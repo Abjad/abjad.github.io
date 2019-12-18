@@ -1,0 +1,434 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>1. Chords &mdash; Abjad 3.0.0 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script defer="defer" type="text/javascript" src="../_static/copybutton.js"></script>
+        <script type="text/javascript" src="../_static/ga.js"></script>
+        <script defer="defer" type="text/javascript" src="../_static/lightbox2/js/lightbox.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/abjad.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/uqbar.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/lightbox2/css/lightbox.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="2. Notes" href="notes.html" />
+    <link rel="prev" title="Reference manual" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Abjad
+          
+
+          
+            
+            <img src="../_static/abjad-logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                3.0.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../gallery.html">Score gallery</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../for_beginners/index.html">For beginners</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../literature_examples/index.html">Literature examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../core_concepts/index.html">Core concepts</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Reference manual</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="index.html#leaves">Leaves</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">1. Chords</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#making-chords-from-a-lilypond-input-string">1.1. Making chords from a LilyPond input string</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#making-chords-from-numbers">1.2. Making chords from numbers</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#understanding-the-interpreter-representation-of-a-chord">1.3. Understanding the interpreter representation of a chord</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#getting-and-setting-the-written-duration-of-a-chord">1.4. Getting and setting the written duration of a chord</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#getting-and-setting-the-written-pitches-of-a-chord">1.5. Getting and setting the written pitches of a chord</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#getting-chord-note-heads">1.6. Getting chord note-heads</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#appending-note-heads-to-a-chord">1.7. Appending note-heads to a chord</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#extending-chords">1.8. Extending chords</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#deleting-chord-note-heads">1.9. Deleting chord note-heads</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tweaking-chord-note-heads">1.10. Tweaking chord note-heads</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#working-with-empty-chords">1.11. Working with empty chords</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="notes.html">2. Notes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rests.html">3. Rests</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#containers">Containers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#attachments">Attachments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#lilypond-files">LilyPond files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#pitches">Pitches</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../api/index.html">Abjad API</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../appendices/index.html">Appendices</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Abjad</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content style-external-links">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">Reference manual</a> &raquo;</li>
+        
+      <li><span class="section-number">1. </span>Chords</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/reference_manual/chords.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="chords">
+<h1><span class="section-number">1. </span>Chords<a class="headerlink" href="#chords" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="making-chords-from-a-lilypond-input-string">
+<h2><span class="section-number">1.1. </span>Making chords from a LilyPond input string<a class="headerlink" href="#making-chords-from-a-lilypond-input-string" title="Permalink to this headline">¶</a></h2>
+<p>You can make chords from a LilyPond input string:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">chord</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Chord</span><span class="p">(</span><span class="s2">&quot;&lt;ef&#39; f&#39; cs&#39;&#39;&gt;4&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">abjad</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">chord</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="uqbar-book">
+    <a href="../_images/lilypond-b574a0745663f9dd3fa7cfb82152e706bca681a9b8e8181782e0e0c0561eaa88.ly"><img src="../_images/lilypond-b574a0745663f9dd3fa7cfb82152e706bca681a9b8e8181782e0e0c0561eaa88.cropped.svg"/></a>
+</div></div>
+<div class="section" id="making-chords-from-numbers">
+<h2><span class="section-number">1.2. </span>Making chords from numbers<a class="headerlink" href="#making-chords-from-numbers" title="Permalink to this headline">¶</a></h2>
+<p>You can also make chords from numbers:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">chord</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Chord</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">14</span><span class="p">],</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">abjad</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">chord</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="uqbar-book">
+    <a href="../_images/lilypond-cd6bcc95624bd509dd455bd78f147191bbba8b8c6cac5397d1c101ee6d5583bb.ly"><img src="../_images/lilypond-cd6bcc95624bd509dd455bd78f147191bbba8b8c6cac5397d1c101ee6d5583bb.cropped.svg"/></a>
+</div></div>
+<div class="section" id="understanding-the-interpreter-representation-of-a-chord">
+<h2><span class="section-number">1.3. </span>Understanding the interpreter representation of a chord<a class="headerlink" href="#understanding-the-interpreter-representation-of-a-chord" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">chord</span>
+<span class="go">Chord(&quot;&lt;e&#39; fs&#39; d&#39;&#39;&gt;4&quot;)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Chord</span></code> tells you the chord’s class.</p>
+<p><code class="docutils literal notranslate"><span class="pre">&quot;&lt;e'</span> <span class="pre">fs'</span> <span class="pre">d''&gt;4&quot;</span></code> tells you chord’s LilyPond input string.</p>
+</div>
+<div class="section" id="getting-and-setting-the-written-duration-of-a-chord">
+<h2><span class="section-number">1.4. </span>Getting and setting the written duration of a chord<a class="headerlink" href="#getting-and-setting-the-written-duration-of-a-chord" title="Permalink to this headline">¶</a></h2>
+<p>Get the written duration of a chord like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">chord</span><span class="o">.</span><span class="n">written_duration</span>
+<span class="go">Duration(1, 4)</span>
+</pre></div>
+</div>
+<p>Set the written duration of a chord like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">chord</span><span class="o">.</span><span class="n">written_duration</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">16</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">abjad</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">chord</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="uqbar-book">
+    <a href="../_images/lilypond-c9d79b8280131636e7fcffde3ce39fbe16cc9cea6f6644835b77390aaeb48339.ly"><img src="../_images/lilypond-c9d79b8280131636e7fcffde3ce39fbe16cc9cea6f6644835b77390aaeb48339.cropped.svg"/></a>
+</div></div>
+<div class="section" id="getting-and-setting-the-written-pitches-of-a-chord">
+<h2><span class="section-number">1.5. </span>Getting and setting the written pitches of a chord<a class="headerlink" href="#getting-and-setting-the-written-pitches-of-a-chord" title="Permalink to this headline">¶</a></h2>
+<p>Get the written pitches of a chord like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">chord</span><span class="o">.</span><span class="n">written_pitches</span>
+<span class="go">PitchSegment(&quot;e&#39; fs&#39; d&#39;&#39;&quot;)</span>
+</pre></div>
+</div>
+<p>Set the written pitches of a chord like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">chord</span><span class="o">.</span><span class="n">written_pitches</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;e&#39;&quot;</span><span class="p">,</span> <span class="s2">&quot;fs&#39;&quot;</span><span class="p">,</span> <span class="s2">&quot;gs&#39;&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">abjad</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">chord</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="uqbar-book">
+    <a href="../_images/lilypond-93bf936f8644a0a75a3a252f8165c022e54ad76096f7ff018c81657bac87e14b.ly"><img src="../_images/lilypond-93bf936f8644a0a75a3a252f8165c022e54ad76096f7ff018c81657bac87e14b.cropped.svg"/></a>
+</div></div>
+<div class="section" id="getting-chord-note-heads">
+<h2><span class="section-number">1.6. </span>Getting chord note-heads<a class="headerlink" href="#getting-chord-note-heads" title="Permalink to this headline">¶</a></h2>
+<p>Get the note-heads of a chord like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">note_head</span> <span class="ow">in</span> <span class="n">chord</span><span class="o">.</span><span class="n">note_heads</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="n">note_head</span>
+<span class="gp">... </span>
+<span class="go">NoteHead(&quot;e&#39;&quot;)</span>
+<span class="go">NoteHead(&quot;fs&#39;&quot;)</span>
+<span class="go">NoteHead(&quot;gs&#39;&quot;)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="appending-note-heads-to-a-chord">
+<h2><span class="section-number">1.7. </span>Appending note-heads to a chord<a class="headerlink" href="#appending-note-heads-to-a-chord" title="Permalink to this headline">¶</a></h2>
+<p>Use <code class="docutils literal notranslate"><span class="pre">append()</span></code> to add one note-head to a chord.</p>
+<p>You can append with a pitch name:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">chord</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Chord</span><span class="p">(</span><span class="s2">&quot;&lt;f&#39; g&#39; ef&#39;&#39;&gt;4&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">show</span><span class="p">(</span><span class="n">chord</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="uqbar-book">
+    <a href="../_images/lilypond-0ad87ce7ac93e9b528f56a2bf70eb4d6513709fdb42905267c55e96d89e7b92a.ly"><img src="../_images/lilypond-0ad87ce7ac93e9b528f56a2bf70eb4d6513709fdb42905267c55e96d89e7b92a.cropped.svg"/></a>
+</div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">chord</span><span class="o">.</span><span class="n">note_heads</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;a&#39;&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">abjad</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">chord</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="uqbar-book">
+    <a href="../_images/lilypond-2aa7aefe8fae827c7983e9ce1db9da2dbaee1de9cd08a615d2c4c4a7027213d7.ly"><img src="../_images/lilypond-2aa7aefe8fae827c7983e9ce1db9da2dbaee1de9cd08a615d2c4c4a7027213d7.cropped.svg"/></a>
+</div><p>Or with a pitch number:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">chord</span><span class="o">.</span><span class="n">note_heads</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">abjad</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">chord</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="uqbar-book">
+    <a href="../_images/lilypond-a80ca1ae4d7d921208379d2d7440de118c26614aa7c730db07f96fa5f87aabd7.ly"><img src="../_images/lilypond-a80ca1ae4d7d921208379d2d7440de118c26614aa7c730db07f96fa5f87aabd7.cropped.svg"/></a>
+</div></div>
+<div class="section" id="extending-chords">
+<h2><span class="section-number">1.8. </span>Extending chords<a class="headerlink" href="#extending-chords" title="Permalink to this headline">¶</a></h2>
+<p>Use <code class="docutils literal notranslate"><span class="pre">extend()</span></code> to add multiple note-heads to a chord.</p>
+<p>You can extend with pitch names:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">chord</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Chord</span><span class="p">(</span><span class="s2">&quot;&lt;fs&#39; gs&#39; e&#39;&#39;&gt;4&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">abjad</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">chord</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="uqbar-book">
+    <a href="../_images/lilypond-ed03f5ffa548b7f9c0bde3be5bfbd0b389ff1f694a646fdc708069e81267745b.ly"><img src="../_images/lilypond-ed03f5ffa548b7f9c0bde3be5bfbd0b389ff1f694a646fdc708069e81267745b.cropped.svg"/></a>
+</div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">chord</span><span class="o">.</span><span class="n">note_heads</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="s2">&quot;a&#39;&quot;</span><span class="p">,</span> <span class="s2">&quot;b&#39;&quot;</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">abjad</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">chord</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="uqbar-book">
+    <a href="../_images/lilypond-48184e2fbd0a986ec21f1966fdff10ef14b52a8849f1297c2bc5c53fb2107de4.ly"><img src="../_images/lilypond-48184e2fbd0a986ec21f1966fdff10ef14b52a8849f1297c2bc5c53fb2107de4.cropped.svg"/></a>
+</div><p>Or with pitch numbers:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">chord</span><span class="o">.</span><span class="n">note_heads</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="mi">13</span><span class="p">,</span> <span class="mi">14</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">abjad</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">chord</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="uqbar-book">
+    <a href="../_images/lilypond-1d3f2bd5e90d89271df0a1ee83638e561263307caeeaf3048567f7478cb82bc6.ly"><img src="../_images/lilypond-1d3f2bd5e90d89271df0a1ee83638e561263307caeeaf3048567f7478cb82bc6.cropped.svg"/></a>
+</div></div>
+<div class="section" id="deleting-chord-note-heads">
+<h2><span class="section-number">1.9. </span>Deleting chord note-heads<a class="headerlink" href="#deleting-chord-note-heads" title="Permalink to this headline">¶</a></h2>
+<p>Delete chord note-heads with <code class="docutils literal notranslate"><span class="pre">del()</span></code>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">chord</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Chord</span><span class="p">(</span><span class="s2">&quot;&lt;g&#39; a&#39; f&#39;&#39;&gt;4&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">abjad</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">chord</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="uqbar-book">
+    <a href="../_images/lilypond-346ba23fe104f2e885f66ff352a386a5a666cdafa4766d403a0aa6b56b8245ff.ly"><img src="../_images/lilypond-346ba23fe104f2e885f66ff352a386a5a666cdafa4766d403a0aa6b56b8245ff.cropped.svg"/></a>
+</div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">del</span> <span class="n">chord</span><span class="o">.</span><span class="n">note_heads</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">abjad</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">chord</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="uqbar-book">
+    <a href="../_images/lilypond-28cd9e51770653f1869698afd73e238bb04db463e0f689233c3195642efd6667.ly"><img src="../_images/lilypond-28cd9e51770653f1869698afd73e238bb04db463e0f689233c3195642efd6667.cropped.svg"/></a>
+</div></div>
+<div class="section" id="tweaking-chord-note-heads">
+<h2><span class="section-number">1.10. </span>Tweaking chord note-heads<a class="headerlink" href="#tweaking-chord-note-heads" title="Permalink to this headline">¶</a></h2>
+<p>Tweak chord note-heads like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">chord</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Chord</span><span class="p">(</span><span class="s2">&quot;&lt;af&#39; bf&#39; gf&#39;&#39;&gt;4&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">abjad</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">chord</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="uqbar-book">
+    <a href="../_images/lilypond-36f1e9e8aff44ef57808b73557bc587fb54cf52e44de18921d642e47db22bf0d.ly"><img src="../_images/lilypond-36f1e9e8aff44ef57808b73557bc587fb54cf52e44de18921d642e47db22bf0d.cropped.svg"/></a>
+</div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">abjad</span><span class="o">.</span><span class="n">tweak</span><span class="p">(</span><span class="n">chord</span><span class="o">.</span><span class="n">note_heads</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">.</span><span class="n">color</span> <span class="o">=</span> <span class="s2">&quot;red&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">abjad</span><span class="o">.</span><span class="n">tweak</span><span class="p">(</span><span class="n">chord</span><span class="o">.</span><span class="n">note_heads</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">color</span> <span class="o">=</span> <span class="s2">&quot;blue&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">abjad</span><span class="o">.</span><span class="n">tweak</span><span class="p">(</span><span class="n">chord</span><span class="o">.</span><span class="n">note_heads</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span><span class="o">.</span><span class="n">color</span> <span class="o">=</span> <span class="s2">&quot;green&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">abjad</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">chord</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="uqbar-book">
+    <a href="../_images/lilypond-1d2fc89031477fddb984565527dd154dbbec15103bb317697fb4719cf5f9f34c.ly"><img src="../_images/lilypond-1d2fc89031477fddb984565527dd154dbbec15103bb317697fb4719cf5f9f34c.cropped.svg"/></a>
+</div></div>
+<div class="section" id="working-with-empty-chords">
+<h2><span class="section-number">1.11. </span>Working with empty chords<a class="headerlink" href="#working-with-empty-chords" title="Permalink to this headline">¶</a></h2>
+<p>Abjad allows empty chords:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">chord</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Chord</span><span class="p">([],</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">chord</span>
+<span class="go">Chord(&#39;&lt;&gt;4&#39;)</span>
+</pre></div>
+</div>
+<p>Empty chords don’t constitute valid LilyPond input.</p>
+<p>This means LilyPond will complain if you pass empty chords to <code class="docutils literal notranslate"><span class="pre">show()</span></code>.</p>
+<p>You can add pitches back to an empty chord at any time:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">chord</span><span class="o">.</span><span class="n">note_heads</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="mi">9</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">17</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">abjad</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">chord</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="uqbar-book">
+    <a href="../_images/lilypond-41d8ec1359d41888c181dfcee80704a5637fd33143183942b884d882a418fe1d.ly"><img src="../_images/lilypond-41d8ec1359d41888c181dfcee80704a5637fd33143183942b884d882a418fe1d.cropped.svg"/></a>
+</div></div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="notes.html" class="btn btn-neutral float-right" title="2. Notes" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral float-left" title="Reference manual" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2008-2019, Trevor Bača &amp; Josiah Wolf Oberholtzer
+      <span class="lastupdated">
+        Last updated on Dec 17, 2019.
+      </span>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

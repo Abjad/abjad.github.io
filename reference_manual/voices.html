@@ -1,0 +1,490 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>5. Voices &mdash; Abjad 3.0.0 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script defer="defer" type="text/javascript" src="../_static/copybutton.js"></script>
+        <script type="text/javascript" src="../_static/ga.js"></script>
+        <script defer="defer" type="text/javascript" src="../_static/lightbox2/js/lightbox.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/abjad.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/uqbar.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/lightbox2/css/lightbox.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="1. Articulations" href="articulations.html" />
+    <link rel="prev" title="4. Tuplets" href="tuplets.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Abjad
+          
+
+          
+            
+            <img src="../_static/abjad-logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                3.0.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../gallery.html">Score gallery</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../for_beginners/index.html">For beginners</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../literature_examples/index.html">Literature examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../core_concepts/index.html">Core concepts</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Reference manual</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="index.html#leaves">Leaves</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html#containers">Containers</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="containers.html">1. Containers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="scores.html">2. Scores</a></li>
+<li class="toctree-l3"><a class="reference internal" href="staves.html">3. Staves</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tuplets.html">4. Tuplets</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">5. Voices</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#making-a-voice-from-a-lilypond-input-string">5.1. Making a voice from a LilyPond input string</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#making-a-voice-from-a-list-of-other-components">5.2. Making a voice from a list of other components</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#understanding-the-interpreter-representation-of-a-voice">5.3. Understanding the interpreter representation of a voice</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#formatting-voices">5.4. Formatting voices</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#selecting-the-components-in-a-voice">5.5. Selecting the components in a voice</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#selecting-a-voice-s-leaves">5.6. Selecting a voice’s leaves</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#getting-the-length-of-a-voice">5.7. Getting the length of a voice</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#inspecting-voice-duration">5.8. Inspecting voice duration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#appending-one-component-to-the-end-of-a-voice">5.9. Appending one component to the end of a voice</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#extending-a-voice-with-multiple-components-at-once">5.10. Extending a voice with multiple components at once</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#finding-the-index-of-a-component-in-a-voice">5.11. Finding the index of a component in a voice</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#popping-a-voice-component-by-index">5.12. Popping a voice component by index</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#removing-a-voice-component-by-reference">5.13. Removing a voice component by reference</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#naming-voices">5.14. Naming voices</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#changing-the-context-of-a-voice">5.15. Changing the context of a voice</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#attachments">Attachments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#lilypond-files">LilyPond files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#pitches">Pitches</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../api/index.html">Abjad API</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../appendices/index.html">Appendices</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Abjad</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content style-external-links">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">Reference manual</a> &raquo;</li>
+        
+      <li><span class="section-number">5. </span>Voices</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/reference_manual/voices.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="voices">
+<h1><span class="section-number">5. </span>Voices<a class="headerlink" href="#voices" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="making-a-voice-from-a-lilypond-input-string">
+<h2><span class="section-number">5.1. </span>Making a voice from a LilyPond input string<a class="headerlink" href="#making-a-voice-from-a-lilypond-input-string" title="Permalink to this headline">¶</a></h2>
+<p>You can make a voice from a LilyPond input string:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">voice</span> <span class="o">=</span> <span class="n">Voice</span><span class="p">(</span><span class="s2">&quot;c&#39;8 d&#39;8 e&#39;8 f&#39;8 g&#39;8 a&#39;8 b&#39;4 c&#39;&#39;1&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">show</span><span class="p">(</span><span class="n">voice</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="uqbar-book">
+    <a href="../_images/lilypond-48b7f566d7478b6e35e393d4c249b4cbd316c9569dcb860593e8ac09e734466c.ly"><img src="../_images/lilypond-48b7f566d7478b6e35e393d4c249b4cbd316c9569dcb860593e8ac09e734466c.cropped.svg"/></a>
+</div></div>
+<div class="section" id="making-a-voice-from-a-list-of-other-components">
+<h2><span class="section-number">5.2. </span>Making a voice from a list of other components<a class="headerlink" href="#making-a-voice-from-a-list-of-other-components" title="Permalink to this headline">¶</a></h2>
+<p>You can also make a voice from a list of other components:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">tuplet</span> <span class="o">=</span> <span class="n">Tuplet</span><span class="p">(</span><span class="n">Multiplier</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="s2">&quot;c&#39;4 d&#39;4 e&#39;4&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">components</span> <span class="o">=</span> <span class="p">[</span><span class="n">tuplet</span><span class="p">,</span> <span class="n">Note</span><span class="p">(</span><span class="s2">&quot;f&#39;2&quot;</span><span class="p">),</span> <span class="n">Note</span><span class="p">(</span><span class="s2">&quot;g&#39;1&quot;</span><span class="p">)]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">voice</span> <span class="o">=</span> <span class="n">Voice</span><span class="p">(</span><span class="n">components</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">show</span><span class="p">(</span><span class="n">voice</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="uqbar-book">
+    <a href="../_images/lilypond-d134628f3d8694f0bef4f5b049729ff4ecb06d359ffdfdcc89f6f4227f8f2fed.ly"><img src="../_images/lilypond-d134628f3d8694f0bef4f5b049729ff4ecb06d359ffdfdcc89f6f4227f8f2fed.cropped.svg"/></a>
+</div></div>
+<div class="section" id="understanding-the-interpreter-representation-of-a-voice">
+<h2><span class="section-number">5.3. </span>Understanding the interpreter representation of a voice<a class="headerlink" href="#understanding-the-interpreter-representation-of-a-voice" title="Permalink to this headline">¶</a></h2>
+<p>The interpreter representation of a voice contains three parts:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">voice</span>
+<span class="go">&lt;Voice{3}&gt;</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Voice</span></code> tells you the voice’s class.</p>
+<p><code class="docutils literal notranslate"><span class="pre">3</span></code> tells you the voice’s length (which is the number of
+top-level components the voice contains).</p>
+<p>Curly braces <code class="docutils literal notranslate"><span class="pre">{</span></code> and <code class="docutils literal notranslate"><span class="pre">}</span></code> tell you that the music inside the voice is
+interpreted sequentially rather than simultaneously.</p>
+</div>
+<div class="section" id="formatting-voices">
+<h2><span class="section-number">5.4. </span>Formatting voices<a class="headerlink" href="#formatting-voices" title="Permalink to this headline">¶</a></h2>
+<p>Use <code class="docutils literal notranslate"><span class="pre">format()</span></code> to get the LilyPond format of a voice:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="nb">format</span><span class="p">(</span><span class="n">voice</span><span class="p">,</span> <span class="s2">&quot;lilypond&quot;</span><span class="p">))</span>
+<span class="go">\new Voice</span>
+<span class="go">{</span>
+<span class="go">    \times 2/3 {</span>
+<span class="go">        c&#39;4</span>
+<span class="go">        d&#39;4</span>
+<span class="go">        e&#39;4</span>
+<span class="go">    }</span>
+<span class="go">    f&#39;2</span>
+<span class="go">    g&#39;1</span>
+<span class="go">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="selecting-the-components-in-a-voice">
+<h2><span class="section-number">5.5. </span>Selecting the components in a voice<a class="headerlink" href="#selecting-the-components-in-a-voice" title="Permalink to this headline">¶</a></h2>
+<p>Select the components in a voice like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">voice</span><span class="p">[:]</span>
+<span class="go">Selection([Tuplet(Multiplier(2, 3), &quot;c&#39;4 d&#39;4 e&#39;4&quot;), Note(&quot;f&#39;2&quot;), Note(&quot;g&#39;1&quot;)])</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="selecting-a-voice-s-leaves">
+<h2><span class="section-number">5.6. </span>Selecting a voice’s leaves<a class="headerlink" href="#selecting-a-voice-s-leaves" title="Permalink to this headline">¶</a></h2>
+<p>Use <code class="docutils literal notranslate"><span class="pre">select(...).leaves()</span></code> to select the leaves in a voice:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">select</span><span class="p">(</span><span class="n">voice</span><span class="p">)</span><span class="o">.</span><span class="n">leaves</span><span class="p">()</span>
+<span class="go">Selection([Note(&quot;c&#39;4&quot;), Note(&quot;d&#39;4&quot;), Note(&quot;e&#39;4&quot;), Note(&quot;f&#39;2&quot;), Note(&quot;g&#39;1&quot;)])</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="getting-the-length-of-a-voice">
+<h2><span class="section-number">5.7. </span>Getting the length of a voice<a class="headerlink" href="#getting-the-length-of-a-voice" title="Permalink to this headline">¶</a></h2>
+<p>Use <code class="docutils literal notranslate"><span class="pre">len()</span></code> to get the length of a voice.</p>
+<p>The length of a voice is defined equal to the number of top-level components
+the voice contains:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">voice</span><span class="p">)</span>
+<span class="go">3</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="inspecting-voice-duration">
+<h2><span class="section-number">5.8. </span>Inspecting voice duration<a class="headerlink" href="#inspecting-voice-duration" title="Permalink to this headline">¶</a></h2>
+<p>Use the inspector to get the duration of a voice:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">inspect</span><span class="p">(</span><span class="n">voice</span><span class="p">)</span><span class="o">.</span><span class="n">duration</span><span class="p">()</span>
+<span class="go">Duration(2, 1)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="appending-one-component-to-the-end-of-a-voice">
+<h2><span class="section-number">5.9. </span>Appending one component to the end of a voice<a class="headerlink" href="#appending-one-component-to-the-end-of-a-voice" title="Permalink to this headline">¶</a></h2>
+<p>Use <code class="docutils literal notranslate"><span class="pre">append()</span></code> to append one component to the end of a voice:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">voice</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Note</span><span class="p">(</span><span class="s2">&quot;af&#39;2&quot;</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">show</span><span class="p">(</span><span class="n">voice</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="uqbar-book">
+    <a href="../_images/lilypond-478e338913ba834969da6d62f682bccaaf7588f390fc6f3829a7df0a67432ea1.ly"><img src="../_images/lilypond-478e338913ba834969da6d62f682bccaaf7588f390fc6f3829a7df0a67432ea1.cropped.svg"/></a>
+</div><p>You can also use a LilyPond input string:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">voice</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;bf&#39;2&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">show</span><span class="p">(</span><span class="n">voice</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="uqbar-book">
+    <a href="../_images/lilypond-8c7bd49f8686c9feb073ac197f5a34fe38b26030c80986ce44f28a51636e9d60.ly"><img src="../_images/lilypond-8c7bd49f8686c9feb073ac197f5a34fe38b26030c80986ce44f28a51636e9d60.cropped.svg"/></a>
+</div></div>
+<div class="section" id="extending-a-voice-with-multiple-components-at-once">
+<h2><span class="section-number">5.10. </span>Extending a voice with multiple components at once<a class="headerlink" href="#extending-a-voice-with-multiple-components-at-once" title="Permalink to this headline">¶</a></h2>
+<p>Use <code class="docutils literal notranslate"><span class="pre">extend()</span></code> to extend a voice with multiple components at once:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">notes</span> <span class="o">=</span> <span class="p">[</span><span class="n">Note</span><span class="p">(</span><span class="s2">&quot;g&#39;4&quot;</span><span class="p">),</span> <span class="n">Note</span><span class="p">(</span><span class="s2">&quot;f&#39;4&quot;</span><span class="p">)]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">voice</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">notes</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">show</span><span class="p">(</span><span class="n">voice</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="uqbar-book">
+    <a href="../_images/lilypond-2c1e4117e4c2aedd2c96a4ae5fcb1a81bdc643bddf2bb07fb7eb74f02fd8723b.ly"><img src="../_images/lilypond-2c1e4117e4c2aedd2c96a4ae5fcb1a81bdc643bddf2bb07fb7eb74f02fd8723b.cropped.svg"/></a>
+</div><p>You can also use a LilyPond input string:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">voice</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="s2">&quot;e&#39;4 ef&#39;4&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">show</span><span class="p">(</span><span class="n">voice</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="uqbar-book">
+    <a href="../_images/lilypond-dcb14513bdea8b319e00049d7a53c293bee14d83a4017cc2659843f60a75d4af.ly"><img src="../_images/lilypond-dcb14513bdea8b319e00049d7a53c293bee14d83a4017cc2659843f60a75d4af.cropped.svg"/></a>
+</div></div>
+<div class="section" id="finding-the-index-of-a-component-in-a-voice">
+<h2><span class="section-number">5.11. </span>Finding the index of a component in a voice<a class="headerlink" href="#finding-the-index-of-a-component-in-a-voice" title="Permalink to this headline">¶</a></h2>
+<p>Use <code class="docutils literal notranslate"><span class="pre">index()</span></code> to find the index of any component in a voice:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">notes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="go">Note(&quot;g&#39;4&quot;)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">voice</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">notes</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="go">5</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="popping-a-voice-component-by-index">
+<h2><span class="section-number">5.12. </span>Popping a voice component by index<a class="headerlink" href="#popping-a-voice-component-by-index" title="Permalink to this headline">¶</a></h2>
+<p>Use <code class="docutils literal notranslate"><span class="pre">pop()</span></code> to pop the last component of a voice:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">voice</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+<span class="go">Note(&quot;ef&#39;4&quot;)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">show</span><span class="p">(</span><span class="n">voice</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="uqbar-book">
+    <a href="../_images/lilypond-996c24936deb1e919eb7edd4506bbb4199a4780d6243b6be98ebbd6ad78b29bc.ly"><img src="../_images/lilypond-996c24936deb1e919eb7edd4506bbb4199a4780d6243b6be98ebbd6ad78b29bc.cropped.svg"/></a>
+</div></div>
+<div class="section" id="removing-a-voice-component-by-reference">
+<h2><span class="section-number">5.13. </span>Removing a voice component by reference<a class="headerlink" href="#removing-a-voice-component-by-reference" title="Permalink to this headline">¶</a></h2>
+<p>Use <code class="docutils literal notranslate"><span class="pre">remove()</span></code> to remove any component from a voice by reference:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">voice</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">voice</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">show</span><span class="p">(</span><span class="n">voice</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="uqbar-book">
+    <a href="../_images/lilypond-2c1e4117e4c2aedd2c96a4ae5fcb1a81bdc643bddf2bb07fb7eb74f02fd8723b.ly"><img src="../_images/lilypond-2c1e4117e4c2aedd2c96a4ae5fcb1a81bdc643bddf2bb07fb7eb74f02fd8723b.cropped.svg"/></a>
+</div></div>
+<div class="section" id="naming-voices">
+<h2><span class="section-number">5.14. </span>Naming voices<a class="headerlink" href="#naming-voices" title="Permalink to this headline">¶</a></h2>
+<p>You can name Abjad voices:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">voice</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;Upper Voice&quot;</span>
+</pre></div>
+</div>
+<p>Voice names appear in LilyPond input but not in notation output:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="p">(</span><span class="n">voice</span><span class="p">)</span>
+<span class="go">\context Voice = &quot;Upper Voice&quot;</span>
+<span class="go">{</span>
+<span class="go">    \times 2/3 {</span>
+<span class="go">        c&#39;4</span>
+<span class="go">        d&#39;4</span>
+<span class="go">        e&#39;4</span>
+<span class="go">    }</span>
+<span class="go">    f&#39;2</span>
+<span class="go">    g&#39;1</span>
+<span class="go">    af&#39;2</span>
+<span class="go">    bf&#39;2</span>
+<span class="go">    g&#39;4</span>
+<span class="go">    f&#39;4</span>
+<span class="go">}</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">show</span><span class="p">(</span><span class="n">voice</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="uqbar-book">
+    <a href="../_images/lilypond-c217e6bd6c8831d2c092d44d7b1779a93c0cf9500fe842a1c3c7433304f8dd0c.ly"><img src="../_images/lilypond-c217e6bd6c8831d2c092d44d7b1779a93c0cf9500fe842a1c3c7433304f8dd0c.cropped.svg"/></a>
+</div></div>
+<div class="section" id="changing-the-context-of-a-voice">
+<h2><span class="section-number">5.15. </span>Changing the context of a voice<a class="headerlink" href="#changing-the-context-of-a-voice" title="Permalink to this headline">¶</a></h2>
+<p>The context of a voice is set to <code class="docutils literal notranslate"><span class="pre">'Voice'</span></code> by default:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">voice</span><span class="o">.</span><span class="n">lilypond_type</span>
+<span class="go">&#39;Voice&#39;</span>
+</pre></div>
+</div>
+<p>But you can change the context of a voice if you want.</p>
+<p>Change the context of a voice when you have defined a new LilyPond context
+based on a LilyPond voice:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">voice</span><span class="o">.</span><span class="n">lilypond_type</span> <span class="o">=</span> <span class="s2">&quot;SpeciallyDefinedVoice&quot;</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">voice</span><span class="o">.</span><span class="n">lilypond_type</span>
+<span class="go">&#39;SpeciallyDefinedVoice&#39;</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="p">(</span><span class="n">voice</span><span class="p">)</span>
+<span class="go">\context SpeciallyDefinedVoice = &quot;Upper Voice&quot;</span>
+<span class="go">{</span>
+<span class="go">    \times 2/3 {</span>
+<span class="go">        c&#39;4</span>
+<span class="go">        d&#39;4</span>
+<span class="go">        e&#39;4</span>
+<span class="go">    }</span>
+<span class="go">    f&#39;2</span>
+<span class="go">    g&#39;1</span>
+<span class="go">    af&#39;2</span>
+<span class="go">    bf&#39;2</span>
+<span class="go">    g&#39;4</span>
+<span class="go">    f&#39;4</span>
+<span class="go">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="articulations.html" class="btn btn-neutral float-right" title="1. Articulations" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="tuplets.html" class="btn btn-neutral float-left" title="4. Tuplets" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2008-2019, Trevor Bača &amp; Josiah Wolf Oberholtzer
+      <span class="lastupdated">
+        Last updated on Dec 17, 2019.
+      </span>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

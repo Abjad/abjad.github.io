@@ -1,0 +1,864 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>TonalAnalysis &mdash; Abjad 3.0.0 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+        <script defer="defer" type="text/javascript" src="../../../_static/copybutton.js"></script>
+        <script type="text/javascript" src="../../../_static/ga.js"></script>
+        <script defer="defer" type="text/javascript" src="../../../_static/lightbox2/js/lightbox.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/abjad.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/uqbar.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/lightbox2/css/lightbox.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="analyze" href="analyze.html" />
+    <link rel="prev" title="ScaleDegree" href="ScaleDegree.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> Abjad
+          
+
+          
+            
+            <img src="../../../_static/abjad-logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                3.0.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../gallery.html">Score gallery</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../for_beginners/index.html">For beginners</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../literature_examples/index.html">Literature examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../core_concepts/index.html">Core concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../reference_manual/index.html">Reference manual</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Abjad API</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../abjad/index.html">abjad</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">abjadext</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../cli/index.html">cli</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../rmakers/index.html">rmakers</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">tonality</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="ChordExtent.html">ChordExtent</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ChordInversion.html">ChordInversion</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ChordQuality.html">ChordQuality</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ChordSuspension.html">ChordSuspension</a></li>
+<li class="toctree-l4"><a class="reference internal" href="RomanNumeral.html">RomanNumeral</a></li>
+<li class="toctree-l4"><a class="reference internal" href="RootedChordClass.html">RootedChordClass</a></li>
+<li class="toctree-l4"><a class="reference internal" href="RootlessChordClass.html">RootlessChordClass</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Scale.html">Scale</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ScaleDegree.html">ScaleDegree</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">TonalAnalysis</a></li>
+<li class="toctree-l4"><a class="reference internal" href="analyze.html">analyze</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../appendices/index.html">Appendices</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Abjad</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content style-external-links">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Abjad API</a> &raquo;</li>
+        
+          <li><a href="../index.html">abjadext</a> &raquo;</li>
+        
+          <li><a href="index.html">tonality</a> &raquo;</li>
+        
+      <li>TonalAnalysis</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../../_sources/api/abjadext/tonality/TonalAnalysis.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-abjadext.tonality.TonalAnalysis">
+<span id="tonalanalysis"></span><span id="abjadext-tonality-tonalanalysis"></span><h1>TonalAnalysis<a class="headerlink" href="#module-abjadext.tonality.TonalAnalysis" title="Permalink to this headline">¶</a></h1>
+<div class="svg-container docutils container">
+<div class="graphviz"><object data="../../../_images/inheritance-3061fddd735a6432ff57a1e4fe8500a7f6154035.svg" type="image/svg+xml" class="inheritance graphviz">
+<p class="warning">digraph InheritanceGraph {
+    graph [bgcolor=transparent,
+        color=lightsteelblue2,
+        fontname=Arial,
+        fontsize=10,
+        outputorder=edgesfirst,
+        overlap=prism,
+        penwidth=2,
+        rankdir=LR,
+        splines=spline,
+        style=&quot;dashed, rounded&quot;,
+        truecolor=true];
+    node [colorscheme=pastel19,
+        fontname=Arial,
+        fontsize=10,
+        height=0,
+        penwidth=2,
+        shape=box,
+        style=&quot;filled, rounded&quot;,
+        width=0];
+    edge [color=lightslategrey,
+        penwidth=1];
+    subgraph &quot;cluster_abjadext.tonality&quot; {
+        graph [label=&quot;abjadext.tonality&quot;];
+        node [color=1];
+        &quot;abjadext.tonality.TonalAnalysis.TonalAnalysis&quot; [URL=&quot;../api/abjadext/tonality/TonalAnalysis.html#abjadext.tonality.TonalAnalysis.TonalAnalysis&quot;,
+            color=black,
+            fontcolor=white,
+            label=&quot;Tonal\nAnalysis&quot;,
+            target=_top];
+    }
+    subgraph cluster_builtins {
+        graph [label=builtins];
+        node [color=2];
+        &quot;builtins.object&quot; [URL=&quot;https://docs.python.org/3.6/library/functions.html#object&quot;,
+            label=object,
+            target=_top];
+    }
+    &quot;builtins.object&quot; -&gt; &quot;abjadext.tonality.TonalAnalysis.TonalAnalysis&quot;;
+}</p></object></div>
+</div>
+<dl class="class">
+<dt id="abjadext.tonality.TonalAnalysis.TonalAnalysis">
+<em class="property">class </em><code class="sig-prename descclassname">abjadext.tonality.TonalAnalysis.</code><code class="sig-name descname">TonalAnalysis</code><span class="sig-paren">(</span><em class="sig-param">client=None</em><span class="sig-paren">)</span><a class="headerlink" href="#abjadext.tonality.TonalAnalysis.TonalAnalysis" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tonal analysis agent.</p>
+<div class="example docutils container">
+<p>Intializes agent on conjunct selection:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">staff</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Staff</span><span class="p">(</span><span class="s2">&quot;c&#39;4 d&#39; e&#39; f&#39;&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">abjad</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">staff</span><span class="p">)</span>  
+</pre></div>
+</div>
+<div class="uqbar-book">
+    <a href="../../../_images/lilypond-962a34d48cf88ba5fbae0978ded1d96422cab4c774de3d31f4e0efcd0043ebfa.ly"><img src="../../../_images/lilypond-962a34d48cf88ba5fbae0978ded1d96422cab4c774de3d31f4e0efcd0043ebfa.cropped.svg"/></a>
+</div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">agent_1</span> <span class="o">=</span> <span class="n">abjadext</span><span class="o">.</span><span class="n">tonality</span><span class="o">.</span><span class="n">analyze</span><span class="p">(</span><span class="n">staff</span><span class="p">[:])</span>
+</pre></div>
+</div>
+</div>
+<div class="example docutils container">
+<p>Initializes agent on disjunct selection:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">staff</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Staff</span><span class="p">(</span><span class="s2">&quot;c&#39;4 d&#39; e&#39; f&#39;&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">abjad</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">staff</span><span class="p">)</span>  
+</pre></div>
+</div>
+<div class="uqbar-book">
+    <a href="../../../_images/lilypond-962a34d48cf88ba5fbae0978ded1d96422cab4c774de3d31f4e0efcd0043ebfa.ly"><img src="../../../_images/lilypond-962a34d48cf88ba5fbae0978ded1d96422cab4c774de3d31f4e0efcd0043ebfa.cropped.svg"/></a>
+</div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">agent_2</span> <span class="o">=</span> <span class="n">abjadext</span><span class="o">.</span><span class="n">tonality</span><span class="o">.</span><span class="n">analyze</span><span class="p">(</span><span class="n">staff</span><span class="p">[:</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">staff</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">:])</span>
+</pre></div>
+</div>
+</div>
+<hr/><p class="class-header rubric">Attributes Summary</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abjadext.tonality.TonalAnalysis.TonalAnalysis.analyze_chords" title="abjadext.tonality.TonalAnalysis.TonalAnalysis.analyze_chords"><code class="xref py py-obj docutils literal notranslate"><span class="pre">analyze_chords</span></code></a></p></td>
+<td><p>Analyzes chords in selection.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#abjadext.tonality.TonalAnalysis.TonalAnalysis.analyze_incomplete_chords" title="abjadext.tonality.TonalAnalysis.TonalAnalysis.analyze_incomplete_chords"><code class="xref py py-obj docutils literal notranslate"><span class="pre">analyze_incomplete_chords</span></code></a></p></td>
+<td><p>Analyzes incomplete chords.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abjadext.tonality.TonalAnalysis.TonalAnalysis.analyze_incomplete_tonal_functions" title="abjadext.tonality.TonalAnalysis.TonalAnalysis.analyze_incomplete_tonal_functions"><code class="xref py py-obj docutils literal notranslate"><span class="pre">analyze_incomplete_tonal_functions</span></code></a></p></td>
+<td><p>Analyzes incomplete tonal functions of chords in client according to <code class="docutils literal notranslate"><span class="pre">key_signature</span></code>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#abjadext.tonality.TonalAnalysis.TonalAnalysis.analyze_neighbor_notes" title="abjadext.tonality.TonalAnalysis.TonalAnalysis.analyze_neighbor_notes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">analyze_neighbor_notes</span></code></a></p></td>
+<td><p>Is true when <code class="docutils literal notranslate"><span class="pre">note</span></code> in client is preceeded by a stepwise interval in one direction and followed by a stepwise interval in the other direction.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abjadext.tonality.TonalAnalysis.TonalAnalysis.analyze_passing_tones" title="abjadext.tonality.TonalAnalysis.TonalAnalysis.analyze_passing_tones"><code class="xref py py-obj docutils literal notranslate"><span class="pre">analyze_passing_tones</span></code></a></p></td>
+<td><p>Is true when note in client is both preceeded and followed by scalewise notes.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#abjadext.tonality.TonalAnalysis.TonalAnalysis.analyze_tonal_functions" title="abjadext.tonality.TonalAnalysis.TonalAnalysis.analyze_tonal_functions"><code class="xref py py-obj docutils literal notranslate"><span class="pre">analyze_tonal_functions</span></code></a></p></td>
+<td><p>Analyzes tonal function of chords in client according to <code class="docutils literal notranslate"><span class="pre">key_signature</span></code>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abjadext.tonality.TonalAnalysis.TonalAnalysis.are_scalar_notes" title="abjadext.tonality.TonalAnalysis.TonalAnalysis.are_scalar_notes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">are_scalar_notes</span></code></a></p></td>
+<td><p>Is true when notes in client are scalar.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#abjadext.tonality.TonalAnalysis.TonalAnalysis.are_stepwise_ascending_notes" title="abjadext.tonality.TonalAnalysis.TonalAnalysis.are_stepwise_ascending_notes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">are_stepwise_ascending_notes</span></code></a></p></td>
+<td><p>Is true when notes in client are stepwise ascending.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abjadext.tonality.TonalAnalysis.TonalAnalysis.are_stepwise_descending_notes" title="abjadext.tonality.TonalAnalysis.TonalAnalysis.are_stepwise_descending_notes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">are_stepwise_descending_notes</span></code></a></p></td>
+<td><p>Is true when notes in client are stepwise descending.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#abjadext.tonality.TonalAnalysis.TonalAnalysis.are_stepwise_notes" title="abjadext.tonality.TonalAnalysis.TonalAnalysis.are_stepwise_notes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">are_stepwise_notes</span></code></a></p></td>
+<td><p>Is true when notes in client are stepwise.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abjadext.tonality.TonalAnalysis.TonalAnalysis.client" title="abjadext.tonality.TonalAnalysis.TonalAnalysis.client"><code class="xref py py-obj docutils literal notranslate"><span class="pre">client</span></code></a></p></td>
+<td><p>Gets client.</p></td>
+</tr>
+</tbody>
+</table>
+<hr/><p class="class-header rubric">Methods</p>
+<dl class="method">
+<dt id="abjadext.tonality.TonalAnalysis.TonalAnalysis.analyze_chords">
+<code class="sig-name descname">analyze_chords</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjadext.tonality.TonalAnalysis.TonalAnalysis.analyze_chords" title="Permalink to this definition">¶</a></dt>
+<dd><p>Analyzes chords in selection.</p>
+<div class="example docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">chords</span> <span class="o">=</span> <span class="p">[</span>
+<span class="gp">... </span>    <span class="n">abjad</span><span class="o">.</span><span class="n">Chord</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">7</span><span class="p">],</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">)),</span>
+<span class="gp">... </span>    <span class="n">abjad</span><span class="o">.</span><span class="n">Chord</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">12</span><span class="p">],</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">)),</span>
+<span class="gp">... </span>    <span class="n">abjad</span><span class="o">.</span><span class="n">Chord</span><span class="p">([</span><span class="mi">7</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">16</span><span class="p">],</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">)),</span>
+<span class="gp">... </span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">staff</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Staff</span><span class="p">(</span><span class="n">chords</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">abjad</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">staff</span><span class="p">)</span>  
+</pre></div>
+</div>
+<div class="uqbar-book">
+    <a href="../../../_images/lilypond-55f416f2c582c179e6888afdb08168d3fb455e44ac46407436648e1ab7788eda.ly"><img src="../../../_images/lilypond-55f416f2c582c179e6888afdb08168d3fb455e44ac46407436648e1ab7788eda.cropped.svg"/></a>
+</div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">chord</span> <span class="ow">in</span> <span class="n">abjadext</span><span class="o">.</span><span class="n">tonality</span><span class="o">.</span><span class="n">analyze</span><span class="p">(</span><span class="n">staff</span><span class="p">[:])</span><span class="o">.</span><span class="n">analyze_chords</span><span class="p">():</span>
+<span class="gp">... </span>    <span class="n">chord</span>
+<span class="gp">... </span>
+<span class="go">CMajorTriadInRootPosition</span>
+<span class="go">CMajorTriadInFirstInversion</span>
+<span class="go">CMajorTriadInSecondInversion</span>
+</pre></div>
+</div>
+</div>
+<div class="example docutils container">
+<p>The three inversions of an a minor triad:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">chords</span> <span class="o">=</span> <span class="p">[</span>
+<span class="gp">... </span>    <span class="n">abjad</span><span class="o">.</span><span class="n">Chord</span><span class="p">([</span><span class="mi">9</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">16</span><span class="p">],</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">)),</span>
+<span class="gp">... </span>    <span class="n">abjad</span><span class="o">.</span><span class="n">Chord</span><span class="p">([</span><span class="mi">12</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">21</span><span class="p">],</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">)),</span>
+<span class="gp">... </span>    <span class="n">abjad</span><span class="o">.</span><span class="n">Chord</span><span class="p">([</span><span class="mi">16</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span> <span class="mi">24</span><span class="p">],</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">)),</span>
+<span class="gp">... </span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">staff</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Staff</span><span class="p">(</span><span class="n">chords</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">abjad</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">staff</span><span class="p">)</span>  
+</pre></div>
+</div>
+<div class="uqbar-book">
+    <a href="../../../_images/lilypond-3627c30e499f282debd873f2d3b72db16aaa484b04bf92c026f2738368270b9f.ly"><img src="../../../_images/lilypond-3627c30e499f282debd873f2d3b72db16aaa484b04bf92c026f2738368270b9f.cropped.svg"/></a>
+</div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">chord</span> <span class="ow">in</span> <span class="n">abjadext</span><span class="o">.</span><span class="n">tonality</span><span class="o">.</span><span class="n">analyze</span><span class="p">(</span><span class="n">staff</span><span class="p">[:])</span><span class="o">.</span><span class="n">analyze_chords</span><span class="p">():</span>
+<span class="gp">... </span>    <span class="n">chord</span>
+<span class="gp">... </span>
+<span class="go">AMinorTriadInRootPosition</span>
+<span class="go">AMinorTriadInFirstInversion</span>
+<span class="go">AMinorTriadInSecondInversion</span>
+</pre></div>
+</div>
+</div>
+<div class="example docutils container">
+<p>The four inversions of a C dominant seventh chord:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">chords</span> <span class="o">=</span> <span class="p">[</span>
+<span class="gp">... </span>    <span class="n">abjad</span><span class="o">.</span><span class="n">Chord</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">10</span><span class="p">],</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">)),</span>
+<span class="gp">... </span>    <span class="n">abjad</span><span class="o">.</span><span class="n">Chord</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">12</span><span class="p">],</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">)),</span>
+<span class="gp">... </span>    <span class="n">abjad</span><span class="o">.</span><span class="n">Chord</span><span class="p">([</span><span class="mi">7</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">16</span><span class="p">],</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">)),</span>
+<span class="gp">... </span>    <span class="n">abjad</span><span class="o">.</span><span class="n">Chord</span><span class="p">([</span><span class="mi">10</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">19</span><span class="p">],</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">)),</span>
+<span class="gp">... </span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">staff</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Staff</span><span class="p">(</span><span class="n">chords</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">abjad</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">staff</span><span class="p">)</span>  
+</pre></div>
+</div>
+<div class="uqbar-book">
+    <a href="../../../_images/lilypond-d38a808e8e7fbe8010eb3d701dd367361af498012ead6e65689ae65ad01b1982.ly"><img src="../../../_images/lilypond-d38a808e8e7fbe8010eb3d701dd367361af498012ead6e65689ae65ad01b1982.cropped.svg"/></a>
+</div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">chord</span> <span class="ow">in</span> <span class="n">abjadext</span><span class="o">.</span><span class="n">tonality</span><span class="o">.</span><span class="n">analyze</span><span class="p">(</span><span class="n">staff</span><span class="p">[:])</span><span class="o">.</span><span class="n">analyze_chords</span><span class="p">():</span>
+<span class="gp">... </span>    <span class="n">chord</span>
+<span class="gp">... </span>
+<span class="go">CDominantSeventhInRootPosition</span>
+<span class="go">CDominantSeventhInFirstInversion</span>
+<span class="go">CDominantSeventhInSecondInversion</span>
+<span class="go">CDominantSeventhInThirdInversion</span>
+</pre></div>
+</div>
+</div>
+<div class="example docutils container">
+<p>The five inversions of a C dominant ninth chord:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">chords</span> <span class="o">=</span> <span class="p">[</span>
+<span class="gp">... </span>    <span class="n">abjad</span><span class="o">.</span><span class="n">Chord</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">14</span><span class="p">],</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">)),</span>
+<span class="gp">... </span>    <span class="n">abjad</span><span class="o">.</span><span class="n">Chord</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">14</span><span class="p">],</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">)),</span>
+<span class="gp">... </span>    <span class="n">abjad</span><span class="o">.</span><span class="n">Chord</span><span class="p">([</span><span class="mi">7</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">16</span><span class="p">],</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">)),</span>
+<span class="gp">... </span>    <span class="n">abjad</span><span class="o">.</span><span class="n">Chord</span><span class="p">([</span><span class="mi">10</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">19</span><span class="p">],</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">)),</span>
+<span class="gp">... </span>    <span class="n">abjad</span><span class="o">.</span><span class="n">Chord</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">19</span><span class="p">],</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">)),</span>
+<span class="gp">... </span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">staff</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Staff</span><span class="p">(</span><span class="n">chords</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">abjad</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">staff</span><span class="p">)</span>  
+</pre></div>
+</div>
+<div class="uqbar-book">
+    <a href="../../../_images/lilypond-659b62800474d9e50ca790fbb7dbfdcafc007d3b10059b7498148df618c55a4f.ly"><img src="../../../_images/lilypond-659b62800474d9e50ca790fbb7dbfdcafc007d3b10059b7498148df618c55a4f.cropped.svg"/></a>
+</div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">chord</span> <span class="ow">in</span> <span class="n">abjadext</span><span class="o">.</span><span class="n">tonality</span><span class="o">.</span><span class="n">analyze</span><span class="p">(</span><span class="n">staff</span><span class="p">[:])</span><span class="o">.</span><span class="n">analyze_chords</span><span class="p">():</span>
+<span class="gp">... </span>    <span class="n">chord</span>
+<span class="gp">... </span>
+<span class="go">CDominantNinthInRootPosition</span>
+<span class="go">CDominantNinthInFirstInversion</span>
+<span class="go">CDominantNinthInSecondInversion</span>
+<span class="go">CDominantNinthInThirdInversion</span>
+<span class="go">CDominantNinthInFourthInversion</span>
+</pre></div>
+</div>
+</div>
+<p>Returns none when no tonal chord is understood.</p>
+<p>Returns list with elements each equal to chord class or none.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="abjadext.tonality.TonalAnalysis.TonalAnalysis.analyze_incomplete_chords">
+<code class="sig-name descname">analyze_incomplete_chords</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjadext.tonality.TonalAnalysis.TonalAnalysis.analyze_incomplete_chords" title="Permalink to this definition">¶</a></dt>
+<dd><p>Analyzes incomplete chords.</p>
+<div class="example docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">chord</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Chord</span><span class="p">(</span><span class="s2">&quot;&lt;g&#39; b&#39;&gt;4&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">abjadext</span><span class="o">.</span><span class="n">tonality</span><span class="o">.</span><span class="n">analyze</span><span class="p">(</span><span class="n">chord</span><span class="p">)</span><span class="o">.</span><span class="n">analyze_incomplete_chords</span><span class="p">()</span>
+<span class="go">[GMajorTriadInRootPosition]</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">chord</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Chord</span><span class="p">(</span><span class="s2">&quot;&lt;g&#39; bf&#39;&gt;4&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">abjadext</span><span class="o">.</span><span class="n">tonality</span><span class="o">.</span><span class="n">analyze</span><span class="p">(</span><span class="n">chord</span><span class="p">)</span><span class="o">.</span><span class="n">analyze_incomplete_chords</span><span class="p">()</span>
+<span class="go">[GMinorTriadInRootPosition]</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">chord</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Chord</span><span class="p">(</span><span class="s2">&quot;&lt;f g b&gt;4&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">abjadext</span><span class="o">.</span><span class="n">tonality</span><span class="o">.</span><span class="n">analyze</span><span class="p">(</span><span class="n">chord</span><span class="p">)</span><span class="o">.</span><span class="n">analyze_incomplete_chords</span><span class="p">()</span>
+<span class="go">[GDominantSeventhInSecondInversion]</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">chord</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Chord</span><span class="p">(</span><span class="s2">&quot;&lt;fs g b&gt;4&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">abjadext</span><span class="o">.</span><span class="n">tonality</span><span class="o">.</span><span class="n">analyze</span><span class="p">(</span><span class="n">chord</span><span class="p">)</span><span class="o">.</span><span class="n">analyze_incomplete_chords</span><span class="p">()</span>
+<span class="go">[GMajorSeventhInSecondInversion]</span>
+</pre></div>
+</div>
+</div>
+<p>Raises tonal harmony error when chord in client can not analyze.</p>
+<p>Returns list with elements each equal to chord class or none.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="abjadext.tonality.TonalAnalysis.TonalAnalysis.analyze_incomplete_tonal_functions">
+<code class="sig-name descname">analyze_incomplete_tonal_functions</code><span class="sig-paren">(</span><em class="sig-param">key_signature</em><span class="sig-paren">)</span><a class="headerlink" href="#abjadext.tonality.TonalAnalysis.TonalAnalysis.analyze_incomplete_tonal_functions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Analyzes incomplete tonal functions of chords in client
+according to <code class="docutils literal notranslate"><span class="pre">key_signature</span></code>.</p>
+<div class="example docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">chord</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Chord</span><span class="p">(</span><span class="s2">&quot;&lt;c&#39; e&#39;&gt;4&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">key_signature</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">KeySignature</span><span class="p">(</span><span class="s2">&quot;g&quot;</span><span class="p">,</span> <span class="s2">&quot;major&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">agent</span> <span class="o">=</span> <span class="n">abjadext</span><span class="o">.</span><span class="n">tonality</span><span class="o">.</span><span class="n">analyze</span><span class="p">(</span><span class="n">chord</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">agent</span><span class="o">.</span><span class="n">analyze_incomplete_tonal_functions</span><span class="p">(</span><span class="n">key_signature</span><span class="p">)</span>
+<span class="go">[RomanNumeral(&#39;IV&#39;)]</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">chord</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Chord</span><span class="p">(</span><span class="s2">&quot;&lt;g&#39; b&#39;&gt;4&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">key_signature</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">KeySignature</span><span class="p">(</span><span class="s2">&quot;c&quot;</span><span class="p">,</span> <span class="s2">&quot;major&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">agent</span> <span class="o">=</span> <span class="n">abjadext</span><span class="o">.</span><span class="n">tonality</span><span class="o">.</span><span class="n">analyze</span><span class="p">(</span><span class="n">chord</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">agent</span><span class="o">.</span><span class="n">analyze_incomplete_tonal_functions</span><span class="p">(</span><span class="n">key_signature</span><span class="p">)</span>
+<span class="go">[RomanNumeral(&#39;V&#39;)]</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">chord</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Chord</span><span class="p">(</span><span class="s2">&quot;&lt;g&#39; bf&#39;&gt;4&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">agent</span> <span class="o">=</span> <span class="n">abjadext</span><span class="o">.</span><span class="n">tonality</span><span class="o">.</span><span class="n">analyze</span><span class="p">(</span><span class="n">chord</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">agent</span><span class="o">.</span><span class="n">analyze_incomplete_tonal_functions</span><span class="p">(</span><span class="n">key_signature</span><span class="p">)</span>
+<span class="go">[RomanNumeral(&#39;v&#39;)]</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">key_signature</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">KeySignature</span><span class="p">(</span><span class="s2">&quot;c&quot;</span><span class="p">,</span> <span class="s2">&quot;major&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">chord</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Chord</span><span class="p">(</span><span class="s2">&quot;&lt;f g b&gt;4&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">agent</span> <span class="o">=</span> <span class="n">abjadext</span><span class="o">.</span><span class="n">tonality</span><span class="o">.</span><span class="n">analyze</span><span class="p">(</span><span class="n">chord</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">agent</span><span class="o">.</span><span class="n">analyze_incomplete_tonal_functions</span><span class="p">(</span><span class="n">key_signature</span><span class="p">)</span>
+<span class="go">[RomanNumeral(&#39;V4/3&#39;)]</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">chord</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Chord</span><span class="p">(</span><span class="s2">&quot;&lt;fs g b&gt;4&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">agent</span> <span class="o">=</span> <span class="n">abjadext</span><span class="o">.</span><span class="n">tonality</span><span class="o">.</span><span class="n">analyze</span><span class="p">(</span><span class="n">chord</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">agent</span><span class="o">.</span><span class="n">analyze_incomplete_tonal_functions</span><span class="p">(</span><span class="n">key_signature</span><span class="p">)</span>
+<span class="go">[RomanNumeral(&#39;VM4/3&#39;)]</span>
+</pre></div>
+</div>
+</div>
+<p>Raises tonal harmony error when chord in client can not analyze.</p>
+<p>Returns list with elements each equal to tonal function or none.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="abjadext.tonality.TonalAnalysis.TonalAnalysis.analyze_neighbor_notes">
+<code class="sig-name descname">analyze_neighbor_notes</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjadext.tonality.TonalAnalysis.TonalAnalysis.analyze_neighbor_notes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Is true when <code class="docutils literal notranslate"><span class="pre">note</span></code> in client is preceeded by a stepwise interval
+in one direction and followed by a stepwise interval in the other
+direction.</p>
+<div class="example docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">staff</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Staff</span><span class="p">(</span><span class="s2">&quot;c&#39;8 d&#39;8 e&#39;8 f&#39;8&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">abjad</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">staff</span><span class="p">)</span>  
+</pre></div>
+</div>
+<div class="uqbar-book">
+    <a href="../../../_images/lilypond-94a7a833904cd369e18d821e258a4c7f4ec536bd956c64114ae33dff795858cc.ly"><img src="../../../_images/lilypond-94a7a833904cd369e18d821e258a4c7f4ec536bd956c64114ae33dff795858cc.cropped.svg"/></a>
+</div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">agent</span> <span class="o">=</span> <span class="n">abjadext</span><span class="o">.</span><span class="n">tonality</span><span class="o">.</span><span class="n">analyze</span><span class="p">(</span><span class="n">staff</span><span class="p">[:])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">agent</span><span class="o">.</span><span class="n">analyze_neighbor_notes</span><span class="p">()</span>
+<span class="go">[False, False, False, False]</span>
+</pre></div>
+</div>
+</div>
+<p>Returns list of boolean values.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="abjadext.tonality.TonalAnalysis.TonalAnalysis.analyze_passing_tones">
+<code class="sig-name descname">analyze_passing_tones</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjadext.tonality.TonalAnalysis.TonalAnalysis.analyze_passing_tones" title="Permalink to this definition">¶</a></dt>
+<dd><p>Is true when note in client is both preceeded and followed by
+scalewise notes.</p>
+<div class="example docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">staff</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Staff</span><span class="p">(</span><span class="s2">&quot;c&#39;8 d&#39;8 e&#39;8 f&#39;8&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">abjad</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">staff</span><span class="p">)</span>  
+</pre></div>
+</div>
+<div class="uqbar-book">
+    <a href="../../../_images/lilypond-94a7a833904cd369e18d821e258a4c7f4ec536bd956c64114ae33dff795858cc.ly"><img src="../../../_images/lilypond-94a7a833904cd369e18d821e258a4c7f4ec536bd956c64114ae33dff795858cc.cropped.svg"/></a>
+</div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">agent</span> <span class="o">=</span> <span class="n">abjadext</span><span class="o">.</span><span class="n">tonality</span><span class="o">.</span><span class="n">analyze</span><span class="p">(</span><span class="n">staff</span><span class="p">[:])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">agent</span><span class="o">.</span><span class="n">analyze_passing_tones</span><span class="p">()</span>
+<span class="go">[False, True, True, False]</span>
+</pre></div>
+</div>
+</div>
+<p>Returns list of boolean values.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="abjadext.tonality.TonalAnalysis.TonalAnalysis.analyze_tonal_functions">
+<code class="sig-name descname">analyze_tonal_functions</code><span class="sig-paren">(</span><em class="sig-param">key_signature</em><span class="sig-paren">)</span><a class="headerlink" href="#abjadext.tonality.TonalAnalysis.TonalAnalysis.analyze_tonal_functions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Analyzes tonal function of chords in client according to
+<code class="docutils literal notranslate"><span class="pre">key_signature</span></code>.</p>
+<div class="example docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">chord</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Chord</span><span class="p">(</span><span class="s2">&quot;&lt;ef g bf&gt;4&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">key_signature</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">KeySignature</span><span class="p">(</span><span class="s2">&quot;c&quot;</span><span class="p">,</span> <span class="s2">&quot;major&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">agent</span> <span class="o">=</span> <span class="n">abjadext</span><span class="o">.</span><span class="n">tonality</span><span class="o">.</span><span class="n">analyze</span><span class="p">(</span><span class="n">chord</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">agent</span><span class="o">.</span><span class="n">analyze_tonal_functions</span><span class="p">(</span><span class="n">key_signature</span><span class="p">)</span>
+<span class="go">[RomanNumeral(&#39;bIII&#39;)]</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">key_signature</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">KeySignature</span><span class="p">(</span><span class="s2">&quot;c&quot;</span><span class="p">,</span> <span class="s2">&quot;major&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">chord</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Chord</span><span class="p">(</span><span class="s2">&quot;&lt;c e g&gt;4&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">agent</span> <span class="o">=</span> <span class="n">abjadext</span><span class="o">.</span><span class="n">tonality</span><span class="o">.</span><span class="n">analyze</span><span class="p">(</span><span class="n">chord</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">agent</span><span class="o">.</span><span class="n">analyze_tonal_functions</span><span class="p">(</span><span class="n">key_signature</span><span class="p">)</span>
+<span class="go">[RomanNumeral(&#39;I&#39;)]</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">chord</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Chord</span><span class="p">([</span><span class="s2">&quot;e&quot;</span><span class="p">,</span> <span class="s2">&quot;g&quot;</span><span class="p">,</span> <span class="s2">&quot;c&#39;&quot;</span><span class="p">],</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">agent</span> <span class="o">=</span> <span class="n">abjadext</span><span class="o">.</span><span class="n">tonality</span><span class="o">.</span><span class="n">analyze</span><span class="p">(</span><span class="n">chord</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">agent</span><span class="o">.</span><span class="n">analyze_tonal_functions</span><span class="p">(</span><span class="n">key_signature</span><span class="p">)</span>
+<span class="go">[RomanNumeral(&#39;I6&#39;)]</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">chord</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Chord</span><span class="p">([</span><span class="s2">&quot;g&quot;</span><span class="p">,</span> <span class="s2">&quot;c&#39;&quot;</span><span class="p">,</span> <span class="s2">&quot;e&#39;&quot;</span><span class="p">],</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">agent</span> <span class="o">=</span> <span class="n">abjadext</span><span class="o">.</span><span class="n">tonality</span><span class="o">.</span><span class="n">analyze</span><span class="p">(</span><span class="n">chord</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">agent</span><span class="o">.</span><span class="n">analyze_tonal_functions</span><span class="p">(</span><span class="n">key_signature</span><span class="p">)</span>
+<span class="go">[RomanNumeral(&#39;I6/4&#39;)]</span>
+</pre></div>
+</div>
+</div>
+<div class="example docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">key_signature</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">KeySignature</span><span class="p">(</span><span class="s2">&quot;c&quot;</span><span class="p">,</span> <span class="s2">&quot;major&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">chord</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Chord</span><span class="p">([</span><span class="s2">&quot;c&quot;</span><span class="p">,</span> <span class="s2">&quot;ef&quot;</span><span class="p">,</span> <span class="s2">&quot;g&quot;</span><span class="p">],</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">agent</span> <span class="o">=</span> <span class="n">abjadext</span><span class="o">.</span><span class="n">tonality</span><span class="o">.</span><span class="n">analyze</span><span class="p">(</span><span class="n">chord</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">agent</span><span class="o">.</span><span class="n">analyze_tonal_functions</span><span class="p">(</span><span class="n">key_signature</span><span class="p">)</span>
+<span class="go">[RomanNumeral(&#39;i&#39;)]</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">chord</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Chord</span><span class="p">([</span><span class="s2">&quot;ef&quot;</span><span class="p">,</span> <span class="s2">&quot;g&quot;</span><span class="p">,</span> <span class="s2">&quot;c&#39;&quot;</span><span class="p">],</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">agent</span> <span class="o">=</span> <span class="n">abjadext</span><span class="o">.</span><span class="n">tonality</span><span class="o">.</span><span class="n">analyze</span><span class="p">(</span><span class="n">chord</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">agent</span><span class="o">.</span><span class="n">analyze_tonal_functions</span><span class="p">(</span><span class="n">key_signature</span><span class="p">)</span>
+<span class="go">[RomanNumeral(&#39;i6&#39;)]</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">chord</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Chord</span><span class="p">([</span><span class="s2">&quot;g&quot;</span><span class="p">,</span> <span class="s2">&quot;c&#39;&quot;</span><span class="p">,</span> <span class="s2">&quot;ef&#39;&quot;</span><span class="p">],</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">agent</span> <span class="o">=</span> <span class="n">abjadext</span><span class="o">.</span><span class="n">tonality</span><span class="o">.</span><span class="n">analyze</span><span class="p">(</span><span class="n">chord</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">agent</span><span class="o">.</span><span class="n">analyze_tonal_functions</span><span class="p">(</span><span class="n">key_signature</span><span class="p">)</span>
+<span class="go">[RomanNumeral(&#39;i6/4&#39;)]</span>
+</pre></div>
+</div>
+</div>
+<div class="example docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">key_signature</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">KeySignature</span><span class="p">(</span><span class="s2">&quot;c&quot;</span><span class="p">,</span> <span class="s2">&quot;major&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">chord</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Chord</span><span class="p">([</span><span class="s2">&quot;c&quot;</span><span class="p">,</span> <span class="s2">&quot;e&quot;</span><span class="p">,</span> <span class="s2">&quot;g&quot;</span><span class="p">,</span> <span class="s2">&quot;bf&quot;</span><span class="p">],</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">agent</span> <span class="o">=</span> <span class="n">abjadext</span><span class="o">.</span><span class="n">tonality</span><span class="o">.</span><span class="n">analyze</span><span class="p">(</span><span class="n">chord</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">agent</span><span class="o">.</span><span class="n">analyze_tonal_functions</span><span class="p">(</span><span class="n">key_signature</span><span class="p">)</span>
+<span class="go">[RomanNumeral(&#39;I7&#39;)]</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">chord</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Chord</span><span class="p">([</span><span class="s2">&quot;e&quot;</span><span class="p">,</span> <span class="s2">&quot;g&quot;</span><span class="p">,</span> <span class="s2">&quot;bf&quot;</span><span class="p">,</span> <span class="s2">&quot;c&#39;&quot;</span><span class="p">],</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">agent</span> <span class="o">=</span> <span class="n">abjadext</span><span class="o">.</span><span class="n">tonality</span><span class="o">.</span><span class="n">analyze</span><span class="p">(</span><span class="n">chord</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">agent</span><span class="o">.</span><span class="n">analyze_tonal_functions</span><span class="p">(</span><span class="n">key_signature</span><span class="p">)</span>
+<span class="go">[RomanNumeral(&#39;I6/5&#39;)]</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">chord</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Chord</span><span class="p">([</span><span class="s2">&quot;g&quot;</span><span class="p">,</span> <span class="s2">&quot;bf&quot;</span><span class="p">,</span> <span class="s2">&quot;c&#39;&quot;</span><span class="p">,</span> <span class="s2">&quot;e&#39;&quot;</span><span class="p">],</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">agent</span> <span class="o">=</span> <span class="n">abjadext</span><span class="o">.</span><span class="n">tonality</span><span class="o">.</span><span class="n">analyze</span><span class="p">(</span><span class="n">chord</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">agent</span><span class="o">.</span><span class="n">analyze_tonal_functions</span><span class="p">(</span><span class="n">key_signature</span><span class="p">)</span>
+<span class="go">[RomanNumeral(&#39;I4/3&#39;)]</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">chord</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Chord</span><span class="p">([</span><span class="s2">&quot;bf&quot;</span><span class="p">,</span> <span class="s2">&quot;c&#39;&quot;</span><span class="p">,</span> <span class="s2">&quot;e&#39;&quot;</span><span class="p">,</span> <span class="s2">&quot;g&#39;&quot;</span><span class="p">],</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">agent</span> <span class="o">=</span> <span class="n">abjadext</span><span class="o">.</span><span class="n">tonality</span><span class="o">.</span><span class="n">analyze</span><span class="p">(</span><span class="n">chord</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">agent</span><span class="o">.</span><span class="n">analyze_tonal_functions</span><span class="p">(</span><span class="n">key_signature</span><span class="p">)</span>
+<span class="go">[RomanNumeral(&#39;I4/2&#39;)]</span>
+</pre></div>
+</div>
+</div>
+<div class="example docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">key_signature</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">KeySignature</span><span class="p">(</span><span class="s2">&quot;c&quot;</span><span class="p">,</span> <span class="s2">&quot;major&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">chord</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Chord</span><span class="p">([</span><span class="s2">&quot;c&quot;</span><span class="p">,</span> <span class="s2">&quot;cs&quot;</span><span class="p">,</span> <span class="s2">&quot;d&quot;</span><span class="p">],</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">agent</span> <span class="o">=</span> <span class="n">abjadext</span><span class="o">.</span><span class="n">tonality</span><span class="o">.</span><span class="n">analyze</span><span class="p">(</span><span class="n">chord</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">agent</span><span class="o">.</span><span class="n">analyze_tonal_functions</span><span class="p">(</span><span class="n">key_signature</span><span class="p">)</span>
+<span class="go">[None]</span>
+</pre></div>
+</div>
+</div>
+<p>Returns none when no tonal function is understood.</p>
+<p>Returns list with elements each equal to tonal function or none.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="abjadext.tonality.TonalAnalysis.TonalAnalysis.are_scalar_notes">
+<code class="sig-name descname">are_scalar_notes</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjadext.tonality.TonalAnalysis.TonalAnalysis.are_scalar_notes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Is true when notes in client are scalar.</p>
+<div class="example docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">staff</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Staff</span><span class="p">(</span><span class="s2">&quot;c&#39;4 cs&#39;&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">abjadext</span><span class="o">.</span><span class="n">tonality</span><span class="o">.</span><span class="n">analyze</span><span class="p">(</span><span class="n">staff</span><span class="p">[:])</span><span class="o">.</span><span class="n">are_scalar_notes</span><span class="p">()</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">staff</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Staff</span><span class="p">(</span><span class="s2">&quot;c&#39;4 d&#39;&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">abjadext</span><span class="o">.</span><span class="n">tonality</span><span class="o">.</span><span class="n">analyze</span><span class="p">(</span><span class="n">staff</span><span class="p">[:])</span><span class="o">.</span><span class="n">are_scalar_notes</span><span class="p">()</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">staff</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Staff</span><span class="p">(</span><span class="s2">&quot;c&#39;4 ds&#39;&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">abjadext</span><span class="o">.</span><span class="n">tonality</span><span class="o">.</span><span class="n">analyze</span><span class="p">(</span><span class="n">staff</span><span class="p">[:])</span><span class="o">.</span><span class="n">are_scalar_notes</span><span class="p">()</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">staff</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Staff</span><span class="p">(</span><span class="s2">&quot;c&#39;4 b&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">abjadext</span><span class="o">.</span><span class="n">tonality</span><span class="o">.</span><span class="n">analyze</span><span class="p">(</span><span class="n">staff</span><span class="p">[:])</span><span class="o">.</span><span class="n">are_scalar_notes</span><span class="p">()</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</div>
+<div class="example docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">staff</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Staff</span><span class="p">(</span><span class="s2">&quot;c&#39;4 c&#39;&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">abjadext</span><span class="o">.</span><span class="n">tonality</span><span class="o">.</span><span class="n">analyze</span><span class="p">(</span><span class="n">staff</span><span class="p">[:])</span><span class="o">.</span><span class="n">are_scalar_notes</span><span class="p">()</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">staff</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Staff</span><span class="p">(</span><span class="s2">&quot;c&#39;4 e&#39;&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">abjadext</span><span class="o">.</span><span class="n">tonality</span><span class="o">.</span><span class="n">analyze</span><span class="p">(</span><span class="n">staff</span><span class="p">[:])</span><span class="o">.</span><span class="n">are_scalar_notes</span><span class="p">()</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+</div>
+<p>Returns true or false.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="abjadext.tonality.TonalAnalysis.TonalAnalysis.are_stepwise_ascending_notes">
+<code class="sig-name descname">are_stepwise_ascending_notes</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjadext.tonality.TonalAnalysis.TonalAnalysis.are_stepwise_ascending_notes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Is true when notes in client are stepwise ascending.</p>
+<div class="example docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">staff</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Staff</span><span class="p">(</span><span class="s2">&quot;c&#39;4 cs&#39;&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">abjadext</span><span class="o">.</span><span class="n">tonality</span><span class="o">.</span><span class="n">analyze</span><span class="p">(</span><span class="n">staff</span><span class="p">[:])</span><span class="o">.</span><span class="n">are_stepwise_ascending_notes</span><span class="p">()</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">staff</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Staff</span><span class="p">(</span><span class="s2">&quot;c&#39;4 d&#39;&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">abjadext</span><span class="o">.</span><span class="n">tonality</span><span class="o">.</span><span class="n">analyze</span><span class="p">(</span><span class="n">staff</span><span class="p">[:])</span><span class="o">.</span><span class="n">are_stepwise_ascending_notes</span><span class="p">()</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">staff</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Staff</span><span class="p">(</span><span class="s2">&quot;c&#39;4 ds&#39;&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">abjadext</span><span class="o">.</span><span class="n">tonality</span><span class="o">.</span><span class="n">analyze</span><span class="p">(</span><span class="n">staff</span><span class="p">[:])</span><span class="o">.</span><span class="n">are_stepwise_ascending_notes</span><span class="p">()</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">staff</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Staff</span><span class="p">(</span><span class="s2">&quot;c&#39;4 b&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">abjadext</span><span class="o">.</span><span class="n">tonality</span><span class="o">.</span><span class="n">analyze</span><span class="p">(</span><span class="n">staff</span><span class="p">[:])</span><span class="o">.</span><span class="n">are_stepwise_ascending_notes</span><span class="p">()</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+</div>
+<div class="example docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">staff</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Staff</span><span class="p">(</span><span class="s2">&quot;c&#39;4 c&#39;&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">abjadext</span><span class="o">.</span><span class="n">tonality</span><span class="o">.</span><span class="n">analyze</span><span class="p">(</span><span class="n">staff</span><span class="p">[:])</span><span class="o">.</span><span class="n">are_stepwise_ascending_notes</span><span class="p">()</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">staff</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Staff</span><span class="p">(</span><span class="s2">&quot;c&#39;4 e&#39;&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">abjadext</span><span class="o">.</span><span class="n">tonality</span><span class="o">.</span><span class="n">analyze</span><span class="p">(</span><span class="n">staff</span><span class="p">[:])</span><span class="o">.</span><span class="n">are_stepwise_ascending_notes</span><span class="p">()</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+</div>
+<p>Returns true or false.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="abjadext.tonality.TonalAnalysis.TonalAnalysis.are_stepwise_descending_notes">
+<code class="sig-name descname">are_stepwise_descending_notes</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjadext.tonality.TonalAnalysis.TonalAnalysis.are_stepwise_descending_notes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Is true when notes in client are stepwise descending.</p>
+<div class="example docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">staff</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Staff</span><span class="p">(</span><span class="s2">&quot;c&#39;4 cs&#39;&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">abjadext</span><span class="o">.</span><span class="n">tonality</span><span class="o">.</span><span class="n">analyze</span><span class="p">(</span><span class="n">staff</span><span class="p">[:])</span><span class="o">.</span><span class="n">are_stepwise_descending_notes</span><span class="p">()</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">staff</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Staff</span><span class="p">(</span><span class="s2">&quot;c&#39;4 d&#39;&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">abjadext</span><span class="o">.</span><span class="n">tonality</span><span class="o">.</span><span class="n">analyze</span><span class="p">(</span><span class="n">staff</span><span class="p">[:])</span><span class="o">.</span><span class="n">are_stepwise_descending_notes</span><span class="p">()</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">staff</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Staff</span><span class="p">(</span><span class="s2">&quot;c&#39;4 ds&#39;&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">abjadext</span><span class="o">.</span><span class="n">tonality</span><span class="o">.</span><span class="n">analyze</span><span class="p">(</span><span class="n">staff</span><span class="p">[:])</span><span class="o">.</span><span class="n">are_stepwise_descending_notes</span><span class="p">()</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">staff</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Staff</span><span class="p">(</span><span class="s2">&quot;c&#39;4 b&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">abjadext</span><span class="o">.</span><span class="n">tonality</span><span class="o">.</span><span class="n">analyze</span><span class="p">(</span><span class="n">staff</span><span class="p">[:])</span><span class="o">.</span><span class="n">are_stepwise_descending_notes</span><span class="p">()</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</div>
+<div class="example docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">staff</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Staff</span><span class="p">(</span><span class="s2">&quot;c&#39;4 c&#39;&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">abjadext</span><span class="o">.</span><span class="n">tonality</span><span class="o">.</span><span class="n">analyze</span><span class="p">(</span><span class="n">staff</span><span class="p">[:])</span><span class="o">.</span><span class="n">are_stepwise_descending_notes</span><span class="p">()</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">staff</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Staff</span><span class="p">(</span><span class="s2">&quot;c&#39;4 e&#39;&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">abjadext</span><span class="o">.</span><span class="n">tonality</span><span class="o">.</span><span class="n">analyze</span><span class="p">(</span><span class="n">staff</span><span class="p">[:])</span><span class="o">.</span><span class="n">are_stepwise_descending_notes</span><span class="p">()</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+</div>
+<p>Returns true or false.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="abjadext.tonality.TonalAnalysis.TonalAnalysis.are_stepwise_notes">
+<code class="sig-name descname">are_stepwise_notes</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjadext.tonality.TonalAnalysis.TonalAnalysis.are_stepwise_notes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Is true when notes in client are stepwise.</p>
+<div class="example docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">staff</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Staff</span><span class="p">(</span><span class="s2">&quot;c&#39;4 cs&#39;&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">abjadext</span><span class="o">.</span><span class="n">tonality</span><span class="o">.</span><span class="n">analyze</span><span class="p">(</span><span class="n">staff</span><span class="p">[:])</span><span class="o">.</span><span class="n">are_stepwise_notes</span><span class="p">()</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">staff</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Staff</span><span class="p">(</span><span class="s2">&quot;c&#39;4 d&#39;&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">abjadext</span><span class="o">.</span><span class="n">tonality</span><span class="o">.</span><span class="n">analyze</span><span class="p">(</span><span class="n">staff</span><span class="p">[:])</span><span class="o">.</span><span class="n">are_stepwise_notes</span><span class="p">()</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">staff</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Staff</span><span class="p">(</span><span class="s2">&quot;c&#39;4 ds&#39;&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">abjadext</span><span class="o">.</span><span class="n">tonality</span><span class="o">.</span><span class="n">analyze</span><span class="p">(</span><span class="n">staff</span><span class="p">[:])</span><span class="o">.</span><span class="n">are_stepwise_notes</span><span class="p">()</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">staff</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Staff</span><span class="p">(</span><span class="s2">&quot;c&#39;4 b&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">abjadext</span><span class="o">.</span><span class="n">tonality</span><span class="o">.</span><span class="n">analyze</span><span class="p">(</span><span class="n">staff</span><span class="p">[:])</span><span class="o">.</span><span class="n">are_stepwise_notes</span><span class="p">()</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</div>
+<div class="example docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">staff</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Staff</span><span class="p">(</span><span class="s2">&quot;c&#39;4 c&#39;&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">abjadext</span><span class="o">.</span><span class="n">tonality</span><span class="o">.</span><span class="n">analyze</span><span class="p">(</span><span class="n">staff</span><span class="p">[:])</span><span class="o">.</span><span class="n">are_stepwise_notes</span><span class="p">()</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">staff</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Staff</span><span class="p">(</span><span class="s2">&quot;c&#39;4 e&#39;&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">abjadext</span><span class="o">.</span><span class="n">tonality</span><span class="o">.</span><span class="n">analyze</span><span class="p">(</span><span class="n">staff</span><span class="p">[:])</span><span class="o">.</span><span class="n">are_stepwise_notes</span><span class="p">()</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+</div>
+<p>Returns true or false.</p>
+</dd></dl>
+
+<hr/><p class="class-header rubric">Read-only properties</p>
+<dl class="attribute">
+<dt id="abjadext.tonality.TonalAnalysis.TonalAnalysis.client">
+<code class="sig-name descname">client</code><a class="headerlink" href="#abjadext.tonality.TonalAnalysis.TonalAnalysis.client" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets client.</p>
+<p>Returns selection or component.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="analyze.html" class="btn btn-neutral float-right" title="analyze" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="ScaleDegree.html" class="btn btn-neutral float-left" title="ScaleDegree" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2008-2019, Trevor Bača &amp; Josiah Wolf Oberholtzer
+      <span class="lastupdated">
+        Last updated on Dec 17, 2019.
+      </span>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

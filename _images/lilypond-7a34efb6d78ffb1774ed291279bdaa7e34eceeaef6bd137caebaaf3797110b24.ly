@@ -1,0 +1,25 @@
+\version "2.19.83"  %! abjad.LilyPondFile._get_format_pieces()
+\language "english" %! abjad.LilyPondFile._get_format_pieces()
+
+#(ly:set-option 'relative-includes #t)
+
+\include "default.ily" %! abjad.LilyPondFile._get_formatted_includes()
+
+\score { %! abjad.LilyPondFile._get_formatted_blocks()
+    \new Staff
+    {
+        \time 6/4
+        c'4.
+        \tweak text #tuplet-number::calc-fraction-text
+        \times 6/7 {
+            c'4.
+            r16
+        }
+        \tweak text #tuplet-number::calc-fraction-text
+        \times 6/7 {
+            r16
+            c'4.
+        }
+        c'4.
+    }
+} %! abjad.LilyPondFile._get_formatted_blocks()

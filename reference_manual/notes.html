@@ -1,0 +1,331 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>2. Notes &mdash; Abjad 3.0.0 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script defer="defer" type="text/javascript" src="../_static/copybutton.js"></script>
+        <script type="text/javascript" src="../_static/ga.js"></script>
+        <script defer="defer" type="text/javascript" src="../_static/lightbox2/js/lightbox.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/abjad.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/uqbar.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/lightbox2/css/lightbox.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="3. Rests" href="rests.html" />
+    <link rel="prev" title="1. Chords" href="chords.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Abjad
+          
+
+          
+            
+            <img src="../_static/abjad-logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                3.0.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../gallery.html">Score gallery</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../for_beginners/index.html">For beginners</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../literature_examples/index.html">Literature examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../core_concepts/index.html">Core concepts</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Reference manual</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="index.html#leaves">Leaves</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="chords.html">1. Chords</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">2. Notes</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#making-notes-from-a-lilypond-input-string">2.1. Making notes from a LilyPond input string</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#making-notes-from-numbers">2.2. Making notes from numbers</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#understanding-the-interpreter-representation-of-a-note">2.3. Understanding the interpreter representation of a note</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#getting-and-setting-the-written-pitch-of-notes">2.4. Getting and setting the written pitch of notes</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#getting-and-setting-the-written-duration-of-notes">2.5. Getting and setting the written duration of notes</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="rests.html">3. Rests</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#containers">Containers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#attachments">Attachments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#lilypond-files">LilyPond files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#pitches">Pitches</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../api/index.html">Abjad API</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../appendices/index.html">Appendices</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Abjad</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content style-external-links">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">Reference manual</a> &raquo;</li>
+        
+      <li><span class="section-number">2. </span>Notes</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/reference_manual/notes.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="notes">
+<h1><span class="section-number">2. </span>Notes<a class="headerlink" href="#notes" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="making-notes-from-a-lilypond-input-string">
+<h2><span class="section-number">2.1. </span>Making notes from a LilyPond input string<a class="headerlink" href="#making-notes-from-a-lilypond-input-string" title="Permalink to this headline">¶</a></h2>
+<p>You can make notes from a LilyPond input string:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">note</span> <span class="o">=</span> <span class="n">Note</span><span class="p">(</span><span class="s2">&quot;c&#39;4&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">show</span><span class="p">(</span><span class="n">note</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="uqbar-book">
+    <a href="../_images/lilypond-72e500c39620423d31e6146d9314680d259909cca34582bd231a9d55a79f3e47.ly"><img src="../_images/lilypond-72e500c39620423d31e6146d9314680d259909cca34582bd231a9d55a79f3e47.cropped.svg"/></a>
+</div></div>
+<div class="section" id="making-notes-from-numbers">
+<h2><span class="section-number">2.2. </span>Making notes from numbers<a class="headerlink" href="#making-notes-from-numbers" title="Permalink to this headline">¶</a></h2>
+<p>You can also make notes from numbers:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">note</span> <span class="o">=</span> <span class="n">Note</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">Duration</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">show</span><span class="p">(</span><span class="n">note</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="uqbar-book">
+    <a href="../_images/lilypond-72e500c39620423d31e6146d9314680d259909cca34582bd231a9d55a79f3e47.ly"><img src="../_images/lilypond-72e500c39620423d31e6146d9314680d259909cca34582bd231a9d55a79f3e47.cropped.svg"/></a>
+</div></div>
+<div class="section" id="understanding-the-interpreter-representation-of-a-note">
+<h2><span class="section-number">2.3. </span>Understanding the interpreter representation of a note<a class="headerlink" href="#understanding-the-interpreter-representation-of-a-note" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">note</span>
+<span class="go">Note(&quot;c&#39;4&quot;)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Note</span></code> tells you the note’s class.</p>
+<p><code class="docutils literal notranslate"><span class="pre">c'</span></code> tells you that the note’s pitch is equal to middle C.</p>
+<p><code class="docutils literal notranslate"><span class="pre">4</span></code> tells you that the note’s duration is equal to a quarter note.</p>
+</div>
+<div class="section" id="getting-and-setting-the-written-pitch-of-notes">
+<h2><span class="section-number">2.4. </span>Getting and setting the written pitch of notes<a class="headerlink" href="#getting-and-setting-the-written-pitch-of-notes" title="Permalink to this headline">¶</a></h2>
+<p>Get the written pitch of notes like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">note</span><span class="o">.</span><span class="n">written_pitch</span>
+<span class="go">NamedPitch(&quot;c&#39;&quot;)</span>
+</pre></div>
+</div>
+<p>Set the written pitch of notes like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">note</span><span class="o">.</span><span class="n">written_pitch</span> <span class="o">=</span> <span class="n">NamedPitch</span><span class="p">(</span><span class="s2">&quot;cs&#39;&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">show</span><span class="p">(</span><span class="n">note</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="uqbar-book">
+    <a href="../_images/lilypond-d7c47b682e5b7033c18007be52b6434ddf1856b55dc2e17599a83291c2c5a28b.ly"><img src="../_images/lilypond-d7c47b682e5b7033c18007be52b6434ddf1856b55dc2e17599a83291c2c5a28b.cropped.svg"/></a>
+</div><p>Or this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">note</span><span class="o">.</span><span class="n">written_pitch</span> <span class="o">=</span> <span class="s2">&quot;d&#39;&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">show</span><span class="p">(</span><span class="n">note</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="uqbar-book">
+    <a href="../_images/lilypond-f215533335bd0aad564cf1fb6f4cef8759114b1925388797939cd5885e9c72c5.ly"><img src="../_images/lilypond-f215533335bd0aad564cf1fb6f4cef8759114b1925388797939cd5885e9c72c5.cropped.svg"/></a>
+</div><p>Or this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">note</span><span class="o">.</span><span class="n">written_pitch</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">show</span><span class="p">(</span><span class="n">note</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="uqbar-book">
+    <a href="../_images/lilypond-4f85ab6494ccf388536ce4d12947c54525f9df747187d62567f0f680fafaeddb.ly"><img src="../_images/lilypond-4f85ab6494ccf388536ce4d12947c54525f9df747187d62567f0f680fafaeddb.cropped.svg"/></a>
+</div></div>
+<div class="section" id="getting-and-setting-the-written-duration-of-notes">
+<h2><span class="section-number">2.5. </span>Getting and setting the written duration of notes<a class="headerlink" href="#getting-and-setting-the-written-duration-of-notes" title="Permalink to this headline">¶</a></h2>
+<p>Get the written duration of notes like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">note</span><span class="o">.</span><span class="n">written_duration</span>
+<span class="go">Duration(1, 4)</span>
+</pre></div>
+</div>
+<p>Set the written duration of notes like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">note</span><span class="o">.</span><span class="n">written_duration</span> <span class="o">=</span> <span class="n">Duration</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">16</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">show</span><span class="p">(</span><span class="n">note</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="uqbar-book">
+    <a href="../_images/lilypond-704b89c5f8ddf623b7f3656e8811058ddf61bae76ff24b35fdda4d640eb84a29.ly"><img src="../_images/lilypond-704b89c5f8ddf623b7f3656e8811058ddf61bae76ff24b35fdda4d640eb84a29.cropped.svg"/></a>
+</div></div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="rests.html" class="btn btn-neutral float-right" title="3. Rests" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="chords.html" class="btn btn-neutral float-left" title="1. Chords" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2008-2019, Trevor Bača &amp; Josiah Wolf Oberholtzer
+      <span class="lastupdated">
+        Last updated on Dec 17, 2019.
+      </span>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

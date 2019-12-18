@@ -1,0 +1,499 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>parser &mdash; Abjad 3.0.0 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+        <script defer="defer" type="text/javascript" src="../../../_static/copybutton.js"></script>
+        <script type="text/javascript" src="../../../_static/ga.js"></script>
+        <script defer="defer" type="text/javascript" src="../../../_static/lightbox2/js/lightbox.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/abjad.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/uqbar.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/lightbox2/css/lightbox.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="ContextSpeccedMusic" href="ContextSpeccedMusic.html" />
+    <link rel="prev" title="meter" href="../meter.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> Abjad
+          
+
+          
+            
+            <img src="../../../_static/abjad-logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                3.0.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../gallery.html">Score gallery</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../for_beginners/index.html">For beginners</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../literature_examples/index.html">Literature examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../core_concepts/index.html">Core concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../reference_manual/index.html">Reference manual</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Abjad API</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">abjad</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../cli.html">cli</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../core/index.html">core</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../demos/index.html">demos</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../enums.html">enums</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../exceptions.html">exceptions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../ext/index.html">ext</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../indicators/index.html">indicators</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../instruments.html">instruments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../iox.html">iox</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../lilypondfile/index.html">lilypondfile</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../lilypondnames/index.html">lilypondnames</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../markups.html">markups</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mathtools.html">mathtools</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../meter.html">meter</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">parser</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="ContextSpeccedMusic.html">ContextSpeccedMusic</a></li>
+<li class="toctree-l4"><a class="reference internal" href="GuileProxy.html">GuileProxy</a></li>
+<li class="toctree-l4"><a class="reference internal" href="LilyPondDuration.html">LilyPondDuration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="LilyPondEvent.html">LilyPondEvent</a></li>
+<li class="toctree-l4"><a class="reference internal" href="LilyPondFraction.html">LilyPondFraction</a></li>
+<li class="toctree-l4"><a class="reference internal" href="LilyPondGrammarGenerator.html">LilyPondGrammarGenerator</a></li>
+<li class="toctree-l4"><a class="reference internal" href="LilyPondLexicalDefinition.html">LilyPondLexicalDefinition</a></li>
+<li class="toctree-l4"><a class="reference internal" href="LilyPondParser.html">LilyPondParser</a></li>
+<li class="toctree-l4"><a class="reference internal" href="LilyPondSyntacticalDefinition.html">LilyPondSyntacticalDefinition</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Music.html">Music</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ReducedLyParser.html">ReducedLyParser</a></li>
+<li class="toctree-l4"><a class="reference internal" href="SchemeParser.html">SchemeParser</a></li>
+<li class="toctree-l4"><a class="reference internal" href="SequentialMusic.html">SequentialMusic</a></li>
+<li class="toctree-l4"><a class="reference internal" href="SimultaneousMusic.html">SimultaneousMusic</a></li>
+<li class="toctree-l4"><a class="reference internal" href="SyntaxNode.html">SyntaxNode</a></li>
+<li class="toctree-l4"><a class="reference internal" href="parse_reduced_ly_syntax.html">parse_reduced_ly_syntax</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../pitch/index.html">pitch</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../rhythmtrees.html">rhythmtrees</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../scheme.html">scheme</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../segments/index.html">segments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../spanners.html">spanners</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../system/index.html">system</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../timespans.html">timespans</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../top/index.html">top</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../utilities/index.html">utilities</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../abjadext/index.html">abjadext</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../appendices/index.html">Appendices</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Abjad</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content style-external-links">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Abjad API</a> &raquo;</li>
+        
+          <li><a href="../index.html">abjad</a> &raquo;</li>
+        
+      <li>parser</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../../_sources/api/abjad/parser/index.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-abjad.parser">
+<span id="parser"></span><span id="abjad-parser"></span><h1>parser<a class="headerlink" href="#module-abjad.parser" title="Permalink to this headline">¶</a></h1>
+<p>Abjad’s LilyPond parser and supporting classes.</p>
+<div class="svg-container docutils container">
+<div class="graphviz"><object data="../../../_images/inheritance-a5a5844d87ef2cf4689ecc2ea95fb00fa88a1a25.svg" type="image/svg+xml" class="inheritance graphviz">
+<p class="warning">digraph InheritanceGraph {
+	graph [bgcolor=transparent,
+		color=lightsteelblue2,
+		fontname=Arial,
+		fontsize=10,
+		outputorder=edgesfirst,
+		overlap=prism,
+		penwidth=2,
+		rankdir=LR,
+		splines=spline,
+		style=&quot;dashed, rounded&quot;,
+		truecolor=true
+	];
+	node [colorscheme=pastel19,
+		fontname=Arial,
+		fontsize=10,
+		height=0,
+		penwidth=2,
+		shape=box,
+		style=&quot;filled, rounded&quot;,
+		width=0
+	];
+	edge [color=lightslategrey,
+		penwidth=1
+	];
+	subgraph &quot;cluster_abjad.parser&quot; {
+		graph [label=&quot;abjad.parser&quot;];
+		node [color=1];
+		&quot;abjad.parser.ContextSpeccedMusic.ContextSpeccedMusic&quot;		 [URL=&quot;../api/abjad/parser/ContextSpeccedMusic.html#abjad.parser.ContextSpeccedMusic.ContextSpeccedMusic&quot;,
+			color=black,
+			fontcolor=white,
+			label=&quot;Context\nSpecced\nMusic&quot;,
+			target=_top];
+		&quot;abjad.parser.GuileProxy.GuileProxy&quot;		 [URL=&quot;../api/abjad/parser/GuileProxy.html#abjad.parser.GuileProxy.GuileProxy&quot;,
+			color=black,
+			fontcolor=white,
+			label=&quot;Guile\nProxy&quot;,
+			target=_top];
+		&quot;abjad.parser.LilyPondDuration.LilyPondDuration&quot;		 [URL=&quot;../api/abjad/parser/LilyPondDuration.html#abjad.parser.LilyPondDuration.LilyPondDuration&quot;,
+			color=black,
+			fontcolor=white,
+			label=&quot;Lily\nPond\nDuration&quot;,
+			target=_top];
+		&quot;abjad.parser.LilyPondEvent.LilyPondEvent&quot;		 [URL=&quot;../api/abjad/parser/LilyPondEvent.html#abjad.parser.LilyPondEvent.LilyPondEvent&quot;,
+			color=black,
+			fontcolor=white,
+			label=&quot;Lily\nPond\nEvent&quot;,
+			target=_top];
+		&quot;abjad.parser.LilyPondFraction.LilyPondFraction&quot;		 [URL=&quot;../api/abjad/parser/LilyPondFraction.html#abjad.parser.LilyPondFraction.LilyPondFraction&quot;,
+			color=black,
+			fontcolor=white,
+			label=&quot;Lily\nPond\nFraction&quot;,
+			target=_top];
+		&quot;abjad.parser.LilyPondGrammarGenerator.LilyPondGrammarGenerator&quot;		 [URL=&quot;../api/abjad/parser/LilyPondGrammarGenerator.html#abjad.parser.LilyPondGrammarGenerator.LilyPondGrammarGenerator&quot;,
+			color=black,
+			fontcolor=white,
+			label=&quot;Lily\nPond\nGrammar\nGenerator&quot;,
+			target=_top];
+		&quot;abjad.parser.LilyPondLexicalDefinition.LilyPondLexicalDefinition&quot;		 [URL=&quot;../api/abjad/parser/LilyPondLexicalDefinition.html#abjad.parser.LilyPondLexicalDefinition.LilyPondLexicalDefinition&quot;,
+			color=black,
+			fontcolor=white,
+			label=&quot;Lily\nPond\nLexical\nDefinition&quot;,
+			target=_top];
+		&quot;abjad.parser.LilyPondParser.LilyPondParser&quot;		 [URL=&quot;../api/abjad/parser/LilyPondParser.html#abjad.parser.LilyPondParser.LilyPondParser&quot;,
+			color=black,
+			fontcolor=white,
+			label=&quot;Lily\nPond\nParser&quot;,
+			target=_top];
+		&quot;abjad.parser.LilyPondSyntacticalDefinition.LilyPondSyntacticalDefinition&quot;		 [URL=&quot;../api/abjad/parser/LilyPondSyntacticalDefinition.html#abjad.parser.LilyPondSyntacticalDefinition.LilyPondSyntacticalDefinition&quot;,
+			color=black,
+			fontcolor=white,
+			label=&quot;Lily\nPond\nSyntactical\nDefinition&quot;,
+			target=_top];
+		&quot;abjad.parser.Music.Music&quot;		 [URL=&quot;../api/abjad/parser/Music.html#abjad.parser.Music.Music&quot;,
+			color=black,
+			fontcolor=white,
+			label=Music,
+			target=_top];
+		&quot;abjad.parser.Music.Music&quot; -&gt; &quot;abjad.parser.ContextSpeccedMusic.ContextSpeccedMusic&quot;		 [minlen=1];
+		&quot;abjad.parser.SequentialMusic.SequentialMusic&quot;		 [URL=&quot;../api/abjad/parser/SequentialMusic.html#abjad.parser.SequentialMusic.SequentialMusic&quot;,
+			color=black,
+			fontcolor=white,
+			label=&quot;Sequential\nMusic&quot;,
+			target=_top];
+		&quot;abjad.parser.Music.Music&quot; -&gt; &quot;abjad.parser.SequentialMusic.SequentialMusic&quot;		 [minlen=2];
+		&quot;abjad.parser.SimultaneousMusic.SimultaneousMusic&quot;		 [URL=&quot;../api/abjad/parser/SimultaneousMusic.html#abjad.parser.SimultaneousMusic.SimultaneousMusic&quot;,
+			color=black,
+			fontcolor=white,
+			label=&quot;Simultaneous\nMusic&quot;,
+			target=_top];
+		&quot;abjad.parser.Music.Music&quot; -&gt; &quot;abjad.parser.SimultaneousMusic.SimultaneousMusic&quot;		 [minlen=3];
+		&quot;abjad.parser.ReducedLyParser.ReducedLyParser&quot;		 [URL=&quot;../api/abjad/parser/ReducedLyParser.html#abjad.parser.ReducedLyParser.ReducedLyParser&quot;,
+			color=black,
+			fontcolor=white,
+			label=&quot;Reduced\nLy\nParser&quot;,
+			target=_top];
+		&quot;abjad.parser.SchemeParser.SchemeParser&quot;		 [URL=&quot;../api/abjad/parser/SchemeParser.html#abjad.parser.SchemeParser.SchemeParser&quot;,
+			color=black,
+			fontcolor=white,
+			label=&quot;Scheme\nParser&quot;,
+			target=_top];
+		&quot;abjad.parser.SyntaxNode.SyntaxNode&quot;		 [URL=&quot;../api/abjad/parser/SyntaxNode.html#abjad.parser.SyntaxNode.SyntaxNode&quot;,
+			color=black,
+			fontcolor=white,
+			label=&quot;Syntax\nNode&quot;,
+			target=_top];
+	}
+	subgraph &quot;cluster_abjad.system&quot; {
+		graph [label=&quot;abjad.system&quot;];
+		node [color=2];
+		&quot;abjad.system.Parser.Parser&quot;		 [URL=&quot;../api/abjad/parser/../system/Parser.html#abjad.system.Parser.Parser&quot;,
+			color=2,
+			label=Parser,
+			target=_top];
+	}
+	subgraph cluster_builtins {
+		graph [label=builtins];
+		node [color=3];
+		&quot;builtins.object&quot;		 [URL=&quot;https://docs.python.org/3.6/library/functions.html#object&quot;,
+			color=3,
+			label=object,
+			target=_top];
+	}
+	&quot;abjad.system.Parser.Parser&quot; -&gt; &quot;abjad.parser.LilyPondParser.LilyPondParser&quot;	 [minlen=1];
+	&quot;abjad.system.Parser.Parser&quot; -&gt; &quot;abjad.parser.ReducedLyParser.ReducedLyParser&quot;	 [minlen=2];
+	&quot;abjad.system.Parser.Parser&quot; -&gt; &quot;abjad.parser.SchemeParser.SchemeParser&quot;	 [minlen=3];
+	&quot;builtins.object&quot; -&gt; &quot;abjad.parser.GuileProxy.GuileProxy&quot;	 [minlen=1];
+	&quot;builtins.object&quot; -&gt; &quot;abjad.parser.LilyPondDuration.LilyPondDuration&quot;	 [minlen=2];
+	&quot;builtins.object&quot; -&gt; &quot;abjad.parser.LilyPondEvent.LilyPondEvent&quot;	 [minlen=3];
+	&quot;builtins.object&quot; -&gt; &quot;abjad.parser.LilyPondFraction.LilyPondFraction&quot;	 [minlen=1];
+	&quot;builtins.object&quot; -&gt; &quot;abjad.parser.LilyPondGrammarGenerator.LilyPondGrammarGenerator&quot;	 [minlen=2];
+	&quot;builtins.object&quot; -&gt; &quot;abjad.parser.LilyPondLexicalDefinition.LilyPondLexicalDefinition&quot;	 [minlen=3];
+	&quot;builtins.object&quot; -&gt; &quot;abjad.parser.LilyPondSyntacticalDefinition.LilyPondSyntacticalDefinition&quot;	 [minlen=1];
+	&quot;builtins.object&quot; -&gt; &quot;abjad.parser.Music.Music&quot;;
+	&quot;builtins.object&quot; -&gt; &quot;abjad.parser.SyntaxNode.SyntaxNode&quot;	 [minlen=2];
+	&quot;builtins.object&quot; -&gt; &quot;abjad.system.Parser.Parser&quot;;
+}</p></object></div>
+</div>
+<hr/><p class="section-header rubric">Classes</p>
+<div class="toctree-wrapper compound">
+</div>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="ContextSpeccedMusic.html#abjad.parser.ContextSpeccedMusic.ContextSpeccedMusic" title="abjad.parser.ContextSpeccedMusic.ContextSpeccedMusic"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ContextSpeccedMusic</span></code></a></p></td>
+<td><p>Abjad model of the LilyPond AST context-specced music node.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="GuileProxy.html#abjad.parser.GuileProxy.GuileProxy" title="abjad.parser.GuileProxy.GuileProxy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">GuileProxy</span></code></a></p></td>
+<td><p>Emulates LilyPond music functions.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="LilyPondDuration.html#abjad.parser.LilyPondDuration.LilyPondDuration" title="abjad.parser.LilyPondDuration.LilyPondDuration"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LilyPondDuration</span></code></a></p></td>
+<td><p>Model of a duration in LilyPond.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="LilyPondEvent.html#abjad.parser.LilyPondEvent.LilyPondEvent" title="abjad.parser.LilyPondEvent.LilyPondEvent"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LilyPondEvent</span></code></a></p></td>
+<td><p>Model of an arbitrary event in LilyPond.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="LilyPondFraction.html#abjad.parser.LilyPondFraction.LilyPondFraction" title="abjad.parser.LilyPondFraction.LilyPondFraction"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LilyPondFraction</span></code></a></p></td>
+<td><p>Model of a fraction in LilyPond.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="LilyPondGrammarGenerator.html#abjad.parser.LilyPondGrammarGenerator.LilyPondGrammarGenerator" title="abjad.parser.LilyPondGrammarGenerator.LilyPondGrammarGenerator"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LilyPondGrammarGenerator</span></code></a></p></td>
+<td><p>Generates a syntax skeleton from LilyPond grammar files.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="LilyPondLexicalDefinition.html#abjad.parser.LilyPondLexicalDefinition.LilyPondLexicalDefinition" title="abjad.parser.LilyPondLexicalDefinition.LilyPondLexicalDefinition"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LilyPondLexicalDefinition</span></code></a></p></td>
+<td><p>The lexical definition of LilyPond’s syntax.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="LilyPondParser.html#abjad.parser.LilyPondParser.LilyPondParser" title="abjad.parser.LilyPondParser.LilyPondParser"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LilyPondParser</span></code></a></p></td>
+<td><p>A LilyPond syntax parser.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="LilyPondSyntacticalDefinition.html#abjad.parser.LilyPondSyntacticalDefinition.LilyPondSyntacticalDefinition" title="abjad.parser.LilyPondSyntacticalDefinition.LilyPondSyntacticalDefinition"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LilyPondSyntacticalDefinition</span></code></a></p></td>
+<td><p>The syntactical definition of LilyPond’s syntax.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="Music.html#abjad.parser.Music.Music" title="abjad.parser.Music.Music"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Music</span></code></a></p></td>
+<td><p>Abjad model of the LilyPond AST music node.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="ReducedLyParser.html#abjad.parser.ReducedLyParser.ReducedLyParser" title="abjad.parser.ReducedLyParser.ReducedLyParser"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ReducedLyParser</span></code></a></p></td>
+<td><p>Parses the “reduced-ly” syntax, a modified subset of LilyPond syntax.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="SchemeParser.html#abjad.parser.SchemeParser.SchemeParser" title="abjad.parser.SchemeParser.SchemeParser"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SchemeParser</span></code></a></p></td>
+<td><p>SchemeParser` mimics how LilyPond’s embedded Scheme parser behaves.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="SequentialMusic.html#abjad.parser.SequentialMusic.SequentialMusic" title="abjad.parser.SequentialMusic.SequentialMusic"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SequentialMusic</span></code></a></p></td>
+<td><p>Abjad model of the LilyPond AST sequential music node.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="SimultaneousMusic.html#abjad.parser.SimultaneousMusic.SimultaneousMusic" title="abjad.parser.SimultaneousMusic.SimultaneousMusic"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SimultaneousMusic</span></code></a></p></td>
+<td><p>Abjad model of the LilyPond AST simultaneous music node.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="SyntaxNode.html#abjad.parser.SyntaxNode.SyntaxNode" title="abjad.parser.SyntaxNode.SyntaxNode"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SyntaxNode</span></code></a></p></td>
+<td><p>A node in an abstract syntax tree (AST).</p></td>
+</tr>
+</tbody>
+</table>
+<hr/><p class="section-header rubric">Functions</p>
+<div class="toctree-wrapper compound">
+</div>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="parse_reduced_ly_syntax.html#abjad.parser.parse_reduced_ly_syntax.parse_reduced_ly_syntax" title="abjad.parser.parse_reduced_ly_syntax.parse_reduced_ly_syntax"><code class="xref py py-obj docutils literal notranslate"><span class="pre">parse_reduced_ly_syntax</span></code></a></p></td>
+<td><p>Parse the reduced LilyPond rhythmic syntax:</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="ContextSpeccedMusic.html" class="btn btn-neutral float-right" title="ContextSpeccedMusic" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../meter.html" class="btn btn-neutral float-left" title="meter" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2008-2019, Trevor Bača &amp; Josiah Wolf Oberholtzer
+      <span class="lastupdated">
+        Last updated on Dec 17, 2019.
+      </span>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

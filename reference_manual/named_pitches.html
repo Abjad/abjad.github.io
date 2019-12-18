@@ -1,0 +1,429 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>1. Named pitches &mdash; Abjad 3.0.0 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script defer="defer" type="text/javascript" src="../_static/copybutton.js"></script>
+        <script type="text/javascript" src="../_static/ga.js"></script>
+        <script defer="defer" type="text/javascript" src="../_static/lightbox2/js/lightbox.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/abjad.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/uqbar.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/lightbox2/css/lightbox.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Abjad API" href="../api/index.html" />
+    <link rel="prev" title="1. LilyPond files" href="lilypond_files.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Abjad
+          
+
+          
+            
+            <img src="../_static/abjad-logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                3.0.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../gallery.html">Score gallery</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../for_beginners/index.html">For beginners</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../literature_examples/index.html">Literature examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../core_concepts/index.html">Core concepts</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Reference manual</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="index.html#leaves">Leaves</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#containers">Containers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#attachments">Attachments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#lilypond-files">LilyPond files</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html#pitches">Pitches</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">1. Named pitches</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#creating-named-pitches">1.1. Creating named pitches</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#understanding-the-interpreter-representation-of-a-named-pitch">1.2. Understanding the interpreter representation of a named pitch</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#understanding-the-string-representation-of-a-named-pitch">1.3. Understanding the string representation of a named pitch</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#getting-the-accidental-of-a-named-pitch">1.4. Getting the accidental of a named pitch</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#getting-the-octave-of-a-named-pitch">1.5. Getting the octave of a named pitch</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#comparing-named-pitches">1.6. Comparing named pitches</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#changing-named-pitches-to-named-pitch-classes">1.7. Changing named pitches to named pitch-classes</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#changing-named-pitches-to-numbered-pitches">1.8. Changing named pitches to numbered pitches</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#changing-named-pitches-to-numbered-pitch-classes">1.9. Changing named pitches to numbered pitch-classes</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../api/index.html">Abjad API</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../appendices/index.html">Appendices</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Abjad</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content style-external-links">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">Reference manual</a> &raquo;</li>
+        
+      <li><span class="section-number">1. </span>Named pitches</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/reference_manual/named_pitches.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="named-pitches">
+<h1><span class="section-number">1. </span>Named pitches<a class="headerlink" href="#named-pitches" title="Permalink to this headline">¶</a></h1>
+<p>Named pitches are the everyday pitches of notes and chords:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">note</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Note</span><span class="p">(</span><span class="s2">&quot;cs&#39;&#39;8&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">note</span><span class="o">.</span><span class="n">written_pitch</span>
+<span class="go">NamedPitch(&quot;cs&#39;&#39;&quot;)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">show</span><span class="p">(</span><span class="n">note</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="uqbar-book">
+    <a href="../_images/lilypond-abcfcf633dd88389fb2e0d38979d2fd57d227e18815b0532e796c14e43886bef.ly"><img src="../_images/lilypond-abcfcf633dd88389fb2e0d38979d2fd57d227e18815b0532e796c14e43886bef.cropped.svg"/></a>
+</div><div class="section" id="creating-named-pitches">
+<h2><span class="section-number">1.1. </span>Creating named pitches<a class="headerlink" href="#creating-named-pitches" title="Permalink to this headline">¶</a></h2>
+<p>Create named pitches like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">named_pitch</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">NamedPitch</span><span class="p">(</span><span class="s2">&quot;cs&#39;&#39;&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="understanding-the-interpreter-representation-of-a-named-pitch">
+<h2><span class="section-number">1.2. </span>Understanding the interpreter representation of a named pitch<a class="headerlink" href="#understanding-the-interpreter-representation-of-a-named-pitch" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">named_pitch</span>
+<span class="go">NamedPitch(&quot;cs&#39;&#39;&quot;)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">NamedPitch</span></code> tells you the pitch’s class.</p>
+<p><code class="docutils literal notranslate"><span class="pre">cs''</span></code> tells you the pitch is equal to <code class="docutils literal notranslate"><span class="pre">C#5</span></code>.</p>
+</div>
+<div class="section" id="understanding-the-string-representation-of-a-named-pitch">
+<h2><span class="section-number">1.3. </span>Understanding the string representation of a named pitch<a class="headerlink" href="#understanding-the-string-representation-of-a-named-pitch" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">str</span><span class="p">(</span><span class="n">named_pitch</span><span class="p">)</span>
+<span class="go">&quot;cs&#39;&#39;&quot;</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">cs''</span></code> tells you the pitch is equal to <code class="docutils literal notranslate"><span class="pre">C#5</span></code>.</p>
+</div>
+<div class="section" id="getting-the-accidental-of-a-named-pitch">
+<h2><span class="section-number">1.4. </span>Getting the accidental of a named pitch<a class="headerlink" href="#getting-the-accidental-of-a-named-pitch" title="Permalink to this headline">¶</a></h2>
+<p>Use <code class="docutils literal notranslate"><span class="pre">accidental</span></code> to get the accidental of a named pitch:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">named_pitch</span><span class="o">.</span><span class="n">accidental</span>
+<span class="go">Accidental(&#39;sharp&#39;)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="getting-the-octave-of-a-named-pitch">
+<h2><span class="section-number">1.5. </span>Getting the octave of a named pitch<a class="headerlink" href="#getting-the-octave-of-a-named-pitch" title="Permalink to this headline">¶</a></h2>
+<p>Use <code class="docutils literal notranslate"><span class="pre">octave</span></code> to get the octave of a named pitch:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">named_pitch</span><span class="o">.</span><span class="n">octave</span>
+<span class="go">Octave(5)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="comparing-named-pitches">
+<h2><span class="section-number">1.6. </span>Comparing named pitches<a class="headerlink" href="#comparing-named-pitches" title="Permalink to this headline">¶</a></h2>
+<p>Named pitches compare equal with equal pitch-class and octave:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">named_pitch_1</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">NamedPitch</span><span class="p">(</span><span class="s2">&quot;cs&#39;&#39;&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">named_pitch_2</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">NamedPitch</span><span class="p">(</span><span class="s2">&quot;df&#39;&#39;&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">named_pitch_1</span> <span class="o">==</span> <span class="n">named_pitch_1</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">named_pitch_1</span> <span class="o">==</span> <span class="n">named_pitch_2</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">named_pitch_2</span> <span class="o">==</span> <span class="n">named_pitch_1</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">named_pitch_2</span> <span class="o">==</span> <span class="n">named_pitch_2</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<p>You can also compare named pitches with greater-than and less-than:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">named_pitch_1</span> <span class="o">&lt;</span> <span class="n">named_pitch_1</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">named_pitch_1</span> <span class="o">&lt;</span> <span class="n">named_pitch_2</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">named_pitch_2</span> <span class="o">&lt;</span> <span class="n">named_pitch_1</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">named_pitch_2</span> <span class="o">&lt;</span> <span class="n">named_pitch_2</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">named_pitch_1</span> <span class="o">&lt;=</span> <span class="n">named_pitch_1</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">named_pitch_1</span> <span class="o">&lt;=</span> <span class="n">named_pitch_2</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">named_pitch_2</span> <span class="o">&lt;=</span> <span class="n">named_pitch_1</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">named_pitch_2</span> <span class="o">&lt;=</span> <span class="n">named_pitch_2</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">named_pitch_1</span> <span class="o">&gt;</span> <span class="n">named_pitch_1</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">named_pitch_1</span> <span class="o">&gt;</span> <span class="n">named_pitch_2</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">named_pitch_2</span> <span class="o">&gt;</span> <span class="n">named_pitch_1</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">named_pitch_2</span> <span class="o">&gt;</span> <span class="n">named_pitch_2</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">named_pitch_1</span> <span class="o">&gt;=</span> <span class="n">named_pitch_1</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">named_pitch_1</span> <span class="o">&gt;=</span> <span class="n">named_pitch_2</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">named_pitch_2</span> <span class="o">&gt;=</span> <span class="n">named_pitch_1</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">named_pitch_2</span> <span class="o">&gt;=</span> <span class="n">named_pitch_2</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="changing-named-pitches-to-named-pitch-classes">
+<h2><span class="section-number">1.7. </span>Changing named pitches to named pitch-classes<a class="headerlink" href="#changing-named-pitches-to-named-pitch-classes" title="Permalink to this headline">¶</a></h2>
+<p>Use <code class="docutils literal notranslate"><span class="pre">pitch_class</span></code> to change a named pitch to a named pitch-class:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">named_pitch</span><span class="o">.</span><span class="n">pitch_class</span>
+<span class="go">NamedPitchClass(&#39;cs&#39;)</span>
+</pre></div>
+</div>
+<p>Or use <code class="docutils literal notranslate"><span class="pre">NamedPitchClass</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">abjad</span><span class="o">.</span><span class="n">NamedPitchClass</span><span class="p">(</span><span class="n">named_pitch</span><span class="p">)</span>
+<span class="go">NamedPitchClass(&#39;cs&#39;)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="changing-named-pitches-to-numbered-pitches">
+<h2><span class="section-number">1.8. </span>Changing named pitches to numbered pitches<a class="headerlink" href="#changing-named-pitches-to-numbered-pitches" title="Permalink to this headline">¶</a></h2>
+<p>Use <code class="docutils literal notranslate"><span class="pre">NumberedPitch</span></code> to change a named pitch to a numbered pitch:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">abjad</span><span class="o">.</span><span class="n">NumberedPitch</span><span class="p">(</span><span class="n">named_pitch</span><span class="p">)</span>
+<span class="go">NumberedPitch(13)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="changing-named-pitches-to-numbered-pitch-classes">
+<h2><span class="section-number">1.9. </span>Changing named pitches to numbered pitch-classes<a class="headerlink" href="#changing-named-pitches-to-numbered-pitch-classes" title="Permalink to this headline">¶</a></h2>
+<p>Change named pitches to numbered pitch-classes like this:</p>
+<p>Or use <code class="docutils literal notranslate"><span class="pre">pitchtools</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">abjad</span><span class="o">.</span><span class="n">NumberedPitchClass</span><span class="p">(</span><span class="n">named_pitch</span><span class="p">)</span>
+<span class="go">NumberedPitchClass(1)</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../api/index.html" class="btn btn-neutral float-right" title="Abjad API" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="lilypond_files.html" class="btn btn-neutral float-left" title="1. LilyPond files" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2008-2019, Trevor Bača &amp; Josiah Wolf Oberholtzer
+      <span class="lastupdated">
+        Last updated on Dec 17, 2019.
+      </span>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

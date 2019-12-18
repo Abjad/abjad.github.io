@@ -1,0 +1,843 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>RootlessChordClass &mdash; Abjad 3.0.0 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+        <script defer="defer" type="text/javascript" src="../../../_static/copybutton.js"></script>
+        <script type="text/javascript" src="../../../_static/ga.js"></script>
+        <script defer="defer" type="text/javascript" src="../../../_static/lightbox2/js/lightbox.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/abjad.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/uqbar.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/lightbox2/css/lightbox.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Scale" href="Scale.html" />
+    <link rel="prev" title="RootedChordClass" href="RootedChordClass.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> Abjad
+          
+
+          
+            
+            <img src="../../../_static/abjad-logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                3.0.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../gallery.html">Score gallery</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../for_beginners/index.html">For beginners</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../literature_examples/index.html">Literature examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../core_concepts/index.html">Core concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../reference_manual/index.html">Reference manual</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Abjad API</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../abjad/index.html">abjad</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">abjadext</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../cli/index.html">cli</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../rmakers/index.html">rmakers</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">tonality</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="ChordExtent.html">ChordExtent</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ChordInversion.html">ChordInversion</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ChordQuality.html">ChordQuality</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ChordSuspension.html">ChordSuspension</a></li>
+<li class="toctree-l4"><a class="reference internal" href="RomanNumeral.html">RomanNumeral</a></li>
+<li class="toctree-l4"><a class="reference internal" href="RootedChordClass.html">RootedChordClass</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">RootlessChordClass</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Scale.html">Scale</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ScaleDegree.html">ScaleDegree</a></li>
+<li class="toctree-l4"><a class="reference internal" href="TonalAnalysis.html">TonalAnalysis</a></li>
+<li class="toctree-l4"><a class="reference internal" href="analyze.html">analyze</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../appendices/index.html">Appendices</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Abjad</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content style-external-links">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Abjad API</a> &raquo;</li>
+        
+          <li><a href="../index.html">abjadext</a> &raquo;</li>
+        
+          <li><a href="index.html">tonality</a> &raquo;</li>
+        
+      <li>RootlessChordClass</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../../_sources/api/abjadext/tonality/RootlessChordClass.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-abjadext.tonality.RootlessChordClass">
+<span id="rootlesschordclass"></span><span id="abjadext-tonality-rootlesschordclass"></span><h1>RootlessChordClass<a class="headerlink" href="#module-abjadext.tonality.RootlessChordClass" title="Permalink to this headline">¶</a></h1>
+<div class="svg-container docutils container">
+<div class="graphviz"><object data="../../../_images/inheritance-365e9df3420332d73b003311b947cb3a52b9e063.svg" type="image/svg+xml" class="inheritance graphviz">
+<p class="warning">digraph InheritanceGraph {
+    graph [bgcolor=transparent,
+        color=lightsteelblue2,
+        fontname=Arial,
+        fontsize=10,
+        outputorder=edgesfirst,
+        overlap=prism,
+        penwidth=2,
+        rankdir=LR,
+        splines=spline,
+        style=&quot;dashed, rounded&quot;,
+        truecolor=true];
+    node [colorscheme=pastel19,
+        fontname=Arial,
+        fontsize=10,
+        height=0,
+        penwidth=2,
+        shape=box,
+        style=&quot;filled, rounded&quot;,
+        width=0];
+    edge [color=lightslategrey,
+        penwidth=1];
+    subgraph &quot;cluster_abjad.pitch&quot; {
+        graph [label=&quot;abjad.pitch&quot;];
+        node [color=1];
+        &quot;abjad.pitch.IntervalSegment.IntervalSegment&quot; [URL=&quot;../api/abjadext/tonality/../../abjad/pitch/IntervalSegment.html#abjad.pitch.IntervalSegment.IntervalSegment&quot;,
+            label=&quot;Interval\nSegment&quot;,
+            target=_top];
+        &quot;abjad.pitch.Segment.Segment&quot; [URL=&quot;../api/abjadext/tonality/../../abjad/pitch/Segment.html#abjad.pitch.Segment.Segment&quot;,
+            label=Segment,
+            shape=oval,
+            style=bold,
+            target=_top];
+        &quot;abjad.pitch.Segment.Segment&quot; -&gt; &quot;abjad.pitch.IntervalSegment.IntervalSegment&quot;;
+    }
+    subgraph &quot;cluster_abjad.utilities&quot; {
+        graph [label=&quot;abjad.utilities&quot;];
+        node [color=2];
+        &quot;abjad.utilities.TypedCollection.TypedCollection&quot; [URL=&quot;../api/abjadext/tonality/../../abjad/utilities/TypedCollection.html#abjad.utilities.TypedCollection.TypedCollection&quot;,
+            label=&quot;Typed\nCollection&quot;,
+            target=_top];
+        &quot;abjad.utilities.TypedTuple.TypedTuple&quot; [URL=&quot;../api/abjadext/tonality/../../abjad/utilities/TypedTuple.html#abjad.utilities.TypedTuple.TypedTuple&quot;,
+            label=&quot;Typed\nTuple&quot;,
+            target=_top];
+        &quot;abjad.utilities.TypedCollection.TypedCollection&quot; -&gt; &quot;abjad.utilities.TypedTuple.TypedTuple&quot;;
+    }
+    subgraph &quot;cluster_abjadext.tonality&quot; {
+        graph [label=&quot;abjadext.tonality&quot;];
+        node [color=3];
+        &quot;abjadext.tonality.RootlessChordClass.RootlessChordClass&quot; [URL=&quot;../api/abjadext/tonality/RootlessChordClass.html#abjadext.tonality.RootlessChordClass.RootlessChordClass&quot;,
+            color=black,
+            fontcolor=white,
+            label=&quot;Rootless\nChord\nClass&quot;,
+            target=_top];
+    }
+    subgraph cluster_builtins {
+        graph [label=builtins];
+        node [color=4];
+        &quot;builtins.object&quot; [URL=&quot;https://docs.python.org/3.6/library/functions.html#object&quot;,
+            label=object,
+            target=_top];
+    }
+    subgraph &quot;cluster_collections.abc&quot; {
+        graph [label=&quot;collections.abc&quot;];
+        node [color=5];
+        &quot;collections.abc.Collection&quot; [URL=&quot;https://docs.python.org/3.6/library/collections.abc.html#collections.abc.Collection&quot;,
+            label=Collection,
+            shape=oval,
+            style=bold,
+            target=_top];
+        &quot;collections.abc.Container&quot; [URL=&quot;https://docs.python.org/3.6/library/collections.abc.html#collections.abc.Container&quot;,
+            label=Container,
+            shape=oval,
+            style=bold,
+            target=_top];
+        &quot;collections.abc.Iterable&quot; [URL=&quot;https://docs.python.org/3.6/library/collections.abc.html#collections.abc.Iterable&quot;,
+            label=Iterable,
+            shape=oval,
+            style=bold,
+            target=_top];
+        &quot;collections.abc.Reversible&quot; [URL=&quot;https://docs.python.org/3.6/library/collections.abc.html#collections.abc.Reversible&quot;,
+            label=Reversible,
+            shape=oval,
+            style=bold,
+            target=_top];
+        &quot;collections.abc.Sequence&quot; [URL=&quot;https://docs.python.org/3.6/library/collections.abc.html#collections.abc.Sequence&quot;,
+            label=Sequence,
+            shape=oval,
+            style=bold,
+            target=_top];
+        &quot;collections.abc.Sized&quot; [URL=&quot;https://docs.python.org/3.6/library/collections.abc.html#collections.abc.Sized&quot;,
+            label=Sized,
+            shape=oval,
+            style=bold,
+            target=_top];
+        &quot;collections.abc.Collection&quot; -&gt; &quot;collections.abc.Sequence&quot;;
+        &quot;collections.abc.Container&quot; -&gt; &quot;collections.abc.Collection&quot;;
+        &quot;collections.abc.Iterable&quot; -&gt; &quot;collections.abc.Collection&quot;;
+        &quot;collections.abc.Iterable&quot; -&gt; &quot;collections.abc.Reversible&quot;;
+        &quot;collections.abc.Reversible&quot; -&gt; &quot;collections.abc.Sequence&quot;;
+        &quot;collections.abc.Sized&quot; -&gt; &quot;collections.abc.Collection&quot;;
+    }
+    &quot;abjad.pitch.IntervalSegment.IntervalSegment&quot; -&gt; &quot;abjadext.tonality.RootlessChordClass.RootlessChordClass&quot;;
+    &quot;abjad.utilities.TypedTuple.TypedTuple&quot; -&gt; &quot;abjad.pitch.Segment.Segment&quot;;
+    &quot;builtins.object&quot; -&gt; &quot;abjad.utilities.TypedCollection.TypedCollection&quot;;
+    &quot;builtins.object&quot; -&gt; &quot;collections.abc.Container&quot;;
+    &quot;builtins.object&quot; -&gt; &quot;collections.abc.Iterable&quot;;
+    &quot;builtins.object&quot; -&gt; &quot;collections.abc.Sized&quot;;
+    &quot;collections.abc.Sequence&quot; -&gt; &quot;abjad.utilities.TypedTuple.TypedTuple&quot;;
+}</p></object></div>
+</div>
+<dl class="class">
+<dt id="abjadext.tonality.RootlessChordClass.RootlessChordClass">
+<em class="property">class </em><code class="sig-prename descclassname">abjadext.tonality.RootlessChordClass.</code><code class="sig-name descname">RootlessChordClass</code><span class="sig-paren">(</span><em class="sig-param">quality_string='major'</em>, <em class="sig-param">extent='triad'</em>, <em class="sig-param">inversion='root'</em><span class="sig-paren">)</span><a class="headerlink" href="#abjadext.tonality.RootlessChordClass.RootlessChordClass" title="Permalink to this definition">¶</a></dt>
+<dd><p>Rootless chord class.</p>
+<div class="example docutils container">
+<p>Major triad in root position:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">abjadext</span><span class="o">.</span><span class="n">tonality</span><span class="o">.</span><span class="n">RootlessChordClass</span><span class="p">(</span><span class="s2">&quot;major&quot;</span><span class="p">)</span>
+<span class="go">MajorTriadInRootPosition(&#39;P1&#39;, &#39;+M3&#39;, &#39;+P5&#39;)</span>
+</pre></div>
+</div>
+</div>
+<div class="example docutils container">
+<p>Dominant seventh in root position:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">abjadext</span><span class="o">.</span><span class="n">tonality</span><span class="o">.</span><span class="n">RootlessChordClass</span><span class="p">(</span><span class="s2">&quot;dominant&quot;</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span>
+<span class="go">DominantSeventhInRootPosition(&#39;P1&#39;, &#39;+M3&#39;, &#39;+P5&#39;, &#39;+m7&#39;)</span>
+</pre></div>
+</div>
+</div>
+<div class="example docutils container">
+<p>German augmented sixth in root position:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">abjadext</span><span class="o">.</span><span class="n">tonality</span><span class="o">.</span><span class="n">RootlessChordClass</span><span class="p">(</span><span class="s2">&quot;German&quot;</span><span class="p">,</span> <span class="s2">&quot;augmented sixth&quot;</span><span class="p">)</span>
+<span class="go">GermanAugmentedSixthInRootPosition(&#39;P1&#39;, &#39;+M3&#39;, &#39;+m3&#39;, &#39;+A2&#39;)</span>
+</pre></div>
+</div>
+</div>
+<hr/><p class="class-header rubric">Attributes Summary</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abjadext.tonality.RootlessChordClass.RootlessChordClass.__repr__" title="abjadext.tonality.RootlessChordClass.RootlessChordClass.__repr__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__repr__</span></code></a></p></td>
+<td><p>Gets interpreter representation of rootless chord-class.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#abjadext.tonality.RootlessChordClass.RootlessChordClass.cardinality" title="abjadext.tonality.RootlessChordClass.RootlessChordClass.cardinality"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cardinality</span></code></a></p></td>
+<td><p>Gets cardinality.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abjadext.tonality.RootlessChordClass.RootlessChordClass.extent" title="abjadext.tonality.RootlessChordClass.RootlessChordClass.extent"><code class="xref py py-obj docutils literal notranslate"><span class="pre">extent</span></code></a></p></td>
+<td><p>Gets extent.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#abjadext.tonality.RootlessChordClass.RootlessChordClass.extent_name" title="abjadext.tonality.RootlessChordClass.RootlessChordClass.extent_name"><code class="xref py py-obj docutils literal notranslate"><span class="pre">extent_name</span></code></a></p></td>
+<td><p>Gets extent name.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abjadext.tonality.RootlessChordClass.RootlessChordClass.from_interval_class_segment" title="abjadext.tonality.RootlessChordClass.RootlessChordClass.from_interval_class_segment"><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_interval_class_segment</span></code></a></p></td>
+<td><p>Makes new rootless chord-class from <code class="docutils literal notranslate"><span class="pre">segment</span></code>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#abjadext.tonality.RootlessChordClass.RootlessChordClass.inversion" title="abjadext.tonality.RootlessChordClass.RootlessChordClass.inversion"><code class="xref py py-obj docutils literal notranslate"><span class="pre">inversion</span></code></a></p></td>
+<td><p>Gets inversion.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abjadext.tonality.RootlessChordClass.RootlessChordClass.position" title="abjadext.tonality.RootlessChordClass.RootlessChordClass.position"><code class="xref py py-obj docutils literal notranslate"><span class="pre">position</span></code></a></p></td>
+<td><p>Gets position.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#abjadext.tonality.RootlessChordClass.RootlessChordClass.quality_string" title="abjadext.tonality.RootlessChordClass.RootlessChordClass.quality_string"><code class="xref py py-obj docutils literal notranslate"><span class="pre">quality_string</span></code></a></p></td>
+<td><p>Gets quality string.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abjadext.tonality.RootlessChordClass.RootlessChordClass.rotation" title="abjadext.tonality.RootlessChordClass.RootlessChordClass.rotation"><code class="xref py py-obj docutils literal notranslate"><span class="pre">rotation</span></code></a></p></td>
+<td><p>Gets rotation.</p></td>
+</tr>
+</tbody>
+</table>
+<hr/><p class="class-header rubric">Special methods</p>
+<div class="inherited docutils container">
+<dl class="method">
+<dt id="abjadext.tonality.RootlessChordClass.RootlessChordClass.__add__">
+<code class="sig-prename descclassname">(<a class="reference internal" href="../../abjad/utilities/TypedTuple.html#abjad.utilities.TypedTuple.TypedTuple" title="abjad.utilities.TypedTuple.TypedTuple"><code class="descclassname docutils literal notranslate"><span class="pre">TypedTuple</span></code></a>).</code><code class="sig-name descname">__add__</code><span class="sig-paren">(</span><em class="sig-param">argument</em><span class="sig-paren">)</span><a class="headerlink" href="#abjadext.tonality.RootlessChordClass.RootlessChordClass.__add__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds typed tuple to <code class="docutils literal notranslate"><span class="pre">argument</span></code>.</p>
+<p>Returns new typed tuple.</p>
+</dd></dl>
+
+</div>
+<div class="inherited docutils container">
+<dl class="method">
+<dt id="abjadext.tonality.RootlessChordClass.RootlessChordClass.__contains__">
+<code class="sig-prename descclassname">(<a class="reference internal" href="../../abjad/utilities/TypedTuple.html#abjad.utilities.TypedTuple.TypedTuple" title="abjad.utilities.TypedTuple.TypedTuple"><code class="descclassname docutils literal notranslate"><span class="pre">TypedTuple</span></code></a>).</code><code class="sig-name descname">__contains__</code><span class="sig-paren">(</span><em class="sig-param">item</em><span class="sig-paren">)</span><a class="headerlink" href="#abjadext.tonality.RootlessChordClass.RootlessChordClass.__contains__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Is true if typed tuple contains <code class="docutils literal notranslate"><span class="pre">item</span></code>.</p>
+<p>Coerces <code class="docutils literal notranslate"><span class="pre">item</span></code>.</p>
+<p>Returns none.</p>
+</dd></dl>
+
+</div>
+<div class="inherited docutils container">
+<dl class="method">
+<dt id="abjadext.tonality.RootlessChordClass.RootlessChordClass.__eq__">
+<code class="sig-prename descclassname">(<a class="reference internal" href="../../abjad/utilities/TypedCollection.html#abjad.utilities.TypedCollection.TypedCollection" title="abjad.utilities.TypedCollection.TypedCollection"><code class="descclassname docutils literal notranslate"><span class="pre">TypedCollection</span></code></a>).</code><code class="sig-name descname">__eq__</code><span class="sig-paren">(</span><em class="sig-param">argument</em><span class="sig-paren">)</span><a class="headerlink" href="#abjadext.tonality.RootlessChordClass.RootlessChordClass.__eq__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Is true when <code class="docutils literal notranslate"><span class="pre">argument</span></code> is a typed collection with items that
+compare equal to those of this typed collection.</p>
+<p>Returns true or false.</p>
+</dd></dl>
+
+</div>
+<div class="inherited docutils container">
+<dl class="method">
+<dt id="abjadext.tonality.RootlessChordClass.RootlessChordClass.__format__">
+<code class="sig-prename descclassname">(<a class="reference internal" href="../../abjad/utilities/TypedCollection.html#abjad.utilities.TypedCollection.TypedCollection" title="abjad.utilities.TypedCollection.TypedCollection"><code class="descclassname docutils literal notranslate"><span class="pre">TypedCollection</span></code></a>).</code><code class="sig-name descname">__format__</code><span class="sig-paren">(</span><em class="sig-param">format_specification=''</em><span class="sig-paren">)</span><a class="headerlink" href="#abjadext.tonality.RootlessChordClass.RootlessChordClass.__format__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Formats object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.6/library/stdtypes.html#str" title="(in Python v3.6)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="inherited docutils container">
+<dl class="method">
+<dt id="abjadext.tonality.RootlessChordClass.RootlessChordClass.__getitem__">
+<code class="sig-prename descclassname">(<a class="reference internal" href="../../abjad/utilities/TypedTuple.html#abjad.utilities.TypedTuple.TypedTuple" title="abjad.utilities.TypedTuple.TypedTuple"><code class="descclassname docutils literal notranslate"><span class="pre">TypedTuple</span></code></a>).</code><code class="sig-name descname">__getitem__</code><span class="sig-paren">(</span><em class="sig-param">argument</em><span class="sig-paren">)</span><a class="headerlink" href="#abjadext.tonality.RootlessChordClass.RootlessChordClass.__getitem__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets item or slice identified by <code class="docutils literal notranslate"><span class="pre">argument</span></code>.</p>
+<p>Returns item or new typed tuple.</p>
+</dd></dl>
+
+</div>
+<div class="inherited docutils container">
+<dl class="method">
+<dt id="abjadext.tonality.RootlessChordClass.RootlessChordClass.__hash__">
+<code class="sig-prename descclassname">(<a class="reference internal" href="../../abjad/utilities/TypedTuple.html#abjad.utilities.TypedTuple.TypedTuple" title="abjad.utilities.TypedTuple.TypedTuple"><code class="descclassname docutils literal notranslate"><span class="pre">TypedTuple</span></code></a>).</code><code class="sig-name descname">__hash__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjadext.tonality.RootlessChordClass.RootlessChordClass.__hash__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Hashes typed tuple.</p>
+<p>Returns integer.</p>
+</dd></dl>
+
+</div>
+<div class="inherited docutils container">
+<dl class="method">
+<dt id="abjadext.tonality.RootlessChordClass.RootlessChordClass.__illustrate__">
+<code class="sig-prename descclassname">(<a class="reference internal" href="../../abjad/pitch/Segment.html#abjad.pitch.Segment.Segment" title="abjad.pitch.Segment.Segment"><code class="descclassname docutils literal notranslate"><span class="pre">Segment</span></code></a>).</code><code class="sig-name descname">__illustrate__</code><span class="sig-paren">(</span><em class="sig-param">markup_direction=Up</em>, <em class="sig-param">figure_name=None</em>, <em class="sig-param">**keywords</em><span class="sig-paren">)</span><a class="headerlink" href="#abjadext.tonality.RootlessChordClass.RootlessChordClass.__illustrate__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Illustrates segment.</p>
+<p>Returns LilyPond file.</p>
+</dd></dl>
+
+</div>
+<div class="inherited docutils container">
+<dl class="method">
+<dt id="abjadext.tonality.RootlessChordClass.RootlessChordClass.__iter__">
+<code class="sig-prename descclassname">(<a class="reference internal" href="../../abjad/utilities/TypedCollection.html#abjad.utilities.TypedCollection.TypedCollection" title="abjad.utilities.TypedCollection.TypedCollection"><code class="descclassname docutils literal notranslate"><span class="pre">TypedCollection</span></code></a>).</code><code class="sig-name descname">__iter__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjadext.tonality.RootlessChordClass.RootlessChordClass.__iter__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Iterates typed collection.</p>
+<p>Returns generator.</p>
+</dd></dl>
+
+</div>
+<div class="inherited docutils container">
+<dl class="method">
+<dt id="abjadext.tonality.RootlessChordClass.RootlessChordClass.__len__">
+<code class="sig-prename descclassname">(<a class="reference internal" href="../../abjad/utilities/TypedCollection.html#abjad.utilities.TypedCollection.TypedCollection" title="abjad.utilities.TypedCollection.TypedCollection"><code class="descclassname docutils literal notranslate"><span class="pre">TypedCollection</span></code></a>).</code><code class="sig-name descname">__len__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjadext.tonality.RootlessChordClass.RootlessChordClass.__len__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets length of typed collection.</p>
+<p>Returns nonnegative integer.</p>
+</dd></dl>
+
+</div>
+<div class="inherited docutils container">
+<dl class="method">
+<dt id="abjadext.tonality.RootlessChordClass.RootlessChordClass.__mul__">
+<code class="sig-prename descclassname">(<a class="reference internal" href="../../abjad/utilities/TypedTuple.html#abjad.utilities.TypedTuple.TypedTuple" title="abjad.utilities.TypedTuple.TypedTuple"><code class="descclassname docutils literal notranslate"><span class="pre">TypedTuple</span></code></a>).</code><code class="sig-name descname">__mul__</code><span class="sig-paren">(</span><em class="sig-param">argument</em><span class="sig-paren">)</span><a class="headerlink" href="#abjadext.tonality.RootlessChordClass.RootlessChordClass.__mul__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Multiplies typed tuple by <code class="docutils literal notranslate"><span class="pre">argument</span></code>.</p>
+<p>Returns new typed tuple.</p>
+</dd></dl>
+
+</div>
+<div class="inherited docutils container">
+<dl class="method">
+<dt id="abjadext.tonality.RootlessChordClass.RootlessChordClass.__radd__">
+<code class="sig-prename descclassname">(<a class="reference internal" href="../../abjad/utilities/TypedTuple.html#abjad.utilities.TypedTuple.TypedTuple" title="abjad.utilities.TypedTuple.TypedTuple"><code class="descclassname docutils literal notranslate"><span class="pre">TypedTuple</span></code></a>).</code><code class="sig-name descname">__radd__</code><span class="sig-paren">(</span><em class="sig-param">argument</em><span class="sig-paren">)</span><a class="headerlink" href="#abjadext.tonality.RootlessChordClass.RootlessChordClass.__radd__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Right-adds <code class="docutils literal notranslate"><span class="pre">argument</span></code> to typed tuple.</p>
+</dd></dl>
+
+</div>
+<dl class="method">
+<dt id="abjadext.tonality.RootlessChordClass.RootlessChordClass.__repr__">
+<em class="property">overridden </em><code class="sig-name descname">__repr__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjadext.tonality.RootlessChordClass.RootlessChordClass.__repr__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets interpreter representation of rootless chord-class.</p>
+<p>Returns string.</p>
+</dd></dl>
+
+<div class="inherited docutils container">
+<dl class="method">
+<dt id="abjadext.tonality.RootlessChordClass.RootlessChordClass.__reversed__">
+<code class="sig-prename descclassname">(<a class="reference external" href="https://docs.python.org/3.6/library/collections.abc.html#collections.abc.Sequence" title="(in Python v3.6)"><code class="descclassname docutils literal notranslate"><span class="pre">Sequence</span></code></a>).</code><code class="sig-name descname">__reversed__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjadext.tonality.RootlessChordClass.RootlessChordClass.__reversed__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="inherited docutils container">
+<dl class="method">
+<dt id="abjadext.tonality.RootlessChordClass.RootlessChordClass.__rmul__">
+<code class="sig-prename descclassname">(<a class="reference internal" href="../../abjad/utilities/TypedTuple.html#abjad.utilities.TypedTuple.TypedTuple" title="abjad.utilities.TypedTuple.TypedTuple"><code class="descclassname docutils literal notranslate"><span class="pre">TypedTuple</span></code></a>).</code><code class="sig-name descname">__rmul__</code><span class="sig-paren">(</span><em class="sig-param">argument</em><span class="sig-paren">)</span><a class="headerlink" href="#abjadext.tonality.RootlessChordClass.RootlessChordClass.__rmul__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Multiplies <code class="docutils literal notranslate"><span class="pre">argument</span></code> by typed tuple.</p>
+<p>Returns new typed tuple.</p>
+</dd></dl>
+
+</div>
+<div class="inherited docutils container">
+<dl class="method">
+<dt id="abjadext.tonality.RootlessChordClass.RootlessChordClass.__str__">
+<code class="sig-prename descclassname">(<a class="reference internal" href="../../abjad/pitch/Segment.html#abjad.pitch.Segment.Segment" title="abjad.pitch.Segment.Segment"><code class="descclassname docutils literal notranslate"><span class="pre">Segment</span></code></a>).</code><code class="sig-name descname">__str__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjadext.tonality.RootlessChordClass.RootlessChordClass.__str__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets string representation of segment.</p>
+<p>Returns string.</p>
+</dd></dl>
+
+</div>
+<hr/><p class="class-header rubric">Methods</p>
+<div class="inherited docutils container">
+<dl class="method">
+<dt id="abjadext.tonality.RootlessChordClass.RootlessChordClass.count">
+<code class="sig-prename descclassname">(<a class="reference internal" href="../../abjad/utilities/TypedTuple.html#abjad.utilities.TypedTuple.TypedTuple" title="abjad.utilities.TypedTuple.TypedTuple"><code class="descclassname docutils literal notranslate"><span class="pre">TypedTuple</span></code></a>).</code><code class="sig-name descname">count</code><span class="sig-paren">(</span><em class="sig-param">item</em><span class="sig-paren">)</span><a class="headerlink" href="#abjadext.tonality.RootlessChordClass.RootlessChordClass.count" title="Permalink to this definition">¶</a></dt>
+<dd><p>Counts <code class="docutils literal notranslate"><span class="pre">item</span></code> in collection.</p>
+<p>Coerces <code class="docutils literal notranslate"><span class="pre">item</span></code>.</p>
+<p>Returns nonnegative integer.</p>
+</dd></dl>
+
+</div>
+<div class="inherited docutils container">
+<dl class="method">
+<dt id="abjadext.tonality.RootlessChordClass.RootlessChordClass.has_duplicates">
+<code class="sig-prename descclassname">(<a class="reference internal" href="../../abjad/pitch/IntervalSegment.html#abjad.pitch.IntervalSegment.IntervalSegment" title="abjad.pitch.IntervalSegment.IntervalSegment"><code class="descclassname docutils literal notranslate"><span class="pre">IntervalSegment</span></code></a>).</code><code class="sig-name descname">has_duplicates</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjadext.tonality.RootlessChordClass.RootlessChordClass.has_duplicates" title="Permalink to this definition">¶</a></dt>
+<dd><p>Is true if segment has duplicate items.</p>
+<div class="example docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">intervals</span> <span class="o">=</span> <span class="s2">&quot;m2 M3 -aug4 m2 P5&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">segment</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">IntervalSegment</span><span class="p">(</span><span class="n">intervals</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">segment</span><span class="o">.</span><span class="n">has_duplicates</span><span class="p">()</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">intervals</span> <span class="o">=</span> <span class="s2">&quot;M3 -aug4 m2 P5&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">segment</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">IntervalSegment</span><span class="p">(</span><span class="n">intervals</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">segment</span><span class="o">.</span><span class="n">has_duplicates</span><span class="p">()</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+</div>
+<p>Returns true or false.</p>
+</dd></dl>
+
+</div>
+<div class="inherited docutils container">
+<dl class="method">
+<dt id="abjadext.tonality.RootlessChordClass.RootlessChordClass.index">
+<code class="sig-prename descclassname">(<a class="reference internal" href="../../abjad/utilities/TypedTuple.html#abjad.utilities.TypedTuple.TypedTuple" title="abjad.utilities.TypedTuple.TypedTuple"><code class="descclassname docutils literal notranslate"><span class="pre">TypedTuple</span></code></a>).</code><code class="sig-name descname">index</code><span class="sig-paren">(</span><em class="sig-param">item</em><span class="sig-paren">)</span><a class="headerlink" href="#abjadext.tonality.RootlessChordClass.RootlessChordClass.index" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets index of <code class="docutils literal notranslate"><span class="pre">item</span></code> in collection.</p>
+<p>Coerces <code class="docutils literal notranslate"><span class="pre">item</span></code>.</p>
+<p>Returns nonnegative integer.</p>
+</dd></dl>
+
+</div>
+<div class="inherited docutils container">
+<dl class="method">
+<dt id="abjadext.tonality.RootlessChordClass.RootlessChordClass.rotate">
+<code class="sig-prename descclassname">(<a class="reference internal" href="../../abjad/pitch/IntervalSegment.html#abjad.pitch.IntervalSegment.IntervalSegment" title="abjad.pitch.IntervalSegment.IntervalSegment"><code class="descclassname docutils literal notranslate"><span class="pre">IntervalSegment</span></code></a>).</code><code class="sig-name descname">rotate</code><span class="sig-paren">(</span><em class="sig-param">n=0</em><span class="sig-paren">)</span><a class="headerlink" href="#abjadext.tonality.RootlessChordClass.RootlessChordClass.rotate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Rotates interval segment by index <cite>n</cite>.</p>
+<p>Returns new interval segment.</p>
+</dd></dl>
+
+</div>
+<hr/><p class="class-header rubric">Class &amp; static methods</p>
+<dl class="method">
+<dt id="abjadext.tonality.RootlessChordClass.RootlessChordClass.from_interval_class_segment">
+<em class="property">static </em><code class="sig-name descname">from_interval_class_segment</code><span class="sig-paren">(</span><em class="sig-param">segment</em><span class="sig-paren">)</span><a class="headerlink" href="#abjadext.tonality.RootlessChordClass.RootlessChordClass.from_interval_class_segment" title="Permalink to this definition">¶</a></dt>
+<dd><p>Makes new rootless chord-class from <code class="docutils literal notranslate"><span class="pre">segment</span></code>.</p>
+<div class="example docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">segment</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">IntervalClassSegment</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="p">[</span>
+<span class="gp">... </span>        <span class="n">abjad</span><span class="o">.</span><span class="n">NamedInversionEquivalentIntervalClass</span><span class="p">(</span><span class="s2">&quot;m3&quot;</span><span class="p">),</span>
+<span class="gp">... </span>        <span class="n">abjad</span><span class="o">.</span><span class="n">NamedInversionEquivalentIntervalClass</span><span class="p">(</span><span class="s2">&quot;m3&quot;</span><span class="p">),</span>
+<span class="gp">... </span>    <span class="p">]</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">class_</span> <span class="o">=</span> <span class="n">abjadext</span><span class="o">.</span><span class="n">tonality</span><span class="o">.</span><span class="n">RootlessChordClass</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">class_</span><span class="o">.</span><span class="n">from_interval_class_segment</span><span class="p">(</span><span class="n">segment</span><span class="p">)</span>
+<span class="go">DiminishedTriadInRootPosition(&#39;P1&#39;, &#39;+m3&#39;, &#39;+d5&#39;)</span>
+</pre></div>
+</div>
+</div>
+<div class="example docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">segment</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">IntervalClassSegment</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="p">[</span>
+<span class="gp">... </span>        <span class="n">abjad</span><span class="o">.</span><span class="n">NamedInversionEquivalentIntervalClass</span><span class="p">(</span><span class="s2">&quot;m3&quot;</span><span class="p">),</span>
+<span class="gp">... </span>        <span class="n">abjad</span><span class="o">.</span><span class="n">NamedInversionEquivalentIntervalClass</span><span class="p">(</span><span class="s2">&quot;M3&quot;</span><span class="p">),</span>
+<span class="gp">... </span>    <span class="p">]</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">class_</span> <span class="o">=</span> <span class="n">abjadext</span><span class="o">.</span><span class="n">tonality</span><span class="o">.</span><span class="n">RootlessChordClass</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">class_</span><span class="o">.</span><span class="n">from_interval_class_segment</span><span class="p">(</span><span class="n">segment</span><span class="p">)</span>
+<span class="go">MinorTriadInRootPosition(&#39;P1&#39;, &#39;+m3&#39;, &#39;+P5&#39;)</span>
+</pre></div>
+</div>
+</div>
+<div class="example docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">segment</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">IntervalClassSegment</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="p">[</span>
+<span class="gp">... </span>        <span class="n">abjad</span><span class="o">.</span><span class="n">NamedInversionEquivalentIntervalClass</span><span class="p">(</span><span class="s2">&quot;M3&quot;</span><span class="p">),</span>
+<span class="gp">... </span>        <span class="n">abjad</span><span class="o">.</span><span class="n">NamedInversionEquivalentIntervalClass</span><span class="p">(</span><span class="s2">&quot;m3&quot;</span><span class="p">),</span>
+<span class="gp">... </span>    <span class="p">]</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">class_</span> <span class="o">=</span> <span class="n">abjadext</span><span class="o">.</span><span class="n">tonality</span><span class="o">.</span><span class="n">RootlessChordClass</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">class_</span><span class="o">.</span><span class="n">from_interval_class_segment</span><span class="p">(</span><span class="n">segment</span><span class="p">)</span>
+<span class="go">MajorTriadInRootPosition(&#39;P1&#39;, &#39;+M3&#39;, &#39;+P5&#39;)</span>
+</pre></div>
+</div>
+</div>
+<p>Returns new rootless chord-class.</p>
+</dd></dl>
+
+<div class="inherited docutils container">
+<dl class="method">
+<dt id="abjadext.tonality.RootlessChordClass.RootlessChordClass.from_selection">
+<em class="property">classmethod </em><code class="sig-prename descclassname">(<a class="reference internal" href="../../abjad/pitch/IntervalSegment.html#abjad.pitch.IntervalSegment.IntervalSegment" title="abjad.pitch.IntervalSegment.IntervalSegment"><code class="descclassname docutils literal notranslate"><span class="pre">IntervalSegment</span></code></a>).</code><code class="sig-name descname">from_selection</code><span class="sig-paren">(</span><em class="sig-param">selection</em>, <em class="sig-param">item_class=None</em><span class="sig-paren">)</span><a class="headerlink" href="#abjadext.tonality.RootlessChordClass.RootlessChordClass.from_selection" title="Permalink to this definition">¶</a></dt>
+<dd><p>Makes interval segment from component <cite>selection</cite>.</p>
+<div class="example docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">staff</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Staff</span><span class="p">(</span><span class="s2">&quot;c&#39;8 d&#39;8 e&#39;8 f&#39;8 g&#39;8 a&#39;8 b&#39;8 c&#39;&#39;8&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">abjad</span><span class="o">.</span><span class="n">IntervalSegment</span><span class="o">.</span><span class="n">from_selection</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">staff</span><span class="p">,</span> <span class="n">item_class</span><span class="o">=</span><span class="n">abjad</span><span class="o">.</span><span class="n">NumberedInterval</span><span class="p">,</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="go">IntervalSegment([2, 2, 1, 2, 2, 2, 1])</span>
+</pre></div>
+</div>
+</div>
+<p>Returns interval segment.</p>
+</dd></dl>
+
+</div>
+<hr/><p class="class-header rubric">Read-only properties</p>
+<dl class="attribute">
+<dt id="abjadext.tonality.RootlessChordClass.RootlessChordClass.cardinality">
+<code class="sig-name descname">cardinality</code><a class="headerlink" href="#abjadext.tonality.RootlessChordClass.RootlessChordClass.cardinality" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets cardinality.</p>
+<div class="example docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">abjadext</span><span class="o">.</span><span class="n">tonality</span><span class="o">.</span><span class="n">RootlessChordClass</span><span class="p">(</span><span class="s2">&quot;dominant&quot;</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span><span class="o">.</span><span class="n">cardinality</span>
+<span class="go">4</span>
+</pre></div>
+</div>
+</div>
+<p>Returns nonnegative integer.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="abjadext.tonality.RootlessChordClass.RootlessChordClass.extent">
+<code class="sig-name descname">extent</code><a class="headerlink" href="#abjadext.tonality.RootlessChordClass.RootlessChordClass.extent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets extent.</p>
+<div class="example docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">abjadext</span><span class="o">.</span><span class="n">tonality</span><span class="o">.</span><span class="n">RootlessChordClass</span><span class="p">(</span><span class="s2">&quot;dominant&quot;</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span><span class="o">.</span><span class="n">extent</span>
+<span class="go">7</span>
+</pre></div>
+</div>
+</div>
+<p>Returns nonnegative integer.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="abjadext.tonality.RootlessChordClass.RootlessChordClass.extent_name">
+<code class="sig-name descname">extent_name</code><a class="headerlink" href="#abjadext.tonality.RootlessChordClass.RootlessChordClass.extent_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets extent name.</p>
+<div class="example docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">abjadext</span><span class="o">.</span><span class="n">tonality</span><span class="o">.</span><span class="n">RootlessChordClass</span><span class="p">(</span><span class="s2">&quot;dominant&quot;</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span><span class="o">.</span><span class="n">extent_name</span>
+<span class="go">&#39;seventh&#39;</span>
+</pre></div>
+</div>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="abjadext.tonality.RootlessChordClass.RootlessChordClass.inversion">
+<code class="sig-name descname">inversion</code><a class="headerlink" href="#abjadext.tonality.RootlessChordClass.RootlessChordClass.inversion" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets inversion.</p>
+<div class="example docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">abjadext</span><span class="o">.</span><span class="n">tonality</span><span class="o">.</span><span class="n">RootlessChordClass</span><span class="p">(</span><span class="s2">&quot;dominant&quot;</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span><span class="o">.</span><span class="n">inversion</span>
+<span class="go">0</span>
+</pre></div>
+</div>
+</div>
+<p>Returns nonnegative integer.</p>
+</dd></dl>
+
+<div class="inherited docutils container">
+<dl class="attribute">
+<dt id="abjadext.tonality.RootlessChordClass.RootlessChordClass.item_class">
+<code class="sig-prename descclassname">(<a class="reference internal" href="../../abjad/utilities/TypedCollection.html#abjad.utilities.TypedCollection.TypedCollection" title="abjad.utilities.TypedCollection.TypedCollection"><code class="descclassname docutils literal notranslate"><span class="pre">TypedCollection</span></code></a>).</code><code class="sig-name descname">item_class</code><a class="headerlink" href="#abjadext.tonality.RootlessChordClass.RootlessChordClass.item_class" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets item class of collection.</p>
+<p>Collection coerces items according to <code class="docutils literal notranslate"><span class="pre">item_class</span></code>.</p>
+<p>Returns class.</p>
+</dd></dl>
+
+</div>
+<div class="inherited docutils container">
+<dl class="attribute">
+<dt id="abjadext.tonality.RootlessChordClass.RootlessChordClass.items">
+<code class="sig-prename descclassname">(<a class="reference internal" href="../../abjad/utilities/TypedCollection.html#abjad.utilities.TypedCollection.TypedCollection" title="abjad.utilities.TypedCollection.TypedCollection"><code class="descclassname docutils literal notranslate"><span class="pre">TypedCollection</span></code></a>).</code><code class="sig-name descname">items</code><a class="headerlink" href="#abjadext.tonality.RootlessChordClass.RootlessChordClass.items" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets items in collection.</p>
+<p>Returns list.</p>
+</dd></dl>
+
+</div>
+<dl class="attribute">
+<dt id="abjadext.tonality.RootlessChordClass.RootlessChordClass.position">
+<code class="sig-name descname">position</code><a class="headerlink" href="#abjadext.tonality.RootlessChordClass.RootlessChordClass.position" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets position.</p>
+<div class="example docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">abjadext</span><span class="o">.</span><span class="n">tonality</span><span class="o">.</span><span class="n">RootlessChordClass</span><span class="p">(</span><span class="s2">&quot;dominant&quot;</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span><span class="o">.</span><span class="n">position</span>
+<span class="go">&#39;root position&#39;</span>
+</pre></div>
+</div>
+</div>
+<p>Returns string.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="abjadext.tonality.RootlessChordClass.RootlessChordClass.quality_string">
+<code class="sig-name descname">quality_string</code><a class="headerlink" href="#abjadext.tonality.RootlessChordClass.RootlessChordClass.quality_string" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets quality string.</p>
+<div class="example docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">abjadext</span><span class="o">.</span><span class="n">tonality</span><span class="o">.</span><span class="n">RootlessChordClass</span><span class="p">(</span><span class="s2">&quot;dominant&quot;</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span><span class="o">.</span><span class="n">quality_string</span>
+<span class="go">&#39;dominant&#39;</span>
+</pre></div>
+</div>
+</div>
+<p>Returns string.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="abjadext.tonality.RootlessChordClass.RootlessChordClass.rotation">
+<code class="sig-name descname">rotation</code><a class="headerlink" href="#abjadext.tonality.RootlessChordClass.RootlessChordClass.rotation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets rotation.</p>
+<div class="example docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">abjadext</span><span class="o">.</span><span class="n">tonality</span><span class="o">.</span><span class="n">RootlessChordClass</span><span class="p">(</span><span class="s2">&quot;dominant&quot;</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span><span class="o">.</span><span class="n">rotation</span>
+<span class="go">0</span>
+</pre></div>
+</div>
+</div>
+<p>Returns nonnegative integer.</p>
+</dd></dl>
+
+<div class="inherited docutils container">
+<dl class="attribute">
+<dt id="abjadext.tonality.RootlessChordClass.RootlessChordClass.slope">
+<code class="sig-prename descclassname">(<a class="reference internal" href="../../abjad/pitch/IntervalSegment.html#abjad.pitch.IntervalSegment.IntervalSegment" title="abjad.pitch.IntervalSegment.IntervalSegment"><code class="descclassname docutils literal notranslate"><span class="pre">IntervalSegment</span></code></a>).</code><code class="sig-name descname">slope</code><a class="headerlink" href="#abjadext.tonality.RootlessChordClass.RootlessChordClass.slope" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets slope of interval segment.</p>
+<div class="example docutils container">
+<p>The slope of a interval segment is the sum of its
+intervals divided by its length:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">abjad</span><span class="o">.</span><span class="n">IntervalSegment</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span><span class="o">.</span><span class="n">slope</span>
+<span class="go">Multiplier(3, 2)</span>
+</pre></div>
+</div>
+</div>
+<p>Returns multiplier.</p>
+</dd></dl>
+
+</div>
+<div class="inherited docutils container">
+<dl class="attribute">
+<dt id="abjadext.tonality.RootlessChordClass.RootlessChordClass.spread">
+<code class="sig-prename descclassname">(<a class="reference internal" href="../../abjad/pitch/IntervalSegment.html#abjad.pitch.IntervalSegment.IntervalSegment" title="abjad.pitch.IntervalSegment.IntervalSegment"><code class="descclassname docutils literal notranslate"><span class="pre">IntervalSegment</span></code></a>).</code><code class="sig-name descname">spread</code><a class="headerlink" href="#abjadext.tonality.RootlessChordClass.RootlessChordClass.spread" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets spread of interval segment.</p>
+<div class="example docutils container">
+<p>The maximum interval spanned by any combination of
+the intervals within a numbered interval segment.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">abjad</span><span class="o">.</span><span class="n">IntervalSegment</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">spread</span>
+<span class="go">NumberedInterval(4)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">abjad</span><span class="o">.</span><span class="n">IntervalSegment</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">])</span><span class="o">.</span><span class="n">spread</span>
+<span class="go">NumberedInterval(5)</span>
+</pre></div>
+</div>
+</div>
+<p>Returns numbered interval.</p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="Scale.html" class="btn btn-neutral float-right" title="Scale" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="RootedChordClass.html" class="btn btn-neutral float-left" title="RootedChordClass" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2008-2019, Trevor Bača &amp; Josiah Wolf Oberholtzer
+      <span class="lastupdated">
+        Last updated on Dec 17, 2019.
+      </span>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,707 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>TypedFrozenset &mdash; Abjad 3.0.0 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+        <script defer="defer" type="text/javascript" src="../../../_static/copybutton.js"></script>
+        <script type="text/javascript" src="../../../_static/ga.js"></script>
+        <script defer="defer" type="text/javascript" src="../../../_static/lightbox2/js/lightbox.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/abjad.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/uqbar.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/lightbox2/css/lightbox.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="TypedList" href="TypedList.html" />
+    <link rel="prev" title="TypedCounter" href="TypedCounter.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> Abjad
+          
+
+          
+            
+            <img src="../../../_static/abjad-logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                3.0.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../gallery.html">Score gallery</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../for_beginners/index.html">For beginners</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../literature_examples/index.html">Literature examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../core_concepts/index.html">Core concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../reference_manual/index.html">Reference manual</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Abjad API</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">abjad</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../cli.html">cli</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../core/index.html">core</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../demos/index.html">demos</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../enums.html">enums</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../exceptions.html">exceptions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../ext/index.html">ext</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../indicators/index.html">indicators</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../instruments.html">instruments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../iox.html">iox</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../lilypondfile/index.html">lilypondfile</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../lilypondnames/index.html">lilypondnames</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../markups.html">markups</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mathtools.html">mathtools</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../meter.html">meter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../parser/index.html">parser</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pitch/index.html">pitch</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../rhythmtrees.html">rhythmtrees</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../scheme.html">scheme</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../segments/index.html">segments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../spanners.html">spanners</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../system/index.html">system</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../timespans.html">timespans</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../top/index.html">top</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">utilities</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="CyclicTuple.html">CyclicTuple</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Duration.html">Duration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Enumerator.html">Enumerator</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Expression.html">Expression</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Multiplier.html">Multiplier</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Offset.html">Offset</a></li>
+<li class="toctree-l4"><a class="reference internal" href="OrderedDict.html">OrderedDict</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Pattern.html">Pattern</a></li>
+<li class="toctree-l4"><a class="reference internal" href="PatternTuple.html">PatternTuple</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Sequence.html">Sequence</a></li>
+<li class="toctree-l4"><a class="reference internal" href="SortedCollection.html">SortedCollection</a></li>
+<li class="toctree-l4"><a class="reference internal" href="String.html">String</a></li>
+<li class="toctree-l4"><a class="reference internal" href="TypedCollection.html">TypedCollection</a></li>
+<li class="toctree-l4"><a class="reference internal" href="TypedCounter.html">TypedCounter</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">TypedFrozenset</a></li>
+<li class="toctree-l4"><a class="reference internal" href="TypedList.html">TypedList</a></li>
+<li class="toctree-l4"><a class="reference internal" href="TypedTuple.html">TypedTuple</a></li>
+<li class="toctree-l4"><a class="reference internal" href="compare_images.html">compare_images</a></li>
+<li class="toctree-l4"><a class="reference internal" href="list_all_classes.html">list_all_classes</a></li>
+<li class="toctree-l4"><a class="reference internal" href="list_all_functions.html">list_all_functions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="yield_all_modules.html">yield_all_modules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="DurationInequality.html">DurationInequality</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Inequality.html">Inequality</a></li>
+<li class="toctree-l4"><a class="reference internal" href="LengthInequality.html">LengthInequality</a></li>
+<li class="toctree-l4"><a class="reference internal" href="PitchInequality.html">PitchInequality</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../abjadext/index.html">abjadext</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../appendices/index.html">Appendices</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Abjad</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content style-external-links">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Abjad API</a> &raquo;</li>
+        
+          <li><a href="../index.html">abjad</a> &raquo;</li>
+        
+          <li><a href="index.html">utilities</a> &raquo;</li>
+        
+      <li>TypedFrozenset</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../../_sources/api/abjad/utilities/TypedFrozenset.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-abjad.utilities.TypedFrozenset">
+<span id="typedfrozenset"></span><span id="abjad-utilities-typedfrozenset"></span><h1>TypedFrozenset<a class="headerlink" href="#module-abjad.utilities.TypedFrozenset" title="Permalink to this headline">¶</a></h1>
+<div class="svg-container docutils container">
+<div class="graphviz"><object data="../../../_images/inheritance-b14c1fd69191d08e17f6dd5c794ef7a2a6706230.svg" type="image/svg+xml" class="inheritance graphviz">
+<p class="warning">digraph InheritanceGraph {
+    graph [bgcolor=transparent,
+        color=lightsteelblue2,
+        fontname=Arial,
+        fontsize=10,
+        outputorder=edgesfirst,
+        overlap=prism,
+        penwidth=2,
+        rankdir=LR,
+        splines=spline,
+        style=&quot;dashed, rounded&quot;,
+        truecolor=true];
+    node [colorscheme=pastel19,
+        fontname=Arial,
+        fontsize=10,
+        height=0,
+        penwidth=2,
+        shape=box,
+        style=&quot;filled, rounded&quot;,
+        width=0];
+    edge [color=lightslategrey,
+        penwidth=1];
+    subgraph &quot;cluster_abjad.pitch&quot; {
+        graph [label=&quot;abjad.pitch&quot;];
+        node [color=1];
+        &quot;abjad.pitch.IntervalClassSet.IntervalClassSet&quot; [URL=&quot;../api/abjad/utilities/../pitch/IntervalClassSet.html#abjad.pitch.IntervalClassSet.IntervalClassSet&quot;,
+            label=&quot;Interval\nClass\nSet&quot;,
+            target=_top];
+        &quot;abjad.pitch.IntervalSet.IntervalSet&quot; [URL=&quot;../api/abjad/utilities/../pitch/IntervalSet.html#abjad.pitch.IntervalSet.IntervalSet&quot;,
+            label=&quot;Interval\nSet&quot;,
+            target=_top];
+        &quot;abjad.pitch.PitchClassSet.PitchClassSet&quot; [URL=&quot;../api/abjad/utilities/../pitch/PitchClassSet.html#abjad.pitch.PitchClassSet.PitchClassSet&quot;,
+            label=&quot;Pitch\nClass\nSet&quot;,
+            target=_top];
+        &quot;abjad.pitch.PitchSet.PitchSet&quot; [URL=&quot;../api/abjad/utilities/../pitch/PitchSet.html#abjad.pitch.PitchSet.PitchSet&quot;,
+            label=&quot;Pitch\nSet&quot;,
+            target=_top];
+        &quot;abjad.pitch.Set.Set&quot; [URL=&quot;../api/abjad/utilities/../pitch/Set.html#abjad.pitch.Set.Set&quot;,
+            label=Set,
+            shape=oval,
+            style=bold,
+            target=_top];
+        &quot;abjad.pitch.Set.Set&quot; -&gt; &quot;abjad.pitch.IntervalClassSet.IntervalClassSet&quot;;
+        &quot;abjad.pitch.Set.Set&quot; -&gt; &quot;abjad.pitch.IntervalSet.IntervalSet&quot;;
+        &quot;abjad.pitch.Set.Set&quot; -&gt; &quot;abjad.pitch.PitchClassSet.PitchClassSet&quot;;
+        &quot;abjad.pitch.Set.Set&quot; -&gt; &quot;abjad.pitch.PitchSet.PitchSet&quot;;
+    }
+    subgraph &quot;cluster_abjad.utilities&quot; {
+        graph [label=&quot;abjad.utilities&quot;];
+        node [color=2];
+        &quot;abjad.utilities.TypedCollection.TypedCollection&quot; [URL=&quot;../api/abjad/utilities/TypedCollection.html#abjad.utilities.TypedCollection.TypedCollection&quot;,
+            label=&quot;Typed\nCollection&quot;,
+            target=_top];
+        &quot;abjad.utilities.TypedFrozenset.TypedFrozenset&quot; [URL=&quot;../api/abjad/utilities/TypedFrozenset.html#abjad.utilities.TypedFrozenset.TypedFrozenset&quot;,
+            color=black,
+            fontcolor=white,
+            label=&quot;Typed\nFrozenset&quot;,
+            target=_top];
+        &quot;abjad.utilities.TypedCollection.TypedCollection&quot; -&gt; &quot;abjad.utilities.TypedFrozenset.TypedFrozenset&quot;;
+    }
+    subgraph cluster_builtins {
+        graph [label=builtins];
+        node [color=3];
+        &quot;builtins.object&quot; [URL=&quot;https://docs.python.org/3.6/library/functions.html#object&quot;,
+            label=object,
+            target=_top];
+    }
+    subgraph &quot;cluster_collections.abc&quot; {
+        graph [label=&quot;collections.abc&quot;];
+        node [color=4];
+        &quot;collections.abc.Collection&quot; [URL=&quot;https://docs.python.org/3.6/library/collections.abc.html#collections.abc.Collection&quot;,
+            label=Collection,
+            shape=oval,
+            style=bold,
+            target=_top];
+        &quot;collections.abc.Container&quot; [URL=&quot;https://docs.python.org/3.6/library/collections.abc.html#collections.abc.Container&quot;,
+            label=Container,
+            shape=oval,
+            style=bold,
+            target=_top];
+        &quot;collections.abc.Iterable&quot; [URL=&quot;https://docs.python.org/3.6/library/collections.abc.html#collections.abc.Iterable&quot;,
+            label=Iterable,
+            shape=oval,
+            style=bold,
+            target=_top];
+        &quot;collections.abc.Set&quot; [URL=&quot;https://docs.python.org/3.6/library/collections.abc.html#collections.abc.Set&quot;,
+            label=Set,
+            shape=oval,
+            style=bold,
+            target=_top];
+        &quot;collections.abc.Sized&quot; [URL=&quot;https://docs.python.org/3.6/library/collections.abc.html#collections.abc.Sized&quot;,
+            label=Sized,
+            shape=oval,
+            style=bold,
+            target=_top];
+        &quot;collections.abc.Collection&quot; -&gt; &quot;collections.abc.Set&quot;;
+        &quot;collections.abc.Container&quot; -&gt; &quot;collections.abc.Collection&quot;;
+        &quot;collections.abc.Iterable&quot; -&gt; &quot;collections.abc.Collection&quot;;
+        &quot;collections.abc.Sized&quot; -&gt; &quot;collections.abc.Collection&quot;;
+    }
+    &quot;abjad.utilities.TypedFrozenset.TypedFrozenset&quot; -&gt; &quot;abjad.pitch.Set.Set&quot;;
+    &quot;builtins.object&quot; -&gt; &quot;abjad.utilities.TypedCollection.TypedCollection&quot;;
+    &quot;builtins.object&quot; -&gt; &quot;collections.abc.Container&quot;;
+    &quot;builtins.object&quot; -&gt; &quot;collections.abc.Iterable&quot;;
+    &quot;builtins.object&quot; -&gt; &quot;collections.abc.Sized&quot;;
+    &quot;collections.abc.Set&quot; -&gt; &quot;abjad.utilities.TypedFrozenset.TypedFrozenset&quot;;
+}</p></object></div>
+</div>
+<dl class="class">
+<dt id="abjad.utilities.TypedFrozenset.TypedFrozenset">
+<em class="property">class </em><code class="sig-prename descclassname">abjad.utilities.TypedFrozenset.</code><code class="sig-name descname">TypedFrozenset</code><span class="sig-paren">(</span><em class="sig-param">items=None</em>, <em class="sig-param">item_class=None</em><span class="sig-paren">)</span><a class="headerlink" href="#abjad.utilities.TypedFrozenset.TypedFrozenset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Typed fozen set.</p>
+<hr/><p class="class-header rubric">Attributes Summary</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abjad.utilities.TypedFrozenset.TypedFrozenset.__and__" title="abjad.utilities.TypedFrozenset.TypedFrozenset.__and__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__and__</span></code></a></p></td>
+<td><p>Logical AND of typed frozen set and <code class="docutils literal notranslate"><span class="pre">argument</span></code>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#abjad.utilities.TypedFrozenset.TypedFrozenset.__ge__" title="abjad.utilities.TypedFrozenset.TypedFrozenset.__ge__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__ge__</span></code></a></p></td>
+<td><p>Is true when typed frozen set is greater than or equal to <code class="docutils literal notranslate"><span class="pre">argument</span></code>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abjad.utilities.TypedFrozenset.TypedFrozenset.__gt__" title="abjad.utilities.TypedFrozenset.TypedFrozenset.__gt__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__gt__</span></code></a></p></td>
+<td><p>Is true when typed frozen set is greater than <code class="docutils literal notranslate"><span class="pre">argument</span></code>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#abjad.utilities.TypedFrozenset.TypedFrozenset.__hash__" title="abjad.utilities.TypedFrozenset.TypedFrozenset.__hash__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__hash__</span></code></a></p></td>
+<td><p>Hashes typed frozen set.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abjad.utilities.TypedFrozenset.TypedFrozenset.__le__" title="abjad.utilities.TypedFrozenset.TypedFrozenset.__le__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__le__</span></code></a></p></td>
+<td><p>Is true when typed frozen set is less than or equal to <code class="docutils literal notranslate"><span class="pre">argument</span></code>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#abjad.utilities.TypedFrozenset.TypedFrozenset.__lt__" title="abjad.utilities.TypedFrozenset.TypedFrozenset.__lt__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__lt__</span></code></a></p></td>
+<td><p>Is true when typed frozen set is less than <code class="docutils literal notranslate"><span class="pre">argument</span></code>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abjad.utilities.TypedFrozenset.TypedFrozenset.__or__" title="abjad.utilities.TypedFrozenset.TypedFrozenset.__or__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__or__</span></code></a></p></td>
+<td><p>Logical OR of typed frozen set and <code class="docutils literal notranslate"><span class="pre">argument</span></code>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#abjad.utilities.TypedFrozenset.TypedFrozenset.__sub__" title="abjad.utilities.TypedFrozenset.TypedFrozenset.__sub__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__sub__</span></code></a></p></td>
+<td><p>Subtracts <code class="docutils literal notranslate"><span class="pre">argument</span></code> from typed frozen set.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abjad.utilities.TypedFrozenset.TypedFrozenset.__xor__" title="abjad.utilities.TypedFrozenset.TypedFrozenset.__xor__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__xor__</span></code></a></p></td>
+<td><p>Logical XOR of typed frozen set and <code class="docutils literal notranslate"><span class="pre">argument</span></code>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#abjad.utilities.TypedFrozenset.TypedFrozenset.copy" title="abjad.utilities.TypedFrozenset.TypedFrozenset.copy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">copy</span></code></a></p></td>
+<td><p>Copies typed frozen set.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abjad.utilities.TypedFrozenset.TypedFrozenset.difference" title="abjad.utilities.TypedFrozenset.TypedFrozenset.difference"><code class="xref py py-obj docutils literal notranslate"><span class="pre">difference</span></code></a></p></td>
+<td><p>Typed frozen set set-minus <code class="docutils literal notranslate"><span class="pre">argument</span></code>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#abjad.utilities.TypedFrozenset.TypedFrozenset.intersection" title="abjad.utilities.TypedFrozenset.TypedFrozenset.intersection"><code class="xref py py-obj docutils literal notranslate"><span class="pre">intersection</span></code></a></p></td>
+<td><p>Set-theoretic intersection of typed frozen set and <code class="docutils literal notranslate"><span class="pre">argument</span></code>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abjad.utilities.TypedFrozenset.TypedFrozenset.isdisjoint" title="abjad.utilities.TypedFrozenset.TypedFrozenset.isdisjoint"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isdisjoint</span></code></a></p></td>
+<td><p>Is true when typed frozen set shares no elements with <code class="docutils literal notranslate"><span class="pre">argument</span></code>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#abjad.utilities.TypedFrozenset.TypedFrozenset.issubset" title="abjad.utilities.TypedFrozenset.TypedFrozenset.issubset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">issubset</span></code></a></p></td>
+<td><p>Is true when typed frozen set is a subset of <code class="docutils literal notranslate"><span class="pre">argument</span></code>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abjad.utilities.TypedFrozenset.TypedFrozenset.issuperset" title="abjad.utilities.TypedFrozenset.TypedFrozenset.issuperset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">issuperset</span></code></a></p></td>
+<td><p>Is true when typed frozen set is a superset of <code class="docutils literal notranslate"><span class="pre">argument</span></code>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#abjad.utilities.TypedFrozenset.TypedFrozenset.symmetric_difference" title="abjad.utilities.TypedFrozenset.TypedFrozenset.symmetric_difference"><code class="xref py py-obj docutils literal notranslate"><span class="pre">symmetric_difference</span></code></a></p></td>
+<td><p>Symmetric difference of typed frozen set and <code class="docutils literal notranslate"><span class="pre">argument</span></code>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abjad.utilities.TypedFrozenset.TypedFrozenset.union" title="abjad.utilities.TypedFrozenset.TypedFrozenset.union"><code class="xref py py-obj docutils literal notranslate"><span class="pre">union</span></code></a></p></td>
+<td><p>Union of typed frozen set and <code class="docutils literal notranslate"><span class="pre">argument</span></code>.</p></td>
+</tr>
+</tbody>
+</table>
+<hr/><p class="class-header rubric">Special methods</p>
+<dl class="method">
+<dt id="abjad.utilities.TypedFrozenset.TypedFrozenset.__and__">
+<em class="property">overridden </em><code class="sig-name descname">__and__</code><span class="sig-paren">(</span><em class="sig-param">argument</em><span class="sig-paren">)</span><a class="headerlink" href="#abjad.utilities.TypedFrozenset.TypedFrozenset.__and__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Logical AND of typed frozen set and <code class="docutils literal notranslate"><span class="pre">argument</span></code>.</p>
+<p>Returns new typed frozen set.</p>
+</dd></dl>
+
+<div class="inherited docutils container">
+<dl class="method">
+<dt id="abjad.utilities.TypedFrozenset.TypedFrozenset.__contains__">
+<code class="sig-prename descclassname">(<a class="reference internal" href="TypedCollection.html#abjad.utilities.TypedCollection.TypedCollection" title="abjad.utilities.TypedCollection.TypedCollection"><code class="descclassname docutils literal notranslate"><span class="pre">TypedCollection</span></code></a>).</code><code class="sig-name descname">__contains__</code><span class="sig-paren">(</span><em class="sig-param">item</em><span class="sig-paren">)</span><a class="headerlink" href="#abjad.utilities.TypedFrozenset.TypedFrozenset.__contains__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Is true when typed collection contains <code class="docutils literal notranslate"><span class="pre">item</span></code>.</p>
+<p>Returns true or false.</p>
+</dd></dl>
+
+</div>
+<div class="inherited docutils container">
+<dl class="method">
+<dt id="abjad.utilities.TypedFrozenset.TypedFrozenset.__eq__">
+<code class="sig-prename descclassname">(<a class="reference internal" href="TypedCollection.html#abjad.utilities.TypedCollection.TypedCollection" title="abjad.utilities.TypedCollection.TypedCollection"><code class="descclassname docutils literal notranslate"><span class="pre">TypedCollection</span></code></a>).</code><code class="sig-name descname">__eq__</code><span class="sig-paren">(</span><em class="sig-param">argument</em><span class="sig-paren">)</span><a class="headerlink" href="#abjad.utilities.TypedFrozenset.TypedFrozenset.__eq__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Is true when <code class="docutils literal notranslate"><span class="pre">argument</span></code> is a typed collection with items that
+compare equal to those of this typed collection.</p>
+<p>Returns true or false.</p>
+</dd></dl>
+
+</div>
+<div class="inherited docutils container">
+<dl class="method">
+<dt id="abjad.utilities.TypedFrozenset.TypedFrozenset.__format__">
+<code class="sig-prename descclassname">(<a class="reference internal" href="TypedCollection.html#abjad.utilities.TypedCollection.TypedCollection" title="abjad.utilities.TypedCollection.TypedCollection"><code class="descclassname docutils literal notranslate"><span class="pre">TypedCollection</span></code></a>).</code><code class="sig-name descname">__format__</code><span class="sig-paren">(</span><em class="sig-param">format_specification=''</em><span class="sig-paren">)</span><a class="headerlink" href="#abjad.utilities.TypedFrozenset.TypedFrozenset.__format__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Formats object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.6/library/stdtypes.html#str" title="(in Python v3.6)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<dl class="method">
+<dt id="abjad.utilities.TypedFrozenset.TypedFrozenset.__ge__">
+<em class="property">overridden </em><code class="sig-name descname">__ge__</code><span class="sig-paren">(</span><em class="sig-param">argument</em><span class="sig-paren">)</span><a class="headerlink" href="#abjad.utilities.TypedFrozenset.TypedFrozenset.__ge__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Is true when typed frozen set is greater than or equal to <code class="docutils literal notranslate"><span class="pre">argument</span></code>.</p>
+<p>Returns true or false.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="abjad.utilities.TypedFrozenset.TypedFrozenset.__gt__">
+<em class="property">overridden </em><code class="sig-name descname">__gt__</code><span class="sig-paren">(</span><em class="sig-param">argument</em><span class="sig-paren">)</span><a class="headerlink" href="#abjad.utilities.TypedFrozenset.TypedFrozenset.__gt__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Is true when typed frozen set is greater than <code class="docutils literal notranslate"><span class="pre">argument</span></code>.</p>
+<p>Returns true or false.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="abjad.utilities.TypedFrozenset.TypedFrozenset.__hash__">
+<em class="property">overridden </em><code class="sig-name descname">__hash__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjad.utilities.TypedFrozenset.TypedFrozenset.__hash__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Hashes typed frozen set.</p>
+<p>Returns integer.</p>
+</dd></dl>
+
+<div class="inherited docutils container">
+<dl class="method">
+<dt id="abjad.utilities.TypedFrozenset.TypedFrozenset.__iter__">
+<code class="sig-prename descclassname">(<a class="reference internal" href="TypedCollection.html#abjad.utilities.TypedCollection.TypedCollection" title="abjad.utilities.TypedCollection.TypedCollection"><code class="descclassname docutils literal notranslate"><span class="pre">TypedCollection</span></code></a>).</code><code class="sig-name descname">__iter__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjad.utilities.TypedFrozenset.TypedFrozenset.__iter__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Iterates typed collection.</p>
+<p>Returns generator.</p>
+</dd></dl>
+
+</div>
+<dl class="method">
+<dt id="abjad.utilities.TypedFrozenset.TypedFrozenset.__le__">
+<em class="property">overridden </em><code class="sig-name descname">__le__</code><span class="sig-paren">(</span><em class="sig-param">argument</em><span class="sig-paren">)</span><a class="headerlink" href="#abjad.utilities.TypedFrozenset.TypedFrozenset.__le__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Is true when typed frozen set is less than or equal to <code class="docutils literal notranslate"><span class="pre">argument</span></code>.</p>
+<p>Returns true or false.</p>
+</dd></dl>
+
+<div class="inherited docutils container">
+<dl class="method">
+<dt id="abjad.utilities.TypedFrozenset.TypedFrozenset.__len__">
+<code class="sig-prename descclassname">(<a class="reference internal" href="TypedCollection.html#abjad.utilities.TypedCollection.TypedCollection" title="abjad.utilities.TypedCollection.TypedCollection"><code class="descclassname docutils literal notranslate"><span class="pre">TypedCollection</span></code></a>).</code><code class="sig-name descname">__len__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjad.utilities.TypedFrozenset.TypedFrozenset.__len__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets length of typed collection.</p>
+<p>Returns nonnegative integer.</p>
+</dd></dl>
+
+</div>
+<dl class="method">
+<dt id="abjad.utilities.TypedFrozenset.TypedFrozenset.__lt__">
+<em class="property">overridden </em><code class="sig-name descname">__lt__</code><span class="sig-paren">(</span><em class="sig-param">argument</em><span class="sig-paren">)</span><a class="headerlink" href="#abjad.utilities.TypedFrozenset.TypedFrozenset.__lt__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Is true when typed frozen set is less than <code class="docutils literal notranslate"><span class="pre">argument</span></code>.</p>
+<p>Returns true or false.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="abjad.utilities.TypedFrozenset.TypedFrozenset.__or__">
+<em class="property">overridden </em><code class="sig-name descname">__or__</code><span class="sig-paren">(</span><em class="sig-param">argument</em><span class="sig-paren">)</span><a class="headerlink" href="#abjad.utilities.TypedFrozenset.TypedFrozenset.__or__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Logical OR of typed frozen set and <code class="docutils literal notranslate"><span class="pre">argument</span></code>.</p>
+<p>Returns new typed frozen set.</p>
+</dd></dl>
+
+<div class="inherited docutils container">
+<dl class="method">
+<dt id="abjad.utilities.TypedFrozenset.TypedFrozenset.__rand__">
+<code class="sig-prename descclassname">(<a class="reference external" href="https://docs.python.org/3.6/library/collections.abc.html#collections.abc.Set" title="(in Python v3.6)"><code class="descclassname docutils literal notranslate"><span class="pre">Set</span></code></a>).</code><code class="sig-name descname">__rand__</code><span class="sig-paren">(</span><em class="sig-param">other</em><span class="sig-paren">)</span><a class="headerlink" href="#abjad.utilities.TypedFrozenset.TypedFrozenset.__rand__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="inherited docutils container">
+<dl class="method">
+<dt id="abjad.utilities.TypedFrozenset.TypedFrozenset.__repr__">
+<code class="sig-prename descclassname">(<a class="reference internal" href="TypedCollection.html#abjad.utilities.TypedCollection.TypedCollection" title="abjad.utilities.TypedCollection.TypedCollection"><code class="descclassname docutils literal notranslate"><span class="pre">TypedCollection</span></code></a>).</code><code class="sig-name descname">__repr__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjad.utilities.TypedFrozenset.TypedFrozenset.__repr__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets interpreter representation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.6/library/stdtypes.html#str" title="(in Python v3.6)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="inherited docutils container">
+<dl class="method">
+<dt id="abjad.utilities.TypedFrozenset.TypedFrozenset.__ror__">
+<code class="sig-prename descclassname">(<a class="reference external" href="https://docs.python.org/3.6/library/collections.abc.html#collections.abc.Set" title="(in Python v3.6)"><code class="descclassname docutils literal notranslate"><span class="pre">Set</span></code></a>).</code><code class="sig-name descname">__ror__</code><span class="sig-paren">(</span><em class="sig-param">other</em><span class="sig-paren">)</span><a class="headerlink" href="#abjad.utilities.TypedFrozenset.TypedFrozenset.__ror__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="inherited docutils container">
+<dl class="method">
+<dt id="abjad.utilities.TypedFrozenset.TypedFrozenset.__rsub__">
+<code class="sig-prename descclassname">(<a class="reference external" href="https://docs.python.org/3.6/library/collections.abc.html#collections.abc.Set" title="(in Python v3.6)"><code class="descclassname docutils literal notranslate"><span class="pre">Set</span></code></a>).</code><code class="sig-name descname">__rsub__</code><span class="sig-paren">(</span><em class="sig-param">other</em><span class="sig-paren">)</span><a class="headerlink" href="#abjad.utilities.TypedFrozenset.TypedFrozenset.__rsub__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="inherited docutils container">
+<dl class="method">
+<dt id="abjad.utilities.TypedFrozenset.TypedFrozenset.__rxor__">
+<code class="sig-prename descclassname">(<a class="reference external" href="https://docs.python.org/3.6/library/collections.abc.html#collections.abc.Set" title="(in Python v3.6)"><code class="descclassname docutils literal notranslate"><span class="pre">Set</span></code></a>).</code><code class="sig-name descname">__rxor__</code><span class="sig-paren">(</span><em class="sig-param">other</em><span class="sig-paren">)</span><a class="headerlink" href="#abjad.utilities.TypedFrozenset.TypedFrozenset.__rxor__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<dl class="method">
+<dt id="abjad.utilities.TypedFrozenset.TypedFrozenset.__sub__">
+<em class="property">overridden </em><code class="sig-name descname">__sub__</code><span class="sig-paren">(</span><em class="sig-param">argument</em><span class="sig-paren">)</span><a class="headerlink" href="#abjad.utilities.TypedFrozenset.TypedFrozenset.__sub__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Subtracts <code class="docutils literal notranslate"><span class="pre">argument</span></code> from typed frozen set.</p>
+<p>Returns new typed frozen set.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="abjad.utilities.TypedFrozenset.TypedFrozenset.__xor__">
+<em class="property">overridden </em><code class="sig-name descname">__xor__</code><span class="sig-paren">(</span><em class="sig-param">argument</em><span class="sig-paren">)</span><a class="headerlink" href="#abjad.utilities.TypedFrozenset.TypedFrozenset.__xor__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Logical XOR of typed frozen set and <code class="docutils literal notranslate"><span class="pre">argument</span></code>.</p>
+<p>Returns new typed frozen set.</p>
+</dd></dl>
+
+<hr/><p class="class-header rubric">Methods</p>
+<dl class="method">
+<dt id="abjad.utilities.TypedFrozenset.TypedFrozenset.copy">
+<code class="sig-name descname">copy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjad.utilities.TypedFrozenset.TypedFrozenset.copy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Copies typed frozen set.</p>
+<p>Returns new typed frozen set.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="abjad.utilities.TypedFrozenset.TypedFrozenset.difference">
+<code class="sig-name descname">difference</code><span class="sig-paren">(</span><em class="sig-param">argument</em><span class="sig-paren">)</span><a class="headerlink" href="#abjad.utilities.TypedFrozenset.TypedFrozenset.difference" title="Permalink to this definition">¶</a></dt>
+<dd><p>Typed frozen set set-minus <code class="docutils literal notranslate"><span class="pre">argument</span></code>.</p>
+<p>Returns new typed frozen set.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="abjad.utilities.TypedFrozenset.TypedFrozenset.intersection">
+<code class="sig-name descname">intersection</code><span class="sig-paren">(</span><em class="sig-param">argument</em><span class="sig-paren">)</span><a class="headerlink" href="#abjad.utilities.TypedFrozenset.TypedFrozenset.intersection" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set-theoretic intersection of typed frozen set and <code class="docutils literal notranslate"><span class="pre">argument</span></code>.</p>
+<p>Returns new typed frozen set.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="abjad.utilities.TypedFrozenset.TypedFrozenset.isdisjoint">
+<em class="property">overridden </em><code class="sig-name descname">isdisjoint</code><span class="sig-paren">(</span><em class="sig-param">argument</em><span class="sig-paren">)</span><a class="headerlink" href="#abjad.utilities.TypedFrozenset.TypedFrozenset.isdisjoint" title="Permalink to this definition">¶</a></dt>
+<dd><p>Is true when typed frozen set shares no elements with <code class="docutils literal notranslate"><span class="pre">argument</span></code>.</p>
+<p>Returns true or false.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="abjad.utilities.TypedFrozenset.TypedFrozenset.issubset">
+<code class="sig-name descname">issubset</code><span class="sig-paren">(</span><em class="sig-param">argument</em><span class="sig-paren">)</span><a class="headerlink" href="#abjad.utilities.TypedFrozenset.TypedFrozenset.issubset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Is true when typed frozen set is a subset of <code class="docutils literal notranslate"><span class="pre">argument</span></code>.</p>
+<p>Returns true or false.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="abjad.utilities.TypedFrozenset.TypedFrozenset.issuperset">
+<code class="sig-name descname">issuperset</code><span class="sig-paren">(</span><em class="sig-param">argument</em><span class="sig-paren">)</span><a class="headerlink" href="#abjad.utilities.TypedFrozenset.TypedFrozenset.issuperset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Is true when typed frozen set is a superset of <code class="docutils literal notranslate"><span class="pre">argument</span></code>.</p>
+<p>Returns true or false.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="abjad.utilities.TypedFrozenset.TypedFrozenset.symmetric_difference">
+<code class="sig-name descname">symmetric_difference</code><span class="sig-paren">(</span><em class="sig-param">argument</em><span class="sig-paren">)</span><a class="headerlink" href="#abjad.utilities.TypedFrozenset.TypedFrozenset.symmetric_difference" title="Permalink to this definition">¶</a></dt>
+<dd><p>Symmetric difference of typed frozen set and <code class="docutils literal notranslate"><span class="pre">argument</span></code>.</p>
+<p>Returns new typed frozen set.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="abjad.utilities.TypedFrozenset.TypedFrozenset.union">
+<code class="sig-name descname">union</code><span class="sig-paren">(</span><em class="sig-param">argument</em><span class="sig-paren">)</span><a class="headerlink" href="#abjad.utilities.TypedFrozenset.TypedFrozenset.union" title="Permalink to this definition">¶</a></dt>
+<dd><p>Union of typed frozen set and <code class="docutils literal notranslate"><span class="pre">argument</span></code>.</p>
+<p>Returns new typed frozen set.</p>
+</dd></dl>
+
+<hr/><p class="class-header rubric">Read-only properties</p>
+<div class="inherited docutils container">
+<dl class="attribute">
+<dt id="abjad.utilities.TypedFrozenset.TypedFrozenset.item_class">
+<code class="sig-prename descclassname">(<a class="reference internal" href="TypedCollection.html#abjad.utilities.TypedCollection.TypedCollection" title="abjad.utilities.TypedCollection.TypedCollection"><code class="descclassname docutils literal notranslate"><span class="pre">TypedCollection</span></code></a>).</code><code class="sig-name descname">item_class</code><a class="headerlink" href="#abjad.utilities.TypedFrozenset.TypedFrozenset.item_class" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets item class of collection.</p>
+<p>Collection coerces items according to <code class="docutils literal notranslate"><span class="pre">item_class</span></code>.</p>
+<p>Returns class.</p>
+</dd></dl>
+
+</div>
+<div class="inherited docutils container">
+<dl class="attribute">
+<dt id="abjad.utilities.TypedFrozenset.TypedFrozenset.items">
+<code class="sig-prename descclassname">(<a class="reference internal" href="TypedCollection.html#abjad.utilities.TypedCollection.TypedCollection" title="abjad.utilities.TypedCollection.TypedCollection"><code class="descclassname docutils literal notranslate"><span class="pre">TypedCollection</span></code></a>).</code><code class="sig-name descname">items</code><a class="headerlink" href="#abjad.utilities.TypedFrozenset.TypedFrozenset.items" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets items in collection.</p>
+<p>Returns list.</p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="TypedList.html" class="btn btn-neutral float-right" title="TypedList" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="TypedCounter.html" class="btn btn-neutral float-left" title="TypedCounter" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2008-2019, Trevor Bača &amp; Josiah Wolf Oberholtzer
+      <span class="lastupdated">
+        Last updated on Dec 17, 2019.
+      </span>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

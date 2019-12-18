@@ -1,0 +1,854 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>OrderedDict &mdash; Abjad 3.0.0 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+        <script defer="defer" type="text/javascript" src="../../../_static/copybutton.js"></script>
+        <script type="text/javascript" src="../../../_static/ga.js"></script>
+        <script defer="defer" type="text/javascript" src="../../../_static/lightbox2/js/lightbox.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/abjad.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/uqbar.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/lightbox2/css/lightbox.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Pattern" href="Pattern.html" />
+    <link rel="prev" title="Offset" href="Offset.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> Abjad
+          
+
+          
+            
+            <img src="../../../_static/abjad-logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                3.0.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../gallery.html">Score gallery</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../for_beginners/index.html">For beginners</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../literature_examples/index.html">Literature examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../core_concepts/index.html">Core concepts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../reference_manual/index.html">Reference manual</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Abjad API</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">abjad</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../cli.html">cli</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../core/index.html">core</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../demos/index.html">demos</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../enums.html">enums</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../exceptions.html">exceptions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../ext/index.html">ext</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../indicators/index.html">indicators</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../instruments.html">instruments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../iox.html">iox</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../lilypondfile/index.html">lilypondfile</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../lilypondnames/index.html">lilypondnames</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../markups.html">markups</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../mathtools.html">mathtools</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../meter.html">meter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../parser/index.html">parser</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pitch/index.html">pitch</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../rhythmtrees.html">rhythmtrees</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../scheme.html">scheme</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../segments/index.html">segments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../spanners.html">spanners</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../system/index.html">system</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../timespans.html">timespans</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../top/index.html">top</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">utilities</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="CyclicTuple.html">CyclicTuple</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Duration.html">Duration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Enumerator.html">Enumerator</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Expression.html">Expression</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Multiplier.html">Multiplier</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Offset.html">Offset</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">OrderedDict</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Pattern.html">Pattern</a></li>
+<li class="toctree-l4"><a class="reference internal" href="PatternTuple.html">PatternTuple</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Sequence.html">Sequence</a></li>
+<li class="toctree-l4"><a class="reference internal" href="SortedCollection.html">SortedCollection</a></li>
+<li class="toctree-l4"><a class="reference internal" href="String.html">String</a></li>
+<li class="toctree-l4"><a class="reference internal" href="TypedCollection.html">TypedCollection</a></li>
+<li class="toctree-l4"><a class="reference internal" href="TypedCounter.html">TypedCounter</a></li>
+<li class="toctree-l4"><a class="reference internal" href="TypedFrozenset.html">TypedFrozenset</a></li>
+<li class="toctree-l4"><a class="reference internal" href="TypedList.html">TypedList</a></li>
+<li class="toctree-l4"><a class="reference internal" href="TypedTuple.html">TypedTuple</a></li>
+<li class="toctree-l4"><a class="reference internal" href="compare_images.html">compare_images</a></li>
+<li class="toctree-l4"><a class="reference internal" href="list_all_classes.html">list_all_classes</a></li>
+<li class="toctree-l4"><a class="reference internal" href="list_all_functions.html">list_all_functions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="yield_all_modules.html">yield_all_modules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="DurationInequality.html">DurationInequality</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Inequality.html">Inequality</a></li>
+<li class="toctree-l4"><a class="reference internal" href="LengthInequality.html">LengthInequality</a></li>
+<li class="toctree-l4"><a class="reference internal" href="PitchInequality.html">PitchInequality</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../abjadext/index.html">abjadext</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../appendices/index.html">Appendices</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Abjad</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content style-external-links">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Abjad API</a> &raquo;</li>
+        
+          <li><a href="../index.html">abjad</a> &raquo;</li>
+        
+          <li><a href="index.html">utilities</a> &raquo;</li>
+        
+      <li>OrderedDict</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../../_sources/api/abjad/utilities/OrderedDict.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-abjad.utilities.OrderedDict">
+<span id="ordereddict"></span><span id="abjad-utilities-ordereddict"></span><h1>OrderedDict<a class="headerlink" href="#module-abjad.utilities.OrderedDict" title="Permalink to this headline">¶</a></h1>
+<div class="svg-container docutils container">
+<div class="graphviz"><object data="../../../_images/inheritance-ed71f6ad64cb61391f993f0b44639b16a5ceddb7.svg" type="image/svg+xml" class="inheritance graphviz">
+<p class="warning">digraph InheritanceGraph {
+    graph [bgcolor=transparent,
+        color=lightsteelblue2,
+        fontname=Arial,
+        fontsize=10,
+        outputorder=edgesfirst,
+        overlap=prism,
+        penwidth=2,
+        rankdir=LR,
+        splines=spline,
+        style=&quot;dashed, rounded&quot;,
+        truecolor=true];
+    node [colorscheme=pastel19,
+        fontname=Arial,
+        fontsize=10,
+        height=0,
+        penwidth=2,
+        shape=box,
+        style=&quot;filled, rounded&quot;,
+        width=0];
+    edge [color=lightslategrey,
+        penwidth=1];
+    subgraph &quot;cluster_abjad.utilities&quot; {
+        graph [label=&quot;abjad.utilities&quot;];
+        node [color=1];
+        &quot;abjad.utilities.OrderedDict.OrderedDict&quot; [URL=&quot;../api/abjad/utilities/OrderedDict.html#abjad.utilities.OrderedDict.OrderedDict&quot;,
+            color=black,
+            fontcolor=white,
+            label=&quot;Ordered\nDict&quot;,
+            target=_top];
+        &quot;abjad.utilities.TypedCollection.TypedCollection&quot; [URL=&quot;../api/abjad/utilities/TypedCollection.html#abjad.utilities.TypedCollection.TypedCollection&quot;,
+            label=&quot;Typed\nCollection&quot;,
+            target=_top];
+        &quot;abjad.utilities.TypedCollection.TypedCollection&quot; -&gt; &quot;abjad.utilities.OrderedDict.OrderedDict&quot;;
+    }
+    subgraph cluster_builtins {
+        graph [label=builtins];
+        node [color=2];
+        &quot;builtins.object&quot; [URL=&quot;https://docs.python.org/3.6/library/functions.html#object&quot;,
+            label=object,
+            target=_top];
+    }
+    subgraph &quot;cluster_collections.abc&quot; {
+        graph [label=&quot;collections.abc&quot;];
+        node [color=3];
+        &quot;collections.abc.Collection&quot; [URL=&quot;https://docs.python.org/3.6/library/collections.abc.html#collections.abc.Collection&quot;,
+            label=Collection,
+            shape=oval,
+            style=bold,
+            target=_top];
+        &quot;collections.abc.Container&quot; [URL=&quot;https://docs.python.org/3.6/library/collections.abc.html#collections.abc.Container&quot;,
+            label=Container,
+            shape=oval,
+            style=bold,
+            target=_top];
+        &quot;collections.abc.Iterable&quot; [URL=&quot;https://docs.python.org/3.6/library/collections.abc.html#collections.abc.Iterable&quot;,
+            label=Iterable,
+            shape=oval,
+            style=bold,
+            target=_top];
+        &quot;collections.abc.Mapping&quot; [URL=&quot;https://docs.python.org/3.6/library/collections.abc.html#collections.abc.Mapping&quot;,
+            label=Mapping,
+            shape=oval,
+            style=bold,
+            target=_top];
+        &quot;collections.abc.MutableMapping&quot; [URL=&quot;https://docs.python.org/3.6/library/collections.abc.html#collections.abc.MutableMapping&quot;,
+            label=&quot;Mutable\nMapping&quot;,
+            shape=oval,
+            style=bold,
+            target=_top];
+        &quot;collections.abc.Sized&quot; [URL=&quot;https://docs.python.org/3.6/library/collections.abc.html#collections.abc.Sized&quot;,
+            label=Sized,
+            shape=oval,
+            style=bold,
+            target=_top];
+        &quot;collections.abc.Collection&quot; -&gt; &quot;collections.abc.Mapping&quot;;
+        &quot;collections.abc.Container&quot; -&gt; &quot;collections.abc.Collection&quot;;
+        &quot;collections.abc.Iterable&quot; -&gt; &quot;collections.abc.Collection&quot;;
+        &quot;collections.abc.Mapping&quot; -&gt; &quot;collections.abc.MutableMapping&quot;;
+        &quot;collections.abc.Sized&quot; -&gt; &quot;collections.abc.Collection&quot;;
+    }
+    &quot;builtins.object&quot; -&gt; &quot;abjad.utilities.TypedCollection.TypedCollection&quot;;
+    &quot;builtins.object&quot; -&gt; &quot;collections.abc.Container&quot;;
+    &quot;builtins.object&quot; -&gt; &quot;collections.abc.Iterable&quot;;
+    &quot;builtins.object&quot; -&gt; &quot;collections.abc.Sized&quot;;
+    &quot;collections.abc.MutableMapping&quot; -&gt; &quot;abjad.utilities.OrderedDict.OrderedDict&quot;;
+}</p></object></div>
+</div>
+<dl class="class">
+<dt id="abjad.utilities.OrderedDict.OrderedDict">
+<em class="property">class </em><code class="sig-prename descclassname">abjad.utilities.OrderedDict.</code><code class="sig-name descname">OrderedDict</code><span class="sig-paren">(</span><em class="sig-param">items=None</em>, <em class="sig-param">item_class=None</em><span class="sig-paren">)</span><a class="headerlink" href="#abjad.utilities.OrderedDict.OrderedDict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Ordered dictionary.</p>
+<div class="example docutils container">
+<p>Initializes from list of pairs:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">dictionary</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">OrderedDict</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="p">[(</span><span class="s2">&quot;color&quot;</span><span class="p">,</span> <span class="s2">&quot;red&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;directive&quot;</span><span class="p">,</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Markup</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\italic Allegretto&quot;</span><span class="p">)),]</span>
+<span class="gp">... </span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">abjad</span><span class="o">.</span><span class="n">f</span><span class="p">(</span><span class="n">dictionary</span><span class="p">)</span>
+<span class="go">abjad.OrderedDict(</span>
+<span class="go">    [</span>
+<span class="go">        (&#39;color&#39;, &#39;red&#39;),</span>
+<span class="go">        (</span>
+<span class="go">            &#39;directive&#39;,</span>
+<span class="go">            abjad.Markup(</span>
+<span class="go">                contents=[</span>
+<span class="go">                    abjad.MarkupCommand(</span>
+<span class="go">                        &#39;italic&#39;,</span>
+<span class="go">                        &#39;Allegretto&#39;</span>
+<span class="go">                        ),</span>
+<span class="go">                    ],</span>
+<span class="go">                ),</span>
+<span class="go">            ),</span>
+<span class="go">        ]</span>
+<span class="go">    )</span>
+</pre></div>
+</div>
+</div>
+<div class="example docutils container">
+<p>Initializes from built-in dictionary:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">dictionary</span> <span class="o">=</span> <span class="p">{</span>
+<span class="gp">... </span>    <span class="s2">&quot;color&quot;</span><span class="p">:</span> <span class="s2">&quot;red&quot;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="s2">&quot;directive&quot;</span><span class="p">:</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Markup</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\italic Allegretto&quot;</span><span class="p">),</span>
+<span class="gp">... </span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dictionary</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">OrderedDict</span><span class="p">(</span><span class="n">dictionary</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">abjad</span><span class="o">.</span><span class="n">f</span><span class="p">(</span><span class="n">dictionary</span><span class="p">)</span>
+<span class="go">abjad.OrderedDict(</span>
+<span class="go">    [</span>
+<span class="go">        (&#39;color&#39;, &#39;red&#39;),</span>
+<span class="go">        (</span>
+<span class="go">            &#39;directive&#39;,</span>
+<span class="go">            abjad.Markup(</span>
+<span class="go">                contents=[</span>
+<span class="go">                    abjad.MarkupCommand(</span>
+<span class="go">                        &#39;italic&#39;,</span>
+<span class="go">                        &#39;Allegretto&#39;</span>
+<span class="go">                        ),</span>
+<span class="go">                    ],</span>
+<span class="go">                ),</span>
+<span class="go">            ),</span>
+<span class="go">        ]</span>
+<span class="go">    )</span>
+</pre></div>
+</div>
+</div>
+<div class="example docutils container">
+<p>Initializes from other ordered dictionary:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">dictionary_1</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">OrderedDict</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="p">[(</span><span class="s2">&quot;color&quot;</span><span class="p">,</span> <span class="s2">&quot;red&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;directive&quot;</span><span class="p">,</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Markup</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\italic Allegretto&quot;</span><span class="p">)),]</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dictionary_2</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">OrderedDict</span><span class="p">(</span><span class="n">dictionary_1</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">abjad</span><span class="o">.</span><span class="n">f</span><span class="p">(</span><span class="n">dictionary_2</span><span class="p">)</span>
+<span class="go">abjad.OrderedDict(</span>
+<span class="go">    [</span>
+<span class="go">        (&#39;color&#39;, &#39;red&#39;),</span>
+<span class="go">        (</span>
+<span class="go">            &#39;directive&#39;,</span>
+<span class="go">            abjad.Markup(</span>
+<span class="go">                contents=[</span>
+<span class="go">                    abjad.MarkupCommand(</span>
+<span class="go">                        &#39;italic&#39;,</span>
+<span class="go">                        &#39;Allegretto&#39;</span>
+<span class="go">                        ),</span>
+<span class="go">                    ],</span>
+<span class="go">                ),</span>
+<span class="go">            ),</span>
+<span class="go">        ]</span>
+<span class="go">    )</span>
+</pre></div>
+</div>
+</div>
+<hr/><p class="class-header rubric">Attributes Summary</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abjad.utilities.OrderedDict.OrderedDict.__cmp__" title="abjad.utilities.OrderedDict.OrderedDict.__cmp__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__cmp__</span></code></a></p></td>
+<td><p>Aliases OrderedDict.__cmp__().</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#abjad.utilities.OrderedDict.OrderedDict.__contains__" title="abjad.utilities.OrderedDict.OrderedDict.__contains__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__contains__</span></code></a></p></td>
+<td><p>Aliases OrderedDict.__contains__().</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abjad.utilities.OrderedDict.OrderedDict.__delitem__" title="abjad.utilities.OrderedDict.OrderedDict.__delitem__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__delitem__</span></code></a></p></td>
+<td><p>Aliases OrderedDict.__delitem__().</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#abjad.utilities.OrderedDict.OrderedDict.__ge__" title="abjad.utilities.OrderedDict.OrderedDict.__ge__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__ge__</span></code></a></p></td>
+<td><p>Is true when typed ordered dictionary is greater than or equal to <code class="docutils literal notranslate"><span class="pre">argument</span></code>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abjad.utilities.OrderedDict.OrderedDict.__getitem__" title="abjad.utilities.OrderedDict.OrderedDict.__getitem__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__getitem__</span></code></a></p></td>
+<td><p>Gets item or slice identified by <code class="docutils literal notranslate"><span class="pre">argument</span></code>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#abjad.utilities.OrderedDict.OrderedDict.__gt__" title="abjad.utilities.OrderedDict.OrderedDict.__gt__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__gt__</span></code></a></p></td>
+<td><p>Is true when typed ordered dictionary is greater than <code class="docutils literal notranslate"><span class="pre">argument</span></code>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abjad.utilities.OrderedDict.OrderedDict.__le__" title="abjad.utilities.OrderedDict.OrderedDict.__le__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__le__</span></code></a></p></td>
+<td><p>Is true when typed ordered dictionary is less than or equal to <code class="docutils literal notranslate"><span class="pre">argument</span></code>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#abjad.utilities.OrderedDict.OrderedDict.__lt__" title="abjad.utilities.OrderedDict.OrderedDict.__lt__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__lt__</span></code></a></p></td>
+<td><p>Is true when typed ordered dictionary is less than <code class="docutils literal notranslate"><span class="pre">argument</span></code>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abjad.utilities.OrderedDict.OrderedDict.__reversed__" title="abjad.utilities.OrderedDict.OrderedDict.__reversed__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__reversed__</span></code></a></p></td>
+<td><p>Aliases OrderedDict.__reversed__().</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#abjad.utilities.OrderedDict.OrderedDict.__setitem__" title="abjad.utilities.OrderedDict.OrderedDict.__setitem__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__setitem__</span></code></a></p></td>
+<td><p>Changes items in <code class="docutils literal notranslate"><span class="pre">argument</span></code> to items and sets.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abjad.utilities.OrderedDict.OrderedDict.clear" title="abjad.utilities.OrderedDict.OrderedDict.clear"><code class="xref py py-obj docutils literal notranslate"><span class="pre">clear</span></code></a></p></td>
+<td><p>Clears typed ordered dictionary.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#abjad.utilities.OrderedDict.OrderedDict.copy" title="abjad.utilities.OrderedDict.OrderedDict.copy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">copy</span></code></a></p></td>
+<td><p>Copies typed ordered dictionary.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abjad.utilities.OrderedDict.OrderedDict.get" title="abjad.utilities.OrderedDict.OrderedDict.get"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get</span></code></a></p></td>
+<td><p>Aliases OrderedDict.get().</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#abjad.utilities.OrderedDict.OrderedDict.has_key" title="abjad.utilities.OrderedDict.OrderedDict.has_key"><code class="xref py py-obj docutils literal notranslate"><span class="pre">has_key</span></code></a></p></td>
+<td><p>Aliases OrderdDict.has_key().</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abjad.utilities.OrderedDict.OrderedDict.items" title="abjad.utilities.OrderedDict.OrderedDict.items"><code class="xref py py-obj docutils literal notranslate"><span class="pre">items</span></code></a></p></td>
+<td><p>Aliases OrderedDict.items().</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#abjad.utilities.OrderedDict.OrderedDict.keys" title="abjad.utilities.OrderedDict.OrderedDict.keys"><code class="xref py py-obj docutils literal notranslate"><span class="pre">keys</span></code></a></p></td>
+<td><p>Aliases OrderedDict.keys().</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abjad.utilities.OrderedDict.OrderedDict.pop" title="abjad.utilities.OrderedDict.OrderedDict.pop"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pop</span></code></a></p></td>
+<td><p>Aliases OrderedDict.pop().</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#abjad.utilities.OrderedDict.OrderedDict.popitem" title="abjad.utilities.OrderedDict.OrderedDict.popitem"><code class="xref py py-obj docutils literal notranslate"><span class="pre">popitem</span></code></a></p></td>
+<td><p>Aliases OrderedDict.popitem().</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abjad.utilities.OrderedDict.OrderedDict.setdefault" title="abjad.utilities.OrderedDict.OrderedDict.setdefault"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setdefault</span></code></a></p></td>
+<td><p>Aliases OrderedDict.setdefault().</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#abjad.utilities.OrderedDict.OrderedDict.sort" title="abjad.utilities.OrderedDict.OrderedDict.sort"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sort</span></code></a></p></td>
+<td><p>Sorts ordered dictionary (in place).</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abjad.utilities.OrderedDict.OrderedDict.update" title="abjad.utilities.OrderedDict.OrderedDict.update"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update</span></code></a></p></td>
+<td><p>Aliases OrderedDict.update().</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#abjad.utilities.OrderedDict.OrderedDict.values" title="abjad.utilities.OrderedDict.OrderedDict.values"><code class="xref py py-obj docutils literal notranslate"><span class="pre">values</span></code></a></p></td>
+<td><p>Aliases OrderedDict.values().</p></td>
+</tr>
+</tbody>
+</table>
+<hr/><p class="class-header rubric">Special methods</p>
+<dl class="method">
+<dt id="abjad.utilities.OrderedDict.OrderedDict.__cmp__">
+<code class="sig-name descname">__cmp__</code><span class="sig-paren">(</span><em class="sig-param">argument</em><span class="sig-paren">)</span><a class="headerlink" href="#abjad.utilities.OrderedDict.OrderedDict.__cmp__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Aliases OrderedDict.__cmp__().</p>
+<p>Returns true or false.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="abjad.utilities.OrderedDict.OrderedDict.__contains__">
+<em class="property">overridden </em><code class="sig-name descname">__contains__</code><span class="sig-paren">(</span><em class="sig-param">key</em><span class="sig-paren">)</span><a class="headerlink" href="#abjad.utilities.OrderedDict.OrderedDict.__contains__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Aliases OrderedDict.__contains__().</p>
+<p>Returns true or false.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="abjad.utilities.OrderedDict.OrderedDict.__delitem__">
+<em class="property">overridden </em><code class="sig-name descname">__delitem__</code><span class="sig-paren">(</span><em class="sig-param">i</em><span class="sig-paren">)</span><a class="headerlink" href="#abjad.utilities.OrderedDict.OrderedDict.__delitem__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Aliases OrderedDict.__delitem__().</p>
+<p>Returns none.</p>
+</dd></dl>
+
+<div class="inherited docutils container">
+<dl class="method">
+<dt id="abjad.utilities.OrderedDict.OrderedDict.__eq__">
+<code class="sig-prename descclassname">(<a class="reference internal" href="TypedCollection.html#abjad.utilities.TypedCollection.TypedCollection" title="abjad.utilities.TypedCollection.TypedCollection"><code class="descclassname docutils literal notranslate"><span class="pre">TypedCollection</span></code></a>).</code><code class="sig-name descname">__eq__</code><span class="sig-paren">(</span><em class="sig-param">argument</em><span class="sig-paren">)</span><a class="headerlink" href="#abjad.utilities.OrderedDict.OrderedDict.__eq__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Is true when <code class="docutils literal notranslate"><span class="pre">argument</span></code> is a typed collection with items that
+compare equal to those of this typed collection.</p>
+<p>Returns true or false.</p>
+</dd></dl>
+
+</div>
+<div class="inherited docutils container">
+<dl class="method">
+<dt id="abjad.utilities.OrderedDict.OrderedDict.__format__">
+<code class="sig-prename descclassname">(<a class="reference internal" href="TypedCollection.html#abjad.utilities.TypedCollection.TypedCollection" title="abjad.utilities.TypedCollection.TypedCollection"><code class="descclassname docutils literal notranslate"><span class="pre">TypedCollection</span></code></a>).</code><code class="sig-name descname">__format__</code><span class="sig-paren">(</span><em class="sig-param">format_specification=''</em><span class="sig-paren">)</span><a class="headerlink" href="#abjad.utilities.OrderedDict.OrderedDict.__format__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Formats object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.6/library/stdtypes.html#str" title="(in Python v3.6)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<dl class="method">
+<dt id="abjad.utilities.OrderedDict.OrderedDict.__ge__">
+<em class="property">overridden </em><code class="sig-name descname">__ge__</code><span class="sig-paren">(</span><em class="sig-param">argument</em><span class="sig-paren">)</span><a class="headerlink" href="#abjad.utilities.OrderedDict.OrderedDict.__ge__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Is true when typed ordered dictionary is greater than or equal
+to <code class="docutils literal notranslate"><span class="pre">argument</span></code>.</p>
+<p>Returns true or false.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="abjad.utilities.OrderedDict.OrderedDict.__getitem__">
+<em class="property">overridden </em><code class="sig-name descname">__getitem__</code><span class="sig-paren">(</span><em class="sig-param">argument</em><span class="sig-paren">)</span><a class="headerlink" href="#abjad.utilities.OrderedDict.OrderedDict.__getitem__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets item or slice identified by <code class="docutils literal notranslate"><span class="pre">argument</span></code>.</p>
+<p>Returns item or slice.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="abjad.utilities.OrderedDict.OrderedDict.__gt__">
+<em class="property">overridden </em><code class="sig-name descname">__gt__</code><span class="sig-paren">(</span><em class="sig-param">argument</em><span class="sig-paren">)</span><a class="headerlink" href="#abjad.utilities.OrderedDict.OrderedDict.__gt__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Is true when typed ordered dictionary is greater than <code class="docutils literal notranslate"><span class="pre">argument</span></code>.</p>
+<p>Returns true or false.</p>
+</dd></dl>
+
+<div class="inherited docutils container">
+<dl class="method">
+<dt id="abjad.utilities.OrderedDict.OrderedDict.__hash__">
+<code class="sig-prename descclassname">(<a class="reference internal" href="TypedCollection.html#abjad.utilities.TypedCollection.TypedCollection" title="abjad.utilities.TypedCollection.TypedCollection"><code class="descclassname docutils literal notranslate"><span class="pre">TypedCollection</span></code></a>).</code><code class="sig-name descname">__hash__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjad.utilities.OrderedDict.OrderedDict.__hash__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Hashes typed collection.</p>
+<p>Redefined in tandem with __eq__.</p>
+</dd></dl>
+
+</div>
+<div class="inherited docutils container">
+<dl class="method">
+<dt id="abjad.utilities.OrderedDict.OrderedDict.__iter__">
+<code class="sig-prename descclassname">(<a class="reference internal" href="TypedCollection.html#abjad.utilities.TypedCollection.TypedCollection" title="abjad.utilities.TypedCollection.TypedCollection"><code class="descclassname docutils literal notranslate"><span class="pre">TypedCollection</span></code></a>).</code><code class="sig-name descname">__iter__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjad.utilities.OrderedDict.OrderedDict.__iter__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Iterates typed collection.</p>
+<p>Returns generator.</p>
+</dd></dl>
+
+</div>
+<dl class="method">
+<dt id="abjad.utilities.OrderedDict.OrderedDict.__le__">
+<em class="property">overridden </em><code class="sig-name descname">__le__</code><span class="sig-paren">(</span><em class="sig-param">argument</em><span class="sig-paren">)</span><a class="headerlink" href="#abjad.utilities.OrderedDict.OrderedDict.__le__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Is true when typed ordered dictionary is less than or equal
+to <code class="docutils literal notranslate"><span class="pre">argument</span></code>.</p>
+<p>Returns true or false.</p>
+</dd></dl>
+
+<div class="inherited docutils container">
+<dl class="method">
+<dt id="abjad.utilities.OrderedDict.OrderedDict.__len__">
+<code class="sig-prename descclassname">(<a class="reference internal" href="TypedCollection.html#abjad.utilities.TypedCollection.TypedCollection" title="abjad.utilities.TypedCollection.TypedCollection"><code class="descclassname docutils literal notranslate"><span class="pre">TypedCollection</span></code></a>).</code><code class="sig-name descname">__len__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjad.utilities.OrderedDict.OrderedDict.__len__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets length of typed collection.</p>
+<p>Returns nonnegative integer.</p>
+</dd></dl>
+
+</div>
+<dl class="method">
+<dt id="abjad.utilities.OrderedDict.OrderedDict.__lt__">
+<em class="property">overridden </em><code class="sig-name descname">__lt__</code><span class="sig-paren">(</span><em class="sig-param">argument</em><span class="sig-paren">)</span><a class="headerlink" href="#abjad.utilities.OrderedDict.OrderedDict.__lt__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Is true when typed ordered dictionary is less than <code class="docutils literal notranslate"><span class="pre">argument</span></code>.</p>
+<p>Returns true or false.</p>
+</dd></dl>
+
+<div class="inherited docutils container">
+<dl class="method">
+<dt id="abjad.utilities.OrderedDict.OrderedDict.__repr__">
+<code class="sig-prename descclassname">(<a class="reference internal" href="TypedCollection.html#abjad.utilities.TypedCollection.TypedCollection" title="abjad.utilities.TypedCollection.TypedCollection"><code class="descclassname docutils literal notranslate"><span class="pre">TypedCollection</span></code></a>).</code><code class="sig-name descname">__repr__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjad.utilities.OrderedDict.OrderedDict.__repr__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets interpreter representation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.6/library/stdtypes.html#str" title="(in Python v3.6)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<dl class="method">
+<dt id="abjad.utilities.OrderedDict.OrderedDict.__reversed__">
+<em class="property">overridden </em><code class="sig-name descname">__reversed__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjad.utilities.OrderedDict.OrderedDict.__reversed__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Aliases OrderedDict.__reversed__().</p>
+<p>Returns generatos.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="abjad.utilities.OrderedDict.OrderedDict.__setitem__">
+<em class="property">overridden </em><code class="sig-name descname">__setitem__</code><span class="sig-paren">(</span><em class="sig-param">i</em>, <em class="sig-param">argument</em><span class="sig-paren">)</span><a class="headerlink" href="#abjad.utilities.OrderedDict.OrderedDict.__setitem__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Changes items in <code class="docutils literal notranslate"><span class="pre">argument</span></code> to items and sets.</p>
+<p>Returns none.</p>
+</dd></dl>
+
+<hr/><p class="class-header rubric">Methods</p>
+<dl class="method">
+<dt id="abjad.utilities.OrderedDict.OrderedDict.clear">
+<em class="property">overridden </em><code class="sig-name descname">clear</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjad.utilities.OrderedDict.OrderedDict.clear" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clears typed ordered dictionary.</p>
+<p>Returns none.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="abjad.utilities.OrderedDict.OrderedDict.copy">
+<code class="sig-name descname">copy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjad.utilities.OrderedDict.OrderedDict.copy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Copies typed ordered dictionary.</p>
+<p>Returns new typed ordered dictionary.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="abjad.utilities.OrderedDict.OrderedDict.get">
+<em class="property">overridden </em><code class="sig-name descname">get</code><span class="sig-paren">(</span><em class="sig-param">i</em>, <em class="sig-param">default=None</em><span class="sig-paren">)</span><a class="headerlink" href="#abjad.utilities.OrderedDict.OrderedDict.get" title="Permalink to this definition">¶</a></dt>
+<dd><p>Aliases OrderedDict.get().</p>
+<p>Returns item or raises key error.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="abjad.utilities.OrderedDict.OrderedDict.has_key">
+<code class="sig-name descname">has_key</code><span class="sig-paren">(</span><em class="sig-param">key</em><span class="sig-paren">)</span><a class="headerlink" href="#abjad.utilities.OrderedDict.OrderedDict.has_key" title="Permalink to this definition">¶</a></dt>
+<dd><p>Aliases OrderdDict.has_key().</p>
+<p>Returns true or false.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="abjad.utilities.OrderedDict.OrderedDict.items">
+<em class="property">overridden </em><code class="sig-name descname">items</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjad.utilities.OrderedDict.OrderedDict.items" title="Permalink to this definition">¶</a></dt>
+<dd><p>Aliases OrderedDict.items().</p>
+<p>Returns generator.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="abjad.utilities.OrderedDict.OrderedDict.keys">
+<em class="property">overridden </em><code class="sig-name descname">keys</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjad.utilities.OrderedDict.OrderedDict.keys" title="Permalink to this definition">¶</a></dt>
+<dd><p>Aliases OrderedDict.keys().</p>
+<p>Returns generator.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="abjad.utilities.OrderedDict.OrderedDict.pop">
+<em class="property">overridden </em><code class="sig-name descname">pop</code><span class="sig-paren">(</span><em class="sig-param">key</em>, <em class="sig-param">default=None</em><span class="sig-paren">)</span><a class="headerlink" href="#abjad.utilities.OrderedDict.OrderedDict.pop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Aliases OrderedDict.pop().</p>
+<p>Returns items.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="abjad.utilities.OrderedDict.OrderedDict.popitem">
+<em class="property">overridden </em><code class="sig-name descname">popitem</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjad.utilities.OrderedDict.OrderedDict.popitem" title="Permalink to this definition">¶</a></dt>
+<dd><p>Aliases OrderedDict.popitem().</p>
+<p>Returns generator.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="abjad.utilities.OrderedDict.OrderedDict.setdefault">
+<em class="property">overridden </em><code class="sig-name descname">setdefault</code><span class="sig-paren">(</span><em class="sig-param">key</em>, <em class="sig-param">default=None</em><span class="sig-paren">)</span><a class="headerlink" href="#abjad.utilities.OrderedDict.OrderedDict.setdefault" title="Permalink to this definition">¶</a></dt>
+<dd><p>Aliases OrderedDict.setdefault().</p>
+<p>Returns items.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="abjad.utilities.OrderedDict.OrderedDict.sort">
+<code class="sig-name descname">sort</code><span class="sig-paren">(</span><em class="sig-param">recurse=False</em><span class="sig-paren">)</span><a class="headerlink" href="#abjad.utilities.OrderedDict.OrderedDict.sort" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sorts ordered dictionary (in place).</p>
+<div class="example docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">dictionary</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">OrderedDict</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dictionary</span><span class="p">[</span><span class="s2">&quot;flavor&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;cherry&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dictionary</span><span class="p">[</span><span class="s2">&quot;colors&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">OrderedDict</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dictionary</span><span class="p">[</span><span class="s2">&quot;colors&quot;</span><span class="p">][</span><span class="s2">&quot;red&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dictionary</span><span class="p">[</span><span class="s2">&quot;colors&quot;</span><span class="p">][</span><span class="s2">&quot;green&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dictionary</span><span class="p">[</span><span class="s2">&quot;colors&quot;</span><span class="p">][</span><span class="s2">&quot;blue&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">abjad</span><span class="o">.</span><span class="n">f</span><span class="p">(</span><span class="n">dictionary</span><span class="p">)</span>
+<span class="go">abjad.OrderedDict(</span>
+<span class="go">    [</span>
+<span class="go">        (&#39;flavor&#39;, &#39;cherry&#39;),</span>
+<span class="go">        (</span>
+<span class="go">            &#39;colors&#39;,</span>
+<span class="go">            abjad.OrderedDict(</span>
+<span class="go">                [</span>
+<span class="go">                    (&#39;red&#39;, 3),</span>
+<span class="go">                    (&#39;green&#39;, 2),</span>
+<span class="go">                    (&#39;blue&#39;, 1),</span>
+<span class="go">                    ]</span>
+<span class="go">                ),</span>
+<span class="go">            ),</span>
+<span class="go">        ]</span>
+<span class="go">    )</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">dictionary</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">abjad</span><span class="o">.</span><span class="n">f</span><span class="p">(</span><span class="n">dictionary</span><span class="p">)</span>
+<span class="go">abjad.OrderedDict(</span>
+<span class="go">    [</span>
+<span class="go">        (</span>
+<span class="go">            &#39;colors&#39;,</span>
+<span class="go">            abjad.OrderedDict(</span>
+<span class="go">                [</span>
+<span class="go">                    (&#39;red&#39;, 3),</span>
+<span class="go">                    (&#39;green&#39;, 2),</span>
+<span class="go">                    (&#39;blue&#39;, 1),</span>
+<span class="go">                    ]</span>
+<span class="go">                ),</span>
+<span class="go">            ),</span>
+<span class="go">        (&#39;flavor&#39;, &#39;cherry&#39;),</span>
+<span class="go">        ]</span>
+<span class="go">    )</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">dictionary</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">recurse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">abjad</span><span class="o">.</span><span class="n">f</span><span class="p">(</span><span class="n">dictionary</span><span class="p">)</span>
+<span class="go">abjad.OrderedDict(</span>
+<span class="go">    [</span>
+<span class="go">        (</span>
+<span class="go">            &#39;colors&#39;,</span>
+<span class="go">            abjad.OrderedDict(</span>
+<span class="go">                [</span>
+<span class="go">                    (&#39;blue&#39;, 1),</span>
+<span class="go">                    (&#39;green&#39;, 2),</span>
+<span class="go">                    (&#39;red&#39;, 3),</span>
+<span class="go">                    ]</span>
+<span class="go">                ),</span>
+<span class="go">            ),</span>
+<span class="go">        (&#39;flavor&#39;, &#39;cherry&#39;),</span>
+<span class="go">        ]</span>
+<span class="go">    )</span>
+</pre></div>
+</div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="abjad.utilities.OrderedDict.OrderedDict.update">
+<em class="property">overridden </em><code class="sig-name descname">update</code><span class="sig-paren">(</span><em class="sig-param">*arguments</em>, <em class="sig-param">**keywords</em><span class="sig-paren">)</span><a class="headerlink" href="#abjad.utilities.OrderedDict.OrderedDict.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Aliases OrderedDict.update().</p>
+<p>Returns none.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="abjad.utilities.OrderedDict.OrderedDict.values">
+<em class="property">overridden </em><code class="sig-name descname">values</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjad.utilities.OrderedDict.OrderedDict.values" title="Permalink to this definition">¶</a></dt>
+<dd><p>Aliases OrderedDict.values().</p>
+<p>Returns generator.</p>
+</dd></dl>
+
+<hr/><p class="class-header rubric">Read-only properties</p>
+<div class="inherited docutils container">
+<dl class="attribute">
+<dt id="abjad.utilities.OrderedDict.OrderedDict.item_class">
+<code class="sig-prename descclassname">(<a class="reference internal" href="TypedCollection.html#abjad.utilities.TypedCollection.TypedCollection" title="abjad.utilities.TypedCollection.TypedCollection"><code class="descclassname docutils literal notranslate"><span class="pre">TypedCollection</span></code></a>).</code><code class="sig-name descname">item_class</code><a class="headerlink" href="#abjad.utilities.OrderedDict.OrderedDict.item_class" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets item class of collection.</p>
+<p>Collection coerces items according to <code class="docutils literal notranslate"><span class="pre">item_class</span></code>.</p>
+<p>Returns class.</p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="Pattern.html" class="btn btn-neutral float-right" title="Pattern" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="Offset.html" class="btn btn-neutral float-left" title="Offset" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2008-2019, Trevor Bača &amp; Josiah Wolf Oberholtzer
+      <span class="lastupdated">
+        Last updated on Dec 17, 2019.
+      </span>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

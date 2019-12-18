@@ -1,0 +1,381 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>3. LilyPond literals &mdash; Abjad 3.0.0 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script defer="defer" type="text/javascript" src="../_static/copybutton.js"></script>
+        <script type="text/javascript" src="../_static/ga.js"></script>
+        <script defer="defer" type="text/javascript" src="../_static/lightbox2/js/lightbox.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/abjad.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/uqbar.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/lightbox2/css/lightbox.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="4. LilyPond comments" href="lilypond_comments.html" />
+    <link rel="prev" title="2. Instruments" href="instruments.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Abjad
+          
+
+          
+            
+            <img src="../_static/abjad-logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                3.0.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../gallery.html">Score gallery</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../for_beginners/index.html">For beginners</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../literature_examples/index.html">Literature examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../core_concepts/index.html">Core concepts</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Reference manual</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="index.html#leaves">Leaves</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#containers">Containers</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html#attachments">Attachments</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="articulations.html">1. Articulations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="instruments.html">2. Instruments</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">3. LilyPond literals</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#creating-lilypond-literals">3.1. Creating LilyPond literals</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#understanding-the-interpreter-representation-of-lilypond-literals">3.2. Understanding the interpreter representation of LilyPond literals</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#attaching-lilypond-literals-to-abjad-components">3.3. Attaching LilyPond literals to Abjad components</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#inspecting-the-lilypond-literals-attached-to-a-leaf">3.4. Inspecting the LilyPond literals attached to a leaf</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#detaching-lilypond-literals">3.5. Detaching LilyPond literals</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#getting-the-argument-of-a-lilypond-literal">3.6. Getting the argument of a LilyPond literal</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#comparing-lilypond-literals">3.7. Comparing LilyPond literals</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="lilypond_comments.html">4. LilyPond comments</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#lilypond-files">LilyPond files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#pitches">Pitches</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../api/index.html">Abjad API</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../appendices/index.html">Appendices</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Abjad</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content style-external-links">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">Reference manual</a> &raquo;</li>
+        
+      <li><span class="section-number">3. </span>LilyPond literals</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/reference_manual/lilypond_literals.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="lilypond-literals">
+<h1><span class="section-number">3. </span>LilyPond literals<a class="headerlink" href="#lilypond-literals" title="Permalink to this headline">¶</a></h1>
+<p>LilyPond literals allow you to attach arbitrary LilyPond literals
+to Abjad score components.</p>
+<div class="section" id="creating-lilypond-literals">
+<h2><span class="section-number">3.1. </span>Creating LilyPond literals<a class="headerlink" href="#creating-lilypond-literals" title="Permalink to this headline">¶</a></h2>
+<p>Use <code class="docutils literal notranslate"><span class="pre">LilyPondLiteral</span></code> to create a LilyPond literal:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">literal</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">LilyPondLiteral</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;\bar &quot;||&quot;&#39;</span><span class="p">,</span> <span class="s2">&quot;after&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="understanding-the-interpreter-representation-of-lilypond-literals">
+<h2><span class="section-number">3.2. </span>Understanding the interpreter representation of LilyPond literals<a class="headerlink" href="#understanding-the-interpreter-representation-of-lilypond-literals" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">literal</span>
+<span class="go">LilyPondLiteral(&#39;\\bar &quot;||&quot;&#39;, format_slot=&#39;after&#39;)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">LilyPondLiteral</span></code> tells you the literal’s class.</p>
+<p><code class="docutils literal notranslate"><span class="pre">r'\bar</span> <span class="pre">&quot;||&quot;'</span></code> tells you the LilyPond literal to be formatted.</p>
+<p><code class="docutils literal notranslate"><span class="pre">'after'</span></code> tells you where the literal will be formatted relative to the leaf
+to which it is attached.</p>
+</div>
+<div class="section" id="attaching-lilypond-literals-to-abjad-components">
+<h2><span class="section-number">3.3. </span>Attaching LilyPond literals to Abjad components<a class="headerlink" href="#attaching-lilypond-literals-to-abjad-components" title="Permalink to this headline">¶</a></h2>
+<p>Use <code class="docutils literal notranslate"><span class="pre">attach()</span></code> to attach a LilyPond literal to any Abjad leaf:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">staff</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Staff</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">staff</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="s2">&quot;{ d&#39;&#39;16 ( c&#39;&#39;16 fs&#39;&#39;16 g&#39;&#39;16 ) }&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">staff</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="s2">&quot;{ f&#39;&#39;16 ( e&#39;&#39;16 d&#39;&#39;16 c&#39;&#39;16 ) }&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">staff</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="s2">&quot;{ cs&#39;&#39;16 ( d&#39;&#39;16 f&#39;&#39;16 d&#39;&#39;16 ) }&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">staff</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="s2">&quot;{ a&#39;8 b&#39;8 }&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">staff</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="s2">&quot;{ d&#39;&#39;16 ( c&#39;&#39;16 fs&#39;&#39;16 g&#39;&#39;16 )} &quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">staff</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="s2">&quot;{ f&#39;&#39;16 ( e&#39;&#39;16 d&#39;&#39;16 c&#39;&#39;16 ) }&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">staff</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="s2">&quot;{ cs&#39;&#39;16 ( d&#39;&#39;16 f&#39;&#39;16 d&#39;&#39;16 ) }&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">staff</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="s2">&quot;{ a&#39;8 b&#39;8 c&#39;&#39;2 }&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">key_signature</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">KeySignature</span><span class="p">(</span><span class="s2">&quot;f&quot;</span><span class="p">,</span> <span class="s2">&quot;major&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">leaf</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">inspect</span><span class="p">(</span><span class="n">staff</span><span class="p">)</span><span class="o">.</span><span class="n">leaf</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">abjad</span><span class="o">.</span><span class="n">attach</span><span class="p">(</span><span class="n">key_signature</span><span class="p">,</span> <span class="n">leaf</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">abjad</span><span class="o">.</span><span class="n">attach</span><span class="p">(</span><span class="n">literal</span><span class="p">,</span> <span class="n">staff</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">])</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">abjad</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">staff</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="uqbar-book">
+    <a href="../_images/lilypond-8a911b11f0326f2c0f2b9f429f0ac96e6eed24cfb6851ae57cd03dd61977e778.ly"><img src="../_images/lilypond-8a911b11f0326f2c0f2b9f429f0ac96e6eed24cfb6851ae57cd03dd61977e778.cropped.svg"/></a>
+</div></div>
+<div class="section" id="inspecting-the-lilypond-literals-attached-to-a-leaf">
+<h2><span class="section-number">3.4. </span>Inspecting the LilyPond literals attached to a leaf<a class="headerlink" href="#inspecting-the-lilypond-literals-attached-to-a-leaf" title="Permalink to this headline">¶</a></h2>
+<p>Use <code class="docutils literal notranslate"><span class="pre">abjad.inspect()</span></code> to get the LilyPond literals attached to a leaf:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">abjad</span><span class="o">.</span><span class="n">inspect</span><span class="p">(</span><span class="n">staff</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">])</span><span class="o">.</span><span class="n">indicators</span><span class="p">(</span><span class="n">abjad</span><span class="o">.</span><span class="n">LilyPondLiteral</span><span class="p">)</span>
+<span class="go">[LilyPondLiteral(&#39;\\bar &quot;||&quot;&#39;, format_slot=&#39;after&#39;)]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="detaching-lilypond-literals">
+<h2><span class="section-number">3.5. </span>Detaching LilyPond literals<a class="headerlink" href="#detaching-lilypond-literals" title="Permalink to this headline">¶</a></h2>
+<p>Use <code class="docutils literal notranslate"><span class="pre">abjad.detach()</span></code> to detach LilyPond literals:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">abjad</span><span class="o">.</span><span class="n">detach</span><span class="p">(</span><span class="n">literal</span><span class="p">,</span> <span class="n">staff</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">])</span>
+<span class="go">(LilyPondLiteral(&#39;\\bar &quot;||&quot;&#39;, format_slot=&#39;after&#39;),)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">abjad</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">staff</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="uqbar-book">
+    <a href="../_images/lilypond-3b2453f7fb89f2c36046c0c98f6df72360b48db59360c57625f9032957707ab8.ly"><img src="../_images/lilypond-3b2453f7fb89f2c36046c0c98f6df72360b48db59360c57625f9032957707ab8.cropped.svg"/></a>
+</div></div>
+<div class="section" id="getting-the-argument-of-a-lilypond-literal">
+<h2><span class="section-number">3.6. </span>Getting the argument of a LilyPond literal<a class="headerlink" href="#getting-the-argument-of-a-lilypond-literal" title="Permalink to this headline">¶</a></h2>
+<p>Use <code class="docutils literal notranslate"><span class="pre">argument</span></code> to get the argument of a LilyPond literal:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">literal</span><span class="o">.</span><span class="n">argument</span>
+<span class="go">&#39;\\bar &quot;||&quot;&#39;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="comparing-lilypond-literals">
+<h2><span class="section-number">3.7. </span>Comparing LilyPond literals<a class="headerlink" href="#comparing-lilypond-literals" title="Permalink to this headline">¶</a></h2>
+<p>LilyPond literals compare equal with equal names. Otherwise LilyPond literals
+do not compare equal:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">literal_1</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">LilyPondLiteral</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;\bar &quot;||&quot;&#39;</span><span class="p">,</span> <span class="s2">&quot;after&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">literal_2</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">LilyPondLiteral</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;\bar &quot;||&quot;&#39;</span><span class="p">,</span> <span class="s2">&quot;before&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">literal_3</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">LilyPondLiteral</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\slurUp&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">literal_1</span> <span class="o">==</span> <span class="n">literal_1</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">literal_1</span> <span class="o">==</span> <span class="n">literal_2</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">literal_1</span> <span class="o">==</span> <span class="n">literal_3</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">literal_2</span> <span class="o">==</span> <span class="n">literal_1</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">literal_2</span> <span class="o">==</span> <span class="n">literal_2</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">literal_2</span> <span class="o">==</span> <span class="n">literal_3</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">literal_3</span> <span class="o">==</span> <span class="n">literal_1</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">literal_3</span> <span class="o">==</span> <span class="n">literal_2</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">literal_3</span> <span class="o">==</span> <span class="n">literal_3</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="lilypond_comments.html" class="btn btn-neutral float-right" title="4. LilyPond comments" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="instruments.html" class="btn btn-neutral float-left" title="2. Instruments" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2008-2019, Trevor Bača &amp; Josiah Wolf Oberholtzer
+      <span class="lastupdated">
+        Last updated on Dec 17, 2019.
+      </span>
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
