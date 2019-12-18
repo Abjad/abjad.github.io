@@ -6,7 +6,7 @@
 \include "default.ily" %! abjad.LilyPondFile._get_formatted_includes()
 
 \score { %! abjad.LilyPondFile._get_formatted_blocks()
-    \new StaffGroup
+    \new PianoStaff
     <<
         \new Staff
         {
