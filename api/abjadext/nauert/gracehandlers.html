@@ -3,9 +3,9 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
   
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <title>gracehandlers &mdash; Abjad 3.2 documentation</title>
   
@@ -22,9 +22,12 @@
   
     <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
   
+
   
   
     <link rel="canonical" href="https://abjad.github.ioapi/abjadext/nauert/gracehandlers.html"/>
+  
+
   
 
   
@@ -37,7 +40,6 @@
         <script src="../../../_static/jquery.js"></script>
         <script src="../../../_static/underscore.js"></script>
         <script src="../../../_static/doctools.js"></script>
-        <script src="../../../_static/language_data.js"></script>
         <script defer="defer" src="../../../_static/copybutton.js"></script>
         <script src="../../../_static/ga.js"></script>
         <script defer="defer" src="../../../_static/lightbox2/js/lightbox.js"></script>
@@ -135,9 +137,9 @@
 </ul>
 <p class="caption"><span class="caption-text">Score gallery</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../gallery_2020.html">2016-20</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../gallery_2015.html">2011-15</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../gallery_2010.html">2000-10</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../gallery_2020.html">2020-16</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../gallery_2015.html">2015-11</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../gallery_2010.html">2010-00</a></li>
 </ul>
 
             
@@ -249,7 +251,7 @@
 <td><p>Concatenating grace-handler.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#abjadext.nauert.gracehandlers.DiscardingGraceHandler" title="abjadext.nauert.gracehandlers.DiscardingGraceHandler"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DiscardingGraceHandler</span></code></a></p></td>
-<td><p>Discarindg grace-handler.</p></td>
+<td><p>Discarding grace-handler.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#abjadext.nauert.gracehandlers.GraceHandler" title="abjadext.nauert.gracehandlers.GraceHandler"><code class="xref py py-obj docutils literal notranslate"><span class="pre">GraceHandler</span></code></a></p></td>
 <td><p>Abstract grace-handler.</p></td>
@@ -285,12 +287,40 @@ grace container.</p>
 
 <dl class="py class">
 <dt id="abjadext.nauert.gracehandlers.ConcatenatingGraceHandler">
-<em class="property">class </em><code class="sig-prename descclassname">abjadext.nauert.gracehandlers.</code><code class="sig-name descname">ConcatenatingGraceHandler</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">grace_duration</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/abjadext/nauert/gracehandlers.html#ConcatenatingGraceHandler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abjadext.nauert.gracehandlers.ConcatenatingGraceHandler" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">abjadext.nauert.gracehandlers.</code><code class="sig-name descname">ConcatenatingGraceHandler</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">discard_grace_rest</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">grace_duration</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/abjadext/nauert/gracehandlers.html#ConcatenatingGraceHandler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abjadext.nauert.gracehandlers.ConcatenatingGraceHandler" title="Permalink to this definition">¶</a></dt>
 <dd><p>Concatenating grace-handler.</p>
 <p>Concatenates all but the final <code class="docutils literal notranslate"><span class="pre">QEvent</span></code> attached to a <code class="docutils literal notranslate"><span class="pre">QGrid</span></code> offset
 into a <code class="docutils literal notranslate"><span class="pre">BeforeGraceContainer</span></code>, using a fixed leaf duration <code class="docutils literal notranslate"><span class="pre">duration</span></code>.</p>
 <p>When called, it returns pitch information of final <code class="docutils literal notranslate"><span class="pre">QEvent</span></code>, and the
 generated <code class="docutils literal notranslate"><span class="pre">BeforeGraceContainer</span></code>, if any.</p>
+<div class="example docutils container">
+<p>When <code class="docutils literal notranslate"><span class="pre">discard_grace_rest</span></code> is set to <code class="docutils literal notranslate"><span class="pre">True</span></code> (the default), all the
+grace rests are discarded.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">quantizer</span> <span class="o">=</span> <span class="n">abjadext</span><span class="o">.</span><span class="n">nauert</span><span class="o">.</span><span class="n">Quantizer</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">durations</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">999</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pitches</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">q_event_sequence</span> <span class="o">=</span> <span class="n">abjadext</span><span class="o">.</span><span class="n">nauert</span><span class="o">.</span><span class="n">QEventSequence</span><span class="o">.</span><span class="n">from_millisecond_pitch_pairs</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="nb">tuple</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">durations</span><span class="p">,</span> <span class="n">pitches</span><span class="p">))</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">grace_handler</span> <span class="o">=</span> <span class="n">ConcatenatingGraceHandler</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">result</span> <span class="o">=</span> <span class="n">quantizer</span><span class="p">(</span><span class="n">q_event_sequence</span><span class="p">,</span> <span class="n">grace_handler</span><span class="o">=</span><span class="n">grace_handler</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">staff</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Staff</span><span class="p">([</span><span class="n">result</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">score</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Score</span><span class="p">([</span><span class="n">staff</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">abjad</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">score</span><span class="p">)</span> 
+</pre></div>
+</div>
+</div>
+<div class="example docutils container">
+<p>When <code class="docutils literal notranslate"><span class="pre">discard_grace_rest</span></code> is set to <code class="docutils literal notranslate"><span class="pre">False</span></code>, grace rests are not
+discarded.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">grace_handler</span> <span class="o">=</span> <span class="n">ConcatenatingGraceHandler</span><span class="p">(</span><span class="n">discard_grace_rest</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">result</span> <span class="o">=</span> <span class="n">quantizer</span><span class="p">(</span><span class="n">q_event_sequence</span><span class="p">,</span> <span class="n">grace_handler</span><span class="o">=</span><span class="n">grace_handler</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">staff</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Staff</span><span class="p">([</span><span class="n">result</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">score</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Score</span><span class="p">([</span><span class="n">staff</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">abjad</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">score</span><span class="p">)</span> 
+</pre></div>
+</div>
+</div>
 <hr/><p class="class-header rubric">Attributes Summary</p>
 <table class="longtable docutils align-default">
 <colgroup>
@@ -301,7 +331,10 @@ generated <code class="docutils literal notranslate"><span class="pre">BeforeGra
 <tr class="row-odd"><td><p><a class="reference internal" href="#abjadext.nauert.gracehandlers.ConcatenatingGraceHandler.__call__" title="abjadext.nauert.gracehandlers.ConcatenatingGraceHandler.__call__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__call__</span></code></a></p></td>
 <td><p>Calls concatenating grace handler.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#abjadext.nauert.gracehandlers.ConcatenatingGraceHandler.grace_duration" title="abjadext.nauert.gracehandlers.ConcatenatingGraceHandler.grace_duration"><code class="xref py py-obj docutils literal notranslate"><span class="pre">grace_duration</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#abjadext.nauert.gracehandlers.ConcatenatingGraceHandler.discard_grace_rest" title="abjadext.nauert.gracehandlers.ConcatenatingGraceHandler.discard_grace_rest"><code class="xref py py-obj docutils literal notranslate"><span class="pre">discard_grace_rest</span></code></a></p></td>
+<td><p>Boolean of whether to discard grace rests or not.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abjadext.nauert.gracehandlers.ConcatenatingGraceHandler.grace_duration" title="abjadext.nauert.gracehandlers.ConcatenatingGraceHandler.grace_duration"><code class="xref py py-obj docutils literal notranslate"><span class="pre">grace_duration</span></code></a></p></td>
 <td><p>Grace duration of concantenating grace handler.</p></td>
 </tr>
 </tbody>
@@ -314,6 +347,17 @@ generated <code class="docutils literal notranslate"><span class="pre">BeforeGra
 </dd></dl>
 
 <hr/><p class="class-header rubric">Read-only properties</p>
+<dl class="py attribute">
+<dt id="abjadext.nauert.gracehandlers.ConcatenatingGraceHandler.discard_grace_rest">
+<code class="sig-name descname">discard_grace_rest</code><a class="headerlink" href="#abjadext.nauert.gracehandlers.ConcatenatingGraceHandler.discard_grace_rest" title="Permalink to this definition">¶</a></dt>
+<dd><p>Boolean of whether to discard grace rests or not.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.9/library/functions.html#bool" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py attribute">
 <dt id="abjadext.nauert.gracehandlers.ConcatenatingGraceHandler.grace_duration">
 <code class="sig-name descname">grace_duration</code><a class="headerlink" href="#abjadext.nauert.gracehandlers.ConcatenatingGraceHandler.grace_duration" title="Permalink to this definition">¶</a></dt>
@@ -330,8 +374,8 @@ generated <code class="docutils literal notranslate"><span class="pre">BeforeGra
 <dl class="py class">
 <dt id="abjadext.nauert.gracehandlers.DiscardingGraceHandler">
 <em class="property">class </em><code class="sig-prename descclassname">abjadext.nauert.gracehandlers.</code><code class="sig-name descname">DiscardingGraceHandler</code><a class="reference internal" href="../../../_modules/abjadext/nauert/gracehandlers.html#DiscardingGraceHandler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#abjadext.nauert.gracehandlers.DiscardingGraceHandler" title="Permalink to this definition">¶</a></dt>
-<dd><p>Discarindg grace-handler.</p>
-<p>Dscards all but final q-event attached to an offset.</p>
+<dd><p>Discarding grace-handler.</p>
+<p>Discards all but final q-event attached to an offset.</p>
 <p>Does not create grace containers.</p>
 <hr/><p class="class-header rubric">Attributes Summary</p>
 <table class="longtable docutils align-default">

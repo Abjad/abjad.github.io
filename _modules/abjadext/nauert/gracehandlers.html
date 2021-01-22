@@ -3,9 +3,9 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
   
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <title>abjadext.nauert.gracehandlers &mdash; Abjad 3.2 documentation</title>
   
@@ -22,9 +22,12 @@
   
     <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
   
+
   
   
     <link rel="canonical" href="https://abjad.github.io_modules/abjadext/nauert/gracehandlers.html"/>
+  
+
   
 
   
@@ -37,7 +40,6 @@
         <script src="../../../_static/jquery.js"></script>
         <script src="../../../_static/underscore.js"></script>
         <script src="../../../_static/doctools.js"></script>
-        <script src="../../../_static/language_data.js"></script>
         <script defer="defer" src="../../../_static/copybutton.js"></script>
         <script src="../../../_static/ga.js"></script>
         <script defer="defer" src="../../../_static/lightbox2/js/lightbox.js"></script>
@@ -171,7 +173,7 @@
 
 <span class="kn">import</span> <span class="nn">abjad</span>
 
-<span class="kn">from</span> <span class="nn">.qevents</span> <span class="kn">import</span> <span class="n">PitchedQEvent</span>
+<span class="kn">from</span> <span class="nn">.qevents</span> <span class="kn">import</span> <span class="n">PitchedQEvent</span><span class="p">,</span> <span class="n">SilentQEvent</span>
 
 
 <div class="viewcode-block" id="GraceHandler"><a class="viewcode-back" href="../../../api/abjadext/nauert/gracehandlers.html#abjadext.nauert.gracehandlers.GraceHandler">[docs]</a><span class="k">class</span> <span class="nc">GraceHandler</span><span class="p">:</span>
@@ -234,7 +236,7 @@
 
 
 <div class="viewcode-block" id="ConcatenatingGraceHandler"><a class="viewcode-back" href="../../../api/abjadext/nauert/gracehandlers.html#abjadext.nauert.gracehandlers.ConcatenatingGraceHandler">[docs]</a><span class="k">class</span> <span class="nc">ConcatenatingGraceHandler</span><span class="p">(</span><span class="n">GraceHandler</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Concatenating grace-handler.</span>
 
 <span class="sd">    Concatenates all but the final ``QEvent`` attached to a ``QGrid`` offset</span>
@@ -242,15 +244,92 @@
 
 <span class="sd">    When called, it returns pitch information of final ``QEvent``, and the</span>
 <span class="sd">    generated ``BeforeGraceContainer``, if any.</span>
+
+<span class="sd">    ..  container:: example</span>
+
+<span class="sd">        When ``discard_grace_rest`` is set to ``True`` (the default), all the</span>
+<span class="sd">        grace rests are discarded.</span>
+
+<span class="sd">        &gt;&gt;&gt; quantizer = abjadext.nauert.Quantizer()</span>
+<span class="sd">        &gt;&gt;&gt; durations = [1000, 1, 999]</span>
+<span class="sd">        &gt;&gt;&gt; pitches = [0, None, 0]</span>
+<span class="sd">        &gt;&gt;&gt; q_event_sequence = abjadext.nauert.QEventSequence.from_millisecond_pitch_pairs(</span>
+<span class="sd">        ...     tuple(zip(durations, pitches))</span>
+<span class="sd">        ... )</span>
+<span class="sd">        &gt;&gt;&gt; grace_handler = ConcatenatingGraceHandler()</span>
+<span class="sd">        &gt;&gt;&gt; result = quantizer(q_event_sequence, grace_handler=grace_handler)</span>
+<span class="sd">        &gt;&gt;&gt; staff = abjad.Staff([result])</span>
+<span class="sd">        &gt;&gt;&gt; score = abjad.Score([staff])</span>
+<span class="sd">        &gt;&gt;&gt; abjad.show(score) # doctest: +SKIP</span>
+
+<span class="sd">        ..  docs::</span>
+
+<span class="sd">            &gt;&gt;&gt; print(abjad.lilypond(score))</span>
+<span class="sd">            \new Score</span>
+<span class="sd">            &lt;&lt;</span>
+<span class="sd">                \new Staff</span>
+<span class="sd">                {</span>
+<span class="sd">                    \new Voice</span>
+<span class="sd">                    {</span>
+<span class="sd">                        {</span>
+<span class="sd">                            \tempo 4=60</span>
+<span class="sd">                            \time 4/4</span>
+<span class="sd">                            c&#39;4</span>
+<span class="sd">                            c&#39;4</span>
+<span class="sd">                            r4</span>
+<span class="sd">                            r4</span>
+<span class="sd">                        }</span>
+<span class="sd">                    }</span>
+<span class="sd">                }</span>
+<span class="sd">            &gt;&gt;</span>
+
+<span class="sd">    ..  container:: example</span>
+
+<span class="sd">        When ``discard_grace_rest`` is set to ``False``, grace rests are not</span>
+<span class="sd">        discarded.</span>
+
+<span class="sd">        &gt;&gt;&gt; grace_handler = ConcatenatingGraceHandler(discard_grace_rest=False)</span>
+<span class="sd">        &gt;&gt;&gt; result = quantizer(q_event_sequence, grace_handler=grace_handler)</span>
+<span class="sd">        &gt;&gt;&gt; staff = abjad.Staff([result])</span>
+<span class="sd">        &gt;&gt;&gt; score = abjad.Score([staff])</span>
+<span class="sd">        &gt;&gt;&gt; abjad.show(score) # doctest: +SKIP</span>
+
+<span class="sd">        ..  docs::</span>
+
+<span class="sd">            &gt;&gt;&gt; print(abjad.lilypond(score))</span>
+<span class="sd">            \new Score</span>
+<span class="sd">            &lt;&lt;</span>
+<span class="sd">                \new Staff</span>
+<span class="sd">                {</span>
+<span class="sd">                    \new Voice</span>
+<span class="sd">                    {</span>
+<span class="sd">                        {</span>
+<span class="sd">                            \tempo 4=60</span>
+<span class="sd">                            \time 4/4</span>
+<span class="sd">                            c&#39;4</span>
+<span class="sd">                            \grace {</span>
+<span class="sd">                                r16</span>
+<span class="sd">                            }</span>
+<span class="sd">                            c&#39;4</span>
+<span class="sd">                            r4</span>
+<span class="sd">                            r4</span>
+<span class="sd">                        }</span>
+<span class="sd">                    }</span>
+<span class="sd">                }</span>
+<span class="sd">            &gt;&gt;</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="c1">### CLASS VARIABLES ###</span>
 
-    <span class="vm">__slots__</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;_grace_duration&quot;</span><span class="p">,)</span>
+    <span class="vm">__slots__</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="s2">&quot;_discard_grace_rest&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;_grace_duration&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
 
     <span class="c1">### INITIALIZER ###</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">grace_duration</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">discard_grace_rest</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">grace_duration</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_discard_grace_rest</span> <span class="o">=</span> <span class="n">discard_grace_rest</span>
         <span class="k">if</span> <span class="n">grace_duration</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">grace_duration</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">16</span><span class="p">)</span>
         <span class="n">grace_duration</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="n">grace_duration</span><span class="p">)</span>
@@ -268,6 +347,13 @@
             <span class="n">pitches</span> <span class="o">=</span> <span class="n">final_event</span><span class="o">.</span><span class="n">pitches</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">pitches</span> <span class="o">=</span> <span class="p">()</span>
+
+        <span class="n">grace_events_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">grace_events</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_discard_grace_rest</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">q_event</span> <span class="ow">in</span> <span class="n">grace_events_list</span><span class="p">:</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">q_event</span><span class="p">,</span> <span class="n">SilentQEvent</span><span class="p">):</span>
+                    <span class="n">grace_events_list</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">q_event</span><span class="p">)</span>
+        <span class="n">grace_events</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">grace_events_list</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">grace_events</span><span class="p">:</span>
             <span class="n">grace_container</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">BeforeGraceContainer</span><span class="p">()</span>
@@ -288,6 +374,13 @@
     <span class="c1">### PUBLIC PROPERTIES ###</span>
 
     <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">discard_grace_rest</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Boolean of whether to discard grace rests or not.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_discard_grace_rest</span>
+
+    <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">grace_duration</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Duration</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Grace duration of concantenating grace handler.</span>
@@ -297,9 +390,9 @@
 
 <div class="viewcode-block" id="DiscardingGraceHandler"><a class="viewcode-back" href="../../../api/abjadext/nauert/gracehandlers.html#abjadext.nauert.gracehandlers.DiscardingGraceHandler">[docs]</a><span class="k">class</span> <span class="nc">DiscardingGraceHandler</span><span class="p">(</span><span class="n">GraceHandler</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Discarindg grace-handler.</span>
+<span class="sd">    Discarding grace-handler.</span>
 
-<span class="sd">    Dscards all but final q-event attached to an offset.</span>
+<span class="sd">    Discards all but final q-event attached to an offset.</span>
 
 <span class="sd">    Does not create grace containers.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
