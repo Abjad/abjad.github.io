@@ -171,7 +171,10 @@
     <div itemprop="articleBody">
     
   <h1>Source code for abjadext.rmakers.commands</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">typing</span>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Rhythm-maker commands.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">typing</span>
 
 <span class="kn">import</span> <span class="nn">abjad</span>
 
@@ -786,9 +789,8 @@
 <span class="sd">        ... )</span>
 <span class="sd">        &gt;&gt;&gt; divisions = [(7, 16), (3, 8), (7, 16), (3, 8)]</span>
 <span class="sd">        &gt;&gt;&gt; selections = stack(divisions)</span>
-<span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile.rhythm(</span>
-<span class="sd">        ...     selections, divisions</span>
-<span class="sd">        ... )</span>
+<span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile.rhythm(selections, divisions)</span>
+<span class="sd">        &gt;&gt;&gt; rmakers.attach_markup_struts(lilypond_file)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(lilypond_file) # doctest: +SKIP</span>
 
 <span class="sd">        ..  docs::</span>
@@ -811,93 +813,15 @@
 <span class="sd">                \new RhythmicStaff</span>
 <span class="sd">                {</span>
 <span class="sd">                    r4..</span>
+<span class="sd">                    - \tweak staff-padding 11</span>
+<span class="sd">                    - \tweak transparent ##t</span>
+<span class="sd">                    ^ \markup I</span>
 <span class="sd">                    c&#39;4.</span>
 <span class="sd">                    c&#39;4..</span>
 <span class="sd">                    r4.</span>
-<span class="sd">                }</span>
-<span class="sd">            &gt;&gt;</span>
-
-<span class="sd">    ..  container:: example</span>
-
-<span class="sd">        Sustains logical ties -1 and -2 to notes:</span>
-
-<span class="sd">        &gt;&gt;&gt; stack = rmakers.stack(</span>
-<span class="sd">        ...     rmakers.note(),</span>
-<span class="sd">        ...     rmakers.force_rest(abjad.select().leaves()),</span>
-<span class="sd">        ...     rmakers.force_note(abjad.select().logical_ties()[-2:]),</span>
-<span class="sd">        ... )</span>
-<span class="sd">        &gt;&gt;&gt; divisions = [(7, 16), (3, 8), (7, 16), (3, 8)]</span>
-<span class="sd">        &gt;&gt;&gt; selections = stack(divisions)</span>
-<span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile.rhythm(</span>
-<span class="sd">        ...     selections, divisions</span>
-<span class="sd">        ... )</span>
-<span class="sd">        &gt;&gt;&gt; abjad.show(lilypond_file) # doctest: +SKIP</span>
-
-<span class="sd">        ..  docs::</span>
-
-<span class="sd">            &gt;&gt;&gt; string = abjad.lilypond(lilypond_file[abjad.Score])</span>
-<span class="sd">            &gt;&gt;&gt; print(string)</span>
-<span class="sd">            \new Score</span>
-<span class="sd">            &lt;&lt;</span>
-<span class="sd">                \new GlobalContext</span>
-<span class="sd">                {</span>
-<span class="sd">                    \time 7/16</span>
-<span class="sd">                    s1 * 7/16</span>
-<span class="sd">                    \time 3/8</span>
-<span class="sd">                    s1 * 3/8</span>
-<span class="sd">                    \time 7/16</span>
-<span class="sd">                    s1 * 7/16</span>
-<span class="sd">                    \time 3/8</span>
-<span class="sd">                    s1 * 3/8</span>
-<span class="sd">                }</span>
-<span class="sd">                \new RhythmicStaff</span>
-<span class="sd">                {</span>
-<span class="sd">                    r4..</span>
-<span class="sd">                    r4.</span>
-<span class="sd">                    c&#39;4..</span>
-<span class="sd">                    c&#39;4.</span>
-<span class="sd">                }</span>
-<span class="sd">            &gt;&gt;</span>
-
-<span class="sd">    ..  container:: example</span>
-
-<span class="sd">        Changes patterned selection of leaves to notes:</span>
-
-<span class="sd">        &gt;&gt;&gt; stack = rmakers.stack(</span>
-<span class="sd">        ...     rmakers.note(),</span>
-<span class="sd">        ...     rmakers.force_rest(abjad.select().leaves()),</span>
-<span class="sd">        ...     rmakers.force_note(abjad.select().logical_ties()[1:-1]),</span>
-<span class="sd">        ... )</span>
-<span class="sd">        &gt;&gt;&gt; divisions = [(7, 16), (3, 8), (7, 16), (3, 8)]</span>
-<span class="sd">        &gt;&gt;&gt; selections = stack(divisions)</span>
-<span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile.rhythm(</span>
-<span class="sd">        ...     selections, divisions</span>
-<span class="sd">        ... )</span>
-<span class="sd">        &gt;&gt;&gt; abjad.show(lilypond_file) # doctest: +SKIP</span>
-
-<span class="sd">        ..  docs::</span>
-
-<span class="sd">            &gt;&gt;&gt; string = abjad.lilypond(lilypond_file[abjad.Score])</span>
-<span class="sd">            &gt;&gt;&gt; print(string)</span>
-<span class="sd">            \new Score</span>
-<span class="sd">            &lt;&lt;</span>
-<span class="sd">                \new GlobalContext</span>
-<span class="sd">                {</span>
-<span class="sd">                    \time 7/16</span>
-<span class="sd">                    s1 * 7/16</span>
-<span class="sd">                    \time 3/8</span>
-<span class="sd">                    s1 * 3/8</span>
-<span class="sd">                    \time 7/16</span>
-<span class="sd">                    s1 * 7/16</span>
-<span class="sd">                    \time 3/8</span>
-<span class="sd">                    s1 * 3/8</span>
-<span class="sd">                }</span>
-<span class="sd">                \new RhythmicStaff</span>
-<span class="sd">                {</span>
-<span class="sd">                    r4..</span>
-<span class="sd">                    c&#39;4.</span>
-<span class="sd">                    c&#39;4..</span>
-<span class="sd">                    r4.</span>
+<span class="sd">                    - \tweak staff-padding 18</span>
+<span class="sd">                    - \tweak transparent ##t</span>
+<span class="sd">                    ^ \markup I</span>
 <span class="sd">                }</span>
 <span class="sd">            &gt;&gt;</span>
 
@@ -913,9 +837,8 @@
 <span class="sd">        ... )</span>
 <span class="sd">        &gt;&gt;&gt; divisions = [(7, 16), (3, 8), (7, 16), (3, 8)]</span>
 <span class="sd">        &gt;&gt;&gt; selections = stack(divisions)</span>
-<span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile.rhythm(</span>
-<span class="sd">        ...     selections, divisions</span>
-<span class="sd">        ... )</span>
+<span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile.rhythm(selections, divisions)</span>
+<span class="sd">        &gt;&gt;&gt; rmakers.attach_markup_struts(lilypond_file)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(lilypond_file) # doctest: +SKIP</span>
 
 <span class="sd">        ..  docs::</span>
@@ -938,9 +861,15 @@
 <span class="sd">                \new RhythmicStaff</span>
 <span class="sd">                {</span>
 <span class="sd">                    c&#39;4..</span>
+<span class="sd">                    - \tweak staff-padding 11</span>
+<span class="sd">                    - \tweak transparent ##t</span>
+<span class="sd">                    ^ \markup I</span>
 <span class="sd">                    r4.</span>
 <span class="sd">                    r4..</span>
 <span class="sd">                    c&#39;4.</span>
+<span class="sd">                    - \tweak staff-padding 18</span>
+<span class="sd">                    - \tweak transparent ##t</span>
+<span class="sd">                    ^ \markup I</span>
 <span class="sd">                }</span>
 <span class="sd">            &gt;&gt;</span>
 
@@ -1064,9 +993,8 @@
 <span class="sd">        ... )</span>
 <span class="sd">        &gt;&gt;&gt; divisions = [(7, 16), (3, 8), (7, 16), (3, 8)]</span>
 <span class="sd">        &gt;&gt;&gt; selections = stack(divisions)</span>
-<span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile.rhythm(</span>
-<span class="sd">        ...     selections, divisions</span>
-<span class="sd">        ... )</span>
+<span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile.rhythm(selections, divisions)</span>
+<span class="sd">        &gt;&gt;&gt; rmakers.attach_markup_struts(lilypond_file)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(lilypond_file) # doctest: +SKIP</span>
 
 <span class="sd">        ..  docs::</span>
@@ -1089,9 +1017,15 @@
 <span class="sd">                \new RhythmicStaff</span>
 <span class="sd">                {</span>
 <span class="sd">                    c&#39;4..</span>
+<span class="sd">                    - \tweak staff-padding 11</span>
+<span class="sd">                    - \tweak transparent ##t</span>
+<span class="sd">                    ^ \markup I</span>
 <span class="sd">                    r4.</span>
 <span class="sd">                    r4..</span>
 <span class="sd">                    c&#39;4.</span>
+<span class="sd">                    - \tweak staff-padding 18</span>
+<span class="sd">                    - \tweak transparent ##t</span>
+<span class="sd">                    ^ \markup I</span>
 <span class="sd">                }</span>
 <span class="sd">            &gt;&gt;</span>
 
@@ -1105,9 +1039,8 @@
 <span class="sd">        ... )</span>
 <span class="sd">        &gt;&gt;&gt; divisions = [(7, 16), (3, 8), (7, 16), (3, 8)]</span>
 <span class="sd">        &gt;&gt;&gt; selections = stack(divisions)</span>
-<span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile.rhythm(</span>
-<span class="sd">        ...     selections, divisions</span>
-<span class="sd">        ... )</span>
+<span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile.rhythm(selections, divisions)</span>
+<span class="sd">        &gt;&gt;&gt; rmakers.attach_markup_struts(lilypond_file)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(lilypond_file) # doctest: +SKIP</span>
 
 <span class="sd">        ..  docs::</span>
@@ -1130,9 +1063,15 @@
 <span class="sd">                \new RhythmicStaff</span>
 <span class="sd">                {</span>
 <span class="sd">                    c&#39;4..</span>
+<span class="sd">                    - \tweak staff-padding 11</span>
+<span class="sd">                    - \tweak transparent ##t</span>
+<span class="sd">                    ^ \markup I</span>
 <span class="sd">                    c&#39;4.</span>
 <span class="sd">                    r4..</span>
 <span class="sd">                    r4.</span>
+<span class="sd">                    - \tweak staff-padding 18</span>
+<span class="sd">                    - \tweak transparent ##t</span>
+<span class="sd">                    ^ \markup I</span>
 <span class="sd">                }</span>
 <span class="sd">            &gt;&gt;</span>
 
@@ -1146,9 +1085,8 @@
 <span class="sd">        ... )</span>
 <span class="sd">        &gt;&gt;&gt; divisions = [(7, 16), (3, 8), (7, 16), (3, 8)]</span>
 <span class="sd">        &gt;&gt;&gt; selections = stack(divisions)</span>
-<span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile.rhythm(</span>
-<span class="sd">        ...     selections, divisions</span>
-<span class="sd">        ... )</span>
+<span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile.rhythm(selections, divisions)</span>
+<span class="sd">        &gt;&gt;&gt; rmakers.attach_markup_struts(lilypond_file)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(lilypond_file) # doctest: +SKIP</span>
 
 <span class="sd">        ..  docs::</span>
@@ -1171,9 +1109,15 @@
 <span class="sd">                \new RhythmicStaff</span>
 <span class="sd">                {</span>
 <span class="sd">                    c&#39;4..</span>
+<span class="sd">                    - \tweak staff-padding 11</span>
+<span class="sd">                    - \tweak transparent ##t</span>
+<span class="sd">                    ^ \markup I</span>
 <span class="sd">                    r4.</span>
 <span class="sd">                    r4..</span>
 <span class="sd">                    c&#39;4.</span>
+<span class="sd">                    - \tweak staff-padding 18</span>
+<span class="sd">                    - \tweak transparent ##t</span>
+<span class="sd">                    ^ \markup I</span>
 <span class="sd">                }</span>
 <span class="sd">            &gt;&gt;</span>
 
@@ -1190,9 +1134,8 @@
 <span class="sd">        ... )</span>
 <span class="sd">        &gt;&gt;&gt; divisions = [(7, 16), (3, 8), (7, 16), (3, 8)]</span>
 <span class="sd">        &gt;&gt;&gt; selections = stack(divisions)</span>
-<span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile.rhythm(</span>
-<span class="sd">        ...     selections, divisions</span>
-<span class="sd">        ... )</span>
+<span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile.rhythm(selections, divisions)</span>
+<span class="sd">        &gt;&gt;&gt; rmakers.attach_markup_struts(lilypond_file)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(lilypond_file) # doctest: +SKIP</span>
 
 <span class="sd">        ..  docs::</span>
@@ -1215,9 +1158,15 @@
 <span class="sd">                \new RhythmicStaff</span>
 <span class="sd">                {</span>
 <span class="sd">                    r4..</span>
+<span class="sd">                    - \tweak staff-padding 11</span>
+<span class="sd">                    - \tweak transparent ##t</span>
+<span class="sd">                    ^ \markup I</span>
 <span class="sd">                    c&#39;4.</span>
 <span class="sd">                    c&#39;4..</span>
 <span class="sd">                    r4.</span>
+<span class="sd">                    - \tweak staff-padding 18</span>
+<span class="sd">                    - \tweak transparent ##t</span>
+<span class="sd">                    ^ \markup I</span>
 <span class="sd">                }</span>
 <span class="sd">            &gt;&gt;</span>
 
@@ -1978,9 +1927,8 @@
 <span class="sd">        ... )</span>
 <span class="sd">        &gt;&gt;&gt; divisions = [(3, 4), (3, 4)]</span>
 <span class="sd">        &gt;&gt;&gt; selections = stack(divisions)</span>
-<span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile.rhythm(</span>
-<span class="sd">        ...     selections, divisions</span>
-<span class="sd">        ... )</span>
+<span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile.rhythm(selections, divisions)</span>
+<span class="sd">        &gt;&gt;&gt; rmakers.attach_markup_struts(lilypond_file)</span>
 <span class="sd">        &gt;&gt;&gt; staff = lilypond_file[abjad.Staff]</span>
 <span class="sd">        &gt;&gt;&gt; containers = abjad.select().components(abjad.AfterGraceContainer)</span>
 <span class="sd">        &gt;&gt;&gt; selector = containers.map(abjad.select().with_next_leaf())</span>
@@ -2005,6 +1953,9 @@
 <span class="sd">                    \tweak text #tuplet-number::calc-fraction-text</span>
 <span class="sd">                    \times 3/5 {</span>
 <span class="sd">                        c&#39;4</span>
+<span class="sd">                        - \tweak staff-padding 11</span>
+<span class="sd">                        - \tweak transparent ##t</span>
+<span class="sd">                        ^ \markup I</span>
 <span class="sd">                        c&#39;4</span>
 <span class="sd">                        c&#39;4</span>
 <span class="sd">                        c&#39;4</span>
@@ -2049,9 +2000,8 @@
 <span class="sd">        ... )</span>
 <span class="sd">        &gt;&gt;&gt; divisions = [(3, 4), (3, 4)]</span>
 <span class="sd">        &gt;&gt;&gt; selections = stack(divisions)</span>
-<span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile.rhythm(</span>
-<span class="sd">        ...     selections, divisions</span>
-<span class="sd">        ... )</span>
+<span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile.rhythm(selections, divisions)</span>
+<span class="sd">        &gt;&gt;&gt; rmakers.attach_markup_struts(lilypond_file)</span>
 <span class="sd">        &gt;&gt;&gt; staff = lilypond_file[abjad.Staff]</span>
 <span class="sd">        &gt;&gt;&gt; containers = abjad.select().components(abjad.AfterGraceContainer)</span>
 <span class="sd">        &gt;&gt;&gt; selector = containers.map(abjad.select().with_next_leaf())</span>
@@ -2076,6 +2026,9 @@
 <span class="sd">                    \tweak text #tuplet-number::calc-fraction-text</span>
 <span class="sd">                    \times 3/5 {</span>
 <span class="sd">                        c&#39;4</span>
+<span class="sd">                        - \tweak staff-padding 11</span>
+<span class="sd">                        - \tweak transparent ##t</span>
+<span class="sd">                        ^ \markup I</span>
 <span class="sd">                        c&#39;4</span>
 <span class="sd">                        c&#39;4</span>
 <span class="sd">                        c&#39;4</span>
@@ -2186,9 +2139,8 @@
 <span class="sd">        ... )</span>
 <span class="sd">        &gt;&gt;&gt; divisions = [(3, 4), (3, 4)]</span>
 <span class="sd">        &gt;&gt;&gt; selections = stack(divisions)</span>
-<span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile.rhythm(</span>
-<span class="sd">        ...     selections, divisions</span>
-<span class="sd">        ... )</span>
+<span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile.rhythm(selections, divisions)</span>
+<span class="sd">        &gt;&gt;&gt; rmakers.attach_markup_struts(lilypond_file)</span>
 <span class="sd">        &gt;&gt;&gt; staff = lilypond_file[abjad.Staff]</span>
 <span class="sd">        &gt;&gt;&gt; containers = abjad.select().components(abjad.BeforeGraceContainer)</span>
 <span class="sd">        &gt;&gt;&gt; result = [abjad.beam(_) for _ in containers(staff)]</span>
@@ -2216,6 +2168,9 @@
 <span class="sd">                    \tweak text #tuplet-number::calc-fraction-text</span>
 <span class="sd">                    \times 3/5 {</span>
 <span class="sd">                        c&#39;4</span>
+<span class="sd">                        - \tweak staff-padding 11</span>
+<span class="sd">                        - \tweak transparent ##t</span>
+<span class="sd">                        ^ \markup I</span>
 <span class="sd">                        \grace {</span>
 <span class="sd">                            \slash</span>
 <span class="sd">                            c&#39;8</span>
@@ -2323,9 +2278,8 @@
 <span class="sd">        ... )</span>
 <span class="sd">        &gt;&gt;&gt; divisions = [(2, 16), (4, 16), (6, 16), (8, 16)]</span>
 <span class="sd">        &gt;&gt;&gt; selections = stack(divisions)</span>
-<span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile.rhythm(</span>
-<span class="sd">        ...     selections, divisions</span>
-<span class="sd">        ... )</span>
+<span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile.rhythm(selections, divisions)</span>
+<span class="sd">        &gt;&gt;&gt; rmakers.attach_markup_struts(lilypond_file)</span>
 <span class="sd">        &gt;&gt;&gt; score = lilypond_file[abjad.Score]</span>
 <span class="sd">        &gt;&gt;&gt; abjad.override(score).TupletBracket.staff_padding = 4.5</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(lilypond_file) # doctest: +SKIP</span>
@@ -2355,6 +2309,9 @@
 <span class="sd">                {</span>
 <span class="sd">                    \times 4/5 {</span>
 <span class="sd">                        c&#39;32</span>
+<span class="sd">                        - \tweak staff-padding 11</span>
+<span class="sd">                        - \tweak transparent ##t</span>
+<span class="sd">                        ^ \markup I</span>
 <span class="sd">                        [</span>
 <span class="sd">                        c&#39;8</span>
 <span class="sd">                        ]</span>
@@ -2389,9 +2346,8 @@
 <span class="sd">        ... )</span>
 <span class="sd">        &gt;&gt;&gt; divisions = [(2, 16), (4, 16), (6, 16), (8, 16)]</span>
 <span class="sd">        &gt;&gt;&gt; selections = stack(divisions)</span>
-<span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile.rhythm(</span>
-<span class="sd">        ...     selections, divisions</span>
-<span class="sd">        ... )</span>
+<span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile.rhythm(selections, divisions)</span>
+<span class="sd">        &gt;&gt;&gt; rmakers.attach_markup_struts(lilypond_file)</span>
 <span class="sd">        &gt;&gt;&gt; score = lilypond_file[abjad.Score]</span>
 <span class="sd">        &gt;&gt;&gt; abjad.override(score).TupletBracket.staff_padding = 4.5</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(lilypond_file) # doctest: +SKIP</span>
@@ -2421,6 +2377,9 @@
 <span class="sd">                {</span>
 <span class="sd">                    \times 4/5 {</span>
 <span class="sd">                        c&#39;32</span>
+<span class="sd">                        - \tweak staff-padding 11</span>
+<span class="sd">                        - \tweak transparent ##t</span>
+<span class="sd">                        ^ \markup I</span>
 <span class="sd">                        [</span>
 <span class="sd">                        c&#39;8</span>
 <span class="sd">                        ]</span>
@@ -2454,9 +2413,8 @@
 <span class="sd">        ... )</span>
 <span class="sd">        &gt;&gt;&gt; divisions = [(2, 16), (4, 16), (6, 16), (8, 16)]</span>
 <span class="sd">        &gt;&gt;&gt; selections = stack(divisions)</span>
-<span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile.rhythm(</span>
-<span class="sd">        ...     selections, divisions</span>
-<span class="sd">        ... )</span>
+<span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile.rhythm(selections, divisions)</span>
+<span class="sd">        &gt;&gt;&gt; rmakers.attach_markup_struts(lilypond_file)</span>
 <span class="sd">        &gt;&gt;&gt; score = lilypond_file[abjad.Score]</span>
 <span class="sd">        &gt;&gt;&gt; abjad.override(score).TupletBracket.staff_padding = 4.5</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(lilypond_file) # doctest: +SKIP</span>
@@ -2486,6 +2444,9 @@
 <span class="sd">                {</span>
 <span class="sd">                    \times 4/5 {</span>
 <span class="sd">                        c&#39;32</span>
+<span class="sd">                        - \tweak staff-padding 11</span>
+<span class="sd">                        - \tweak transparent ##t</span>
+<span class="sd">                        ^ \markup I</span>
 <span class="sd">                        [</span>
 <span class="sd">                        c&#39;8</span>
 <span class="sd">                        ]</span>
@@ -2519,9 +2480,8 @@
 <span class="sd">        ... )</span>
 <span class="sd">        &gt;&gt;&gt; divisions = [(2, 16), (4, 16), (6, 16), (8, 16)]</span>
 <span class="sd">        &gt;&gt;&gt; selections = stack(divisions)</span>
-<span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile.rhythm(</span>
-<span class="sd">        ...     selections, divisions</span>
-<span class="sd">        ... )</span>
+<span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile.rhythm(selections, divisions)</span>
+<span class="sd">        &gt;&gt;&gt; rmakers.attach_markup_struts(lilypond_file)</span>
 <span class="sd">        &gt;&gt;&gt; score = lilypond_file[abjad.Score]</span>
 <span class="sd">        &gt;&gt;&gt; abjad.override(score).TupletBracket.staff_padding = 4.5</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(lilypond_file) # doctest: +SKIP</span>
@@ -2551,6 +2511,9 @@
 <span class="sd">                {</span>
 <span class="sd">                    \times 8/10 {</span>
 <span class="sd">                        c&#39;32</span>
+<span class="sd">                        - \tweak staff-padding 11</span>
+<span class="sd">                        - \tweak transparent ##t</span>
+<span class="sd">                        ^ \markup I</span>
 <span class="sd">                        [</span>
 <span class="sd">                        c&#39;8</span>
 <span class="sd">                        ]</span>
@@ -2586,9 +2549,8 @@
 <span class="sd">        ... )</span>
 <span class="sd">        &gt;&gt;&gt; divisions = [(2, 16), (4, 16), (6, 16), (8, 16)]</span>
 <span class="sd">        &gt;&gt;&gt; selections = stack(divisions)</span>
-<span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile.rhythm(</span>
-<span class="sd">        ...     selections, divisions</span>
-<span class="sd">        ... )</span>
+<span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile.rhythm(selections, divisions)</span>
+<span class="sd">        &gt;&gt;&gt; rmakers.attach_markup_struts(lilypond_file)</span>
 <span class="sd">        &gt;&gt;&gt; score = lilypond_file[abjad.Score]</span>
 <span class="sd">        &gt;&gt;&gt; abjad.override(score).TupletBracket.staff_padding = 4.5</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(lilypond_file) # doctest: +SKIP</span>
@@ -2618,6 +2580,9 @@
 <span class="sd">                {</span>
 <span class="sd">                    \times 8/10 {</span>
 <span class="sd">                        c&#39;32</span>
+<span class="sd">                        - \tweak staff-padding 11</span>
+<span class="sd">                        - \tweak transparent ##t</span>
+<span class="sd">                        ^ \markup I</span>
 <span class="sd">                        [</span>
 <span class="sd">                        c&#39;8</span>
 <span class="sd">                        ]</span>
@@ -2651,9 +2616,8 @@
 <span class="sd">        ... )</span>
 <span class="sd">        &gt;&gt;&gt; divisions = [(2, 16), (4, 16), (6, 16), (8, 16)]</span>
 <span class="sd">        &gt;&gt;&gt; selections = stack(divisions)</span>
-<span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile.rhythm(</span>
-<span class="sd">        ...     selections, divisions</span>
-<span class="sd">        ... )</span>
+<span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile.rhythm(selections, divisions)</span>
+<span class="sd">        &gt;&gt;&gt; rmakers.attach_markup_struts(lilypond_file)</span>
 <span class="sd">        &gt;&gt;&gt; score = lilypond_file[abjad.Score]</span>
 <span class="sd">        &gt;&gt;&gt; abjad.override(score).TupletBracket.staff_padding = 4.5</span>
 <span class="sd">        &gt;&gt;&gt; abjad.setting(score).proportionalNotationDuration = &quot;#(ly:make-moment 1 28)&quot;</span>
@@ -2685,6 +2649,9 @@
 <span class="sd">                {</span>
 <span class="sd">                    \times 12/15 {</span>
 <span class="sd">                        c&#39;32</span>
+<span class="sd">                        - \tweak staff-padding 11</span>
+<span class="sd">                        - \tweak transparent ##t</span>
+<span class="sd">                        ^ \markup I</span>
 <span class="sd">                        [</span>
 <span class="sd">                        c&#39;8</span>
 <span class="sd">                        ]</span>
@@ -2718,9 +2685,8 @@
 <span class="sd">        ... )</span>
 <span class="sd">        &gt;&gt;&gt; divisions = [(2, 16), (4, 16), (6, 16), (8, 16)]</span>
 <span class="sd">        &gt;&gt;&gt; selections = stack(divisions)</span>
-<span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile.rhythm(</span>
-<span class="sd">        ...     selections, divisions</span>
-<span class="sd">        ... )</span>
+<span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile.rhythm(selections, divisions)</span>
+<span class="sd">        &gt;&gt;&gt; rmakers.attach_markup_struts(lilypond_file)</span>
 <span class="sd">        &gt;&gt;&gt; score = lilypond_file[abjad.Score]</span>
 <span class="sd">        &gt;&gt;&gt; abjad.override(score).TupletBracket.staff_padding = 4.5</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(lilypond_file) # doctest: +SKIP</span>
@@ -2750,6 +2716,9 @@
 <span class="sd">                {</span>
 <span class="sd">                    \times 4/5 {</span>
 <span class="sd">                        c&#39;32</span>
+<span class="sd">                        - \tweak staff-padding 11</span>
+<span class="sd">                        - \tweak transparent ##t</span>
+<span class="sd">                        ^ \markup I</span>
 <span class="sd">                        [</span>
 <span class="sd">                        c&#39;8</span>
 <span class="sd">                        ]</span>
@@ -2800,9 +2769,8 @@
 <span class="sd">        ... )</span>
 <span class="sd">        &gt;&gt;&gt; divisions = [(3, 8), (3, 8), (3, 8), (3, 8)]</span>
 <span class="sd">        &gt;&gt;&gt; selections = stack(divisions)</span>
-<span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile.rhythm(</span>
-<span class="sd">        ...     selections, divisions</span>
-<span class="sd">        ... )</span>
+<span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile.rhythm(selections, divisions)</span>
+<span class="sd">        &gt;&gt;&gt; rmakers.attach_markup_struts(lilypond_file)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(lilypond_file) # doctest: +SKIP</span>
 
 <span class="sd">        ..  docs::</span>
@@ -2827,6 +2795,9 @@
 <span class="sd">                    \tweak text #tuplet-number::calc-fraction-text</span>
 <span class="sd">                    \times 3/3 {</span>
 <span class="sd">                        c&#39;8</span>
+<span class="sd">                        - \tweak staff-padding 11</span>
+<span class="sd">                        - \tweak transparent ##t</span>
+<span class="sd">                        ^ \markup I</span>
 <span class="sd">                        [</span>
 <span class="sd">                        c&#39;8</span>
 <span class="sd">                        c&#39;8</span>
@@ -2894,9 +2865,8 @@
 <span class="sd">        ... )</span>
 <span class="sd">        &gt;&gt;&gt; divisions = [(2, 8), (2, 8), (2, 8)]</span>
 <span class="sd">        &gt;&gt;&gt; selections = stack(divisions)</span>
-<span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile.rhythm(</span>
-<span class="sd">        ...     selections, divisions</span>
-<span class="sd">        ... )</span>
+<span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile.rhythm(selections, divisions)</span>
+<span class="sd">        &gt;&gt;&gt; rmakers.attach_markup_struts(lilypond_file)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(lilypond_file) # doctest: +SKIP</span>
 
 <span class="sd">        ..  docs::</span>
@@ -2918,6 +2888,9 @@
 <span class="sd">                {</span>
 <span class="sd">                    \times 2/3 {</span>
 <span class="sd">                        c&#39;8</span>
+<span class="sd">                        - \tweak staff-padding 11</span>
+<span class="sd">                        - \tweak transparent ##t</span>
+<span class="sd">                        ^ \markup I</span>
 <span class="sd">                        [</span>
 <span class="sd">                        c&#39;8</span>
 <span class="sd">                        c&#39;8</span>
@@ -2949,9 +2922,8 @@
 <span class="sd">        ... )</span>
 <span class="sd">        &gt;&gt;&gt; divisions = [(2, 8), (2, 8), (2, 8)]</span>
 <span class="sd">        &gt;&gt;&gt; selections = stack(divisions)</span>
-<span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile.rhythm(</span>
-<span class="sd">        ...     selections, divisions</span>
-<span class="sd">        ... )</span>
+<span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile.rhythm(selections, divisions)</span>
+<span class="sd">        &gt;&gt;&gt; rmakers.attach_markup_struts(lilypond_file)</span>
 <span class="sd">        &gt;&gt;&gt; staff = lilypond_file[abjad.Score]</span>
 <span class="sd">        &gt;&gt;&gt; string = &#39;#tuplet-number::calc-denominator-text&#39;</span>
 <span class="sd">        &gt;&gt;&gt; abjad.override(staff).TupletNumber.text = string</span>
@@ -2980,6 +2952,9 @@
 <span class="sd">                {</span>
 <span class="sd">                    \times 2/3 {</span>
 <span class="sd">                        c&#39;8</span>
+<span class="sd">                        - \tweak staff-padding 11</span>
+<span class="sd">                        - \tweak transparent ##t</span>
+<span class="sd">                        ^ \markup I</span>
 <span class="sd">                        [</span>
 <span class="sd">                        c&#39;8</span>
 <span class="sd">                        c&#39;8</span>
@@ -3012,9 +2987,8 @@
 <span class="sd">        ... )</span>
 <span class="sd">        &gt;&gt;&gt; divisions = [(2, 8), (2, 8), (2, 8)]</span>
 <span class="sd">        &gt;&gt;&gt; selections = stack(divisions)</span>
-<span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile.rhythm(</span>
-<span class="sd">        ...     selections, divisions</span>
-<span class="sd">        ... )</span>
+<span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile.rhythm(selections, divisions)</span>
+<span class="sd">        &gt;&gt;&gt; rmakers.attach_markup_struts(lilypond_file)</span>
 <span class="sd">        &gt;&gt;&gt; staff = lilypond_file[abjad.Score]</span>
 <span class="sd">        &gt;&gt;&gt; string = &#39;#tuplet-number::calc-denominator-text&#39;</span>
 <span class="sd">        &gt;&gt;&gt; abjad.override(staff).TupletNumber.text = string</span>
@@ -3044,6 +3018,9 @@
 <span class="sd">                    \tweak text #tuplet-number::calc-fraction-text</span>
 <span class="sd">                    \times 2/3 {</span>
 <span class="sd">                        c&#39;8</span>
+<span class="sd">                        - \tweak staff-padding 11</span>
+<span class="sd">                        - \tweak transparent ##t</span>
+<span class="sd">                        ^ \markup I</span>
 <span class="sd">                        [</span>
 <span class="sd">                        c&#39;8</span>
 <span class="sd">                        c&#39;8</span>
@@ -3151,6 +3128,7 @@
 <span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile.rhythm(</span>
 <span class="sd">        ...     abjad.select(music_voice), divisions, pitched_staff=False</span>
 <span class="sd">        ... )</span>
+<span class="sd">        &gt;&gt;&gt; rmakers.attach_markup_struts(lilypond_file)</span>
 <span class="sd">        &gt;&gt;&gt; staff = lilypond_file[abjad.Staff]</span>
 <span class="sd">        &gt;&gt;&gt; abjad.override(staff).TupletBracket.direction = abjad.Up</span>
 <span class="sd">        &gt;&gt;&gt; abjad.override(staff).TupletBracket.staff_padding = 5</span>
@@ -3181,6 +3159,9 @@
 <span class="sd">                        \tweak text #tuplet-number::calc-fraction-text</span>
 <span class="sd">                        \times 3/5 {</span>
 <span class="sd">                            c&#39;4</span>
+<span class="sd">                            - \tweak staff-padding 11</span>
+<span class="sd">                            - \tweak transparent ##t</span>
+<span class="sd">                            ^ \markup I</span>
 <span class="sd">                            &lt;&lt;</span>
 <span class="sd">                                \context Voice = &quot;On_Beat_Grace_Container&quot;</span>
 <span class="sd">                                {</span>
@@ -3356,6 +3337,7 @@
 <span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile.rhythm(</span>
 <span class="sd">        ...     abjad.select(music_voice), divisions, pitched_staff=False</span>
 <span class="sd">        ... )</span>
+<span class="sd">        &gt;&gt;&gt; rmakers.attach_markup_struts(lilypond_file)</span>
 <span class="sd">        &gt;&gt;&gt; staff = lilypond_file[abjad.Staff]</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(lilypond_file) # doctest: +SKIP</span>
 
@@ -3387,6 +3369,9 @@
 <span class="sd">                                    \tweak transparent ##t</span>
 <span class="sd">                                    c&#39;</span>
 <span class="sd">                                &gt;8 * 2/7</span>
+<span class="sd">                                - \tweak staff-padding 11</span>
+<span class="sd">                                - \tweak transparent ##t</span>
+<span class="sd">                                ^ \markup I</span>
 <span class="sd">                                [</span>
 <span class="sd">                                (</span>
 <span class="sd">                                c&#39;8 * 2/7</span>
@@ -3539,9 +3524,8 @@
 <span class="sd">        ... )</span>
 <span class="sd">        &gt;&gt;&gt; divisions = [(2, 8), (2, 8), (2, 8), (2, 8), (2, 8), (2, 8)]</span>
 <span class="sd">        &gt;&gt;&gt; selections = stack(divisions)</span>
-<span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile.rhythm(</span>
-<span class="sd">        ...     selections, divisions</span>
-<span class="sd">        ... )</span>
+<span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile.rhythm(selections, divisions)</span>
+<span class="sd">        &gt;&gt;&gt; rmakers.attach_markup_struts(lilypond_file)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(lilypond_file) # doctest: +SKIP</span>
 
 <span class="sd">        ..  docs::</span>
@@ -3569,6 +3553,9 @@
 <span class="sd">                {</span>
 <span class="sd">                    \times 2/3 {</span>
 <span class="sd">                        c&#39;8</span>
+<span class="sd">                        - \tweak staff-padding 11</span>
+<span class="sd">                        - \tweak transparent ##t</span>
+<span class="sd">                        ^ \markup I</span>
 <span class="sd">                        [</span>
 <span class="sd">                        c&#39;8</span>
 <span class="sd">                        c&#39;8</span>
@@ -3628,9 +3615,8 @@
 <span class="sd">        ... )</span>
 <span class="sd">        &gt;&gt;&gt; divisions = [(2, 8), (2, 8), (2, 8), (2, 8), (2, 8), (2, 8)]</span>
 <span class="sd">        &gt;&gt;&gt; selections = stack(divisions)</span>
-<span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile.rhythm(</span>
-<span class="sd">        ...     selections, divisions</span>
-<span class="sd">        ... )</span>
+<span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile.rhythm(selections, divisions)</span>
+<span class="sd">        &gt;&gt;&gt; rmakers.attach_markup_struts(lilypond_file)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(lilypond_file) # doctest: +SKIP</span>
 
 <span class="sd">        ..  docs::</span>
@@ -3658,6 +3644,9 @@
 <span class="sd">                {</span>
 <span class="sd">                    \times 2/3 {</span>
 <span class="sd">                        c&#39;8</span>
+<span class="sd">                        - \tweak staff-padding 11</span>
+<span class="sd">                        - \tweak transparent ##t</span>
+<span class="sd">                        ^ \markup I</span>
 <span class="sd">                        [</span>
 <span class="sd">                        c&#39;8</span>
 <span class="sd">                        c&#39;8</span>
@@ -3751,9 +3740,8 @@
 <span class="sd">        ... )</span>
 <span class="sd">        &gt;&gt;&gt; divisions = [(4, 16), (4, 16), (5, 16), (5, 16)]</span>
 <span class="sd">        &gt;&gt;&gt; selections = stack(divisions)</span>
-<span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile.rhythm(</span>
-<span class="sd">        ...     selections, divisions</span>
-<span class="sd">        ... )</span>
+<span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile.rhythm(selections, divisions)</span>
+<span class="sd">        &gt;&gt;&gt; rmakers.attach_markup_struts(lilypond_file)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(lilypond_file) # doctest: +SKIP</span>
 
 <span class="sd">        ..  docs::</span>
@@ -3777,6 +3765,9 @@
 <span class="sd">                {</span>
 <span class="sd">                    \times 4/5 {</span>
 <span class="sd">                        r16</span>
+<span class="sd">                        - \tweak staff-padding 11</span>
+<span class="sd">                        - \tweak transparent ##t</span>
+<span class="sd">                        ^ \markup I</span>
 <span class="sd">                        r16</span>
 <span class="sd">                        r16</span>
 <span class="sd">                        r16</span>
@@ -3819,9 +3810,8 @@
 <span class="sd">        ... )</span>
 <span class="sd">        &gt;&gt;&gt; divisions = [(4, 16), (4, 16), (5, 16), (5, 16)]</span>
 <span class="sd">        &gt;&gt;&gt; selections = stack(divisions)</span>
-<span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile.rhythm(</span>
-<span class="sd">        ...     selections, divisions</span>
-<span class="sd">        ... )</span>
+<span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile.rhythm(selections, divisions)</span>
+<span class="sd">        &gt;&gt;&gt; rmakers.attach_markup_struts(lilypond_file)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(lilypond_file) # doctest: +SKIP</span>
 
 <span class="sd">        ..  docs::</span>
@@ -3844,6 +3834,9 @@
 <span class="sd">                \new RhythmicStaff</span>
 <span class="sd">                {</span>
 <span class="sd">                    r4</span>
+<span class="sd">                    - \tweak staff-padding 11</span>
+<span class="sd">                    - \tweak transparent ##t</span>
+<span class="sd">                    ^ \markup I</span>
 <span class="sd">                    r4</span>
 <span class="sd">                    r4</span>
 <span class="sd">                    r16</span>
@@ -3863,9 +3856,8 @@
 <span class="sd">        ... )</span>
 <span class="sd">        &gt;&gt;&gt; divisions = [(4, 16), (4, 16), (5, 16), (5, 16)]</span>
 <span class="sd">        &gt;&gt;&gt; selections = stack(divisions)</span>
-<span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile.rhythm(</span>
-<span class="sd">        ...     selections, divisions</span>
-<span class="sd">        ... )</span>
+<span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile.rhythm(selections, divisions)</span>
+<span class="sd">        &gt;&gt;&gt; rmakers.attach_markup_struts(lilypond_file)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(lilypond_file) # doctest: +SKIP</span>
 
 <span class="sd">        ..  docs::</span>
@@ -3888,6 +3880,9 @@
 <span class="sd">                \new RhythmicStaff</span>
 <span class="sd">                {</span>
 <span class="sd">                    r4</span>
+<span class="sd">                    - \tweak staff-padding 11</span>
+<span class="sd">                    - \tweak transparent ##t</span>
+<span class="sd">                    ^ \markup I</span>
 <span class="sd">                    r4</span>
 <span class="sd">                    r16</span>
 <span class="sd">                    r4</span>
@@ -3907,9 +3902,8 @@
 <span class="sd">        ... )</span>
 <span class="sd">        &gt;&gt;&gt; divisions = [(4, 16), (4, 16), (5, 16), (5, 16)]</span>
 <span class="sd">        &gt;&gt;&gt; selections = stack(divisions)</span>
-<span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile.rhythm(</span>
-<span class="sd">        ...     selections, divisions</span>
-<span class="sd">        ... )</span>
+<span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile.rhythm(selections, divisions)</span>
+<span class="sd">        &gt;&gt;&gt; rmakers.attach_markup_struts(lilypond_file)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(lilypond_file) # doctest: +SKIP</span>
 
 <span class="sd">        ..  docs::</span>
@@ -3933,6 +3927,9 @@
 <span class="sd">                {</span>
 <span class="sd">                    \times 4/5 {</span>
 <span class="sd">                        r16</span>
+<span class="sd">                        - \tweak staff-padding 11</span>
+<span class="sd">                        - \tweak transparent ##t</span>
+<span class="sd">                        ^ \markup I</span>
 <span class="sd">                        r16</span>
 <span class="sd">                        r16</span>
 <span class="sd">                        r16</span>
@@ -3978,9 +3975,8 @@
 <span class="sd">        ... )</span>
 <span class="sd">        &gt;&gt;&gt; divisions = [(4, 16), (4, 16), (4, 16), (4, 16)]</span>
 <span class="sd">        &gt;&gt;&gt; selections = stack(divisions)</span>
-<span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile.rhythm(</span>
-<span class="sd">        ...     selections, divisions</span>
-<span class="sd">        ... )</span>
+<span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile.rhythm(selections, divisions)</span>
+<span class="sd">        &gt;&gt;&gt; rmakers.attach_markup_struts(lilypond_file)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(lilypond_file) # doctest: +SKIP</span>
 
 <span class="sd">        ..  docs::</span>
@@ -4004,6 +4000,9 @@
 <span class="sd">                {</span>
 <span class="sd">                    \times 2/3 {</span>
 <span class="sd">                        c&#39;4.</span>
+<span class="sd">                        - \tweak staff-padding 11</span>
+<span class="sd">                        - \tweak transparent ##t</span>
+<span class="sd">                        ^ \markup I</span>
 <span class="sd">                    }</span>
 <span class="sd">                    \times 4/5 {</span>
 <span class="sd">                        c&#39;4</span>
@@ -4056,9 +4055,8 @@
 <span class="sd">        ... )</span>
 <span class="sd">        &gt;&gt;&gt; divisions = [(4, 16), (4, 16), (4, 16), (4, 16)]</span>
 <span class="sd">        &gt;&gt;&gt; selections = stack(divisions)</span>
-<span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile.rhythm(</span>
-<span class="sd">        ...     selections, divisions</span>
-<span class="sd">        ... )</span>
+<span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile.rhythm(selections, divisions)</span>
+<span class="sd">        &gt;&gt;&gt; rmakers.attach_markup_struts(lilypond_file)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(lilypond_file) # doctest: +SKIP</span>
 
 <span class="sd">        ..  docs::</span>
@@ -4083,6 +4081,9 @@
 <span class="sd">                    \tweak text #tuplet-number::calc-fraction-text</span>
 <span class="sd">                    \times 1/1 {</span>
 <span class="sd">                        c&#39;4</span>
+<span class="sd">                        - \tweak staff-padding 11</span>
+<span class="sd">                        - \tweak transparent ##t</span>
+<span class="sd">                        ^ \markup I</span>
 <span class="sd">                    }</span>
 <span class="sd">                    \tweak text #tuplet-number::calc-fraction-text</span>
 <span class="sd">                    \times 1/1 {</span>
@@ -4116,9 +4117,8 @@
 <span class="sd">        ... )</span>
 <span class="sd">        &gt;&gt;&gt; divisions = [(4, 16), (4, 16), (4, 16), (4, 16)]</span>
 <span class="sd">        &gt;&gt;&gt; selections = stack(divisions)</span>
-<span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile.rhythm(</span>
-<span class="sd">        ...     selections, divisions</span>
-<span class="sd">        ... )</span>
+<span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile.rhythm(selections, divisions)</span>
+<span class="sd">        &gt;&gt;&gt; rmakers.attach_markup_struts(lilypond_file)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(lilypond_file) # doctest: +SKIP</span>
 
 <span class="sd">        ..  docs::</span>
@@ -4141,6 +4141,9 @@
 <span class="sd">                \new RhythmicStaff</span>
 <span class="sd">                {</span>
 <span class="sd">                    c&#39;4</span>
+<span class="sd">                    - \tweak staff-padding 11</span>
+<span class="sd">                    - \tweak transparent ##t</span>
+<span class="sd">                    ^ \markup I</span>
 <span class="sd">                    c&#39;4</span>
 <span class="sd">                    ~</span>
 <span class="sd">                    c&#39;4</span>
@@ -4168,9 +4171,8 @@
 <span class="sd">        ... )</span>
 <span class="sd">        &gt;&gt;&gt; divisions = [(2, 8), (2, 8), (2, 8), (2, 8)]</span>
 <span class="sd">        &gt;&gt;&gt; selections = stack(divisions)</span>
-<span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile.rhythm(</span>
-<span class="sd">        ...     selections, divisions</span>
-<span class="sd">        ... )</span>
+<span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile.rhythm(selections, divisions)</span>
+<span class="sd">        &gt;&gt;&gt; rmakers.attach_markup_struts(lilypond_file)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(lilypond_file) # doctest: +SKIP</span>
 
 <span class="sd">        ..  docs::</span>
@@ -4194,6 +4196,9 @@
 <span class="sd">                {</span>
 <span class="sd">                    \times 2/3 {</span>
 <span class="sd">                        c&#39;8</span>
+<span class="sd">                        - \tweak staff-padding 11</span>
+<span class="sd">                        - \tweak transparent ##t</span>
+<span class="sd">                        ^ \markup I</span>
 <span class="sd">                        ~</span>
 <span class="sd">                        [</span>
 <span class="sd">                        c&#39;8</span>
@@ -4247,9 +4252,8 @@
 <span class="sd">        ... )</span>
 <span class="sd">        &gt;&gt;&gt; divisions = [(2, 8), (2, 8), (2, 8), (2, 8), (2, 8), (2, 8)]</span>
 <span class="sd">        &gt;&gt;&gt; selections = stack(divisions)</span>
-<span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile.rhythm(</span>
-<span class="sd">        ...     selections, divisions</span>
-<span class="sd">        ... )</span>
+<span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile.rhythm(selections, divisions)</span>
+<span class="sd">        &gt;&gt;&gt; rmakers.attach_markup_struts(lilypond_file)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(lilypond_file) # doctest: +SKIP</span>
 
 <span class="sd">        ..  docs::</span>
@@ -4277,6 +4281,9 @@
 <span class="sd">                {</span>
 <span class="sd">                    \times 2/3 {</span>
 <span class="sd">                        c&#39;8</span>
+<span class="sd">                        - \tweak staff-padding 11</span>
+<span class="sd">                        - \tweak transparent ##t</span>
+<span class="sd">                        ^ \markup I</span>
 <span class="sd">                        [</span>
 <span class="sd">                        c&#39;8</span>
 <span class="sd">                        c&#39;8</span>
@@ -4344,9 +4351,8 @@
 <span class="sd">        ... )</span>
 <span class="sd">        &gt;&gt;&gt; divisions = [(2, 8), (2, 8), (2, 8), (2, 8), (2, 8), (2, 8)]</span>
 <span class="sd">        &gt;&gt;&gt; selections = stack(divisions)</span>
-<span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile.rhythm(</span>
-<span class="sd">        ...     selections, divisions</span>
-<span class="sd">        ... )</span>
+<span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile.rhythm(selections, divisions)</span>
+<span class="sd">        &gt;&gt;&gt; rmakers.attach_markup_struts(lilypond_file)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(lilypond_file) # doctest: +SKIP</span>
 
 <span class="sd">        ..  docs::</span>
@@ -4374,6 +4380,9 @@
 <span class="sd">                {</span>
 <span class="sd">                    \times 2/3 {</span>
 <span class="sd">                        c&#39;8</span>
+<span class="sd">                        - \tweak staff-padding 11</span>
+<span class="sd">                        - \tweak transparent ##t</span>
+<span class="sd">                        ^ \markup I</span>
 <span class="sd">                        [</span>
 <span class="sd">                        c&#39;8</span>
 <span class="sd">                        c&#39;8</span>
@@ -4433,9 +4442,8 @@
 <span class="sd">        ... )</span>
 <span class="sd">        &gt;&gt;&gt; divisions = [(2, 8), (2, 8), (2, 8), (2, 8), (2, 8), (2, 8)]</span>
 <span class="sd">        &gt;&gt;&gt; selections = stack(divisions)</span>
-<span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile.rhythm(</span>
-<span class="sd">        ...     selections, divisions</span>
-<span class="sd">        ... )</span>
+<span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile.rhythm(selections, divisions)</span>
+<span class="sd">        &gt;&gt;&gt; rmakers.attach_markup_struts(lilypond_file)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(lilypond_file) # doctest: +SKIP</span>
 
 <span class="sd">        ..  docs::</span>
@@ -4463,6 +4471,9 @@
 <span class="sd">                {</span>
 <span class="sd">                    \times 2/3 {</span>
 <span class="sd">                        c&#39;8</span>
+<span class="sd">                        - \tweak staff-padding 11</span>
+<span class="sd">                        - \tweak transparent ##t</span>
+<span class="sd">                        ^ \markup I</span>
 <span class="sd">                        [</span>
 <span class="sd">                        c&#39;8</span>
 <span class="sd">                        c&#39;8</span>
@@ -4521,9 +4532,8 @@
 <span class="sd">        ... )</span>
 <span class="sd">        &gt;&gt;&gt; divisions = [(4, 8), (4, 8), (4, 8)]</span>
 <span class="sd">        &gt;&gt;&gt; selections = stack(divisions)</span>
-<span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile.rhythm(</span>
-<span class="sd">        ...     selections, divisions</span>
-<span class="sd">        ... )</span>
+<span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile.rhythm(selections, divisions)</span>
+<span class="sd">        &gt;&gt;&gt; rmakers.attach_markup_struts(lilypond_file)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(lilypond_file) # doctest: +SKIP</span>
 
 <span class="sd">        ..  docs::</span>
@@ -4545,6 +4555,9 @@
 <span class="sd">                {</span>
 <span class="sd">                    \times 4/7 {</span>
 <span class="sd">                        c&#39;2</span>
+<span class="sd">                        - \tweak staff-padding 11</span>
+<span class="sd">                        - \tweak transparent ##t</span>
+<span class="sd">                        ^ \markup I</span>
 <span class="sd">                        ~</span>
 <span class="sd">                        c&#39;8</span>
 <span class="sd">                        c&#39;4</span>
@@ -4581,9 +4594,8 @@
 <span class="sd">        ... )</span>
 <span class="sd">        &gt;&gt;&gt; divisions = [(2, 8), (2, 8), (2, 8), (2, 8), (2, 8), (2, 8)]</span>
 <span class="sd">        &gt;&gt;&gt; selections = stack(divisions)</span>
-<span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile.rhythm(</span>
-<span class="sd">        ...     selections, divisions</span>
-<span class="sd">        ... )</span>
+<span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile.rhythm(selections, divisions)</span>
+<span class="sd">        &gt;&gt;&gt; rmakers.attach_markup_struts(lilypond_file)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(lilypond_file) # doctest: +SKIP</span>
 
 <span class="sd">        ..  docs::</span>
@@ -4611,6 +4623,9 @@
 <span class="sd">                {</span>
 <span class="sd">                    \times 2/3 {</span>
 <span class="sd">                        c&#39;8</span>
+<span class="sd">                        - \tweak staff-padding 11</span>
+<span class="sd">                        - \tweak transparent ##t</span>
+<span class="sd">                        ^ \markup I</span>
 <span class="sd">                        ~</span>
 <span class="sd">                        [</span>
 <span class="sd">                        c&#39;8</span>
@@ -4677,9 +4692,8 @@
 <span class="sd">        ... )</span>
 <span class="sd">        &gt;&gt;&gt; divisions = [(2, 8), (2, 8), (2, 8), (2, 8), (2, 8), (2, 8)]</span>
 <span class="sd">        &gt;&gt;&gt; selections = stack(divisions)</span>
-<span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile.rhythm(</span>
-<span class="sd">        ...     selections, divisions</span>
-<span class="sd">        ... )</span>
+<span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile.rhythm(selections, divisions)</span>
+<span class="sd">        &gt;&gt;&gt; rmakers.attach_markup_struts(lilypond_file)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(lilypond_file) # doctest: +SKIP</span>
 
 <span class="sd">        ..  docs::</span>
@@ -4707,6 +4721,9 @@
 <span class="sd">                {</span>
 <span class="sd">                    \times 2/3 {</span>
 <span class="sd">                        c&#39;8</span>
+<span class="sd">                        - \tweak staff-padding 11</span>
+<span class="sd">                        - \tweak transparent ##t</span>
+<span class="sd">                        ^ \markup I</span>
 <span class="sd">                        ~</span>
 <span class="sd">                        [</span>
 <span class="sd">                        c&#39;8</span>
@@ -4781,9 +4798,8 @@
 <span class="sd">        &gt;&gt;&gt; selections = stack(divisions)</span>
 <span class="sd">        &gt;&gt;&gt; selector = abjad.select().components(abjad.TremoloContainer)</span>
 <span class="sd">        &gt;&gt;&gt; result = [abjad.slur(_) for _ in selector(selections)]</span>
-<span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile.rhythm(</span>
-<span class="sd">        ...     selections, divisions</span>
-<span class="sd">        ... )</span>
+<span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile.rhythm(selections, divisions)</span>
+<span class="sd">        &gt;&gt;&gt; rmakers.attach_markup_struts(lilypond_file)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(lilypond_file) # doctest: +SKIP</span>
 
 <span class="sd">        ..  docs::</span>
@@ -4803,6 +4819,9 @@
 <span class="sd">                {</span>
 <span class="sd">                    \repeat tremolo 2 {</span>
 <span class="sd">                        c&#39;16</span>
+<span class="sd">                        - \tweak staff-padding 11</span>
+<span class="sd">                        - \tweak transparent ##t</span>
+<span class="sd">                        ^ \markup I</span>
 <span class="sd">                        (</span>
 <span class="sd">                        c&#39;16</span>
 <span class="sd">                        )</span>
@@ -4826,6 +4845,9 @@
 <span class="sd">                        c&#39;16</span>
 <span class="sd">                        (</span>
 <span class="sd">                        c&#39;16</span>
+<span class="sd">                        - \tweak staff-padding 18</span>
+<span class="sd">                        - \tweak transparent ##t</span>
+<span class="sd">                        ^ \markup I</span>
 <span class="sd">                        )</span>
 <span class="sd">                    }</span>
 <span class="sd">                }</span>
@@ -4844,9 +4866,8 @@
 <span class="sd">        &gt;&gt;&gt; selections = stack(divisions)</span>
 <span class="sd">        &gt;&gt;&gt; selector = abjad.select().components(abjad.TremoloContainer)</span>
 <span class="sd">        &gt;&gt;&gt; result = [abjad.slur(_) for _ in selector(selections)]</span>
-<span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile.rhythm(</span>
-<span class="sd">        ...     selections, divisions</span>
-<span class="sd">        ... )</span>
+<span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile.rhythm(selections, divisions)</span>
+<span class="sd">        &gt;&gt;&gt; rmakers.attach_markup_struts(lilypond_file)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(lilypond_file) # doctest: +SKIP</span>
 
 <span class="sd">        ..  docs::</span>
@@ -4866,6 +4887,9 @@
 <span class="sd">                {</span>
 <span class="sd">                    \repeat tremolo 4 {</span>
 <span class="sd">                        c&#39;32</span>
+<span class="sd">                        - \tweak staff-padding 11</span>
+<span class="sd">                        - \tweak transparent ##t</span>
+<span class="sd">                        ^ \markup I</span>
 <span class="sd">                        (</span>
 <span class="sd">                        c&#39;32</span>
 <span class="sd">                        )</span>
@@ -4889,6 +4913,9 @@
 <span class="sd">                        c&#39;32</span>
 <span class="sd">                        (</span>
 <span class="sd">                        c&#39;32</span>
+<span class="sd">                        - \tweak staff-padding 18</span>
+<span class="sd">                        - \tweak transparent ##t</span>
+<span class="sd">                        ^ \markup I</span>
 <span class="sd">                        )</span>
 <span class="sd">                    }</span>
 <span class="sd">                }</span>
@@ -4931,9 +4958,8 @@
 <span class="sd">        ... )</span>
 <span class="sd">        &gt;&gt;&gt; divisions = [(2, 8), (2, 8), (2, 8), (2, 8), (2, 8), (2, 8)]</span>
 <span class="sd">        &gt;&gt;&gt; selections = stack(divisions)</span>
-<span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile.rhythm(</span>
-<span class="sd">        ...     selections, divisions</span>
-<span class="sd">        ... )</span>
+<span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile.rhythm(selections, divisions)</span>
+<span class="sd">        &gt;&gt;&gt; rmakers.attach_markup_struts(lilypond_file)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(lilypond_file) # doctest: +SKIP</span>
 
 <span class="sd">        ..  docs::</span>
@@ -4961,6 +4987,9 @@
 <span class="sd">                {</span>
 <span class="sd">                    \times 2/3 {</span>
 <span class="sd">                        c&#39;8</span>
+<span class="sd">                        - \tweak staff-padding 11</span>
+<span class="sd">                        - \tweak transparent ##t</span>
+<span class="sd">                        ^ \markup I</span>
 <span class="sd">                        [</span>
 <span class="sd">                        c&#39;8</span>
 <span class="sd">                        ~</span>
@@ -5029,9 +5058,8 @@
 <span class="sd">        ... )</span>
 <span class="sd">        &gt;&gt;&gt; divisions = [(2, 8), (2, 8), (2, 8), (2, 8), (2, 8), (2, 8)]</span>
 <span class="sd">        &gt;&gt;&gt; selections = stack(divisions)</span>
-<span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile.rhythm(</span>
-<span class="sd">        ...     selections, divisions</span>
-<span class="sd">        ... )</span>
+<span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile.rhythm(selections, divisions)</span>
+<span class="sd">        &gt;&gt;&gt; rmakers.attach_markup_struts(lilypond_file)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(lilypond_file) # doctest: +SKIP</span>
 
 <span class="sd">        ..  docs::</span>
@@ -5059,6 +5087,9 @@
 <span class="sd">                {</span>
 <span class="sd">                    \times 2/3 {</span>
 <span class="sd">                        c&#39;8</span>
+<span class="sd">                        - \tweak staff-padding 11</span>
+<span class="sd">                        - \tweak transparent ##t</span>
+<span class="sd">                        ^ \markup I</span>
 <span class="sd">                        [</span>
 <span class="sd">                        c&#39;8</span>
 <span class="sd">                        \repeatTie</span>
