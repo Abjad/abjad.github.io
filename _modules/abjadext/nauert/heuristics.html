@@ -215,7 +215,7 @@
 
 
 <div class="viewcode-block" id="DistanceHeuristic"><a class="viewcode-back" href="../../../api/abjadext/nauert/heuristics.html#abjadext.nauert.heuristics.DistanceHeuristic">[docs]</a><span class="k">class</span> <span class="nc">DistanceHeuristic</span><span class="p">(</span><span class="n">Heuristic</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Distance heuristic.</span>
 
 <span class="sd">    Considers only the computed distance of each ``QGrid`` and the number of</span>
@@ -224,6 +224,41 @@
 
 <span class="sd">    The ``QGrid`` with the smallest distance and fewest number of</span>
 <span class="sd">    leaves will be selected.</span>
+
+<span class="sd">    ..  container:: example</span>
+
+<span class="sd">        &gt;&gt;&gt; quantizer = nauert.Quantizer()</span>
+<span class="sd">        &gt;&gt;&gt; durations = [1000] * 8</span>
+<span class="sd">        &gt;&gt;&gt; pitches = range(8)</span>
+<span class="sd">        &gt;&gt;&gt; q_event_sequence = \</span>
+<span class="sd">        ...     nauert.QEventSequence.from_millisecond_pitch_pairs(</span>
+<span class="sd">        ...     tuple(zip(durations, pitches)))</span>
+<span class="sd">        &gt;&gt;&gt; heuristic = nauert.DistanceHeuristic()</span>
+<span class="sd">        &gt;&gt;&gt; result = quantizer(q_event_sequence, heuristic=heuristic)</span>
+<span class="sd">        &gt;&gt;&gt; abjad.show(result) # doctest: +SKIP</span>
+
+<span class="sd">        ..  docs::</span>
+
+<span class="sd">            &gt;&gt;&gt; string = abjad.lilypond(result)</span>
+<span class="sd">            &gt;&gt;&gt; print(string)</span>
+<span class="sd">            \new Voice</span>
+<span class="sd">            {</span>
+<span class="sd">                {</span>
+<span class="sd">                    \tempo 4=60</span>
+<span class="sd">                    %%% \time 4/4 %%%</span>
+<span class="sd">                    c&#39;4</span>
+<span class="sd">                    cs&#39;4</span>
+<span class="sd">                    d&#39;4</span>
+<span class="sd">                    ef&#39;4</span>
+<span class="sd">                }</span>
+<span class="sd">                {</span>
+<span class="sd">                    e&#39;4</span>
+<span class="sd">                    f&#39;4</span>
+<span class="sd">                    fs&#39;4</span>
+<span class="sd">                    g&#39;4</span>
+<span class="sd">                }</span>
+<span class="sd">            }</span>
+
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="c1">### CLASS VARIABLES ###</span>

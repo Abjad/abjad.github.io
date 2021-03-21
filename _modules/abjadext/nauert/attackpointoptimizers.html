@@ -378,14 +378,96 @@
 
 
 <div class="viewcode-block" id="NaiveAttackPointOptimizer"><a class="viewcode-back" href="../../../api/abjadext/nauert/attackpointoptimizers.html#abjadext.nauert.attackpointoptimizers.NaiveAttackPointOptimizer">[docs]</a><span class="k">class</span> <span class="nc">NaiveAttackPointOptimizer</span><span class="p">(</span><span class="n">AttackPointOptimizer</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Naive attack-point optimizer.</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Naive attack-point optimizer. (The default attack-point optimizer)</span>
 
 <span class="sd">    Optimizes attack points by fusing tie leaves within logical ties with leaf</span>
 <span class="sd">    durations decreasing monotonically.</span>
 
 <span class="sd">    Logical ties will be partitioned into sub-logical-ties if leaves are found</span>
 <span class="sd">    with metronome marks attached.</span>
+
+<span class="sd">    ..  container:: example</span>
+
+<span class="sd">        &gt;&gt;&gt; staff = abjad.Staff(&quot;c&#39;8 d&#39;8 e&#39;8 f&#39;8 g&#39;8 a&#39;8 b&#39;8 c&#39;&#39;8&quot;)</span>
+<span class="sd">        &gt;&gt;&gt; abjad.show(staff) # doctest: +SKIP</span>
+
+<span class="sd">        &gt;&gt;&gt; source_tempo = abjad.MetronomeMark((1, 4), 60)</span>
+<span class="sd">        &gt;&gt;&gt; q_events = nauert.QEventSequence.from_tempo_scaled_leaves(</span>
+<span class="sd">        ...     staff[:],</span>
+<span class="sd">        ...     tempo=source_tempo,</span>
+<span class="sd">        ... )</span>
+<span class="sd">        &gt;&gt;&gt; target_tempo = abjad.MetronomeMark((1, 4), 54)</span>
+<span class="sd">        &gt;&gt;&gt; q_schema = nauert.MeasurewiseQSchema(</span>
+<span class="sd">        ...     tempo=target_tempo,</span>
+<span class="sd">        ... )</span>
+<span class="sd">        &gt;&gt;&gt; quantizer = nauert.Quantizer()</span>
+
+<span class="sd">    ..  container:: example</span>
+
+<span class="sd">        &gt;&gt;&gt; optimizer = nauert.NaiveAttackPointOptimizer()</span>
+<span class="sd">        &gt;&gt;&gt; result = quantizer(</span>
+<span class="sd">        ...     q_events,</span>
+<span class="sd">        ...     attack_point_optimizer=optimizer,</span>
+<span class="sd">        ...     q_schema=q_schema,</span>
+<span class="sd">        ... )</span>
+<span class="sd">        &gt;&gt;&gt; abjad.show(result) # doctest: +SKIP</span>
+
+<span class="sd">        ..  docs::</span>
+
+<span class="sd">            &gt;&gt;&gt; string = abjad.lilypond(result)</span>
+<span class="sd">            &gt;&gt;&gt; print(string)</span>
+<span class="sd">            \new Voice</span>
+<span class="sd">            {</span>
+<span class="sd">                {</span>
+<span class="sd">                    \tempo 4=54</span>
+<span class="sd">                    %%% \time 4/4 %%%</span>
+<span class="sd">                    c&#39;16..</span>
+<span class="sd">                    d&#39;64</span>
+<span class="sd">                    ~</span>
+<span class="sd">                    \times 4/5 {</span>
+<span class="sd">                        d&#39;8</span>
+<span class="sd">                        e&#39;32</span>
+<span class="sd">                        ~</span>
+<span class="sd">                    }</span>
+<span class="sd">                    \times 4/7 {</span>
+<span class="sd">                        e&#39;8</span>
+<span class="sd">                        ~</span>
+<span class="sd">                        e&#39;32</span>
+<span class="sd">                        f&#39;16</span>
+<span class="sd">                        ~</span>
+<span class="sd">                    }</span>
+<span class="sd">                    \times 4/5 {</span>
+<span class="sd">                        f&#39;16.</span>
+<span class="sd">                        g&#39;16</span>
+<span class="sd">                        ~</span>
+<span class="sd">                    }</span>
+<span class="sd">                    g&#39;16</span>
+<span class="sd">                    a&#39;16</span>
+<span class="sd">                    ~</span>
+<span class="sd">                    \times 4/5 {</span>
+<span class="sd">                        a&#39;16</span>
+<span class="sd">                        b&#39;16.</span>
+<span class="sd">                        ~</span>
+<span class="sd">                    }</span>
+<span class="sd">                    \times 4/7 {</span>
+<span class="sd">                        b&#39;16</span>
+<span class="sd">                        c&#39;&#39;8</span>
+<span class="sd">                        ~</span>
+<span class="sd">                        c&#39;&#39;32</span>
+<span class="sd">                        ~</span>
+<span class="sd">                    }</span>
+<span class="sd">                    \times 4/5 {</span>
+<span class="sd">                        c&#39;&#39;32</span>
+<span class="sd">                        r32</span>
+<span class="sd">                        r32</span>
+<span class="sd">                        r32</span>
+<span class="sd">                        r32</span>
+<span class="sd">                    }</span>
+<span class="sd">                }</span>
+<span class="sd">            }</span>
+
+
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="c1">### CLASS VARIABLES ###</span>
@@ -421,10 +503,131 @@
 
 
 <div class="viewcode-block" id="NullAttackPointOptimizer"><a class="viewcode-back" href="../../../api/abjadext/nauert/attackpointoptimizers.html#abjadext.nauert.attackpointoptimizers.NullAttackPointOptimizer">[docs]</a><span class="k">class</span> <span class="nc">NullAttackPointOptimizer</span><span class="p">(</span><span class="n">AttackPointOptimizer</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Null attack-point optimizer.</span>
 
 <span class="sd">    Performs no attack point optimization.</span>
+
+<span class="sd">    ..  container:: example</span>
+
+<span class="sd">        &gt;&gt;&gt; staff = abjad.Staff(&quot;c&#39;8 d&#39;8 e&#39;8 f&#39;8 g&#39;8 a&#39;8 b&#39;8 c&#39;&#39;8&quot;)</span>
+<span class="sd">        &gt;&gt;&gt; abjad.show(staff) # doctest: +SKIP</span>
+
+<span class="sd">        &gt;&gt;&gt; source_tempo = abjad.MetronomeMark((1, 4), 60)</span>
+<span class="sd">        &gt;&gt;&gt; q_events = nauert.QEventSequence.from_tempo_scaled_leaves(</span>
+<span class="sd">        ...     staff[:],</span>
+<span class="sd">        ...     tempo=source_tempo,</span>
+<span class="sd">        ... )</span>
+<span class="sd">        &gt;&gt;&gt; target_tempo = abjad.MetronomeMark((1, 4), 54)</span>
+<span class="sd">        &gt;&gt;&gt; q_schema = nauert.MeasurewiseQSchema(</span>
+<span class="sd">        ...     tempo=target_tempo,</span>
+<span class="sd">        ... )</span>
+<span class="sd">        &gt;&gt;&gt; quantizer = nauert.Quantizer()</span>
+
+<span class="sd">    ..  container:: example</span>
+
+<span class="sd">        &gt;&gt;&gt; optimizer = nauert.NullAttackPointOptimizer()</span>
+<span class="sd">        &gt;&gt;&gt; result = quantizer(</span>
+<span class="sd">        ...     q_events,</span>
+<span class="sd">        ...     attack_point_optimizer=optimizer,</span>
+<span class="sd">        ...     q_schema=q_schema,</span>
+<span class="sd">        ... )</span>
+<span class="sd">        &gt;&gt;&gt; abjad.show(result) # doctest: +SKIP</span>
+
+<span class="sd">        ..  docs::</span>
+
+<span class="sd">            &gt;&gt;&gt; string = abjad.lilypond(result)</span>
+<span class="sd">            &gt;&gt;&gt; print(string)</span>
+<span class="sd">            \new Voice</span>
+<span class="sd">            {</span>
+<span class="sd">                {</span>
+<span class="sd">                    \tempo 4=54</span>
+<span class="sd">                    %%% \time 4/4 %%%</span>
+<span class="sd">                    c&#39;16</span>
+<span class="sd">                    ~</span>
+<span class="sd">                    c&#39;32</span>
+<span class="sd">                    ~</span>
+<span class="sd">                    c&#39;64</span>
+<span class="sd">                    d&#39;64</span>
+<span class="sd">                    ~</span>
+<span class="sd">                    \times 4/5 {</span>
+<span class="sd">                        d&#39;32</span>
+<span class="sd">                        ~</span>
+<span class="sd">                        d&#39;32</span>
+<span class="sd">                        ~</span>
+<span class="sd">                        d&#39;32</span>
+<span class="sd">                        ~</span>
+<span class="sd">                        d&#39;32</span>
+<span class="sd">                        e&#39;32</span>
+<span class="sd">                        ~</span>
+<span class="sd">                    }</span>
+<span class="sd">                    \times 4/7 {</span>
+<span class="sd">                        e&#39;32</span>
+<span class="sd">                        ~</span>
+<span class="sd">                        e&#39;32</span>
+<span class="sd">                        ~</span>
+<span class="sd">                        e&#39;32</span>
+<span class="sd">                        ~</span>
+<span class="sd">                        e&#39;32</span>
+<span class="sd">                        ~</span>
+<span class="sd">                        e&#39;32</span>
+<span class="sd">                        f&#39;32</span>
+<span class="sd">                        ~</span>
+<span class="sd">                        f&#39;32</span>
+<span class="sd">                        ~</span>
+<span class="sd">                    }</span>
+<span class="sd">                    \times 4/5 {</span>
+<span class="sd">                        f&#39;32</span>
+<span class="sd">                        ~</span>
+<span class="sd">                        f&#39;32</span>
+<span class="sd">                        ~</span>
+<span class="sd">                        f&#39;32</span>
+<span class="sd">                        g&#39;32</span>
+<span class="sd">                        ~</span>
+<span class="sd">                        g&#39;32</span>
+<span class="sd">                        ~</span>
+<span class="sd">                    }</span>
+<span class="sd">                    g&#39;16</span>
+<span class="sd">                    a&#39;16</span>
+<span class="sd">                    ~</span>
+<span class="sd">                    \times 4/5 {</span>
+<span class="sd">                        a&#39;32</span>
+<span class="sd">                        ~</span>
+<span class="sd">                        a&#39;32</span>
+<span class="sd">                        b&#39;32</span>
+<span class="sd">                        ~</span>
+<span class="sd">                        b&#39;32</span>
+<span class="sd">                        ~</span>
+<span class="sd">                        b&#39;32</span>
+<span class="sd">                        ~</span>
+<span class="sd">                    }</span>
+<span class="sd">                    \times 4/7 {</span>
+<span class="sd">                        b&#39;32</span>
+<span class="sd">                        ~</span>
+<span class="sd">                        b&#39;32</span>
+<span class="sd">                        c&#39;&#39;32</span>
+<span class="sd">                        ~</span>
+<span class="sd">                        c&#39;&#39;32</span>
+<span class="sd">                        ~</span>
+<span class="sd">                        c&#39;&#39;32</span>
+<span class="sd">                        ~</span>
+<span class="sd">                        c&#39;&#39;32</span>
+<span class="sd">                        ~</span>
+<span class="sd">                        c&#39;&#39;32</span>
+<span class="sd">                        ~</span>
+<span class="sd">                    }</span>
+<span class="sd">                    \times 4/5 {</span>
+<span class="sd">                        c&#39;&#39;32</span>
+<span class="sd">                        r32</span>
+<span class="sd">                        r32</span>
+<span class="sd">                        r32</span>
+<span class="sd">                        r32</span>
+<span class="sd">                    }</span>
+<span class="sd">                }</span>
+<span class="sd">            }</span>
+
+
+
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="c1">### CLASS VARIABLES ###</span>
