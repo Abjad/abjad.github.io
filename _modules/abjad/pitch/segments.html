@@ -1688,9 +1688,7 @@
         <span class="k">return</span> <span class="n">argument</span> <span class="o">==</span> <span class="n">new_pitch_classes</span>
 
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">_make_rotate_method_name</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">stravinsky</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">stravinsky</span><span class="p">:</span>
-            <span class="k">return</span> <span class="s2">&quot;rs&quot;</span>
+    <span class="k">def</span> <span class="nf">_make_rotate_method_name</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
         <span class="k">return</span> <span class="s2">&quot;r&quot;</span>
 
     <span class="k">def</span> <span class="nf">_transpose_to_zero</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -2753,10 +2751,10 @@
 
 <div class="viewcode-block" id="PitchClassSegment.rotate"><a class="viewcode-back" href="../../../api/abjad/pitch/segments.html#abjad.pitch.segments.PitchClassSegment.rotate">[docs]</a>    <span class="nd">@Signature</span><span class="p">(</span>
         <span class="n">is_operator</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-        <span class="n">method_name_callback</span><span class="o">=</span><span class="s2">&quot;_make_rotate_method_name&quot;</span><span class="p">,</span>
+        <span class="n">method_name</span><span class="o">=</span><span class="s2">&quot;r&quot;</span><span class="p">,</span>
         <span class="n">subscript</span><span class="o">=</span><span class="s2">&quot;n&quot;</span><span class="p">,</span>
     <span class="p">)</span>
-    <span class="k">def</span> <span class="nf">rotate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">stravinsky</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">rotate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
         <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Rotates segment by index ``n``.</span>
 
@@ -2999,80 +2997,6 @@
 
 <span class="sd">        ..  container:: example</span>
 
-<span class="sd">            Stravinsky-style rotation back-transposes segment to</span>
-<span class="sd">            begin at zero:</span>
-
-<span class="sd">            ..  container:: example</span>
-
-<span class="sd">                &gt;&gt;&gt; J.rotate(n=1, stravinsky=True)</span>
-<span class="sd">                PitchClassSegment([0, 3, 3.5, 11, 0, 3.5])</span>
-
-<span class="sd">                &gt;&gt;&gt; segment = J.rotate(n=1, stravinsky=True)</span>
-<span class="sd">                &gt;&gt;&gt; lilypond_file = abjad.illustrate(segment)</span>
-<span class="sd">                &gt;&gt;&gt; abjad.show(lilypond_file) # doctest: +SKIP</span>
-
-<span class="sd">                ..  docs::</span>
-
-<span class="sd">                    &gt;&gt;&gt; voice = lilypond_file[abjad.Score][0][0]</span>
-<span class="sd">                    &gt;&gt;&gt; string = abjad.lilypond(voice)</span>
-<span class="sd">                    &gt;&gt;&gt; print(string)</span>
-<span class="sd">                    \new Voice</span>
-<span class="sd">                    {</span>
-<span class="sd">                        c&#39;8</span>
-<span class="sd">                        ef&#39;8</span>
-<span class="sd">                        eqf&#39;8</span>
-<span class="sd">                        b&#39;8</span>
-<span class="sd">                        c&#39;8</span>
-<span class="sd">                        eqf&#39;8</span>
-<span class="sd">                        \bar &quot;|.&quot;</span>
-<span class="sd">                        \override Score.BarLine.transparent = ##f</span>
-<span class="sd">                    }</span>
-
-<span class="sd">            ..  container:: example expression</span>
-
-<span class="sd">                &gt;&gt;&gt; expression = abjad.pitch_class_segment(name=&quot;J&quot;)</span>
-<span class="sd">                &gt;&gt;&gt; expression = expression.rotate(n=1, stravinsky=True)</span>
-
-<span class="sd">                &gt;&gt;&gt; expression([-2, -1.5, 6, 7, -1.5, 7])</span>
-<span class="sd">                PitchClassSegment([0, 3, 3.5, 11, 0, 3.5])</span>
-
-<span class="sd">                &gt;&gt;&gt; expression.get_string()</span>
-<span class="sd">                &#39;rs1(J)&#39;</span>
-
-<span class="sd">                &gt;&gt;&gt; segment = expression([-2, -1.5, 6, 7, -1.5, 7])</span>
-<span class="sd">                &gt;&gt;&gt; markup = expression.get_markup()</span>
-<span class="sd">                &gt;&gt;&gt; lilypond_file = abjad.illustrate(segment, figure_name=markup)</span>
-<span class="sd">                &gt;&gt;&gt; abjad.show(lilypond_file) # doctest: +SKIP</span>
-
-<span class="sd">                ..  docs::</span>
-
-<span class="sd">                    &gt;&gt;&gt; voice = lilypond_file[abjad.Score][0][0]</span>
-<span class="sd">                    &gt;&gt;&gt; string = abjad.lilypond(voice)</span>
-<span class="sd">                    &gt;&gt;&gt; print(string)</span>
-<span class="sd">                    \new Voice</span>
-<span class="sd">                    {</span>
-<span class="sd">                        c&#39;8</span>
-<span class="sd">                        ^ \markup {</span>
-<span class="sd">                            \concat</span>
-<span class="sd">                                {</span>
-<span class="sd">                                    rs</span>
-<span class="sd">                                    \sub</span>
-<span class="sd">                                        1</span>
-<span class="sd">                                    \bold</span>
-<span class="sd">                                        J</span>
-<span class="sd">                                }</span>
-<span class="sd">                            }</span>
-<span class="sd">                        ef&#39;8</span>
-<span class="sd">                        eqf&#39;8</span>
-<span class="sd">                        b&#39;8</span>
-<span class="sd">                        c&#39;8</span>
-<span class="sd">                        eqf&#39;8</span>
-<span class="sd">                        \bar &quot;|.&quot;</span>
-<span class="sd">                        \override Score.BarLine.transparent = ##f</span>
-<span class="sd">                    }</span>
-
-<span class="sd">        ..  container:: example</span>
-
 <span class="sd">            Returns pitch-class segment:</span>
 
 <span class="sd">            &gt;&gt;&gt; isinstance(segment, abjad.PitchClassSegment)</span>
@@ -3082,11 +3006,6 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_expression</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_update_expression</span><span class="p">(</span><span class="n">inspect</span><span class="o">.</span><span class="n">currentframe</span><span class="p">())</span>
         <span class="n">items</span> <span class="o">=</span> <span class="n">Sequence</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_collection</span><span class="p">)</span><span class="o">.</span><span class="n">rotate</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">stravinsky</span><span class="p">:</span>
-            <span class="n">n</span> <span class="o">=</span> <span class="mi">0</span> <span class="o">-</span> <span class="nb">float</span><span class="p">(</span><span class="n">items</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">number</span><span class="p">)</span>
-            <span class="n">segment</span> <span class="o">=</span> <span class="n">new</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">items</span><span class="o">=</span><span class="n">items</span><span class="p">)</span>
-            <span class="n">segment</span> <span class="o">=</span> <span class="n">segment</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>
-            <span class="n">items</span> <span class="o">=</span> <span class="n">segment</span><span class="o">.</span><span class="n">items</span><span class="p">[:]</span>
         <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span><span class="n">items</span><span class="o">=</span><span class="n">items</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="PitchClassSegment.to_pitch_classes"><a class="viewcode-back" href="../../../api/abjad/pitch/segments.html#abjad.pitch.segments.PitchClassSegment.to_pitch_classes">[docs]</a>    <span class="k">def</span> <span class="nf">to_pitch_classes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -4491,7 +4410,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">new</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">items</span><span class="o">=</span><span class="nb">reversed</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="PitchSegment.rotate"><a class="viewcode-back" href="../../../api/abjad/pitch/segments.html#abjad.pitch.segments.PitchSegment.rotate">[docs]</a>    <span class="k">def</span> <span class="nf">rotate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">stravinsky</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<div class="viewcode-block" id="PitchSegment.rotate"><a class="viewcode-back" href="../../../api/abjad/pitch/segments.html#abjad.pitch.segments.PitchSegment.rotate">[docs]</a>    <span class="k">def</span> <span class="nf">rotate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
         <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Rotates pitch segment by index ``n``.</span>
 
@@ -4572,10 +4491,6 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">rotated_pitches</span> <span class="o">=</span> <span class="n">Sequence</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_collection</span><span class="p">)</span><span class="o">.</span><span class="n">rotate</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>
         <span class="n">new_segment</span> <span class="o">=</span> <span class="n">new</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">items</span><span class="o">=</span><span class="n">rotated_pitches</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">stravinsky</span><span class="p">:</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="n">new_segment</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
-                <span class="n">interval</span> <span class="o">=</span> <span class="n">new_segment</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="bp">self</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-                <span class="n">new_segment</span> <span class="o">=</span> <span class="n">new_segment</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">interval</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">new_segment</span></div>
 
 <div class="viewcode-block" id="PitchSegment.to_pitch_classes"><a class="viewcode-back" href="../../../api/abjad/pitch/segments.html#abjad.pitch.segments.PitchSegment.to_pitch_classes">[docs]</a>    <span class="k">def</span> <span class="nf">to_pitch_classes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -6140,7 +6055,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">retrograde</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="TwelveToneRow.rotate"><a class="viewcode-back" href="../../../api/abjad/pitch/segments.html#abjad.pitch.segments.TwelveToneRow.rotate">[docs]</a>    <span class="k">def</span> <span class="nf">rotate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">stravinsky</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<div class="viewcode-block" id="TwelveToneRow.rotate"><a class="viewcode-back" href="../../../api/abjad/pitch/segments.html#abjad.pitch.segments.TwelveToneRow.rotate">[docs]</a>    <span class="k">def</span> <span class="nf">rotate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
         <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Rotates row by index ``n``.</span>
 
@@ -6251,44 +6166,13 @@
 
 <span class="sd">        ..  container:: example</span>
 
-<span class="sd">            Stravinsky-style rotation back-transposes row to zero:</span>
-
-<span class="sd">            &gt;&gt;&gt; rotation = row.rotate(n=-1, stravinsky=True)</span>
-<span class="sd">            &gt;&gt;&gt; lilypond_file = abjad.illustrate(rotation)</span>
-<span class="sd">            &gt;&gt;&gt; abjad.show(lilypond_file) # doctest: +SKIP</span>
-
-<span class="sd">            ..  docs::</span>
-
-<span class="sd">                &gt;&gt;&gt; voice = lilypond_file[abjad.Score][0][0]</span>
-<span class="sd">                &gt;&gt;&gt; string = abjad.lilypond(voice)</span>
-<span class="sd">                &gt;&gt;&gt; print(string)</span>
-<span class="sd">                \new Voice</span>
-<span class="sd">                {</span>
-<span class="sd">                    c&#39;8</span>
-<span class="sd">                    bf&#39;8</span>
-<span class="sd">                    e&#39;8</span>
-<span class="sd">                    g&#39;8</span>
-<span class="sd">                    af&#39;8</span>
-<span class="sd">                    fs&#39;8</span>
-<span class="sd">                    f&#39;8</span>
-<span class="sd">                    b&#39;8</span>
-<span class="sd">                    ef&#39;8</span>
-<span class="sd">                    a&#39;8</span>
-<span class="sd">                    cs&#39;8</span>
-<span class="sd">                    d&#39;8</span>
-<span class="sd">                    \bar &quot;|.&quot;</span>
-<span class="sd">                    \override Score.BarLine.transparent = ##f</span>
-<span class="sd">                }</span>
-
-<span class="sd">        ..  container:: example</span>
-
 <span class="sd">            Returns row:</span>
 
 <span class="sd">            &gt;&gt;&gt; rotation</span>
-<span class="sd">            TwelveToneRow([0, 10, 4, 7, 8, 6, 5, 11, 3, 9, 1, 2])</span>
+<span class="sd">            TwelveToneRow([1, 11, 9, 3, 6, 7, 5, 4, 10, 2, 8, 0])</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">rotate</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="n">n</span><span class="p">,</span> <span class="n">stravinsky</span><span class="o">=</span><span class="n">stravinsky</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">rotate</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="n">n</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="TwelveToneRow.transpose"><a class="viewcode-back" href="../../../api/abjad/pitch/segments.html#abjad.pitch.segments.TwelveToneRow.transpose">[docs]</a>    <span class="k">def</span> <span class="nf">transpose</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
         <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>

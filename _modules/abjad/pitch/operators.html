@@ -194,15 +194,15 @@
 <span class="sd">        Rotation followed by transposition:</span>
 
 <span class="sd">        &gt;&gt;&gt; operator = abjad.CompoundOperator()</span>
-<span class="sd">        &gt;&gt;&gt; operator = operator.rotate(n=1, stravinsky=True)</span>
+<span class="sd">        &gt;&gt;&gt; operator = operator.rotate(n=1)</span>
 <span class="sd">        &gt;&gt;&gt; operator = operator.transpose(n=2)</span>
 
 <span class="sd">        &gt;&gt;&gt; str(operator)</span>
-<span class="sd">        &#39;T2rs1&#39;</span>
+<span class="sd">        &#39;T2r1&#39;</span>
 
 <span class="sd">        &gt;&gt;&gt; pitch_classes = abjad.PitchClassSegment([0, 1, 4, 7])</span>
 <span class="sd">        &gt;&gt;&gt; operator(pitch_classes)</span>
-<span class="sd">        PitchClassSegment([2, 7, 8, 11])</span>
+<span class="sd">        PitchClassSegment([9, 2, 3, 6])</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -284,10 +284,10 @@
 <span class="sd">        ..  container:: example</span>
 
 <span class="sd">            &gt;&gt;&gt; operator = abjad.CompoundOperator()</span>
-<span class="sd">            &gt;&gt;&gt; operator = operator.rotate(n=1, stravinsky=True)</span>
+<span class="sd">            &gt;&gt;&gt; operator = operator.rotate(n=1)</span>
 <span class="sd">            &gt;&gt;&gt; operator = operator.transpose(n=2)</span>
 <span class="sd">            &gt;&gt;&gt; str(operator)</span>
-<span class="sd">            &#39;T2rs1&#39;</span>
+<span class="sd">            &#39;T2r1&#39;</span>
 
 <span class="sd">            &gt;&gt;&gt; segment = abjad.PitchClassSegment([0, 1, 4, 7])</span>
 <span class="sd">            &gt;&gt;&gt; lilypond_file = abjad.illustrate(segment)</span>
@@ -298,7 +298,7 @@
 <span class="sd">            &gt;&gt;&gt; abjad.show(lilypond_file) # doctest: +SKIP</span>
 
 <span class="sd">            &gt;&gt;&gt; transform</span>
-<span class="sd">            PitchClassSegment([2, 7, 8, 11])</span>
+<span class="sd">            PitchClassSegment([9, 2, 3, 6])</span>
 
 <span class="sd">        Returns new object with type equal to that of ``argument``.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -589,7 +589,7 @@
         <span class="n">operator</span> <span class="o">=</span> <span class="n">Retrograde</span><span class="p">(</span><span class="n">period</span><span class="o">=</span><span class="n">period</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_with_operator</span><span class="p">(</span><span class="n">operator</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="CompoundOperator.rotate"><a class="viewcode-back" href="../../../api/abjad/pitch/operators.html#abjad.pitch.operators.CompoundOperator.rotate">[docs]</a>    <span class="k">def</span> <span class="nf">rotate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">period</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">stravinsky</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="CompoundOperator.rotate"><a class="viewcode-back" href="../../../api/abjad/pitch/operators.html#abjad.pitch.operators.CompoundOperator.rotate">[docs]</a>    <span class="k">def</span> <span class="nf">rotate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">period</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Configures compound operator to rotate pitches by index ``n``.</span>
 
@@ -607,7 +607,7 @@
 
 <span class="sd">        Returns new compound operator.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">operator</span> <span class="o">=</span> <span class="n">Rotation</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="n">n</span><span class="p">,</span> <span class="n">period</span><span class="o">=</span><span class="n">period</span><span class="p">,</span> <span class="n">stravinsky</span><span class="o">=</span><span class="n">stravinsky</span><span class="p">)</span>
+        <span class="n">operator</span> <span class="o">=</span> <span class="n">Rotation</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="n">n</span><span class="p">,</span> <span class="n">period</span><span class="o">=</span><span class="n">period</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_with_operator</span><span class="p">(</span><span class="n">operator</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="CompoundOperator.transpose"><a class="viewcode-back" href="../../../api/abjad/pitch/operators.html#abjad.pitch.operators.CompoundOperator.transpose">[docs]</a>    <span class="k">def</span> <span class="nf">transpose</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
@@ -1691,18 +1691,16 @@
 
     <span class="c1">### CLASS VARIABLES ###</span>
 
-    <span class="vm">__slots__</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;_n&quot;</span><span class="p">,</span> <span class="s2">&quot;_period&quot;</span><span class="p">,</span> <span class="s2">&quot;_stravinsky&quot;</span><span class="p">)</span>
+    <span class="vm">__slots__</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;_n&quot;</span><span class="p">,</span> <span class="s2">&quot;_period&quot;</span><span class="p">)</span>
 
     <span class="c1">### INITIALIZER ###</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">period</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">stravinsky</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">period</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_n</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">period</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">period</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">period</span><span class="p">))</span>
             <span class="k">assert</span> <span class="mi">0</span> <span class="o">&lt;</span> <span class="n">period</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_period</span> <span class="o">=</span> <span class="n">period</span>
-        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">stravinsky</span><span class="p">,</span> <span class="p">(</span><span class="nb">bool</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="kc">None</span><span class="p">))),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">stravinsky</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_stravinsky</span> <span class="o">=</span> <span class="n">stravinsky</span>
 
     <span class="c1">### SPECIAL METHODS ###</span>
 
@@ -1809,16 +1807,6 @@
 
 <span class="sd">        ..  container:: example</span>
 
-<span class="sd">            Rotates pitch classes with Stravinsky-style back-transposition to</span>
-<span class="sd">            zero:</span>
-
-<span class="sd">            &gt;&gt;&gt; rotation = abjad.Rotation(n=1, stravinsky=True)</span>
-<span class="sd">            &gt;&gt;&gt; pitch_classes = abjad.PitchClassSegment([0, 1, 4, 7])</span>
-<span class="sd">            &gt;&gt;&gt; rotation(pitch_classes)</span>
-<span class="sd">            PitchClassSegment([0, 5, 6, 9])</span>
-
-<span class="sd">        ..  container:: example</span>
-
 <span class="sd">            Does not rotate single pitches or pitch-classes:</span>
 
 <span class="sd">            &gt;&gt;&gt; rotation = abjad.Rotation(n=1)</span>
@@ -1837,21 +1825,6 @@
 <span class="sd">            &gt;&gt;&gt; rotation(pitches)</span>
 <span class="sd">            PitchSegment(&quot;e&#39; c&#39; d&#39; a&#39; f&#39; g&#39; c&#39;&#39; b&#39;&quot;)</span>
 
-<span class="sd">        ..  container:: example</span>
-
-<span class="sd">            Stravinsky-style periodic rotation:</span>
-
-<span class="sd">            ..  todo:: Deprecated.</span>
-
-<span class="sd">            &gt;&gt;&gt; rotation = abjad.Rotation(</span>
-<span class="sd">            ...     n=1,</span>
-<span class="sd">            ...     period=3,</span>
-<span class="sd">            ...     stravinsky=True,</span>
-<span class="sd">            ...     )</span>
-<span class="sd">            &gt;&gt;&gt; pitches = abjad.PitchSegment(&quot;c&#39; d&#39; e&#39; f&#39; g&#39; a&#39; b&#39; c&#39;&#39;&quot;)</span>
-<span class="sd">            &gt;&gt;&gt; rotation(pitches)</span>
-<span class="sd">            PitchSegment(&quot;c&#39; af bf f&#39; df&#39; ef&#39; b&#39; as&#39;&quot;)</span>
-
 <span class="sd">        Returns new object with type equal to that of ``argument``.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">argument</span><span class="p">,</span> <span class="p">(</span><span class="n">Pitch</span><span class="p">,</span> <span class="n">PitchClass</span><span class="p">)):</span>
@@ -1859,13 +1832,13 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">argument</span><span class="p">,</span> <span class="p">(</span><span class="n">PitchSegment</span><span class="p">,</span> <span class="n">PitchClassSegment</span><span class="p">)):</span>
             <span class="n">argument</span> <span class="o">=</span> <span class="n">PitchSegment</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">period</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">argument</span><span class="o">.</span><span class="n">rotate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="p">,</span> <span class="n">stravinsky</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">stravinsky</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">argument</span><span class="o">.</span><span class="n">rotate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="p">)</span>
         <span class="n">result</span> <span class="o">=</span> <span class="n">new</span><span class="p">(</span><span class="n">argument</span><span class="p">,</span> <span class="n">items</span><span class="o">=</span><span class="p">())</span>
         <span class="k">for</span> <span class="n">shard</span> <span class="ow">in</span> <span class="n">Sequence</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span><span class="o">.</span><span class="n">partition_by_counts</span><span class="p">(</span>
             <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">period</span><span class="p">],</span> <span class="n">cyclic</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">overhang</span><span class="o">=</span><span class="kc">True</span>
         <span class="p">):</span>
             <span class="n">shard</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="n">argument</span><span class="p">)(</span><span class="n">shard</span><span class="p">)</span>
-            <span class="n">shard</span> <span class="o">=</span> <span class="n">shard</span><span class="o">.</span><span class="n">rotate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="p">,</span> <span class="n">stravinsky</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">stravinsky</span><span class="p">)</span>
+            <span class="n">shard</span> <span class="o">=</span> <span class="n">shard</span><span class="o">.</span><span class="n">rotate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="p">)</span>
             <span class="n">result</span> <span class="o">=</span> <span class="n">result</span> <span class="o">+</span> <span class="n">shard</span>
         <span class="k">return</span> <span class="n">result</span></div>
 
@@ -1923,21 +1896,8 @@
 <span class="sd">            &gt;&gt;&gt; str(abjad.Rotation(n=1))</span>
 <span class="sd">            &#39;r1&#39;</span>
 
-<span class="sd">        ..  container:: example</span>
-
-<span class="sd">            &gt;&gt;&gt; str(abjad.Rotation(stravinsky=True))</span>
-<span class="sd">            &#39;rs0&#39;</span>
-
-<span class="sd">        ..  container:: example</span>
-
-<span class="sd">            &gt;&gt;&gt; str(abjad.Rotation(n=1, stravinsky=True))</span>
-<span class="sd">            &#39;rs1&#39;</span>
-
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">stravinsky</span><span class="p">:</span>
-            <span class="n">string</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;rs</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="si">}</span><span class="s2">&quot;</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">string</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;r</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="n">string</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;r</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="si">}</span><span class="s2">&quot;</span>
         <span class="k">return</span> <span class="n">string</span></div>
 
     <span class="c1">### PRIVATE METHODS ###</span>
@@ -1992,22 +1952,7 @@
 
 <span class="sd">        Returns integer or none.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_period</span>
-
-    <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">stravinsky</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Is true when rotation uses Stravinsky-style back-transposition to zero.</span>
-
-<span class="sd">        ..  container:: example</span>
-
-<span class="sd">            &gt;&gt;&gt; rotation = abjad.Rotation(n=2, stravinsky=False)</span>
-<span class="sd">            &gt;&gt;&gt; rotation.stravinsky</span>
-<span class="sd">            False</span>
-
-<span class="sd">        Returns true or false.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stravinsky</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_period</span></div>
 
 
 <div class="viewcode-block" id="Transposition"><a class="viewcode-back" href="../../../api/abjad/pitch/operators.html#abjad.pitch.operators.Transposition">[docs]</a><span class="k">class</span> <span class="nc">Transposition</span><span class="p">:</span>

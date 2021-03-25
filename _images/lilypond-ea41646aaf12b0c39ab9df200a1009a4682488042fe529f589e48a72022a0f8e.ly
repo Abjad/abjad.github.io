@@ -1,0 +1,21 @@
+\version "2.19.83"
+\language "english"
+#(ly:set-option 'relative-includes #t)
+\include "default.ily"
+
+\score
+{
+    \new Staff
+    {
+        c'4
+        - \abjad-dashed-line-with-hook
+        - \tweak bound-details.left.text \markup \concat { \upright
+            pont. \hspace #0.5 }
+        - \tweak staff-padding 2.5
+        \startTextSpan
+        d'4
+        e'4
+        f'4
+        \stopTextSpan
+    }
+}
