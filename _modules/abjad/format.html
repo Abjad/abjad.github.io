@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>abjad.format &mdash; Abjad 3.3 documentation</title>
+  <title>abjad.format &mdash; Abjad 3.4 documentation</title>
   
 
   
@@ -58,12 +58,12 @@
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search"  style="background: #cc0044" >
+        <div class="wy-side-nav-search"  style="background: #cc0088" >
           
 
 
     <a href="../../index.html" class="icon icon-home" alt="Documentation
-    Home"> Abjad 3.3
+    Home"> Abjad 3.4
 
 
 
@@ -189,7 +189,8 @@
         <span class="n">tag_start</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">&quot;%!&quot;</span><span class="p">)</span>
         <span class="n">line</span> <span class="o">=</span> <span class="n">line</span><span class="p">[:</span><span class="n">tag_start</span><span class="p">]</span>
         <span class="n">line</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span>
-        <span class="n">lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">line</span><span class="p">:</span>
+            <span class="n">lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
     <span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">lines</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">string</span></div>
 
@@ -361,7 +362,7 @@
                 <span class="k">else</span><span class="p">:</span>
                     <span class="n">markup</span> <span class="o">=</span> <span class="n">wrapper</span><span class="o">.</span><span class="n">indicator</span>
                 <span class="n">format_pieces</span> <span class="o">=</span> <span class="n">markup</span><span class="o">.</span><span class="n">_get_format_pieces</span><span class="p">()</span>
-                <span class="n">format_pieces</span> <span class="o">=</span> <span class="n">_tag</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span>
+                <span class="n">format_pieces</span> <span class="o">=</span> <span class="n">_tag</span><span class="o">.</span><span class="n">double_tag</span><span class="p">(</span>
                     <span class="n">format_pieces</span><span class="p">,</span> <span class="n">wrapper</span><span class="o">.</span><span class="n">tag</span><span class="p">,</span> <span class="n">deactivate</span><span class="o">=</span><span class="n">wrapper</span><span class="o">.</span><span class="n">deactivate</span>
                 <span class="p">)</span>
                 <span class="n">bundle</span><span class="o">.</span><span class="n">after</span><span class="o">.</span><span class="n">markup</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">format_pieces</span><span class="p">)</span>
@@ -413,30 +414,6 @@
 
     <span class="c1">### PUBLIC METHODS ###</span>
 
-    <span class="c1"># TODO: make top-level function</span>
-<div class="viewcode-block" id="LilyPondFormatManager.align_tags"><a class="viewcode-back" href="../../api/abjad/format.html#abjad.format.LilyPondFormatManager.align_tags">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">align_tags</span><span class="p">(</span><span class="n">string</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">n</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Line-breaks ``string`` and aligns tags starting a column ``n``.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;must be integer:</span><span class="se">\n</span><span class="s2">    </span><span class="si">{</span><span class="nb">repr</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="n">lines</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">string</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">):</span>
-            <span class="k">if</span> <span class="s2">&quot;%!&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">line</span><span class="p">:</span>
-                <span class="n">lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
-                <span class="k">continue</span>
-            <span class="n">location</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">&quot;%!&quot;</span><span class="p">)</span>
-            <span class="n">left</span> <span class="o">=</span> <span class="n">line</span><span class="p">[:</span><span class="n">location</span><span class="p">]</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span>
-            <span class="n">right</span> <span class="o">=</span> <span class="n">line</span><span class="p">[</span><span class="n">location</span><span class="p">:]</span>
-            <span class="n">pad</span> <span class="o">=</span> <span class="n">n</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">left</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">pad</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
-                <span class="n">pad</span> <span class="o">=</span> <span class="mi">1</span>
-            <span class="n">line</span> <span class="o">=</span> <span class="n">left</span> <span class="o">+</span> <span class="n">pad</span> <span class="o">*</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="n">right</span>
-            <span class="n">lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
-        <span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">lines</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">string</span></div>
-
 <div class="viewcode-block" id="LilyPondFormatManager.bundle_format_contributions"><a class="viewcode-back" href="../../api/abjad/format.html#abjad.format.LilyPondFormatManager.bundle_format_contributions">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">bundle_format_contributions</span><span class="p">(</span><span class="n">component</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;_bundle.LilyPondFormatBundle&quot;</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -479,8 +456,6 @@
             <span class="n">string_</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">string_</span><span class="p">)</span>
             <span class="n">strings_</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">string_</span><span class="p">)</span>
         <span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">strings_</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">realign</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">text</span> <span class="o">=</span> <span class="n">LilyPondFormatManager</span><span class="o">.</span><span class="n">align_tags</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="n">realign</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">text</span></div></div>
 </pre></div>
 

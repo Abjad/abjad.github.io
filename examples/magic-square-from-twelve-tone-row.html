@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Magic square, from twelve-tone row &mdash; Abjad 3.3 documentation</title>
+  <title>Magic square, from twelve-tone row &mdash; Abjad 3.4 documentation</title>
   
 
   
@@ -60,12 +60,12 @@
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search"  style="background: #cc0044" >
+        <div class="wy-side-nav-search"  style="background: #cc0088" >
           
 
 
     <a href="../index.html" class="icon icon-home" alt="Documentation
-    Home"> Abjad 3.3
+    Home"> Abjad 3.4
 
 
 
@@ -189,30 +189,32 @@ example:</p>
 <span class="gp">... </span>
 </pre></div>
 </div>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>&gt;&gt;&gt; def make_score(row):
-...     score = abjad.Score(name=&quot;Score&quot;)
-...     transpositions = make_transpositions(row)
-...     for i, transposition in enumerate(transpositions):
-...         notes = [abjad.Note(_, (1, 4)) for _ in transposition]
-...         voice = abjad.Voice(notes, name=f&quot;Voice_{i}&quot;)
-...         staff = abjad.Staff([voice], name=f&quot;Staff_{i}&quot;)
-...         score.append(staff)
-...         number = notes[0].written_pitch.number
-...         string = r&quot;\markup \larger \with-color #blue&quot;
-...         string = string + r&quot; { T \hspace #-0.75 \sub&quot; + str(number) + &quot;}&quot;
-...         markup = abjad.Markup(string, literal=True)
-...         start_markup = abjad.StartMarkup(markup)
-...         abjad.attach(start_markup, notes[0])
-...     for note in score[&quot;Voice_0&quot;]:
-...         number = note.written_pitch.number
-...         string = rf&quot;\markup \larger {{ IT \hspace #-0.75 \sub {number} }}&quot;
-...         markup = abjad.Markup(string, direction=abjad.Up, literal=True)
-...         abjad.attach(markup, note)
-...     note = abjad.select(score).note(0)
-...     time_signature = abjad.TimeSignature((12, 4))
-...     abjad.attach(time_signature, note)
-...     return score
-... 
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">make_score</span><span class="p">(</span><span class="n">row</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="n">score</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Score</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;Score&quot;</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="n">transpositions</span> <span class="o">=</span> <span class="n">make_transpositions</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">transposition</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">transpositions</span><span class="p">):</span>
+<span class="gp">... </span>        <span class="n">notes</span> <span class="o">=</span> <span class="p">[</span><span class="n">abjad</span><span class="o">.</span><span class="n">Note</span><span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">transposition</span><span class="p">]</span>
+<span class="gp">... </span>        <span class="n">voice</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Voice</span><span class="p">(</span><span class="n">notes</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Voice_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="gp">... </span>        <span class="n">staff</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Staff</span><span class="p">([</span><span class="n">voice</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Staff_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="gp">... </span>        <span class="n">score</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">staff</span><span class="p">)</span>
+<span class="gp">... </span>        <span class="n">number</span> <span class="o">=</span> <span class="n">notes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">written_pitch</span><span class="o">.</span><span class="n">number</span>
+<span class="gp">... </span>        <span class="n">string</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;\markup \larger \with-color #blue&quot;</span>
+<span class="gp">... </span>        <span class="n">string</span> <span class="o">=</span> <span class="n">string</span> <span class="o">+</span> <span class="sa">r</span><span class="s2">&quot; { T \hspace #-0.75 \sub&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">number</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;}&quot;</span>
+<span class="gp">... </span>        <span class="n">markup</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Markup</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">literal</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="gp">... </span>        <span class="n">start_markup</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">StartMarkup</span><span class="p">(</span><span class="n">markup</span><span class="p">)</span>
+<span class="gp">... </span>        <span class="n">abjad</span><span class="o">.</span><span class="n">attach</span><span class="p">(</span><span class="n">start_markup</span><span class="p">,</span> <span class="n">notes</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="gp">... </span>    <span class="k">for</span> <span class="n">note</span> <span class="ow">in</span> <span class="n">score</span><span class="p">[</span><span class="s2">&quot;Voice_0&quot;</span><span class="p">]:</span>
+<span class="gp">... </span>        <span class="n">number</span> <span class="o">=</span> <span class="n">note</span><span class="o">.</span><span class="n">written_pitch</span><span class="o">.</span><span class="n">number</span>
+<span class="gp">... </span>        <span class="n">string</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;\markup \larger { IT \hspace #-0.75 \sub &quot;</span>
+<span class="gp">... </span>        <span class="n">string</span> <span class="o">+=</span> <span class="nb">str</span><span class="p">(</span><span class="n">number</span><span class="p">)</span>
+<span class="gp">... </span>        <span class="n">string</span> <span class="o">+=</span> <span class="s2">&quot; }&quot;</span>
+<span class="gp">... </span>        <span class="n">markup</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Markup</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">direction</span><span class="o">=</span><span class="n">abjad</span><span class="o">.</span><span class="n">Up</span><span class="p">,</span> <span class="n">literal</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="gp">... </span>        <span class="n">abjad</span><span class="o">.</span><span class="n">attach</span><span class="p">(</span><span class="n">markup</span><span class="p">,</span> <span class="n">note</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="n">note</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">score</span><span class="p">)</span><span class="o">.</span><span class="n">note</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="n">time_signature</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">TimeSignature</span><span class="p">((</span><span class="mi">12</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="gp">... </span>    <span class="n">abjad</span><span class="o">.</span><span class="n">attach</span><span class="p">(</span><span class="n">time_signature</span><span class="p">,</span> <span class="n">note</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="k">return</span> <span class="n">score</span>
+<span class="gp">... </span>
 </pre></div>
 </div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">preamble</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;&quot;&quot;#(set-global-staff-size 14)</span>

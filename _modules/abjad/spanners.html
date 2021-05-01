@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>abjad.spanners &mdash; Abjad 3.3 documentation</title>
+  <title>abjad.spanners &mdash; Abjad 3.4 documentation</title>
   
 
   
@@ -58,12 +58,12 @@
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search"  style="background: #cc0044" >
+        <div class="wy-side-nav-search"  style="background: #cc0088" >
           
 
 
     <a href="../../index.html" class="icon icon-home" alt="Documentation
-    Home"> Abjad 3.3
+    Home"> Abjad 3.4
 
 
 
@@ -240,7 +240,7 @@
     <span class="n">beam_lone_notes</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">beam_rests</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="n">durations</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Sequence</span><span class="p">[</span><span class="n">Duration</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">selector</span><span class="p">:</span> <span class="n">Expression</span> <span class="o">=</span> <span class="n">select</span><span class="p">()</span><span class="o">.</span><span class="n">leaves</span><span class="p">(),</span>
+    <span class="n">selector</span><span class="o">=</span><span class="k">lambda</span> <span class="n">_</span><span class="p">:</span> <span class="n">select</span><span class="p">(</span><span class="n">_</span><span class="p">)</span><span class="o">.</span><span class="n">leaves</span><span class="p">(),</span>
     <span class="n">span_beam_count</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">start_beam</span><span class="p">:</span> <span class="n">StartBeam</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">stemlet_length</span><span class="p">:</span> <span class="n">typings</span><span class="o">.</span><span class="n">Number</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -271,7 +271,7 @@
 <span class="sd">            }</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">selector</span><span class="p">,</span> <span class="n">Expression</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">callable</span><span class="p">(</span><span class="n">selector</span><span class="p">)</span>
     <span class="n">argument</span> <span class="o">=</span> <span class="n">selector</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span>
     <span class="n">original_leaves</span> <span class="o">=</span> <span class="n">Iteration</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span><span class="o">.</span><span class="n">leaves</span><span class="p">()</span>
     <span class="n">original_leaves</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">original_leaves</span><span class="p">)</span>
@@ -1237,13 +1237,18 @@
 <span class="sd">        \new Staff</span>
 <span class="sd">        {</span>
 <span class="sd">            c&#39;8</span>
-<span class="sd">            \glissando                                    %! abjad.glissando(7)</span>
+<span class="sd">            %! abjad.glissando(7)</span>
+<span class="sd">            \glissando</span>
 <span class="sd">            d&#39;8</span>
-<span class="sd">            \glissando                                    %! abjad.glissando(7)</span>
+<span class="sd">            %! abjad.glissando(7)</span>
+<span class="sd">            \glissando</span>
 <span class="sd">            e&#39;8</span>
-<span class="sd">            \glissando                                    %! abjad.glissando(7)</span>
+<span class="sd">            %! abjad.glissando(7)</span>
+<span class="sd">            \glissando</span>
 <span class="sd">            f&#39;8</span>
-<span class="sd">        %@% \glissando                                    %! abjad.glissando(7):SHOW_TO_JOIN_BROKEN_SPANNERS</span>
+<span class="sd">            %! abjad.glissando(7)</span>
+<span class="sd">            %! SHOW_TO_JOIN_BROKEN_SPANNERS</span>
+<span class="sd">            %@% \glissando</span>
 <span class="sd">        }</span>
 
 <span class="sd">    ..  container:: example</span>
@@ -1266,17 +1271,42 @@
 <span class="sd">        \new Staff</span>
 <span class="sd">        {</span>
 <span class="sd">            c&#39;8</span>
-<span class="sd">            \glissando                                    %! abjad.glissando(7)</span>
-<span class="sd">            \hide NoteHead                                %! abjad.glissando(0):SHOW_TO_JOIN_BROKEN_SPANNERS:RIGHT_BROKEN</span>
-<span class="sd">            \override Accidental.stencil = ##f            %! abjad.glissando(0):SHOW_TO_JOIN_BROKEN_SPANNERS:RIGHT_BROKEN</span>
-<span class="sd">            \override NoteColumn.glissando-skip = ##t     %! abjad.glissando(0):SHOW_TO_JOIN_BROKEN_SPANNERS:RIGHT_BROKEN</span>
-<span class="sd">            \override NoteHead.no-ledgers = ##t           %! abjad.glissando(0):SHOW_TO_JOIN_BROKEN_SPANNERS:RIGHT_BROKEN</span>
+<span class="sd">            %! abjad.glissando(7)</span>
+<span class="sd">            \glissando</span>
+<span class="sd">            %! abjad.glissando(0)</span>
+<span class="sd">            %! SHOW_TO_JOIN_BROKEN_SPANNERS</span>
+<span class="sd">            %! RIGHT_BROKEN</span>
+<span class="sd">            \hide NoteHead</span>
+<span class="sd">            %! abjad.glissando(0)</span>
+<span class="sd">            %! SHOW_TO_JOIN_BROKEN_SPANNERS</span>
+<span class="sd">            %! RIGHT_BROKEN</span>
+<span class="sd">            \override Accidental.stencil = ##f</span>
+<span class="sd">            %! abjad.glissando(0)</span>
+<span class="sd">            %! SHOW_TO_JOIN_BROKEN_SPANNERS</span>
+<span class="sd">            %! RIGHT_BROKEN</span>
+<span class="sd">            \override NoteColumn.glissando-skip = ##t</span>
+<span class="sd">            %! abjad.glissando(0)</span>
+<span class="sd">            %! SHOW_TO_JOIN_BROKEN_SPANNERS</span>
+<span class="sd">            %! RIGHT_BROKEN</span>
+<span class="sd">            \override NoteHead.no-ledgers = ##t</span>
 <span class="sd">            d&#39;8</span>
 <span class="sd">            e&#39;8</span>
-<span class="sd">            \revert Accidental.stencil                    %! abjad.glissando(4):HIDE_TO_JOIN_BROKEN_SPANNERS:RIGHT_BROKEN</span>
-<span class="sd">            \revert NoteColumn.glissando-skip             %! abjad.glissando(4):HIDE_TO_JOIN_BROKEN_SPANNERS:RIGHT_BROKEN</span>
-<span class="sd">            \revert NoteHead.no-ledgers                   %! abjad.glissando(4):HIDE_TO_JOIN_BROKEN_SPANNERS:RIGHT_BROKEN</span>
-<span class="sd">            \undo \hide NoteHead                          %! abjad.glissando(4):HIDE_TO_JOIN_BROKEN_SPANNERS:RIGHT_BROKEN</span>
+<span class="sd">            %! abjad.glissando(4)</span>
+<span class="sd">            %! HIDE_TO_JOIN_BROKEN_SPANNERS</span>
+<span class="sd">            %! RIGHT_BROKEN</span>
+<span class="sd">            \revert Accidental.stencil</span>
+<span class="sd">            %! abjad.glissando(4)</span>
+<span class="sd">            %! HIDE_TO_JOIN_BROKEN_SPANNERS</span>
+<span class="sd">            %! RIGHT_BROKEN</span>
+<span class="sd">            \revert NoteColumn.glissando-skip</span>
+<span class="sd">            %! abjad.glissando(4)</span>
+<span class="sd">            %! HIDE_TO_JOIN_BROKEN_SPANNERS</span>
+<span class="sd">            %! RIGHT_BROKEN</span>
+<span class="sd">            \revert NoteHead.no-ledgers</span>
+<span class="sd">            %! abjad.glissando(4)</span>
+<span class="sd">            %! HIDE_TO_JOIN_BROKEN_SPANNERS</span>
+<span class="sd">            %! RIGHT_BROKEN</span>
+<span class="sd">            \undo \hide NoteHead</span>
 <span class="sd">            f&#39;8</span>
 <span class="sd">        }</span>
 
@@ -1301,22 +1331,59 @@
 <span class="sd">        \new Staff</span>
 <span class="sd">        {</span>
 <span class="sd">            c&#39;8</span>
-<span class="sd">            \glissando                                    %! abjad.glissando(7)</span>
-<span class="sd">            \hide NoteHead                                %! abjad.glissando(0):SHOW_TO_JOIN_BROKEN_SPANNERS:RIGHT_BROKEN</span>
-<span class="sd">            \override Accidental.stencil = ##f            %! abjad.glissando(0):SHOW_TO_JOIN_BROKEN_SPANNERS:RIGHT_BROKEN</span>
-<span class="sd">            \override NoteColumn.glissando-skip = ##t     %! abjad.glissando(0):SHOW_TO_JOIN_BROKEN_SPANNERS:RIGHT_BROKEN</span>
-<span class="sd">            \override NoteHead.no-ledgers = ##t           %! abjad.glissando(0):SHOW_TO_JOIN_BROKEN_SPANNERS:RIGHT_BROKEN</span>
+<span class="sd">            %! abjad.glissando(7)</span>
+<span class="sd">            \glissando</span>
+<span class="sd">            %! abjad.glissando(0)</span>
+<span class="sd">            %! SHOW_TO_JOIN_BROKEN_SPANNERS</span>
+<span class="sd">            %! RIGHT_BROKEN</span>
+<span class="sd">            \hide NoteHead</span>
+<span class="sd">            %! abjad.glissando(0)</span>
+<span class="sd">            %! SHOW_TO_JOIN_BROKEN_SPANNERS</span>
+<span class="sd">            %! RIGHT_BROKEN</span>
+<span class="sd">            \override Accidental.stencil = ##f</span>
+<span class="sd">            %! abjad.glissando(0)</span>
+<span class="sd">            %! SHOW_TO_JOIN_BROKEN_SPANNERS</span>
+<span class="sd">            %! RIGHT_BROKEN</span>
+<span class="sd">            \override NoteColumn.glissando-skip = ##t</span>
+<span class="sd">            %! abjad.glissando(0)</span>
+<span class="sd">            %! SHOW_TO_JOIN_BROKEN_SPANNERS</span>
+<span class="sd">            %! RIGHT_BROKEN</span>
+<span class="sd">            \override NoteHead.no-ledgers = ##t</span>
 <span class="sd">            d&#39;8</span>
 <span class="sd">            e&#39;8</span>
-<span class="sd">            \revert Accidental.stencil                    %! abjad.glissando(4):HIDE_TO_JOIN_BROKEN_SPANNERS:RIGHT_BROKEN</span>
-<span class="sd">            \revert NoteColumn.glissando-skip             %! abjad.glissando(4):HIDE_TO_JOIN_BROKEN_SPANNERS:RIGHT_BROKEN</span>
-<span class="sd">            \revert NoteHead.no-ledgers                   %! abjad.glissando(4):HIDE_TO_JOIN_BROKEN_SPANNERS:RIGHT_BROKEN</span>
-<span class="sd">            \undo \hide NoteHead                          %! abjad.glissando(4):HIDE_TO_JOIN_BROKEN_SPANNERS:RIGHT_BROKEN</span>
+<span class="sd">            %! abjad.glissando(4)</span>
+<span class="sd">            %! HIDE_TO_JOIN_BROKEN_SPANNERS</span>
+<span class="sd">            %! RIGHT_BROKEN</span>
+<span class="sd">            \revert Accidental.stencil</span>
+<span class="sd">            %! abjad.glissando(4)</span>
+<span class="sd">            %! HIDE_TO_JOIN_BROKEN_SPANNERS</span>
+<span class="sd">            %! RIGHT_BROKEN</span>
+<span class="sd">            \revert NoteColumn.glissando-skip</span>
+<span class="sd">            %! abjad.glissando(4)</span>
+<span class="sd">            %! HIDE_TO_JOIN_BROKEN_SPANNERS</span>
+<span class="sd">            %! RIGHT_BROKEN</span>
+<span class="sd">            \revert NoteHead.no-ledgers</span>
+<span class="sd">            %! abjad.glissando(4)</span>
+<span class="sd">            %! HIDE_TO_JOIN_BROKEN_SPANNERS</span>
+<span class="sd">            %! RIGHT_BROKEN</span>
+<span class="sd">            \undo \hide NoteHead</span>
 <span class="sd">            f&#39;8</span>
-<span class="sd">        %@% \revert Accidental.stencil                    %! abjad.glissando(5):SHOW_TO_JOIN_BROKEN_SPANNERS:RIGHT_BROKEN_SHOW_NEXT</span>
-<span class="sd">        %@% \revert NoteColumn.glissando-skip             %! abjad.glissando(5):SHOW_TO_JOIN_BROKEN_SPANNERS:RIGHT_BROKEN_SHOW_NEXT</span>
-<span class="sd">        %@% \revert NoteHead.no-ledgers                   %! abjad.glissando(5):SHOW_TO_JOIN_BROKEN_SPANNERS:RIGHT_BROKEN_SHOW_NEXT</span>
-<span class="sd">        %@% \undo \hide NoteHead                          %! abjad.glissando(5):SHOW_TO_JOIN_BROKEN_SPANNERS:RIGHT_BROKEN_SHOW_NEXT</span>
+<span class="sd">            %! abjad.glissando(5)</span>
+<span class="sd">            %! SHOW_TO_JOIN_BROKEN_SPANNERS</span>
+<span class="sd">            %! RIGHT_BROKEN_SHOW_NEXT</span>
+<span class="sd">            %@% \revert Accidental.stencil</span>
+<span class="sd">            %! abjad.glissando(5)</span>
+<span class="sd">            %! SHOW_TO_JOIN_BROKEN_SPANNERS</span>
+<span class="sd">            %! RIGHT_BROKEN_SHOW_NEXT</span>
+<span class="sd">            %@% \revert NoteColumn.glissando-skip</span>
+<span class="sd">            %! abjad.glissando(5)</span>
+<span class="sd">            %! SHOW_TO_JOIN_BROKEN_SPANNERS</span>
+<span class="sd">            %! RIGHT_BROKEN_SHOW_NEXT</span>
+<span class="sd">            %@% \revert NoteHead.no-ledgers</span>
+<span class="sd">            %! abjad.glissando(5)</span>
+<span class="sd">            %! SHOW_TO_JOIN_BROKEN_SPANNERS</span>
+<span class="sd">            %! RIGHT_BROKEN_SHOW_NEXT</span>
+<span class="sd">            %@% \undo \hide NoteHead</span>
 <span class="sd">        }</span>
 
 <span class="sd">    ..  container:: example</span>
@@ -1338,18 +1405,35 @@
 <span class="sd">        &gt;&gt;&gt; print(string)</span>
 <span class="sd">        \new Staff</span>
 <span class="sd">        {</span>
-<span class="sd">            \hide NoteHead                                %! abjad.glissando(2):HIDE_TO_JOIN_BROKEN_SPANNERS:LEFT_BROKEN</span>
-<span class="sd">            \override Accidental.stencil = ##f            %! abjad.glissando(2):HIDE_TO_JOIN_BROKEN_SPANNERS:LEFT_BROKEN</span>
-<span class="sd">            \override NoteHead.no-ledgers = ##t           %! abjad.glissando(2):HIDE_TO_JOIN_BROKEN_SPANNERS:LEFT_BROKEN</span>
+<span class="sd">            %! abjad.glissando(2)</span>
+<span class="sd">            %! HIDE_TO_JOIN_BROKEN_SPANNERS</span>
+<span class="sd">            %! LEFT_BROKEN</span>
+<span class="sd">            \hide NoteHead</span>
+<span class="sd">            %! abjad.glissando(2)</span>
+<span class="sd">            %! HIDE_TO_JOIN_BROKEN_SPANNERS</span>
+<span class="sd">            %! LEFT_BROKEN</span>
+<span class="sd">            \override Accidental.stencil = ##f</span>
+<span class="sd">            %! abjad.glissando(2)</span>
+<span class="sd">            %! HIDE_TO_JOIN_BROKEN_SPANNERS</span>
+<span class="sd">            %! LEFT_BROKEN</span>
+<span class="sd">            \override NoteHead.no-ledgers = ##t</span>
 <span class="sd">            c&#39;8</span>
-<span class="sd">            \glissando                                    %! abjad.glissando(7)</span>
-<span class="sd">            \override NoteColumn.glissando-skip = ##t     %! abjad.glissando(3):HIDE_TO_JOIN_BROKEN_SPANNERS:LEFT_BROKEN</span>
+<span class="sd">            %! abjad.glissando(7)</span>
+<span class="sd">            \glissando</span>
+<span class="sd">            %! abjad.glissando(3)</span>
+<span class="sd">            %! HIDE_TO_JOIN_BROKEN_SPANNERS</span>
+<span class="sd">            %! LEFT_BROKEN</span>
+<span class="sd">            \override NoteColumn.glissando-skip = ##t</span>
 <span class="sd">            d&#39;8</span>
 <span class="sd">            e&#39;8</span>
-<span class="sd">            \revert Accidental.stencil                    %! abjad.glissando(6)</span>
-<span class="sd">            \revert NoteColumn.glissando-skip             %! abjad.glissando(6)</span>
-<span class="sd">            \revert NoteHead.no-ledgers                   %! abjad.glissando(6)</span>
-<span class="sd">            \undo \hide NoteHead                          %! abjad.glissando(6)</span>
+<span class="sd">            %! abjad.glissando(6)</span>
+<span class="sd">            \revert Accidental.stencil</span>
+<span class="sd">            %! abjad.glissando(6)</span>
+<span class="sd">            \revert NoteColumn.glissando-skip</span>
+<span class="sd">            %! abjad.glissando(6)</span>
+<span class="sd">            \revert NoteHead.no-ledgers</span>
+<span class="sd">            %! abjad.glissando(6)</span>
+<span class="sd">            \undo \hide NoteHead</span>
 <span class="sd">            f&#39;8</span>
 <span class="sd">        }</span>
 
@@ -1712,7 +1796,7 @@
     <span class="n">descriptor</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="n">argument</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">Component</span><span class="p">,</span> <span class="n">Selection</span><span class="p">],</span>
     <span class="o">*</span><span class="p">,</span>
-    <span class="n">selector</span><span class="p">:</span> <span class="n">Expression</span> <span class="o">=</span> <span class="n">select</span><span class="p">()</span><span class="o">.</span><span class="n">leaves</span><span class="p">(),</span>
+    <span class="n">selector</span><span class="o">=</span><span class="k">lambda</span> <span class="n">_</span><span class="p">:</span> <span class="n">select</span><span class="p">(</span><span class="n">_</span><span class="p">)</span><span class="o">.</span><span class="n">leaves</span><span class="p">(),</span>
     <span class="n">tag</span><span class="p">:</span> <span class="n">Tag</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
@@ -1852,7 +1936,7 @@
     <span class="k">if</span> <span class="n">start_dynamic</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">start_dynamic</span><span class="p">,</span> <span class="n">Dynamic</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">start_dynamic</span><span class="p">)</span>
 
-    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">selector</span><span class="p">,</span> <span class="n">Expression</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">callable</span><span class="p">(</span><span class="n">selector</span><span class="p">)</span>
     <span class="n">argument</span> <span class="o">=</span> <span class="n">selector</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span>
     <span class="n">leaves</span> <span class="o">=</span> <span class="n">Selection</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span><span class="o">.</span><span class="n">leaves</span><span class="p">()</span>
     <span class="n">start_leaf</span> <span class="o">=</span> <span class="n">leaves</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
@@ -1869,7 +1953,7 @@
 <div class="viewcode-block" id="horizontal_bracket"><a class="viewcode-back" href="../../api/abjad/spanners.html#abjad.spanners.horizontal_bracket">[docs]</a><span class="k">def</span> <span class="nf">horizontal_bracket</span><span class="p">(</span>
     <span class="n">argument</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">Component</span><span class="p">,</span> <span class="n">Selection</span><span class="p">],</span>
     <span class="o">*</span><span class="p">,</span>
-    <span class="n">selector</span><span class="p">:</span> <span class="n">Expression</span> <span class="o">=</span> <span class="n">select</span><span class="p">()</span><span class="o">.</span><span class="n">leaves</span><span class="p">(),</span>
+    <span class="n">selector</span><span class="o">=</span><span class="k">lambda</span> <span class="n">_</span><span class="p">:</span> <span class="n">select</span><span class="p">(</span><span class="n">_</span><span class="p">)</span><span class="o">.</span><span class="n">leaves</span><span class="p">(),</span>
     <span class="n">start_group</span><span class="p">:</span> <span class="n">StartGroup</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">stop_group</span><span class="p">:</span> <span class="n">StopGroup</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">tag</span><span class="p">:</span> <span class="n">Tag</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -1900,7 +1984,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">start_group</span> <span class="o">=</span> <span class="n">start_group</span> <span class="ow">or</span> <span class="n">StartGroup</span><span class="p">()</span>
     <span class="n">stop_group</span> <span class="o">=</span> <span class="n">stop_group</span> <span class="ow">or</span> <span class="n">StopGroup</span><span class="p">()</span>
-    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">selector</span><span class="p">,</span> <span class="n">Expression</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">callable</span><span class="p">(</span><span class="n">selector</span><span class="p">)</span>
     <span class="n">argument</span> <span class="o">=</span> <span class="n">selector</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span>
     <span class="n">leaves</span> <span class="o">=</span> <span class="n">Selection</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span><span class="o">.</span><span class="n">leaves</span><span class="p">()</span>
     <span class="n">start_leaf</span> <span class="o">=</span> <span class="n">leaves</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
@@ -1912,7 +1996,7 @@
 <div class="viewcode-block" id="ottava"><a class="viewcode-back" href="../../api/abjad/spanners.html#abjad.spanners.ottava">[docs]</a><span class="k">def</span> <span class="nf">ottava</span><span class="p">(</span>
     <span class="n">argument</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">Component</span><span class="p">,</span> <span class="n">Selection</span><span class="p">],</span>
     <span class="o">*</span><span class="p">,</span>
-    <span class="n">selector</span><span class="p">:</span> <span class="n">Expression</span> <span class="o">=</span> <span class="n">select</span><span class="p">()</span><span class="o">.</span><span class="n">leaves</span><span class="p">(),</span>
+    <span class="n">selector</span><span class="o">=</span><span class="k">lambda</span> <span class="n">_</span><span class="p">:</span> <span class="n">select</span><span class="p">(</span><span class="n">_</span><span class="p">)</span><span class="o">.</span><span class="n">leaves</span><span class="p">(),</span>
     <span class="n">start_ottava</span><span class="p">:</span> <span class="n">Ottava</span> <span class="o">=</span> <span class="n">Ottava</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
     <span class="n">stop_ottava</span><span class="p">:</span> <span class="n">Ottava</span> <span class="o">=</span> <span class="n">Ottava</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">format_slot</span><span class="o">=</span><span class="s2">&quot;after&quot;</span><span class="p">),</span>
     <span class="n">tag</span><span class="p">:</span> <span class="n">Tag</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -1943,7 +2027,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">start_ottava</span><span class="p">,</span> <span class="n">Ottava</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">start_ottava</span><span class="p">)</span>
     <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">stop_ottava</span><span class="p">,</span> <span class="n">Ottava</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">stop_ottava</span><span class="p">)</span>
-    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">selector</span><span class="p">,</span> <span class="n">Expression</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">callable</span><span class="p">(</span><span class="n">selector</span><span class="p">)</span>
     <span class="n">argument</span> <span class="o">=</span> <span class="n">selector</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span>
     <span class="n">leaves</span> <span class="o">=</span> <span class="n">Selection</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span><span class="o">.</span><span class="n">leaves</span><span class="p">()</span>
     <span class="n">start_leaf</span> <span class="o">=</span> <span class="n">leaves</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
@@ -1955,7 +2039,7 @@
 <div class="viewcode-block" id="phrasing_slur"><a class="viewcode-back" href="../../api/abjad/spanners.html#abjad.spanners.phrasing_slur">[docs]</a><span class="k">def</span> <span class="nf">phrasing_slur</span><span class="p">(</span>
     <span class="n">argument</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">Component</span><span class="p">,</span> <span class="n">Selection</span><span class="p">],</span>
     <span class="o">*</span><span class="p">,</span>
-    <span class="n">selector</span><span class="p">:</span> <span class="n">Expression</span> <span class="o">=</span> <span class="n">select</span><span class="p">()</span><span class="o">.</span><span class="n">leaves</span><span class="p">(),</span>
+    <span class="n">selector</span><span class="o">=</span><span class="k">lambda</span> <span class="n">_</span><span class="p">:</span> <span class="n">select</span><span class="p">(</span><span class="n">_</span><span class="p">)</span><span class="o">.</span><span class="n">leaves</span><span class="p">(),</span>
     <span class="n">start_phrasing_slur</span><span class="p">:</span> <span class="n">StartPhrasingSlur</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">stop_phrasing_slur</span><span class="p">:</span> <span class="n">StopPhrasingSlur</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">tag</span><span class="p">:</span> <span class="n">Tag</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -1987,7 +2071,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">start_phrasing_slur</span> <span class="o">=</span> <span class="n">StartPhrasingSlur</span><span class="p">()</span>
     <span class="n">stop_phrasing_slur</span> <span class="o">=</span> <span class="n">StopPhrasingSlur</span><span class="p">()</span>
-    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">selector</span><span class="p">,</span> <span class="n">Expression</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">callable</span><span class="p">(</span><span class="n">selector</span><span class="p">)</span>
     <span class="n">argument</span> <span class="o">=</span> <span class="n">selector</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span>
     <span class="n">leaves</span> <span class="o">=</span> <span class="n">Selection</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span><span class="o">.</span><span class="n">leaves</span><span class="p">()</span>
     <span class="n">start_leaf</span> <span class="o">=</span> <span class="n">leaves</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
@@ -2001,7 +2085,7 @@
 <div class="viewcode-block" id="piano_pedal"><a class="viewcode-back" href="../../api/abjad/spanners.html#abjad.spanners.piano_pedal">[docs]</a><span class="k">def</span> <span class="nf">piano_pedal</span><span class="p">(</span>
     <span class="n">argument</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">Component</span><span class="p">,</span> <span class="n">Selection</span><span class="p">],</span>
     <span class="o">*</span><span class="p">,</span>
-    <span class="n">selector</span><span class="p">:</span> <span class="n">Expression</span> <span class="o">=</span> <span class="n">select</span><span class="p">()</span><span class="o">.</span><span class="n">leaves</span><span class="p">(),</span>
+    <span class="n">selector</span><span class="o">=</span><span class="k">lambda</span> <span class="n">_</span><span class="p">:</span> <span class="n">select</span><span class="p">(</span><span class="n">_</span><span class="p">)</span><span class="o">.</span><span class="n">leaves</span><span class="p">(),</span>
     <span class="n">start_piano_pedal</span><span class="p">:</span> <span class="n">StartPianoPedal</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">stop_piano_pedal</span><span class="p">:</span> <span class="n">StopPianoPedal</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">tag</span><span class="p">:</span> <span class="n">Tag</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -2039,7 +2123,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">start_piano_pedal</span> <span class="o">=</span> <span class="n">start_piano_pedal</span> <span class="ow">or</span> <span class="n">StartPianoPedal</span><span class="p">()</span>
     <span class="n">stop_piano_pedal</span> <span class="o">=</span> <span class="n">stop_piano_pedal</span> <span class="ow">or</span> <span class="n">StopPianoPedal</span><span class="p">()</span>
-    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">selector</span><span class="p">,</span> <span class="n">Expression</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">callable</span><span class="p">(</span><span class="n">selector</span><span class="p">)</span>
     <span class="n">argument</span> <span class="o">=</span> <span class="n">selector</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span>
     <span class="n">leaves</span> <span class="o">=</span> <span class="n">Selection</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span><span class="o">.</span><span class="n">leaves</span><span class="p">()</span>
     <span class="n">start_leaf</span> <span class="o">=</span> <span class="n">leaves</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
@@ -2051,7 +2135,7 @@
 <div class="viewcode-block" id="slur"><a class="viewcode-back" href="../../api/abjad/spanners.html#abjad.spanners.slur">[docs]</a><span class="k">def</span> <span class="nf">slur</span><span class="p">(</span>
     <span class="n">argument</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">Component</span><span class="p">,</span> <span class="n">Selection</span><span class="p">],</span>
     <span class="o">*</span><span class="p">,</span>
-    <span class="n">selector</span><span class="p">:</span> <span class="n">Expression</span> <span class="o">=</span> <span class="n">select</span><span class="p">()</span><span class="o">.</span><span class="n">leaves</span><span class="p">(),</span>
+    <span class="n">selector</span><span class="o">=</span><span class="k">lambda</span> <span class="n">_</span><span class="p">:</span> <span class="n">select</span><span class="p">(</span><span class="n">_</span><span class="p">)</span><span class="o">.</span><span class="n">leaves</span><span class="p">(),</span>
     <span class="n">start_slur</span><span class="p">:</span> <span class="n">StartSlur</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">stop_slur</span><span class="p">:</span> <span class="n">StopSlur</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">tag</span><span class="p">:</span> <span class="n">Tag</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -2083,7 +2167,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">start_slur</span> <span class="o">=</span> <span class="n">start_slur</span> <span class="ow">or</span> <span class="n">StartSlur</span><span class="p">()</span>
     <span class="n">stop_slur</span> <span class="o">=</span> <span class="n">stop_slur</span> <span class="ow">or</span> <span class="n">StopSlur</span><span class="p">()</span>
-    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">selector</span><span class="p">,</span> <span class="n">Expression</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">callable</span><span class="p">(</span><span class="n">selector</span><span class="p">)</span>
     <span class="n">argument</span> <span class="o">=</span> <span class="n">selector</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span>
     <span class="n">leaves</span> <span class="o">=</span> <span class="n">Selection</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span><span class="o">.</span><span class="n">leaves</span><span class="p">()</span>
     <span class="n">start_leaf</span> <span class="o">=</span> <span class="n">leaves</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
@@ -2095,7 +2179,7 @@
 <div class="viewcode-block" id="text_spanner"><a class="viewcode-back" href="../../api/abjad/spanners.html#abjad.spanners.text_spanner">[docs]</a><span class="k">def</span> <span class="nf">text_spanner</span><span class="p">(</span>
     <span class="n">argument</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">Component</span><span class="p">,</span> <span class="n">Selection</span><span class="p">],</span>
     <span class="o">*</span><span class="p">,</span>
-    <span class="n">selector</span><span class="p">:</span> <span class="n">Expression</span> <span class="o">=</span> <span class="n">select</span><span class="p">()</span><span class="o">.</span><span class="n">leaves</span><span class="p">(),</span>
+    <span class="n">selector</span><span class="o">=</span><span class="k">lambda</span> <span class="n">_</span><span class="p">:</span> <span class="n">select</span><span class="p">(</span><span class="n">_</span><span class="p">)</span><span class="o">.</span><span class="n">leaves</span><span class="p">(),</span>
     <span class="n">start_text_span</span><span class="p">:</span> <span class="n">StartTextSpan</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">stop_text_span</span><span class="p">:</span> <span class="n">StopTextSpan</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">tag</span><span class="p">:</span> <span class="n">Tag</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -2233,7 +2317,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">start_text_span</span> <span class="o">=</span> <span class="n">start_text_span</span> <span class="ow">or</span> <span class="n">StartTextSpan</span><span class="p">()</span>
     <span class="n">stop_text_span</span> <span class="o">=</span> <span class="n">stop_text_span</span> <span class="ow">or</span> <span class="n">StopTextSpan</span><span class="p">()</span>
-    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">selector</span><span class="p">,</span> <span class="n">Expression</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">callable</span><span class="p">(</span><span class="n">selector</span><span class="p">)</span>
     <span class="n">argument</span> <span class="o">=</span> <span class="n">selector</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span>
     <span class="n">leaves</span> <span class="o">=</span> <span class="n">Selection</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span><span class="o">.</span><span class="n">leaves</span><span class="p">()</span>
     <span class="n">start_leaf</span> <span class="o">=</span> <span class="n">leaves</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
@@ -2247,7 +2331,7 @@
     <span class="o">*</span><span class="p">,</span>
     <span class="n">direction</span><span class="p">:</span> <span class="n">enums</span><span class="o">.</span><span class="n">VerticalAlignment</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">repeat</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="n">typings</span><span class="o">.</span><span class="n">IntegerPair</span><span class="p">,</span> <span class="n">DurationInequality</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">selector</span><span class="p">:</span> <span class="n">Expression</span> <span class="o">=</span> <span class="n">select</span><span class="p">()</span><span class="o">.</span><span class="n">leaves</span><span class="p">(),</span>
+    <span class="n">selector</span><span class="o">=</span><span class="k">lambda</span> <span class="n">_</span><span class="p">:</span> <span class="n">select</span><span class="p">(</span><span class="n">_</span><span class="p">)</span><span class="o">.</span><span class="n">leaves</span><span class="p">(),</span>
     <span class="n">tag</span><span class="p">:</span> <span class="n">Tag</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
@@ -2443,7 +2527,7 @@
         <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">repeat</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">repeat</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">repeat</span><span class="p">)</span>
         <span class="n">inequality</span> <span class="o">=</span> <span class="n">DurationInequality</span><span class="p">(</span><span class="s2">&quot;&gt;=&quot;</span><span class="p">,</span> <span class="n">repeat</span><span class="p">)</span>
     <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">inequality</span><span class="p">,</span> <span class="n">DurationInequality</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">inequality</span><span class="p">)</span>
-    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">selector</span><span class="p">,</span> <span class="n">Expression</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">callable</span><span class="p">(</span><span class="n">selector</span><span class="p">)</span>
     <span class="n">argument</span> <span class="o">=</span> <span class="n">selector</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span>
     <span class="n">leaves</span> <span class="o">=</span> <span class="n">Selection</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span><span class="o">.</span><span class="n">leaves</span><span class="p">()</span>
     <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">leaves</span><span class="p">,</span> <span class="n">Selection</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">leaves</span><span class="p">)</span>
@@ -2469,7 +2553,7 @@
 <div class="viewcode-block" id="trill_spanner"><a class="viewcode-back" href="../../api/abjad/spanners.html#abjad.spanners.trill_spanner">[docs]</a><span class="k">def</span> <span class="nf">trill_spanner</span><span class="p">(</span>
     <span class="n">argument</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">Component</span><span class="p">,</span> <span class="n">Selection</span><span class="p">],</span>
     <span class="o">*</span><span class="p">,</span>
-    <span class="n">selector</span><span class="p">:</span> <span class="n">Expression</span> <span class="o">=</span> <span class="n">select</span><span class="p">()</span><span class="o">.</span><span class="n">leaves</span><span class="p">(),</span>
+    <span class="n">selector</span><span class="o">=</span><span class="k">lambda</span> <span class="n">_</span><span class="p">:</span> <span class="n">select</span><span class="p">(</span><span class="n">_</span><span class="p">)</span><span class="o">.</span><span class="n">leaves</span><span class="p">(),</span>
     <span class="n">start_trill_span</span><span class="p">:</span> <span class="n">StartTrillSpan</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">stop_trill_span</span><span class="p">:</span> <span class="n">StopTrillSpan</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">tag</span><span class="p">:</span> <span class="n">Tag</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -2500,7 +2584,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">start_trill_span</span> <span class="o">=</span> <span class="n">start_trill_span</span> <span class="ow">or</span> <span class="n">StartTrillSpan</span><span class="p">()</span>
     <span class="n">stop_trill_span</span> <span class="o">=</span> <span class="n">stop_trill_span</span> <span class="ow">or</span> <span class="n">StopTrillSpan</span><span class="p">()</span>
-    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">selector</span><span class="p">,</span> <span class="n">Expression</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">callable</span><span class="p">(</span><span class="n">selector</span><span class="p">)</span>
     <span class="n">argument</span> <span class="o">=</span> <span class="n">selector</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span>
     <span class="n">leaves</span> <span class="o">=</span> <span class="n">Selection</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span><span class="o">.</span><span class="n">leaves</span><span class="p">()</span>
     <span class="n">start_leaf</span> <span class="o">=</span> <span class="n">leaves</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>

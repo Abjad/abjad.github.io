@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Changes &mdash; Abjad 3.3 documentation</title>
+  <title>Changes &mdash; Abjad 3.4 documentation</title>
   
 
   
@@ -60,12 +60,12 @@
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search"  style="background: #cc0044" >
+        <div class="wy-side-nav-search"  style="background: #cc0088" >
           
 
 
     <a href="../index.html" class="icon icon-home" alt="Documentation
-    Home"> Abjad 3.3
+    Home"> Abjad 3.4
 
 
 
@@ -174,6 +174,77 @@
     
   <div class="section" id="changes">
 <h1>Changes<a class="headerlink" href="#changes" title="Permalink to this headline">¶</a></h1>
+<hr class="docutils" />
+<div class="section" id="changed-in-abjad-3-4">
+<h2>Changed in Abjad 3.4<a class="headerlink" href="#changed-in-abjad-3-4" title="Permalink to this headline">¶</a></h2>
+<p>Changes to Abjad 3.4 (2021-05-01) since Abjad 3.3 (2021-03-01).</p>
+<p>Removed support for IPython.</p>
+<p><a class="reference external" href="https://github.com/Abjad/abjad/issues/1338">#1338</a>. Cleaned up tuplet formatting and
+block formatting. Opening brace now appears on its own line in LilyPond output:</p>
+<p>OLD:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">tuplet</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Tuplet</span><span class="p">(</span><span class="s2">&quot;3:2&quot;</span><span class="p">,</span> <span class="s2">&quot;c&#39;4 d&#39; e&#39;&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">string</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">lilypond</span><span class="p">(</span><span class="n">tuplet</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
+<span class="go">\times 2/3</span>
+<span class="go">{</span>
+<span class="go">    c&#39;4</span>
+<span class="go">    d&#39;4</span>
+<span class="go">    e&#39;4</span>
+<span class="go">}</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">staff</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Staff</span><span class="p">(</span><span class="s2">&quot;c&#39;4 d&#39; e&#39; f&#39;&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">block</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Block</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;score&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">block</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">staff</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">string</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">lilypond</span><span class="p">(</span><span class="n">block</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
+<span class="go">\score</span>
+<span class="go">{</span>
+<span class="go">    \new Staff</span>
+<span class="go">    {</span>
+<span class="go">        c&#39;4</span>
+<span class="go">        d&#39;4</span>
+<span class="go">        e&#39;4</span>
+<span class="go">        f&#39;4</span>
+<span class="go">    }</span>
+<span class="go">}</span>
+</pre></div>
+</div>
+<p>NEW:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">tuplet</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Tuplet</span><span class="p">(</span><span class="s2">&quot;3:2&quot;</span><span class="p">,</span> <span class="s2">&quot;c&#39;4 d&#39; e&#39;&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">string</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">lilypond</span><span class="p">(</span><span class="n">tuplet</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
+<span class="go">\times 2/3</span>
+<span class="go">{</span>
+<span class="go">    c&#39;4</span>
+<span class="go">    d&#39;4</span>
+<span class="go">    e&#39;4</span>
+<span class="go">}</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">staff</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Staff</span><span class="p">(</span><span class="s2">&quot;c&#39;4 d&#39; e&#39; f&#39;&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">block</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Block</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;score&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">block</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">staff</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">string</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">lilypond</span><span class="p">(</span><span class="n">block</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
+<span class="go">\score</span>
+<span class="go">{</span>
+<span class="go">    \new Staff</span>
+<span class="go">    {</span>
+<span class="go">        c&#39;4</span>
+<span class="go">        d&#39;4</span>
+<span class="go">        e&#39;4</span>
+<span class="go">        f&#39;4</span>
+<span class="go">    }</span>
+<span class="go">}</span>
+</pre></div>
+</div>
+<p><a class="reference external" href="https://github.com/Abjad/abjad/issues/1299">#1299</a>. Removed deprecated <code class="docutils literal notranslate"><span class="pre">stravinsky</span></code>
+keyword from pitch classes. The function of the keyword was to transpose sets and
+segments such that the first element was set equal to 0 (after operations like inversion
+or rotation). Transpose sets and segments separately (after inversion or rotation) when
+required instead.</p>
+</div>
 <hr class="docutils" />
 <div class="section" id="changed-in-abjad-3-3">
 <h2>Changed in Abjad 3.3<a class="headerlink" href="#changed-in-abjad-3-3" title="Permalink to this headline">¶</a></h2>

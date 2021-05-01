@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>abjadext.rmakers.commands &mdash; Abjad 3.3 documentation</title>
+  <title>abjadext.rmakers.commands &mdash; Abjad 3.4 documentation</title>
   
 
   
@@ -58,12 +58,12 @@
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search"  style="background: #cc0044" >
+        <div class="wy-side-nav-search"  style="background: #cc0088" >
           
 
 
     <a href="../../../index.html" class="icon icon-home" alt="Documentation
-    Home"> Abjad 3.3
+    Home"> Abjad 3.4
 
 
 
@@ -547,7 +547,7 @@
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">duration</span><span class="p">:</span> <span class="n">abjad</span><span class="o">.</span><span class="n">DurationTyping</span><span class="p">,</span>
         <span class="o">*</span><span class="p">,</span>
-        <span class="n">selector</span><span class="p">:</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Expression</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">select</span><span class="p">()</span><span class="o">.</span><span class="n">leaf</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span>
+        <span class="n">selector</span><span class="o">=</span><span class="k">lambda</span> <span class="n">_</span><span class="p">:</span> <span class="n">abjad</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">_</span><span class="p">)</span><span class="o">.</span><span class="n">leaf</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">selector</span><span class="p">)</span>
         <span class="n">duration_</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="n">duration</span><span class="p">)</span>
@@ -784,13 +784,13 @@
 
 <span class="sd">        &gt;&gt;&gt; stack = rmakers.stack(</span>
 <span class="sd">        ...     rmakers.note(),</span>
-<span class="sd">        ...     rmakers.force_rest(abjad.select().leaves()),</span>
-<span class="sd">        ...     rmakers.force_note(abjad.select().logical_ties()[1:3]),</span>
+<span class="sd">        ...     rmakers.force_rest(lambda _: abjad.select(_).leaves()),</span>
+<span class="sd">        ...     rmakers.force_note(lambda _: abjad.select(_).logical_ties()[1:3]),</span>
 <span class="sd">        ... )</span>
 <span class="sd">        &gt;&gt;&gt; divisions = [(7, 16), (3, 8), (7, 16), (3, 8)]</span>
 <span class="sd">        &gt;&gt;&gt; selections = stack(divisions)</span>
 <span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile.rhythm(selections, divisions)</span>
-<span class="sd">        &gt;&gt;&gt; rmakers.attach_markup_struts(lilypond_file)</span>
+<span class="sd">        &gt;&gt;&gt; abjad.illustrators.attach_markup_struts(lilypond_file)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(lilypond_file) # doctest: +SKIP</span>
 
 <span class="sd">        ..  docs::</span>
@@ -832,13 +832,13 @@
 
 <span class="sd">        &gt;&gt;&gt; stack = rmakers.stack(</span>
 <span class="sd">        ...     rmakers.note(),</span>
-<span class="sd">        ...     rmakers.force_rest(abjad.select().leaves()),</span>
-<span class="sd">        ...     rmakers.force_note(abjad.select().logical_ties().get([0, -1])),</span>
+<span class="sd">        ...     rmakers.force_rest(lambda _: abjad.select(_).leaves()),</span>
+<span class="sd">        ...     rmakers.force_note(lambda _: abjad.select(_).logical_ties().get([0, -1])),</span>
 <span class="sd">        ... )</span>
 <span class="sd">        &gt;&gt;&gt; divisions = [(7, 16), (3, 8), (7, 16), (3, 8)]</span>
 <span class="sd">        &gt;&gt;&gt; selections = stack(divisions)</span>
 <span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile.rhythm(selections, divisions)</span>
-<span class="sd">        &gt;&gt;&gt; rmakers.attach_markup_struts(lilypond_file)</span>
+<span class="sd">        &gt;&gt;&gt; abjad.illustrators.attach_markup_struts(lilypond_file)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(lilypond_file) # doctest: +SKIP</span>
 
 <span class="sd">        ..  docs::</span>
@@ -989,12 +989,12 @@
 
 <span class="sd">        &gt;&gt;&gt; stack = rmakers.stack(</span>
 <span class="sd">        ...     rmakers.note(),</span>
-<span class="sd">        ...     rmakers.force_rest(abjad.select().logical_ties()[1:3]),</span>
+<span class="sd">        ...     rmakers.force_rest(lambda _: abjad.select(_).logical_ties()[1:3]),</span>
 <span class="sd">        ... )</span>
 <span class="sd">        &gt;&gt;&gt; divisions = [(7, 16), (3, 8), (7, 16), (3, 8)]</span>
 <span class="sd">        &gt;&gt;&gt; selections = stack(divisions)</span>
 <span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile.rhythm(selections, divisions)</span>
-<span class="sd">        &gt;&gt;&gt; rmakers.attach_markup_struts(lilypond_file)</span>
+<span class="sd">        &gt;&gt;&gt; abjad.illustrators.attach_markup_struts(lilypond_file)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(lilypond_file) # doctest: +SKIP</span>
 
 <span class="sd">        ..  docs::</span>
@@ -1035,12 +1035,12 @@
 
 <span class="sd">        &gt;&gt;&gt; stack = rmakers.stack(</span>
 <span class="sd">        ...     rmakers.note(),</span>
-<span class="sd">        ...     rmakers.force_rest(abjad.select().logical_ties()[-2:]),</span>
+<span class="sd">        ...     rmakers.force_rest(lambda _: abjad.select(_).logical_ties()[-2:]),</span>
 <span class="sd">        ... )</span>
 <span class="sd">        &gt;&gt;&gt; divisions = [(7, 16), (3, 8), (7, 16), (3, 8)]</span>
 <span class="sd">        &gt;&gt;&gt; selections = stack(divisions)</span>
 <span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile.rhythm(selections, divisions)</span>
-<span class="sd">        &gt;&gt;&gt; rmakers.attach_markup_struts(lilypond_file)</span>
+<span class="sd">        &gt;&gt;&gt; abjad.illustrators.attach_markup_struts(lilypond_file)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(lilypond_file) # doctest: +SKIP</span>
 
 <span class="sd">        ..  docs::</span>
@@ -1081,12 +1081,12 @@
 
 <span class="sd">        &gt;&gt;&gt; stack = rmakers.stack(</span>
 <span class="sd">        ...     rmakers.note(),</span>
-<span class="sd">        ...     rmakers.force_rest(abjad.select().logical_ties()[1:-1]),</span>
+<span class="sd">        ...     rmakers.force_rest(lambda _: abjad.select(_).logical_ties()[1:-1]),</span>
 <span class="sd">        ... )</span>
 <span class="sd">        &gt;&gt;&gt; divisions = [(7, 16), (3, 8), (7, 16), (3, 8)]</span>
 <span class="sd">        &gt;&gt;&gt; selections = stack(divisions)</span>
 <span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile.rhythm(selections, divisions)</span>
-<span class="sd">        &gt;&gt;&gt; rmakers.attach_markup_struts(lilypond_file)</span>
+<span class="sd">        &gt;&gt;&gt; abjad.illustrators.attach_markup_struts(lilypond_file)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(lilypond_file) # doctest: +SKIP</span>
 
 <span class="sd">        ..  docs::</span>
@@ -1129,13 +1129,13 @@
 <span class="sd">        &gt;&gt;&gt; stack = rmakers.stack(</span>
 <span class="sd">        ...     rmakers.note(),</span>
 <span class="sd">        ...     rmakers.force_rest(</span>
-<span class="sd">        ...         abjad.select().logical_ties().get([0, -1]),</span>
+<span class="sd">        ...         lambda _: abjad.select(_).logical_ties().get([0, -1]),</span>
 <span class="sd">        ...     ),</span>
 <span class="sd">        ... )</span>
 <span class="sd">        &gt;&gt;&gt; divisions = [(7, 16), (3, 8), (7, 16), (3, 8)]</span>
 <span class="sd">        &gt;&gt;&gt; selections = stack(divisions)</span>
 <span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile.rhythm(selections, divisions)</span>
-<span class="sd">        &gt;&gt;&gt; rmakers.attach_markup_struts(lilypond_file)</span>
+<span class="sd">        &gt;&gt;&gt; abjad.illustrators.attach_markup_struts(lilypond_file)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(lilypond_file) # doctest: +SKIP</span>
 
 <span class="sd">        ..  docs::</span>
@@ -1181,9 +1181,11 @@
 <div class="viewcode-block" id="ForceRestCommand.__call__"><a class="viewcode-back" href="../../../api/abjadext/rmakers/commands.html#abjadext.rmakers.commands.ForceRestCommand.__call__">[docs]</a>    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">voice</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">previous_logical_ties_produced</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="n">selection</span> <span class="o">=</span> <span class="n">voice</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">selector</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">selections</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">selector</span><span class="p">(</span>
-                <span class="n">selection</span><span class="p">,</span> <span class="n">previous</span><span class="o">=</span><span class="n">previous_logical_ties_produced</span>
+            <span class="n">selection</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Selection</span><span class="p">(</span>
+                <span class="n">selection</span><span class="p">,</span>
+                <span class="n">previous</span><span class="o">=</span><span class="n">previous_logical_ties_produced</span><span class="p">,</span>
             <span class="p">)</span>
+            <span class="n">selections</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">selector</span><span class="p">(</span><span class="n">selection</span><span class="p">)</span>
         <span class="c1"># will need to restore for statal rhythm-makers:</span>
         <span class="c1"># logical_ties = abjad.select(selections).logical_ties()</span>
         <span class="c1"># logical_ties = list(logical_ties)</span>
@@ -1547,7 +1549,7 @@
             <span class="n">leaves</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">selection</span><span class="p">)</span><span class="o">.</span><span class="n">leaves</span><span class="p">(</span><span class="n">grace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
             <span class="n">beat_durations</span> <span class="o">=</span> <span class="p">[]</span>
             <span class="n">beat_offsets</span> <span class="o">=</span> <span class="n">meter</span><span class="o">.</span><span class="n">depthwise_offset_inventory</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-            <span class="k">for</span> <span class="n">start</span><span class="p">,</span> <span class="n">stop</span> <span class="ow">in</span> <span class="n">abjad</span><span class="o">.</span><span class="n">sequence</span><span class="p">(</span><span class="n">beat_offsets</span><span class="p">)</span><span class="o">.</span><span class="n">nwise</span><span class="p">():</span>
+            <span class="k">for</span> <span class="n">start</span><span class="p">,</span> <span class="n">stop</span> <span class="ow">in</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Sequence</span><span class="p">(</span><span class="n">beat_offsets</span><span class="p">)</span><span class="o">.</span><span class="n">nwise</span><span class="p">():</span>
                 <span class="n">beat_duration</span> <span class="o">=</span> <span class="n">stop</span> <span class="o">-</span> <span class="n">start</span>
                 <span class="n">beat_durations</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">beat_duration</span><span class="p">)</span>
             <span class="n">beamable_groups</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_beamable_groups</span><span class="p">(</span><span class="n">leaves</span><span class="p">,</span> <span class="n">beat_durations</span><span class="p">)</span>
@@ -1901,6 +1903,17 @@
             <span class="n">abjad</span><span class="o">.</span><span class="n">detach</span><span class="p">(</span><span class="n">abjad</span><span class="o">.</span><span class="n">RepeatTie</span><span class="p">,</span> <span class="n">leaf</span><span class="p">)</span></div></div>
 
 
+<span class="c1">### DEFAULT SELECTORS ###</span>
+
+
+<div class="viewcode-block" id="nongrace_leaves_in_each_tuplet"><a class="viewcode-back" href="../../../api/abjadext/rmakers/commands.html#abjadext.rmakers.commands.nongrace_leaves_in_each_tuplet">[docs]</a><span class="k">def</span> <span class="nf">nongrace_leaves_in_each_tuplet</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">selector</span><span class="p">(</span><span class="n">argument</span><span class="p">):</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span><span class="o">.</span><span class="n">tuplets</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">level</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">abjad</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">abjad</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">_</span><span class="p">)</span><span class="o">.</span><span class="n">leaves</span><span class="p">(</span><span class="n">grace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">result</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">selector</span></div>
+
+
 <span class="c1">### FACTORY FUNCTIONS ###</span>
 
 
@@ -1918,8 +1931,10 @@
 
 <span class="sd">        Single after-graces with slurs applied manually:</span>
 
-<span class="sd">        &gt;&gt;&gt; selector = abjad.select().note(-1)</span>
-<span class="sd">        &gt;&gt;&gt; selector = abjad.select().tuplets().map(selector)</span>
+<span class="sd">        &gt;&gt;&gt; def selector(argument):</span>
+<span class="sd">        ...     result = abjad.select(argument).tuplets()</span>
+<span class="sd">        ...     return [abjad.select(_).note(-1) for _ in result]</span>
+
 <span class="sd">        &gt;&gt;&gt; stack = rmakers.stack(</span>
 <span class="sd">        ...     rmakers.even_division([4], extra_counts=[2]),</span>
 <span class="sd">        ...     rmakers.after_grace_container([1], selector),</span>
@@ -1928,10 +1943,13 @@
 <span class="sd">        &gt;&gt;&gt; divisions = [(3, 4), (3, 4)]</span>
 <span class="sd">        &gt;&gt;&gt; selections = stack(divisions)</span>
 <span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile.rhythm(selections, divisions)</span>
-<span class="sd">        &gt;&gt;&gt; rmakers.attach_markup_struts(lilypond_file)</span>
+<span class="sd">        &gt;&gt;&gt; abjad.illustrators.attach_markup_struts(lilypond_file)</span>
 <span class="sd">        &gt;&gt;&gt; staff = lilypond_file[abjad.Staff]</span>
-<span class="sd">        &gt;&gt;&gt; containers = abjad.select().components(abjad.AfterGraceContainer)</span>
-<span class="sd">        &gt;&gt;&gt; selector = containers.map(abjad.select().with_next_leaf())</span>
+
+<span class="sd">        &gt;&gt;&gt; def selector(argument):</span>
+<span class="sd">        ...     result = abjad.select(argument).components(abjad.AfterGraceContainer)</span>
+<span class="sd">        ...     return [abjad.select(_).with_next_leaf() for _ in result]</span>
+
 <span class="sd">        &gt;&gt;&gt; result = [abjad.slur(_) for _ in selector(staff)]</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(lilypond_file) # doctest: +SKIP</span>
 
@@ -1989,8 +2007,10 @@
 <span class="sd">        Multiple after-graces with ``beam_and_slash=True`` and with slurs</span>
 <span class="sd">        applied manually:</span>
 
-<span class="sd">        &gt;&gt;&gt; selector = abjad.select().note(-1)</span>
-<span class="sd">        &gt;&gt;&gt; selector = abjad.select().tuplets().map(selector)</span>
+<span class="sd">        &gt;&gt;&gt; def selector(argument):</span>
+<span class="sd">        ...     result = abjad.select(argument).tuplets()</span>
+<span class="sd">        ...     return [abjad.select(_).note(-1) for _ in result]</span>
+
 <span class="sd">        &gt;&gt;&gt; stack = rmakers.stack(</span>
 <span class="sd">        ...     rmakers.even_division([4], extra_counts=[2]),</span>
 <span class="sd">        ...     rmakers.after_grace_container(</span>
@@ -2001,10 +2021,13 @@
 <span class="sd">        &gt;&gt;&gt; divisions = [(3, 4), (3, 4)]</span>
 <span class="sd">        &gt;&gt;&gt; selections = stack(divisions)</span>
 <span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile.rhythm(selections, divisions)</span>
-<span class="sd">        &gt;&gt;&gt; rmakers.attach_markup_struts(lilypond_file)</span>
+<span class="sd">        &gt;&gt;&gt; abjad.illustrators.attach_markup_struts(lilypond_file)</span>
 <span class="sd">        &gt;&gt;&gt; staff = lilypond_file[abjad.Staff]</span>
-<span class="sd">        &gt;&gt;&gt; containers = abjad.select().components(abjad.AfterGraceContainer)</span>
-<span class="sd">        &gt;&gt;&gt; selector = containers.map(abjad.select().with_next_leaf())</span>
+
+<span class="sd">        &gt;&gt;&gt; def selector(argument):</span>
+<span class="sd">        ...     result = abjad.select(argument).components(abjad.AfterGraceContainer)</span>
+<span class="sd">        ...     return [abjad.select(_).with_next_leaf() for _ in result]</span>
+
 <span class="sd">        &gt;&gt;&gt; result = [abjad.slur(_) for _ in selector(staff)]</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(lilypond_file) # doctest: +SKIP</span>
 
@@ -2078,9 +2101,7 @@
 
 
 <div class="viewcode-block" id="beam"><a class="viewcode-back" href="../../../api/abjadext/rmakers/commands.html#abjadext.rmakers.commands.beam">[docs]</a><span class="k">def</span> <span class="nf">beam</span><span class="p">(</span>
-    <span class="n">selector</span><span class="p">:</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Expression</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">select</span><span class="p">()</span>
-    <span class="o">.</span><span class="n">tuplets</span><span class="p">()</span>
-    <span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">abjad</span><span class="o">.</span><span class="n">select</span><span class="p">()</span><span class="o">.</span><span class="n">leaves</span><span class="p">(</span><span class="n">grace</span><span class="o">=</span><span class="kc">False</span><span class="p">)),</span>
+    <span class="n">selector</span><span class="o">=</span><span class="n">nongrace_leaves_in_each_tuplet</span><span class="p">(),</span>
     <span class="o">*</span><span class="p">,</span>
     <span class="n">beam_lone_notes</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">beam_rests</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -2098,9 +2119,7 @@
 
 
 <div class="viewcode-block" id="beam_groups"><a class="viewcode-back" href="../../../api/abjadext/rmakers/commands.html#abjadext.rmakers.commands.beam_groups">[docs]</a><span class="k">def</span> <span class="nf">beam_groups</span><span class="p">(</span>
-    <span class="n">selector</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="n">abjad</span><span class="o">.</span><span class="n">Expression</span><span class="p">]</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">select</span><span class="p">()</span>
-    <span class="o">.</span><span class="n">tuplets</span><span class="p">(</span><span class="n">level</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
-    <span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">abjad</span><span class="o">.</span><span class="n">select</span><span class="p">()</span><span class="o">.</span><span class="n">leaves</span><span class="p">(</span><span class="n">grace</span><span class="o">=</span><span class="kc">False</span><span class="p">)),</span>
+    <span class="n">selector</span><span class="o">=</span><span class="n">nongrace_leaves_in_each_tuplet</span><span class="p">(</span><span class="n">level</span><span class="o">=-</span><span class="mi">1</span><span class="p">),</span>
     <span class="o">*</span><span class="p">,</span>
     <span class="n">beam_lone_notes</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">beam_rests</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -2130,8 +2149,10 @@
 
 <span class="sd">    ..  container:: example</span>
 
-<span class="sd">        &gt;&gt;&gt; selector = abjad.select().notes().exclude([0, -1])</span>
-<span class="sd">        &gt;&gt;&gt; selector = abjad.select().tuplets().map(selector)</span>
+<span class="sd">        &gt;&gt;&gt; def selector(argument):</span>
+<span class="sd">        ...     result = abjad.select(argument).tuplets()</span>
+<span class="sd">        ...     return [abjad.select(_).notes().exclude([0, -1]) for _ in result]</span>
+
 <span class="sd">        &gt;&gt;&gt; stack = rmakers.stack(</span>
 <span class="sd">        ...     rmakers.even_division([4], extra_counts=[2]),</span>
 <span class="sd">        ...     rmakers.before_grace_container([2, 4], selector),</span>
@@ -2140,11 +2161,18 @@
 <span class="sd">        &gt;&gt;&gt; divisions = [(3, 4), (3, 4)]</span>
 <span class="sd">        &gt;&gt;&gt; selections = stack(divisions)</span>
 <span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile.rhythm(selections, divisions)</span>
-<span class="sd">        &gt;&gt;&gt; rmakers.attach_markup_struts(lilypond_file)</span>
+<span class="sd">        &gt;&gt;&gt; abjad.illustrators.attach_markup_struts(lilypond_file)</span>
 <span class="sd">        &gt;&gt;&gt; staff = lilypond_file[abjad.Staff]</span>
-<span class="sd">        &gt;&gt;&gt; containers = abjad.select().components(abjad.BeforeGraceContainer)</span>
+
+<span class="sd">        &gt;&gt;&gt; def containers(argument):</span>
+<span class="sd">        ...     return abjad.select(argument).components(abjad.BeforeGraceContainer)</span>
+
 <span class="sd">        &gt;&gt;&gt; result = [abjad.beam(_) for _ in containers(staff)]</span>
-<span class="sd">        &gt;&gt;&gt; selector = containers.map(abjad.select().with_next_leaf())</span>
+
+<span class="sd">        &gt;&gt;&gt; def selector(argument):</span>
+<span class="sd">        ...     result = abjad.select(argument).components(abjad.BeforeGraceContainer)</span>
+<span class="sd">        ...     return [abjad.select(_).with_next_leaf() for _ in result]</span>
+
 <span class="sd">        &gt;&gt;&gt; result = [abjad.slur(_) for _ in selector(staff)]</span>
 <span class="sd">        &gt;&gt;&gt; slash = abjad.LilyPondLiteral(r&quot;\slash&quot;)</span>
 <span class="sd">        &gt;&gt;&gt; result = [abjad.attach(slash, _[0]) for _ in containers(staff)]</span>
@@ -2260,7 +2288,7 @@
 
 <div class="viewcode-block" id="denominator"><a class="viewcode-back" href="../../../api/abjadext/rmakers/commands.html#abjadext.rmakers.commands.denominator">[docs]</a><span class="k">def</span> <span class="nf">denominator</span><span class="p">(</span>
     <span class="n">denominator</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">abjad</span><span class="o">.</span><span class="n">DurationTyping</span><span class="p">],</span>
-    <span class="n">selector</span><span class="p">:</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Expression</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">select</span><span class="p">()</span><span class="o">.</span><span class="n">tuplets</span><span class="p">(),</span>
+    <span class="n">selector</span><span class="o">=</span><span class="k">lambda</span> <span class="n">_</span><span class="p">:</span> <span class="n">abjad</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">_</span><span class="p">)</span><span class="o">.</span><span class="n">tuplets</span><span class="p">(),</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DenominatorCommand</span><span class="p">:</span>
     <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Makes tuplet denominator command.</span>
@@ -2279,7 +2307,7 @@
 <span class="sd">        &gt;&gt;&gt; divisions = [(2, 16), (4, 16), (6, 16), (8, 16)]</span>
 <span class="sd">        &gt;&gt;&gt; selections = stack(divisions)</span>
 <span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile.rhythm(selections, divisions)</span>
-<span class="sd">        &gt;&gt;&gt; rmakers.attach_markup_struts(lilypond_file)</span>
+<span class="sd">        &gt;&gt;&gt; abjad.illustrators.attach_markup_struts(lilypond_file)</span>
 <span class="sd">        &gt;&gt;&gt; score = lilypond_file[abjad.Score]</span>
 <span class="sd">        &gt;&gt;&gt; abjad.override(score).TupletBracket.staff_padding = 4.5</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(lilypond_file) # doctest: +SKIP</span>
@@ -2347,7 +2375,7 @@
 <span class="sd">        &gt;&gt;&gt; divisions = [(2, 16), (4, 16), (6, 16), (8, 16)]</span>
 <span class="sd">        &gt;&gt;&gt; selections = stack(divisions)</span>
 <span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile.rhythm(selections, divisions)</span>
-<span class="sd">        &gt;&gt;&gt; rmakers.attach_markup_struts(lilypond_file)</span>
+<span class="sd">        &gt;&gt;&gt; abjad.illustrators.attach_markup_struts(lilypond_file)</span>
 <span class="sd">        &gt;&gt;&gt; score = lilypond_file[abjad.Score]</span>
 <span class="sd">        &gt;&gt;&gt; abjad.override(score).TupletBracket.staff_padding = 4.5</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(lilypond_file) # doctest: +SKIP</span>
@@ -2414,7 +2442,7 @@
 <span class="sd">        &gt;&gt;&gt; divisions = [(2, 16), (4, 16), (6, 16), (8, 16)]</span>
 <span class="sd">        &gt;&gt;&gt; selections = stack(divisions)</span>
 <span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile.rhythm(selections, divisions)</span>
-<span class="sd">        &gt;&gt;&gt; rmakers.attach_markup_struts(lilypond_file)</span>
+<span class="sd">        &gt;&gt;&gt; abjad.illustrators.attach_markup_struts(lilypond_file)</span>
 <span class="sd">        &gt;&gt;&gt; score = lilypond_file[abjad.Score]</span>
 <span class="sd">        &gt;&gt;&gt; abjad.override(score).TupletBracket.staff_padding = 4.5</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(lilypond_file) # doctest: +SKIP</span>
@@ -2481,7 +2509,7 @@
 <span class="sd">        &gt;&gt;&gt; divisions = [(2, 16), (4, 16), (6, 16), (8, 16)]</span>
 <span class="sd">        &gt;&gt;&gt; selections = stack(divisions)</span>
 <span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile.rhythm(selections, divisions)</span>
-<span class="sd">        &gt;&gt;&gt; rmakers.attach_markup_struts(lilypond_file)</span>
+<span class="sd">        &gt;&gt;&gt; abjad.illustrators.attach_markup_struts(lilypond_file)</span>
 <span class="sd">        &gt;&gt;&gt; score = lilypond_file[abjad.Score]</span>
 <span class="sd">        &gt;&gt;&gt; abjad.override(score).TupletBracket.staff_padding = 4.5</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(lilypond_file) # doctest: +SKIP</span>
@@ -2550,7 +2578,7 @@
 <span class="sd">        &gt;&gt;&gt; divisions = [(2, 16), (4, 16), (6, 16), (8, 16)]</span>
 <span class="sd">        &gt;&gt;&gt; selections = stack(divisions)</span>
 <span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile.rhythm(selections, divisions)</span>
-<span class="sd">        &gt;&gt;&gt; rmakers.attach_markup_struts(lilypond_file)</span>
+<span class="sd">        &gt;&gt;&gt; abjad.illustrators.attach_markup_struts(lilypond_file)</span>
 <span class="sd">        &gt;&gt;&gt; score = lilypond_file[abjad.Score]</span>
 <span class="sd">        &gt;&gt;&gt; abjad.override(score).TupletBracket.staff_padding = 4.5</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(lilypond_file) # doctest: +SKIP</span>
@@ -2617,7 +2645,7 @@
 <span class="sd">        &gt;&gt;&gt; divisions = [(2, 16), (4, 16), (6, 16), (8, 16)]</span>
 <span class="sd">        &gt;&gt;&gt; selections = stack(divisions)</span>
 <span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile.rhythm(selections, divisions)</span>
-<span class="sd">        &gt;&gt;&gt; rmakers.attach_markup_struts(lilypond_file)</span>
+<span class="sd">        &gt;&gt;&gt; abjad.illustrators.attach_markup_struts(lilypond_file)</span>
 <span class="sd">        &gt;&gt;&gt; score = lilypond_file[abjad.Score]</span>
 <span class="sd">        &gt;&gt;&gt; abjad.override(score).TupletBracket.staff_padding = 4.5</span>
 <span class="sd">        &gt;&gt;&gt; abjad.setting(score).proportionalNotationDuration = &quot;#(ly:make-moment 1 28)&quot;</span>
@@ -2686,7 +2714,7 @@
 <span class="sd">        &gt;&gt;&gt; divisions = [(2, 16), (4, 16), (6, 16), (8, 16)]</span>
 <span class="sd">        &gt;&gt;&gt; selections = stack(divisions)</span>
 <span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile.rhythm(selections, divisions)</span>
-<span class="sd">        &gt;&gt;&gt; rmakers.attach_markup_struts(lilypond_file)</span>
+<span class="sd">        &gt;&gt;&gt; abjad.illustrators.attach_markup_struts(lilypond_file)</span>
 <span class="sd">        &gt;&gt;&gt; score = lilypond_file[abjad.Score]</span>
 <span class="sd">        &gt;&gt;&gt; abjad.override(score).TupletBracket.staff_padding = 4.5</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(lilypond_file) # doctest: +SKIP</span>
@@ -2765,12 +2793,12 @@
 <span class="sd">        &gt;&gt;&gt; stack = rmakers.stack(</span>
 <span class="sd">        ...     rmakers.even_division([8]),</span>
 <span class="sd">        ...     rmakers.beam(),</span>
-<span class="sd">        ...     rmakers.extract_trivial(abjad.select().tuplets()[-2:]),</span>
+<span class="sd">        ...     rmakers.extract_trivial(lambda _: abjad.select(_).tuplets()[-2:]),</span>
 <span class="sd">        ... )</span>
 <span class="sd">        &gt;&gt;&gt; divisions = [(3, 8), (3, 8), (3, 8), (3, 8)]</span>
 <span class="sd">        &gt;&gt;&gt; selections = stack(divisions)</span>
 <span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile.rhythm(selections, divisions)</span>
-<span class="sd">        &gt;&gt;&gt; rmakers.attach_markup_struts(lilypond_file)</span>
+<span class="sd">        &gt;&gt;&gt; abjad.illustrators.attach_markup_struts(lilypond_file)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(lilypond_file) # doctest: +SKIP</span>
 
 <span class="sd">        ..  docs::</span>
@@ -2829,9 +2857,7 @@
 
 
 <div class="viewcode-block" id="feather_beam"><a class="viewcode-back" href="../../../api/abjadext/rmakers/commands.html#abjadext.rmakers.commands.feather_beam">[docs]</a><span class="k">def</span> <span class="nf">feather_beam</span><span class="p">(</span>
-    <span class="n">selector</span><span class="p">:</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Expression</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">select</span><span class="p">()</span>
-    <span class="o">.</span><span class="n">tuplets</span><span class="p">()</span>
-    <span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">abjad</span><span class="o">.</span><span class="n">select</span><span class="p">()</span><span class="o">.</span><span class="n">leaves</span><span class="p">(</span><span class="n">grace</span><span class="o">=</span><span class="kc">False</span><span class="p">)),</span>
+    <span class="n">selector</span><span class="o">=</span><span class="n">nongrace_leaves_in_each_tuplet</span><span class="p">(),</span>
     <span class="o">*</span><span class="p">,</span>
     <span class="n">beam_rests</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">stemlet_length</span><span class="p">:</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Number</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -2866,7 +2892,7 @@
 <span class="sd">        &gt;&gt;&gt; divisions = [(2, 8), (2, 8), (2, 8)]</span>
 <span class="sd">        &gt;&gt;&gt; selections = stack(divisions)</span>
 <span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile.rhythm(selections, divisions)</span>
-<span class="sd">        &gt;&gt;&gt; rmakers.attach_markup_struts(lilypond_file)</span>
+<span class="sd">        &gt;&gt;&gt; abjad.illustrators.attach_markup_struts(lilypond_file)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(lilypond_file) # doctest: +SKIP</span>
 
 <span class="sd">        ..  docs::</span>
@@ -2923,7 +2949,7 @@
 <span class="sd">        &gt;&gt;&gt; divisions = [(2, 8), (2, 8), (2, 8)]</span>
 <span class="sd">        &gt;&gt;&gt; selections = stack(divisions)</span>
 <span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile.rhythm(selections, divisions)</span>
-<span class="sd">        &gt;&gt;&gt; rmakers.attach_markup_struts(lilypond_file)</span>
+<span class="sd">        &gt;&gt;&gt; abjad.illustrators.attach_markup_struts(lilypond_file)</span>
 <span class="sd">        &gt;&gt;&gt; staff = lilypond_file[abjad.Score]</span>
 <span class="sd">        &gt;&gt;&gt; string = &#39;#tuplet-number::calc-denominator-text&#39;</span>
 <span class="sd">        &gt;&gt;&gt; abjad.override(staff).TupletNumber.text = string</span>
@@ -2988,7 +3014,7 @@
 <span class="sd">        &gt;&gt;&gt; divisions = [(2, 8), (2, 8), (2, 8)]</span>
 <span class="sd">        &gt;&gt;&gt; selections = stack(divisions)</span>
 <span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile.rhythm(selections, divisions)</span>
-<span class="sd">        &gt;&gt;&gt; rmakers.attach_markup_struts(lilypond_file)</span>
+<span class="sd">        &gt;&gt;&gt; abjad.illustrators.attach_markup_struts(lilypond_file)</span>
 <span class="sd">        &gt;&gt;&gt; staff = lilypond_file[abjad.Score]</span>
 <span class="sd">        &gt;&gt;&gt; string = &#39;#tuplet-number::calc-denominator-text&#39;</span>
 <span class="sd">        &gt;&gt;&gt; abjad.override(staff).TupletNumber.text = string</span>
@@ -3111,9 +3137,14 @@
 
 <span class="sd">    ..  container:: example</span>
 
-<span class="sd">        &gt;&gt;&gt; selector = abjad.select().notes().exclude([0, -1])</span>
-<span class="sd">        &gt;&gt;&gt; selector = abjad.select().tuplets().map(selector)</span>
-<span class="sd">        &gt;&gt;&gt; selector = selector.notes().map(abjad.select())</span>
+<span class="sd">        &gt;&gt;&gt; def selector(argument):</span>
+<span class="sd">        ...     result = abjad.select(argument).tuplets()</span>
+<span class="sd">        ...     result = abjad.select(</span>
+<span class="sd">        ...         abjad.select(_).notes().exclude([0, -1]) for _ in result</span>
+<span class="sd">        ...     )</span>
+<span class="sd">        ...     result = result.notes()</span>
+<span class="sd">        ...     return [abjad.select(_) for _ in result]</span>
+
 <span class="sd">        &gt;&gt;&gt; stack = rmakers.stack(</span>
 <span class="sd">        ...     rmakers.even_division([4], extra_counts=[2]),</span>
 <span class="sd">        ...     rmakers.on_beat_grace_container(</span>
@@ -3128,7 +3159,7 @@
 <span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile.rhythm(</span>
 <span class="sd">        ...     abjad.select(music_voice), divisions, pitched_staff=False</span>
 <span class="sd">        ... )</span>
-<span class="sd">        &gt;&gt;&gt; rmakers.attach_markup_struts(lilypond_file)</span>
+<span class="sd">        &gt;&gt;&gt; abjad.illustrators.attach_markup_struts(lilypond_file)</span>
 <span class="sd">        &gt;&gt;&gt; staff = lilypond_file[abjad.Staff]</span>
 <span class="sd">        &gt;&gt;&gt; abjad.override(staff).TupletBracket.direction = abjad.Up</span>
 <span class="sd">        &gt;&gt;&gt; abjad.override(staff).TupletBracket.staff_padding = 5</span>
@@ -3321,7 +3352,9 @@
 
 <span class="sd">    ..  container:: example</span>
 
-<span class="sd">        &gt;&gt;&gt; selector = abjad.select().logical_ties()</span>
+<span class="sd">        &gt;&gt;&gt; def selector(argument):</span>
+<span class="sd">        ...     return abjad.select(argument).logical_ties()</span>
+
 <span class="sd">        &gt;&gt;&gt; stack = rmakers.stack(</span>
 <span class="sd">        ...     rmakers.talea([5], 16),</span>
 <span class="sd">        ...     rmakers.extract_trivial(),</span>
@@ -3337,7 +3370,7 @@
 <span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile.rhythm(</span>
 <span class="sd">        ...     abjad.select(music_voice), divisions, pitched_staff=False</span>
 <span class="sd">        ... )</span>
-<span class="sd">        &gt;&gt;&gt; rmakers.attach_markup_struts(lilypond_file)</span>
+<span class="sd">        &gt;&gt;&gt; abjad.illustrators.attach_markup_struts(lilypond_file)</span>
 <span class="sd">        &gt;&gt;&gt; staff = lilypond_file[abjad.Staff]</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(lilypond_file) # doctest: +SKIP</span>
 
@@ -3515,8 +3548,10 @@
 <span class="sd">        TIE-ACROSS-DIVISIONS RECIPE. Attaches repeat-ties to first note in</span>
 <span class="sd">        nonfirst tuplets:</span>
 
-<span class="sd">        &gt;&gt;&gt; selector = abjad.select().tuplets()[1:]</span>
-<span class="sd">        &gt;&gt;&gt; selector = selector.map(abjad.select().note(0))</span>
+<span class="sd">        &gt;&gt;&gt; def selector(argument):</span>
+<span class="sd">        ...     result = abjad.select(argument).tuplets()[1:]</span>
+<span class="sd">        ...     return [abjad.select(_).note(0) for _ in result]</span>
+
 <span class="sd">        &gt;&gt;&gt; stack = rmakers.stack(</span>
 <span class="sd">        ...     rmakers.even_division([8], extra_counts=[1]),</span>
 <span class="sd">        ...     rmakers.repeat_tie(selector),</span>
@@ -3525,7 +3560,7 @@
 <span class="sd">        &gt;&gt;&gt; divisions = [(2, 8), (2, 8), (2, 8), (2, 8), (2, 8), (2, 8)]</span>
 <span class="sd">        &gt;&gt;&gt; selections = stack(divisions)</span>
 <span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile.rhythm(selections, divisions)</span>
-<span class="sd">        &gt;&gt;&gt; rmakers.attach_markup_struts(lilypond_file)</span>
+<span class="sd">        &gt;&gt;&gt; abjad.illustrators.attach_markup_struts(lilypond_file)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(lilypond_file) # doctest: +SKIP</span>
 
 <span class="sd">        ..  docs::</span>
@@ -3606,8 +3641,10 @@
 
 <span class="sd">        With pattern:</span>
 
-<span class="sd">        &gt;&gt;&gt; selector = abjad.select().tuplets().get([1], 2)</span>
-<span class="sd">        &gt;&gt;&gt; selector = selector.map(abjad.select().note(0))</span>
+<span class="sd">        &gt;&gt;&gt; def selector(argument):</span>
+<span class="sd">        ...     result = abjad.select(argument).tuplets().get([1], 2)</span>
+<span class="sd">        ...     return [abjad.select(_).note(0) for _ in result]</span>
+
 <span class="sd">        &gt;&gt;&gt; stack = rmakers.stack(</span>
 <span class="sd">        ...     rmakers.even_division([8], extra_counts=[1]),</span>
 <span class="sd">        ...     rmakers.repeat_tie(selector),</span>
@@ -3616,7 +3653,7 @@
 <span class="sd">        &gt;&gt;&gt; divisions = [(2, 8), (2, 8), (2, 8), (2, 8), (2, 8), (2, 8)]</span>
 <span class="sd">        &gt;&gt;&gt; selections = stack(divisions)</span>
 <span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile.rhythm(selections, divisions)</span>
-<span class="sd">        &gt;&gt;&gt; rmakers.attach_markup_struts(lilypond_file)</span>
+<span class="sd">        &gt;&gt;&gt; abjad.illustrators.attach_markup_struts(lilypond_file)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(lilypond_file) # doctest: +SKIP</span>
 
 <span class="sd">        ..  docs::</span>
@@ -3741,7 +3778,7 @@
 <span class="sd">        &gt;&gt;&gt; divisions = [(4, 16), (4, 16), (5, 16), (5, 16)]</span>
 <span class="sd">        &gt;&gt;&gt; selections = stack(divisions)</span>
 <span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile.rhythm(selections, divisions)</span>
-<span class="sd">        &gt;&gt;&gt; rmakers.attach_markup_struts(lilypond_file)</span>
+<span class="sd">        &gt;&gt;&gt; abjad.illustrators.attach_markup_struts(lilypond_file)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(lilypond_file) # doctest: +SKIP</span>
 
 <span class="sd">        ..  docs::</span>
@@ -3811,7 +3848,7 @@
 <span class="sd">        &gt;&gt;&gt; divisions = [(4, 16), (4, 16), (5, 16), (5, 16)]</span>
 <span class="sd">        &gt;&gt;&gt; selections = stack(divisions)</span>
 <span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile.rhythm(selections, divisions)</span>
-<span class="sd">        &gt;&gt;&gt; rmakers.attach_markup_struts(lilypond_file)</span>
+<span class="sd">        &gt;&gt;&gt; abjad.illustrators.attach_markup_struts(lilypond_file)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(lilypond_file) # doctest: +SKIP</span>
 
 <span class="sd">        ..  docs::</span>
@@ -3857,7 +3894,7 @@
 <span class="sd">        &gt;&gt;&gt; divisions = [(4, 16), (4, 16), (5, 16), (5, 16)]</span>
 <span class="sd">        &gt;&gt;&gt; selections = stack(divisions)</span>
 <span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile.rhythm(selections, divisions)</span>
-<span class="sd">        &gt;&gt;&gt; rmakers.attach_markup_struts(lilypond_file)</span>
+<span class="sd">        &gt;&gt;&gt; abjad.illustrators.attach_markup_struts(lilypond_file)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(lilypond_file) # doctest: +SKIP</span>
 
 <span class="sd">        ..  docs::</span>
@@ -3896,14 +3933,14 @@
 <span class="sd">        &gt;&gt;&gt; stack = rmakers.stack(</span>
 <span class="sd">        ...     rmakers.talea([-1], 16, extra_counts=[1]),</span>
 <span class="sd">        ...     rmakers.rewrite_rest_filled(</span>
-<span class="sd">        ...         abjad.select().tuplets()[-2:],</span>
+<span class="sd">        ...         lambda _: abjad.select(_).tuplets()[-2:],</span>
 <span class="sd">        ...     ),</span>
 <span class="sd">        ...     rmakers.extract_trivial(),</span>
 <span class="sd">        ... )</span>
 <span class="sd">        &gt;&gt;&gt; divisions = [(4, 16), (4, 16), (5, 16), (5, 16)]</span>
 <span class="sd">        &gt;&gt;&gt; selections = stack(divisions)</span>
 <span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile.rhythm(selections, divisions)</span>
-<span class="sd">        &gt;&gt;&gt; rmakers.attach_markup_struts(lilypond_file)</span>
+<span class="sd">        &gt;&gt;&gt; abjad.illustrators.attach_markup_struts(lilypond_file)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(lilypond_file) # doctest: +SKIP</span>
 
 <span class="sd">        ..  docs::</span>
@@ -3957,7 +3994,7 @@
 
 
 <div class="viewcode-block" id="rewrite_sustained"><a class="viewcode-back" href="../../../api/abjadext/rmakers/commands.html#abjadext.rmakers.commands.rewrite_sustained">[docs]</a><span class="k">def</span> <span class="nf">rewrite_sustained</span><span class="p">(</span>
-    <span class="n">selector</span><span class="p">:</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Expression</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">select</span><span class="p">()</span><span class="o">.</span><span class="n">tuplets</span><span class="p">(),</span>
+    <span class="n">selector</span><span class="o">=</span><span class="k">lambda</span> <span class="n">_</span><span class="p">:</span> <span class="n">abjad</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">_</span><span class="p">)</span><span class="o">.</span><span class="n">tuplets</span><span class="p">(),</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">RewriteSustainedCommand</span><span class="p">:</span>
     <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Makes tuplet command.</span>
@@ -3967,16 +4004,19 @@
 <span class="sd">        Sustained tuplets generalize a class of rhythms composers are</span>
 <span class="sd">        likely to rewrite:</span>
 
-<span class="sd">        &gt;&gt;&gt; last_leaf = abjad.select().leaf(-1)</span>
+<span class="sd">        &gt;&gt;&gt; def selector(argument):</span>
+<span class="sd">        ...     result = abjad.select(argument).tuplets()[1:3]</span>
+<span class="sd">        ...     return [abjad.select(_).leaf(-1) for _ in result]</span>
+
 <span class="sd">        &gt;&gt;&gt; stack = rmakers.stack(</span>
 <span class="sd">        ...     rmakers.talea([6, 5, 5, 4, 1], 16, extra_counts=[2, 1, 1, 1]),</span>
-<span class="sd">        ...     rmakers.tie(abjad.select().tuplets()[1:3].map(last_leaf)),</span>
+<span class="sd">        ...     rmakers.tie(selector),</span>
 <span class="sd">        ...     rmakers.beam(),</span>
 <span class="sd">        ... )</span>
 <span class="sd">        &gt;&gt;&gt; divisions = [(4, 16), (4, 16), (4, 16), (4, 16)]</span>
 <span class="sd">        &gt;&gt;&gt; selections = stack(divisions)</span>
 <span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile.rhythm(selections, divisions)</span>
-<span class="sd">        &gt;&gt;&gt; rmakers.attach_markup_struts(lilypond_file)</span>
+<span class="sd">        &gt;&gt;&gt; abjad.illustrators.attach_markup_struts(lilypond_file)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(lilypond_file) # doctest: +SKIP</span>
 
 <span class="sd">        ..  docs::</span>
@@ -4046,17 +4086,20 @@
 
 <span class="sd">        Rewrite sustained tuplets like this:</span>
 
-<span class="sd">        &gt;&gt;&gt; last_leaf = abjad.select().leaf(-1)</span>
+<span class="sd">        &gt;&gt;&gt; def selector(argument):</span>
+<span class="sd">        ...     result = abjad.select(argument).tuplets()[1:3]</span>
+<span class="sd">        ...     return [abjad.select(_).leaf(-1) for _ in result]</span>
+
 <span class="sd">        &gt;&gt;&gt; stack = rmakers.stack(</span>
 <span class="sd">        ...     rmakers.talea([6, 5, 5, 4, 1], 16, extra_counts=[2, 1, 1, 1]),</span>
 <span class="sd">        ...     rmakers.rewrite_sustained(),</span>
-<span class="sd">        ...     rmakers.tie(abjad.select().tuplets()[1:3].map(last_leaf)),</span>
+<span class="sd">        ...     rmakers.tie(selector),</span>
 <span class="sd">        ...     rmakers.beam(),</span>
 <span class="sd">        ... )</span>
 <span class="sd">        &gt;&gt;&gt; divisions = [(4, 16), (4, 16), (4, 16), (4, 16)]</span>
 <span class="sd">        &gt;&gt;&gt; selections = stack(divisions)</span>
 <span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile.rhythm(selections, divisions)</span>
-<span class="sd">        &gt;&gt;&gt; rmakers.attach_markup_struts(lilypond_file)</span>
+<span class="sd">        &gt;&gt;&gt; abjad.illustrators.attach_markup_struts(lilypond_file)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(lilypond_file) # doctest: +SKIP</span>
 
 <span class="sd">        ..  docs::</span>
@@ -4107,18 +4150,21 @@
 <span class="sd">        Rewrite sustained tuplets -- and then extract the trivial tuplets</span>
 <span class="sd">        that result -- like this:</span>
 
-<span class="sd">        &gt;&gt;&gt; last_leaf = abjad.select().leaf(-1)</span>
+<span class="sd">        &gt;&gt;&gt; def selector(argument):</span>
+<span class="sd">        ...     result = abjad.select(argument).tuplets()[1:3]</span>
+<span class="sd">        ...     return [abjad.select(_).leaf(-1) for _ in result]</span>
+
 <span class="sd">        &gt;&gt;&gt; stack = rmakers.stack(</span>
 <span class="sd">        ...     rmakers.talea([6, 5, 5, 4, 1], 16, extra_counts=[2, 1, 1, 1]),</span>
 <span class="sd">        ...     rmakers.beam(),</span>
-<span class="sd">        ...     rmakers.tie(abjad.select().tuplets()[1:3].map(last_leaf)),</span>
+<span class="sd">        ...     rmakers.tie(selector),</span>
 <span class="sd">        ...     rmakers.rewrite_sustained(),</span>
 <span class="sd">        ...     rmakers.extract_trivial(),</span>
 <span class="sd">        ... )</span>
 <span class="sd">        &gt;&gt;&gt; divisions = [(4, 16), (4, 16), (4, 16), (4, 16)]</span>
 <span class="sd">        &gt;&gt;&gt; selections = stack(divisions)</span>
 <span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile.rhythm(selections, divisions)</span>
-<span class="sd">        &gt;&gt;&gt; rmakers.attach_markup_struts(lilypond_file)</span>
+<span class="sd">        &gt;&gt;&gt; abjad.illustrators.attach_markup_struts(lilypond_file)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(lilypond_file) # doctest: +SKIP</span>
 
 <span class="sd">        ..  docs::</span>
@@ -4159,20 +4205,22 @@
 
 <span class="sd">        With selector:</span>
 
-<span class="sd">        &gt;&gt;&gt; selector = abjad.select().notes()[:-1]</span>
-<span class="sd">        &gt;&gt;&gt; selector = abjad.select().tuplets().map(selector)</span>
+<span class="sd">        &gt;&gt;&gt; def selector(argument):</span>
+<span class="sd">        ...     result = abjad.select(argument).tuplets()</span>
+<span class="sd">        ...     return [abjad.select(_).notes()[:-1] for _ in result]</span>
+
 <span class="sd">        &gt;&gt;&gt; stack = rmakers.stack(</span>
 <span class="sd">        ...     rmakers.even_division([8], extra_counts=[1]),</span>
 <span class="sd">        ...     rmakers.tie(selector),</span>
 <span class="sd">        ...     rmakers.rewrite_sustained(</span>
-<span class="sd">        ...         abjad.select().tuplets()[-2:],</span>
+<span class="sd">        ...         lambda _: abjad.select(_).tuplets()[-2:],</span>
 <span class="sd">        ...     ),</span>
 <span class="sd">        ...     rmakers.beam(),</span>
 <span class="sd">        ... )</span>
 <span class="sd">        &gt;&gt;&gt; divisions = [(2, 8), (2, 8), (2, 8), (2, 8)]</span>
 <span class="sd">        &gt;&gt;&gt; selections = stack(divisions)</span>
 <span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile.rhythm(selections, divisions)</span>
-<span class="sd">        &gt;&gt;&gt; rmakers.attach_markup_struts(lilypond_file)</span>
+<span class="sd">        &gt;&gt;&gt; abjad.illustrators.attach_markup_struts(lilypond_file)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(lilypond_file) # doctest: +SKIP</span>
 
 <span class="sd">        ..  docs::</span>
@@ -4247,13 +4295,13 @@
 
 <span class="sd">        &gt;&gt;&gt; stack = rmakers.stack(</span>
 <span class="sd">        ...     rmakers.even_division([8], extra_counts=[1]),</span>
-<span class="sd">        ...     rmakers.tie(abjad.select().notes()[5:15]),</span>
+<span class="sd">        ...     rmakers.tie(lambda _: abjad.select(_).notes()[5:15]),</span>
 <span class="sd">        ...     rmakers.beam(),</span>
 <span class="sd">        ... )</span>
 <span class="sd">        &gt;&gt;&gt; divisions = [(2, 8), (2, 8), (2, 8), (2, 8), (2, 8), (2, 8)]</span>
 <span class="sd">        &gt;&gt;&gt; selections = stack(divisions)</span>
 <span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile.rhythm(selections, divisions)</span>
-<span class="sd">        &gt;&gt;&gt; rmakers.attach_markup_struts(lilypond_file)</span>
+<span class="sd">        &gt;&gt;&gt; abjad.illustrators.attach_markup_struts(lilypond_file)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(lilypond_file) # doctest: +SKIP</span>
 
 <span class="sd">        ..  docs::</span>
@@ -4342,8 +4390,10 @@
 <span class="sd">        TIE-ACROSS-DIVISIONS RECIPE. Attaches ties to last note in nonlast</span>
 <span class="sd">        tuplets:</span>
 
-<span class="sd">        &gt;&gt;&gt; selector = abjad.select().tuplets()[:-1]</span>
-<span class="sd">        &gt;&gt;&gt; selector = selector.map(abjad.select().note(-1))</span>
+<span class="sd">        &gt;&gt;&gt; def selector(argument):</span>
+<span class="sd">        ...     result = abjad.select(argument).tuplets()[:-1]</span>
+<span class="sd">        ...     return [abjad.select(_).note(-1) for _ in result]</span>
+
 <span class="sd">        &gt;&gt;&gt; stack = rmakers.stack(</span>
 <span class="sd">        ...     rmakers.even_division([8], extra_counts=[1]),</span>
 <span class="sd">        ...     rmakers.tie(selector),</span>
@@ -4352,7 +4402,7 @@
 <span class="sd">        &gt;&gt;&gt; divisions = [(2, 8), (2, 8), (2, 8), (2, 8), (2, 8), (2, 8)]</span>
 <span class="sd">        &gt;&gt;&gt; selections = stack(divisions)</span>
 <span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile.rhythm(selections, divisions)</span>
-<span class="sd">        &gt;&gt;&gt; rmakers.attach_markup_struts(lilypond_file)</span>
+<span class="sd">        &gt;&gt;&gt; abjad.illustrators.attach_markup_struts(lilypond_file)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(lilypond_file) # doctest: +SKIP</span>
 
 <span class="sd">        ..  docs::</span>
@@ -4433,8 +4483,10 @@
 
 <span class="sd">        With pattern:</span>
 
-<span class="sd">        &gt;&gt;&gt; selector = abjad.select().tuplets().get([0], 2)</span>
-<span class="sd">        &gt;&gt;&gt; selector = selector.map(abjad.select().note(-1))</span>
+<span class="sd">        &gt;&gt;&gt; def selector(argument):</span>
+<span class="sd">        ...     result = abjad.select(argument).tuplets().get([0], 2)</span>
+<span class="sd">        ...     return [abjad.select(_).note(-1) for _ in result]</span>
+
 <span class="sd">        &gt;&gt;&gt; stack = rmakers.stack(</span>
 <span class="sd">        ...     rmakers.even_division([8], extra_counts=[1]),</span>
 <span class="sd">        ...     rmakers.tie(selector),</span>
@@ -4443,7 +4495,7 @@
 <span class="sd">        &gt;&gt;&gt; divisions = [(2, 8), (2, 8), (2, 8), (2, 8), (2, 8), (2, 8)]</span>
 <span class="sd">        &gt;&gt;&gt; selections = stack(divisions)</span>
 <span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile.rhythm(selections, divisions)</span>
-<span class="sd">        &gt;&gt;&gt; rmakers.attach_markup_struts(lilypond_file)</span>
+<span class="sd">        &gt;&gt;&gt; abjad.illustrators.attach_markup_struts(lilypond_file)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(lilypond_file) # doctest: +SKIP</span>
 
 <span class="sd">        ..  docs::</span>
@@ -4524,16 +4576,18 @@
 
 <span class="sd">        TIE-ACROSS-DIVISIONS RECIPE:</span>
 
-<span class="sd">        &gt;&gt;&gt; nonlast_tuplets = abjad.select().tuplets()[:-1]</span>
-<span class="sd">        &gt;&gt;&gt; last_leaf = abjad.select().leaf(-1)</span>
+<span class="sd">        &gt;&gt;&gt; def selector(argument):</span>
+<span class="sd">        ...     result = abjad.select(argument).tuplets()[:-1]</span>
+<span class="sd">        ...     return [abjad.select(_).leaf(-1) for _ in result]</span>
+
 <span class="sd">        &gt;&gt;&gt; stack = rmakers.stack(</span>
 <span class="sd">        ...     rmakers.tuplet([(5, 2)]),</span>
-<span class="sd">        ...     rmakers.tie(nonlast_tuplets.map(last_leaf)),</span>
+<span class="sd">        ...     rmakers.tie(selector),</span>
 <span class="sd">        ... )</span>
 <span class="sd">        &gt;&gt;&gt; divisions = [(4, 8), (4, 8), (4, 8)]</span>
 <span class="sd">        &gt;&gt;&gt; selections = stack(divisions)</span>
 <span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile.rhythm(selections, divisions)</span>
-<span class="sd">        &gt;&gt;&gt; rmakers.attach_markup_struts(lilypond_file)</span>
+<span class="sd">        &gt;&gt;&gt; abjad.illustrators.attach_markup_struts(lilypond_file)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(lilypond_file) # doctest: +SKIP</span>
 
 <span class="sd">        ..  docs::</span>
@@ -4583,9 +4637,10 @@
 
 <span class="sd">        TIE-WITHIN-DIVISIONS RECIPE:</span>
 
-<span class="sd">        &gt;&gt;&gt; selector = abjad.select().tuplets()</span>
-<span class="sd">        &gt;&gt;&gt; nonlast_notes = abjad.select().notes()[:-1]</span>
-<span class="sd">        &gt;&gt;&gt; selector = selector.map(nonlast_notes)</span>
+<span class="sd">        &gt;&gt;&gt; def selector(argument):</span>
+<span class="sd">        ...     result = abjad.select(argument).tuplets()</span>
+<span class="sd">        ...     return [abjad.select(_).notes()[:-1] for _ in result]</span>
+
 <span class="sd">        &gt;&gt;&gt; stack = rmakers.stack(</span>
 <span class="sd">        ...     rmakers.even_division([8], extra_counts=[1]),</span>
 <span class="sd">        ...     rmakers.untie(selector),</span>
@@ -4595,7 +4650,7 @@
 <span class="sd">        &gt;&gt;&gt; divisions = [(2, 8), (2, 8), (2, 8), (2, 8), (2, 8), (2, 8)]</span>
 <span class="sd">        &gt;&gt;&gt; selections = stack(divisions)</span>
 <span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile.rhythm(selections, divisions)</span>
-<span class="sd">        &gt;&gt;&gt; rmakers.attach_markup_struts(lilypond_file)</span>
+<span class="sd">        &gt;&gt;&gt; abjad.illustrators.attach_markup_struts(lilypond_file)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(lilypond_file) # doctest: +SKIP</span>
 
 <span class="sd">        ..  docs::</span>
@@ -4683,8 +4738,10 @@
 
 <span class="sd">        With pattern:</span>
 
-<span class="sd">        &gt;&gt;&gt; selector = abjad.select().tuplets().get([0], 2)</span>
-<span class="sd">        &gt;&gt;&gt; selector = selector.map(abjad.select().notes()[:-1])</span>
+<span class="sd">        &gt;&gt;&gt; def selector(argument):</span>
+<span class="sd">        ...     result = abjad.select(argument).tuplets().get([0], 2)</span>
+<span class="sd">        ...     return [abjad.select(_).notes()[:-1] for _ in result]</span>
+
 <span class="sd">        &gt;&gt;&gt; stack = rmakers.stack(</span>
 <span class="sd">        ...     rmakers.even_division([8], extra_counts=[1]),</span>
 <span class="sd">        ...     rmakers.tie(selector),</span>
@@ -4693,7 +4750,7 @@
 <span class="sd">        &gt;&gt;&gt; divisions = [(2, 8), (2, 8), (2, 8), (2, 8), (2, 8), (2, 8)]</span>
 <span class="sd">        &gt;&gt;&gt; selections = stack(divisions)</span>
 <span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile.rhythm(selections, divisions)</span>
-<span class="sd">        &gt;&gt;&gt; rmakers.attach_markup_struts(lilypond_file)</span>
+<span class="sd">        &gt;&gt;&gt; abjad.illustrators.attach_markup_struts(lilypond_file)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(lilypond_file) # doctest: +SKIP</span>
 
 <span class="sd">        ..  docs::</span>
@@ -4787,8 +4844,10 @@
 
 <span class="sd">        Repeats figures two times each:</span>
 
-<span class="sd">        &gt;&gt;&gt; selector = abjad.select().notes().get([0, -1])</span>
-<span class="sd">        &gt;&gt;&gt; selector = abjad.select().tuplets().map(selector)</span>
+<span class="sd">        &gt;&gt;&gt; def selector(argument):</span>
+<span class="sd">        ...     result = abjad.select(argument).tuplets()</span>
+<span class="sd">        ...     return [abjad.select(_).notes().get([0, -1]) for _ in result]</span>
+
 <span class="sd">        &gt;&gt;&gt; stack = rmakers.stack(</span>
 <span class="sd">        ...     rmakers.even_division([4]),</span>
 <span class="sd">        ...     rmakers.tremolo_container(2, selector),</span>
@@ -4796,10 +4855,13 @@
 <span class="sd">        ... )</span>
 <span class="sd">        &gt;&gt;&gt; divisions = [(4, 4), (3, 4)]</span>
 <span class="sd">        &gt;&gt;&gt; selections = stack(divisions)</span>
-<span class="sd">        &gt;&gt;&gt; selector = abjad.select().components(abjad.TremoloContainer)</span>
+
+<span class="sd">        &gt;&gt;&gt; def selector(argument):</span>
+<span class="sd">        ...     return abjad.select(argument).components(abjad.TremoloContainer)</span>
+
 <span class="sd">        &gt;&gt;&gt; result = [abjad.slur(_) for _ in selector(selections)]</span>
 <span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile.rhythm(selections, divisions)</span>
-<span class="sd">        &gt;&gt;&gt; rmakers.attach_markup_struts(lilypond_file)</span>
+<span class="sd">        &gt;&gt;&gt; abjad.illustrators.attach_markup_struts(lilypond_file)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(lilypond_file) # doctest: +SKIP</span>
 
 <span class="sd">        ..  docs::</span>
@@ -4855,8 +4917,10 @@
 
 <span class="sd">        Repeats figures four times each:</span>
 
-<span class="sd">        &gt;&gt;&gt; selector = abjad.select().notes().get([0, -1])</span>
-<span class="sd">        &gt;&gt;&gt; selector = abjad.select().tuplets().map(selector)</span>
+<span class="sd">        &gt;&gt;&gt; def selector(argument):</span>
+<span class="sd">        ...     result = abjad.select(argument).tuplets()</span>
+<span class="sd">        ...     return [abjad.select(_).notes().get([0, -1]) for _ in result]</span>
+
 <span class="sd">        &gt;&gt;&gt; stack = rmakers.stack(</span>
 <span class="sd">        ...     rmakers.even_division([4]),</span>
 <span class="sd">        ...     rmakers.tremolo_container(4, selector),</span>
@@ -4864,10 +4928,13 @@
 <span class="sd">        ... )</span>
 <span class="sd">        &gt;&gt;&gt; divisions = [(4, 4), (3, 4)]</span>
 <span class="sd">        &gt;&gt;&gt; selections = stack(divisions)</span>
-<span class="sd">        &gt;&gt;&gt; selector = abjad.select().components(abjad.TremoloContainer)</span>
+
+<span class="sd">        &gt;&gt;&gt; def selector(argument):</span>
+<span class="sd">        ...     return abjad.select(argument).components(abjad.TremoloContainer)</span>
+
 <span class="sd">        &gt;&gt;&gt; result = [abjad.slur(_) for _ in selector(selections)]</span>
 <span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile.rhythm(selections, divisions)</span>
-<span class="sd">        &gt;&gt;&gt; rmakers.attach_markup_struts(lilypond_file)</span>
+<span class="sd">        &gt;&gt;&gt; abjad.illustrators.attach_markup_struts(lilypond_file)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(lilypond_file) # doctest: +SKIP</span>
 
 <span class="sd">        ..  docs::</span>
@@ -4933,7 +5000,7 @@
 
 
 <div class="viewcode-block" id="unbeam"><a class="viewcode-back" href="../../../api/abjadext/rmakers/commands.html#abjadext.rmakers.commands.unbeam">[docs]</a><span class="k">def</span> <span class="nf">unbeam</span><span class="p">(</span>
-    <span class="n">selector</span><span class="p">:</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Expression</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">select</span><span class="p">()</span><span class="o">.</span><span class="n">leaves</span><span class="p">(),</span>
+    <span class="n">selector</span><span class="o">=</span><span class="k">lambda</span> <span class="n">_</span><span class="p">:</span> <span class="n">abjad</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">_</span><span class="p">)</span><span class="o">.</span><span class="n">leaves</span><span class="p">(),</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">UnbeamCommand</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Makes unbeam command.</span>
@@ -4952,14 +5019,14 @@
 
 <span class="sd">        &gt;&gt;&gt; stack = rmakers.stack(</span>
 <span class="sd">        ...     rmakers.even_division([8], extra_counts=[1]),</span>
-<span class="sd">        ...     rmakers.tie(abjad.select().notes()[:-1]),</span>
-<span class="sd">        ...     rmakers.untie(abjad.select().notes().get([0], 4)),</span>
+<span class="sd">        ...     rmakers.tie(lambda _: abjad.select(_).notes()[:-1]),</span>
+<span class="sd">        ...     rmakers.untie(lambda _: abjad.select(_).notes().get([0], 4)),</span>
 <span class="sd">        ...     rmakers.beam(),</span>
 <span class="sd">        ... )</span>
 <span class="sd">        &gt;&gt;&gt; divisions = [(2, 8), (2, 8), (2, 8), (2, 8), (2, 8), (2, 8)]</span>
 <span class="sd">        &gt;&gt;&gt; selections = stack(divisions)</span>
 <span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile.rhythm(selections, divisions)</span>
-<span class="sd">        &gt;&gt;&gt; rmakers.attach_markup_struts(lilypond_file)</span>
+<span class="sd">        &gt;&gt;&gt; abjad.illustrators.attach_markup_struts(lilypond_file)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(lilypond_file) # doctest: +SKIP</span>
 
 <span class="sd">        ..  docs::</span>
@@ -5052,14 +5119,14 @@
 
 <span class="sd">        &gt;&gt;&gt; stack = rmakers.stack(</span>
 <span class="sd">        ...     rmakers.even_division([8], extra_counts=[1]),</span>
-<span class="sd">        ...     rmakers.repeat_tie(abjad.select().notes()[1:]),</span>
-<span class="sd">        ...     rmakers.untie(abjad.select().notes().get([0], 4)),</span>
+<span class="sd">        ...     rmakers.repeat_tie(lambda _: abjad.select(_).notes()[1:]),</span>
+<span class="sd">        ...     rmakers.untie(lambda _: abjad.select(_).notes().get([0], 4)),</span>
 <span class="sd">        ...     rmakers.beam(),</span>
 <span class="sd">        ... )</span>
 <span class="sd">        &gt;&gt;&gt; divisions = [(2, 8), (2, 8), (2, 8), (2, 8), (2, 8), (2, 8)]</span>
 <span class="sd">        &gt;&gt;&gt; selections = stack(divisions)</span>
 <span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile.rhythm(selections, divisions)</span>
-<span class="sd">        &gt;&gt;&gt; rmakers.attach_markup_struts(lilypond_file)</span>
+<span class="sd">        &gt;&gt;&gt; abjad.illustrators.attach_markup_struts(lilypond_file)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(lilypond_file) # doctest: +SKIP</span>
 
 <span class="sd">        ..  docs::</span>
@@ -5152,7 +5219,7 @@
 
 <div class="viewcode-block" id="written_duration"><a class="viewcode-back" href="../../../api/abjadext/rmakers/commands.html#abjadext.rmakers.commands.written_duration">[docs]</a><span class="k">def</span> <span class="nf">written_duration</span><span class="p">(</span>
     <span class="n">duration</span><span class="p">:</span> <span class="n">abjad</span><span class="o">.</span><span class="n">DurationTyping</span><span class="p">,</span>
-    <span class="n">selector</span><span class="p">:</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Expression</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">select</span><span class="p">()</span><span class="o">.</span><span class="n">leaves</span><span class="p">(),</span>
+    <span class="n">selector</span><span class="o">=</span><span class="k">lambda</span> <span class="n">_</span><span class="p">:</span> <span class="n">abjad</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">_</span><span class="p">)</span><span class="o">.</span><span class="n">leaves</span><span class="p">(),</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">WrittenDurationCommand</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Makes written duration command.</span>

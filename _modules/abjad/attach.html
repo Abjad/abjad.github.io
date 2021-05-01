@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>abjad.attach &mdash; Abjad 3.3 documentation</title>
+  <title>abjad.attach &mdash; Abjad 3.4 documentation</title>
   
 
   
@@ -58,12 +58,12 @@
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search"  style="background: #cc0044" >
+        <div class="wy-side-nav-search"  style="background: #cc0088" >
           
 
 
     <a href="../../index.html" class="icon icon-home" alt="Documentation
-    Home"> Abjad 3.3
+    Home"> Abjad 3.4
 
 
 
@@ -392,8 +392,11 @@
 <span class="sd">            &gt;&gt;&gt; abjad.attach(clef, old_staff[0], tag=abjad.Tag(&quot;RED:M1&quot;))</span>
 <span class="sd">            &gt;&gt;&gt; string = abjad.lilypond(old_staff, tags=True)</span>
 <span class="sd">            &gt;&gt;&gt; print(string)</span>
-<span class="sd">            \new Staff {</span>
-<span class="sd">                \clef &quot;alto&quot; %! RED:M1</span>
+<span class="sd">            \new Staff</span>
+<span class="sd">            {</span>
+<span class="sd">                %! RED</span>
+<span class="sd">                %! M1</span>
+<span class="sd">                \clef &quot;alto&quot;</span>
 <span class="sd">                c&#39;4</span>
 <span class="sd">                d&#39;4</span>
 <span class="sd">                e&#39;4</span>
@@ -413,8 +416,11 @@
 <span class="sd">            &gt;&gt;&gt; new_staff = abjad.mutate.copy(old_staff)</span>
 <span class="sd">            &gt;&gt;&gt; string = abjad.lilypond(new_staff, tags=True)</span>
 <span class="sd">            &gt;&gt;&gt; print(string)</span>
-<span class="sd">            \new Staff {</span>
-<span class="sd">                \clef &quot;alto&quot; %! RED:M1</span>
+<span class="sd">            \new Staff</span>
+<span class="sd">            {</span>
+<span class="sd">                %! RED</span>
+<span class="sd">                %! M1</span>
+<span class="sd">                \clef &quot;alto&quot;</span>
 <span class="sd">                c&#39;4</span>
 <span class="sd">                d&#39;4</span>
 <span class="sd">                e&#39;4</span>
@@ -444,8 +450,11 @@
 <span class="sd">            ...     )</span>
 <span class="sd">            &gt;&gt;&gt; string = abjad.lilypond(old_staff, tags=True)</span>
 <span class="sd">            &gt;&gt;&gt; print(string)</span>
-<span class="sd">            \new Staff {</span>
-<span class="sd">                %@% \clef &quot;alto&quot; %! RED:M1</span>
+<span class="sd">            \new Staff</span>
+<span class="sd">            {</span>
+<span class="sd">                %! RED</span>
+<span class="sd">                %! M1</span>
+<span class="sd">                %@% \clef &quot;alto&quot;</span>
 <span class="sd">                c&#39;4</span>
 <span class="sd">                d&#39;4</span>
 <span class="sd">                e&#39;4</span>
@@ -466,8 +475,11 @@
 <span class="sd">            &gt;&gt;&gt; new_staff = abjad.mutate.copy(old_staff)</span>
 <span class="sd">            &gt;&gt;&gt; string = abjad.lilypond(new_staff, tags=True)</span>
 <span class="sd">            &gt;&gt;&gt; print(string)</span>
-<span class="sd">            \new Staff {</span>
-<span class="sd">                %@% \clef &quot;alto&quot; %! RED:M1</span>
+<span class="sd">            \new Staff</span>
+<span class="sd">            {</span>
+<span class="sd">                %! RED</span>
+<span class="sd">                %! M1</span>
+<span class="sd">                %@% \clef &quot;alto&quot;</span>
 <span class="sd">                c&#39;4</span>
 <span class="sd">                d&#39;4</span>
 <span class="sd">                e&#39;4</span>
@@ -603,7 +615,7 @@
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">lilypond_format</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
             <span class="n">lilypond_format</span> <span class="o">=</span> <span class="p">[</span><span class="n">lilypond_format</span><span class="p">]</span>
         <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">lilypond_format</span><span class="p">,</span> <span class="p">(</span><span class="nb">tuple</span><span class="p">,</span> <span class="nb">list</span><span class="p">))</span>
-        <span class="n">lilypond_format</span> <span class="o">=</span> <span class="n">_tag</span><span class="o">.</span><span class="n">tag</span><span class="p">(</span>
+        <span class="n">lilypond_format</span> <span class="o">=</span> <span class="n">_tag</span><span class="o">.</span><span class="n">double_tag</span><span class="p">(</span>
             <span class="n">lilypond_format</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tag</span><span class="p">,</span> <span class="n">deactivate</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">deactivate</span>
         <span class="p">)</span>
         <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">lilypond_format</span><span class="p">)</span>
@@ -1031,8 +1043,10 @@
 <span class="sd">            \new Staff</span>
 <span class="sd">            {</span>
 <span class="sd">                \clef &quot;treble&quot;</span>
-<span class="sd">            %@% \clef &quot;alto&quot; %! +PARTS</span>
-<span class="sd">            %@% \clef &quot;tenor&quot; %! +PARTS</span>
+<span class="sd">                %! +PARTS</span>
+<span class="sd">                %@% \clef &quot;alto&quot;</span>
+<span class="sd">                %! +PARTS</span>
+<span class="sd">                %@% \clef &quot;tenor&quot;</span>
 <span class="sd">                c&#39;4</span>
 <span class="sd">                d&#39;4</span>
 <span class="sd">                e&#39;4</span>
@@ -1069,7 +1083,8 @@
 <span class="sd">            &gt;&gt;&gt; print(string)</span>
 <span class="sd">            \new Staff</span>
 <span class="sd">            {</span>
-<span class="sd">            %@% \clef &quot;alto&quot; %! +PARTS</span>
+<span class="sd">                %! +PARTS</span>
+<span class="sd">                %@% \clef &quot;alto&quot;</span>
 <span class="sd">                c&#39;4</span>
 <span class="sd">                d&#39;4</span>
 <span class="sd">                e&#39;4</span>
@@ -1280,9 +1295,12 @@
 <span class="sd">        \new Staff</span>
 <span class="sd">        {</span>
 <span class="sd">            c&#39;4</span>
-<span class="sd">            ^ \markup { tutti }                           %! +SCORE</span>
-<span class="sd">        %@% ^ \markup { with the others }                 %! +PARTS_VIOLIN_1</span>
-<span class="sd">        %@% ^ \markup { with the others }                 %! +PARTS_VIOLIN_2</span>
+<span class="sd">            %! +SCORE</span>
+<span class="sd">            ^ \markup { tutti }</span>
+<span class="sd">            %! +PARTS_VIOLIN_1</span>
+<span class="sd">            %@% ^ \markup { with the others }</span>
+<span class="sd">            %! +PARTS_VIOLIN_2</span>
+<span class="sd">            %@% ^ \markup { with the others }</span>
 <span class="sd">            d&#39;4</span>
 <span class="sd">            e&#39;4</span>
 <span class="sd">            f&#39;4</span>
@@ -1304,7 +1322,8 @@
 <span class="sd">        \new Staff</span>
 <span class="sd">        {</span>
 <span class="sd">            c&#39;4</span>
-<span class="sd">            ^ \markup { tutti }                           %! +SCORE</span>
+<span class="sd">            %! +SCORE</span>
+<span class="sd">            ^ \markup { tutti }</span>
 <span class="sd">            d&#39;4</span>
 <span class="sd">            e&#39;4</span>
 <span class="sd">            f&#39;4</span>
@@ -1333,9 +1352,12 @@
 <span class="sd">        \new Staff</span>
 <span class="sd">        {</span>
 <span class="sd">            c&#39;4</span>
-<span class="sd">            ^ \markup { tutti }                           %! +SCORE</span>
-<span class="sd">        %@% ^ \markup { with the others }                 %! +PARTS_VIOLIN_1</span>
-<span class="sd">        %@% ^ \markup { with the others }                 %! +PARTS_VIOLIN_2</span>
+<span class="sd">            %! +SCORE</span>
+<span class="sd">            ^ \markup { tutti }</span>
+<span class="sd">            %! +PARTS_VIOLIN_1</span>
+<span class="sd">            %@% ^ \markup { with the others }</span>
+<span class="sd">            %! +PARTS_VIOLIN_2</span>
+<span class="sd">            %@% ^ \markup { with the others }</span>
 <span class="sd">            d&#39;4</span>
 <span class="sd">            e&#39;4</span>
 <span class="sd">            f&#39;4</span>
@@ -1355,8 +1377,10 @@
 <span class="sd">        \new Staff</span>
 <span class="sd">        {</span>
 <span class="sd">            c&#39;4</span>
-<span class="sd">            ^ \markup { tutti }                           %! +SCORE</span>
-<span class="sd">        %@% ^ \markup { with the others }                 %! +PARTS_VIOLIN_2</span>
+<span class="sd">            %! +SCORE</span>
+<span class="sd">            ^ \markup { tutti }</span>
+<span class="sd">            %! +PARTS_VIOLIN_2</span>
+<span class="sd">            %@% ^ \markup { with the others }</span>
 <span class="sd">            d&#39;4</span>
 <span class="sd">            e&#39;4</span>
 <span class="sd">            f&#39;4</span>

@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>abjad.persist &mdash; Abjad 3.3 documentation</title>
+  <title>abjad.persist &mdash; Abjad 3.4 documentation</title>
   
 
   
@@ -58,12 +58,12 @@
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search"  style="background: #cc0044" >
+        <div class="wy-side-nav-search"  style="background: #cc0088" >
           
 
 
     <a href="../../index.html" class="icon icon-home" alt="Documentation
-    Home"> Abjad 3.3
+    Home"> Abjad 3.4
 
 
 
@@ -178,7 +178,6 @@
 
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">io</span>
 <span class="kn">from</span> <span class="nn">.contextmanagers</span> <span class="kn">import</span> <span class="n">Timer</span>
-<span class="kn">from</span> <span class="nn">.format</span> <span class="kn">import</span> <span class="n">LilyPondFormatManager</span>
 <span class="kn">from</span> <span class="nn">.illustrators</span> <span class="kn">import</span> <span class="n">illustrate</span>
 
 
@@ -187,7 +186,6 @@
     <span class="n">ly_file_path</span><span class="p">,</span>
     <span class="o">*</span><span class="p">,</span>
     <span class="n">illustrate_function</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-    <span class="n">align_tags</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="o">**</span><span class="n">keywords</span><span class="p">,</span>
 <span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -195,8 +193,6 @@
 
 <span class="sd">    Returns output path and elapsed formatting time when LilyPond output is written.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="n">align_tags</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">align_tags</span><span class="p">,</span> <span class="nb">int</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">align_tags</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">illustrate_function</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">lilypond_file</span> <span class="o">=</span> <span class="n">illustrate_function</span><span class="p">(</span><span class="o">**</span><span class="n">keywords</span><span class="p">)</span>
     <span class="k">elif</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">argument</span><span class="p">,</span> <span class="s2">&quot;__illustrate__&quot;</span><span class="p">):</span>
@@ -210,8 +206,6 @@
     <span class="n">timer</span> <span class="o">=</span> <span class="n">Timer</span><span class="p">()</span>
     <span class="k">with</span> <span class="n">timer</span><span class="p">:</span>
         <span class="n">string</span> <span class="o">=</span> <span class="n">lilypond_file</span><span class="o">.</span><span class="n">_get_lilypond_format</span><span class="p">()</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">align_tags</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
-            <span class="n">string</span> <span class="o">=</span> <span class="n">LilyPondFormatManager</span><span class="o">.</span><span class="n">align_tags</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">align_tags</span><span class="p">)</span>
     <span class="n">abjad_formatting_time</span> <span class="o">=</span> <span class="n">timer</span><span class="o">.</span><span class="n">elapsed_time</span>
     <span class="n">directory</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">ly_file_path</span><span class="p">)</span>
     <span class="n">io</span><span class="o">.</span><span class="n">_ensure_directory_existence</span><span class="p">(</span><span class="n">directory</span><span class="p">)</span>
@@ -266,7 +260,6 @@
     <span class="o">*</span><span class="p">,</span>
     <span class="n">illustrate_function</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="n">remove_ly</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-    <span class="n">align_tags</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="o">**</span><span class="n">keywords</span><span class="p">,</span>
 <span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -275,8 +268,6 @@
 <span class="sd">    Returns output path, elapsed formatting time and elapsed rendering time when PDF</span>
 <span class="sd">    output is written.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="n">align_tags</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">align_tags</span><span class="p">,</span> <span class="nb">int</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">align_tags</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">pdf_file_path</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">pdf_file_path</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">pdf_file_path</span><span class="p">)</span>
         <span class="n">pdf_file_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="n">pdf_file_path</span><span class="p">)</span>
@@ -288,7 +279,6 @@
         <span class="n">argument</span><span class="p">,</span>
         <span class="n">ly_file_path</span><span class="p">,</span>
         <span class="n">illustrate_function</span><span class="o">=</span><span class="n">illustrate_function</span><span class="p">,</span>
-        <span class="n">align_tags</span><span class="o">=</span><span class="n">align_tags</span><span class="p">,</span>
         <span class="o">**</span><span class="n">keywords</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="n">ly_file_path</span><span class="p">,</span> <span class="n">abjad_formatting_time</span> <span class="o">=</span> <span class="n">result</span>
