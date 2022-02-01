@@ -83,7 +83,8 @@ Define helper functions:
     ...         cent_string = f"{remainder}"
     ...     else:
     ...         cent_string = f"+{remainder}"
-    ...     markup = abjad.Markup(cent_string, direction=direction)
+    ...     string = rf"\markup {cent_string}"
+    ...     markup = abjad.Markup(string, direction=direction)
     ...     abjad.tweak(markup).parent_alignment_X = 0 
     ...     abjad.tweak(markup).self_alignment_X = 0.25 
     ...     if pitch <= -8:
@@ -114,7 +115,7 @@ Define helper functions:
     ...             staff.append(note)
     ...     for measure_number in (1, 11, 21, 31):
     ...         note = abjad.select(staff_1).note(measure_number - 1)
-    ...         markup = abjad.Markup(r"\markup A", direction=abjad.Up, literal=True)
+    ...         markup = abjad.Markup(r"\markup A", direction=abjad.Up)
     ...         abjad.tweak(markup).staff_padding = 8
     ...         abjad.tweak(markup).transparent = True
     ...         abjad.attach(markup, note)
@@ -131,12 +132,14 @@ Define helper functions:
     ...     abjad.override(score).SpacingSpanner.strict_note_spacing = True
     ...     abjad.override(score).TimeSignature.stencil = False
     ...     abjad.setting(score).proportionalNotationDuration = "#(ly:make-moment 1 5)"
-    ...     items= [score, abjad.Block(name="layout"), abjad.Block(name="paper")]
-    ...     lilypond_file = abjad.LilyPondFile(items=items, global_staff_size=16)
-    ...     lilypond_file.layout_block.indent = "#0"
+    ...     items = [score, abjad.Block(name="layout"), abjad.Block(name="paper")]
+    ...     string = "#(set-global-staff-size 16)"
+    ...     items.insert(0, string)
+    ...     lilypond_file = abjad.LilyPondFile(items)
+    ...     lilypond_file["layout"].items.append("indent = #0")
     ...     space = "system-system-spacing = #'((basic-distance . 13)"
     ...     space += " (minimum-distance . 13) (padding . 4))"
-    ...     lilypond_file.paper_block.items.append(space)
+    ...     lilypond_file["paper"].items.append(space)
     ...     return lilypond_file
     ...
 

@@ -12,7 +12,7 @@ Rotation, by row index
     >>> def make_rotation_chart(permutation, label):
     ...     rotations = [0, -1, -2, -3, -4, -5]
     ...     source_staff = abjad.Staff([abjad.Note(_, (1, 16)) for _ in permutation])
-    ...     markup = abjad.Markup(rf'\markup "{label}"', direction=abjad.Up, literal=True)
+    ...     markup = abjad.Markup(rf'\markup "{label}"', direction=abjad.Up)
     ...     abjad.attach(markup, source_staff[0])
     ...     score = abjad.Score([source_staff], name="Score")
     ...     group = abjad.StaffGroup(name="Staff_Group")
@@ -20,7 +20,7 @@ Rotation, by row index
     ...         [_.number for _ in permutation[:6]],
     ...         [_.number for _ in permutation[6:]],
     ...     ]
-    ...     markup = abjad.Markup(rf'\markup \box "{label}"', literal=True)
+    ...     markup = abjad.Markup(rf'\markup \box "{label}"')
     ...     margin_markups = [
     ...         abjad.StartMarkup(markup=markup),
     ...         abjad.StartMarkup(markup="I"),
@@ -34,24 +34,24 @@ Rotation, by row index
     ...         sets = [
     ...             abjad.PitchClassSegment(hexachords[0]).rotate(r),
     ...             abjad.PitchClassSegment(hexachords[1]).rotate(r),
-    ...             abjad.PitchClassSegment(hexachords[0])
-    ...             .rotate(r, stravinsky=True)
+    ...             abjad.PitchClassSegment(hexachords[0]).rotate(r)
+    ...             .transpose(-int(hexachords[0][0]))
     ...             .transpose(hexachords[0][0]),
-    ...             abjad.PitchClassSegment(hexachords[1])
-    ...             .rotate(r, stravinsky=True)
+    ...             abjad.PitchClassSegment(hexachords[1]).rotate(r)
+    ...             .transpose(-int(hexachords[1][0]))
     ...             .transpose(hexachords[1][0]),
     ...         ]
     ...         names = [
-    ...             abjad.Markup(r"\markup \box α", direction=abjad.Up, literal=True),
-    ...             abjad.Markup(r"\markup \box β", direction=abjad.Up, literal=True),
-    ...             abjad.Markup(r"\markup \box γ", direction=abjad.Up, literal=True),
-    ...             abjad.Markup(r"\markup \box δ", direction=abjad.Up, literal=True),
+    ...             abjad.Markup(r"\markup \box α", direction=abjad.Up),
+    ...             abjad.Markup(r"\markup \box β", direction=abjad.Up),
+    ...             abjad.Markup(r"\markup \box γ", direction=abjad.Up),
+    ...             abjad.Markup(r"\markup \box δ", direction=abjad.Up),
     ...         ]
     ...         for set, name in zip(sets, names):
     ...             voice = abjad.Voice([abjad.Note(_, (1, 16)) for _ in set])
     ...             for leaf in abjad.select(voice).leaves():
     ...                 markup = abjad.Markup(
-    ...                     abjad.NumberedPitchClass(leaf.written_pitch),
+    ...                     rf"\markup {abjad.NumberedPitchClass(leaf.written_pitch)}",
     ...                     direction=abjad.Up,
     ...                 )
     ...                 abjad.tweak(markup).staff_padding = "3"
@@ -108,7 +108,7 @@ Examples 1a-d are based on the following row:
 ::
 
     >>> score = make_rotation_chart(source, "P")
-    >>> lilypond_file = abjad.LilyPondFile(items=[preamble, score])
+    >>> lilypond_file = abjad.LilyPondFile([preamble, score])
     >>> abjad.show(lilypond_file)
 
 ----
@@ -118,7 +118,7 @@ Examples 1a-d are based on the following row:
 ::
 
     >>> score = make_rotation_chart(source.invert(), "I")
-    >>> lilypond_file = abjad.LilyPondFile(items=[preamble, score])
+    >>> lilypond_file = abjad.LilyPondFile([preamble, score])
     >>> abjad.show(lilypond_file)
 
 ----
@@ -128,7 +128,7 @@ Examples 1a-d are based on the following row:
 ::
 
     >>> score = make_rotation_chart(source.retrograde(), "R")
-    >>> lilypond_file = abjad.LilyPondFile(items=[preamble, score])
+    >>> lilypond_file = abjad.LilyPondFile([preamble, score])
     >>> abjad.show(lilypond_file)
 
 ----
@@ -139,7 +139,7 @@ this?
 ::
 
     >>> score = make_rotation_chart(source.retrograde().invert(), "IR")
-    >>> lilypond_file = abjad.LilyPondFile(items=[preamble, score])
+    >>> lilypond_file = abjad.LilyPondFile([preamble, score])
     >>> abjad.show(lilypond_file)
 
 :author:`[Evans (3.2); ex. Igor Stravinsky, Abraham and Isaac (1962--63).]`

@@ -160,12 +160,12 @@ This function enumerates scales in any mode:
     ...         name = notes[0].written_pitch.get_name(locale="us")
     ...         name = name[:-1]
     ...         string = fr'\markup {{ "{name} {mode_name}" }}'
-    ...         markup = abjad.Markup(string, direction=abjad.Up, literal=True)
+    ...         markup = abjad.Markup(string, direction=abjad.Up)
     ...         abjad.attach(markup, notes[0])
     ...         bar_line = abjad.BarLine("||")
     ...         abjad.attach(bar_line, notes[-1])
     ...         string = r"\markup \transparent A"
-    ...         strut = abjad.Markup(string, direction=abjad.Up, literal=True)
+    ...         strut = abjad.Markup(string, direction=abjad.Up)
     ...         abjad.tweak(strut).staff_padding = 8 
     ...         abjad.attach(strut, notes[-1])
     ...         voice.extend(notes)
@@ -187,20 +187,18 @@ This LilyPond code styles output:
     ...         \override TimeSignature.stencil = ##f
     ...     }
     ...     indent = 0
-    ... }"""
+    ... }
+    ... """
 
 ----
 
 Twelve major scales
 -------------------
 
-..  book::
-    :lilypond/no-stylesheet:
-
     >>> string = "C4 G4 D4 A4 E4 B4 F4 Bb4 Eb4 Ab4 Db4 Gb4"
     >>> tonics = string.split()
     >>> score = make_score(tonics, "major")
-    >>> lilypond_file = abjad.LilyPondFile(items=[preamble, score])
+    >>> lilypond_file = abjad.LilyPondFile([preamble, score])
     >>> abjad.show(lilypond_file)
 
 ----
@@ -208,13 +206,10 @@ Twelve major scales
 Twelve minor scales
 -------------------
 
-..  book::
-    :lilypond/no-stylesheet:
-
     >>> string = "C4 G4 D4 A4 E4 B4 F4 Bb4 Eb4 Ab4 Db4 Gb4"
     >>> tonics = string.split()
     >>> score = make_score(tonics, "minor")
-    >>> lilypond_file = abjad.LilyPondFile(items=[preamble, score])
+    >>> lilypond_file = abjad.LilyPondFile([preamble, score])
     >>> abjad.show(lilypond_file)
 
 ----
@@ -222,13 +217,10 @@ Twelve minor scales
 Twelve Dorian scales
 --------------------
 
-..  book::
-    :lilypond/no-stylesheet:
-
     >>> string = "C4 G4 D4 A4 E4 B4 F4 Bb4 Eb4 Ab4 Db4 Gb4"
     >>> tonics = string.split()
     >>> score = make_score(tonics, "dorian")
-    >>> lilypond_file = abjad.LilyPondFile(items=[preamble, score])
+    >>> lilypond_file = abjad.LilyPondFile([preamble, score])
     >>> abjad.show(lilypond_file)
 
 :author:`[Bača (3.3)]`

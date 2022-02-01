@@ -1,0 +1,163 @@
+\version "2.19.83"
+\language "english"
+\include "abjad.ily"
+\include "abjad.ily"
+\layout
+{
+    \context
+    {
+        \Score
+        proportionalNotationDuration = #(ly:make-moment 1 24)
+    }
+}
+
+\context Score = "Score"
+<<
+    \context RhythmicStaff = "Staff"
+    \with
+    {
+        \override Clef.stencil = ##f
+    }
+    {
+        \context Voice = "Rhythm_Maker_Music_Voice"
+        {
+            <<
+                \context Voice = "On_Beat_Grace_Container"
+                {
+                    \set fontSize = #-3
+                    \slash
+                    \voiceOne
+                    <
+                        \tweak font-size 0
+                        \tweak transparent ##t
+                        c'
+                    >8 * 2/7
+                    [
+                    (
+                    c'8 * 2/7
+                    c'8 * 2/7
+                    c'8 * 2/7
+                    c'8 * 2/7
+                    c'8 * 2/7
+                    )
+                    ]
+                }
+                \context Voice = "Rhythm_Maker_Music_Voice"
+                {
+                    \time 3/4
+                    \voiceTwo
+                    c'4
+                    ~
+                    c'16
+                }
+            >>
+            <<
+                \context Voice = "On_Beat_Grace_Container"
+                {
+                    \set fontSize = #-3
+                    \slash
+                    \voiceOne
+                    <
+                        \tweak font-size 0
+                        \tweak transparent ##t
+                        c'
+                    >8 * 2/7
+                    [
+                    (
+                    c'8 * 2/7
+                    )
+                    ]
+                }
+                \context Voice = "Rhythm_Maker_Music_Voice"
+                {
+                    \voiceTwo
+                    c'4
+                    ~
+                    c'16
+                }
+            >>
+            <<
+                \context Voice = "On_Beat_Grace_Container"
+                {
+                    \set fontSize = #-3
+                    \slash
+                    \voiceOne
+                    <
+                        \tweak font-size 0
+                        \tweak transparent ##t
+                        c'
+                    >8 * 2/7
+                    [
+                    (
+                    c'8 * 2/7
+                    c'8 * 2/7
+                    c'8 * 2/7
+                    c'8 * 2/7
+                    c'8 * 2/7
+                    )
+                    ]
+                }
+                \context Voice = "Rhythm_Maker_Music_Voice"
+                {
+                    \voiceTwo
+                    c'8
+                    ~
+                    \time 3/4
+                    c'8.
+                }
+            >>
+            <<
+                \context Voice = "On_Beat_Grace_Container"
+                {
+                    \set fontSize = #-3
+                    \slash
+                    \voiceOne
+                    <
+                        \tweak font-size 0
+                        \tweak transparent ##t
+                        c'
+                    >8 * 2/7
+                    [
+                    (
+                    c'8 * 2/7
+                    )
+                    ]
+                }
+                \context Voice = "Rhythm_Maker_Music_Voice"
+                {
+                    \voiceTwo
+                    c'4
+                    ~
+                    c'16
+                }
+            >>
+            <<
+                \context Voice = "On_Beat_Grace_Container"
+                {
+                    \set fontSize = #-3
+                    \slash
+                    \voiceOne
+                    <
+                        \tweak font-size 0
+                        \tweak transparent ##t
+                        c'
+                    >8 * 2/7
+                    [
+                    (
+                    c'8 * 2/7
+                    c'8 * 2/7
+                    c'8 * 2/7
+                    c'8 * 2/7
+                    c'8 * 2/7
+                    )
+                    ]
+                }
+                \context Voice = "Rhythm_Maker_Music_Voice"
+                {
+                    \voiceTwo
+                    c'4
+                }
+            >>
+        }
+    }
+>>
