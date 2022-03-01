@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>abjad.pattern &mdash; Abjad 3.5 documentation</title>
+  <title>abjad.pattern &mdash; Abjad 3.6 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/abjad.css" type="text/css" />
@@ -32,11 +32,11 @@
   <div class="wy-grid-for-nav">
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search"  style="background: #00ff55" >
+        <div class="wy-side-nav-search"  style="background: #00dd00" >
 
 
     <a href="../../index.html" class="icon icon-home" alt="Documentation
-    Home"> Abjad 3.5
+    Home"> Abjad 3.6
 
 
 
@@ -110,7 +110,7 @@
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #00ff55" >
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #00dd00" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../index.html">Abjad</a>
       </nav>
@@ -127,16 +127,16 @@
     
   <h1>Source code for abjad.pattern</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">collections</span>
-<span class="kn">import</span> <span class="nn">operator</span>
+<span class="kn">import</span> <span class="nn">dataclasses</span>
+<span class="kn">import</span> <span class="nn">operator</span> <span class="k">as</span> <span class="nn">operator_module</span>
+<span class="kn">import</span> <span class="nn">typing</span>
 
-<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="nb">format</span> <span class="k">as</span> <span class="n">_format</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">math</span> <span class="k">as</span> <span class="n">_math</span>
-<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">new</span> <span class="k">as</span> <span class="n">_new</span>
-<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">sequence</span> <span class="k">as</span> <span class="n">_sequence</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">typedcollections</span> <span class="k">as</span> <span class="n">_typedcollections</span>
 
 
-<div class="viewcode-block" id="Pattern"><a class="viewcode-back" href="../../api/abjad/pattern.html#abjad.pattern.Pattern">[docs]</a><span class="k">class</span> <span class="nc">Pattern</span><span class="p">:</span>
+<div class="viewcode-block" id="Pattern"><a class="viewcode-back" href="../../api/abjad/pattern.html#abjad.pattern.Pattern">[docs]</a><span class="nd">@dataclasses</span><span class="o">.</span><span class="n">dataclass</span><span class="p">(</span><span class="n">slots</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">Pattern</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Pattern.</span>
 
@@ -147,7 +147,7 @@
 <span class="sd">        &gt;&gt;&gt; pattern = abjad.Pattern(</span>
 <span class="sd">        ...     indices=[0, 1, 7],</span>
 <span class="sd">        ...     period=8,</span>
-<span class="sd">        ...     )</span>
+<span class="sd">        ... )</span>
 
 <span class="sd">        &gt;&gt;&gt; total_length = 16</span>
 <span class="sd">        &gt;&gt;&gt; for index in range(16):</span>
@@ -178,7 +178,7 @@
 <span class="sd">        &gt;&gt;&gt; pattern = abjad.Pattern(</span>
 <span class="sd">        ...     indices=[0, 1, 7],</span>
 <span class="sd">        ...     period=16,</span>
-<span class="sd">        ...     )</span>
+<span class="sd">        ... )</span>
 
 <span class="sd">        &gt;&gt;&gt; total_length = 16</span>
 <span class="sd">        &gt;&gt;&gt; for index in range(16):</span>
@@ -209,7 +209,7 @@
 <span class="sd">        &gt;&gt;&gt; pattern = abjad.Pattern(</span>
 <span class="sd">        ...     indices=[16, 17, 23],</span>
 <span class="sd">        ...     period=16,</span>
-<span class="sd">        ...     )</span>
+<span class="sd">        ... )</span>
 
 <span class="sd">        &gt;&gt;&gt; total_length = 16</span>
 <span class="sd">        &gt;&gt;&gt; for index in range(16):</span>
@@ -260,55 +260,253 @@
 <span class="sd">        [1, 1, 0, 1, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1,</span>
 <span class="sd">        1, 0, 1, 1, 0, 1, 0, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 0]</span>
 
+<span class="sd">    ..  container:: example</span>
+
+<span class="sd">        Inverted works like this:</span>
+
+<span class="sd">        Matches three indices out of every eight:</span>
+
+<span class="sd">        &gt;&gt;&gt; pattern = abjad.Pattern(</span>
+<span class="sd">        ...     indices=[0, 1, 7],</span>
+<span class="sd">        ...     period=8,</span>
+<span class="sd">        ... )</span>
+
+<span class="sd">        &gt;&gt;&gt; pattern.inverted is None</span>
+<span class="sd">        True</span>
+
+<span class="sd">        &gt;&gt;&gt; total_length = 16</span>
+<span class="sd">        &gt;&gt;&gt; for index in range(16):</span>
+<span class="sd">        ...     match = pattern.matches_index(index, total_length)</span>
+<span class="sd">        ...     match = match or &#39;&#39;</span>
+<span class="sd">        ...     print(index, match)</span>
+<span class="sd">        0 True</span>
+<span class="sd">        1 True</span>
+<span class="sd">        2</span>
+<span class="sd">        3</span>
+<span class="sd">        4</span>
+<span class="sd">        5</span>
+<span class="sd">        6</span>
+<span class="sd">        7 True</span>
+<span class="sd">        8 True</span>
+<span class="sd">        9 True</span>
+<span class="sd">        10</span>
+<span class="sd">        11</span>
+<span class="sd">        12</span>
+<span class="sd">        13</span>
+<span class="sd">        14</span>
+<span class="sd">        15 True</span>
+
+<span class="sd">        Pattern that rejects three indices from every eight; equivalently, pattern</span>
+<span class="sd">        matches ``8-3=5`` indices out of every eight:</span>
+
+<span class="sd">        &gt;&gt;&gt; pattern = abjad.Pattern(</span>
+<span class="sd">        ...     indices=[0, 1, 7],</span>
+<span class="sd">        ...     period=8,</span>
+<span class="sd">        ...     inverted=True</span>
+<span class="sd">        ... )</span>
+
+<span class="sd">        &gt;&gt;&gt; pattern.inverted</span>
+<span class="sd">        True</span>
+
+<span class="sd">        &gt;&gt;&gt; total_length = 16</span>
+<span class="sd">        &gt;&gt;&gt; for index in range(16):</span>
+<span class="sd">        ...     match = pattern.matches_index(index, total_length)</span>
+<span class="sd">        ...     match = match or &#39;&#39;</span>
+<span class="sd">        ...     print(index, match)</span>
+<span class="sd">        0</span>
+<span class="sd">        1</span>
+<span class="sd">        2 True</span>
+<span class="sd">        3 True</span>
+<span class="sd">        4 True</span>
+<span class="sd">        5 True</span>
+<span class="sd">        6 True</span>
+<span class="sd">        7</span>
+<span class="sd">        8</span>
+<span class="sd">        9</span>
+<span class="sd">        10 True</span>
+<span class="sd">        11 True</span>
+<span class="sd">        12 True</span>
+<span class="sd">        13 True</span>
+<span class="sd">        14 True</span>
+<span class="sd">        15</span>
+
+<span class="sd">        Matches every index that is (one of the first three indices) OR (one of the last</span>
+<span class="sd">        three indices):</span>
+
+<span class="sd">        &gt;&gt;&gt; pattern_1 = abjad.index_first(3)</span>
+<span class="sd">        &gt;&gt;&gt; pattern_2 = abjad.index_last(3)</span>
+<span class="sd">        &gt;&gt;&gt; pattern = pattern_1 | pattern_2</span>
+<span class="sd">        &gt;&gt;&gt; pattern.inverted is None</span>
+<span class="sd">        True</span>
+
+<span class="sd">        &gt;&gt;&gt; pattern.get_boolean_vector(total_length=16)</span>
+<span class="sd">        [1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1]</span>
+
+<span class="sd">        Matches every index that is NOT (one of the first three indices) OR (one of the</span>
+<span class="sd">        last three indices):</span>
+
+<span class="sd">        &gt;&gt;&gt; import dataclasses</span>
+<span class="sd">        &gt;&gt;&gt; pattern = dataclasses.replace(pattern, inverted=True)</span>
+<span class="sd">        &gt;&gt;&gt; pattern.inverted</span>
+<span class="sd">        True</span>
+
+<span class="sd">        &gt;&gt;&gt; pattern.get_boolean_vector(total_length=16)</span>
+<span class="sd">        [0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0]</span>
+
+<span class="sd">    ..  container:: example</span>
+
+<span class="sd">        Payload works like this: Pattern with string payload assigned to three of every</span>
+<span class="sd">        eight indices:</span>
+
+<span class="sd">        &gt;&gt;&gt; pattern = abjad.Pattern(</span>
+<span class="sd">        ...     indices=[0, 1, 7],</span>
+<span class="sd">        ...     payload=&#39;Allegro non troppo&#39;,</span>
+<span class="sd">        ...     period=8,</span>
+<span class="sd">        ... )</span>
+
+<span class="sd">        &gt;&gt;&gt; total_length = 10</span>
+<span class="sd">        &gt;&gt;&gt; for index in range(10):</span>
+<span class="sd">        ...     match = pattern.matches_index(index, total_length)</span>
+<span class="sd">        ...     if match:</span>
+<span class="sd">        ...         payload = pattern.payload</span>
+<span class="sd">        ...     else:</span>
+<span class="sd">        ...         payload = &#39;&#39;</span>
+<span class="sd">        ...     print(index, repr(payload))</span>
+<span class="sd">        ...</span>
+<span class="sd">        0 &#39;Allegro non troppo&#39;</span>
+<span class="sd">        1 &#39;Allegro non troppo&#39;</span>
+<span class="sd">        2 &#39;&#39;</span>
+<span class="sd">        3 &#39;&#39;</span>
+<span class="sd">        4 &#39;&#39;</span>
+<span class="sd">        5 &#39;&#39;</span>
+<span class="sd">        6 &#39;&#39;</span>
+<span class="sd">        7 &#39;Allegro non troppo&#39;</span>
+<span class="sd">        8 &#39;Allegro non troppo&#39;</span>
+<span class="sd">        9 &#39;Allegro non troppo&#39;</span>
+
+<span class="sd">    ..  container:: example</span>
+
+<span class="sd">        Period works like this:</span>
+
+<span class="sd">        Pattern with a period of eight:</span>
+
+<span class="sd">        &gt;&gt;&gt; pattern = abjad.Pattern(</span>
+<span class="sd">        ...     indices=[0, 1, 7],</span>
+<span class="sd">        ...     period=8,</span>
+<span class="sd">        ... )</span>
+
+<span class="sd">        &gt;&gt;&gt; pattern.period</span>
+<span class="sd">        8</span>
+
+<span class="sd">        &gt;&gt;&gt; total_length = 16</span>
+<span class="sd">        &gt;&gt;&gt; for index in range(16):</span>
+<span class="sd">        ...     match = pattern.matches_index(index, total_length)</span>
+<span class="sd">        ...     match = match or &#39;&#39;</span>
+<span class="sd">        ...     print(index, match)</span>
+<span class="sd">        0 True</span>
+<span class="sd">        1 True</span>
+<span class="sd">        2</span>
+<span class="sd">        3</span>
+<span class="sd">        4</span>
+<span class="sd">        5</span>
+<span class="sd">        6</span>
+<span class="sd">        7 True</span>
+<span class="sd">        8 True</span>
+<span class="sd">        9 True</span>
+<span class="sd">        10</span>
+<span class="sd">        11</span>
+<span class="sd">        12</span>
+<span class="sd">        13</span>
+<span class="sd">        14</span>
+<span class="sd">        15 True</span>
+
+<span class="sd">        Same pattern with a period of sixteen:</span>
+
+<span class="sd">        &gt;&gt;&gt; pattern = abjad.Pattern(</span>
+<span class="sd">        ...     indices=[0, 1, 7],</span>
+<span class="sd">        ...     period=16,</span>
+<span class="sd">        ... )</span>
+
+<span class="sd">        &gt;&gt;&gt; pattern.period</span>
+<span class="sd">        16</span>
+
+<span class="sd">        &gt;&gt;&gt; total_length = 16</span>
+<span class="sd">        &gt;&gt;&gt; for index in range(16):</span>
+<span class="sd">        ...     match = pattern.matches_index(index, total_length)</span>
+<span class="sd">        ...     match = match or &#39;&#39;</span>
+<span class="sd">        ...     print(index, match)</span>
+<span class="sd">        0 True</span>
+<span class="sd">        1 True</span>
+<span class="sd">        2</span>
+<span class="sd">        3</span>
+<span class="sd">        4</span>
+<span class="sd">        5</span>
+<span class="sd">        6</span>
+<span class="sd">        7 True</span>
+<span class="sd">        8</span>
+<span class="sd">        9</span>
+<span class="sd">        10</span>
+<span class="sd">        11</span>
+<span class="sd">        12</span>
+<span class="sd">        13</span>
+<span class="sd">        14</span>
+<span class="sd">        15</span>
+
+<span class="sd">        Gets period of pattern that indexs every fourth and fifth element:</span>
+
+<span class="sd">        &gt;&gt;&gt; pattern_1 = abjad.Pattern([0], period=4)</span>
+<span class="sd">        &gt;&gt;&gt; pattern_2 = abjad.Pattern([0], period=5)</span>
+<span class="sd">        &gt;&gt;&gt; pattern = pattern_1 | pattern_2</span>
+<span class="sd">        &gt;&gt;&gt; pattern</span>
+<span class="sd">        Pattern(indices=None, inverted=None, operator=&#39;or&#39;, patterns=(Pattern(indices=(0,), inverted=None, operator=None, patterns=None, payload=None, period=4), Pattern(indices=(0,), inverted=None, operator=None, patterns=None, payload=None, period=5)), payload=None, period=20)</span>
+
+<span class="sd">        &gt;&gt;&gt; pattern.period</span>
+<span class="sd">        20</span>
+
+<span class="sd">        Returns none when pattern contains acyclic parts:</span>
+
+<span class="sd">        &gt;&gt;&gt; pattern_1 = abjad.Pattern([0], period=4)</span>
+<span class="sd">        &gt;&gt;&gt; pattern_2 = abjad.Pattern([0])</span>
+<span class="sd">        &gt;&gt;&gt; pattern = pattern_1 | pattern_2</span>
+<span class="sd">        &gt;&gt;&gt; pattern</span>
+<span class="sd">        Pattern(indices=None, inverted=None, operator=&#39;or&#39;, patterns=(Pattern(indices=(0,), inverted=None, operator=None, patterns=None, payload=None, period=4), Pattern(indices=(0,), inverted=None, operator=None, patterns=None, payload=None, period=None)), payload=None, period=None)</span>
+
+<span class="sd">        &gt;&gt;&gt; pattern.period is None</span>
+<span class="sd">        True</span>
+
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="c1">### CLASS VARIABLES ###</span>
-
-    <span class="vm">__slots__</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="s2">&quot;_indices&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;_inverted&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;_operator&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;_patterns&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;_payload&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;_period&quot;</span><span class="p">,</span>
-    <span class="p">)</span>
+    <span class="n">indices</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Any</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">inverted</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Any</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">operator</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Any</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">patterns</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Any</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">payload</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Any</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">period</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Any</span> <span class="o">=</span> <span class="kc">None</span>
 
     <span class="n">_name_to_operator</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s2">&quot;and&quot;</span><span class="p">:</span> <span class="n">operator</span><span class="o">.</span><span class="n">and_</span><span class="p">,</span>
-        <span class="s2">&quot;or&quot;</span><span class="p">:</span> <span class="n">operator</span><span class="o">.</span><span class="n">or_</span><span class="p">,</span>
-        <span class="s2">&quot;xor&quot;</span><span class="p">:</span> <span class="n">operator</span><span class="o">.</span><span class="n">xor</span><span class="p">,</span>
+        <span class="s2">&quot;and&quot;</span><span class="p">:</span> <span class="n">operator_module</span><span class="o">.</span><span class="n">and_</span><span class="p">,</span>
+        <span class="s2">&quot;or&quot;</span><span class="p">:</span> <span class="n">operator_module</span><span class="o">.</span><span class="n">or_</span><span class="p">,</span>
+        <span class="s2">&quot;xor&quot;</span><span class="p">:</span> <span class="n">operator_module</span><span class="o">.</span><span class="n">xor</span><span class="p">,</span>
     <span class="p">}</span>
 
-    <span class="c1">### INITIALIZER ###</span>
-
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span>
-        <span class="n">indices</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="o">*</span><span class="p">,</span>
-        <span class="n">inverted</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">operator</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">patterns</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">payload</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">period</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-    <span class="p">):</span>
-        <span class="k">if</span> <span class="n">indices</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">assert</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">indices</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">indices</span><span class="p">)</span>
-            <span class="n">indices</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">indices</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_indices</span> <span class="o">=</span> <span class="n">indices</span>
-        <span class="k">if</span> <span class="n">inverted</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">inverted</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">inverted</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_inverted</span> <span class="o">=</span> <span class="n">inverted</span>
-        <span class="k">if</span> <span class="n">operator</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">assert</span> <span class="n">operator</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name_to_operator</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">operator</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_operator</span> <span class="o">=</span> <span class="n">operator</span>
-        <span class="k">if</span> <span class="n">period</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">assert</span> <span class="n">_math</span><span class="o">.</span><span class="n">is_positive_integer</span><span class="p">(</span><span class="n">period</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">period</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">patterns</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">assert</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">patterns</span><span class="p">)</span>
-            <span class="n">patterns</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">patterns</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_patterns</span> <span class="o">=</span> <span class="n">patterns</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_payload</span> <span class="o">=</span> <span class="n">payload</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_period</span> <span class="o">=</span> <span class="n">period</span>
+<div class="viewcode-block" id="Pattern.__post_init__"><a class="viewcode-back" href="../../api/abjad/pattern.html#abjad.pattern.Pattern.__post_init__">[docs]</a>    <span class="k">def</span> <span class="nf">__post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">indices</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">assert</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">indices</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">indices</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">indices</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">indices</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">inverted</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">inverted</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">inverted</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">operator</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">operator</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name_to_operator</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">operator</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">patterns</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">assert</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">patterns</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">patterns</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">patterns</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">period</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">patterns</span><span class="p">:</span>
+                <span class="n">periods</span> <span class="o">=</span> <span class="p">[</span><span class="n">_</span><span class="o">.</span><span class="n">period</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">patterns</span><span class="p">]</span>
+                <span class="k">if</span> <span class="kc">None</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">periods</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">period</span> <span class="o">=</span> <span class="n">_math</span><span class="o">.</span><span class="n">least_common_multiple</span><span class="p">(</span><span class="o">*</span><span class="n">periods</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">period</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">assert</span> <span class="n">_math</span><span class="o">.</span><span class="n">is_positive_integer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">period</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">period</span><span class="p">)</span></div>
 
     <span class="c1">### SPECIAL METHODS ###</span>
 
@@ -322,21 +520,8 @@
 
 <span class="sd">            &gt;&gt;&gt; pattern_1 = abjad.index_first(3)</span>
 <span class="sd">            &gt;&gt;&gt; pattern_2 = abjad.index_last(3)</span>
-<span class="sd">            &gt;&gt;&gt; pattern = pattern_1 &amp; pattern_2</span>
-
-<span class="sd">            &gt;&gt;&gt; string = abjad.storage(pattern)</span>
-<span class="sd">            &gt;&gt;&gt; print(string)</span>
-<span class="sd">            abjad.Pattern(</span>
-<span class="sd">                operator=&#39;and&#39;,</span>
-<span class="sd">                patterns=(</span>
-<span class="sd">                    abjad.Pattern(</span>
-<span class="sd">                        indices=[0, 1, 2],</span>
-<span class="sd">                        ),</span>
-<span class="sd">                    abjad.Pattern(</span>
-<span class="sd">                        indices=[-3, -2, -1],</span>
-<span class="sd">                        ),</span>
-<span class="sd">                    ),</span>
-<span class="sd">                )</span>
+<span class="sd">            &gt;&gt;&gt; pattern_1 &amp; pattern_2</span>
+<span class="sd">            Pattern(indices=None, inverted=None, operator=&#39;and&#39;, patterns=(Pattern(indices=(0, 1, 2), inverted=None, operator=None, patterns=None, payload=None, period=None), Pattern(indices=(-3, -2, -1), inverted=None, operator=None, patterns=None, payload=None, period=None)), payload=None, period=None)</span>
 
 <span class="sd">        ..  container:: example</span>
 
@@ -346,24 +531,8 @@
 <span class="sd">            &gt;&gt;&gt; pattern_2 = abjad.index_last(3)</span>
 <span class="sd">            &gt;&gt;&gt; pattern_3 = abjad.index([0], 2)</span>
 <span class="sd">            &gt;&gt;&gt; pattern = pattern_1 &amp; pattern_2 &amp; pattern_3</span>
-
-<span class="sd">            &gt;&gt;&gt; string = abjad.storage(pattern)</span>
-<span class="sd">            &gt;&gt;&gt; print(string)</span>
-<span class="sd">            abjad.Pattern(</span>
-<span class="sd">                operator=&#39;and&#39;,</span>
-<span class="sd">                patterns=(</span>
-<span class="sd">                    abjad.Pattern(</span>
-<span class="sd">                        indices=[0, 1, 2],</span>
-<span class="sd">                        ),</span>
-<span class="sd">                    abjad.Pattern(</span>
-<span class="sd">                        indices=[-3, -2, -1],</span>
-<span class="sd">                        ),</span>
-<span class="sd">                    abjad.Pattern(</span>
-<span class="sd">                        indices=[0],</span>
-<span class="sd">                        period=2,</span>
-<span class="sd">                        ),</span>
-<span class="sd">                    ),</span>
-<span class="sd">                )</span>
+<span class="sd">            &gt;&gt;&gt; pattern</span>
+<span class="sd">            Pattern(indices=None, inverted=None, operator=&#39;and&#39;, patterns=(Pattern(indices=(0, 1, 2), inverted=None, operator=None, patterns=None, payload=None, period=None), Pattern(indices=(-3, -2, -1), inverted=None, operator=None, patterns=None, payload=None, period=None), Pattern(indices=(0,), inverted=None, operator=None, patterns=None, payload=None, period=2)), payload=None, period=None)</span>
 
 <span class="sd">            &gt;&gt;&gt; pattern.get_boolean_vector(total_length=16)</span>
 <span class="sd">            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]</span>
@@ -376,29 +545,8 @@
 <span class="sd">            &gt;&gt;&gt; pattern_2 = abjad.index_last(3)</span>
 <span class="sd">            &gt;&gt;&gt; pattern_3 = abjad.index([0], 2)</span>
 <span class="sd">            &gt;&gt;&gt; pattern = pattern_1 &amp; pattern_2 | pattern_3</span>
-
-<span class="sd">            &gt;&gt;&gt; string = abjad.storage(pattern)</span>
-<span class="sd">            &gt;&gt;&gt; print(string)</span>
-<span class="sd">            abjad.Pattern(</span>
-<span class="sd">                operator=&#39;or&#39;,</span>
-<span class="sd">                patterns=(</span>
-<span class="sd">                    abjad.Pattern(</span>
-<span class="sd">                        operator=&#39;and&#39;,</span>
-<span class="sd">                        patterns=(</span>
-<span class="sd">                            abjad.Pattern(</span>
-<span class="sd">                                indices=[0, 1, 2],</span>
-<span class="sd">                                ),</span>
-<span class="sd">                            abjad.Pattern(</span>
-<span class="sd">                                indices=[-3, -2, -1],</span>
-<span class="sd">                                ),</span>
-<span class="sd">                            ),</span>
-<span class="sd">                        ),</span>
-<span class="sd">                    abjad.Pattern(</span>
-<span class="sd">                        indices=[0],</span>
-<span class="sd">                        period=2,</span>
-<span class="sd">                        ),</span>
-<span class="sd">                    ),</span>
-<span class="sd">                )</span>
+<span class="sd">            &gt;&gt;&gt; pattern</span>
+<span class="sd">            Pattern(indices=None, inverted=None, operator=&#39;or&#39;, patterns=(Pattern(indices=None, inverted=None, operator=&#39;and&#39;, patterns=(Pattern(indices=(0, 1, 2), inverted=None, operator=None, patterns=None, payload=None, period=None), Pattern(indices=(-3, -2, -1), inverted=None, operator=None, patterns=None, payload=None, period=None)), payload=None, period=None), Pattern(indices=(0,), inverted=None, operator=None, patterns=None, payload=None, period=2)), payload=None, period=None)</span>
 
 <span class="sd">            &gt;&gt;&gt; pattern.get_boolean_vector(total_length=16)</span>
 <span class="sd">            [1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0]</span>
@@ -409,20 +557,8 @@
 
 <span class="sd">            &gt;&gt;&gt; pattern = abjad.index_first(3)</span>
 <span class="sd">            &gt;&gt;&gt; pattern &amp;= abjad.index_last(3)</span>
-
-<span class="sd">            &gt;&gt;&gt; string = abjad.storage(pattern)</span>
-<span class="sd">            &gt;&gt;&gt; print(string)</span>
-<span class="sd">            abjad.Pattern(</span>
-<span class="sd">                operator=&#39;and&#39;,</span>
-<span class="sd">                patterns=(</span>
-<span class="sd">                    abjad.Pattern(</span>
-<span class="sd">                        indices=[0, 1, 2],</span>
-<span class="sd">                        ),</span>
-<span class="sd">                    abjad.Pattern(</span>
-<span class="sd">                        indices=[-3, -2, -1],</span>
-<span class="sd">                        ),</span>
-<span class="sd">                    ),</span>
-<span class="sd">                )</span>
+<span class="sd">            &gt;&gt;&gt; pattern</span>
+<span class="sd">            Pattern(indices=None, inverted=None, operator=&#39;and&#39;, patterns=(Pattern(indices=(0, 1, 2), inverted=None, operator=None, patterns=None, payload=None, period=None), Pattern(indices=(-3, -2, -1), inverted=None, operator=None, patterns=None, payload=None, period=None)), payload=None, period=None)</span>
 
 <span class="sd">        Returns new pattern.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -444,52 +580,29 @@
 <span class="sd">        ..  container:: example</span>
 
 <span class="sd">            &gt;&gt;&gt; pattern = abjad.index_first(3)</span>
-<span class="sd">            &gt;&gt;&gt; string = abjad.storage(pattern)</span>
-<span class="sd">            &gt;&gt;&gt; print(string)</span>
-<span class="sd">            abjad.Pattern(</span>
-<span class="sd">                indices=[0, 1, 2],</span>
-<span class="sd">                )</span>
+<span class="sd">            &gt;&gt;&gt; pattern</span>
+<span class="sd">            Pattern(indices=(0, 1, 2), inverted=None, operator=None, patterns=None, payload=None, period=None)</span>
 
 <span class="sd">            &gt;&gt;&gt; pattern = ~pattern</span>
-<span class="sd">            &gt;&gt;&gt; string = abjad.storage(pattern)</span>
-<span class="sd">            &gt;&gt;&gt; print(string)</span>
-<span class="sd">            abjad.Pattern(</span>
-<span class="sd">                indices=[0, 1, 2],</span>
-<span class="sd">                inverted=True,</span>
-<span class="sd">                )</span>
+<span class="sd">            &gt;&gt;&gt; pattern</span>
+<span class="sd">            Pattern(indices=(0, 1, 2), inverted=True, operator=None, patterns=None, payload=None, period=None)</span>
 
 <span class="sd">            &gt;&gt;&gt; pattern = ~pattern</span>
-<span class="sd">            &gt;&gt;&gt; string = abjad.storage(pattern)</span>
-<span class="sd">            &gt;&gt;&gt; print(string)</span>
-<span class="sd">            abjad.Pattern(</span>
-<span class="sd">                indices=[0, 1, 2],</span>
-<span class="sd">                inverted=False,</span>
-<span class="sd">                )</span>
+<span class="sd">            &gt;&gt;&gt; pattern</span>
+<span class="sd">            Pattern(indices=(0, 1, 2), inverted=False, operator=None, patterns=None, payload=None, period=None)</span>
 
 <span class="sd">            Negation defined equal to inversion.</span>
 
 <span class="sd">        ..  container:: example</span>
 
-<span class="sd">            Matches every index that is (one of the first three indices) or</span>
-<span class="sd">            (one of the last three indices):</span>
+<span class="sd">            Matches every index that is (one of the first three indices) or (one of the</span>
+<span class="sd">            last three indices):</span>
 
 <span class="sd">            &gt;&gt;&gt; pattern_1 = abjad.index_first(3)</span>
 <span class="sd">            &gt;&gt;&gt; pattern_2 = abjad.index_last(3)</span>
 <span class="sd">            &gt;&gt;&gt; pattern = pattern_1 | pattern_2</span>
-
-<span class="sd">            &gt;&gt;&gt; string = abjad.storage(pattern)</span>
-<span class="sd">            &gt;&gt;&gt; print(string)</span>
-<span class="sd">            abjad.Pattern(</span>
-<span class="sd">                operator=&#39;or&#39;,</span>
-<span class="sd">                patterns=(</span>
-<span class="sd">                    abjad.Pattern(</span>
-<span class="sd">                        indices=[0, 1, 2],</span>
-<span class="sd">                        ),</span>
-<span class="sd">                    abjad.Pattern(</span>
-<span class="sd">                        indices=[-3, -2, -1],</span>
-<span class="sd">                        ),</span>
-<span class="sd">                    ),</span>
-<span class="sd">                )</span>
+<span class="sd">            &gt;&gt;&gt; pattern</span>
+<span class="sd">            Pattern(indices=None, inverted=None, operator=&#39;or&#39;, patterns=(Pattern(indices=(0, 1, 2), inverted=None, operator=None, patterns=None, payload=None, period=None), Pattern(indices=(-3, -2, -1), inverted=None, operator=None, patterns=None, payload=None, period=None)), payload=None, period=None)</span>
 
 <span class="sd">            &gt;&gt;&gt; pattern.get_boolean_vector(total_length=16)</span>
 <span class="sd">            [1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1]</span>
@@ -500,20 +613,8 @@
 <span class="sd">            (one of the last three indices):</span>
 
 <span class="sd">            &gt;&gt;&gt; pattern = ~pattern</span>
-<span class="sd">            &gt;&gt;&gt; string = abjad.storage(pattern)</span>
-<span class="sd">            &gt;&gt;&gt; print(string)</span>
-<span class="sd">            abjad.Pattern(</span>
-<span class="sd">                inverted=True,</span>
-<span class="sd">                operator=&#39;or&#39;,</span>
-<span class="sd">                patterns=(</span>
-<span class="sd">                    abjad.Pattern(</span>
-<span class="sd">                        indices=[0, 1, 2],</span>
-<span class="sd">                        ),</span>
-<span class="sd">                    abjad.Pattern(</span>
-<span class="sd">                        indices=[-3, -2, -1],</span>
-<span class="sd">                        ),</span>
-<span class="sd">                    ),</span>
-<span class="sd">                )</span>
+<span class="sd">            &gt;&gt;&gt; pattern</span>
+<span class="sd">            Pattern(indices=None, inverted=True, operator=&#39;or&#39;, patterns=(Pattern(indices=(0, 1, 2), inverted=None, operator=None, patterns=None, payload=None, period=None), Pattern(indices=(-3, -2, -1), inverted=None, operator=None, patterns=None, payload=None, period=None)), payload=None, period=None)</span>
 
 <span class="sd">            &gt;&gt;&gt; pattern.get_boolean_vector(total_length=16)</span>
 <span class="sd">            [0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0]</span>
@@ -521,7 +622,7 @@
 <span class="sd">        Returns new pattern.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">inverted</span> <span class="o">=</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">inverted</span>
-        <span class="k">return</span> <span class="n">_new</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inverted</span><span class="o">=</span><span class="n">inverted</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">dataclasses</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inverted</span><span class="o">=</span><span class="n">inverted</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Pattern.__len__"><a class="viewcode-back" href="../../api/abjad/pattern.html#abjad.pattern.Pattern.__len__">[docs]</a>    <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -534,7 +635,7 @@
 <span class="sd">            &gt;&gt;&gt; pattern = abjad.Pattern(</span>
 <span class="sd">            ...     indices=[0, 1, 7],</span>
 <span class="sd">            ...     period=8,</span>
-<span class="sd">            ...     )</span>
+<span class="sd">            ... )</span>
 
 <span class="sd">            &gt;&gt;&gt; len(pattern)</span>
 <span class="sd">            8</span>
@@ -547,7 +648,7 @@
 
 <span class="sd">            &gt;&gt;&gt; pattern = abjad.Pattern(</span>
 <span class="sd">            ...     indices=[0, 2, 3],</span>
-<span class="sd">            ...     )</span>
+<span class="sd">            ... )</span>
 
 <span class="sd">            &gt;&gt;&gt; len(pattern)</span>
 <span class="sd">            4</span>
@@ -561,7 +662,7 @@
 
 <span class="sd">            &gt;&gt;&gt; pattern = abjad.Pattern(</span>
 <span class="sd">            ...     indices=[-3],</span>
-<span class="sd">            ...     )</span>
+<span class="sd">            ... )</span>
 
 <span class="sd">            &gt;&gt;&gt; len(pattern)</span>
 <span class="sd">            3</span>
@@ -596,20 +697,8 @@
 <span class="sd">            &gt;&gt;&gt; pattern_1 = abjad.index_first(3)</span>
 <span class="sd">            &gt;&gt;&gt; pattern_2 = abjad.index_last(3)</span>
 <span class="sd">            &gt;&gt;&gt; pattern = pattern_1 | pattern_2</span>
-
-<span class="sd">            &gt;&gt;&gt; string = abjad.storage(pattern)</span>
-<span class="sd">            &gt;&gt;&gt; print(string)</span>
-<span class="sd">            abjad.Pattern(</span>
-<span class="sd">                operator=&#39;or&#39;,</span>
-<span class="sd">                patterns=(</span>
-<span class="sd">                    abjad.Pattern(</span>
-<span class="sd">                        indices=[0, 1, 2],</span>
-<span class="sd">                        ),</span>
-<span class="sd">                    abjad.Pattern(</span>
-<span class="sd">                        indices=[-3, -2, -1],</span>
-<span class="sd">                        ),</span>
-<span class="sd">                    ),</span>
-<span class="sd">                )</span>
+<span class="sd">            &gt;&gt;&gt; pattern</span>
+<span class="sd">            Pattern(indices=None, inverted=None, operator=&#39;or&#39;, patterns=(Pattern(indices=(0, 1, 2), inverted=None, operator=None, patterns=None, payload=None, period=None), Pattern(indices=(-3, -2, -1), inverted=None, operator=None, patterns=None, payload=None, period=None)), payload=None, period=None)</span>
 
 <span class="sd">        ..  container:: example</span>
 
@@ -619,24 +708,8 @@
 <span class="sd">            &gt;&gt;&gt; pattern_2 = abjad.index_last(3)</span>
 <span class="sd">            &gt;&gt;&gt; pattern_3 = abjad.index([0], 2)</span>
 <span class="sd">            &gt;&gt;&gt; pattern = pattern_1 | pattern_2 | pattern_3</span>
-
-<span class="sd">            &gt;&gt;&gt; string = abjad.storage(pattern)</span>
-<span class="sd">            &gt;&gt;&gt; print(string)</span>
-<span class="sd">            abjad.Pattern(</span>
-<span class="sd">                operator=&#39;or&#39;,</span>
-<span class="sd">                patterns=(</span>
-<span class="sd">                    abjad.Pattern(</span>
-<span class="sd">                        indices=[0, 1, 2],</span>
-<span class="sd">                        ),</span>
-<span class="sd">                    abjad.Pattern(</span>
-<span class="sd">                        indices=[-3, -2, -1],</span>
-<span class="sd">                        ),</span>
-<span class="sd">                    abjad.Pattern(</span>
-<span class="sd">                        indices=[0],</span>
-<span class="sd">                        period=2,</span>
-<span class="sd">                        ),</span>
-<span class="sd">                    ),</span>
-<span class="sd">                )</span>
+<span class="sd">            &gt;&gt;&gt; pattern</span>
+<span class="sd">            Pattern(indices=None, inverted=None, operator=&#39;or&#39;, patterns=(Pattern(indices=(0, 1, 2), inverted=None, operator=None, patterns=None, payload=None, period=None), Pattern(indices=(-3, -2, -1), inverted=None, operator=None, patterns=None, payload=None, period=None), Pattern(indices=(0,), inverted=None, operator=None, patterns=None, payload=None, period=2)), payload=None, period=None)</span>
 
 <span class="sd">            &gt;&gt;&gt; pattern.get_boolean_vector(total_length=16)</span>
 <span class="sd">            [1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1]</span>
@@ -649,29 +722,8 @@
 <span class="sd">            &gt;&gt;&gt; pattern_2 = abjad.index_last(3)</span>
 <span class="sd">            &gt;&gt;&gt; pattern_3 = abjad.index([0], 2)</span>
 <span class="sd">            &gt;&gt;&gt; pattern = pattern_1 | pattern_2 &amp; pattern_3</span>
-
-<span class="sd">            &gt;&gt;&gt; string = abjad.storage(pattern)</span>
-<span class="sd">            &gt;&gt;&gt; print(string)</span>
-<span class="sd">            abjad.Pattern(</span>
-<span class="sd">                operator=&#39;or&#39;,</span>
-<span class="sd">                patterns=(</span>
-<span class="sd">                    abjad.Pattern(</span>
-<span class="sd">                        indices=[0, 1, 2],</span>
-<span class="sd">                        ),</span>
-<span class="sd">                    abjad.Pattern(</span>
-<span class="sd">                        operator=&#39;and&#39;,</span>
-<span class="sd">                        patterns=(</span>
-<span class="sd">                            abjad.Pattern(</span>
-<span class="sd">                                indices=[-3, -2, -1],</span>
-<span class="sd">                                ),</span>
-<span class="sd">                            abjad.Pattern(</span>
-<span class="sd">                                indices=[0],</span>
-<span class="sd">                                period=2,</span>
-<span class="sd">                                ),</span>
-<span class="sd">                            ),</span>
-<span class="sd">                        ),</span>
-<span class="sd">                    ),</span>
-<span class="sd">                )</span>
+<span class="sd">            &gt;&gt;&gt; pattern</span>
+<span class="sd">            Pattern(indices=None, inverted=None, operator=&#39;or&#39;, patterns=(Pattern(indices=(0, 1, 2), inverted=None, operator=None, patterns=None, payload=None, period=None), Pattern(indices=None, inverted=None, operator=&#39;and&#39;, patterns=(Pattern(indices=(-3, -2, -1), inverted=None, operator=None, patterns=None, payload=None, period=None), Pattern(indices=(0,), inverted=None, operator=None, patterns=None, payload=None, period=2)), payload=None, period=None)), payload=None, period=None)</span>
 
 <span class="sd">            &gt;&gt;&gt; pattern.get_boolean_vector(total_length=16)</span>
 <span class="sd">            [1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0]</span>
@@ -682,20 +734,8 @@
 
 <span class="sd">            &gt;&gt;&gt; pattern = abjad.index_first(3)</span>
 <span class="sd">            &gt;&gt;&gt; pattern |= abjad.index_last(3)</span>
-
-<span class="sd">            &gt;&gt;&gt; string = abjad.storage(pattern)</span>
-<span class="sd">            &gt;&gt;&gt; print(string)</span>
-<span class="sd">            abjad.Pattern(</span>
-<span class="sd">                operator=&#39;or&#39;,</span>
-<span class="sd">                patterns=(</span>
-<span class="sd">                    abjad.Pattern(</span>
-<span class="sd">                        indices=[0, 1, 2],</span>
-<span class="sd">                        ),</span>
-<span class="sd">                    abjad.Pattern(</span>
-<span class="sd">                        indices=[-3, -2, -1],</span>
-<span class="sd">                        ),</span>
-<span class="sd">                    ),</span>
-<span class="sd">                )</span>
+<span class="sd">            &gt;&gt;&gt; pattern</span>
+<span class="sd">            Pattern(indices=None, inverted=None, operator=&#39;or&#39;, patterns=(Pattern(indices=(0, 1, 2), inverted=None, operator=None, patterns=None, payload=None, period=None), Pattern(indices=(-3, -2, -1), inverted=None, operator=None, patterns=None, payload=None, period=None)), payload=None, period=None)</span>
 
 <span class="sd">        Returns new pattern.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -710,12 +750,6 @@
             <span class="n">result</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span><span class="n">operator</span><span class="o">=</span><span class="s2">&quot;or&quot;</span><span class="p">,</span> <span class="n">patterns</span><span class="o">=</span><span class="p">[</span><span class="bp">self</span><span class="p">,</span> <span class="n">pattern</span><span class="p">])</span>
         <span class="k">return</span> <span class="n">result</span></div>
 
-<div class="viewcode-block" id="Pattern.__repr__"><a class="viewcode-back" href="../../api/abjad/pattern.html#abjad.pattern.Pattern.__repr__">[docs]</a>    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Gets interpreter representation.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">_format</span><span class="o">.</span><span class="n">get_repr</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
-
 <div class="viewcode-block" id="Pattern.__xor__"><a class="viewcode-back" href="../../api/abjad/pattern.html#abjad.pattern.Pattern.__xor__">[docs]</a>    <span class="k">def</span> <span class="fm">__xor__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pattern</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Logical XOR of two patterns.</span>
@@ -725,20 +759,8 @@
 <span class="sd">            &gt;&gt;&gt; pattern_1 = abjad.index_first(3)</span>
 <span class="sd">            &gt;&gt;&gt; pattern_2 = abjad.index_last(3)</span>
 <span class="sd">            &gt;&gt;&gt; pattern = pattern_1 ^ pattern_2</span>
-
-<span class="sd">            &gt;&gt;&gt; string = abjad.storage(pattern)</span>
-<span class="sd">            &gt;&gt;&gt; print(string)</span>
-<span class="sd">            abjad.Pattern(</span>
-<span class="sd">                operator=&#39;xor&#39;,</span>
-<span class="sd">                patterns=(</span>
-<span class="sd">                    abjad.Pattern(</span>
-<span class="sd">                        indices=[0, 1, 2],</span>
-<span class="sd">                        ),</span>
-<span class="sd">                    abjad.Pattern(</span>
-<span class="sd">                        indices=[-3, -2, -1],</span>
-<span class="sd">                        ),</span>
-<span class="sd">                    ),</span>
-<span class="sd">                )</span>
+<span class="sd">            &gt;&gt;&gt; pattern</span>
+<span class="sd">            Pattern(indices=None, inverted=None, operator=&#39;xor&#39;, patterns=(Pattern(indices=(0, 1, 2), inverted=None, operator=None, patterns=None, payload=None, period=None), Pattern(indices=(-3, -2, -1), inverted=None, operator=None, patterns=None, payload=None, period=None)), payload=None, period=None)</span>
 
 <span class="sd">        ..  container:: example</span>
 
@@ -748,24 +770,8 @@
 <span class="sd">            &gt;&gt;&gt; pattern_2 = abjad.index_last(3)</span>
 <span class="sd">            &gt;&gt;&gt; pattern_3 = abjad.index([0], 2)</span>
 <span class="sd">            &gt;&gt;&gt; pattern = pattern_1 ^ pattern_2 ^ pattern_3</span>
-
-<span class="sd">            &gt;&gt;&gt; string = abjad.storage(pattern)</span>
-<span class="sd">            &gt;&gt;&gt; print(string)</span>
-<span class="sd">            abjad.Pattern(</span>
-<span class="sd">                operator=&#39;xor&#39;,</span>
-<span class="sd">                patterns=(</span>
-<span class="sd">                    abjad.Pattern(</span>
-<span class="sd">                        indices=[0, 1, 2],</span>
-<span class="sd">                        ),</span>
-<span class="sd">                    abjad.Pattern(</span>
-<span class="sd">                        indices=[-3, -2, -1],</span>
-<span class="sd">                        ),</span>
-<span class="sd">                    abjad.Pattern(</span>
-<span class="sd">                        indices=[0],</span>
-<span class="sd">                        period=2,</span>
-<span class="sd">                        ),</span>
-<span class="sd">                    ),</span>
-<span class="sd">                )</span>
+<span class="sd">            &gt;&gt;&gt; pattern</span>
+<span class="sd">            Pattern(indices=None, inverted=None, operator=&#39;xor&#39;, patterns=(Pattern(indices=(0, 1, 2), inverted=None, operator=None, patterns=None, payload=None, period=None), Pattern(indices=(-3, -2, -1), inverted=None, operator=None, patterns=None, payload=None, period=None), Pattern(indices=(0,), inverted=None, operator=None, patterns=None, payload=None, period=2)), payload=None, period=None)</span>
 
 <span class="sd">            &gt;&gt;&gt; pattern.get_boolean_vector(total_length=16)</span>
 <span class="sd">            [0, 1, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 0, 1]</span>
@@ -778,29 +784,8 @@
 <span class="sd">            &gt;&gt;&gt; pattern_2 = abjad.index_last(3)</span>
 <span class="sd">            &gt;&gt;&gt; pattern_3 = abjad.index([0], 2)</span>
 <span class="sd">            &gt;&gt;&gt; pattern = pattern_1 ^ pattern_2 &amp; pattern_3</span>
-
-<span class="sd">            &gt;&gt;&gt; string = abjad.storage(pattern)</span>
-<span class="sd">            &gt;&gt;&gt; print(string)</span>
-<span class="sd">            abjad.Pattern(</span>
-<span class="sd">                operator=&#39;xor&#39;,</span>
-<span class="sd">                patterns=(</span>
-<span class="sd">                    abjad.Pattern(</span>
-<span class="sd">                        indices=[0, 1, 2],</span>
-<span class="sd">                        ),</span>
-<span class="sd">                    abjad.Pattern(</span>
-<span class="sd">                        operator=&#39;and&#39;,</span>
-<span class="sd">                        patterns=(</span>
-<span class="sd">                            abjad.Pattern(</span>
-<span class="sd">                                indices=[-3, -2, -1],</span>
-<span class="sd">                                ),</span>
-<span class="sd">                            abjad.Pattern(</span>
-<span class="sd">                                indices=[0],</span>
-<span class="sd">                                period=2,</span>
-<span class="sd">                                ),</span>
-<span class="sd">                            ),</span>
-<span class="sd">                        ),</span>
-<span class="sd">                    ),</span>
-<span class="sd">                )</span>
+<span class="sd">            &gt;&gt;&gt; pattern</span>
+<span class="sd">            Pattern(indices=None, inverted=None, operator=&#39;xor&#39;, patterns=(Pattern(indices=(0, 1, 2), inverted=None, operator=None, patterns=None, payload=None, period=None), Pattern(indices=None, inverted=None, operator=&#39;and&#39;, patterns=(Pattern(indices=(-3, -2, -1), inverted=None, operator=None, patterns=None, payload=None, period=None), Pattern(indices=(0,), inverted=None, operator=None, patterns=None, payload=None, period=2)), payload=None, period=None)), payload=None, period=None)</span>
 
 <span class="sd">            &gt;&gt;&gt; pattern.get_boolean_vector(total_length=16)</span>
 <span class="sd">            [1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0]</span>
@@ -811,20 +796,8 @@
 
 <span class="sd">            &gt;&gt;&gt; pattern = abjad.index_first(3)</span>
 <span class="sd">            &gt;&gt;&gt; pattern ^= abjad.index_last(3)</span>
-
-<span class="sd">            &gt;&gt;&gt; string = abjad.storage(pattern)</span>
-<span class="sd">            &gt;&gt;&gt; print(string)</span>
-<span class="sd">            abjad.Pattern(</span>
-<span class="sd">                operator=&#39;xor&#39;,</span>
-<span class="sd">                patterns=(</span>
-<span class="sd">                    abjad.Pattern(</span>
-<span class="sd">                        indices=[0, 1, 2],</span>
-<span class="sd">                        ),</span>
-<span class="sd">                    abjad.Pattern(</span>
-<span class="sd">                        indices=[-3, -2, -1],</span>
-<span class="sd">                        ),</span>
-<span class="sd">                    ),</span>
-<span class="sd">                )</span>
+<span class="sd">            &gt;&gt;&gt; pattern</span>
+<span class="sd">            Pattern(indices=None, inverted=None, operator=&#39;xor&#39;, patterns=(Pattern(indices=(0, 1, 2), inverted=None, operator=None, patterns=None, payload=None, period=None), Pattern(indices=(-3, -2, -1), inverted=None, operator=None, patterns=None, payload=None, period=None)), payload=None, period=None)</span>
 
 <span class="sd">        Returns new pattern.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -852,367 +825,8 @@
             <span class="k">return</span> <span class="kc">True</span>
         <span class="k">return</span> <span class="kc">False</span>
 
-    <span class="k">def</span> <span class="nf">_get_format_specification</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">_format</span><span class="o">.</span><span class="n">FormatSpecification</span><span class="p">()</span>
-
     <span class="k">def</span> <span class="nf">_make_subscript_string</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
-
-    <span class="c1">### PUBLIC PROPERTIES ###</span>
-
-    <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">indices</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Gets indices of pattern.</span>
-
-<span class="sd">        ..  container:: example</span>
-
-<span class="sd">            Matches three indices out of every eight:</span>
-
-<span class="sd">            &gt;&gt;&gt; pattern = abjad.Pattern(</span>
-<span class="sd">            ...     indices=[0, 1, 7],</span>
-<span class="sd">            ...     period=8,</span>
-<span class="sd">            ...     )</span>
-
-<span class="sd">            &gt;&gt;&gt; pattern.indices</span>
-<span class="sd">            [0, 1, 7]</span>
-
-<span class="sd">        ..  container:: example</span>
-
-<span class="sd">            Matches three indices out of every sixteen:</span>
-
-<span class="sd">            &gt;&gt;&gt; pattern = abjad.Pattern(</span>
-<span class="sd">            ...     indices=[0, 1, 7],</span>
-<span class="sd">            ...     period=16,</span>
-<span class="sd">            ...     )</span>
-
-<span class="sd">            &gt;&gt;&gt; pattern.indices</span>
-<span class="sd">            [0, 1, 7]</span>
-
-<span class="sd">        Defaults to none.</span>
-
-<span class="sd">        Set to integers or none.</span>
-
-<span class="sd">        Returns integers or none.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_indices</span><span class="p">:</span>
-            <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_indices</span><span class="p">)</span>
-
-    <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">inverted</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Is true when pattern is inverted.</span>
-
-<span class="sd">        ..  container:: example</span>
-
-<span class="sd">            Matches three indices out of every eight:</span>
-
-<span class="sd">            &gt;&gt;&gt; pattern = abjad.Pattern(</span>
-<span class="sd">            ...     indices=[0, 1, 7],</span>
-<span class="sd">            ...     period=8,</span>
-<span class="sd">            ...     )</span>
-
-<span class="sd">            &gt;&gt;&gt; pattern.inverted is None</span>
-<span class="sd">            True</span>
-
-<span class="sd">            &gt;&gt;&gt; total_length = 16</span>
-<span class="sd">            &gt;&gt;&gt; for index in range(16):</span>
-<span class="sd">            ...     match = pattern.matches_index(index, total_length)</span>
-<span class="sd">            ...     match = match or &#39;&#39;</span>
-<span class="sd">            ...     print(index, match)</span>
-<span class="sd">            0 True</span>
-<span class="sd">            1 True</span>
-<span class="sd">            2</span>
-<span class="sd">            3</span>
-<span class="sd">            4</span>
-<span class="sd">            5</span>
-<span class="sd">            6</span>
-<span class="sd">            7 True</span>
-<span class="sd">            8 True</span>
-<span class="sd">            9 True</span>
-<span class="sd">            10</span>
-<span class="sd">            11</span>
-<span class="sd">            12</span>
-<span class="sd">            13</span>
-<span class="sd">            14</span>
-<span class="sd">            15 True</span>
-
-<span class="sd">        ..  container:: example</span>
-
-<span class="sd">            Pattern that rejects three indices from every eight; equivalently,</span>
-<span class="sd">            pattern matches ``8-3=5`` indices out of every eight:</span>
-
-<span class="sd">            &gt;&gt;&gt; pattern = abjad.Pattern(</span>
-<span class="sd">            ...     indices=[0, 1, 7],</span>
-<span class="sd">            ...     period=8,</span>
-<span class="sd">            ...     inverted=True</span>
-<span class="sd">            ...     )</span>
-
-<span class="sd">            &gt;&gt;&gt; pattern.inverted</span>
-<span class="sd">            True</span>
-
-<span class="sd">            &gt;&gt;&gt; total_length = 16</span>
-<span class="sd">            &gt;&gt;&gt; for index in range(16):</span>
-<span class="sd">            ...     match = pattern.matches_index(index, total_length)</span>
-<span class="sd">            ...     match = match or &#39;&#39;</span>
-<span class="sd">            ...     print(index, match)</span>
-<span class="sd">            0</span>
-<span class="sd">            1</span>
-<span class="sd">            2 True</span>
-<span class="sd">            3 True</span>
-<span class="sd">            4 True</span>
-<span class="sd">            5 True</span>
-<span class="sd">            6 True</span>
-<span class="sd">            7</span>
-<span class="sd">            8</span>
-<span class="sd">            9</span>
-<span class="sd">            10 True</span>
-<span class="sd">            11 True</span>
-<span class="sd">            12 True</span>
-<span class="sd">            13 True</span>
-<span class="sd">            14 True</span>
-<span class="sd">            15</span>
-
-<span class="sd">        ..  container:: example</span>
-
-<span class="sd">            Matches every index that is (one of the first three indices) OR</span>
-<span class="sd">            (one of the last three indices):</span>
-
-<span class="sd">            &gt;&gt;&gt; pattern_1 = abjad.index_first(3)</span>
-<span class="sd">            &gt;&gt;&gt; pattern_2 = abjad.index_last(3)</span>
-<span class="sd">            &gt;&gt;&gt; pattern = pattern_1 | pattern_2</span>
-<span class="sd">            &gt;&gt;&gt; pattern.inverted is None</span>
-<span class="sd">            True</span>
-
-<span class="sd">            &gt;&gt;&gt; pattern.get_boolean_vector(total_length=16)</span>
-<span class="sd">            [1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1]</span>
-
-
-<span class="sd">        ..  container:: example</span>
-
-<span class="sd">            Matches every index that is NOT (one of the first three indices) OR</span>
-<span class="sd">            (one of the last three indices):</span>
-
-<span class="sd">            &gt;&gt;&gt; pattern = abjad.new(pattern, inverted=True)</span>
-<span class="sd">            &gt;&gt;&gt; pattern.inverted</span>
-<span class="sd">            True</span>
-
-<span class="sd">            &gt;&gt;&gt; pattern.get_boolean_vector(total_length=16)</span>
-<span class="sd">            [0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0]</span>
-
-<span class="sd">        Defaults to none.</span>
-
-<span class="sd">        Set to true, false or none.</span>
-
-<span class="sd">        Returns true, false or none.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_inverted</span>
-
-    <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">operator</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Gets operator of pattern.</span>
-
-<span class="sd">        Set to string.</span>
-
-<span class="sd">        Returns string.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_operator</span>
-
-    <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">patterns</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Gets paterns of pattern.</span>
-
-<span class="sd">        Set to patterns or none.</span>
-
-<span class="sd">        Returns tuple of patterns or none.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_patterns</span>
-
-    <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">payload</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Gets payload of pattern.</span>
-
-<span class="sd">        ..  container:: example</span>
-
-<span class="sd">            Pattern with string payload assigned to three of every eight</span>
-<span class="sd">            indices:</span>
-
-<span class="sd">            &gt;&gt;&gt; pattern = abjad.Pattern(</span>
-<span class="sd">            ...     indices=[0, 1, 7],</span>
-<span class="sd">            ...     payload=&#39;Allegro non troppo&#39;,</span>
-<span class="sd">            ...     period=8,</span>
-<span class="sd">            ...     )</span>
-
-<span class="sd">            &gt;&gt;&gt; total_length = 10</span>
-<span class="sd">            &gt;&gt;&gt; for index in range(10):</span>
-<span class="sd">            ...     match = pattern.matches_index(index, total_length)</span>
-<span class="sd">            ...     if match:</span>
-<span class="sd">            ...         payload = pattern.payload</span>
-<span class="sd">            ...     else:</span>
-<span class="sd">            ...         payload = &#39;&#39;</span>
-<span class="sd">            ...     print(index, repr(payload))</span>
-<span class="sd">            ...</span>
-<span class="sd">            0 &#39;Allegro non troppo&#39;</span>
-<span class="sd">            1 &#39;Allegro non troppo&#39;</span>
-<span class="sd">            2 &#39;&#39;</span>
-<span class="sd">            3 &#39;&#39;</span>
-<span class="sd">            4 &#39;&#39;</span>
-<span class="sd">            5 &#39;&#39;</span>
-<span class="sd">            6 &#39;&#39;</span>
-<span class="sd">            7 &#39;Allegro non troppo&#39;</span>
-<span class="sd">            8 &#39;Allegro non troppo&#39;</span>
-<span class="sd">            9 &#39;Allegro non troppo&#39;</span>
-
-<span class="sd">        Defaults to none.</span>
-
-<span class="sd">        Set to any object.</span>
-
-<span class="sd">        Returns arbitrary object.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_payload</span>
-
-    <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">period</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Gets period of pattern.</span>
-
-<span class="sd">        ..  container:: example</span>
-
-<span class="sd">            Pattern with a period of eight:</span>
-
-<span class="sd">            &gt;&gt;&gt; pattern = abjad.Pattern(</span>
-<span class="sd">            ...     indices=[0, 1, 7],</span>
-<span class="sd">            ...     period=8,</span>
-<span class="sd">            ...     )</span>
-
-<span class="sd">            &gt;&gt;&gt; pattern.period</span>
-<span class="sd">            8</span>
-
-<span class="sd">            &gt;&gt;&gt; total_length = 16</span>
-<span class="sd">            &gt;&gt;&gt; for index in range(16):</span>
-<span class="sd">            ...     match = pattern.matches_index(index, total_length)</span>
-<span class="sd">            ...     match = match or &#39;&#39;</span>
-<span class="sd">            ...     print(index, match)</span>
-<span class="sd">            0 True</span>
-<span class="sd">            1 True</span>
-<span class="sd">            2</span>
-<span class="sd">            3</span>
-<span class="sd">            4</span>
-<span class="sd">            5</span>
-<span class="sd">            6</span>
-<span class="sd">            7 True</span>
-<span class="sd">            8 True</span>
-<span class="sd">            9 True</span>
-<span class="sd">            10</span>
-<span class="sd">            11</span>
-<span class="sd">            12</span>
-<span class="sd">            13</span>
-<span class="sd">            14</span>
-<span class="sd">            15 True</span>
-
-<span class="sd">        ..  container:: example</span>
-
-<span class="sd">            Same pattern with a period of sixteen:</span>
-
-<span class="sd">            &gt;&gt;&gt; pattern = abjad.Pattern(</span>
-<span class="sd">            ...     indices=[0, 1, 7],</span>
-<span class="sd">            ...     period=16,</span>
-<span class="sd">            ...     )</span>
-
-<span class="sd">            &gt;&gt;&gt; pattern.period</span>
-<span class="sd">            16</span>
-
-<span class="sd">            &gt;&gt;&gt; total_length = 16</span>
-<span class="sd">            &gt;&gt;&gt; for index in range(16):</span>
-<span class="sd">            ...     match = pattern.matches_index(index, total_length)</span>
-<span class="sd">            ...     match = match or &#39;&#39;</span>
-<span class="sd">            ...     print(index, match)</span>
-<span class="sd">            0 True</span>
-<span class="sd">            1 True</span>
-<span class="sd">            2</span>
-<span class="sd">            3</span>
-<span class="sd">            4</span>
-<span class="sd">            5</span>
-<span class="sd">            6</span>
-<span class="sd">            7 True</span>
-<span class="sd">            8</span>
-<span class="sd">            9</span>
-<span class="sd">            10</span>
-<span class="sd">            11</span>
-<span class="sd">            12</span>
-<span class="sd">            13</span>
-<span class="sd">            14</span>
-<span class="sd">            15</span>
-
-<span class="sd">        ..  container:: example</span>
-
-<span class="sd">            Gets period of pattern that indexs every fourth and fifth element:</span>
-
-<span class="sd">            &gt;&gt;&gt; pattern_1 = abjad.Pattern([0], period=4)</span>
-<span class="sd">            &gt;&gt;&gt; pattern_2 = abjad.Pattern([0], period=5)</span>
-<span class="sd">            &gt;&gt;&gt; pattern = pattern_1 | pattern_2</span>
-
-<span class="sd">            &gt;&gt;&gt; string = abjad.storage(pattern)</span>
-<span class="sd">            &gt;&gt;&gt; print(string)</span>
-<span class="sd">            abjad.Pattern(</span>
-<span class="sd">                operator=&#39;or&#39;,</span>
-<span class="sd">                patterns=(</span>
-<span class="sd">                    abjad.Pattern(</span>
-<span class="sd">                        indices=[0],</span>
-<span class="sd">                        period=4,</span>
-<span class="sd">                        ),</span>
-<span class="sd">                    abjad.Pattern(</span>
-<span class="sd">                        indices=[0],</span>
-<span class="sd">                        period=5,</span>
-<span class="sd">                        ),</span>
-<span class="sd">                    ),</span>
-<span class="sd">                period=20,</span>
-<span class="sd">                )</span>
-
-<span class="sd">            &gt;&gt;&gt; pattern.period</span>
-<span class="sd">            20</span>
-
-<span class="sd">        ..  container:: example</span>
-
-<span class="sd">            Returns none when pattern contains acyclic parts:</span>
-
-<span class="sd">            &gt;&gt;&gt; pattern_1 = abjad.Pattern([0], period=4)</span>
-<span class="sd">            &gt;&gt;&gt; pattern_2 = abjad.Pattern([0])</span>
-<span class="sd">            &gt;&gt;&gt; pattern = pattern_1 | pattern_2</span>
-
-<span class="sd">            &gt;&gt;&gt; string = abjad.storage(pattern)</span>
-<span class="sd">            &gt;&gt;&gt; print(string)</span>
-<span class="sd">            abjad.Pattern(</span>
-<span class="sd">                operator=&#39;or&#39;,</span>
-<span class="sd">                patterns=(</span>
-<span class="sd">                    abjad.Pattern(</span>
-<span class="sd">                        indices=[0],</span>
-<span class="sd">                        period=4,</span>
-<span class="sd">                        ),</span>
-<span class="sd">                    abjad.Pattern(</span>
-<span class="sd">                        indices=[0],</span>
-<span class="sd">                        ),</span>
-<span class="sd">                    ),</span>
-<span class="sd">                )</span>
-
-<span class="sd">            &gt;&gt;&gt; pattern.period is None</span>
-<span class="sd">            True</span>
-
-<span class="sd">        Defaults to none.</span>
-
-<span class="sd">        Set to positive integer or none.</span>
-
-<span class="sd">        Returns positive integer or none.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_period</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_period</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">patterns</span><span class="p">:</span>
-            <span class="n">periods</span> <span class="o">=</span> <span class="p">[</span><span class="n">_</span><span class="o">.</span><span class="n">period</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">patterns</span><span class="p">]</span>
-            <span class="k">if</span> <span class="kc">None</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">periods</span><span class="p">:</span>
-                <span class="k">return</span> <span class="n">_math</span><span class="o">.</span><span class="n">least_common_multiple</span><span class="p">(</span><span class="o">*</span><span class="n">periods</span><span class="p">)</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">weight</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -1226,7 +840,7 @@
 <span class="sd">            &gt;&gt;&gt; pattern = abjad.Pattern(</span>
 <span class="sd">            ...     indices=[0, 1, 7],</span>
 <span class="sd">            ...     period=8,</span>
-<span class="sd">            ...     )</span>
+<span class="sd">            ... )</span>
 
 <span class="sd">            &gt;&gt;&gt; pattern.weight</span>
 <span class="sd">            3</span>
@@ -1237,7 +851,7 @@
 
 <span class="sd">            &gt;&gt;&gt; pattern = abjad.Pattern(</span>
 <span class="sd">            ...     indices=[0, 2, 3],</span>
-<span class="sd">            ...     )</span>
+<span class="sd">            ... )</span>
 
 <span class="sd">            &gt;&gt;&gt; pattern.weight</span>
 <span class="sd">            3</span>
@@ -1260,11 +874,11 @@
 
 <span class="sd">            &gt;&gt;&gt; pattern = pattern.advance(8)</span>
 <span class="sd">            &gt;&gt;&gt; pattern</span>
-<span class="sd">            Pattern(indices=[4])</span>
+<span class="sd">            Pattern(indices=(4,), inverted=None, operator=None, patterns=None, payload=None, period=None)</span>
 
 <span class="sd">            &gt;&gt;&gt; pattern = pattern.advance(8)</span>
 <span class="sd">            &gt;&gt;&gt; pattern</span>
-<span class="sd">            Pattern(indices=())</span>
+<span class="sd">            Pattern(indices=(), inverted=None, operator=None, patterns=None, payload=None, period=None)</span>
 
 <span class="sd">        ..  container:: example</span>
 
@@ -1272,7 +886,7 @@
 
 <span class="sd">            &gt;&gt;&gt; pattern = abjad.Pattern([0, 2, 12])</span>
 <span class="sd">            &gt;&gt;&gt; pattern.advance()</span>
-<span class="sd">            Pattern(indices=[0, 2, 12])</span>
+<span class="sd">            Pattern(indices=(0, 2, 12), inverted=None, operator=None, patterns=None, payload=None, period=None)</span>
 
 <span class="sd">        ..  container:: example exception</span>
 
@@ -1282,11 +896,11 @@
 <span class="sd">            &gt;&gt;&gt; pattern.advance(8)</span>
 <span class="sd">            Traceback (most recent call last):</span>
 <span class="sd">                ...</span>
-<span class="sd">            Exception: can not advance pattern with negative indices (Pattern(indices=[-2, -1])).</span>
+<span class="sd">            Exception: can not advance pattern with negative indices ...</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">count</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">_new</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">dataclasses</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="k">assert</span> <span class="mi">0</span> <span class="o">&lt;</span> <span class="n">count</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">count</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">indices</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">index</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
@@ -1298,7 +912,7 @@
             <span class="n">new_index</span> <span class="o">=</span> <span class="n">index</span> <span class="o">-</span> <span class="n">count</span>
             <span class="k">if</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">new_index</span><span class="p">:</span>
                 <span class="n">new_indices</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_index</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">_new</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">indices</span><span class="o">=</span><span class="n">new_indices</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">dataclasses</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">indices</span><span class="o">=</span><span class="n">new_indices</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Pattern.from_vector"><a class="viewcode-back" href="../../api/abjad/pattern.html#abjad.pattern.Pattern.from_vector">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">from_vector</span><span class="p">(</span><span class="n">class_</span><span class="p">,</span> <span class="n">vector</span><span class="p">):</span>
@@ -1311,12 +925,8 @@
 
 <span class="sd">            &gt;&gt;&gt; pattern = [1, 0, 0, 1, 1]</span>
 <span class="sd">            &gt;&gt;&gt; pattern = abjad.Pattern.from_vector(pattern)</span>
-<span class="sd">            &gt;&gt;&gt; string = abjad.storage(pattern)</span>
-<span class="sd">            &gt;&gt;&gt; print(string)</span>
-<span class="sd">            abjad.Pattern(</span>
-<span class="sd">                indices=[0, 3, 4],</span>
-<span class="sd">                period=5,</span>
-<span class="sd">                )</span>
+<span class="sd">            &gt;&gt;&gt; pattern</span>
+<span class="sd">            Pattern(indices=(0, 3, 4), inverted=None, operator=None, patterns=None, payload=None, period=5)</span>
 
 <span class="sd">            &gt;&gt;&gt; total_length = 10</span>
 <span class="sd">            &gt;&gt;&gt; for index in range(10):</span>
@@ -1340,12 +950,8 @@
 
 <span class="sd">            &gt;&gt;&gt; pattern = [1, 0, 0, 1, 1, 0]</span>
 <span class="sd">            &gt;&gt;&gt; pattern = abjad.Pattern.from_vector(pattern)</span>
-<span class="sd">            &gt;&gt;&gt; string = abjad.storage(pattern)</span>
-<span class="sd">            &gt;&gt;&gt; print(string)</span>
-<span class="sd">            abjad.Pattern(</span>
-<span class="sd">                indices=[0, 3, 4],</span>
-<span class="sd">                period=6,</span>
-<span class="sd">                )</span>
+<span class="sd">            &gt;&gt;&gt; pattern</span>
+<span class="sd">            Pattern(indices=(0, 3, 4), inverted=None, operator=None, patterns=None, payload=None, period=6)</span>
 
 <span class="sd">            &gt;&gt;&gt; total_length = 12</span>
 <span class="sd">            &gt;&gt;&gt; for index in range(12):</span>
@@ -1383,7 +989,7 @@
 
 <span class="sd">            &gt;&gt;&gt; pattern = abjad.Pattern(</span>
 <span class="sd">            ...     indices=[4, 5, 6, 7],</span>
-<span class="sd">            ...     )</span>
+<span class="sd">            ... )</span>
 
 
 <span class="sd">            &gt;&gt;&gt; pattern.get_boolean_vector(4)</span>
@@ -1408,7 +1014,7 @@
 <span class="sd">            &gt;&gt;&gt; pattern = abjad.Pattern(</span>
 <span class="sd">            ...     indices=[4, 5, 6, 7],</span>
 <span class="sd">            ...     period=20,</span>
-<span class="sd">            ...     )</span>
+<span class="sd">            ... )</span>
 
 <span class="sd">            &gt;&gt;&gt; pattern.get_boolean_vector(4)</span>
 <span class="sd">            [0, 0, 0, 0]</span>
@@ -1432,7 +1038,7 @@
 <span class="sd">            &gt;&gt;&gt; pattern = abjad.Pattern(</span>
 <span class="sd">            ...     indices=[4, 5, 6, 7],</span>
 <span class="sd">            ...     period=20,</span>
-<span class="sd">            ...     )</span>
+<span class="sd">            ... )</span>
 
 <span class="sd">            &gt;&gt;&gt; pattern.get_boolean_vector(4)</span>
 <span class="sd">            [0, 0, 0, 0]</span>
@@ -1463,7 +1069,7 @@
 <span class="sd">            ...             indices=[-3, -2, -1],</span>
 <span class="sd">            ...             ),</span>
 <span class="sd">            ...         ],</span>
-<span class="sd">            ...     )</span>
+<span class="sd">            ... )</span>
 
 <span class="sd">            &gt;&gt;&gt; pattern.get_boolean_vector(4)</span>
 <span class="sd">            [1, 1, 1, 1]</span>
@@ -1493,7 +1099,7 @@
 <span class="sd">            ...             inverted=True,</span>
 <span class="sd">            ...             ),</span>
 <span class="sd">            ...         ],</span>
-<span class="sd">            ...     )</span>
+<span class="sd">            ... )</span>
 
 <span class="sd">            &gt;&gt;&gt; pattern.get_boolean_vector(4)</span>
 <span class="sd">            [1, 0, 0, 0]</span>
@@ -1514,23 +1120,8 @@
 <span class="sd">            &gt;&gt;&gt; pattern_1 = abjad.Pattern([0], period=4)</span>
 <span class="sd">            &gt;&gt;&gt; pattern_2 = abjad.Pattern([0], period=5)</span>
 <span class="sd">            &gt;&gt;&gt; pattern = pattern_1 | pattern_2</span>
-
-<span class="sd">            &gt;&gt;&gt; string = abjad.storage(pattern)</span>
-<span class="sd">            &gt;&gt;&gt; print(string)</span>
-<span class="sd">            abjad.Pattern(</span>
-<span class="sd">                operator=&#39;or&#39;,</span>
-<span class="sd">                patterns=(</span>
-<span class="sd">                    abjad.Pattern(</span>
-<span class="sd">                        indices=[0],</span>
-<span class="sd">                        period=4,</span>
-<span class="sd">                        ),</span>
-<span class="sd">                    abjad.Pattern(</span>
-<span class="sd">                        indices=[0],</span>
-<span class="sd">                        period=5,</span>
-<span class="sd">                        ),</span>
-<span class="sd">                    ),</span>
-<span class="sd">                period=20,</span>
-<span class="sd">                )</span>
+<span class="sd">            &gt;&gt;&gt; pattern</span>
+<span class="sd">            Pattern(indices=None, inverted=None, operator=&#39;or&#39;, patterns=(Pattern(indices=(0,), inverted=None, operator=None, patterns=None, payload=None, period=4), Pattern(indices=(0,), inverted=None, operator=None, patterns=None, payload=None, period=5)), payload=None, period=20)</span>
 
 <span class="sd">            &gt;&gt;&gt; pattern.get_boolean_vector(4)</span>
 <span class="sd">            [1, 0, 0, 0]</span>
@@ -1570,29 +1161,29 @@
 
 <span class="sd">            &gt;&gt;&gt; pattern = abjad.Pattern(</span>
 <span class="sd">            ...     indices=[4, 5, 6, 7],</span>
-<span class="sd">            ...     )</span>
+<span class="sd">            ... )</span>
 
 <span class="sd">            &gt;&gt;&gt; pattern.get_matching_items(&#39;abcdefghijklmnopqrstuvwxyz&#39;)</span>
-<span class="sd">            Sequence([&#39;e&#39;, &#39;f&#39;, &#39;g&#39;, &#39;h&#39;])</span>
+<span class="sd">            [&#39;e&#39;, &#39;f&#39;, &#39;g&#39;, &#39;h&#39;]</span>
 
 <span class="sd">        ..  container:: example</span>
 
 <span class="sd">            &gt;&gt;&gt; pattern = abjad.Pattern(</span>
 <span class="sd">            ...     indices=[8, 9],</span>
 <span class="sd">            ...     period=10,</span>
-<span class="sd">            ...     )</span>
+<span class="sd">            ... )</span>
 
 <span class="sd">            &gt;&gt;&gt; pattern.get_matching_items(&#39;abcdefghijklmnopqrstuvwxyz&#39;)</span>
-<span class="sd">            Sequence([&#39;i&#39;, &#39;j&#39;, &#39;s&#39;, &#39;t&#39;])</span>
+<span class="sd">            [&#39;i&#39;, &#39;j&#39;, &#39;s&#39;, &#39;t&#39;]</span>
 
 <span class="sd">        ..  container:: example</span>
 
 <span class="sd">            &gt;&gt;&gt; pattern = abjad.index_first(1) | abjad.index_last(2)</span>
 
 <span class="sd">            &gt;&gt;&gt; pattern.get_matching_items(&#39;abcdefghijklmnopqrstuvwxyz&#39;)</span>
-<span class="sd">            Sequence([&#39;a&#39;, &#39;y&#39;, &#39;z&#39;])</span>
+<span class="sd">            [&#39;a&#39;, &#39;y&#39;, &#39;z&#39;]</span>
 
-<span class="sd">        Returns new sequence.</span>
+<span class="sd">        Returns list.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">sequence</span><span class="p">,</span> <span class="n">collections</span><span class="o">.</span><span class="n">abc</span><span class="o">.</span><span class="n">Iterable</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">sequence</span><span class="p">)</span>
         <span class="n">length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">sequence</span><span class="p">)</span>
@@ -1601,7 +1192,7 @@
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">matches_index</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">length</span><span class="p">):</span>
                 <span class="n">item</span> <span class="o">=</span> <span class="n">sequence</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
                 <span class="n">items</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">_sequence</span><span class="o">.</span><span class="n">Sequence</span><span class="p">(</span><span class="n">items</span><span class="o">=</span><span class="n">items</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">items</span></div>
 
 <div class="viewcode-block" id="Pattern.index"><a class="viewcode-back" href="../../api/abjad/pattern.html#abjad.pattern.Pattern.index">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">index</span><span class="p">(</span><span class="n">indices</span><span class="p">,</span> <span class="n">period</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">inverted</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
@@ -1613,24 +1204,16 @@
 <span class="sd">            Indexes item 2:</span>
 
 <span class="sd">            &gt;&gt;&gt; pattern = abjad.index([2])</span>
-
-<span class="sd">            &gt;&gt;&gt; string = abjad.storage(pattern)</span>
-<span class="sd">            &gt;&gt;&gt; print(string)</span>
-<span class="sd">            abjad.Pattern(</span>
-<span class="sd">                indices=[2],</span>
-<span class="sd">                )</span>
+<span class="sd">            &gt;&gt;&gt; pattern</span>
+<span class="sd">            Pattern(indices=(2,), inverted=None, operator=None, patterns=None, payload=None, period=None)</span>
 
 <span class="sd">        ..  container:: example</span>
 
 <span class="sd">            Indexes items 2, 3 and 5:</span>
 
 <span class="sd">            &gt;&gt;&gt; pattern = abjad.index([2, 3, 5])</span>
-
-<span class="sd">            &gt;&gt;&gt; string = abjad.storage(pattern)</span>
-<span class="sd">            &gt;&gt;&gt; print(string)</span>
-<span class="sd">            abjad.Pattern(</span>
-<span class="sd">                indices=[2, 3, 5],</span>
-<span class="sd">                )</span>
+<span class="sd">            &gt;&gt;&gt; pattern</span>
+<span class="sd">            Pattern(indices=(2, 3, 5), inverted=None, operator=None, patterns=None, payload=None, period=None)</span>
 
 <span class="sd">        Returns pattern.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -1652,13 +1235,8 @@
 <span class="sd">            Indexes all divisions for tie creation:</span>
 
 <span class="sd">            &gt;&gt;&gt; pattern = abjad.index_all()</span>
-
-<span class="sd">            &gt;&gt;&gt; string = abjad.storage(pattern)</span>
-<span class="sd">            &gt;&gt;&gt; print(string)</span>
-<span class="sd">            abjad.Pattern(</span>
-<span class="sd">                indices=[0],</span>
-<span class="sd">                period=1,</span>
-<span class="sd">                )</span>
+<span class="sd">            &gt;&gt;&gt; pattern</span>
+<span class="sd">            Pattern(indices=(0,), inverted=None, operator=None, patterns=None, payload=None, period=1)</span>
 
 <span class="sd">        Returns pattern.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -1674,34 +1252,24 @@
 <span class="sd">            Indexes first division for tie creation:</span>
 
 <span class="sd">            &gt;&gt;&gt; pattern = abjad.index_first(1)</span>
-
-<span class="sd">            &gt;&gt;&gt; string = abjad.storage(pattern)</span>
-<span class="sd">            &gt;&gt;&gt; print(string)</span>
-<span class="sd">            abjad.Pattern(</span>
-<span class="sd">                indices=[0],</span>
-<span class="sd">                )</span>
+<span class="sd">            &gt;&gt;&gt; pattern</span>
+<span class="sd">            Pattern(indices=(0,), inverted=None, operator=None, patterns=None, payload=None, period=None)</span>
 
 <span class="sd">        ..  container:: example</span>
 
 <span class="sd">            Indexes first two items:</span>
 
 <span class="sd">            &gt;&gt;&gt; pattern = abjad.index_first(2)</span>
-
-<span class="sd">            &gt;&gt;&gt; string = abjad.storage(pattern)</span>
-<span class="sd">            &gt;&gt;&gt; print(string)</span>
-<span class="sd">            abjad.Pattern(</span>
-<span class="sd">                indices=[0, 1],</span>
-<span class="sd">                )</span>
+<span class="sd">            &gt;&gt;&gt; pattern</span>
+<span class="sd">            Pattern(indices=(0, 1), inverted=None, operator=None, patterns=None, payload=None, period=None)</span>
 
 <span class="sd">        ..  container:: example</span>
 
 <span class="sd">            Indexes nothing:</span>
 
 <span class="sd">            &gt;&gt;&gt; pattern = abjad.index_first(0)</span>
-
-<span class="sd">            &gt;&gt;&gt; string = abjad.storage(pattern)</span>
-<span class="sd">            &gt;&gt;&gt; print(string)</span>
-<span class="sd">            abjad.Pattern()</span>
+<span class="sd">            &gt;&gt;&gt; pattern</span>
+<span class="sd">            Pattern(indices=None, inverted=None, operator=None, patterns=None, payload=None, period=None)</span>
 
 <span class="sd">        Returns pattern.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -1722,22 +1290,16 @@
 <span class="sd">            Indexes last two items:</span>
 
 <span class="sd">            &gt;&gt;&gt; pattern = abjad.index_last(2)</span>
-
-<span class="sd">            &gt;&gt;&gt; string = abjad.storage(pattern)</span>
-<span class="sd">            &gt;&gt;&gt; print(string)</span>
-<span class="sd">            abjad.Pattern(</span>
-<span class="sd">                indices=[-2, -1],</span>
-<span class="sd">                )</span>
+<span class="sd">            &gt;&gt;&gt; pattern</span>
+<span class="sd">            Pattern(indices=(-2, -1), inverted=None, operator=None, patterns=None, payload=None, period=None)</span>
 
 <span class="sd">        ..  container:: example</span>
 
 <span class="sd">            Indexes nothing:</span>
 
 <span class="sd">            &gt;&gt;&gt; pattern = abjad.index_last(0)</span>
-
-<span class="sd">            &gt;&gt;&gt; string = abjad.storage(pattern)</span>
-<span class="sd">            &gt;&gt;&gt; print(string)</span>
-<span class="sd">            abjad.Pattern()</span>
+<span class="sd">            &gt;&gt;&gt; pattern</span>
+<span class="sd">            Pattern(indices=None, inverted=None, operator=None, patterns=None, payload=None, period=None)</span>
 
 <span class="sd">        Returns pattern.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -1762,7 +1324,7 @@
 <span class="sd">            &gt;&gt;&gt; pattern = abjad.Pattern(</span>
 <span class="sd">            ...     indices=[0, 1, 7],</span>
 <span class="sd">            ...     period=8,</span>
-<span class="sd">            ...     )</span>
+<span class="sd">            ... )</span>
 
 <span class="sd">            &gt;&gt;&gt; total_length = 16</span>
 <span class="sd">            &gt;&gt;&gt; for index in range(16):</span>
@@ -1791,7 +1353,7 @@
 <span class="sd">            &gt;&gt;&gt; pattern = abjad.Pattern(</span>
 <span class="sd">            ...     indices=[0, 1, 7],</span>
 <span class="sd">            ...     period=8,</span>
-<span class="sd">            ...     )</span>
+<span class="sd">            ... )</span>
 
 <span class="sd">            &gt;&gt;&gt; total_length = 16</span>
 <span class="sd">            &gt;&gt;&gt; for index in range(16):</span>
@@ -1825,7 +1387,7 @@
 <span class="sd">            &gt;&gt;&gt; pattern = abjad.Pattern(</span>
 <span class="sd">            ...     indices=[0, 1, 7],</span>
 <span class="sd">            ...     period=8,</span>
-<span class="sd">            ...     )</span>
+<span class="sd">            ... )</span>
 
 <span class="sd">            &gt;&gt;&gt; total_length = 16</span>
 <span class="sd">            &gt;&gt;&gt; for index in range(16):</span>
@@ -1860,7 +1422,7 @@
 <span class="sd">            &gt;&gt;&gt; pattern = abjad.Pattern(</span>
 <span class="sd">            ...     indices=[0, 1, 7],</span>
 <span class="sd">            ...     period=16,</span>
-<span class="sd">            ...     )</span>
+<span class="sd">            ... )</span>
 
 <span class="sd">            &gt;&gt;&gt; total_length = 16</span>
 <span class="sd">            &gt;&gt;&gt; for index in range(16):</span>
@@ -1890,7 +1452,7 @@
 <span class="sd">            &gt;&gt;&gt; pattern = abjad.Pattern(</span>
 <span class="sd">            ...     indices=[0, 1, 7],</span>
 <span class="sd">            ...     period=16,</span>
-<span class="sd">            ...     )</span>
+<span class="sd">            ... )</span>
 
 <span class="sd">            &gt;&gt;&gt; total_length = 16</span>
 <span class="sd">            &gt;&gt;&gt; for index in range(16):</span>
@@ -1924,7 +1486,7 @@
 <span class="sd">            &gt;&gt;&gt; pattern = abjad.Pattern(</span>
 <span class="sd">            ...     indices=[0, 1, 7],</span>
 <span class="sd">            ...     period=16,</span>
-<span class="sd">            ...     )</span>
+<span class="sd">            ... )</span>
 
 <span class="sd">            &gt;&gt;&gt; total_length = 16</span>
 <span class="sd">            &gt;&gt;&gt; for index in range(16):</span>
@@ -2025,7 +1587,7 @@
 <span class="sd">            ...             indices=[0, 1, 2],</span>
 <span class="sd">            ...             ),</span>
 <span class="sd">            ...         ],</span>
-<span class="sd">            ...     )</span>
+<span class="sd">            ... )</span>
 <span class="sd">            &gt;&gt;&gt; total_length = 16</span>
 <span class="sd">            &gt;&gt;&gt; for index in range(total_length):</span>
 <span class="sd">            ...     match = pattern.matches_index(index, total_length)</span>
@@ -2057,7 +1619,7 @@
 <span class="sd">            ...             indices=[0, 1, 2],</span>
 <span class="sd">            ...             ),</span>
 <span class="sd">            ...         ],</span>
-<span class="sd">            ...     )</span>
+<span class="sd">            ... )</span>
 <span class="sd">            &gt;&gt;&gt; total_length = 16</span>
 <span class="sd">            &gt;&gt;&gt; for index in range(total_length):</span>
 <span class="sd">            ...     match = pattern.matches_index(index, total_length)</span>
@@ -2089,7 +1651,7 @@
 <span class="sd">            ...             indices=[0, 1, 2],</span>
 <span class="sd">            ...             ),</span>
 <span class="sd">            ...         ],</span>
-<span class="sd">            ...     )</span>
+<span class="sd">            ... )</span>
 <span class="sd">            &gt;&gt;&gt; total_length = 16</span>
 <span class="sd">            &gt;&gt;&gt; for index in range(total_length):</span>
 <span class="sd">            ...     match = pattern.matches_index(index, total_length)</span>
@@ -2130,7 +1692,7 @@
 <span class="sd">            ...             indices=[-3, -2, -1],</span>
 <span class="sd">            ...             ),</span>
 <span class="sd">            ...         ],</span>
-<span class="sd">            ...     )</span>
+<span class="sd">            ... )</span>
 
 <span class="sd">            Total length 16:</span>
 
@@ -2201,7 +1763,7 @@
 <span class="sd">            ...             indices=[-3, -2, -1],</span>
 <span class="sd">            ...             ),</span>
 <span class="sd">            ...         ],</span>
-<span class="sd">            ...     )</span>
+<span class="sd">            ... )</span>
 
 <span class="sd">            Total length 16:</span>
 
@@ -2272,7 +1834,7 @@
 <span class="sd">            ...             indices=[-3, -2, -1],</span>
 <span class="sd">            ...             ),</span>
 <span class="sd">            ...         ],</span>
-<span class="sd">            ...     )</span>
+<span class="sd">            ... )</span>
 
 <span class="sd">            Total length 16:</span>
 
@@ -2345,7 +1907,7 @@
 <span class="sd">            ...             inverted=True,</span>
 <span class="sd">            ...             ),</span>
 <span class="sd">            ...         ],</span>
-<span class="sd">            ...     )</span>
+<span class="sd">            ... )</span>
 
 <span class="sd">            Total length 16:</span>
 
@@ -2418,7 +1980,7 @@
 <span class="sd">            ...             inverted=True,</span>
 <span class="sd">            ...             ),</span>
 <span class="sd">            ...         ],</span>
-<span class="sd">            ...     )</span>
+<span class="sd">            ... )</span>
 <span class="sd">            &gt;&gt;&gt; pattern = abjad.Pattern(</span>
 <span class="sd">            ...     operator=&#39;or&#39;,</span>
 <span class="sd">            ...     patterns=[</span>
@@ -2427,31 +1989,9 @@
 <span class="sd">            ...             indices=[0, 1, 2],</span>
 <span class="sd">            ...             ),</span>
 <span class="sd">            ...         ],</span>
-<span class="sd">            ...     )</span>
-
-<span class="sd">            &gt;&gt;&gt; string = abjad.storage(pattern)</span>
-<span class="sd">            &gt;&gt;&gt; print(string)</span>
-<span class="sd">            abjad.Pattern(</span>
-<span class="sd">                operator=&#39;or&#39;,</span>
-<span class="sd">                patterns=(</span>
-<span class="sd">                    abjad.Pattern(</span>
-<span class="sd">                        operator=&#39;and&#39;,</span>
-<span class="sd">                        patterns=(</span>
-<span class="sd">                            abjad.Pattern(</span>
-<span class="sd">                                indices=[0],</span>
-<span class="sd">                                period=2,</span>
-<span class="sd">                                ),</span>
-<span class="sd">                            abjad.Pattern(</span>
-<span class="sd">                                indices=[-3, -2, -1],</span>
-<span class="sd">                                inverted=True,</span>
-<span class="sd">                                ),</span>
-<span class="sd">                            ),</span>
-<span class="sd">                        ),</span>
-<span class="sd">                    abjad.Pattern(</span>
-<span class="sd">                        indices=[0, 1, 2],</span>
-<span class="sd">                        ),</span>
-<span class="sd">                    ),</span>
-<span class="sd">                )</span>
+<span class="sd">            ... )</span>
+<span class="sd">            &gt;&gt;&gt; pattern</span>
+<span class="sd">            Pattern(indices=None, inverted=None, operator=&#39;or&#39;, patterns=(Pattern(indices=None, inverted=None, operator=&#39;and&#39;, patterns=(Pattern(indices=(0,), inverted=None, operator=None, patterns=None, payload=None, period=2), Pattern(indices=(-3, -2, -1), inverted=True, operator=None, patterns=None, payload=None, period=None)), payload=None, period=None), Pattern(indices=(0, 1, 2), inverted=None, operator=None, patterns=None, payload=None, period=None)), payload=None, period=None)</span>
 
 <span class="sd">            Total length 16:</span>
 
@@ -2565,7 +2105,7 @@
 <span class="sd">            &gt;&gt;&gt; pattern = abjad.Pattern(</span>
 <span class="sd">            ...     indices=[0, 1, 7],</span>
 <span class="sd">            ...     period=8,</span>
-<span class="sd">            ...     )</span>
+<span class="sd">            ... )</span>
 
 <span class="sd">            &gt;&gt;&gt; total_length = 16</span>
 <span class="sd">            &gt;&gt;&gt; for index in range(16):</span>
@@ -2596,15 +2136,11 @@
 <span class="sd">            &gt;&gt;&gt; pattern = abjad.Pattern(</span>
 <span class="sd">            ...     indices=[0, 1, 7],</span>
 <span class="sd">            ...     period=8,</span>
-<span class="sd">            ...     )</span>
+<span class="sd">            ... )</span>
 
 <span class="sd">            &gt;&gt;&gt; pattern = pattern.reverse()</span>
-<span class="sd">            &gt;&gt;&gt; string = abjad.storage(pattern)</span>
-<span class="sd">            &gt;&gt;&gt; print(string)</span>
-<span class="sd">            abjad.Pattern(</span>
-<span class="sd">                indices=[-1, -2, -8],</span>
-<span class="sd">                period=8,</span>
-<span class="sd">                )</span>
+<span class="sd">            &gt;&gt;&gt; pattern</span>
+<span class="sd">            Pattern(indices=(-1, -2, -8), inverted=None, operator=None, patterns=None, payload=None, period=8)</span>
 
 <span class="sd">            &gt;&gt;&gt; total_length = 16</span>
 <span class="sd">            &gt;&gt;&gt; for index in range(16):</span>
@@ -2645,53 +2181,26 @@
 <span class="sd">            ...             inverted=True,</span>
 <span class="sd">            ...             ),</span>
 <span class="sd">            ...         ],</span>
-<span class="sd">            ...     )</span>
-
-<span class="sd">            &gt;&gt;&gt; string = abjad.storage(pattern)</span>
-<span class="sd">            &gt;&gt;&gt; print(string)</span>
-<span class="sd">            abjad.Pattern(</span>
-<span class="sd">                operator=&#39;and&#39;,</span>
-<span class="sd">                patterns=(</span>
-<span class="sd">                    abjad.Pattern(</span>
-<span class="sd">                        indices=[0],</span>
-<span class="sd">                        period=2,</span>
-<span class="sd">                        ),</span>
-<span class="sd">                    abjad.Pattern(</span>
-<span class="sd">                        indices=[-3, -2, -1],</span>
-<span class="sd">                        inverted=True,</span>
-<span class="sd">                        ),</span>
-<span class="sd">                    ),</span>
-<span class="sd">                )</span>
+<span class="sd">            ... )</span>
+<span class="sd">            &gt;&gt;&gt; pattern</span>
+<span class="sd">            Pattern(indices=None, inverted=None, operator=&#39;and&#39;, patterns=(Pattern(indices=(0,), inverted=None, operator=None, patterns=None, payload=None, period=2), Pattern(indices=(-3, -2, -1), inverted=True, operator=None, patterns=None, payload=None, period=None)), payload=None, period=None)</span>
 
 <span class="sd">            Reverses pattern:</span>
 
 <span class="sd">            &gt;&gt;&gt; pattern = pattern.reverse()</span>
-<span class="sd">            &gt;&gt;&gt; string = abjad.storage(pattern)</span>
-<span class="sd">            &gt;&gt;&gt; print(string)</span>
-<span class="sd">            abjad.Pattern(</span>
-<span class="sd">                operator=&#39;and&#39;,</span>
-<span class="sd">                patterns=(</span>
-<span class="sd">                    abjad.Pattern(</span>
-<span class="sd">                        indices=[-1],</span>
-<span class="sd">                        period=2,</span>
-<span class="sd">                        ),</span>
-<span class="sd">                    abjad.Pattern(</span>
-<span class="sd">                        indices=[2, 1, 0],</span>
-<span class="sd">                        inverted=True,</span>
-<span class="sd">                        ),</span>
-<span class="sd">                    ),</span>
-<span class="sd">                )</span>
+<span class="sd">            &gt;&gt;&gt; pattern</span>
+<span class="sd">            Pattern(indices=None, inverted=None, operator=&#39;and&#39;, patterns=(Pattern(indices=(-1,), inverted=None, operator=None, patterns=None, payload=None, period=2), Pattern(indices=(2, 1, 0), inverted=True, operator=None, patterns=None, payload=None, period=None)), payload=None, period=None)</span>
 
-<span class="sd">            New pattern matches every index that is (equal to -1 % 2) AND</span>
-<span class="sd">            (not one of the first three indices).</span>
+<span class="sd">            New pattern matches every index that is (equal to -1 % 2) AND (not one of the</span>
+<span class="sd">            first three indices).</span>
 
 <span class="sd">        Returns new pattern.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">patterns</span><span class="p">:</span>
             <span class="n">indices</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="n">index</span> <span class="o">-</span> <span class="mi">1</span> <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">indices</span><span class="p">]</span>
-            <span class="k">return</span> <span class="n">_new</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">indices</span><span class="o">=</span><span class="n">indices</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">dataclasses</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">indices</span><span class="o">=</span><span class="n">indices</span><span class="p">)</span>
         <span class="n">patterns</span> <span class="o">=</span> <span class="p">[</span><span class="n">_</span><span class="o">.</span><span class="n">reverse</span><span class="p">()</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">patterns</span><span class="p">]</span>
-        <span class="k">return</span> <span class="n">_new</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">patterns</span><span class="o">=</span><span class="n">patterns</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">dataclasses</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">patterns</span><span class="o">=</span><span class="n">patterns</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Pattern.rotate"><a class="viewcode-back" href="../../api/abjad/pattern.html#abjad.pattern.Pattern.rotate">[docs]</a>    <span class="k">def</span> <span class="nf">rotate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -2704,7 +2213,7 @@
 <span class="sd">            &gt;&gt;&gt; pattern = abjad.Pattern(</span>
 <span class="sd">            ...     indices=[0, 1, 7],</span>
 <span class="sd">            ...     period=8,</span>
-<span class="sd">            ...     )</span>
+<span class="sd">            ... )</span>
 
 <span class="sd">            &gt;&gt;&gt; total_length = 16</span>
 <span class="sd">            &gt;&gt;&gt; for index in range(16):</span>
@@ -2733,15 +2242,11 @@
 <span class="sd">            &gt;&gt;&gt; pattern = abjad.Pattern(</span>
 <span class="sd">            ...     indices=[0, 1, 7],</span>
 <span class="sd">            ...     period=8,</span>
-<span class="sd">            ...     )</span>
+<span class="sd">            ... )</span>
 
 <span class="sd">            &gt;&gt;&gt; pattern = pattern.rotate(n=2)</span>
-<span class="sd">            &gt;&gt;&gt; string = abjad.storage(pattern)</span>
-<span class="sd">            &gt;&gt;&gt; print(string)</span>
-<span class="sd">            abjad.Pattern(</span>
-<span class="sd">                indices=[2, 3, 9],</span>
-<span class="sd">                period=8,</span>
-<span class="sd">                )</span>
+<span class="sd">            &gt;&gt;&gt; pattern</span>
+<span class="sd">            Pattern(indices=(2, 3, 9), inverted=None, operator=None, patterns=None, payload=None, period=8)</span>
 
 <span class="sd">            &gt;&gt;&gt; total_length = 16</span>
 <span class="sd">            &gt;&gt;&gt; for index in range(16):</span>
@@ -2772,7 +2277,7 @@
 <span class="sd">            &gt;&gt;&gt; pattern = abjad.Pattern(</span>
 <span class="sd">            ...     indices=[-3, -2, -1],</span>
 <span class="sd">            ...     period=8,</span>
-<span class="sd">            ...     )</span>
+<span class="sd">            ... )</span>
 
 <span class="sd">            &gt;&gt;&gt; total_length = 16</span>
 <span class="sd">            &gt;&gt;&gt; for index in range(16):</span>
@@ -2801,15 +2306,11 @@
 <span class="sd">            &gt;&gt;&gt; pattern = abjad.Pattern(</span>
 <span class="sd">            ...     indices=[-3, -2, -1],</span>
 <span class="sd">            ...     period=8,</span>
-<span class="sd">            ...     )</span>
+<span class="sd">            ... )</span>
 
 <span class="sd">            &gt;&gt;&gt; pattern = pattern.rotate(n=2)</span>
-<span class="sd">            &gt;&gt;&gt; string = abjad.storage(pattern)</span>
-<span class="sd">            &gt;&gt;&gt; print(string)</span>
-<span class="sd">            abjad.Pattern(</span>
-<span class="sd">                indices=[-1, 0, 1],</span>
-<span class="sd">                period=8,</span>
-<span class="sd">                )</span>
+<span class="sd">            &gt;&gt;&gt; pattern</span>
+<span class="sd">            Pattern(indices=(-1, 0, 1), inverted=None, operator=None, patterns=None, payload=None, period=8)</span>
 
 <span class="sd">            &gt;&gt;&gt; total_length = 16</span>
 <span class="sd">            &gt;&gt;&gt; for index in range(16):</span>
@@ -2850,53 +2351,26 @@
 <span class="sd">            ...             inverted=True,</span>
 <span class="sd">            ...             ),</span>
 <span class="sd">            ...         ],</span>
-<span class="sd">            ...     )</span>
-
-<span class="sd">            &gt;&gt;&gt; string = abjad.storage(pattern)</span>
-<span class="sd">            &gt;&gt;&gt; print(string)</span>
-<span class="sd">            abjad.Pattern(</span>
-<span class="sd">                operator=&#39;and&#39;,</span>
-<span class="sd">                patterns=(</span>
-<span class="sd">                    abjad.Pattern(</span>
-<span class="sd">                        indices=[0],</span>
-<span class="sd">                        period=2,</span>
-<span class="sd">                        ),</span>
-<span class="sd">                    abjad.Pattern(</span>
-<span class="sd">                        indices=[-3, -2, -1],</span>
-<span class="sd">                        inverted=True,</span>
-<span class="sd">                        ),</span>
-<span class="sd">                    ),</span>
-<span class="sd">                )</span>
+<span class="sd">            ... )</span>
+<span class="sd">            &gt;&gt;&gt; pattern</span>
+<span class="sd">            Pattern(indices=None, inverted=None, operator=&#39;and&#39;, patterns=(Pattern(indices=(0,), inverted=None, operator=None, patterns=None, payload=None, period=2), Pattern(indices=(-3, -2, -1), inverted=True, operator=None, patterns=None, payload=None, period=None)), payload=None, period=None)</span>
 
 <span class="sd">            Rotates pattern two elements to the right:</span>
 
 <span class="sd">            &gt;&gt;&gt; pattern = pattern.rotate(n=2)</span>
-<span class="sd">            &gt;&gt;&gt; string = abjad.storage(pattern)</span>
-<span class="sd">            &gt;&gt;&gt; print(string)</span>
-<span class="sd">            abjad.Pattern(</span>
-<span class="sd">                operator=&#39;and&#39;,</span>
-<span class="sd">                patterns=(</span>
-<span class="sd">                    abjad.Pattern(</span>
-<span class="sd">                        indices=[2],</span>
-<span class="sd">                        period=2,</span>
-<span class="sd">                        ),</span>
-<span class="sd">                    abjad.Pattern(</span>
-<span class="sd">                        indices=[-1, 0, 1],</span>
-<span class="sd">                        inverted=True,</span>
-<span class="sd">                        ),</span>
-<span class="sd">                    ),</span>
-<span class="sd">                )</span>
+<span class="sd">            &gt;&gt;&gt; pattern</span>
+<span class="sd">            Pattern(indices=None, inverted=None, operator=&#39;and&#39;, patterns=(Pattern(indices=(2,), inverted=None, operator=None, patterns=None, payload=None, period=2), Pattern(indices=(-1, 0, 1), inverted=True, operator=None, patterns=None, payload=None, period=None)), payload=None, period=None)</span>
 
-<span class="sd">            New pattern matches every index that is (equal to 2 % 2) AND (not</span>
-<span class="sd">            the first, second or last index in the pattern).</span>
+<span class="sd">            New pattern matches every index that is (equal to 2 % 2) AND (not the first,</span>
+<span class="sd">            second or last index in the pattern).</span>
 
 <span class="sd">        Returns new pattern.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">patterns</span><span class="p">:</span>
             <span class="n">indices</span> <span class="o">=</span> <span class="p">[</span><span class="n">index</span> <span class="o">+</span> <span class="n">n</span> <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">indices</span><span class="p">]</span>
-            <span class="k">return</span> <span class="n">_new</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">indices</span><span class="o">=</span><span class="n">indices</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">dataclasses</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">indices</span><span class="o">=</span><span class="n">indices</span><span class="p">)</span>
         <span class="n">patterns</span> <span class="o">=</span> <span class="p">[</span><span class="n">_</span><span class="o">.</span><span class="n">rotate</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="n">n</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">patterns</span><span class="p">]</span>
-        <span class="k">return</span> <span class="n">_new</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">patterns</span><span class="o">=</span><span class="n">patterns</span><span class="p">)</span></div></div>
+        <span class="k">return</span> <span class="n">dataclasses</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">patterns</span><span class="o">=</span><span class="n">patterns</span><span class="p">)</span></div></div>
 
 
 <div class="viewcode-block" id="PatternTuple"><a class="viewcode-back" href="../../api/abjad/pattern.html#abjad.pattern.PatternTuple">[docs]</a><span class="k">class</span> <span class="nc">PatternTuple</span><span class="p">(</span><span class="n">_typedcollections</span><span class="o">.</span><span class="n">TypedTuple</span><span class="p">):</span>
@@ -2920,24 +2394,8 @@
 <span class="sd">        ...         period=3,</span>
 <span class="sd">        ...         ),</span>
 <span class="sd">        ...     ])</span>
-
-<span class="sd">        &gt;&gt;&gt; string = abjad.storage(patterns)</span>
-<span class="sd">        &gt;&gt;&gt; print(string)</span>
-<span class="sd">        abjad.PatternTuple(</span>
-<span class="sd">            (</span>
-<span class="sd">                abjad.Pattern(</span>
-<span class="sd">                    indices=[0, 1, 7],</span>
-<span class="sd">                    period=10,</span>
-<span class="sd">                    ),</span>
-<span class="sd">                abjad.Pattern(</span>
-<span class="sd">                    indices=[-2, -1],</span>
-<span class="sd">                    ),</span>
-<span class="sd">                abjad.Pattern(</span>
-<span class="sd">                    indices=[2],</span>
-<span class="sd">                    period=3,</span>
-<span class="sd">                    ),</span>
-<span class="sd">                )</span>
-<span class="sd">            )</span>
+<span class="sd">        &gt;&gt;&gt; patterns</span>
+<span class="sd">        PatternTuple(items=(Pattern(indices=(0, 1, 7), inverted=None, operator=None, patterns=None, payload=None, period=10), Pattern(indices=(-2, -1), inverted=None, operator=None, patterns=None, payload=None, period=None), Pattern(indices=(2,), inverted=None, operator=None, patterns=None, payload=None, period=3)), item_class=None)</span>
 
 <span class="sd">    ..  container:: example</span>
 
@@ -2952,20 +2410,8 @@
 <span class="sd">        ...         indices=[-3, -2, -1],</span>
 <span class="sd">        ...         ),</span>
 <span class="sd">        ...     ])</span>
-
-<span class="sd">        &gt;&gt;&gt; string = abjad.storage(patterns)</span>
-<span class="sd">        &gt;&gt;&gt; print(string)</span>
-<span class="sd">        abjad.PatternTuple(</span>
-<span class="sd">            (</span>
-<span class="sd">                abjad.Pattern(</span>
-<span class="sd">                    indices=[1],</span>
-<span class="sd">                    period=2,</span>
-<span class="sd">                    ),</span>
-<span class="sd">                abjad.Pattern(</span>
-<span class="sd">                    indices=[-3, -2, -1],</span>
-<span class="sd">                    ),</span>
-<span class="sd">                )</span>
-<span class="sd">            )</span>
+<span class="sd">        &gt;&gt;&gt; patterns</span>
+<span class="sd">        PatternTuple(items=(Pattern(indices=(1,), inverted=None, operator=None, patterns=None, payload=None, period=2), Pattern(indices=(-3, -2, -1), inverted=None, operator=None, patterns=None, payload=None, period=None)), item_class=None)</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -3000,15 +2446,15 @@
 <span class="sd">            ...     print(i, match)</span>
 <span class="sd">            ...</span>
 <span class="sd">            0 None</span>
-<span class="sd">            1 Pattern(indices=[1], period=2)</span>
+<span class="sd">            1 Pattern(indices=(1,), inverted=None, operator=None, patterns=None, payload=None, period=2)</span>
 <span class="sd">            2 None</span>
-<span class="sd">            3 Pattern(indices=[1], period=2)</span>
+<span class="sd">            3 Pattern(indices=(1,), inverted=None, operator=None, patterns=None, payload=None, period=2)</span>
 <span class="sd">            4 None</span>
-<span class="sd">            5 Pattern(indices=[1], period=2)</span>
+<span class="sd">            5 Pattern(indices=(1,), inverted=None, operator=None, patterns=None, payload=None, period=2)</span>
 <span class="sd">            6 None</span>
-<span class="sd">            7 Pattern(indices=[-3, -2, -1])</span>
-<span class="sd">            8 Pattern(indices=[-3, -2, -1])</span>
-<span class="sd">            9 Pattern(indices=[-3, -2, -1])</span>
+<span class="sd">            7 Pattern(indices=(-3, -2, -1), inverted=None, operator=None, patterns=None, payload=None, period=None)</span>
+<span class="sd">            8 Pattern(indices=(-3, -2, -1), inverted=None, operator=None, patterns=None, payload=None, period=None)</span>
+<span class="sd">            9 Pattern(indices=(-3, -2, -1), inverted=None, operator=None, patterns=None, payload=None, period=None)</span>
 
 <span class="sd">            Last three indices match the second pattern.</span>
 
@@ -3019,15 +2465,15 @@
 <span class="sd">            ...     print(i, match)</span>
 <span class="sd">            ...</span>
 <span class="sd">            10 None</span>
-<span class="sd">            11 Pattern(indices=[1], period=2)</span>
+<span class="sd">            11 Pattern(indices=(1,), inverted=None, operator=None, patterns=None, payload=None, period=2)</span>
 <span class="sd">            12 None</span>
-<span class="sd">            13 Pattern(indices=[1], period=2)</span>
+<span class="sd">            13 Pattern(indices=(1,), inverted=None, operator=None, patterns=None, payload=None, period=2)</span>
 <span class="sd">            14 None</span>
-<span class="sd">            15 Pattern(indices=[1], period=2)</span>
+<span class="sd">            15 Pattern(indices=(1,), inverted=None, operator=None, patterns=None, payload=None, period=2)</span>
 <span class="sd">            16 None</span>
-<span class="sd">            17 Pattern(indices=[1], period=2)</span>
+<span class="sd">            17 Pattern(indices=(1,), inverted=None, operator=None, patterns=None, payload=None, period=2)</span>
 <span class="sd">            18 None</span>
-<span class="sd">            19 Pattern(indices=[1], period=2)</span>
+<span class="sd">            19 Pattern(indices=(1,), inverted=None, operator=None, patterns=None, payload=None, period=2)</span>
 
 <span class="sd">            Last three indices no longer match the second pattern.</span>
 
@@ -3040,16 +2486,16 @@
 <span class="sd">            ...     match = patterns.get_matching_pattern(i, 10, rotation=1)</span>
 <span class="sd">            ...     print(i, match)</span>
 <span class="sd">            ...</span>
-<span class="sd">            0 Pattern(indices=[1], period=2)</span>
+<span class="sd">            0 Pattern(indices=(1,), inverted=None, operator=None, patterns=None, payload=None, period=2)</span>
 <span class="sd">            1 None</span>
-<span class="sd">            2 Pattern(indices=[1], period=2)</span>
+<span class="sd">            2 Pattern(indices=(1,), inverted=None, operator=None, patterns=None, payload=None, period=2)</span>
 <span class="sd">            3 None</span>
-<span class="sd">            4 Pattern(indices=[1], period=2)</span>
+<span class="sd">            4 Pattern(indices=(1,), inverted=None, operator=None, patterns=None, payload=None, period=2)</span>
 <span class="sd">            5 None</span>
-<span class="sd">            6 Pattern(indices=[1], period=2)</span>
-<span class="sd">            7 Pattern(indices=[-3, -2, -1])</span>
-<span class="sd">            8 Pattern(indices=[-3, -2, -1])</span>
-<span class="sd">            9 Pattern(indices=[-3, -2, -1])</span>
+<span class="sd">            6 Pattern(indices=(1,), inverted=None, operator=None, patterns=None, payload=None, period=2)</span>
+<span class="sd">            7 Pattern(indices=(-3, -2, -1), inverted=None, operator=None, patterns=None, payload=None, period=None)</span>
+<span class="sd">            8 Pattern(indices=(-3, -2, -1), inverted=None, operator=None, patterns=None, payload=None, period=None)</span>
+<span class="sd">            9 Pattern(indices=(-3, -2, -1), inverted=None, operator=None, patterns=None, payload=None, period=None)</span>
 
 <span class="sd">            Matching indices of first pattern offset by ``1``.</span>
 
@@ -3060,15 +2506,15 @@
 <span class="sd">            ...     match = patterns.get_matching_pattern(i, 10, rotation=1)</span>
 <span class="sd">            ...     print(i, match)</span>
 <span class="sd">            ...</span>
-<span class="sd">            10 Pattern(indices=[1], period=2)</span>
+<span class="sd">            10 Pattern(indices=(1,), inverted=None, operator=None, patterns=None, payload=None, period=2)</span>
 <span class="sd">            11 None</span>
-<span class="sd">            12 Pattern(indices=[1], period=2)</span>
+<span class="sd">            12 Pattern(indices=(1,), inverted=None, operator=None, patterns=None, payload=None, period=2)</span>
 <span class="sd">            13 None</span>
-<span class="sd">            14 Pattern(indices=[1], period=2)</span>
+<span class="sd">            14 Pattern(indices=(1,), inverted=None, operator=None, patterns=None, payload=None, period=2)</span>
 <span class="sd">            15 None</span>
-<span class="sd">            16 Pattern(indices=[1], period=2)</span>
+<span class="sd">            16 Pattern(indices=(1,), inverted=None, operator=None, patterns=None, payload=None, period=2)</span>
 <span class="sd">            17 None</span>
-<span class="sd">            18 Pattern(indices=[1], period=2)</span>
+<span class="sd">            18 Pattern(indices=(1,), inverted=None, operator=None, patterns=None, payload=None, period=2)</span>
 <span class="sd">            19 None</span>
 
 <span class="sd">            Matching indices of first pattern offset by ``1``.</span>
@@ -3088,16 +2534,16 @@
 <span class="sd">            ...     match = patterns.get_matching_pattern(i, 10)</span>
 <span class="sd">            ...     print(i, match)</span>
 <span class="sd">            ...</span>
-<span class="sd">            0 Pattern(indices=[-3], inverted=True)</span>
-<span class="sd">            1 Pattern(indices=[-3], inverted=True)</span>
-<span class="sd">            2 Pattern(indices=[-3], inverted=True)</span>
-<span class="sd">            3 Pattern(indices=[-3], inverted=True)</span>
-<span class="sd">            4 Pattern(indices=[-3], inverted=True)</span>
-<span class="sd">            5 Pattern(indices=[-3], inverted=True)</span>
-<span class="sd">            6 Pattern(indices=[-3], inverted=True)</span>
+<span class="sd">            0 Pattern(indices=(-3,), inverted=True, operator=None, patterns=None, payload=None, period=None)</span>
+<span class="sd">            1 Pattern(indices=(-3,), inverted=True, operator=None, patterns=None, payload=None, period=None)</span>
+<span class="sd">            2 Pattern(indices=(-3,), inverted=True, operator=None, patterns=None, payload=None, period=None)</span>
+<span class="sd">            3 Pattern(indices=(-3,), inverted=True, operator=None, patterns=None, payload=None, period=None)</span>
+<span class="sd">            4 Pattern(indices=(-3,), inverted=True, operator=None, patterns=None, payload=None, period=None)</span>
+<span class="sd">            5 Pattern(indices=(-3,), inverted=True, operator=None, patterns=None, payload=None, period=None)</span>
+<span class="sd">            6 Pattern(indices=(-3,), inverted=True, operator=None, patterns=None, payload=None, period=None)</span>
 <span class="sd">            7 None</span>
-<span class="sd">            8 Pattern(indices=[-3], inverted=True)</span>
-<span class="sd">            9 Pattern(indices=[-3], inverted=True)</span>
+<span class="sd">            8 Pattern(indices=(-3,), inverted=True, operator=None, patterns=None, payload=None, period=None)</span>
+<span class="sd">            9 Pattern(indices=(-3,), inverted=True, operator=None, patterns=None, payload=None, period=None)</span>
 
 <span class="sd">        Returns pattern or none.</span>
 <span class="sd">        &quot;&quot;&quot;</span>

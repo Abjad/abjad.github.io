@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>abjad.io &mdash; Abjad 3.5 documentation</title>
+  <title>abjad.io &mdash; Abjad 3.6 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/abjad.css" type="text/css" />
@@ -32,11 +32,11 @@
   <div class="wy-grid-for-nav">
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search"  style="background: #00ff55" >
+        <div class="wy-side-nav-search"  style="background: #00dd00" >
 
 
     <a href="../../index.html" class="icon icon-home" alt="Documentation
-    Home"> Abjad 3.5
+    Home"> Abjad 3.6
 
 
 
@@ -110,7 +110,7 @@
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #00ff55" >
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #00dd00" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../index.html">Abjad</a>
       </nav>
@@ -628,7 +628,8 @@
 
 <span class="sd">        ..  docs::</span>
 
-<span class="sd">            &gt;&gt;&gt; print(format(staff.__graph__(), &quot;graphviz&quot;))</span>
+<span class="sd">            &gt;&gt;&gt; graph = abjad.io._graph_container(staff)</span>
+<span class="sd">            &gt;&gt;&gt; print(format(graph, &quot;graphviz&quot;))</span>
 <span class="sd">            digraph G {</span>
 <span class="sd">                graph [style=rounded];</span>
 <span class="sd">                node [fontname=Arial,</span>
@@ -732,36 +733,10 @@
 
 <span class="sd">    Opens image in default image viewer.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">graphable</span><span class="p">,</span> <span class="n">_score</span><span class="o">.</span><span class="n">Container</span><span class="p">):</span>
+        <span class="n">graphable</span> <span class="o">=</span> <span class="n">_graph_container</span><span class="p">(</span><span class="n">graphable</span><span class="p">)</span>
     <span class="n">grapher</span> <span class="o">=</span> <span class="n">AbjadGrapher</span><span class="p">(</span><span class="n">graphable</span><span class="p">,</span> <span class="n">format_</span><span class="o">=</span><span class="n">format_</span><span class="p">,</span> <span class="n">layout</span><span class="o">=</span><span class="n">layout</span><span class="p">,</span> <span class="o">**</span><span class="n">keywords</span><span class="p">)</span>
     <span class="n">result</span> <span class="o">=</span> <span class="n">grapher</span><span class="p">()</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">result</span><span class="p">:</span>
-        <span class="k">return</span>
-    <span class="n">_</span><span class="p">,</span> <span class="n">format_time</span><span class="p">,</span> <span class="n">render_time</span><span class="p">,</span> <span class="n">success</span><span class="p">,</span> <span class="n">log</span> <span class="o">=</span> <span class="n">result</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">success</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="n">log</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">return_timing</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">format_time</span><span class="p">,</span> <span class="n">render_time</span></div>
-
-
-<div class="viewcode-block" id="play"><a class="viewcode-back" href="../../api/abjad/io.html#abjad.io.play">[docs]</a><span class="k">def</span> <span class="nf">play</span><span class="p">(</span><span class="n">illustrable</span><span class="p">,</span> <span class="n">return_timing</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">keywords</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Plays ``argument``.</span>
-
-<span class="sd">    ..  container:: example</span>
-
-<span class="sd">        &gt;&gt;&gt; note = abjad.Note(&quot;c&#39;4&quot;)</span>
-<span class="sd">        &gt;&gt;&gt; abjad.play(note) # doctest: +SKIP</span>
-
-<span class="sd">    Makes MIDI file.</span>
-
-<span class="sd">    Appends ``.mid`` filename extension under Windows.</span>
-
-<span class="sd">    Appends ``.midi`` filename extension under other operating systems.</span>
-
-<span class="sd">    Opens MIDI file.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">player</span> <span class="o">=</span> <span class="n">Player</span><span class="p">(</span><span class="n">illustrable</span><span class="p">,</span> <span class="o">**</span><span class="n">keywords</span><span class="p">)</span>
-    <span class="n">result</span> <span class="o">=</span> <span class="n">player</span><span class="p">()</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">result</span><span class="p">:</span>
         <span class="k">return</span>
     <span class="n">_</span><span class="p">,</span> <span class="n">format_time</span><span class="p">,</span> <span class="n">render_time</span><span class="p">,</span> <span class="n">success</span><span class="p">,</span> <span class="n">log</span> <span class="o">=</span> <span class="n">result</span>
@@ -986,7 +961,7 @@
     <span class="o">*</span><span class="p">,</span>
     <span class="n">application</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">line_number</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">test</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">test</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
 <span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Opens ``file_path``.</span>

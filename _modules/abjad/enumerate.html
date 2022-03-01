@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>abjad.enumerate &mdash; Abjad 3.5 documentation</title>
+  <title>abjad.enumerate &mdash; Abjad 3.6 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/abjad.css" type="text/css" />
@@ -32,11 +32,11 @@
   <div class="wy-grid-for-nav">
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search"  style="background: #00ff55" >
+        <div class="wy-side-nav-search"  style="background: #00dd00" >
 
 
     <a href="../../index.html" class="icon icon-home" alt="Documentation
-    Home"> Abjad 3.5
+    Home"> Abjad 3.6
 
 
 
@@ -110,7 +110,7 @@
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #00ff55" >
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #00dd00" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../index.html">Abjad</a>
       </nav>
@@ -185,15 +185,15 @@
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Partitions ``sequence`` by restricted growth function ``rgf``.</span>
 
-<span class="sd">    &gt;&gt;&gt; sequence = abjad.Sequence(range(10))</span>
+<span class="sd">    &gt;&gt;&gt; sequence = list(range(10))</span>
 <span class="sd">    &gt;&gt;&gt; rgf = [1, 1, 2, 2, 1, 2, 3, 3, 2, 4]</span>
 
 <span class="sd">    &gt;&gt;&gt; abjad.enumerate._partition_by_rgf(sequence, rgf)</span>
-<span class="sd">    Sequence([Sequence([0, 1, 4]), Sequence([2, 3, 5, 8]), Sequence([6, 7]), Sequence([9])])</span>
+<span class="sd">    [[0, 1, 4], [2, 3, 5, 8], [6, 7], [9]]</span>
 
 <span class="sd">    Returns list of lists.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">rgf</span> <span class="o">=</span> <span class="n">_sequence</span><span class="o">.</span><span class="n">Sequence</span><span class="p">(</span><span class="n">rgf</span><span class="p">)</span>
+    <span class="n">rgf</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">rgf</span><span class="p">)</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">_is_restricted_growth_function</span><span class="p">(</span><span class="n">rgf</span><span class="p">):</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;must be restricted growth function: </span><span class="si">{</span><span class="n">rgf</span><span class="si">!r}</span><span class="s2">.&quot;</span><span class="p">)</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="nb">len</span><span class="p">(</span><span class="n">sequence</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">rgf</span><span class="p">):</span>
@@ -206,8 +206,8 @@
         <span class="n">part_index</span> <span class="o">=</span> <span class="n">part_number</span> <span class="o">-</span> <span class="mi">1</span>
         <span class="n">part</span> <span class="o">=</span> <span class="n">partition</span><span class="p">[</span><span class="n">part_index</span><span class="p">]</span>
         <span class="n">part</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
-    <span class="n">partition</span> <span class="o">=</span> <span class="p">[</span><span class="n">_sequence</span><span class="o">.</span><span class="n">Sequence</span><span class="p">(</span><span class="n">_</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">partition</span><span class="p">]</span>
-    <span class="k">return</span> <span class="n">_sequence</span><span class="o">.</span><span class="n">Sequence</span><span class="p">(</span><span class="n">partition</span><span class="p">)</span>
+    <span class="n">partition</span> <span class="o">=</span> <span class="p">[</span><span class="nb">type</span><span class="p">(</span><span class="n">sequence</span><span class="p">)(</span><span class="n">_</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">partition</span><span class="p">]</span>
+    <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="n">sequence</span><span class="p">)(</span><span class="n">partition</span><span class="p">)</span>
 
 
 <span class="k">def</span> <span class="nf">_yield_restricted_growth_functions</span><span class="p">(</span><span class="n">length</span><span class="p">):</span>
@@ -262,7 +262,7 @@
 
 <span class="sd">    ..  container:: example</span>
 
-<span class="sd">        &gt;&gt;&gt; sequences = [abjad.Sequence([1, 2, 3]), abjad.Sequence([&quot;a&quot;, &quot;b&quot;])]</span>
+<span class="sd">        &gt;&gt;&gt; sequences = [list([1, 2, 3]), list([&quot;a&quot;, &quot;b&quot;])]</span>
 <span class="sd">        &gt;&gt;&gt; for sequence in abjad.enumerate.outer_product(sequences):</span>
 <span class="sd">        ...     sequence</span>
 <span class="sd">        ...</span>
@@ -339,79 +339,79 @@
 
 <span class="sd">    ..  container:: example</span>
 
-<span class="sd">        &gt;&gt;&gt; sequence = abjad.Sequence([1, 2, 3, 4])</span>
+<span class="sd">        &gt;&gt;&gt; sequence = list([1, 2, 3, 4])</span>
 <span class="sd">        &gt;&gt;&gt; for combination in abjad.enumerate.yield_combinations(sequence):</span>
 <span class="sd">        ...     combination</span>
-<span class="sd">        Sequence([])</span>
-<span class="sd">        Sequence([1])</span>
-<span class="sd">        Sequence([2])</span>
-<span class="sd">        Sequence([1, 2])</span>
-<span class="sd">        Sequence([3])</span>
-<span class="sd">        Sequence([1, 3])</span>
-<span class="sd">        Sequence([2, 3])</span>
-<span class="sd">        Sequence([1, 2, 3])</span>
-<span class="sd">        Sequence([4])</span>
-<span class="sd">        Sequence([1, 4])</span>
-<span class="sd">        Sequence([2, 4])</span>
-<span class="sd">        Sequence([1, 2, 4])</span>
-<span class="sd">        Sequence([3, 4])</span>
-<span class="sd">        Sequence([1, 3, 4])</span>
-<span class="sd">        Sequence([2, 3, 4])</span>
-<span class="sd">        Sequence([1, 2, 3, 4])</span>
+<span class="sd">        []</span>
+<span class="sd">        [1]</span>
+<span class="sd">        [2]</span>
+<span class="sd">        [1, 2]</span>
+<span class="sd">        [3]</span>
+<span class="sd">        [1, 3]</span>
+<span class="sd">        [2, 3]</span>
+<span class="sd">        [1, 2, 3]</span>
+<span class="sd">        [4]</span>
+<span class="sd">        [1, 4]</span>
+<span class="sd">        [2, 4]</span>
+<span class="sd">        [1, 2, 4]</span>
+<span class="sd">        [3, 4]</span>
+<span class="sd">        [1, 3, 4]</span>
+<span class="sd">        [2, 3, 4]</span>
+<span class="sd">        [1, 2, 3, 4]</span>
 
 <span class="sd">    ..  container:: example</span>
 
-<span class="sd">        &gt;&gt;&gt; sequence = abjad.Sequence([1, 2, 3, 4])</span>
+<span class="sd">        &gt;&gt;&gt; sequence = list([1, 2, 3, 4])</span>
 <span class="sd">        &gt;&gt;&gt; for combination in abjad.enumerate.yield_combinations(</span>
 <span class="sd">        ...     sequence,</span>
 <span class="sd">        ...     minimum_length=3,</span>
 <span class="sd">        ...     ):</span>
 <span class="sd">        ...     combination</span>
-<span class="sd">        Sequence([1, 2, 3])</span>
-<span class="sd">        Sequence([1, 2, 4])</span>
-<span class="sd">        Sequence([1, 3, 4])</span>
-<span class="sd">        Sequence([2, 3, 4])</span>
-<span class="sd">        Sequence([1, 2, 3, 4])</span>
+<span class="sd">        [1, 2, 3]</span>
+<span class="sd">        [1, 2, 4]</span>
+<span class="sd">        [1, 3, 4]</span>
+<span class="sd">        [2, 3, 4]</span>
+<span class="sd">        [1, 2, 3, 4]</span>
 
 <span class="sd">    ..  container:: example</span>
 
-<span class="sd">        &gt;&gt;&gt; sequence = abjad.Sequence([1, 2, 3, 4])</span>
+<span class="sd">        &gt;&gt;&gt; sequence = list([1, 2, 3, 4])</span>
 <span class="sd">        &gt;&gt;&gt; for combination in abjad.enumerate.yield_combinations(</span>
 <span class="sd">        ...     sequence,</span>
 <span class="sd">        ...     maximum_length=2,</span>
 <span class="sd">        ...     ):</span>
 <span class="sd">        ...     combination</span>
-<span class="sd">        Sequence([])</span>
-<span class="sd">        Sequence([1])</span>
-<span class="sd">        Sequence([2])</span>
-<span class="sd">        Sequence([1, 2])</span>
-<span class="sd">        Sequence([3])</span>
-<span class="sd">        Sequence([1, 3])</span>
-<span class="sd">        Sequence([2, 3])</span>
-<span class="sd">        Sequence([4])</span>
-<span class="sd">        Sequence([1, 4])</span>
-<span class="sd">        Sequence([2, 4])</span>
-<span class="sd">        Sequence([3, 4])</span>
+<span class="sd">        []</span>
+<span class="sd">        [1]</span>
+<span class="sd">        [2]</span>
+<span class="sd">        [1, 2]</span>
+<span class="sd">        [3]</span>
+<span class="sd">        [1, 3]</span>
+<span class="sd">        [2, 3]</span>
+<span class="sd">        [4]</span>
+<span class="sd">        [1, 4]</span>
+<span class="sd">        [2, 4]</span>
+<span class="sd">        [3, 4]</span>
 
 <span class="sd">    ..  container:: example</span>
 
-<span class="sd">        &gt;&gt;&gt; sequence = abjad.Sequence([1, 2, 3, 4])</span>
+<span class="sd">        &gt;&gt;&gt; sequence = list([1, 2, 3, 4])</span>
 <span class="sd">        &gt;&gt;&gt; for combination in abjad.enumerate.yield_combinations(</span>
 <span class="sd">        ...     sequence,</span>
 <span class="sd">        ...     minimum_length=2,</span>
 <span class="sd">        ...     maximum_length=2,</span>
 <span class="sd">        ...     ):</span>
 <span class="sd">        ...     combination</span>
-<span class="sd">        Sequence([1, 2])</span>
-<span class="sd">        Sequence([1, 3])</span>
-<span class="sd">        Sequence([2, 3])</span>
-<span class="sd">        Sequence([1, 4])</span>
-<span class="sd">        Sequence([2, 4])</span>
-<span class="sd">        Sequence([3, 4])</span>
+<span class="sd">        [1, 2]</span>
+<span class="sd">        [1, 3]</span>
+<span class="sd">        [2, 3]</span>
+<span class="sd">        [1, 4]</span>
+<span class="sd">        [2, 4]</span>
+<span class="sd">        [3, 4]</span>
 
 <span class="sd">    ..  container:: example</span>
 
-<span class="sd">        &gt;&gt;&gt; sequence = abjad.Sequence(&quot;text&quot;)</span>
+<span class="sd">        &gt;&gt;&gt; sequence = list(&quot;text&quot;)</span>
 <span class="sd">        &gt;&gt;&gt; for combination in abjad.enumerate.yield_combinations(sequence):</span>
 <span class="sd">        ...     &#39;&#39;.join([str(_) for _ in combination])</span>
 <span class="sd">        &#39;&#39;</span>
@@ -454,7 +454,7 @@
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">argument</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
                 <span class="k">yield</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">sublist</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="k">yield</span> <span class="n">_sequence</span><span class="o">.</span><span class="n">Sequence</span><span class="p">(</span><span class="n">sublist</span><span class="p">)</span></div>
+                <span class="k">yield</span> <span class="nb">type</span><span class="p">(</span><span class="n">argument</span><span class="p">)(</span><span class="n">sublist</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="yield_pairs"><a class="viewcode-back" href="../../api/abjad/enumerate.html#abjad.enumerate.yield_pairs">[docs]</a><span class="k">def</span> <span class="nf">yield_pairs</span><span class="p">(</span><span class="n">argument</span><span class="p">):</span>
@@ -468,12 +468,12 @@
 <span class="sd">        &gt;&gt;&gt; for pair in abjad.enumerate.yield_pairs([1, 2, 3, 4]):</span>
 <span class="sd">        ...     pair</span>
 <span class="sd">        ...</span>
-<span class="sd">        Sequence([1, 2])</span>
-<span class="sd">        Sequence([1, 3])</span>
-<span class="sd">        Sequence([1, 4])</span>
-<span class="sd">        Sequence([2, 3])</span>
-<span class="sd">        Sequence([2, 4])</span>
-<span class="sd">        Sequence([3, 4])</span>
+<span class="sd">        [1, 2]</span>
+<span class="sd">        [1, 3]</span>
+<span class="sd">        [1, 4]</span>
+<span class="sd">        [2, 3]</span>
+<span class="sd">        [2, 4]</span>
+<span class="sd">        [3, 4]</span>
 
 <span class="sd">    ..  container:: example</span>
 
@@ -482,9 +482,9 @@
 <span class="sd">        &gt;&gt;&gt; for pair in abjad.enumerate.yield_pairs([1, 1, 1]):</span>
 <span class="sd">        ...     pair</span>
 <span class="sd">        ...</span>
-<span class="sd">        Sequence([1, 1])</span>
-<span class="sd">        Sequence([1, 1])</span>
-<span class="sd">        Sequence([1, 1])</span>
+<span class="sd">        [1, 1]</span>
+<span class="sd">        [1, 1]</span>
+<span class="sd">        [1, 1]</span>
 
 <span class="sd">    ..  container:: example</span>
 
@@ -508,7 +508,7 @@
         <span class="n">start</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span>
         <span class="k">for</span> <span class="n">item_</span> <span class="ow">in</span> <span class="n">argument</span><span class="p">[</span><span class="n">start</span><span class="p">:]:</span>
             <span class="n">pair</span> <span class="o">=</span> <span class="p">[</span><span class="n">item</span><span class="p">,</span> <span class="n">item_</span><span class="p">]</span>
-            <span class="k">yield</span> <span class="n">_sequence</span><span class="o">.</span><span class="n">Sequence</span><span class="p">(</span><span class="n">pair</span><span class="p">)</span></div>
+            <span class="k">yield</span> <span class="nb">type</span><span class="p">(</span><span class="n">argument</span><span class="p">)(</span><span class="n">pair</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="yield_partitions"><a class="viewcode-back" href="../../api/abjad/enumerate.html#abjad.enumerate.yield_partitions">[docs]</a><span class="k">def</span> <span class="nf">yield_partitions</span><span class="p">(</span><span class="n">argument</span><span class="p">):</span>
@@ -520,24 +520,24 @@
 <span class="sd">        &gt;&gt;&gt; for partition in abjad.enumerate.yield_partitions([0, 1, 2]):</span>
 <span class="sd">        ...     partition</span>
 <span class="sd">        ...</span>
-<span class="sd">        Sequence([Sequence([0, 1, 2])])</span>
-<span class="sd">        Sequence([Sequence([0, 1]), Sequence([2])])</span>
-<span class="sd">        Sequence([Sequence([0]), Sequence([1, 2])])</span>
-<span class="sd">        Sequence([Sequence([0]), Sequence([1]), Sequence([2])])</span>
+<span class="sd">        [[0, 1, 2]]</span>
+<span class="sd">        [[0, 1], [2]]</span>
+<span class="sd">        [[0], [1, 2]]</span>
+<span class="sd">        [[0], [1], [2]]</span>
 
 <span class="sd">    ..  container:: example</span>
 
 <span class="sd">        &gt;&gt;&gt; for partition in abjad.enumerate.yield_partitions([0, 1, 2, 3]):</span>
 <span class="sd">        ...     partition</span>
 <span class="sd">        ...</span>
-<span class="sd">        Sequence([Sequence([0, 1, 2, 3])])</span>
-<span class="sd">        Sequence([Sequence([0, 1, 2]), Sequence([3])])</span>
-<span class="sd">        Sequence([Sequence([0, 1]), Sequence([2, 3])])</span>
-<span class="sd">        Sequence([Sequence([0, 1]), Sequence([2]), Sequence([3])])</span>
-<span class="sd">        Sequence([Sequence([0]), Sequence([1, 2, 3])])</span>
-<span class="sd">        Sequence([Sequence([0]), Sequence([1, 2]), Sequence([3])])</span>
-<span class="sd">        Sequence([Sequence([0]), Sequence([1]), Sequence([2, 3])])</span>
-<span class="sd">        Sequence([Sequence([0]), Sequence([1]), Sequence([2]), Sequence([3])])</span>
+<span class="sd">        [[0, 1, 2, 3]]</span>
+<span class="sd">        [[0, 1, 2], [3]]</span>
+<span class="sd">        [[0, 1], [2, 3]]</span>
+<span class="sd">        [[0, 1], [2], [3]]</span>
+<span class="sd">        [[0], [1, 2, 3]]</span>
+<span class="sd">        [[0], [1, 2], [3]]</span>
+<span class="sd">        [[0], [1], [2, 3]]</span>
+<span class="sd">        [[0], [1], [2], [3]]</span>
 
 <span class="sd">    Returns generator of nested sequences.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -553,8 +553,8 @@
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">part</span> <span class="o">=</span> <span class="p">[</span><span class="n">n</span><span class="p">]</span>
                 <span class="n">partition</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">part</span><span class="p">)</span>
-        <span class="n">parts</span> <span class="o">=</span> <span class="p">[</span><span class="n">_sequence</span><span class="o">.</span><span class="n">Sequence</span><span class="p">(</span><span class="n">_</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">partition</span><span class="p">]</span>
-        <span class="n">partition</span> <span class="o">=</span> <span class="n">_sequence</span><span class="o">.</span><span class="n">Sequence</span><span class="p">(</span><span class="n">parts</span><span class="p">)</span>
+        <span class="n">parts</span> <span class="o">=</span> <span class="p">[</span><span class="nb">type</span><span class="p">(</span><span class="n">argument</span><span class="p">)(</span><span class="n">_</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">partition</span><span class="p">]</span>
+        <span class="n">partition</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="n">argument</span><span class="p">)(</span><span class="n">parts</span><span class="p">)</span>
         <span class="k">yield</span> <span class="n">partition</span></div>
 
 
@@ -567,20 +567,20 @@
 <span class="sd">        &gt;&gt;&gt; for permutation in abjad.enumerate.yield_permutations([1, 2, 3]):</span>
 <span class="sd">        ...     permutation</span>
 <span class="sd">        ...</span>
-<span class="sd">        Sequence([1, 2, 3])</span>
-<span class="sd">        Sequence([1, 3, 2])</span>
-<span class="sd">        Sequence([2, 1, 3])</span>
-<span class="sd">        Sequence([2, 3, 1])</span>
-<span class="sd">        Sequence([3, 1, 2])</span>
-<span class="sd">        Sequence([3, 2, 1])</span>
+<span class="sd">        [1, 2, 3]</span>
+<span class="sd">        [1, 3, 2]</span>
+<span class="sd">        [2, 1, 3]</span>
+<span class="sd">        [2, 3, 1]</span>
+<span class="sd">        [3, 1, 2]</span>
+<span class="sd">        [3, 2, 1]</span>
 
 <span class="sd">    Returns sequence generator.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">_argument</span> <span class="o">=</span> <span class="n">_sequence</span><span class="o">.</span><span class="n">Sequence</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span>
+    <span class="n">_argument</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span>
     <span class="n">length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">_argument</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">permutation</span> <span class="ow">in</span> <span class="n">itertools</span><span class="o">.</span><span class="n">permutations</span><span class="p">(</span><span class="nb">tuple</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">length</span><span class="p">))):</span>
-        <span class="n">permutation</span> <span class="o">=</span> <span class="n">_sequence</span><span class="o">.</span><span class="n">Sequence</span><span class="p">(</span><span class="n">permutation</span><span class="p">)</span>
-        <span class="k">yield</span> <span class="n">_argument</span><span class="o">.</span><span class="n">permute</span><span class="p">(</span><span class="n">permutation</span><span class="p">)</span></div>
+        <span class="n">permutation</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="n">argument</span><span class="p">)(</span><span class="n">permutation</span><span class="p">)</span>
+        <span class="k">yield</span> <span class="n">_sequence</span><span class="o">.</span><span class="n">permute</span><span class="p">(</span><span class="n">argument</span><span class="p">,</span> <span class="n">permutation</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="yield_set_partitions"><a class="viewcode-back" href="../../api/abjad/enumerate.html#abjad.enumerate.yield_set_partitions">[docs]</a><span class="k">def</span> <span class="nf">yield_set_partitions</span><span class="p">(</span><span class="n">argument</span><span class="p">):</span>
@@ -592,27 +592,27 @@
 <span class="sd">        &gt;&gt;&gt; for set_partition in abjad.enumerate.yield_set_partitions([21, 22, 23, 24]):</span>
 <span class="sd">        ...     set_partition</span>
 <span class="sd">        ...</span>
-<span class="sd">        Sequence([Sequence([21, 22, 23, 24])])</span>
-<span class="sd">        Sequence([Sequence([21, 22, 23]), Sequence([24])])</span>
-<span class="sd">        Sequence([Sequence([21, 22, 24]), Sequence([23])])</span>
-<span class="sd">        Sequence([Sequence([21, 22]), Sequence([23, 24])])</span>
-<span class="sd">        Sequence([Sequence([21, 22]), Sequence([23]), Sequence([24])])</span>
-<span class="sd">        Sequence([Sequence([21, 23, 24]), Sequence([22])])</span>
-<span class="sd">        Sequence([Sequence([21, 23]), Sequence([22, 24])])</span>
-<span class="sd">        Sequence([Sequence([21, 23]), Sequence([22]), Sequence([24])])</span>
-<span class="sd">        Sequence([Sequence([21, 24]), Sequence([22, 23])])</span>
-<span class="sd">        Sequence([Sequence([21]), Sequence([22, 23, 24])])</span>
-<span class="sd">        Sequence([Sequence([21]), Sequence([22, 23]), Sequence([24])])</span>
-<span class="sd">        Sequence([Sequence([21, 24]), Sequence([22]), Sequence([23])])</span>
-<span class="sd">        Sequence([Sequence([21]), Sequence([22, 24]), Sequence([23])])</span>
-<span class="sd">        Sequence([Sequence([21]), Sequence([22]), Sequence([23, 24])])</span>
-<span class="sd">        Sequence([Sequence([21]), Sequence([22]), Sequence([23]), Sequence([24])])</span>
+<span class="sd">        [[21, 22, 23, 24]]</span>
+<span class="sd">        [[21, 22, 23], [24]]</span>
+<span class="sd">        [[21, 22, 24], [23]]</span>
+<span class="sd">        [[21, 22], [23, 24]]</span>
+<span class="sd">        [[21, 22], [23], [24]]</span>
+<span class="sd">        [[21, 23, 24], [22]]</span>
+<span class="sd">        [[21, 23], [22, 24]]</span>
+<span class="sd">        [[21, 23], [22], [24]]</span>
+<span class="sd">        [[21, 24], [22, 23]]</span>
+<span class="sd">        [[21], [22, 23, 24]]</span>
+<span class="sd">        [[21], [22, 23], [24]]</span>
+<span class="sd">        [[21, 24], [22], [23]]</span>
+<span class="sd">        [[21], [22, 24], [23]]</span>
+<span class="sd">        [[21], [22], [23, 24]]</span>
+<span class="sd">        [[21], [22], [23], [24]]</span>
 
 <span class="sd">    Returns set partitions in order of restricted growth function.</span>
 
 <span class="sd">    Returns generator of list of lists.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">_argument</span> <span class="o">=</span> <span class="n">_sequence</span><span class="o">.</span><span class="n">Sequence</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span>
+    <span class="n">_argument</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span>
     <span class="n">length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">_argument</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">rgf</span> <span class="ow">in</span> <span class="n">_yield_restricted_growth_functions</span><span class="p">(</span><span class="n">length</span><span class="p">):</span>
         <span class="n">partition</span> <span class="o">=</span> <span class="n">_partition_by_rgf</span><span class="p">(</span><span class="n">_argument</span><span class="p">,</span> <span class="n">rgf</span><span class="p">)</span>
@@ -628,13 +628,13 @@
 <span class="sd">        &gt;&gt;&gt; for subsequence in abjad.enumerate.yield_subsequences([0, 1, 2]):</span>
 <span class="sd">        ...     subsequence</span>
 <span class="sd">        ...</span>
-<span class="sd">        Sequence([])</span>
-<span class="sd">        Sequence([0])</span>
-<span class="sd">        Sequence([0, 1])</span>
-<span class="sd">        Sequence([0, 1, 2])</span>
-<span class="sd">        Sequence([1])</span>
-<span class="sd">        Sequence([1, 2])</span>
-<span class="sd">        Sequence([2])</span>
+<span class="sd">        []</span>
+<span class="sd">        [0]</span>
+<span class="sd">        [0, 1]</span>
+<span class="sd">        [0, 1, 2]</span>
+<span class="sd">        [1]</span>
+<span class="sd">        [1, 2]</span>
+<span class="sd">        [2]</span>
 
 <span class="sd">    ..  container:: example</span>
 
@@ -644,12 +644,12 @@
 <span class="sd">        ...     ):</span>
 <span class="sd">        ...     subsequence</span>
 <span class="sd">        ...</span>
-<span class="sd">        Sequence([0, 1, 2])</span>
-<span class="sd">        Sequence([0, 1, 2, 3])</span>
-<span class="sd">        Sequence([0, 1, 2, 3, 4])</span>
-<span class="sd">        Sequence([1, 2, 3])</span>
-<span class="sd">        Sequence([1, 2, 3, 4])</span>
-<span class="sd">        Sequence([2, 3, 4])</span>
+<span class="sd">        [0, 1, 2]</span>
+<span class="sd">        [0, 1, 2, 3]</span>
+<span class="sd">        [0, 1, 2, 3, 4]</span>
+<span class="sd">        [1, 2, 3]</span>
+<span class="sd">        [1, 2, 3, 4]</span>
+<span class="sd">        [2, 3, 4]</span>
 
 <span class="sd">    ..  container:: example</span>
 
@@ -659,19 +659,19 @@
 <span class="sd">        ...     ):</span>
 <span class="sd">        ...     subsequence</span>
 <span class="sd">        ...</span>
-<span class="sd">        Sequence([])</span>
-<span class="sd">        Sequence([0])</span>
-<span class="sd">        Sequence([0, 1])</span>
-<span class="sd">        Sequence([0, 1, 2])</span>
-<span class="sd">        Sequence([1])</span>
-<span class="sd">        Sequence([1, 2])</span>
-<span class="sd">        Sequence([1, 2, 3])</span>
-<span class="sd">        Sequence([2])</span>
-<span class="sd">        Sequence([2, 3])</span>
-<span class="sd">        Sequence([2, 3, 4])</span>
-<span class="sd">        Sequence([3])</span>
-<span class="sd">        Sequence([3, 4])</span>
-<span class="sd">        Sequence([4])</span>
+<span class="sd">        []</span>
+<span class="sd">        [0]</span>
+<span class="sd">        [0, 1]</span>
+<span class="sd">        [0, 1, 2]</span>
+<span class="sd">        [1]</span>
+<span class="sd">        [1, 2]</span>
+<span class="sd">        [1, 2, 3]</span>
+<span class="sd">        [2]</span>
+<span class="sd">        [2, 3]</span>
+<span class="sd">        [2, 3, 4]</span>
+<span class="sd">        [3]</span>
+<span class="sd">        [3, 4]</span>
+<span class="sd">        [4]</span>
 
 <span class="sd">    ..  container:: example</span>
 
@@ -682,13 +682,13 @@
 <span class="sd">        ...     ):</span>
 <span class="sd">        ...     subsequence</span>
 <span class="sd">        ...</span>
-<span class="sd">        Sequence([0, 1, 2])</span>
-<span class="sd">        Sequence([1, 2, 3])</span>
-<span class="sd">        Sequence([2, 3, 4])</span>
+<span class="sd">        [0, 1, 2]</span>
+<span class="sd">        [1, 2, 3]</span>
+<span class="sd">        [2, 3, 4]</span>
 
 <span class="sd">    Returns sequence generator.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">_argument</span> <span class="o">=</span> <span class="n">_sequence</span><span class="o">.</span><span class="n">Sequence</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span>
+    <span class="n">_argument</span> <span class="o">=</span> <span class="n">argument</span>
     <span class="n">length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">_argument</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">maximum_length</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">maximum_length</span> <span class="o">=</span> <span class="n">length</span>

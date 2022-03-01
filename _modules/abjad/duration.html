@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>abjad.duration &mdash; Abjad 3.5 documentation</title>
+  <title>abjad.duration &mdash; Abjad 3.6 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/abjad.css" type="text/css" />
@@ -32,11 +32,11 @@
   <div class="wy-grid-for-nav">
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search"  style="background: #00ff55" >
+        <div class="wy-side-nav-search"  style="background: #00dd00" >
 
 
     <a href="../../index.html" class="icon icon-home" alt="Documentation
-    Home"> Abjad 3.5
+    Home"> Abjad 3.6
 
 
 
@@ -110,7 +110,7 @@
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #00ff55" >
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #00dd00" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../index.html">Abjad</a>
       </nav>
@@ -133,7 +133,6 @@
 <span class="kn">import</span> <span class="nn">quicktions</span>
 
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">exceptions</span> <span class="k">as</span> <span class="n">_exceptions</span>
-<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="nb">format</span> <span class="k">as</span> <span class="n">_format</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">math</span> <span class="k">as</span> <span class="n">_math</span>
 
 
@@ -524,9 +523,9 @@
 
 <div class="viewcode-block" id="Duration.__repr__"><a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.Duration.__repr__">[docs]</a>    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Gets interpreter representation.</span>
+<span class="sd">        Gets repr.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">_format</span><span class="o">.</span><span class="n">get_repr</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">(</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">numerator</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">denominator</span><span class="si">}</span><span class="s2">)&quot;</span></div>
 
 <div class="viewcode-block" id="Duration.__rmod__"><a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.Duration.__rmod__">[docs]</a>    <span class="k">def</span> <span class="fm">__rmod__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">arguments</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -592,13 +591,6 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__div__</span><span class="p">(</span><span class="o">*</span><span class="n">arguments</span><span class="p">)</span></div>
 
     <span class="c1">### PRIVATE METHODS ###</span>
-
-    <span class="k">def</span> <span class="nf">_get_format_specification</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">_format</span><span class="o">.</span><span class="n">FormatSpecification</span><span class="p">(</span>
-            <span class="n">storage_format_args_values</span><span class="o">=</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">numerator</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">denominator</span><span class="p">],</span>
-            <span class="n">storage_format_is_not_indented</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-            <span class="n">storage_format_keyword_names</span><span class="o">=</span><span class="p">[],</span>
-        <span class="p">)</span>
 
     <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">_group_by_implied_prolation</span><span class="p">(</span><span class="n">durations</span><span class="p">):</span>
@@ -1543,16 +1535,6 @@
 <span class="sd">        &gt;&gt;&gt; isinstance(abjad.Offset(3, 16), numbers.Number)</span>
 <span class="sd">        True</span>
 
-<span class="sd">    ..  container:: example exception</span>
-
-<span class="sd">        REGRESSION. Raises exception when new is attempted:</span>
-
-<span class="sd">        &gt;&gt;&gt; abjad.new(abjad.Offset((3, 16)))</span>
-<span class="sd">        Traceback (most recent call last):</span>
-<span class="sd">            ...</span>
-<span class="sd">        Exception: low-level class not equipped for new():</span>
-<span class="sd">            Offset((3, 16))</span>
-
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="c1">### CLASS VARIABLES ###</span>
@@ -1968,7 +1950,11 @@
 <span class="sd">            Offset((1, 4), displacement=Duration(-1, 16))</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__repr__</span><span class="p">()</span></div>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">displacement</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">(</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">pair</span><span class="si">}</span><span class="s2">)&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">string</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">pair</span><span class="si">}</span><span class="s2">, displacement=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">displacement</span><span class="si">!r}</span><span class="s2">&quot;</span>
+            <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">(</span><span class="si">{</span><span class="n">string</span><span class="si">}</span><span class="s2">)&quot;</span></div>
 
 <div class="viewcode-block" id="Offset.__sub__"><a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.Offset.__sub__">[docs]</a>    <span class="k">def</span> <span class="fm">__sub__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -2010,17 +1996,6 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">displacement</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">Duration</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">displacement</span>
-
-    <span class="k">def</span> <span class="nf">_get_format_specification</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">names</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">values</span> <span class="o">=</span> <span class="p">[(</span><span class="bp">self</span><span class="o">.</span><span class="n">numerator</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">denominator</span><span class="p">)]</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_displacement</span><span class="p">():</span>
-            <span class="n">names</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;displacement&quot;</span><span class="p">]</span>
-        <span class="k">return</span> <span class="n">_format</span><span class="o">.</span><span class="n">FormatSpecification</span><span class="p">(</span>
-            <span class="n">storage_format_args_values</span><span class="o">=</span><span class="n">values</span><span class="p">,</span>
-            <span class="n">storage_format_is_not_indented</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-            <span class="n">storage_format_keyword_names</span><span class="o">=</span><span class="n">names</span><span class="p">,</span>
-        <span class="p">)</span>
 
     <span class="c1">### PUBLIC PROPERTIES ###</span>
 
@@ -2450,7 +2425,7 @@
 <span class="sd">            NonreducedFraction(3, 6)</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">_format</span><span class="o">.</span><span class="n">get_repr</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">(</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">numerator</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">denominator</span><span class="si">}</span><span class="s2">)&quot;</span></div>
 
 <div class="viewcode-block" id="NonreducedFraction.__rmul__"><a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.NonreducedFraction.__rmul__">[docs]</a>    <span class="k">def</span> <span class="fm">__rmul__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;NonreducedFraction&quot;</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -2527,13 +2502,6 @@
         <span class="n">result</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span><span class="n">fraction</span><span class="p">)</span>
         <span class="n">result</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">with_denominator</span><span class="p">(</span><span class="n">denominator</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">result</span>
-
-    <span class="k">def</span> <span class="nf">_get_format_specification</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">_format</span><span class="o">.</span><span class="n">FormatSpecification</span><span class="p">(</span>
-            <span class="n">storage_format_args_values</span><span class="o">=</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">numerator</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">denominator</span><span class="p">],</span>
-            <span class="n">storage_format_is_not_indented</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-            <span class="n">storage_format_keyword_names</span><span class="o">=</span><span class="p">[],</span>
-        <span class="p">)</span>
 
     <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">_parse_input_string</span><span class="p">(</span><span class="n">string</span><span class="p">):</span>

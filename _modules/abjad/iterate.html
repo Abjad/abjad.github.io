@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>abjad.iterate &mdash; Abjad 3.5 documentation</title>
+  <title>abjad.iterate &mdash; Abjad 3.6 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/abjad.css" type="text/css" />
@@ -32,11 +32,11 @@
   <div class="wy-grid-for-nav">
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search"  style="background: #00ff55" >
+        <div class="wy-side-nav-search"  style="background: #00dd00" >
 
 
     <a href="../../index.html" class="icon icon-home" alt="Documentation
-    Home"> Abjad 3.5
+    Home"> Abjad 3.6
 
 
 
@@ -110,7 +110,7 @@
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #00ff55" >
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #00dd00" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../index.html">Abjad</a>
       </nav>
@@ -129,12 +129,16 @@
 <span></span><span class="kn">import</span> <span class="nn">typing</span>
 
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">_iterate</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">duration</span> <span class="k">as</span> <span class="n">_duration</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">pcollections</span> <span class="k">as</span> <span class="n">_pcollections</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">pitch</span> <span class="k">as</span> <span class="n">_pitch</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">score</span> <span class="k">as</span> <span class="n">_score</span>
-<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">selection</span> <span class="k">as</span> <span class="n">_selection</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">select</span> <span class="k">as</span> <span class="n">_select</span>
 
 
-<div class="viewcode-block" id="components"><a class="viewcode-back" href="../../api/abjad/iterate.html#abjad.iterate.components">[docs]</a><span class="k">def</span> <span class="nf">components</span><span class="p">(</span><span class="n">argument</span><span class="p">,</span> <span class="n">prototype</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">exclude</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">grace</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="components"><a class="viewcode-back" href="../../api/abjad/iterate.html#abjad.iterate.components">[docs]</a><span class="k">def</span> <span class="nf">components</span><span class="p">(</span>
+    <span class="n">argument</span><span class="p">,</span> <span class="n">prototype</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">exclude</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">grace</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">None</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Generator</span><span class="p">:</span>
     <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Iterates components in ``argument``.</span>
 
@@ -209,13 +213,13 @@
 
 <span class="sd">        &gt;&gt;&gt; for component in abjad.iterate.components(staff):</span>
 <span class="sd">        ...     component</span>
-<span class="sd">        &lt;Staff{1}&gt;</span>
-<span class="sd">        &lt;Voice-&quot;Music_Voice&quot;{4}&gt;</span>
+<span class="sd">        Staff(&quot;{ c&#39;4 d&#39;4 { { &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 } } f&#39;4 }&quot;)</span>
+<span class="sd">        Voice(&quot;c&#39;4 d&#39;4 { { &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 } } f&#39;4&quot;, name=&#39;Music_Voice&#39;)</span>
 <span class="sd">        Note(&quot;c&#39;4&quot;)</span>
 <span class="sd">        BeforeGraceContainer(&quot;cs&#39;16&quot;)</span>
 <span class="sd">        Note(&quot;cs&#39;16&quot;)</span>
 <span class="sd">        Note(&quot;d&#39;4&quot;)</span>
-<span class="sd">        &lt;&lt;&lt;2&gt;&gt;&gt;</span>
+<span class="sd">        Container(&quot;{ &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 }&quot;)</span>
 <span class="sd">        OnBeatGraceContainer(&quot;&lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16&quot;)</span>
 <span class="sd">        Chord(&quot;&lt;e&#39; g&#39;&gt;16&quot;)</span>
 <span class="sd">        Note(&quot;gs&#39;16&quot;)</span>
@@ -229,12 +233,12 @@
 
 <span class="sd">        &gt;&gt;&gt; for component in abjad.iterate.components(staff, reverse=True):</span>
 <span class="sd">        ...     component</span>
-<span class="sd">        &lt;Staff{1}&gt;</span>
-<span class="sd">        &lt;Voice-&quot;Music_Voice&quot;{4}&gt;</span>
+<span class="sd">        Staff(&quot;{ c&#39;4 d&#39;4 { { &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 } } f&#39;4 }&quot;)</span>
+<span class="sd">        Voice(&quot;c&#39;4 d&#39;4 { { &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 } } f&#39;4&quot;, name=&#39;Music_Voice&#39;)</span>
 <span class="sd">        AfterGraceContainer(&quot;fs&#39;16&quot;)</span>
 <span class="sd">        Note(&quot;fs&#39;16&quot;)</span>
 <span class="sd">        Note(&quot;f&#39;4&quot;)</span>
-<span class="sd">        &lt;&lt;&lt;2&gt;&gt;&gt;</span>
+<span class="sd">        Container(&quot;{ &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 }&quot;)</span>
 <span class="sd">        Voice(&quot;e&#39;4&quot;, name=&#39;Music_Voice&#39;)</span>
 <span class="sd">        Note(&quot;e&#39;4&quot;)</span>
 <span class="sd">        OnBeatGraceContainer(&quot;&lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16&quot;)</span>
@@ -277,27 +281,26 @@
 
 <span class="sd">        &gt;&gt;&gt; for component in abjad.iterate.components(staff, grace=False):</span>
 <span class="sd">        ...     component</span>
-<span class="sd">        &lt;Staff{1}&gt;</span>
-<span class="sd">        &lt;Voice-&quot;Music_Voice&quot;{4}&gt;</span>
+<span class="sd">        Staff(&quot;{ c&#39;4 d&#39;4 { { &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 } } f&#39;4 }&quot;)</span>
+<span class="sd">        Voice(&quot;c&#39;4 d&#39;4 { { &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 } } f&#39;4&quot;, name=&#39;Music_Voice&#39;)</span>
 <span class="sd">        Note(&quot;c&#39;4&quot;)</span>
 <span class="sd">        Note(&quot;d&#39;4&quot;)</span>
-<span class="sd">        &lt;&lt;&lt;2&gt;&gt;&gt;</span>
+<span class="sd">        Container(&quot;{ &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 }&quot;)</span>
 <span class="sd">        Voice(&quot;e&#39;4&quot;, name=&#39;Music_Voice&#39;)</span>
 <span class="sd">        Note(&quot;e&#39;4&quot;)</span>
 <span class="sd">        Note(&quot;f&#39;4&quot;)</span>
 
 <span class="sd">        &gt;&gt;&gt; for component in abjad.iterate.components(staff, grace=False, reverse=True):</span>
 <span class="sd">        ...     component</span>
-<span class="sd">        &lt;Staff{1}&gt;</span>
-<span class="sd">        &lt;Voice-&quot;Music_Voice&quot;{4}&gt;</span>
+<span class="sd">        Staff(&quot;{ c&#39;4 d&#39;4 { { &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 } } f&#39;4 }&quot;)</span>
+<span class="sd">        Voice(&quot;c&#39;4 d&#39;4 { { &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 } } f&#39;4&quot;, name=&#39;Music_Voice&#39;)</span>
 <span class="sd">        Note(&quot;f&#39;4&quot;)</span>
-<span class="sd">        &lt;&lt;&lt;2&gt;&gt;&gt;</span>
+<span class="sd">        Container(&quot;{ &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 }&quot;)</span>
 <span class="sd">        Voice(&quot;e&#39;4&quot;, name=&#39;Music_Voice&#39;)</span>
 <span class="sd">        Note(&quot;e&#39;4&quot;)</span>
 <span class="sd">        Note(&quot;d&#39;4&quot;)</span>
 <span class="sd">        Note(&quot;c&#39;4&quot;)</span>
 
-<span class="sd">    Returns generator.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">_iterate</span><span class="o">.</span><span class="n">_public_iterate_components</span><span class="p">(</span>
         <span class="n">argument</span><span class="p">,</span>
@@ -316,7 +319,7 @@
     <span class="n">grace</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="n">pitched</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="n">reverse</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-<span class="p">):</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Generator</span><span class="p">:</span>
     <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Iterates leaves in ``argument``.</span>
 
@@ -540,7 +543,6 @@
 <span class="sd">        Rest(&#39;r8&#39;)</span>
 <span class="sd">        Rest(&#39;r8&#39;)</span>
 
-<span class="sd">    Returns generator.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">_iterate</span><span class="o">.</span><span class="n">_public_iterate_leaves</span><span class="p">(</span>
         <span class="n">argument</span><span class="p">,</span>
@@ -594,10 +596,10 @@
 <span class="sd">        &gt;&gt;&gt; for logical_tie in abjad.iterate.logical_ties(staff):</span>
 <span class="sd">        ...     logical_tie</span>
 <span class="sd">        ...</span>
-<span class="sd">        LogicalTie([Note(&quot;c&#39;4&quot;), Note(&quot;c&#39;16&quot;)])</span>
-<span class="sd">        LogicalTie([Note(&quot;d&#39;8&quot;)])</span>
-<span class="sd">        LogicalTie([Note(&quot;e&#39;8&quot;)])</span>
-<span class="sd">        LogicalTie([Note(&quot;f&#39;4&quot;), Note(&quot;f&#39;16&quot;)])</span>
+<span class="sd">        LogicalTie(items=[Note(&quot;c&#39;4&quot;), Note(&quot;c&#39;16&quot;)])</span>
+<span class="sd">        LogicalTie(items=[Note(&quot;d&#39;8&quot;)])</span>
+<span class="sd">        LogicalTie(items=[Note(&quot;e&#39;8&quot;)])</span>
+<span class="sd">        LogicalTie(items=[Note(&quot;f&#39;4&quot;), Note(&quot;f&#39;16&quot;)])</span>
 
 <span class="sd">    ..  container:: example</span>
 
@@ -669,65 +671,65 @@
 
 <span class="sd">        &gt;&gt;&gt; for lt in abjad.iterate.logical_ties(staff):</span>
 <span class="sd">        ...     lt</span>
-<span class="sd">        LogicalTie([Note(&quot;c&#39;4&quot;)])</span>
-<span class="sd">        LogicalTie([Note(&quot;cs&#39;16&quot;)])</span>
-<span class="sd">        LogicalTie([Note(&quot;d&#39;4&quot;)])</span>
-<span class="sd">        LogicalTie([Chord(&quot;&lt;e&#39; g&#39;&gt;16&quot;)])</span>
-<span class="sd">        LogicalTie([Note(&quot;gs&#39;16&quot;)])</span>
-<span class="sd">        LogicalTie([Note(&quot;a&#39;16&quot;)])</span>
-<span class="sd">        LogicalTie([Note(&quot;as&#39;16&quot;)])</span>
-<span class="sd">        LogicalTie([Note(&quot;e&#39;4&quot;)])</span>
-<span class="sd">        LogicalTie([Note(&quot;f&#39;4&quot;)])</span>
-<span class="sd">        LogicalTie([Note(&quot;fs&#39;16&quot;)])</span>
+<span class="sd">        LogicalTie(items=[Note(&quot;c&#39;4&quot;)])</span>
+<span class="sd">        LogicalTie(items=[Note(&quot;cs&#39;16&quot;)])</span>
+<span class="sd">        LogicalTie(items=[Note(&quot;d&#39;4&quot;)])</span>
+<span class="sd">        LogicalTie(items=[Chord(&quot;&lt;e&#39; g&#39;&gt;16&quot;)])</span>
+<span class="sd">        LogicalTie(items=[Note(&quot;gs&#39;16&quot;)])</span>
+<span class="sd">        LogicalTie(items=[Note(&quot;a&#39;16&quot;)])</span>
+<span class="sd">        LogicalTie(items=[Note(&quot;as&#39;16&quot;)])</span>
+<span class="sd">        LogicalTie(items=[Note(&quot;e&#39;4&quot;)])</span>
+<span class="sd">        LogicalTie(items=[Note(&quot;f&#39;4&quot;)])</span>
+<span class="sd">        LogicalTie(items=[Note(&quot;fs&#39;16&quot;)])</span>
 
 <span class="sd">        &gt;&gt;&gt; for lt in abjad.iterate.logical_ties(staff, reverse=True):</span>
 <span class="sd">        ...     lt</span>
-<span class="sd">        LogicalTie([Note(&quot;fs&#39;16&quot;)])</span>
-<span class="sd">        LogicalTie([Note(&quot;f&#39;4&quot;)])</span>
-<span class="sd">        LogicalTie([Note(&quot;e&#39;4&quot;)])</span>
-<span class="sd">        LogicalTie([Note(&quot;as&#39;16&quot;)])</span>
-<span class="sd">        LogicalTie([Note(&quot;a&#39;16&quot;)])</span>
-<span class="sd">        LogicalTie([Note(&quot;gs&#39;16&quot;)])</span>
-<span class="sd">        LogicalTie([Chord(&quot;&lt;e&#39; g&#39;&gt;16&quot;)])</span>
-<span class="sd">        LogicalTie([Note(&quot;d&#39;4&quot;)])</span>
-<span class="sd">        LogicalTie([Note(&quot;cs&#39;16&quot;)])</span>
-<span class="sd">        LogicalTie([Note(&quot;c&#39;4&quot;)])</span>
+<span class="sd">        LogicalTie(items=[Note(&quot;fs&#39;16&quot;)])</span>
+<span class="sd">        LogicalTie(items=[Note(&quot;f&#39;4&quot;)])</span>
+<span class="sd">        LogicalTie(items=[Note(&quot;e&#39;4&quot;)])</span>
+<span class="sd">        LogicalTie(items=[Note(&quot;as&#39;16&quot;)])</span>
+<span class="sd">        LogicalTie(items=[Note(&quot;a&#39;16&quot;)])</span>
+<span class="sd">        LogicalTie(items=[Note(&quot;gs&#39;16&quot;)])</span>
+<span class="sd">        LogicalTie(items=[Chord(&quot;&lt;e&#39; g&#39;&gt;16&quot;)])</span>
+<span class="sd">        LogicalTie(items=[Note(&quot;d&#39;4&quot;)])</span>
+<span class="sd">        LogicalTie(items=[Note(&quot;cs&#39;16&quot;)])</span>
+<span class="sd">        LogicalTie(items=[Note(&quot;c&#39;4&quot;)])</span>
 
 <span class="sd">        Set ``grace=True`` to iterate grace logical ties only:</span>
 
 <span class="sd">        &gt;&gt;&gt; for lt in abjad.iterate.logical_ties(staff, grace=True):</span>
 <span class="sd">        ...     lt</span>
-<span class="sd">        LogicalTie([Note(&quot;cs&#39;16&quot;)])</span>
-<span class="sd">        LogicalTie([Chord(&quot;&lt;e&#39; g&#39;&gt;16&quot;)])</span>
-<span class="sd">        LogicalTie([Note(&quot;gs&#39;16&quot;)])</span>
-<span class="sd">        LogicalTie([Note(&quot;a&#39;16&quot;)])</span>
-<span class="sd">        LogicalTie([Note(&quot;as&#39;16&quot;)])</span>
-<span class="sd">        LogicalTie([Note(&quot;fs&#39;16&quot;)])</span>
+<span class="sd">        LogicalTie(items=[Note(&quot;cs&#39;16&quot;)])</span>
+<span class="sd">        LogicalTie(items=[Chord(&quot;&lt;e&#39; g&#39;&gt;16&quot;)])</span>
+<span class="sd">        LogicalTie(items=[Note(&quot;gs&#39;16&quot;)])</span>
+<span class="sd">        LogicalTie(items=[Note(&quot;a&#39;16&quot;)])</span>
+<span class="sd">        LogicalTie(items=[Note(&quot;as&#39;16&quot;)])</span>
+<span class="sd">        LogicalTie(items=[Note(&quot;fs&#39;16&quot;)])</span>
 
 <span class="sd">        &gt;&gt;&gt; for lt in abjad.iterate.logical_ties(staff, grace=True, reverse=True):</span>
 <span class="sd">        ...     lt</span>
-<span class="sd">        LogicalTie([Note(&quot;fs&#39;16&quot;)])</span>
-<span class="sd">        LogicalTie([Note(&quot;as&#39;16&quot;)])</span>
-<span class="sd">        LogicalTie([Note(&quot;a&#39;16&quot;)])</span>
-<span class="sd">        LogicalTie([Note(&quot;gs&#39;16&quot;)])</span>
-<span class="sd">        LogicalTie([Chord(&quot;&lt;e&#39; g&#39;&gt;16&quot;)])</span>
-<span class="sd">        LogicalTie([Note(&quot;cs&#39;16&quot;)])</span>
+<span class="sd">        LogicalTie(items=[Note(&quot;fs&#39;16&quot;)])</span>
+<span class="sd">        LogicalTie(items=[Note(&quot;as&#39;16&quot;)])</span>
+<span class="sd">        LogicalTie(items=[Note(&quot;a&#39;16&quot;)])</span>
+<span class="sd">        LogicalTie(items=[Note(&quot;gs&#39;16&quot;)])</span>
+<span class="sd">        LogicalTie(items=[Chord(&quot;&lt;e&#39; g&#39;&gt;16&quot;)])</span>
+<span class="sd">        LogicalTie(items=[Note(&quot;cs&#39;16&quot;)])</span>
 
 <span class="sd">        Set ``grace=False`` to iterate nongrace logical ties only:</span>
 
 <span class="sd">        &gt;&gt;&gt; for lt in abjad.iterate.logical_ties(staff, grace=False):</span>
 <span class="sd">        ...     lt</span>
-<span class="sd">        LogicalTie([Note(&quot;c&#39;4&quot;)])</span>
-<span class="sd">        LogicalTie([Note(&quot;d&#39;4&quot;)])</span>
-<span class="sd">        LogicalTie([Note(&quot;e&#39;4&quot;)])</span>
-<span class="sd">        LogicalTie([Note(&quot;f&#39;4&quot;)])</span>
+<span class="sd">        LogicalTie(items=[Note(&quot;c&#39;4&quot;)])</span>
+<span class="sd">        LogicalTie(items=[Note(&quot;d&#39;4&quot;)])</span>
+<span class="sd">        LogicalTie(items=[Note(&quot;e&#39;4&quot;)])</span>
+<span class="sd">        LogicalTie(items=[Note(&quot;f&#39;4&quot;)])</span>
 
 <span class="sd">        &gt;&gt;&gt; for lt in abjad.iterate.logical_ties(staff, grace=False, reverse=True):</span>
 <span class="sd">        ...     lt</span>
-<span class="sd">        LogicalTie([Note(&quot;f&#39;4&quot;)])</span>
-<span class="sd">        LogicalTie([Note(&quot;e&#39;4&quot;)])</span>
-<span class="sd">        LogicalTie([Note(&quot;d&#39;4&quot;)])</span>
-<span class="sd">        LogicalTie([Note(&quot;c&#39;4&quot;)])</span>
+<span class="sd">        LogicalTie(items=[Note(&quot;f&#39;4&quot;)])</span>
+<span class="sd">        LogicalTie(items=[Note(&quot;e&#39;4&quot;)])</span>
+<span class="sd">        LogicalTie(items=[Note(&quot;d&#39;4&quot;)])</span>
+<span class="sd">        LogicalTie(items=[Note(&quot;c&#39;4&quot;)])</span>
 
 <span class="sd">    ..  container:: example</span>
 
@@ -766,41 +768,41 @@
 
 <span class="sd">        &gt;&gt;&gt; for lt in abjad.iterate.logical_ties(staff):</span>
 <span class="sd">        ...     lt</span>
-<span class="sd">        LogicalTie([Note(&quot;c&#39;4&quot;), Note(&quot;c&#39;8&quot;)])</span>
-<span class="sd">        LogicalTie([Note(&quot;d&#39;4&quot;)])</span>
-<span class="sd">        LogicalTie([Note(&quot;e&#39;4&quot;), Note(&quot;e&#39;8&quot;)])</span>
-<span class="sd">        LogicalTie([Note(&quot;f&#39;8&quot;)])</span>
+<span class="sd">        LogicalTie(items=[Note(&quot;c&#39;4&quot;), Note(&quot;c&#39;8&quot;)])</span>
+<span class="sd">        LogicalTie(items=[Note(&quot;d&#39;4&quot;)])</span>
+<span class="sd">        LogicalTie(items=[Note(&quot;e&#39;4&quot;), Note(&quot;e&#39;8&quot;)])</span>
+<span class="sd">        LogicalTie(items=[Note(&quot;f&#39;8&quot;)])</span>
 
 <span class="sd">        &gt;&gt;&gt; for lt in abjad.iterate.logical_ties(staff, reverse=True):</span>
 <span class="sd">        ...     lt</span>
-<span class="sd">        LogicalTie([Note(&quot;f&#39;8&quot;)])</span>
-<span class="sd">        LogicalTie([Note(&quot;e&#39;4&quot;), Note(&quot;e&#39;8&quot;)])</span>
-<span class="sd">        LogicalTie([Note(&quot;d&#39;4&quot;)])</span>
-<span class="sd">        LogicalTie([Note(&quot;c&#39;4&quot;), Note(&quot;c&#39;8&quot;)])</span>
+<span class="sd">        LogicalTie(items=[Note(&quot;f&#39;8&quot;)])</span>
+<span class="sd">        LogicalTie(items=[Note(&quot;e&#39;4&quot;), Note(&quot;e&#39;8&quot;)])</span>
+<span class="sd">        LogicalTie(items=[Note(&quot;d&#39;4&quot;)])</span>
+<span class="sd">        LogicalTie(items=[Note(&quot;c&#39;4&quot;), Note(&quot;c&#39;8&quot;)])</span>
 
 <span class="sd">        Set ``nontrivial=True`` to iterate nontrivial logical ties only:</span>
 
 <span class="sd">        &gt;&gt;&gt; for lt in abjad.iterate.logical_ties(staff, nontrivial=True):</span>
 <span class="sd">        ...     lt</span>
-<span class="sd">        LogicalTie([Note(&quot;c&#39;4&quot;), Note(&quot;c&#39;8&quot;)])</span>
-<span class="sd">        LogicalTie([Note(&quot;e&#39;4&quot;), Note(&quot;e&#39;8&quot;)])</span>
+<span class="sd">        LogicalTie(items=[Note(&quot;c&#39;4&quot;), Note(&quot;c&#39;8&quot;)])</span>
+<span class="sd">        LogicalTie(items=[Note(&quot;e&#39;4&quot;), Note(&quot;e&#39;8&quot;)])</span>
 
 <span class="sd">        &gt;&gt;&gt; for lt in abjad.iterate.logical_ties(staff, nontrivial=True, reverse=True):</span>
 <span class="sd">        ...     lt</span>
-<span class="sd">        LogicalTie([Note(&quot;e&#39;4&quot;), Note(&quot;e&#39;8&quot;)])</span>
-<span class="sd">        LogicalTie([Note(&quot;c&#39;4&quot;), Note(&quot;c&#39;8&quot;)])</span>
+<span class="sd">        LogicalTie(items=[Note(&quot;e&#39;4&quot;), Note(&quot;e&#39;8&quot;)])</span>
+<span class="sd">        LogicalTie(items=[Note(&quot;c&#39;4&quot;), Note(&quot;c&#39;8&quot;)])</span>
 
 <span class="sd">        Set ``nontrivial=False`` to iterate trivial logical ties only:</span>
 
 <span class="sd">        &gt;&gt;&gt; for lt in abjad.iterate.logical_ties(staff, nontrivial=False):</span>
 <span class="sd">        ...     lt</span>
-<span class="sd">        LogicalTie([Note(&quot;d&#39;4&quot;)])</span>
-<span class="sd">        LogicalTie([Note(&quot;f&#39;8&quot;)])</span>
+<span class="sd">        LogicalTie(items=[Note(&quot;d&#39;4&quot;)])</span>
+<span class="sd">        LogicalTie(items=[Note(&quot;f&#39;8&quot;)])</span>
 
 <span class="sd">        &gt;&gt;&gt; for lt in abjad.iterate.logical_ties(staff, nontrivial=False, reverse=True):</span>
 <span class="sd">        ...     lt</span>
-<span class="sd">        LogicalTie([Note(&quot;f&#39;8&quot;)])</span>
-<span class="sd">        LogicalTie([Note(&quot;d&#39;4&quot;)])</span>
+<span class="sd">        LogicalTie(items=[Note(&quot;f&#39;8&quot;)])</span>
+<span class="sd">        LogicalTie(items=[Note(&quot;d&#39;4&quot;)])</span>
 
 <span class="sd">    ..  container:: example</span>
 
@@ -837,41 +839,41 @@
 
 <span class="sd">        &gt;&gt;&gt; for lt in abjad.iterate.logical_ties(staff):</span>
 <span class="sd">        ...     lt</span>
-<span class="sd">        LogicalTie([Note(&quot;c&#39;4&quot;), Note(&quot;c&#39;8&quot;)])</span>
-<span class="sd">        LogicalTie([Rest(&#39;r4&#39;)])</span>
-<span class="sd">        LogicalTie([Note(&quot;d&#39;4&quot;), Note(&quot;d&#39;8&quot;)])</span>
-<span class="sd">        LogicalTie([Rest(&#39;r4&#39;)])</span>
+<span class="sd">        LogicalTie(items=[Note(&quot;c&#39;4&quot;), Note(&quot;c&#39;8&quot;)])</span>
+<span class="sd">        LogicalTie(items=[Rest(&#39;r4&#39;)])</span>
+<span class="sd">        LogicalTie(items=[Note(&quot;d&#39;4&quot;), Note(&quot;d&#39;8&quot;)])</span>
+<span class="sd">        LogicalTie(items=[Rest(&#39;r4&#39;)])</span>
 
 <span class="sd">        &gt;&gt;&gt; for lt in abjad.iterate.logical_ties(staff, reverse=True):</span>
 <span class="sd">        ...     lt</span>
-<span class="sd">        LogicalTie([Rest(&#39;r4&#39;)])</span>
-<span class="sd">        LogicalTie([Note(&quot;d&#39;4&quot;), Note(&quot;d&#39;8&quot;)])</span>
-<span class="sd">        LogicalTie([Rest(&#39;r4&#39;)])</span>
-<span class="sd">        LogicalTie([Note(&quot;c&#39;4&quot;), Note(&quot;c&#39;8&quot;)])</span>
+<span class="sd">        LogicalTie(items=[Rest(&#39;r4&#39;)])</span>
+<span class="sd">        LogicalTie(items=[Note(&quot;d&#39;4&quot;), Note(&quot;d&#39;8&quot;)])</span>
+<span class="sd">        LogicalTie(items=[Rest(&#39;r4&#39;)])</span>
+<span class="sd">        LogicalTie(items=[Note(&quot;c&#39;4&quot;), Note(&quot;c&#39;8&quot;)])</span>
 
 <span class="sd">        Set ``pitched=True`` to iterate pitched logical ties only:</span>
 
 <span class="sd">        &gt;&gt;&gt; for lt in abjad.iterate.logical_ties(staff, pitched=True):</span>
 <span class="sd">        ...     lt</span>
-<span class="sd">        LogicalTie([Note(&quot;c&#39;4&quot;), Note(&quot;c&#39;8&quot;)])</span>
-<span class="sd">        LogicalTie([Note(&quot;d&#39;4&quot;), Note(&quot;d&#39;8&quot;)])</span>
+<span class="sd">        LogicalTie(items=[Note(&quot;c&#39;4&quot;), Note(&quot;c&#39;8&quot;)])</span>
+<span class="sd">        LogicalTie(items=[Note(&quot;d&#39;4&quot;), Note(&quot;d&#39;8&quot;)])</span>
 
 <span class="sd">        &gt;&gt;&gt; for lt in abjad.iterate.logical_ties(staff, pitched=True, reverse=True):</span>
 <span class="sd">        ...     lt</span>
-<span class="sd">        LogicalTie([Note(&quot;d&#39;4&quot;), Note(&quot;d&#39;8&quot;)])</span>
-<span class="sd">        LogicalTie([Note(&quot;c&#39;4&quot;), Note(&quot;c&#39;8&quot;)])</span>
+<span class="sd">        LogicalTie(items=[Note(&quot;d&#39;4&quot;), Note(&quot;d&#39;8&quot;)])</span>
+<span class="sd">        LogicalTie(items=[Note(&quot;c&#39;4&quot;), Note(&quot;c&#39;8&quot;)])</span>
 
 <span class="sd">        Set ``pitched=False`` to iterate unpitched logical ties only:</span>
 
 <span class="sd">        &gt;&gt;&gt; for lt in abjad.iterate.logical_ties(staff, pitched=False):</span>
 <span class="sd">        ...     lt</span>
-<span class="sd">        LogicalTie([Rest(&#39;r4&#39;)])</span>
-<span class="sd">        LogicalTie([Rest(&#39;r4&#39;)])</span>
+<span class="sd">        LogicalTie(items=[Rest(&#39;r4&#39;)])</span>
+<span class="sd">        LogicalTie(items=[Rest(&#39;r4&#39;)])</span>
 
 <span class="sd">        &gt;&gt;&gt; for lt in abjad.iterate.logical_ties(staff, pitched=False, reverse=True):</span>
 <span class="sd">        ...     lt</span>
-<span class="sd">        LogicalTie([Rest(&#39;r4&#39;)])</span>
-<span class="sd">        LogicalTie([Rest(&#39;r4&#39;)])</span>
+<span class="sd">        LogicalTie(items=[Rest(&#39;r4&#39;)])</span>
+<span class="sd">        LogicalTie(items=[Rest(&#39;r4&#39;)])</span>
 
 <span class="sd">    ..  container:: example</span>
 
@@ -901,9 +903,8 @@
 <span class="sd">        &gt;&gt;&gt; for logical_tie in abjad.iterate.logical_ties(selection):</span>
 <span class="sd">        ...     logical_tie</span>
 <span class="sd">        ...</span>
-<span class="sd">        LogicalTie([Note(&quot;c&#39;8&quot;), Note(&quot;c&#39;8&quot;), Note(&quot;c&#39;8&quot;)])</span>
+<span class="sd">        LogicalTie(items=[Note(&quot;c&#39;8&quot;), Note(&quot;c&#39;8&quot;), Note(&quot;c&#39;8&quot;)])</span>
 
-<span class="sd">    Returns generator.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">_iterate</span><span class="o">.</span><span class="n">_iterate_logical_ties</span><span class="p">(</span>
         <span class="n">argument</span><span class="p">,</span>
@@ -912,11 +913,11 @@
         <span class="n">nontrivial</span><span class="o">=</span><span class="n">nontrivial</span><span class="p">,</span>
         <span class="n">pitched</span><span class="o">=</span><span class="n">pitched</span><span class="p">,</span>
         <span class="n">reverse</span><span class="o">=</span><span class="n">reverse</span><span class="p">,</span>
-        <span class="n">wrapper_class</span><span class="o">=</span><span class="n">_selection</span><span class="o">.</span><span class="n">LogicalTie</span><span class="p">,</span>
+        <span class="n">wrapper_class</span><span class="o">=</span><span class="n">_select</span><span class="o">.</span><span class="n">LogicalTie</span><span class="p">,</span>
     <span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="pitches"><a class="viewcode-back" href="../../api/abjad/iterate.html#abjad.iterate.pitches">[docs]</a><span class="k">def</span> <span class="nf">pitches</span><span class="p">(</span><span class="n">argument</span><span class="p">):</span>
+<div class="viewcode-block" id="pitches"><a class="viewcode-back" href="../../api/abjad/iterate.html#abjad.iterate.pitches">[docs]</a><span class="k">def</span> <span class="nf">pitches</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Generator</span><span class="p">:</span>
     <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Iterates pitches in ``argument``.</span>
 
@@ -983,7 +984,6 @@
 <span class="sd">        NamedPitch(&quot;e&#39;&quot;)</span>
 <span class="sd">        NamedPitch(&quot;fs&#39;&quot;)</span>
 
-<span class="sd">    Returns generator.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">argument</span><span class="p">,</span> <span class="n">_pitch</span><span class="o">.</span><span class="n">Pitch</span><span class="p">):</span>
         <span class="n">pitch</span> <span class="o">=</span> <span class="n">_pitch</span><span class="o">.</span><span class="n">NamedPitch</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span>
@@ -995,7 +995,7 @@
         <span class="k">pass</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">argument</span><span class="p">,</span> <span class="n">_score</span><span class="o">.</span><span class="n">Chord</span><span class="p">):</span>
         <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">argument</span><span class="o">.</span><span class="n">written_pitches</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">argument</span><span class="p">,</span> <span class="n">_pitch</span><span class="o">.</span><span class="n">PitchSet</span><span class="p">):</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">argument</span><span class="p">,</span> <span class="n">_pcollections</span><span class="o">.</span><span class="n">PitchSet</span><span class="p">):</span>
         <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">argument</span><span class="p">)))</span>
     <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">argument</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">,</span> <span class="nb">set</span><span class="p">)):</span>
         <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">argument</span><span class="p">:</span>
@@ -1015,7 +1015,9 @@
         <span class="k">yield</span> <span class="n">pitch</span></div>
 
 
-<div class="viewcode-block" id="timeline"><a class="viewcode-back" href="../../api/abjad/iterate.html#abjad.iterate.timeline">[docs]</a><span class="k">def</span> <span class="nf">timeline</span><span class="p">(</span><span class="n">argument</span><span class="p">,</span> <span class="n">prototype</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">exclude</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="timeline"><a class="viewcode-back" href="../../api/abjad/iterate.html#abjad.iterate.timeline">[docs]</a><span class="k">def</span> <span class="nf">timeline</span><span class="p">(</span>
+    <span class="n">argument</span><span class="p">,</span> <span class="n">prototype</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">exclude</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">None</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">_score</span><span class="o">.</span><span class="n">Component</span><span class="p">,</span> <span class="o">...</span><span class="p">]:</span>
     <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Iterates leaves in ``argument`` in timeline order.</span>
 
@@ -1168,10 +1170,10 @@
 
 <span class="sd">    Iterates leaves when ``prototype`` is none.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">components</span> <span class="o">=</span> <span class="n">leaves</span><span class="p">(</span><span class="n">argument</span><span class="p">,</span> <span class="n">prototype</span><span class="o">=</span><span class="n">prototype</span><span class="p">,</span> <span class="n">exclude</span><span class="o">=</span><span class="n">exclude</span><span class="p">)</span>
-    <span class="n">components</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">components</span><span class="p">)</span>
+    <span class="n">generator</span> <span class="o">=</span> <span class="n">leaves</span><span class="p">(</span><span class="n">argument</span><span class="p">,</span> <span class="n">prototype</span><span class="o">=</span><span class="n">prototype</span><span class="p">,</span> <span class="n">exclude</span><span class="o">=</span><span class="n">exclude</span><span class="p">)</span>
+    <span class="n">components</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">generator</span><span class="p">)</span>
     <span class="n">components</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">_</span><span class="p">:</span> <span class="n">_</span><span class="o">.</span><span class="n">_get_timespan</span><span class="p">()</span><span class="o">.</span><span class="n">start_offset</span><span class="p">)</span>
-    <span class="n">offset_to_components</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+    <span class="n">offset_to_components</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="n">_duration</span><span class="o">.</span><span class="n">Offset</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="n">_score</span><span class="o">.</span><span class="n">Component</span><span class="p">]]</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">component</span> <span class="ow">in</span> <span class="n">components</span><span class="p">:</span>
         <span class="n">start_offset</span> <span class="o">=</span> <span class="n">component</span><span class="o">.</span><span class="n">_get_timespan</span><span class="p">()</span><span class="o">.</span><span class="n">start_offset</span>
         <span class="k">if</span> <span class="n">start_offset</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">offset_to_components</span><span class="p">:</span>
@@ -1179,12 +1181,12 @@
     <span class="k">for</span> <span class="n">component</span> <span class="ow">in</span> <span class="n">components</span><span class="p">:</span>
         <span class="n">start_offset</span> <span class="o">=</span> <span class="n">component</span><span class="o">.</span><span class="n">_get_timespan</span><span class="p">()</span><span class="o">.</span><span class="n">start_offset</span>
         <span class="n">offset_to_components</span><span class="p">[</span><span class="n">start_offset</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">component</span><span class="p">)</span>
-    <span class="n">components</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">result</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">_score</span><span class="o">.</span><span class="n">Component</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">start_offset</span><span class="p">,</span> <span class="n">list_</span> <span class="ow">in</span> <span class="n">offset_to_components</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-        <span class="n">components</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">list_</span><span class="p">)</span>
+        <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">list_</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">reverse</span><span class="p">:</span>
-        <span class="n">components</span><span class="o">.</span><span class="n">reverse</span><span class="p">()</span>
-    <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">components</span><span class="p">)</span></div>
+        <span class="n">result</span><span class="o">.</span><span class="n">reverse</span><span class="p">()</span>
+    <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">result</span><span class="p">)</span></div>
 </pre></div>
 
     </div>

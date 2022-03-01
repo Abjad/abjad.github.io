@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>abjad.meter &mdash; Abjad 3.5 documentation</title>
+  <title>abjad.meter &mdash; Abjad 3.6 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/abjad.css" type="text/css" />
@@ -32,11 +32,11 @@
   <div class="wy-grid-for-nav">
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search"  style="background: #00ff55" >
+        <div class="wy-side-nav-search"  style="background: #00dd00" >
 
 
     <a href="../../index.html" class="icon icon-home" alt="Documentation
-    Home"> Abjad 3.5
+    Home"> Abjad 3.6
 
 
 
@@ -110,7 +110,7 @@
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #00ff55" >
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #00dd00" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../index.html">Abjad</a>
       </nav>
@@ -131,23 +131,22 @@
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">bisect</span>
 <span class="kn">import</span> <span class="nn">collections</span>
+<span class="kn">import</span> <span class="nn">dataclasses</span>
 <span class="kn">import</span> <span class="nn">typing</span>
 
 <span class="kn">import</span> <span class="nn">uqbar.graphs</span>
 
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">_inspect</span><span class="p">,</span> <span class="n">_iterate</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">duration</span> <span class="k">as</span> <span class="n">_duration</span>
-<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="nb">format</span> <span class="k">as</span> <span class="n">_format</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">indicators</span> <span class="k">as</span> <span class="n">_indicators</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">lilypondfile</span> <span class="k">as</span> <span class="n">_lilypondfile</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">markups</span> <span class="k">as</span> <span class="n">_markups</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">math</span> <span class="k">as</span> <span class="n">_math</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">mutate</span> <span class="k">as</span> <span class="n">_mutate</span>
-<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">new</span> <span class="k">as</span> <span class="n">_new</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">parentage</span> <span class="k">as</span> <span class="n">_parentage</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">rhythmtrees</span> <span class="k">as</span> <span class="n">_rhythmtrees</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">score</span> <span class="k">as</span> <span class="n">_score</span>
-<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">selection</span> <span class="k">as</span> <span class="n">_selection</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">select</span> <span class="k">as</span> <span class="n">_select</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">sequence</span> <span class="k">as</span> <span class="n">_sequence</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">timespan</span> <span class="k">as</span> <span class="n">_timespan</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">typedcollections</span> <span class="k">as</span> <span class="n">_typedcollections</span>
@@ -669,7 +668,7 @@
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">offset_node</span> <span class="o">=</span> <span class="n">uqbar</span><span class="o">.</span><span class="n">graphs</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">attributes</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;shape&quot;</span><span class="p">:</span> <span class="s2">&quot;Mrecord&quot;</span><span class="p">})</span>
             <span class="n">offset_field</span> <span class="o">=</span> <span class="n">uqbar</span><span class="o">.</span><span class="n">graphs</span><span class="o">.</span><span class="n">RecordField</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">offset</span><span class="p">))</span>
-            <span class="n">weight_field</span> <span class="o">=</span> <span class="n">uqbar</span><span class="o">.</span><span class="n">graphs</span><span class="o">.</span><span class="n">RecordField</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;+&quot;</span> <span class="o">*</span> <span class="n">offsets</span><span class="p">[</span><span class="n">offset</span><span class="p">])</span>
+            <span class="n">weight_field</span> <span class="o">=</span> <span class="n">uqbar</span><span class="o">.</span><span class="n">graphs</span><span class="o">.</span><span class="n">RecordField</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;+&quot;</span> <span class="o">*</span> <span class="n">offsets</span><span class="o">.</span><span class="n">items</span><span class="p">[</span><span class="n">offset</span><span class="p">])</span>
             <span class="n">group</span> <span class="o">=</span> <span class="n">uqbar</span><span class="o">.</span><span class="n">graphs</span><span class="o">.</span><span class="n">RecordGroup</span><span class="p">()</span>
             <span class="n">group</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="n">offset_field</span><span class="p">,</span> <span class="n">weight_field</span><span class="p">])</span>
             <span class="n">offset_node</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">group</span><span class="p">)</span>
@@ -683,7 +682,7 @@
                 <span class="n">edge</span><span class="o">.</span><span class="n">attach</span><span class="p">(</span><span class="n">leaf_two_node</span><span class="p">,</span> <span class="n">offset_node</span><span class="p">)</span>
 
         <span class="n">offsets</span> <span class="o">=</span> <span class="n">MetricAccentKernel</span><span class="o">.</span><span class="n">count_offsets</span><span class="p">(</span>
-            <span class="n">_sequence</span><span class="o">.</span><span class="n">Sequence</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">depthwise_offset_inventory</span><span class="p">)</span><span class="o">.</span><span class="n">flatten</span><span class="p">(</span><span class="n">depth</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">_sequence</span><span class="o">.</span><span class="n">flatten</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">depthwise_offset_inventory</span><span class="p">,</span> <span class="n">depth</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
         <span class="p">)</span>
         <span class="n">graph</span> <span class="o">=</span> <span class="n">uqbar</span><span class="o">.</span><span class="n">graphs</span><span class="o">.</span><span class="n">Graph</span><span class="p">(</span>
             <span class="n">name</span><span class="o">=</span><span class="s2">&quot;G&quot;</span><span class="p">,</span>
@@ -719,7 +718,7 @@
         <span class="p">)</span>
         <span class="n">graph</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">offset_subgraph</span><span class="p">)</span>
         <span class="n">make_offset_node</span><span class="p">(</span><span class="n">offset</span><span class="p">,</span> <span class="n">leaves</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-        <span class="k">for</span> <span class="n">one</span><span class="p">,</span> <span class="n">two</span> <span class="ow">in</span> <span class="n">_sequence</span><span class="o">.</span><span class="n">Sequence</span><span class="p">(</span><span class="n">leaves</span><span class="p">)</span><span class="o">.</span><span class="n">nwise</span><span class="p">():</span>
+        <span class="k">for</span> <span class="n">one</span><span class="p">,</span> <span class="n">two</span> <span class="ow">in</span> <span class="n">_sequence</span><span class="o">.</span><span class="n">nwise</span><span class="p">(</span><span class="n">leaves</span><span class="p">):</span>
             <span class="n">offset</span> <span class="o">=</span> <span class="n">one</span><span class="o">.</span><span class="n">stop_offset</span>
             <span class="n">make_offset_node</span><span class="p">(</span><span class="n">offset</span><span class="p">,</span> <span class="n">one</span><span class="p">,</span> <span class="n">two</span><span class="p">)</span>
         <span class="n">offset</span> <span class="o">=</span> <span class="n">leaves</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">stop_offset</span>
@@ -779,9 +778,9 @@
 
 <div class="viewcode-block" id="Meter.__repr__"><a class="viewcode-back" href="../../api/abjad/meter.html#abjad.meter.Meter.__repr__">[docs]</a>    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Gets interpreter representation.</span>
+<span class="sd">        Gets repr.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">_format</span><span class="o">.</span><span class="n">get_repr</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">(</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">rtm_format</span><span class="si">!r}</span><span class="s2">)&quot;</span></div>
 
 <div class="viewcode-block" id="Meter.__str__"><a class="viewcode-back" href="../../api/abjad/meter.html#abjad.meter.Meter.__str__">[docs]</a>    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -805,14 +804,6 @@
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">numerator</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">denominator</span><span class="si">}</span><span class="s2">&quot;</span></div>
-
-    <span class="c1">### PRIVATE METHODS ###</span>
-
-    <span class="k">def</span> <span class="nf">_get_format_specification</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">_format</span><span class="o">.</span><span class="n">FormatSpecification</span><span class="p">(</span>
-            <span class="n">storage_format_args_values</span><span class="o">=</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">rtm_format</span><span class="p">],</span>
-            <span class="n">storage_format_keyword_names</span><span class="o">=</span><span class="p">[],</span>
-        <span class="p">)</span>
 
     <span class="c1">### PUBLIC PROPERTIES ###</span>
 
@@ -1161,55 +1152,10 @@
 <span class="sd">        ..  container:: example</span>
 
 <span class="sd">            &gt;&gt;&gt; meter = abjad.Meter((7, 4))</span>
-<span class="sd">            &gt;&gt;&gt; print(abjad.storage(meter.root_node))</span>
-<span class="sd">            abjad.rhythmtrees.RhythmTreeContainer(</span>
-<span class="sd">                children=(</span>
-<span class="sd">                    abjad.rhythmtrees.RhythmTreeContainer(</span>
-<span class="sd">                        children=(</span>
-<span class="sd">                            abjad.rhythmtrees.RhythmTreeLeaf(</span>
-<span class="sd">                                preprolated_duration=abjad.Duration(1, 4),</span>
-<span class="sd">                                is_pitched=True,</span>
-<span class="sd">                                ),</span>
-<span class="sd">                            abjad.rhythmtrees.RhythmTreeLeaf(</span>
-<span class="sd">                                preprolated_duration=abjad.Duration(1, 4),</span>
-<span class="sd">                                is_pitched=True,</span>
-<span class="sd">                                ),</span>
-<span class="sd">                            abjad.rhythmtrees.RhythmTreeLeaf(</span>
-<span class="sd">                                preprolated_duration=abjad.Duration(1, 4),</span>
-<span class="sd">                                is_pitched=True,</span>
-<span class="sd">                                ),</span>
-<span class="sd">                            ),</span>
-<span class="sd">                        preprolated_duration=abjad.NonreducedFraction(3, 4),</span>
-<span class="sd">                        ),</span>
-<span class="sd">                    abjad.rhythmtrees.RhythmTreeContainer(</span>
-<span class="sd">                        children=(</span>
-<span class="sd">                            abjad.rhythmtrees.RhythmTreeLeaf(</span>
-<span class="sd">                                preprolated_duration=abjad.Duration(1, 4),</span>
-<span class="sd">                                is_pitched=True,</span>
-<span class="sd">                                ),</span>
-<span class="sd">                            abjad.rhythmtrees.RhythmTreeLeaf(</span>
-<span class="sd">                                preprolated_duration=abjad.Duration(1, 4),</span>
-<span class="sd">                                is_pitched=True,</span>
-<span class="sd">                                ),</span>
-<span class="sd">                            ),</span>
-<span class="sd">                        preprolated_duration=abjad.NonreducedFraction(2, 4),</span>
-<span class="sd">                        ),</span>
-<span class="sd">                    abjad.rhythmtrees.RhythmTreeContainer(</span>
-<span class="sd">                        children=(</span>
-<span class="sd">                            abjad.rhythmtrees.RhythmTreeLeaf(</span>
-<span class="sd">                                preprolated_duration=abjad.Duration(1, 4),</span>
-<span class="sd">                                is_pitched=True,</span>
-<span class="sd">                                ),</span>
-<span class="sd">                            abjad.rhythmtrees.RhythmTreeLeaf(</span>
-<span class="sd">                                preprolated_duration=abjad.Duration(1, 4),</span>
-<span class="sd">                                is_pitched=True,</span>
-<span class="sd">                                ),</span>
-<span class="sd">                            ),</span>
-<span class="sd">                        preprolated_duration=abjad.NonreducedFraction(2, 4),</span>
-<span class="sd">                        ),</span>
-<span class="sd">                    ),</span>
-<span class="sd">                preprolated_duration=abjad.NonreducedFraction(7, 4),</span>
-<span class="sd">                )</span>
+<span class="sd">            &gt;&gt;&gt; for _ in meter.root_node: _</span>
+<span class="sd">            RhythmTreeContainer((3, 4))</span>
+<span class="sd">            RhythmTreeContainer((2, 4))</span>
+<span class="sd">            RhythmTreeContainer((2, 4))</span>
 
 <span class="sd">        Returns rhythm tree node.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -1328,7 +1274,7 @@
         <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">extra_depth</span><span class="p">):</span>
             <span class="n">old_offsets</span> <span class="o">=</span> <span class="n">inventory</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
             <span class="n">new_offsets</span> <span class="o">=</span> <span class="p">[]</span>
-            <span class="k">for</span> <span class="n">first</span><span class="p">,</span> <span class="n">second</span> <span class="ow">in</span> <span class="n">_sequence</span><span class="o">.</span><span class="n">Sequence</span><span class="p">(</span><span class="n">old_offsets</span><span class="p">)</span><span class="o">.</span><span class="n">nwise</span><span class="p">():</span>
+            <span class="k">for</span> <span class="n">first</span><span class="p">,</span> <span class="n">second</span> <span class="ow">in</span> <span class="n">_sequence</span><span class="o">.</span><span class="n">nwise</span><span class="p">(</span><span class="n">old_offsets</span><span class="p">):</span>
                 <span class="n">new_offsets</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">first</span><span class="p">)</span>
                 <span class="n">new_offsets</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">first</span> <span class="o">+</span> <span class="n">second</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
             <span class="n">new_offsets</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">old_offsets</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
@@ -1346,7 +1292,8 @@
                 <span class="n">kernel</span><span class="p">[</span><span class="n">offset</span><span class="p">]</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Multiplier</span><span class="p">(</span><span class="n">response</span><span class="p">,</span> <span class="n">total</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">MetricAccentKernel</span><span class="p">(</span><span class="n">kernel</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Meter.rewrite_meter"><a class="viewcode-back" href="../../api/abjad/meter.html#abjad.meter.Meter.rewrite_meter">[docs]</a>    <span class="k">def</span> <span class="nf">rewrite_meter</span><span class="p">(</span>
+<div class="viewcode-block" id="Meter.rewrite_meter"><a class="viewcode-back" href="../../api/abjad/meter.html#abjad.meter.Meter.rewrite_meter">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">rewrite_meter</span><span class="p">(</span>
         <span class="n">components</span><span class="p">,</span>
         <span class="n">meter</span><span class="p">,</span>
         <span class="n">boundary_depth</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
@@ -2495,7 +2442,9 @@
             <span class="n">logical_tie</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="p">):</span>
             <span class="n">offsets</span> <span class="o">=</span> <span class="n">_MeterManager</span><span class="o">.</span><span class="n">get_offsets_at_depth</span><span class="p">(</span><span class="n">depth</span><span class="p">,</span> <span class="n">offset_inventory</span><span class="p">)</span>
-            <span class="n">logical_tie_duration</span> <span class="o">=</span> <span class="n">logical_tie</span><span class="o">.</span><span class="n">_get_preprolated_duration</span><span class="p">()</span>
+            <span class="n">logical_tie_duration</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span>
+                <span class="n">_</span><span class="o">.</span><span class="n">_get_preprolated_duration</span><span class="p">()</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">logical_tie</span>
+            <span class="p">)</span>
             <span class="n">logical_tie_timespan</span> <span class="o">=</span> <span class="n">_inspect</span><span class="o">.</span><span class="n">_get_timespan</span><span class="p">(</span><span class="n">logical_tie</span><span class="p">)</span>
             <span class="n">logical_tie_start_offset</span> <span class="o">=</span> <span class="n">logical_tie_timespan</span><span class="o">.</span><span class="n">start_offset</span>
             <span class="n">logical_tie_stop_offset</span> <span class="o">=</span> <span class="n">logical_tie_timespan</span><span class="o">.</span><span class="n">stop_offset</span>
@@ -2520,7 +2469,7 @@
                 <span class="k">if</span> <span class="n">split_offset</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                     <span class="n">split_offset</span> <span class="o">-=</span> <span class="n">logical_tie_start_offset</span>
                     <span class="n">shards</span> <span class="o">=</span> <span class="n">_mutate</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">logical_tie</span><span class="p">[:],</span> <span class="p">[</span><span class="n">split_offset</span><span class="p">])</span>
-                    <span class="n">logical_ties</span> <span class="o">=</span> <span class="p">[</span><span class="n">_selection</span><span class="o">.</span><span class="n">LogicalTie</span><span class="p">(</span><span class="n">_</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">shards</span><span class="p">]</span>
+                    <span class="n">logical_ties</span> <span class="o">=</span> <span class="p">[</span><span class="n">_select</span><span class="o">.</span><span class="n">LogicalTie</span><span class="p">(</span><span class="n">_</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">shards</span><span class="p">]</span>
                     <span class="k">for</span> <span class="n">logical_tie</span> <span class="ow">in</span> <span class="n">logical_ties</span><span class="p">:</span>
                         <span class="n">recurse</span><span class="p">(</span>
                             <span class="n">boundary_depth</span><span class="o">=</span><span class="n">boundary_depth</span><span class="p">,</span>
@@ -2552,7 +2501,7 @@
                 <span class="k">assert</span> <span class="n">split_offset</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
                 <span class="n">split_offset</span> <span class="o">-=</span> <span class="n">logical_tie_start_offset</span>
                 <span class="n">shards</span> <span class="o">=</span> <span class="n">_mutate</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">logical_tie</span><span class="p">[:],</span> <span class="p">[</span><span class="n">split_offset</span><span class="p">])</span>
-                <span class="n">logical_ties</span> <span class="o">=</span> <span class="p">[</span><span class="n">_selection</span><span class="o">.</span><span class="n">LogicalTie</span><span class="p">(</span><span class="n">shard</span><span class="p">)</span> <span class="k">for</span> <span class="n">shard</span> <span class="ow">in</span> <span class="n">shards</span><span class="p">]</span>
+                <span class="n">logical_ties</span> <span class="o">=</span> <span class="p">[</span><span class="n">_select</span><span class="o">.</span><span class="n">LogicalTie</span><span class="p">(</span><span class="n">shard</span><span class="p">)</span> <span class="k">for</span> <span class="n">shard</span> <span class="ow">in</span> <span class="n">shards</span><span class="p">]</span>
                 <span class="k">for</span> <span class="n">logical_tie</span> <span class="ow">in</span> <span class="n">logical_ties</span><span class="p">:</span>
                     <span class="n">recurse</span><span class="p">(</span>
                         <span class="n">boundary_depth</span><span class="o">=</span><span class="n">boundary_depth</span><span class="p">,</span>
@@ -2563,14 +2512,9 @@
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">_mutate</span><span class="o">.</span><span class="n">_fuse</span><span class="p">(</span><span class="n">logical_tie</span><span class="p">[:])</span>
 
-        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">components</span><span class="p">,</span> <span class="n">_selection</span><span class="o">.</span><span class="n">Selection</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">components</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">meter</span><span class="p">,</span> <span class="n">Meter</span><span class="p">):</span>
             <span class="n">meter</span> <span class="o">=</span> <span class="n">Meter</span><span class="p">(</span><span class="n">meter</span><span class="p">)</span>
         <span class="n">boundary_depth</span> <span class="o">=</span> <span class="n">boundary_depth</span> <span class="ow">or</span> <span class="n">meter</span><span class="o">.</span><span class="n">preferred_boundary_depth</span>
-        <span class="c1"># Validate arguments.</span>
-        <span class="k">assert</span> <span class="n">_selection</span><span class="o">.</span><span class="n">Selection</span><span class="p">(</span><span class="n">components</span><span class="p">)</span><span class="o">.</span><span class="n">are_contiguous_logical_voice</span><span class="p">(</span>
-            <span class="n">ignore_before_after_grace</span><span class="o">=</span><span class="kc">True</span>
-        <span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">meter</span><span class="p">,</span> <span class="n">Meter</span><span class="p">):</span>
             <span class="n">meter</span> <span class="o">=</span> <span class="n">Meter</span><span class="p">(</span><span class="n">meter</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">boundary_depth</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -2607,7 +2551,7 @@
         <span class="n">iterator</span> <span class="o">=</span> <span class="n">_MeterManager</span><span class="o">.</span><span class="n">iterate_rewrite_inputs</span><span class="p">(</span><span class="n">components</span><span class="p">)</span>
         <span class="n">items</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">iterator</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">items</span><span class="p">:</span>
-            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">_selection</span><span class="o">.</span><span class="n">LogicalTie</span><span class="p">):</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">_select</span><span class="o">.</span><span class="n">LogicalTie</span><span class="p">):</span>
                 <span class="n">recurse</span><span class="p">(</span>
                     <span class="n">boundary_depth</span><span class="o">=</span><span class="n">boundary_depth</span><span class="p">,</span>
                     <span class="n">boundary_offsets</span><span class="o">=</span><span class="n">boundary_offsets</span><span class="p">,</span>
@@ -2639,38 +2583,23 @@
                 <span class="p">)</span></div></div>
 
 
-<div class="viewcode-block" id="MeterList"><a class="viewcode-back" href="../../api/abjad/meter.html#abjad.meter.MeterList">[docs]</a><span class="k">class</span> <span class="nc">MeterList</span><span class="p">(</span><span class="n">_typedcollections</span><span class="o">.</span><span class="n">TypedList</span><span class="p">):</span>
+<div class="viewcode-block" id="MeterList"><a class="viewcode-back" href="../../api/abjad/meter.html#abjad.meter.MeterList">[docs]</a><span class="nd">@dataclasses</span><span class="o">.</span><span class="n">dataclass</span><span class="p">(</span><span class="n">slots</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">MeterList</span><span class="p">(</span><span class="n">_typedcollections</span><span class="o">.</span><span class="n">TypedList</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Meter list.</span>
 
 <span class="sd">    ..  container:: example</span>
 
-<span class="sd">        &gt;&gt;&gt; meters = abjad.MeterList([</span>
-<span class="sd">        ...     (3, 4), (5, 16), (7, 8),</span>
-<span class="sd">        ...     ])</span>
-
-<span class="sd">        &gt;&gt;&gt; string = abjad.storage(meters)</span>
-<span class="sd">        &gt;&gt;&gt; print(string)</span>
-<span class="sd">        abjad.MeterList(</span>
-<span class="sd">            [</span>
-<span class="sd">                abjad.Meter(</span>
-<span class="sd">                    &#39;(3/4 (1/4 1/4 1/4))&#39;</span>
-<span class="sd">                    ),</span>
-<span class="sd">                abjad.Meter(</span>
-<span class="sd">                    &#39;(5/16 ((3/16 (1/16 1/16 1/16)) (2/16 (1/16 1/16))))&#39;</span>
-<span class="sd">                    ),</span>
-<span class="sd">                abjad.Meter(</span>
-<span class="sd">                    &#39;(7/8 ((3/8 (1/8 1/8 1/8)) (2/8 (1/8 1/8)) (2/8 (1/8 1/8))))&#39;</span>
-<span class="sd">                    ),</span>
-<span class="sd">                ]</span>
-<span class="sd">            )</span>
+<span class="sd">        &gt;&gt;&gt; meters = abjad.MeterList([(3, 4), (5, 16), (7, 8)])</span>
+<span class="sd">        &gt;&gt;&gt; for _ in meters: _</span>
+<span class="sd">        Meter(&#39;(3/4 (1/4 1/4 1/4))&#39;)</span>
+<span class="sd">        Meter(&#39;(5/16 ((3/16 (1/16 1/16 1/16)) (2/16 (1/16 1/16))))&#39;)</span>
+<span class="sd">        Meter(&#39;(7/8 ((3/8 (1/8 1/8 1/8)) (2/8 (1/8 1/8)) (2/8 (1/8 1/8))))&#39;)</span>
 
 <span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.meter.illustrate_meter_list(meters, scale=0.5)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(lilypond_file) # doctest: +SKIP</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="vm">__slots__</span> <span class="o">=</span> <span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">_coerce_item</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">Meter</span><span class="p">(</span><span class="n">item</span><span class="p">)</span></div>
@@ -2849,7 +2778,7 @@
     <span class="n">total_duration</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">durations</span><span class="p">)</span>
     <span class="n">offsets</span> <span class="o">=</span> <span class="n">_math</span><span class="o">.</span><span class="n">cumulative_sums</span><span class="p">(</span><span class="n">durations</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
     <span class="n">timespans</span> <span class="o">=</span> <span class="n">_timespan</span><span class="o">.</span><span class="n">TimespanList</span><span class="p">()</span>
-    <span class="k">for</span> <span class="n">one</span><span class="p">,</span> <span class="n">two</span> <span class="ow">in</span> <span class="n">_sequence</span><span class="o">.</span><span class="n">Sequence</span><span class="p">(</span><span class="n">offsets</span><span class="p">)</span><span class="o">.</span><span class="n">nwise</span><span class="p">():</span>
+    <span class="k">for</span> <span class="n">one</span><span class="p">,</span> <span class="n">two</span> <span class="ow">in</span> <span class="n">_sequence</span><span class="o">.</span><span class="n">nwise</span><span class="p">(</span><span class="n">offsets</span><span class="p">):</span>
         <span class="n">timespan</span> <span class="o">=</span> <span class="n">_timespan</span><span class="o">.</span><span class="n">Timespan</span><span class="p">(</span><span class="n">start_offset</span><span class="o">=</span><span class="n">one</span><span class="p">,</span> <span class="n">stop_offset</span><span class="o">=</span><span class="n">two</span><span class="p">)</span>
         <span class="n">timespans</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">timespan</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">range_</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -2916,7 +2845,7 @@
     <span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">strings</span><span class="p">)</span>
     <span class="n">markup</span> <span class="o">=</span> <span class="n">_markups</span><span class="o">.</span><span class="n">Markup</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
     <span class="n">lilypond_file</span> <span class="o">=</span> <span class="n">_lilypondfile</span><span class="o">.</span><span class="n">LilyPondFile</span><span class="p">()</span>
-    <span class="n">markup</span> <span class="o">=</span> <span class="n">_new</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">markup</span><span class="p">,</span> <span class="n">direction</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+    <span class="n">markup</span> <span class="o">=</span> <span class="n">dataclasses</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">markup</span><span class="p">,</span> <span class="n">direction</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
     <span class="n">lilypond_file</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">markup</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">lilypond_file</span></div>
 
@@ -2930,18 +2859,7 @@
 <span class="sd">        &gt;&gt;&gt; hierarchy = abjad.Meter((7, 8))</span>
 <span class="sd">        &gt;&gt;&gt; kernel = hierarchy.generate_offset_kernel_to_denominator(8)</span>
 <span class="sd">        &gt;&gt;&gt; kernel</span>
-<span class="sd">        MetricAccentKernel(</span>
-<span class="sd">            {</span>
-<span class="sd">                Offset((0, 1)): Multiplier(3, 14),</span>
-<span class="sd">                Offset((1, 8)): Multiplier(1, 14),</span>
-<span class="sd">                Offset((1, 4)): Multiplier(1, 14),</span>
-<span class="sd">                Offset((3, 8)): Multiplier(1, 7),</span>
-<span class="sd">                Offset((1, 2)): Multiplier(1, 14),</span>
-<span class="sd">                Offset((5, 8)): Multiplier(1, 7),</span>
-<span class="sd">                Offset((3, 4)): Multiplier(1, 14),</span>
-<span class="sd">                Offset((7, 8)): Multiplier(3, 14),</span>
-<span class="sd">                }</span>
-<span class="sd">            )</span>
+<span class="sd">        MetricAccentKernel(kernel={Offset((0, 1)): Multiplier(3, 14), Offset((7, 8)): Multiplier(3, 14), Offset((3, 8)): Multiplier(1, 7), Offset((5, 8)): Multiplier(1, 7), Offset((1, 8)): Multiplier(1, 14), Offset((1, 4)): Multiplier(1, 14), Offset((1, 2)): Multiplier(1, 14), Offset((3, 4)): Multiplier(1, 14)})</span>
 
 <span class="sd">    Call the kernel against an expression from which offsets can be counted to receive an</span>
 <span class="sd">    impulse-response:</span>
@@ -2987,7 +2905,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">offset_count</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">count_offsets</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span>
         <span class="n">response</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Multiplier</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-        <span class="k">for</span> <span class="n">offset</span><span class="p">,</span> <span class="n">count</span> <span class="ow">in</span> <span class="n">offset_count</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">for</span> <span class="n">offset</span><span class="p">,</span> <span class="n">count</span> <span class="ow">in</span> <span class="n">offset_count</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="k">if</span> <span class="n">offset</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_kernel</span><span class="p">:</span>
                 <span class="n">weight</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_kernel</span><span class="p">[</span><span class="n">offset</span><span class="p">]</span>
                 <span class="n">weighted_count</span> <span class="o">=</span> <span class="n">weight</span> <span class="o">*</span> <span class="n">count</span>
@@ -3013,18 +2931,9 @@
 
 <div class="viewcode-block" id="MetricAccentKernel.__repr__"><a class="viewcode-back" href="../../api/abjad/meter.html#abjad.meter.MetricAccentKernel.__repr__">[docs]</a>    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Gets interpreter representation.</span>
+<span class="sd">        Gets repr.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">_format</span><span class="o">.</span><span class="n">get_repr</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
-
-    <span class="c1">### PRIVATE METHODS ###</span>
-
-    <span class="k">def</span> <span class="nf">_get_format_specification</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">_format</span><span class="o">.</span><span class="n">FormatSpecification</span><span class="p">(</span>
-            <span class="n">repr_is_indented</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-            <span class="n">storage_format_args_values</span><span class="o">=</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">kernel</span><span class="p">],</span>
-            <span class="n">storage_format_keyword_names</span><span class="o">=</span><span class="p">[],</span>
-        <span class="p">)</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">(kernel=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">kernel</span><span class="si">}</span><span class="s2">)&quot;</span></div>
 
     <span class="c1">### PUBLIC PROPERTIES ###</span>
 
@@ -3082,9 +2991,9 @@
 <span class="sd">            &gt;&gt;&gt; abjad.show(score) # doctest: +SKIP</span>
 
 <span class="sd">            &gt;&gt;&gt; MetricAccentKernel = abjad.MetricAccentKernel</span>
-<span class="sd">            &gt;&gt;&gt; leaves = abjad.select(score).leaves()</span>
+<span class="sd">            &gt;&gt;&gt; leaves = abjad.select.leaves(score)</span>
 <span class="sd">            &gt;&gt;&gt; counter = abjad.MetricAccentKernel.count_offsets(leaves)</span>
-<span class="sd">            &gt;&gt;&gt; for offset, count in sorted(counter.items()):</span>
+<span class="sd">            &gt;&gt;&gt; for offset, count in sorted(counter.items.items()):</span>
 <span class="sd">            ...     offset, count</span>
 <span class="sd">            (Offset((0, 1)), 2)</span>
 <span class="sd">            (Offset((1, 8)), 2)</span>
@@ -3100,7 +3009,7 @@
 <span class="sd">            &gt;&gt;&gt; c = abjad.Timespan(15, 20)</span>
 
 <span class="sd">            &gt;&gt;&gt; counter = MetricAccentKernel.count_offsets((a, b, c))</span>
-<span class="sd">            &gt;&gt;&gt; for offset, count in sorted(counter.items()):</span>
+<span class="sd">            &gt;&gt;&gt; for offset, count in sorted(counter.items.items()):</span>
 <span class="sd">            ...     offset, count</span>
 <span class="sd">            (Offset((0, 1)), 1)</span>
 <span class="sd">            (Offset((5, 1)), 1)</span>
@@ -3166,7 +3075,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_offset_counter</span> <span class="o">=</span> <span class="n">MetricAccentKernel</span><span class="o">.</span><span class="n">count_offsets</span><span class="p">(</span><span class="n">offset_counter</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_offset_counter</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_ordered_offsets</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">offset_counter</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ordered_offsets</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">offset_counter</span><span class="o">.</span><span class="n">items</span><span class="p">))</span>
         <span class="n">meters</span> <span class="o">=</span> <span class="n">meters</span> <span class="ow">or</span> <span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_meters</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">Meter</span><span class="p">(</span><span class="n">_</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">meters</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_kernel_denominator</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="n">kernel_denominator</span><span class="p">)</span>
@@ -3249,7 +3158,7 @@
             <span class="k">return</span> <span class="n">offset_counter</span>
         <span class="n">offset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ordered_offsets</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
         <span class="k">while</span> <span class="n">offset</span> <span class="o">&lt;=</span> <span class="n">stop_offset</span><span class="p">:</span>
-            <span class="n">count</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">offset_counter</span><span class="p">[</span><span class="n">offset</span><span class="p">]</span>
+            <span class="n">count</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">offset_counter</span><span class="o">.</span><span class="n">items</span><span class="p">[</span><span class="n">offset</span><span class="p">]</span>
             <span class="n">offset_counter</span><span class="p">[</span><span class="n">offset</span> <span class="o">-</span> <span class="n">start_offset</span><span class="p">]</span> <span class="o">=</span> <span class="n">count</span>
             <span class="n">index</span> <span class="o">+=</span> <span class="mi">1</span>
             <span class="k">if</span> <span class="n">index</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ordered_offsets</span><span class="p">):</span>
@@ -3354,7 +3263,7 @@
         <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">offset_inventory</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">depth</span><span class="p">:</span>
             <span class="n">new_offsets</span> <span class="o">=</span> <span class="p">[]</span>
             <span class="n">old_offsets</span> <span class="o">=</span> <span class="n">offset_inventory</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-            <span class="k">for</span> <span class="n">first</span><span class="p">,</span> <span class="n">second</span> <span class="ow">in</span> <span class="n">_sequence</span><span class="o">.</span><span class="n">Sequence</span><span class="p">(</span><span class="n">old_offsets</span><span class="p">)</span><span class="o">.</span><span class="n">nwise</span><span class="p">():</span>
+            <span class="k">for</span> <span class="n">first</span><span class="p">,</span> <span class="n">second</span> <span class="ow">in</span> <span class="n">_sequence</span><span class="o">.</span><span class="n">nwise</span><span class="p">(</span><span class="n">old_offsets</span><span class="p">):</span>
                 <span class="n">new_offsets</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">first</span><span class="p">)</span>
                 <span class="n">difference</span> <span class="o">=</span> <span class="n">second</span> <span class="o">-</span> <span class="n">first</span>
                 <span class="n">half</span> <span class="o">=</span> <span class="p">(</span><span class="n">first</span> <span class="o">+</span> <span class="n">second</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span>
@@ -3484,31 +3393,31 @@
 <span class="sd">        &gt;&gt;&gt; for x in abjad.meter._MeterManager.iterate_rewrite_inputs(</span>
 <span class="sd">        ...     staff[0]): x</span>
 <span class="sd">        ...</span>
-<span class="sd">        LogicalTie([Note(&quot;c&#39;4&quot;)])</span>
-<span class="sd">        LogicalTie([Note(&quot;d&#39;4&quot;)])</span>
+<span class="sd">        LogicalTie(items=[Note(&quot;c&#39;4&quot;)])</span>
+<span class="sd">        LogicalTie(items=[Note(&quot;d&#39;4&quot;)])</span>
 
 <span class="sd">        &gt;&gt;&gt; for x in abjad.meter._MeterManager.iterate_rewrite_inputs(</span>
 <span class="sd">        ...     staff[1]): x</span>
 <span class="sd">        ...</span>
-<span class="sd">        LogicalTie([Note(&quot;d&#39;8.&quot;)])</span>
-<span class="sd">        LogicalTie([Rest(&#39;r16&#39;), Rest(&#39;r8.&#39;)])</span>
-<span class="sd">        LogicalTie([Note(&quot;e&#39;16&quot;)])</span>
+<span class="sd">        LogicalTie(items=[Note(&quot;d&#39;8.&quot;)])</span>
+<span class="sd">        LogicalTie(items=[Rest(&#39;r16&#39;), Rest(&#39;r8.&#39;)])</span>
+<span class="sd">        LogicalTie(items=[Note(&quot;e&#39;16&quot;)])</span>
 <span class="sd">        Tuplet(&#39;3:2&#39;, &quot;e&#39;8 e&#39;8 f&#39;8&quot;)</span>
-<span class="sd">        LogicalTie([Note(&quot;f&#39;4&quot;)])</span>
+<span class="sd">        LogicalTie(items=[Note(&quot;f&#39;4&quot;)])</span>
 
 <span class="sd">        &gt;&gt;&gt; for x in abjad.meter._MeterManager.iterate_rewrite_inputs(</span>
 <span class="sd">        ...     staff[2]): x</span>
 <span class="sd">        ...</span>
-<span class="sd">        LogicalTie([Note(&quot;f&#39;8&quot;)])</span>
-<span class="sd">        LogicalTie([Note(&quot;g&#39;8&quot;), Note(&quot;g&#39;4&quot;)])</span>
-<span class="sd">        LogicalTie([Note(&quot;a&#39;4&quot;), Note(&quot;a&#39;8&quot;)])</span>
-<span class="sd">        LogicalTie([Note(&quot;b&#39;8&quot;)])</span>
+<span class="sd">        LogicalTie(items=[Note(&quot;f&#39;8&quot;)])</span>
+<span class="sd">        LogicalTie(items=[Note(&quot;g&#39;8&quot;), Note(&quot;g&#39;4&quot;)])</span>
+<span class="sd">        LogicalTie(items=[Note(&quot;a&#39;4&quot;), Note(&quot;a&#39;8&quot;)])</span>
+<span class="sd">        LogicalTie(items=[Note(&quot;b&#39;8&quot;)])</span>
 
 <span class="sd">        &gt;&gt;&gt; for x in abjad.meter._MeterManager.iterate_rewrite_inputs(</span>
 <span class="sd">        ...     staff[3]): x</span>
 <span class="sd">        ...</span>
-<span class="sd">        LogicalTie([Note(&quot;b&#39;4&quot;)])</span>
-<span class="sd">        LogicalTie([Note(&quot;c&#39;&#39;4&quot;)])</span>
+<span class="sd">        LogicalTie(items=[Note(&quot;b&#39;4&quot;)])</span>
+<span class="sd">        LogicalTie(items=[Note(&quot;c&#39;&#39;4&quot;)])</span>
 
 <span class="sd">        Returns generator.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -3518,7 +3427,7 @@
         <span class="k">for</span> <span class="n">component</span> <span class="ow">in</span> <span class="n">argument</span><span class="p">:</span>
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">component</span><span class="p">,</span> <span class="p">(</span><span class="n">_score</span><span class="o">.</span><span class="n">Note</span><span class="p">,</span> <span class="n">_score</span><span class="o">.</span><span class="n">Chord</span><span class="p">)):</span>
                 <span class="n">this_tie_leaves</span> <span class="o">=</span> <span class="n">_iterate</span><span class="o">.</span><span class="n">_get_logical_tie_leaves</span><span class="p">(</span><span class="n">component</span><span class="p">)</span>
-                <span class="n">this_tie</span> <span class="o">=</span> <span class="n">_selection</span><span class="o">.</span><span class="n">LogicalTie</span><span class="p">(</span><span class="n">this_tie_leaves</span><span class="p">)</span>
+                <span class="n">this_tie</span> <span class="o">=</span> <span class="n">_select</span><span class="o">.</span><span class="n">LogicalTie</span><span class="p">(</span><span class="n">this_tie_leaves</span><span class="p">)</span>
                 <span class="k">if</span> <span class="n">current_leaf_group</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                     <span class="n">current_leaf_group</span> <span class="o">=</span> <span class="p">[]</span>
                 <span class="k">elif</span> <span class="p">(</span>
@@ -3526,7 +3435,7 @@
                     <span class="ow">or</span> <span class="n">this_tie</span> <span class="ow">is</span> <span class="kc">None</span>
                     <span class="ow">or</span> <span class="n">last_tie</span> <span class="o">!=</span> <span class="n">this_tie</span>
                 <span class="p">):</span>
-                    <span class="k">yield</span> <span class="n">_selection</span><span class="o">.</span><span class="n">LogicalTie</span><span class="p">(</span><span class="n">current_leaf_group</span><span class="p">)</span>
+                    <span class="k">yield</span> <span class="n">_select</span><span class="o">.</span><span class="n">LogicalTie</span><span class="p">(</span><span class="n">current_leaf_group</span><span class="p">)</span>
                     <span class="n">current_leaf_group</span> <span class="o">=</span> <span class="p">[]</span>
                 <span class="n">current_leaf_group_is_silent</span> <span class="o">=</span> <span class="kc">False</span>
                 <span class="n">current_leaf_group</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">component</span><span class="p">)</span>
@@ -3535,21 +3444,21 @@
                 <span class="k">if</span> <span class="n">current_leaf_group</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                     <span class="n">current_leaf_group</span> <span class="o">=</span> <span class="p">[]</span>
                 <span class="k">elif</span> <span class="ow">not</span> <span class="n">current_leaf_group_is_silent</span><span class="p">:</span>
-                    <span class="k">yield</span> <span class="n">_selection</span><span class="o">.</span><span class="n">LogicalTie</span><span class="p">(</span><span class="n">current_leaf_group</span><span class="p">)</span>
+                    <span class="k">yield</span> <span class="n">_select</span><span class="o">.</span><span class="n">LogicalTie</span><span class="p">(</span><span class="n">current_leaf_group</span><span class="p">)</span>
                     <span class="n">current_leaf_group</span> <span class="o">=</span> <span class="p">[]</span>
                 <span class="n">current_leaf_group_is_silent</span> <span class="o">=</span> <span class="kc">True</span>
                 <span class="n">current_leaf_group</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">component</span><span class="p">)</span>
                 <span class="n">last_tie</span> <span class="o">=</span> <span class="kc">None</span>
             <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">component</span><span class="p">,</span> <span class="n">_score</span><span class="o">.</span><span class="n">Container</span><span class="p">):</span>
                 <span class="k">if</span> <span class="n">current_leaf_group</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                    <span class="k">yield</span> <span class="n">_selection</span><span class="o">.</span><span class="n">LogicalTie</span><span class="p">(</span><span class="n">current_leaf_group</span><span class="p">)</span>
+                    <span class="k">yield</span> <span class="n">_select</span><span class="o">.</span><span class="n">LogicalTie</span><span class="p">(</span><span class="n">current_leaf_group</span><span class="p">)</span>
                     <span class="n">current_leaf_group</span> <span class="o">=</span> <span class="kc">None</span>
                     <span class="n">last_tie</span> <span class="o">=</span> <span class="kc">None</span>
                 <span class="k">yield</span> <span class="n">component</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;unhandled component: </span><span class="si">{</span><span class="n">component</span><span class="si">!r}</span><span class="s2">.&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">current_leaf_group</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">yield</span> <span class="n">_selection</span><span class="o">.</span><span class="n">LogicalTie</span><span class="p">(</span><span class="n">current_leaf_group</span><span class="p">)</span>
+            <span class="k">yield</span> <span class="n">_select</span><span class="o">.</span><span class="n">LogicalTie</span><span class="p">(</span><span class="n">current_leaf_group</span><span class="p">)</span>
 </pre></div>
 
     </div>

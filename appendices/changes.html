@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Changes &mdash; Abjad 3.5 documentation</title>
+  <title>Changes &mdash; Abjad 3.6 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/abjad.css" type="text/css" />
@@ -35,11 +35,11 @@
   <div class="wy-grid-for-nav">
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search"  style="background: #00ff55" >
+        <div class="wy-side-nav-search"  style="background: #00dd00" >
 
 
     <a href="../index.html" class="icon icon-home" alt="Documentation
-    Home"> Abjad 3.5
+    Home"> Abjad 3.6
 
 
 
@@ -113,7 +113,7 @@
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #00ff55" >
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #00dd00" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../index.html">Abjad</a>
       </nav>
@@ -130,6 +130,374 @@
     
   <section id="changes">
 <h1>Changes<a class="headerlink" href="#changes" title="Permalink to this headline">¶</a></h1>
+<hr class="docutils" />
+<section id="changed-in-abjad-3-6">
+<h2>Changed in Abjad 3.6<a class="headerlink" href="#changed-in-abjad-3-6" title="Permalink to this headline">¶</a></h2>
+<p>Changes to Abjad 3.6 (2022-03-01) since Abjad 3.5 (2022-02-01).</p>
+<p>PERFORMANCE INCREASES. Abjad 3.6 runs significantly faster than previous versions of the
+system: user code rendering two or more pages of music runs 200% to 800% than before.
+Performance increases came from removing inspect-heavy functions, and from optimizing
+score updates. Total performance increase depends on the number of context indicators
+(like clefs and time signatures) used, and on the amount of looping used to find
+indicators in a score.</p>
+<p>BREAKING CHANGE: <a class="reference external" href="https://github.com/Abjad/abjad/issues/1407">#1407</a>. The custom
+<code class="docutils literal notranslate"><span class="pre">abjad.Selection</span></code> class is deprecated will be completely removed in Abjad 3.7.</p>
+<blockquote>
+<div><p>CHANGED. In general, remove all <code class="docutils literal notranslate"><span class="pre">isinstance(...,</span> <span class="pre">abjad.Selection)</span></code> from your code:
+Abjad 3.6 now passes built-in lists of components instead of custom selection
+objects. Container slices now return a list:</p>
+<p>OLD:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">staff</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Staff</span><span class="p">(</span><span class="s2">&quot;c&#39;4 d&#39; e&#39; f&#39;&quot;</span><span class="p">)[:]</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">Selection</span><span class="p">(</span><span class="n">items</span><span class="o">=</span><span class="p">[</span><span class="n">Note</span><span class="p">(</span><span class="s2">&quot;c&#39;4&quot;</span><span class="p">),</span> <span class="n">Note</span><span class="p">(</span><span class="s2">&quot;d&#39;4&quot;</span><span class="p">),</span> <span class="n">Note</span><span class="p">(</span><span class="s2">&quot;e&#39;4&quot;</span><span class="p">),</span> <span class="n">Note</span><span class="p">(</span><span class="s2">&quot;f&#39;4&quot;</span><span class="p">)])</span>
+</pre></div>
+</div>
+<p>NEW:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">staff</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Staff</span><span class="p">(</span><span class="s2">&quot;c&#39;4 d&#39; e&#39; f&#39;&quot;</span><span class="p">)[:]</span>
+<span class="p">[</span><span class="n">Note</span><span class="p">(</span><span class="s2">&quot;c&#39;4&quot;</span><span class="p">),</span> <span class="n">Note</span><span class="p">(</span><span class="s2">&quot;d&#39;4&quot;</span><span class="p">),</span> <span class="n">Note</span><span class="p">(</span><span class="s2">&quot;e&#39;4&quot;</span><span class="p">),</span> <span class="n">Note</span><span class="p">(</span><span class="s2">&quot;f&#39;4&quot;</span><span class="p">)]</span>
+</pre></div>
+</div>
+<p>CHANGED. <code class="docutils literal notranslate"><span class="pre">abjad.select.foo(...)</span></code> and <code class="docutils literal notranslate"><span class="pre">abjad.iterate.foo(...)</span></code> now match.</p>
+<p>Selecting components means calling functions; class creation is no longer required:</p>
+<p>OLD:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">abjad</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="o">...</span><span class="p">)</span><span class="o">.</span><span class="n">chord</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="o">...</span><span class="p">)</span><span class="o">.</span><span class="n">chords</span><span class="p">()</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="o">...</span><span class="p">)</span><span class="o">.</span><span class="n">components</span><span class="p">()</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="o">...</span><span class="p">)</span><span class="o">.</span><span class="n">exclude</span><span class="p">([</span><span class="mi">0</span><span class="p">],</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="o">...</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">_</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">_</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="o">...</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">([</span><span class="mi">0</span><span class="p">],</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="o">...</span><span class="p">)</span><span class="o">.</span><span class="n">group_by</span><span class="p">(</span><span class="k">lambda</span> <span class="n">_</span><span class="p">:</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="s2">&quot;foo&quot;</span><span class="p">))</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="o">...</span><span class="p">)</span><span class="o">.</span><span class="n">group_by_contiguity</span><span class="p">()</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="o">...</span><span class="p">)</span><span class="o">.</span><span class="n">group_by_duration</span><span class="p">()</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="o">...</span><span class="p">)</span><span class="o">.</span><span class="n">group_by_length</span><span class="p">()</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="o">...</span><span class="p">)</span><span class="o">.</span><span class="n">group_by_measure</span><span class="p">()</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="o">...</span><span class="p">)</span><span class="o">.</span><span class="n">group_by_pitch</span><span class="p">()</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="o">...</span><span class="p">)</span><span class="o">.</span><span class="n">leaf</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="o">...</span><span class="p">)</span><span class="o">.</span><span class="n">leaves</span><span class="p">()</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="o">...</span><span class="p">)</span><span class="o">.</span><span class="n">logical_tie</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="o">...</span><span class="p">)</span><span class="o">.</span><span class="n">logical_ties</span><span class="p">()</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="o">...</span><span class="p">)</span><span class="o">.</span><span class="n">nontrivial</span><span class="p">()</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="o">...</span><span class="p">)</span><span class="o">.</span><span class="n">note</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="o">...</span><span class="p">)</span><span class="o">.</span><span class="n">notes</span><span class="p">()</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="o">...</span><span class="p">)</span><span class="o">.</span><span class="n">partition_by_counts</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">cyclic</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="o">...</span><span class="p">)</span><span class="o">.</span><span class="n">partition_by_ratio</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="o">...</span><span class="p">)</span><span class="o">.</span><span class="n">rest</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="o">...</span><span class="p">)</span><span class="o">.</span><span class="n">rests</span><span class="p">()</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="o">...</span><span class="p">)</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="o">...</span><span class="p">)</span><span class="o">.</span><span class="n">runs</span><span class="p">()</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="o">...</span><span class="p">)</span><span class="o">.</span><span class="n">top</span><span class="p">()</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="o">...</span><span class="p">)</span><span class="o">.</span><span class="n">tuplet</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="o">...</span><span class="p">)</span><span class="o">.</span><span class="n">tuplets</span><span class="p">()</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="o">...</span><span class="p">)</span><span class="o">.</span><span class="n">with_next_leaf</span><span class="p">()</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="o">...</span><span class="p">)</span><span class="o">.</span><span class="n">with_previous_leaf</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>NEW:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">abjad</span><span class="o">.</span><span class="n">select</span><span class="o">.</span><span class="n">chord</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">select</span><span class="o">.</span><span class="n">chords</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="p">)</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">select</span><span class="o">.</span><span class="n">components</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="p">)</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">select</span><span class="o">.</span><span class="n">exclude</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">select</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">_</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">_</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">select</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">select</span><span class="o">.</span><span class="n">group_by</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">_</span><span class="p">:</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="s2">&quot;foo&quot;</span><span class="p">))</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">select</span><span class="o">.</span><span class="n">group_by_contiguity</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="p">)</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">select</span><span class="o">.</span><span class="n">group_by_duration</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="p">)</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">select</span><span class="o">.</span><span class="n">group_by_length</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="p">)</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">select</span><span class="o">.</span><span class="n">group_by_measure</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="p">)</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">select</span><span class="o">.</span><span class="n">group_by_pitch</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="p">)</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">select</span><span class="o">.</span><span class="n">leaf</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">select</span><span class="o">.</span><span class="n">leaves</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="p">)</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">select</span><span class="o">.</span><span class="n">logical_tie</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">select</span><span class="o">.</span><span class="n">logical_ties</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="p">)</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">select</span><span class="o">.</span><span class="n">nontrivial</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="p">)</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">select</span><span class="o">.</span><span class="n">note</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">select</span><span class="o">.</span><span class="n">notes</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="p">)</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">select</span><span class="o">.</span><span class="n">partition_by_counts</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">cyclic</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">select</span><span class="o">.</span><span class="n">partition_by_ratio</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">select</span><span class="o">.</span><span class="n">rest</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">select</span><span class="o">.</span><span class="n">rests</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="p">)</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">select</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">select</span><span class="o">.</span><span class="n">runs</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="p">)</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">select</span><span class="o">.</span><span class="n">top</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="p">)</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">select</span><span class="o">.</span><span class="n">tuplet</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">select</span><span class="o">.</span><span class="n">tuplets</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="p">)</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">select</span><span class="o">.</span><span class="n">with_next_leaf</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="p">)</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">select</span><span class="o">.</span><span class="n">with_previous_leaf</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="p">)</span>
+</pre></div>
+</div>
+<p>Dot-chained syntax continues to be allowed in Abjad 3.6 but will be removed in Abjad
+3.7. Rewrite dot-chained method calls like this:</p>
+<p>Example 1:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">OLD</span><span class="p">:</span>
+
+    <span class="n">result</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="o">...</span><span class="p">)</span><span class="o">.</span><span class="n">tuplets</span><span class="p">()[:</span><span class="mi">4</span><span class="p">]</span><span class="o">.</span><span class="n">leaves</span><span class="p">()</span>
+
+<span class="n">NEW</span><span class="p">:</span>
+
+    <span class="n">result</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">select</span><span class="o">.</span><span class="n">tuplets</span><span class="p">(</span><span class="o">...</span><span class="p">)[:</span><span class="mi">4</span><span class="p">]</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">select</span><span class="o">.</span><span class="n">leaves</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Example 2:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">OLD</span><span class="p">:</span>
+
+    <span class="n">result</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="o">...</span><span class="p">)</span><span class="o">.</span><span class="n">leaves</span><span class="p">()</span><span class="o">.</span><span class="n">group_by_measure</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">([</span><span class="mi">0</span><span class="p">],</span> <span class="mi">2</span><span class="p">)</span>
+
+<span class="n">NEW</span><span class="p">:</span>
+
+    <span class="n">result</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">select</span><span class="o">.</span><span class="n">leaves</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">select</span><span class="o">.</span><span class="n">group_by_measure</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">select</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>BREAKING CHANGE: <a class="reference external" href="https://github.com/Abjad/abjad/issues/1415">#1415</a>. Replaced
+<code class="docutils literal notranslate"><span class="pre">abjad.Sequence</span></code> with <code class="docutils literal notranslate"><span class="pre">sequence.py</span></code> module:</p>
+<blockquote>
+<div><p>OLD:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">abjad</span><span class="o">.</span><span class="n">Sequence</span><span class="p">(</span><span class="o">...</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">()</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">Sequence</span><span class="p">(</span><span class="o">...</span><span class="p">)</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">Sequence</span><span class="p">(</span><span class="o">...</span><span class="p">)</span><span class="o">.</span><span class="n">group_by</span><span class="p">()</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">Sequence</span><span class="p">(</span><span class="o">...</span><span class="p">)</span><span class="o">.</span><span class="n">is_decreasing</span><span class="p">()</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">Sequence</span><span class="p">(</span><span class="o">...</span><span class="p">)</span><span class="o">.</span><span class="n">is_increasing</span><span class="p">()</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">Sequence</span><span class="p">(</span><span class="o">...</span><span class="p">)</span><span class="o">.</span><span class="n">is_permutation</span><span class="p">()</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">Sequence</span><span class="p">(</span><span class="o">...</span><span class="p">)</span><span class="o">.</span><span class="n">is_repetition_free</span><span class="p">()</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">Sequence</span><span class="p">(</span><span class="o">...</span><span class="p">)</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">Sequence</span><span class="p">(</span><span class="o">...</span><span class="p">)</span><span class="o">.</span><span class="n">map</span><span class="p">()</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">Sequence</span><span class="p">(</span><span class="o">...</span><span class="p">)</span><span class="o">.</span><span class="n">nwise</span><span class="p">()</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">Sequence</span><span class="p">(</span><span class="o">...</span><span class="p">)</span><span class="o">.</span><span class="n">partition_by_counts</span><span class="p">()</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">Sequence</span><span class="p">(</span><span class="o">...</span><span class="p">)</span><span class="o">.</span><span class="n">partition_by_ratio_of_lengths</span><span class="p">()</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">Sequence</span><span class="p">(</span><span class="o">...</span><span class="p">)</span><span class="o">.</span><span class="n">partition_by_ratio_of_weights</span><span class="p">()</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">Sequence</span><span class="p">(</span><span class="o">...</span><span class="p">)</span><span class="o">.</span><span class="n">partition_by_weights</span><span class="p">()</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">Sequence</span><span class="p">(</span><span class="o">...</span><span class="p">)</span><span class="o">.</span><span class="n">permute</span><span class="p">()</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">Sequence</span><span class="p">(</span><span class="o">...</span><span class="p">)</span><span class="o">.</span><span class="n">remove</span><span class="p">()</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">Sequence</span><span class="p">(</span><span class="o">...</span><span class="p">)</span><span class="o">.</span><span class="n">remove_repeats</span><span class="p">()</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">Sequence</span><span class="p">(</span><span class="o">...</span><span class="p">)</span><span class="o">.</span><span class="n">repeat</span><span class="p">()</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">Sequence</span><span class="p">(</span><span class="o">...</span><span class="p">)</span><span class="o">.</span><span class="n">repeat_to_length</span><span class="p">()</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">Sequence</span><span class="p">(</span><span class="o">...</span><span class="p">)</span><span class="o">.</span><span class="n">repeat_to_weight</span><span class="p">()</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">Sequence</span><span class="p">(</span><span class="o">...</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">()</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">Sequence</span><span class="p">(</span><span class="o">...</span><span class="p">)</span><span class="o">.</span><span class="n">replace_at</span><span class="p">()</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">Sequence</span><span class="p">(</span><span class="o">...</span><span class="p">)</span><span class="o">.</span><span class="n">retain</span><span class="p">()</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">Sequence</span><span class="p">(</span><span class="o">...</span><span class="p">)</span><span class="o">.</span><span class="n">retain_pattern</span><span class="p">()</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">Sequence</span><span class="p">(</span><span class="o">...</span><span class="p">)</span><span class="o">.</span><span class="n">reverse</span><span class="p">()</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">Sequence</span><span class="p">(</span><span class="o">...</span><span class="p">)</span><span class="o">.</span><span class="n">rotate</span><span class="p">()</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">Sequence</span><span class="p">(</span><span class="o">...</span><span class="p">)</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">Sequence</span><span class="p">(</span><span class="o">...</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">Sequence</span><span class="p">(</span><span class="o">...</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">Sequence</span><span class="p">(</span><span class="o">...</span><span class="p">)</span><span class="o">.</span><span class="n">sum_by_sign</span><span class="p">()</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">Sequence</span><span class="p">(</span><span class="o">...</span><span class="p">)</span><span class="o">.</span><span class="n">truncate</span><span class="p">()</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">Sequence</span><span class="p">(</span><span class="o">...</span><span class="p">)</span><span class="o">.</span><span class="n">weight</span><span class="p">()</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">Sequence</span><span class="p">(</span><span class="o">...</span><span class="p">)</span><span class="o">.</span><span class="n">zip</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>NEW:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">abjad</span><span class="o">.</span><span class="n">sequence</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">sequence</span><span class="o">.</span><span class="n">flatten</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">sequence</span><span class="o">.</span><span class="n">group_by</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">sequence</span><span class="o">.</span><span class="n">is_decreasing</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">sequence</span><span class="o">.</span><span class="n">is_increasing</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">sequence</span><span class="o">.</span><span class="n">is_permutation</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">sequence</span><span class="o">.</span><span class="n">is_repetition_free</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">sequence</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">sequence</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">sequence</span><span class="o">.</span><span class="n">nwise</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">sequence</span><span class="o">.</span><span class="n">partition_by_counts</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">sequence</span><span class="o">.</span><span class="n">partition_by_ratio_of_lengths</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">sequence</span><span class="o">.</span><span class="n">partition_by_ratio_of_weights</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">sequence</span><span class="o">.</span><span class="n">partition_by_weights</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">sequence</span><span class="o">.</span><span class="n">permute</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">sequence</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">sequence</span><span class="o">.</span><span class="n">remove_repeats</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">sequence</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">sequence</span><span class="o">.</span><span class="n">repeat_to_length</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">sequence</span><span class="o">.</span><span class="n">repeat_to_weight</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">sequence</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">sequence</span><span class="o">.</span><span class="n">replace_at</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">sequence</span><span class="o">.</span><span class="n">retain</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">sequence</span><span class="o">.</span><span class="n">retain_pattern</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">sequence</span><span class="o">.</span><span class="n">reverse</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">sequence</span><span class="o">.</span><span class="n">rotate</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">sequence</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">sequence</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">sequence</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">sequence</span><span class="o">.</span><span class="n">sum_by_sign</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">sequence</span><span class="o">.</span><span class="n">truncate</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">sequence</span><span class="o">.</span><span class="n">weight</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">sequence</span><span class="o">.</span><span class="n">zip</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>BREAKING CHANGE: <a class="reference external" href="https://github.com/Abjad/abjad/issues/1394">#1394</a>. Replaced
+<code class="docutils literal notranslate"><span class="pre">abjad.String</span></code> with <code class="docutils literal notranslate"><span class="pre">string.py</span></code> module:</p>
+<blockquote>
+<div><p>OLD:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">abjad</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="s2">&quot;text&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">capitalize_start</span><span class="p">()</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="s2">&quot;text&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">delimit_words</span><span class="p">()</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="s2">&quot;text&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">from_roman</span><span class="p">()</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="s2">&quot;text&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">is_lilypond_identifier</span><span class="p">()</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="s2">&quot;text&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">is_roman</span><span class="p">()</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="s2">&quot;text&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">is_shout_case</span><span class="p">()</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="s2">&quot;text&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">pluralize</span><span class="p">()</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="s2">&quot;text&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">strip_roman</span><span class="p">()</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="s2">&quot;text&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">to_shout_case</span><span class="p">()</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="s2">&quot;text&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">to_upper_camel_case</span><span class="p">()</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">String</span><span class="o">.</span><span class="n">normalize</span><span class="p">(</span><span class="s2">&quot;text&quot;</span><span class="p">)</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">String</span><span class="o">.</span><span class="n">sort_roman</span><span class="p">([</span><span class="s2">&quot;PartI&quot;</span><span class="p">,</span> <span class="s2">&quot;PartII&quot;</span><span class="p">,</span> <span class="s2">&quot;PartIII&quot;</span><span class="p">])</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">String</span><span class="o">.</span><span class="n">to_tridirectional_lilypond_symbol</span><span class="p">(</span><span class="s2">&quot;text&quot;</span><span class="p">)</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">String</span><span class="o">.</span><span class="n">to_tridirectional_ordinal_constant</span><span class="p">(</span><span class="s2">&quot;text&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>NEW:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">abjad</span><span class="o">.</span><span class="n">string</span><span class="o">.</span><span class="n">capitalize_start</span><span class="p">(</span><span class="s2">&quot;text&quot;</span><span class="p">)</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">string</span><span class="o">.</span><span class="n">delimit_words</span><span class="p">(</span><span class="s2">&quot;text&quot;</span><span class="p">)</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">string</span><span class="o">.</span><span class="n">from_roman</span><span class="p">(</span><span class="s2">&quot;text&quot;</span><span class="p">)</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">string</span><span class="o">.</span><span class="n">is_lilypond_identifier</span><span class="p">(</span><span class="s2">&quot;text&quot;</span><span class="p">)</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">string</span><span class="o">.</span><span class="n">is_roman</span><span class="p">(</span><span class="s2">&quot;text&quot;</span><span class="p">)</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">string</span><span class="o">.</span><span class="n">is_shout_case</span><span class="p">(</span><span class="s2">&quot;text&quot;</span><span class="p">)</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">string</span><span class="o">.</span><span class="n">pluralize</span><span class="p">(</span><span class="s2">&quot;text&quot;</span><span class="p">)</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">string</span><span class="o">.</span><span class="n">strip_roman</span><span class="p">(</span><span class="s2">&quot;text&quot;</span><span class="p">)</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">string</span><span class="o">.</span><span class="n">to_shout_case</span><span class="p">(</span><span class="s2">&quot;text&quot;</span><span class="p">)</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">string</span><span class="o">.</span><span class="n">to_upper_camel_case</span><span class="p">(</span><span class="s2">&quot;text&quot;</span><span class="p">)</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">string</span><span class="o">.</span><span class="n">normalize</span><span class="p">(</span><span class="s2">&quot;text&quot;</span><span class="p">)</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">string</span><span class="o">.</span><span class="n">sort_roman</span><span class="p">([</span><span class="s2">&quot;PartI&quot;</span><span class="p">,</span> <span class="s2">&quot;PartII&quot;</span><span class="p">,</span> <span class="s2">&quot;PartIII&quot;</span><span class="p">])</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">string</span><span class="o">.</span><span class="n">to_tridirectional_lilypond_symbol</span><span class="p">(</span><span class="s2">&quot;text&quot;</span><span class="p">)</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">string</span><span class="o">.</span><span class="n">to_tridirectional_ordinal_constant</span><span class="p">(</span><span class="s2">&quot;text&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>REMOVED:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">abjad</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="s2">&quot;text&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">base_26</span><span class="p">()</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="s2">&quot;text&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">is_build_directory_name</span><span class="p">()</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="s2">&quot;text&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">is_classfile_name</span><span class="p">()</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="s2">&quot;text&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">is_dash_case</span><span class="p">()</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="s2">&quot;text&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">is_lower_camel_case</span><span class="p">()</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="s2">&quot;text&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">is_lowercase_file_name</span><span class="p">()</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="s2">&quot;text&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">is_module_file_name</span><span class="p">()</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="s2">&quot;text&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">is_package_name</span><span class="p">()</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="s2">&quot;text&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">is_public_python_file_name</span><span class="p">()</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="s2">&quot;text&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">is_rehearsal_mark</span><span class="p">()</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="s2">&quot;text&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">is_snake_case</span><span class="p">()</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="s2">&quot;text&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">is_snake_case_file_name</span><span class="p">()</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="s2">&quot;text&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">is_snake_case_file_name_with_extension</span><span class="p">()</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="s2">&quot;text&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">is_snake_case_package_name</span><span class="p">()</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="s2">&quot;text&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">is_space_delimited_lowercase</span><span class="p">()</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="s2">&quot;text&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">is_string</span><span class="p">()</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="s2">&quot;text&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">is_stylesheet_name</span><span class="p">()</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="s2">&quot;text&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">is_tools_file_name</span><span class="p">()</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="s2">&quot;text&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">is_upper_camel_case</span><span class="p">()</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="s2">&quot;text&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">match_strings</span><span class="p">()</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="s2">&quot;text&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">match_word_starts</span><span class="p">()</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="s2">&quot;text&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">remove_zfill</span><span class="p">()</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="s2">&quot;text&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">segment_letter</span><span class="p">()</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="s2">&quot;text&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">segment_rank</span><span class="p">()</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="s2">&quot;text&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">strip_diacritics</span><span class="p">()</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="s2">&quot;text&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">to_accent_free_snake_case</span><span class="p">()</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="s2">&quot;text&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">to_dash_case</span><span class="p">()</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="s2">&quot;text&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">to_lower_camel_case</span><span class="p">()</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="s2">&quot;text&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">to_segment_lilypond_identifier</span><span class="p">()</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="s2">&quot;text&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">to_snake_case</span><span class="p">()</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="s2">&quot;text&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">to_space_delimited_lowercase</span><span class="p">()</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="s2">&quot;text&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">to_space_delimited_lowercase</span><span class="p">()</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">String</span><span class="o">.</span><span class="n">to_bidirectional_direction_string</span><span class="p">(</span><span class="s2">&quot;text&quot;</span><span class="p">)</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">String</span><span class="o">.</span><span class="n">to_bidirectional_lilypond_symbol</span><span class="p">(</span><span class="s2">&quot;text&quot;</span><span class="p">)</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">String</span><span class="o">.</span><span class="n">to_tridirectional_direction_string</span><span class="p">(</span><span class="s2">&quot;text&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p><a class="reference external" href="https://github.com/Abjad/abjad/issues/1420">#1420</a>. Cleaned up boolean keywords.</p>
+<p><a class="reference external" href="https://github.com/Abjad/abjad/issues/1418">#1418</a>. Constrained <code class="docutils literal notranslate"><span class="pre">abjad.PitchRange</span></code>
+to named pitches:</p>
+<blockquote>
+<div><p>OLD:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">abjad</span><span class="o">.</span><span class="n">PitchRange</span><span class="p">(</span><span class="s2">&quot;[A0, C8]&quot;</span><span class="p">)</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">PitchRange</span><span class="p">(</span><span class="s2">&quot;[-39, 48]&quot;</span><span class="p">)</span>
+<span class="s2">&quot;C3&quot;</span> <span class="ow">in</span> <span class="n">pitch_range</span>
+<span class="o">-</span><span class="mi">12</span> <span class="ow">in</span> <span class="n">pitch_range</span>
+</pre></div>
+</div>
+<p>NEW:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">abjad</span><span class="o">.</span><span class="n">PitchRange</span><span class="p">(</span><span class="s2">&quot;[A0, C8]&quot;</span><span class="p">)</span>
+<span class="s2">&quot;C3&quot;</span> <span class="ow">in</span> <span class="n">pitch_range</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p><a class="reference external" href="https://github.com/Abjad/abjad/issues/1405">#1405</a>. Removed pitch vector classes.</p>
+<p><a class="reference external" href="https://github.com/Abjad/abjad/issues/1403">#1403</a>. Changed pitch collections’
+<code class="docutils literal notranslate"><span class="pre">from_selection()</span></code> to <code class="docutils literal notranslate"><span class="pre">from_pitches()</span></code>:</p>
+<blockquote>
+<div><p>OLD:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">abjad</span><span class="o">.</span><span class="n">IntervalClassSegment</span><span class="o">.</span><span class="n">from_selection</span><span class="p">()</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">IntervalSegment</span><span class="o">.</span><span class="n">from_selection</span><span class="p">()</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">PitchClassSegment</span><span class="o">.</span><span class="n">from_selection</span><span class="p">()</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">PitchSegment</span><span class="o">.</span><span class="n">from_selection</span><span class="p">()</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">IntervalClassSet</span><span class="o">.</span><span class="n">from_selection</span><span class="p">()</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">IntervalSet</span><span class="o">.</span><span class="n">from_selection</span><span class="p">()</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">PitchClassSet</span><span class="o">.</span><span class="n">from_selection</span><span class="p">()</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">PitchSet</span><span class="o">.</span><span class="n">from_selection</span><span class="p">()</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">IntervalVector</span><span class="o">.</span><span class="n">from_selection</span><span class="p">()</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">IntervalClassVector</span><span class="o">.</span><span class="n">from_selection</span><span class="p">()</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">PitchClassVector</span><span class="o">.</span><span class="n">from_selection</span><span class="p">()</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">PitchVector</span><span class="o">.</span><span class="n">from_selection</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>NEW:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">abjad</span><span class="o">.</span><span class="n">IntervalClassSegment</span><span class="o">.</span><span class="n">from_pitches</span><span class="p">()</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">IntervalSegment</span><span class="o">.</span><span class="n">from_pitches</span><span class="p">()</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">PitchClassSegment</span><span class="o">.</span><span class="n">from_pitches</span><span class="p">()</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">PitchSegment</span><span class="o">.</span><span class="n">from_pitches</span><span class="p">()</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">IntervalClassSet</span><span class="o">.</span><span class="n">from_pitches</span><span class="p">()</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">IntervalSet</span><span class="o">.</span><span class="n">from_pitches</span><span class="p">()</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">PitchClassSet</span><span class="o">.</span><span class="n">from_pitches</span><span class="p">()</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">PitchSet</span><span class="o">.</span><span class="n">from_pitches</span><span class="p">()</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">IntervalVector</span><span class="o">.</span><span class="n">from_pitches</span><span class="p">()</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">IntervalClassVector</span><span class="o">.</span><span class="n">from_pitches</span><span class="p">()</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">PitchClassVector</span><span class="o">.</span><span class="n">from_pitches</span><span class="p">()</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">PitchVector</span><span class="o">.</span><span class="n">from_pitches</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>You must now call <code class="docutils literal notranslate"><span class="pre">abjad.iterate.pitches()</span></code> explicitly before calling
+<code class="docutils literal notranslate"><span class="pre">from_pitches()</span></code>:</p>
+<p>OLD:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">abjad</span><span class="o">.</span><span class="n">PitchSegment</span><span class="o">.</span><span class="n">from_selection</span><span class="p">(</span><span class="n">staff</span><span class="p">[:])</span>
+</pre></div>
+</div>
+<p>NEW:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pitches</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">iterate</span><span class="o">.</span><span class="n">pitches</span><span class="p">(</span><span class="n">staff</span><span class="p">)</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">PitchSegment</span><span class="o">.</span><span class="n">from_pitches</span><span class="p">(</span><span class="n">pitches</span><span class="p">)</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p><a class="reference external" href="https://github.com/Abjad/abjad/issues/1401">#1401</a>. Made
+<code class="docutils literal notranslate"><span class="pre">abjad.NamedPitch.respell()</span></code> public.</p>
+<blockquote>
+<div><p>NEW:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">abjad</span><span class="o">.</span><span class="n">NamedPitch</span><span class="p">(</span><span class="s2">&quot;cs&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">respell</span><span class="p">(</span><span class="n">accidental</span><span class="o">=</span><span class="s2">&quot;flats&quot;</span><span class="p">)</span>
+<span class="n">NamedPitch</span><span class="p">(</span><span class="s1">&#39;df&#39;</span><span class="p">)</span>
+
+<span class="n">abjad</span><span class="o">.</span><span class="n">NamedPitch</span><span class="p">(</span><span class="s2">&quot;df&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">respell</span><span class="p">(</span><span class="n">accidental</span><span class="o">=</span><span class="s2">&quot;sharps&quot;</span><span class="p">)</span>
+<span class="n">NamedPitch</span><span class="p">(</span><span class="s1">&#39;cs&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p><a class="reference external" href="https://github.com/Abjad/abjad/issues/1399">#1399</a>. Removed operator classes.</p>
+<p><a class="reference external" href="https://github.com/Abjad/abjad/issues/1397">#1397</a>. Removed inequality classes.</p>
+<p><a class="reference external" href="https://github.com/Abjad/abjad/issues/1392">#1392</a>. Remove <code class="docutils literal notranslate"><span class="pre">abjad.SegmentMaker</span></code>.
+Removed score templates.</p>
+<p><a class="reference external" href="https://github.com/Abjad/abjad/issues/1390">#1390</a>. Optimized score updates.</p>
+<p><a class="reference external" href="https://github.com/Abjad/abjad/issues/1388">#1388</a>. Removed
+<code class="docutils literal notranslate"><span class="pre">abjad.format.get_repr()</span></code>, and related inspect-heavy functions:</p>
+<blockquote>
+<div><p>REMOVED:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">abjad</span><span class="o">.</span><span class="n">get</span><span class="o">.</span><span class="n">get_hash_values</span><span class="p">()</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">format</span><span class="o">.</span><span class="n">get_repr</span><span class="p">()</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">format</span><span class="o">.</span><span class="n">get_template_dict</span><span class="p">()</span>
+<span class="n">abjad</span><span class="o">.</span><span class="n">format</span><span class="o">.</span><span class="n">storage</span><span class="p">()</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p><a class="reference external" href="https://github.com/Abjad/abjad/issues/1387">#1387</a>. Refused comparison between named
+and numbered pitches.</p>
+<p><a class="reference external" href="https://github.com/Abjad/abjad/issues/1379">#1379</a>. Removed
+<code class="docutils literal notranslate"><span class="pre">abjad.format.compare_objects()</span></code>.</p>
+</section>
 <hr class="docutils" />
 <section id="changed-in-abjad-3-5">
 <h2>Changed in Abjad 3.5<a class="headerlink" href="#changed-in-abjad-3-5" title="Permalink to this headline">¶</a></h2>
@@ -220,39 +588,40 @@ no longer parsed:</p>
 <p><a class="reference external" href="https://github.com/Abjad/abjad/issues/1293">#1293</a>. Gutted <code class="docutils literal notranslate"><span class="pre">abjad.LilyPondFile</span></code>:</p>
 <blockquote>
 <div><p>Removed abjad.ContextBlock; use abjad.Block instead:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">string</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;&quot;&quot;\Staff</span>
-<span class="gp">... </span><span class="s2">    \name FluteStaff</span>
-<span class="gp">... </span><span class="s2">    \type Engraver_group</span>
-<span class="gp">... </span><span class="s2">    \alias Staff</span>
-<span class="gp">... </span><span class="s2">    \remove Forbid_line_break_engraver</span>
-<span class="gp">... </span><span class="s2">    \consists Horizontal_bracket_engraver</span>
-<span class="gp">... </span><span class="s2">    \accepts FluteUpperVoice</span>
-<span class="gp">... </span><span class="s2">    \accepts FluteLowerVoice</span>
-<span class="gp">... </span><span class="s2">    \override Beam.positions = #&#39;(-4 . -4)</span>
-<span class="gp">... </span><span class="s2">    \override Stem.stem-end-position = -6</span>
-<span class="gp">... </span><span class="s2">    autoBeaming = ##f</span>
-<span class="gp">... </span><span class="s2">    tupletFullLength = ##t</span>
-<span class="gp">... </span><span class="s2">    \accidentalStyle dodecaphonic&quot;&quot;&quot;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">block</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Block</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;context&quot;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">block</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">string</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">lilypond</span><span class="p">(</span><span class="n">block</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
-<span class="go">\context</span>
-<span class="go">{</span>
-<span class="go">    \Staff</span>
-<span class="go">    \name FluteStaff</span>
-<span class="go">    \type Engraver_group</span>
-<span class="go">    \alias Staff</span>
-<span class="go">    \remove Forbid_line_break_engraver</span>
-<span class="go">    \consists Horizontal_bracket_engraver</span>
-<span class="go">    \accepts FluteUpperVoice</span>
-<span class="go">    \accepts FluteLowerVoice</span>
-<span class="go">    \override Beam.positions = #&#39;(-4 . -4)</span>
-<span class="go">    \override Stem.stem-end-position = -6</span>
-<span class="go">    autoBeaming = ##f</span>
-<span class="go">    tupletFullLength = ##t</span>
-<span class="go">    \accidentalStyle dodecaphonic</span>
-<span class="go">}</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">string</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;&quot;&quot;\Staff</span>
+<span class="s2">    \name FluteStaff</span>
+<span class="s2">    \type Engraver_group</span>
+<span class="s2">    \alias Staff</span>
+<span class="s2">    \remove Forbid_line_break_engraver</span>
+<span class="s2">    \consists Horizontal_bracket_engraver</span>
+<span class="s2">    \accepts FluteUpperVoice</span>
+<span class="s2">    \accepts FluteLowerVoice</span>
+<span class="s2">    \override Beam.positions = #&#39;(-4 . -4)</span>
+<span class="s2">    \override Stem.stem-end-position = -6</span>
+<span class="s2">    autoBeaming = ##f</span>
+<span class="s2">    tupletFullLength = ##t</span>
+<span class="s2">    \accidentalStyle dodecaphonic&quot;&quot;&quot;</span>
+<span class="n">block</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Block</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;context&quot;</span><span class="p">)</span>
+<span class="n">block</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
+
+<span class="n">string</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">lilypond</span><span class="p">(</span><span class="n">block</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
+\<span class="n">context</span>
+<span class="p">{</span>
+    \<span class="n">Staff</span>
+    \<span class="n">name</span> <span class="n">FluteStaff</span>
+    \<span class="nb">type</span> <span class="n">Engraver_group</span>
+    \<span class="n">alias</span> <span class="n">Staff</span>
+    \<span class="n">remove</span> <span class="n">Forbid_line_break_engraver</span>
+    \<span class="n">consists</span> <span class="n">Horizontal_bracket_engraver</span>
+    \<span class="n">accepts</span> <span class="n">FluteUpperVoice</span>
+    \<span class="n">accepts</span> <span class="n">FluteLowerVoice</span>
+    \<span class="n">override</span> <span class="n">Beam</span><span class="o">.</span><span class="n">positions</span> <span class="o">=</span> <span class="c1">#&#39;(-4 . -4)</span>
+    \<span class="n">override</span> <span class="n">Stem</span><span class="o">.</span><span class="n">stem</span><span class="o">-</span><span class="n">end</span><span class="o">-</span><span class="n">position</span> <span class="o">=</span> <span class="o">-</span><span class="mi">6</span>
+    <span class="n">autoBeaming</span> <span class="o">=</span> <span class="c1">##f</span>
+    <span class="n">tupletFullLength</span> <span class="o">=</span> <span class="c1">##t</span>
+    \<span class="n">accidentalStyle</span> <span class="n">dodecaphonic</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 <p>Removed <code class="docutils literal notranslate"><span class="pre">abjad.Block.__setattr__()</span></code>. Use <code class="docutils literal notranslate"><span class="pre">abjad.Block.items</span></code> instead.</p>

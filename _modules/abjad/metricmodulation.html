@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>abjad.metricmodulation &mdash; Abjad 3.5 documentation</title>
+  <title>abjad.metricmodulation &mdash; Abjad 3.6 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/abjad.css" type="text/css" />
@@ -32,11 +32,11 @@
   <div class="wy-grid-for-nav">
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search"  style="background: #00ff55" >
+        <div class="wy-side-nav-search"  style="background: #00dd00" >
 
 
     <a href="../../index.html" class="icon icon-home" alt="Documentation
-    Home"> Abjad 3.5
+    Home"> Abjad 3.6
 
 
 
@@ -110,7 +110,7 @@
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #00ff55" >
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #00dd00" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../index.html">Abjad</a>
       </nav>
@@ -126,25 +126,22 @@
     <div itemprop="articleBody">
     
   <h1>Source code for abjad.metricmodulation</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">typing</span>
+<span></span><span class="kn">import</span> <span class="nn">dataclasses</span>
+<span class="kn">import</span> <span class="nn">typing</span>
 
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">_inspect</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">bundle</span> <span class="k">as</span> <span class="n">_bundle</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">enums</span> <span class="k">as</span> <span class="n">_enums</span>
-<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="nb">format</span> <span class="k">as</span> <span class="n">_format</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">illustrators</span> <span class="k">as</span> <span class="n">_illustrators</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">markups</span> <span class="k">as</span> <span class="n">_markups</span>
-<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">new</span> <span class="k">as</span> <span class="n">_new</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">ratio</span> <span class="k">as</span> <span class="n">_ratio</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">score</span> <span class="k">as</span> <span class="n">_score</span>
-<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">selection</span> <span class="k">as</span> <span class="n">_selection</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">typings</span> <span class="k">as</span> <span class="n">_typings</span>
 
 
 <div class="viewcode-block" id="MetricModulation"><a class="viewcode-back" href="../../api/abjad/metricmodulation.html#abjad.metricmodulation.MetricModulation">[docs]</a><span class="k">class</span> <span class="nc">MetricModulation</span><span class="p">:</span>
     <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Metric modulation.</span>
-
 
 <span class="sd">    ..  container:: example</span>
 
@@ -153,7 +150,7 @@
 <span class="sd">        &gt;&gt;&gt; metric_modulation = abjad.MetricModulation(</span>
 <span class="sd">        ...     left_rhythm=abjad.Note(&quot;c&#39;8.&quot;),</span>
 <span class="sd">        ...     right_rhythm=abjad.Note(&quot;c&#39;4.&quot;),</span>
-<span class="sd">        ...     )</span>
+<span class="sd">        ... )</span>
 
 <span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile(</span>
 <span class="sd">        ...     [r&#39;\include &quot;abjad.ily&quot;&#39;, metric_modulation]</span>
@@ -173,7 +170,7 @@
 <span class="sd">        &gt;&gt;&gt; metric_modulation = abjad.MetricModulation(</span>
 <span class="sd">        ...     left_rhythm=abjad.Tuplet((4, 5), &quot;c&#39;4&quot;),</span>
 <span class="sd">        ...     right_rhythm=abjad.Note(&quot;c&#39;4&quot;),</span>
-<span class="sd">        ...     )</span>
+<span class="sd">        ... )</span>
 
 <span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile(</span>
 <span class="sd">        ...     [r&#39;\include &quot;abjad.ily&quot;&#39;, metric_modulation]</span>
@@ -483,14 +480,12 @@
         <span class="n">left_rhythm</span><span class="p">,</span>
         <span class="n">right_rhythm</span><span class="p">,</span>
         <span class="o">*</span><span class="p">,</span>
-        <span class="n">hide</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">hide</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
         <span class="n">left_markup</span><span class="p">:</span> <span class="n">_markups</span><span class="o">.</span><span class="n">Markup</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">right_markup</span><span class="p">:</span> <span class="n">_markups</span><span class="o">.</span><span class="n">Markup</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">scale</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Tuple</span><span class="p">[</span><span class="n">_typings</span><span class="o">.</span><span class="n">Number</span><span class="p">,</span> <span class="n">_typings</span><span class="o">.</span><span class="n">Number</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">hide</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">hide</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">hide</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_hide</span> <span class="o">=</span> <span class="n">hide</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_hide</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">hide</span><span class="p">)</span>
         <span class="n">left_rhythm</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_initialize_rhythm</span><span class="p">(</span><span class="n">left_rhythm</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_left_rhythm</span> <span class="o">=</span> <span class="n">left_rhythm</span>
         <span class="n">right_rhythm</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_initialize_rhythm</span><span class="p">(</span><span class="n">right_rhythm</span><span class="p">)</span>
@@ -530,11 +525,11 @@
 <span class="sd">            ...     )</span>
 
 <span class="sd">            &gt;&gt;&gt; metric_modulation_1.ratio</span>
-<span class="sd">            Ratio((2, 3))</span>
+<span class="sd">            Ratio(numbers=(2, 3))</span>
 <span class="sd">            &gt;&gt;&gt; metric_modulation_2.ratio</span>
-<span class="sd">            Ratio((2, 3))</span>
+<span class="sd">            Ratio(numbers=(2, 3))</span>
 <span class="sd">            &gt;&gt;&gt; metric_modulation_3.ratio</span>
-<span class="sd">            Ratio((4, 5))</span>
+<span class="sd">            Ratio(numbers=(4, 5))</span>
 
 <span class="sd">            &gt;&gt;&gt; metric_modulation_1 == metric_modulation_1</span>
 <span class="sd">            True</span>
@@ -572,9 +567,9 @@
 
 <div class="viewcode-block" id="MetricModulation.__repr__"><a class="viewcode-back" href="../../api/abjad/metricmodulation.html#abjad.metricmodulation.MetricModulation.__repr__">[docs]</a>    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Gets interpreter representation.</span>
+<span class="sd">        Gets repr.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">_format</span><span class="o">.</span><span class="n">get_repr</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">(left_rhythm=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">left_rhythm</span><span class="si">!r}</span><span class="s2">, right_rhythm=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">right_rhythm</span><span class="si">!r}</span><span class="s2">)&quot;</span></div>
 
 <div class="viewcode-block" id="MetricModulation.__str__"><a class="viewcode-back" href="../../api/abjad/metricmodulation.html#abjad.metricmodulation.MetricModulation.__str__">[docs]</a>    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
@@ -630,7 +625,7 @@
         <span class="n">bundle</span> <span class="o">=</span> <span class="n">_bundle</span><span class="o">.</span><span class="n">LilyPondFormatBundle</span><span class="p">()</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">hide</span><span class="p">:</span>
             <span class="n">markup</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_markup</span><span class="p">()</span>
-            <span class="n">markup</span> <span class="o">=</span> <span class="n">_new</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">markup</span><span class="p">,</span> <span class="n">direction</span><span class="o">=</span><span class="n">_enums</span><span class="o">.</span><span class="n">Up</span><span class="p">)</span>
+            <span class="n">markup</span> <span class="o">=</span> <span class="n">dataclasses</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">markup</span><span class="p">,</span> <span class="n">direction</span><span class="o">=</span><span class="n">_enums</span><span class="o">.</span><span class="n">Up</span><span class="p">)</span>
             <span class="n">markup_format_pieces</span> <span class="o">=</span> <span class="n">markup</span><span class="o">.</span><span class="n">_get_format_pieces</span><span class="p">()</span>
             <span class="n">bundle</span><span class="o">.</span><span class="n">after</span><span class="o">.</span><span class="n">markup</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">markup_format_pieces</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">bundle</span>
@@ -693,10 +688,9 @@
             <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;implement tied note values.&quot;</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_initialize_rhythm</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rhythm</span><span class="p">):</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">rhythm</span><span class="p">,</span> <span class="s2">&quot;_items&quot;</span><span class="p">):</span>
-            <span class="n">selection</span> <span class="o">=</span> <span class="n">_selection</span><span class="o">.</span><span class="n">Selection</span><span class="p">([</span><span class="n">rhythm</span><span class="p">])</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">rhythm</span><span class="p">,</span> <span class="n">_score</span><span class="o">.</span><span class="n">Component</span><span class="p">):</span>
+            <span class="n">selection</span> <span class="o">=</span> <span class="p">[</span><span class="n">rhythm</span><span class="p">]</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">assert</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">rhythm</span><span class="p">,</span> <span class="s2">&quot;_items&quot;</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">rhythm</span><span class="p">)</span>
             <span class="n">selection</span> <span class="o">=</span> <span class="n">rhythm</span>
         <span class="k">return</span> <span class="n">selection</span>
 
@@ -733,7 +727,7 @@
     <span class="c1">### PUBLIC PROPERTIES ###</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">hide</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]:</span>
+    <span class="k">def</span> <span class="nf">hide</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Is true when metric modulation generates no LilyPond output.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -767,7 +761,7 @@
 <span class="sd">            ...     right_rhythm=abjad.Note(&quot;c&#39;4.&quot;),</span>
 <span class="sd">            ...     )</span>
 <span class="sd">            &gt;&gt;&gt; metric_modulation.left_rhythm</span>
-<span class="sd">            Selection([Note(&quot;c&#39;4&quot;)])</span>
+<span class="sd">            [Note(&quot;c&#39;4&quot;)]</span>
 
 <span class="sd">        Returns selection.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -785,7 +779,7 @@
 <span class="sd">            ...     right_rhythm=abjad.Note(&quot;c&#39;4&quot;),</span>
 <span class="sd">            ...     )</span>
 <span class="sd">            &gt;&gt;&gt; metric_modulation.ratio</span>
-<span class="sd">            Ratio((2, 3))</span>
+<span class="sd">            Ratio(numbers=(2, 3))</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">left_duration</span> <span class="o">=</span> <span class="n">_inspect</span><span class="o">.</span><span class="n">_get_duration</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">left_rhythm</span><span class="p">)</span>
@@ -821,7 +815,7 @@
 <span class="sd">            ...     right_rhythm=abjad.Note(&quot;c&#39;4.&quot;),</span>
 <span class="sd">            ...     )</span>
 <span class="sd">            &gt;&gt;&gt; metric_modulation.right_rhythm</span>
-<span class="sd">            Selection([Note(&quot;c&#39;4.&quot;)])</span>
+<span class="sd">            [Note(&quot;c&#39;4.&quot;)]</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_right_rhythm</span>

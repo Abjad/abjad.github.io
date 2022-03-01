@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>abjad.overrides &mdash; Abjad 3.5 documentation</title>
+  <title>abjad.overrides &mdash; Abjad 3.6 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/abjad.css" type="text/css" />
@@ -32,11 +32,11 @@
   <div class="wy-grid-for-nav">
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search"  style="background: #00ff55" >
+        <div class="wy-side-nav-search"  style="background: #00dd00" >
 
 
     <a href="../../index.html" class="icon icon-home" alt="Documentation
-    Home"> Abjad 3.5
+    Home"> Abjad 3.6
 
 
 
@@ -110,7 +110,7 @@
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #00ff55" >
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #00dd00" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../index.html">Abjad</a>
       </nav>
@@ -127,25 +127,107 @@
     
   <h1>Source code for abjad.overrides</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">copy</span>
+<span class="kn">import</span> <span class="nn">dataclasses</span>
 <span class="kn">import</span> <span class="nn">typing</span>
 
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">bundle</span> <span class="k">as</span> <span class="n">_bundle</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">enums</span> <span class="k">as</span> <span class="n">_enums</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="nb">format</span> <span class="k">as</span> <span class="n">_format</span>
-<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">fsv</span> <span class="k">as</span> <span class="n">_fsv</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">lyenv</span> <span class="k">as</span> <span class="n">_lyenv</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">string</span> <span class="k">as</span> <span class="n">_string</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">tag</span> <span class="k">as</span> <span class="n">_tag</span>
 
 
 <div class="viewcode-block" id="format_embedded_scheme_value"><a class="viewcode-back" href="../../api/abjad/overrides.html#abjad.overrides.format_embedded_scheme_value">[docs]</a><span class="k">def</span> <span class="nf">format_embedded_scheme_value</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
-    <span class="n">result</span> <span class="o">=</span> <span class="n">_fsv</span><span class="o">.</span><span class="n">format_scheme_value</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Formats embedded Scheme ``value``.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">format_scheme_value</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">bool</span><span class="p">):</span>
         <span class="n">result</span> <span class="o">=</span> <span class="s2">&quot;#&quot;</span> <span class="o">+</span> <span class="n">result</span>
     <span class="k">return</span> <span class="n">result</span></div>
 
 
+<div class="viewcode-block" id="format_scheme_value"><a class="viewcode-back" href="../../api/abjad/overrides.html#abjad.overrides.format_scheme_value">[docs]</a><span class="k">def</span> <span class="nf">format_scheme_value</span><span class="p">(</span>
+    <span class="n">value</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Any</span><span class="p">,</span> <span class="n">force_quotes</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">verbatim</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Formats ``value`` in a scheme-like way.</span>
+
+<span class="sd">    ..  container:: example</span>
+
+<span class="sd">        Some basic values:</span>
+
+<span class="sd">        &gt;&gt;&gt; abjad.overrides.format_scheme_value(1)</span>
+<span class="sd">        &#39;1&#39;</span>
+
+<span class="sd">        &gt;&gt;&gt; abjad.overrides.format_scheme_value(&#39;foo&#39;)</span>
+<span class="sd">        &#39;foo&#39;</span>
+
+<span class="sd">        &gt;&gt;&gt; abjad.overrides.format_scheme_value(&#39;bar baz&#39;)</span>
+<span class="sd">        &#39;&quot;bar baz&quot;&#39;</span>
+
+<span class="sd">        &gt;&gt;&gt; abjad.overrides.format_scheme_value([1.5, True, False])</span>
+<span class="sd">        &#39;(1.5 #t #f)&#39;</span>
+
+<span class="sd">    ..  container:: example</span>
+
+<span class="sd">        Strings without whitespace can be forcibly quoted via the</span>
+<span class="sd">        ``force_quotes`` keyword:</span>
+
+<span class="sd">        &gt;&gt;&gt; abjad.overrides.format_scheme_value(</span>
+<span class="sd">        ...     &#39;foo&#39;,</span>
+<span class="sd">        ...     force_quotes=True,</span>
+<span class="sd">        ... )</span>
+<span class="sd">        &#39;&quot;foo&quot;&#39;</span>
+
+<span class="sd">    ..  container:: example</span>
+
+<span class="sd">        Set verbatim to true to format value exactly (with only hash</span>
+<span class="sd">        preprended):</span>
+
+<span class="sd">        &gt;&gt;&gt; string = &#39;(lambda (grob) (grob-interpret-markup grob&#39;</span>
+<span class="sd">        &gt;&gt;&gt; string += r&#39; #{ \markup \musicglyph #&quot;noteheads.s0harmonic&quot; #}))&#39;</span>
+<span class="sd">        &gt;&gt;&gt; abjad.overrides.format_scheme_value(string, verbatim=True)</span>
+<span class="sd">        &#39;(lambda (grob) (grob-interpret-markup grob #{ \\markup \\musicglyph #&quot;noteheads.s0harmonic&quot; #}))&#39;</span>
+
+<span class="sd">    ..  container:: example</span>
+
+<span class="sd">        Hash symbol at the beginning of a string does not result in quoted</span>
+<span class="sd">        output:</span>
+
+<span class="sd">        &gt;&gt;&gt; string = &#39;#1-finger&#39;</span>
+<span class="sd">        &gt;&gt;&gt; abjad.overrides.format_scheme_value(string)</span>
+<span class="sd">        &#39;#1-finger&#39;</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">and</span> <span class="n">verbatim</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">value</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">verbatim</span><span class="p">:</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;&quot;&#39;</span><span class="p">,</span> <span class="sa">r</span><span class="s2">&quot;</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">value</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;#&quot;</span><span class="p">):</span>
+            <span class="k">pass</span>
+        <span class="k">elif</span> <span class="n">value</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\\</span><span class="s2">&quot;</span><span class="p">):</span>
+            <span class="k">pass</span>
+        <span class="k">elif</span> <span class="n">force_quotes</span> <span class="ow">or</span> <span class="s2">&quot; &quot;</span> <span class="ow">in</span> <span class="n">value</span> <span class="ow">or</span> <span class="s2">&quot;#&quot;</span> <span class="ow">in</span> <span class="n">value</span><span class="p">:</span>
+            <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;&quot;</span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s1">&quot;&#39;</span>
+        <span class="k">return</span> <span class="n">value</span>
+    <span class="k">elif</span> <span class="n">value</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;#t&quot;</span>
+    <span class="k">elif</span> <span class="n">value</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;#f&quot;</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)):</span>
+        <span class="n">string</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">format_scheme_value</span><span class="p">(</span><span class="n">_</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">value</span><span class="p">)</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;(</span><span class="si">{</span><span class="n">string</span><span class="si">}</span><span class="s2">)&quot;</span>
+    <span class="k">elif</span> <span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;#f&quot;</span>
+    <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">)</span></div>
+
+
 <div class="viewcode-block" id="format_lilypond_attribute"><a class="viewcode-back" href="../../api/abjad/overrides.html#abjad.overrides.format_lilypond_attribute">[docs]</a><span class="k">def</span> <span class="nf">format_lilypond_attribute</span><span class="p">(</span><span class="n">attribute</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Formats LilyPond ``attribute``.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">attribute</span><span class="p">,</span> <span class="nb">str</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">attribute</span><span class="p">)</span>
     <span class="n">attribute</span> <span class="o">=</span> <span class="n">attribute</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;__&quot;</span><span class="p">,</span> <span class="s2">&quot;.&quot;</span><span class="p">)</span>
     <span class="n">result</span> <span class="o">=</span> <span class="n">attribute</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;_&quot;</span><span class="p">,</span> <span class="s2">&quot;-&quot;</span><span class="p">)</span>
@@ -177,6 +259,9 @@
 
 
 <div class="viewcode-block" id="format_lilypond_value"><a class="viewcode-back" href="../../api/abjad/overrides.html#abjad.overrides.format_lilypond_value">[docs]</a><span class="k">def</span> <span class="nf">format_lilypond_value</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Formats LilyPond value.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="s2">&quot;_get_lilypond_format&quot;</span> <span class="ow">in</span> <span class="nb">dir</span><span class="p">(</span><span class="n">argument</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">argument</span><span class="o">.</span><span class="n">_get_lilypond_format</span><span class="p">()</span>
     <span class="k">if</span> <span class="n">argument</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
@@ -201,13 +286,14 @@
 <div class="viewcode-block" id="make_lilypond_override_string"><a class="viewcode-back" href="../../api/abjad/overrides.html#abjad.overrides.make_lilypond_override_string">[docs]</a><span class="k">def</span> <span class="nf">make_lilypond_override_string</span><span class="p">(</span>
     <span class="n">grob</span><span class="p">,</span> <span class="n">attribute</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">context</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">once</span><span class="o">=</span><span class="kc">False</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-    <span class="c1"># camel_name = _string.String(grob).to_upper_camel_case()</span>
-    <span class="c1"># assert grob == camel_name, repr((grob, camel_name))</span>
-    <span class="n">grob</span> <span class="o">=</span> <span class="n">_string</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="n">grob</span><span class="p">)</span><span class="o">.</span><span class="n">to_upper_camel_case</span><span class="p">()</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Makes LilyPond override string.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">grob</span> <span class="o">=</span> <span class="n">_string</span><span class="o">.</span><span class="n">to_upper_camel_case</span><span class="p">(</span><span class="n">grob</span><span class="p">)</span>
     <span class="n">attribute</span> <span class="o">=</span> <span class="n">format_lilypond_attribute</span><span class="p">(</span><span class="n">attribute</span><span class="p">)</span>
     <span class="n">value</span> <span class="o">=</span> <span class="n">format_lilypond_value</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">context</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">context</span> <span class="o">=</span> <span class="n">_string</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="n">context</span><span class="p">)</span><span class="o">.</span><span class="n">capitalize_start</span><span class="p">()</span> <span class="o">+</span> <span class="s2">&quot;.&quot;</span>
+        <span class="n">context</span> <span class="o">=</span> <span class="n">_string</span><span class="o">.</span><span class="n">capitalize_start</span><span class="p">(</span><span class="n">context</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;.&quot;</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">context</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
     <span class="k">if</span> <span class="n">once</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
@@ -219,14 +305,13 @@
 
 
 <div class="viewcode-block" id="make_lilypond_revert_string"><a class="viewcode-back" href="../../api/abjad/overrides.html#abjad.overrides.make_lilypond_revert_string">[docs]</a><span class="k">def</span> <span class="nf">make_lilypond_revert_string</span><span class="p">(</span><span class="n">grob</span><span class="p">,</span> <span class="n">attribute</span><span class="p">,</span> <span class="n">context</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-    <span class="c1"># camel_name = _string.String(grob).to_upper_camel_case()</span>
-    <span class="c1"># assert grob == camel_name, repr((grob, camel_name))</span>
-    <span class="n">grob</span> <span class="o">=</span> <span class="n">_string</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="n">grob</span><span class="p">)</span><span class="o">.</span><span class="n">to_upper_camel_case</span><span class="p">()</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Makes LilyPond revert string.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">grob</span> <span class="o">=</span> <span class="n">_string</span><span class="o">.</span><span class="n">to_upper_camel_case</span><span class="p">(</span><span class="n">grob</span><span class="p">)</span>
     <span class="n">dotted</span> <span class="o">=</span> <span class="n">format_lilypond_attribute</span><span class="p">(</span><span class="n">attribute</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">context</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="c1"># camel_name = _string.String(context).to_upper_camel_case()</span>
-        <span class="c1"># assert context == camel_name, repr((context, camel_name))</span>
-        <span class="n">context</span> <span class="o">=</span> <span class="n">_string</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="n">context</span><span class="p">)</span><span class="o">.</span><span class="n">to_upper_camel_case</span><span class="p">()</span>
+        <span class="n">context</span> <span class="o">=</span> <span class="n">_string</span><span class="o">.</span><span class="n">to_upper_camel_case</span><span class="p">(</span><span class="n">context</span><span class="p">)</span>
         <span class="n">context</span> <span class="o">+=</span> <span class="s2">&quot;.&quot;</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">context</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
@@ -237,10 +322,11 @@
 <div class="viewcode-block" id="make_lilypond_tweak_string"><a class="viewcode-back" href="../../api/abjad/overrides.html#abjad.overrides.make_lilypond_tweak_string">[docs]</a><span class="k">def</span> <span class="nf">make_lilypond_tweak_string</span><span class="p">(</span>
     <span class="n">attribute</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">directed</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">grob</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">literal</span><span class="o">=</span><span class="kc">None</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Makes LilyPond tweak string.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">grob</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="c1"># camel_name = _string.String(grob).to_upper_camel_case()</span>
-        <span class="c1"># assert grob == camel_name, repr((grob, camel_name))</span>
-        <span class="n">grob</span> <span class="o">=</span> <span class="n">_string</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="n">grob</span><span class="p">)</span><span class="o">.</span><span class="n">to_upper_camel_case</span><span class="p">()</span>
+        <span class="n">grob</span> <span class="o">=</span> <span class="n">_string</span><span class="o">.</span><span class="n">to_upper_camel_case</span><span class="p">(</span><span class="n">grob</span><span class="p">)</span>
         <span class="n">grob</span> <span class="o">+=</span> <span class="s2">&quot;.&quot;</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">grob</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
@@ -253,7 +339,8 @@
     <span class="k">return</span> <span class="n">string</span></div>
 
 
-<div class="viewcode-block" id="LilyPondLiteral"><a class="viewcode-back" href="../../api/abjad/overrides.html#abjad.overrides.LilyPondLiteral">[docs]</a><span class="k">class</span> <span class="nc">LilyPondLiteral</span><span class="p">:</span>
+<div class="viewcode-block" id="LilyPondLiteral"><a class="viewcode-back" href="../../api/abjad/overrides.html#abjad.overrides.LilyPondLiteral">[docs]</a><span class="nd">@dataclasses</span><span class="o">.</span><span class="n">dataclass</span><span class="p">(</span><span class="n">slots</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">unsafe_hash</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">LilyPondLiteral</span><span class="p">:</span>
     <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    LilyPond literal.</span>
 
@@ -295,7 +382,7 @@
 <span class="sd">        &gt;&gt;&gt; literal = abjad.LilyPondLiteral(</span>
 <span class="sd">        ...     &quot;% before all formatting&quot;,</span>
 <span class="sd">        ...     format_slot=&quot;absolute_before&quot;,</span>
-<span class="sd">        ...     )</span>
+<span class="sd">        ... )</span>
 <span class="sd">        &gt;&gt;&gt; abjad.attach(literal, staff[0])</span>
 <span class="sd">        &gt;&gt;&gt; literal = abjad.LilyPondLiteral(&quot;&quot;, format_slot=&quot;absolute_after&quot;)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.attach(literal, staff[-1])</span>
@@ -398,11 +485,95 @@
 <span class="sd">            f&#39;4</span>
 <span class="sd">        }</span>
 
+<span class="sd">    ..  container:: example</span>
+
+<span class="sd">        &gt;&gt;&gt; staff = abjad.Staff(&quot;c&#39;4 d&#39; e&#39; f&#39;&quot;)</span>
+<span class="sd">        &gt;&gt;&gt; literal = abjad.LilyPondLiteral(r&quot;\f&quot;, &quot;after&quot;, directed=True)</span>
+<span class="sd">        &gt;&gt;&gt; abjad.tweak(literal).color = &quot;#blue&quot;</span>
+<span class="sd">        &gt;&gt;&gt; abjad.attach(literal, staff[0])</span>
+<span class="sd">        &gt;&gt;&gt; abjad.show(staff) # doctest: +SKIP</span>
+
+<span class="sd">        ..  docs::</span>
+
+<span class="sd">            &gt;&gt;&gt; string = abjad.lilypond(staff)</span>
+<span class="sd">            &gt;&gt;&gt; print(string)</span>
+<span class="sd">            \new Staff</span>
+<span class="sd">            {</span>
+<span class="sd">                c&#39;4</span>
+<span class="sd">                - \tweak color #blue</span>
+<span class="sd">                \f</span>
+<span class="sd">                d&#39;4</span>
+<span class="sd">                e&#39;4</span>
+<span class="sd">                f&#39;4</span>
+<span class="sd">            }</span>
+
+<span class="sd">    ..  container:: example</span>
+
+<span class="sd">        Directed literal:</span>
+
+<span class="sd">        &gt;&gt;&gt; staff = abjad.Staff(&quot;c&#39;4 d&#39; e&#39; f&#39;&quot;)</span>
+<span class="sd">        &gt;&gt;&gt; literal = abjad.LilyPondLiteral(r&quot;\f&quot;, &quot;after&quot;, directed=True)</span>
+<span class="sd">        &gt;&gt;&gt; abjad.tweak(literal).color = &quot;#blue&quot;</span>
+<span class="sd">        &gt;&gt;&gt; abjad.tweak(literal).DynamicLineSpanner.staff_padding = 5</span>
+<span class="sd">        &gt;&gt;&gt; abjad.attach(literal, staff[0])</span>
+<span class="sd">        &gt;&gt;&gt; abjad.show(staff) # doctest: +SKIP</span>
+
+<span class="sd">        ..  docs::</span>
+
+<span class="sd">            &gt;&gt;&gt; string = abjad.lilypond(staff)</span>
+<span class="sd">            &gt;&gt;&gt; print(string)</span>
+<span class="sd">            \new Staff</span>
+<span class="sd">            {</span>
+<span class="sd">                c&#39;4</span>
+<span class="sd">                - \tweak DynamicLineSpanner.staff-padding 5</span>
+<span class="sd">                - \tweak color #blue</span>
+<span class="sd">                \f</span>
+<span class="sd">                d&#39;4</span>
+<span class="sd">                e&#39;4</span>
+<span class="sd">                f&#39;4</span>
+<span class="sd">            }</span>
+
+<span class="sd">    ..  container:: example</span>
+
+<span class="sd">        Nondirected literal:</span>
+
+<span class="sd">        &gt;&gt;&gt; staff = abjad.Staff(&quot;c&#39;4 d&#39; e&#39; f&#39;&quot;)</span>
+<span class="sd">        &gt;&gt;&gt; literal = abjad.LilyPondLiteral(</span>
+<span class="sd">        ...     r&quot;\breathe&quot;,</span>
+<span class="sd">        ...     &quot;after&quot;,</span>
+<span class="sd">        ...     directed=False,</span>
+<span class="sd">        ... )</span>
+<span class="sd">        &gt;&gt;&gt; abjad.tweak(literal).color = &quot;#blue&quot;</span>
+<span class="sd">        &gt;&gt;&gt; abjad.attach(literal, staff[0])</span>
+<span class="sd">        &gt;&gt;&gt; abjad.show(staff) # doctest: +SKIP</span>
+
+<span class="sd">        ..  docs::</span>
+
+<span class="sd">            &gt;&gt;&gt; string = abjad.lilypond(staff)</span>
+<span class="sd">            &gt;&gt;&gt; print(string)</span>
+<span class="sd">            \new Staff</span>
+<span class="sd">            {</span>
+<span class="sd">                c&#39;4</span>
+<span class="sd">                \tweak color #blue</span>
+<span class="sd">                \breathe</span>
+<span class="sd">                d&#39;4</span>
+<span class="sd">                e&#39;4</span>
+<span class="sd">                f&#39;4</span>
+<span class="sd">            }</span>
+
+<span class="sd">        Proper use of the ``directed`` property entails searching the LilyPond</span>
+<span class="sd">        docs to understand whether LilyPond treats any particular command as</span>
+<span class="sd">        directed or not. Most LilyPond commands are directed. LilyPond insists</span>
+<span class="sd">        that a few commands (include ``\breathe``, ``\key``, ``\mark``) must</span>
+<span class="sd">        not be directed.</span>
+
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="c1">### CLASS VARIABLES ###</span>
-
-    <span class="vm">__slots__</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;_argument&quot;</span><span class="p">,</span> <span class="s2">&quot;_directed&quot;</span><span class="p">,</span> <span class="s2">&quot;_format_slot&quot;</span><span class="p">,</span> <span class="s2">&quot;_tweaks&quot;</span><span class="p">)</span>
+    <span class="n">argument</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="c1"># TODO: probaby change default to &quot;before&quot;</span>
+    <span class="n">format_slot</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;opening&quot;</span>
+    <span class="n">directed</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">tweaks</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="s2">&quot;TweakInterface&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
 
     <span class="n">_allowable_format_slots</span> <span class="o">=</span> <span class="p">(</span>
         <span class="s2">&quot;absolute_after&quot;</span><span class="p">,</span>
@@ -413,55 +584,15 @@
         <span class="s2">&quot;opening&quot;</span><span class="p">,</span>
     <span class="p">)</span>
 
+    <span class="n">_is_dataclass</span> <span class="o">=</span> <span class="kc">True</span>
     <span class="n">_can_attach_to_containers</span> <span class="o">=</span> <span class="kc">True</span>
-
     <span class="n">_format_leaf_children</span> <span class="o">=</span> <span class="kc">False</span>
 
-    <span class="c1">### INITIALIZER ###</span>
-
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span>
-        <span class="n">argument</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
-        <span class="c1"># TODO: probaby change default to &quot;before&quot;</span>
-        <span class="n">format_slot</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;opening&quot;</span><span class="p">,</span>
-        <span class="o">*</span><span class="p">,</span>
-        <span class="n">directed</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">tweaks</span><span class="p">:</span> <span class="s2">&quot;TweakInterface&quot;</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_argument</span> <span class="o">=</span> <span class="n">argument</span>
-        <span class="k">assert</span> <span class="n">format_slot</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_allowable_format_slots</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">format_slot</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_format_slot</span> <span class="o">=</span> <span class="n">format_slot</span>
-        <span class="k">if</span> <span class="n">directed</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">directed</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">directed</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_directed</span> <span class="o">=</span> <span class="n">directed</span>
-        <span class="k">if</span> <span class="n">tweaks</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">tweaks</span><span class="p">,</span> <span class="n">TweakInterface</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">tweaks</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_tweaks</span> <span class="o">=</span> <span class="n">TweakInterface</span><span class="o">.</span><span class="n">set_tweaks</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tweaks</span><span class="p">)</span>
-
-    <span class="c1">### SPECIAL METHODS ###</span>
-
-<div class="viewcode-block" id="LilyPondLiteral.__eq__"><a class="viewcode-back" href="../../api/abjad/overrides.html#abjad.overrides.LilyPondLiteral.__eq__">[docs]</a>    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Compares ``argument`` and ``format_slot``.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">argument</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)):</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">argument</span> <span class="o">==</span> <span class="n">argument</span><span class="o">.</span><span class="n">argument</span><span class="p">:</span>
-                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">format_slot</span> <span class="o">==</span> <span class="n">argument</span><span class="o">.</span><span class="n">format_slot</span>
-        <span class="k">return</span> <span class="kc">False</span></div>
-
-<div class="viewcode-block" id="LilyPondLiteral.__hash__"><a class="viewcode-back" href="../../api/abjad/overrides.html#abjad.overrides.LilyPondLiteral.__hash__">[docs]</a>    <span class="k">def</span> <span class="fm">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Hashes LilyPond literal.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="nb">hash</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span></div>
-
-<div class="viewcode-block" id="LilyPondLiteral.__repr__"><a class="viewcode-back" href="../../api/abjad/overrides.html#abjad.overrides.LilyPondLiteral.__repr__">[docs]</a>    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Gets interpreter representation.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">_format</span><span class="o">.</span><span class="n">get_repr</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
-
-    <span class="c1">### PRIVATE METHODS ###</span>
+<div class="viewcode-block" id="LilyPondLiteral.__post_init__"><a class="viewcode-back" href="../../api/abjad/overrides.html#abjad.overrides.LilyPondLiteral.__post_init__">[docs]</a>    <span class="k">def</span> <span class="nf">__post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">format_slot</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_allowable_format_slots</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">format_slot</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">directed</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">directed</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">directed</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tweaks</span> <span class="o">=</span> <span class="n">TweakInterface</span><span class="o">.</span><span class="n">set_dataclass_tweaks</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tweaks</span><span class="p">)</span></div>
 
     <span class="c1"># TODO: activate this:</span>
     <span class="c1">#    def _before_attach(self, component):</span>
@@ -476,12 +607,6 @@
         <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">argument</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">argument</span><span class="p">[:]</span>
 
-    <span class="k">def</span> <span class="nf">_get_format_specification</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">_format</span><span class="o">.</span><span class="n">FormatSpecification</span><span class="p">(</span>
-            <span class="n">storage_format_args_values</span><span class="o">=</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">argument</span><span class="p">],</span>
-            <span class="n">storage_format_is_not_indented</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-        <span class="p">)</span>
-
     <span class="k">def</span> <span class="nf">_get_lilypond_format_bundle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">component</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="n">bundle</span> <span class="o">=</span> <span class="n">_bundle</span><span class="o">.</span><span class="n">LilyPondFormatBundle</span><span class="p">()</span>
         <span class="n">format_slot</span> <span class="o">=</span> <span class="n">bundle</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">format_slot</span><span class="p">)</span>
@@ -490,134 +615,7 @@
             <span class="n">format_slot</span><span class="o">.</span><span class="n">commands</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">tweaks</span><span class="p">)</span>
         <span class="n">pieces</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_format_pieces</span><span class="p">()</span>
         <span class="n">format_slot</span><span class="o">.</span><span class="n">commands</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">pieces</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">bundle</span>
-
-    <span class="c1">### PUBLIC PROPERTIES ###</span>
-
-    <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">argument</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]:</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Gets argument of LilyPond literal.</span>
-
-<span class="sd">        ..  container:: example</span>
-
-<span class="sd">            &gt;&gt;&gt; literal = abjad.LilyPondLiteral(r&quot;\slurDotted&quot;)</span>
-<span class="sd">            &gt;&gt;&gt; literal.argument</span>
-<span class="sd">            &#39;\\slurDotted&#39;</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_argument</span>
-
-    <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">directed</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]:</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Is true when literal is directed.</span>
-
-<span class="sd">        ..  container:: example</span>
-
-<span class="sd">            Directed literal:</span>
-
-<span class="sd">            &gt;&gt;&gt; staff = abjad.Staff(&quot;c&#39;4 d&#39; e&#39; f&#39;&quot;)</span>
-<span class="sd">            &gt;&gt;&gt; literal = abjad.LilyPondLiteral(r&quot;\f&quot;, &quot;after&quot;, directed=True)</span>
-<span class="sd">            &gt;&gt;&gt; abjad.tweak(literal).color = &quot;#blue&quot;</span>
-<span class="sd">            &gt;&gt;&gt; abjad.tweak(literal).DynamicLineSpanner.staff_padding = 5</span>
-<span class="sd">            &gt;&gt;&gt; abjad.attach(literal, staff[0])</span>
-<span class="sd">            &gt;&gt;&gt; abjad.show(staff) # doctest: +SKIP</span>
-
-<span class="sd">            ..  docs::</span>
-
-<span class="sd">                &gt;&gt;&gt; string = abjad.lilypond(staff)</span>
-<span class="sd">                &gt;&gt;&gt; print(string)</span>
-<span class="sd">                \new Staff</span>
-<span class="sd">                {</span>
-<span class="sd">                    c&#39;4</span>
-<span class="sd">                    - \tweak DynamicLineSpanner.staff-padding 5</span>
-<span class="sd">                    - \tweak color #blue</span>
-<span class="sd">                    \f</span>
-<span class="sd">                    d&#39;4</span>
-<span class="sd">                    e&#39;4</span>
-<span class="sd">                    f&#39;4</span>
-<span class="sd">                }</span>
-
-<span class="sd">        ..  container:: example</span>
-
-<span class="sd">            Nondirected literal:</span>
-
-<span class="sd">            &gt;&gt;&gt; staff = abjad.Staff(&quot;c&#39;4 d&#39; e&#39; f&#39;&quot;)</span>
-<span class="sd">            &gt;&gt;&gt; literal = abjad.LilyPondLiteral(</span>
-<span class="sd">            ...     r&quot;\breathe&quot;,</span>
-<span class="sd">            ...     &quot;after&quot;,</span>
-<span class="sd">            ...     directed=False,</span>
-<span class="sd">            ...     )</span>
-<span class="sd">            &gt;&gt;&gt; abjad.tweak(literal).color = &quot;#blue&quot;</span>
-<span class="sd">            &gt;&gt;&gt; abjad.attach(literal, staff[0])</span>
-<span class="sd">            &gt;&gt;&gt; abjad.show(staff) # doctest: +SKIP</span>
-
-<span class="sd">            ..  docs::</span>
-
-<span class="sd">                &gt;&gt;&gt; string = abjad.lilypond(staff)</span>
-<span class="sd">                &gt;&gt;&gt; print(string)</span>
-<span class="sd">                \new Staff</span>
-<span class="sd">                {</span>
-<span class="sd">                    c&#39;4</span>
-<span class="sd">                    \tweak color #blue</span>
-<span class="sd">                    \breathe</span>
-<span class="sd">                    d&#39;4</span>
-<span class="sd">                    e&#39;4</span>
-<span class="sd">                    f&#39;4</span>
-<span class="sd">                }</span>
-
-<span class="sd">        Proper use of the ``directed`` property entails searching the LilyPond</span>
-<span class="sd">        docs to understand whether LilyPond treats any particular command as</span>
-<span class="sd">        directed or not. Most LilyPond commands are directed. LilyPond insists</span>
-<span class="sd">        that a few commands (include ``\breathe``, ``\key``, ``\mark``) must</span>
-<span class="sd">        not be directed.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_directed</span>
-
-    <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">format_slot</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Gets format slot of LilyPond literal.</span>
-
-<span class="sd">        ..  container:: example</span>
-
-<span class="sd">            &gt;&gt;&gt; literal = abjad.LilyPondLiteral(r&quot;\slurDotted&quot;)</span>
-<span class="sd">            &gt;&gt;&gt; literal.format_slot</span>
-<span class="sd">            &#39;opening&#39;</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_format_slot</span>
-
-    <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">tweaks</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="s2">&quot;TweakInterface&quot;</span><span class="p">]:</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Gets tweaks.</span>
-
-<span class="sd">        ..  container:: example</span>
-
-<span class="sd">            &gt;&gt;&gt; staff = abjad.Staff(&quot;c&#39;4 d&#39; e&#39; f&#39;&quot;)</span>
-<span class="sd">            &gt;&gt;&gt; literal = abjad.LilyPondLiteral(r&quot;\f&quot;, &quot;after&quot;, directed=True)</span>
-<span class="sd">            &gt;&gt;&gt; abjad.tweak(literal).color = &quot;#blue&quot;</span>
-<span class="sd">            &gt;&gt;&gt; abjad.attach(literal, staff[0])</span>
-<span class="sd">            &gt;&gt;&gt; abjad.show(staff) # doctest: +SKIP</span>
-
-<span class="sd">            ..  docs::</span>
-
-<span class="sd">                &gt;&gt;&gt; string = abjad.lilypond(staff)</span>
-<span class="sd">                &gt;&gt;&gt; print(string)</span>
-<span class="sd">                \new Staff</span>
-<span class="sd">                {</span>
-<span class="sd">                    c&#39;4</span>
-<span class="sd">                    - \tweak color #blue</span>
-<span class="sd">                    \f</span>
-<span class="sd">                    d&#39;4</span>
-<span class="sd">                    e&#39;4</span>
-<span class="sd">                    f&#39;4</span>
-<span class="sd">                }</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tweaks</span></div>
+        <span class="k">return</span> <span class="n">bundle</span></div>
 
 
 <div class="viewcode-block" id="Interface"><a class="viewcode-back" href="../../api/abjad/overrides.html#abjad.overrides.Interface">[docs]</a><span class="k">class</span> <span class="nc">Interface</span><span class="p">:</span>
@@ -794,8 +792,8 @@
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">lilypond_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">grob_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;NoteHead&quot;</span><span class="p">,</span>
-        <span class="n">once</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">is_revert</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">once</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">is_revert</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
         <span class="n">property_path</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">typing</span><span class="o">.</span><span class="n">Iterable</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="s2">&quot;color&quot;</span><span class="p">,</span>
         <span class="n">value</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Any</span> <span class="o">=</span> <span class="s2">&quot;#red&quot;</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
@@ -804,12 +802,8 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_lilypond_type</span> <span class="o">=</span> <span class="n">lilypond_type</span>
         <span class="k">assert</span> <span class="n">grob_name</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_grob_name</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">grob_name</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">once</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">once</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">once</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_once</span> <span class="o">=</span> <span class="n">once</span>
-        <span class="k">if</span> <span class="n">is_revert</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">is_revert</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">is_revert</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_is_revert</span> <span class="o">=</span> <span class="n">is_revert</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_once</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">once</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_is_revert</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">is_revert</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">property_path</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
             <span class="n">property_path_</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">property_path</span><span class="p">,)</span>
         <span class="k">else</span><span class="p">:</span>
@@ -878,7 +872,7 @@
 <span class="sd">            ...     grob_name=&quot;Glissando&quot;,</span>
 <span class="sd">            ...     property_path=&quot;style&quot;,</span>
 <span class="sd">            ...     value=&quot;#&#39;zigzag&quot;,</span>
-<span class="sd">            ...     )</span>
+<span class="sd">            ... )</span>
 <span class="sd">            &gt;&gt;&gt; override.grob_name</span>
 <span class="sd">            &#39;Glissando&#39;</span>
 
@@ -886,7 +880,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_grob_name</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">is_revert</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]:</span>
+    <span class="k">def</span> <span class="nf">is_revert</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
         <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Is true if grob override is a grob revert.</span>
 
@@ -896,16 +890,16 @@
 <span class="sd">            ...     grob_name=&quot;Glissando&quot;,</span>
 <span class="sd">            ...     property_path=&quot;style&quot;,</span>
 <span class="sd">            ...     value=&quot;#&#39;zigzag&quot;,</span>
-<span class="sd">            ...     )</span>
-<span class="sd">            &gt;&gt;&gt; bool(override.is_revert)</span>
+<span class="sd">            ... )</span>
+<span class="sd">            &gt;&gt;&gt; override.is_revert</span>
 <span class="sd">            False</span>
 
 <span class="sd">            &gt;&gt;&gt; override = abjad.LilyPondOverride(</span>
 <span class="sd">            ...     grob_name=&quot;Glissando&quot;,</span>
 <span class="sd">            ...     is_revert=True,</span>
 <span class="sd">            ...     property_path=&quot;style&quot;,</span>
-<span class="sd">            ...     )</span>
-<span class="sd">            &gt;&gt;&gt; bool(override.is_revert)</span>
+<span class="sd">            ... )</span>
+<span class="sd">            &gt;&gt;&gt; override.is_revert</span>
 <span class="sd">            True</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -936,7 +930,7 @@
 <span class="sd">            ...     grob_name=&quot;Glissando&quot;,</span>
 <span class="sd">            ...     property_path=&quot;style&quot;,</span>
 <span class="sd">            ...     value=&quot;#&#39;zigzag&quot;,</span>
-<span class="sd">            ...     )</span>
+<span class="sd">            ... )</span>
 <span class="sd">            &gt;&gt;&gt; override.lilypond_type is None</span>
 <span class="sd">            True</span>
 
@@ -944,7 +938,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_lilypond_type</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">once</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]:</span>
+    <span class="k">def</span> <span class="nf">once</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
         <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Is true when grob override is to be applied only once.</span>
 
@@ -968,7 +962,7 @@
 <span class="sd">            ...     grob_name=&quot;Glissando&quot;,</span>
 <span class="sd">            ...     property_path=&quot;style&quot;,</span>
 <span class="sd">            ...     value=&quot;#&#39;zigzag&quot;,</span>
-<span class="sd">            ...     )</span>
+<span class="sd">            ... )</span>
 <span class="sd">            &gt;&gt;&gt; bool(override.once)</span>
 <span class="sd">            False</span>
 
@@ -1024,7 +1018,7 @@
 <span class="sd">            ...     grob_name=&quot;Glissando&quot;,</span>
 <span class="sd">            ...     property_path=&quot;style&quot;,</span>
 <span class="sd">            ...     value=&quot;#&#39;zigzag&quot;,</span>
-<span class="sd">            ...     )</span>
+<span class="sd">            ... )</span>
 <span class="sd">            &gt;&gt;&gt; override.override_string</span>
 <span class="sd">            &quot;\\override Glissando.style = #&#39;zigzag&quot;</span>
 
@@ -1066,7 +1060,7 @@
 <span class="sd">            ...     grob_name=&quot;Glissando&quot;,</span>
 <span class="sd">            ...     property_path=&quot;style&quot;,</span>
 <span class="sd">            ...     value=&quot;#&#39;zigzag&quot;,</span>
-<span class="sd">            ...     )</span>
+<span class="sd">            ... )</span>
 <span class="sd">            &gt;&gt;&gt; override.revert_format_pieces</span>
 <span class="sd">            (&#39;\\revert Glissando.style&#39;,)</span>
 
@@ -1085,7 +1079,7 @@
 <span class="sd">            ...     grob_name=&quot;Glissando&quot;,</span>
 <span class="sd">            ...     property_path=&quot;style&quot;,</span>
 <span class="sd">            ...     value=&quot;#&#39;zigzag&quot;,</span>
-<span class="sd">            ...     )</span>
+<span class="sd">            ... )</span>
 <span class="sd">            &gt;&gt;&gt; override.revert_string</span>
 <span class="sd">            &#39;\\revert Glissando.style&#39;</span>
 
@@ -1128,7 +1122,7 @@
 <span class="sd">            ...     grob_name=&quot;Glissando&quot;,</span>
 <span class="sd">            ...     property_path=&quot;style&quot;,</span>
 <span class="sd">            ...     value=&quot;#&#39;zigzag&quot;,</span>
-<span class="sd">            ...     )</span>
+<span class="sd">            ... )</span>
 <span class="sd">            &gt;&gt;&gt; override.tweak_string()</span>
 <span class="sd">            &quot;- \\tweak style #&#39;zigzag&quot;</span>
 
@@ -1138,7 +1132,7 @@
 <span class="sd">            ...     grob_name=&quot;RehearsalMark&quot;,</span>
 <span class="sd">            ...     property_path=&quot;color&quot;,</span>
 <span class="sd">            ...     value=&quot;#red&quot;,</span>
-<span class="sd">            ...     )</span>
+<span class="sd">            ... )</span>
 <span class="sd">            &gt;&gt;&gt; override.tweak_string(directed=False)</span>
 <span class="sd">            &#39;\\tweak color #red&#39;</span>
 
@@ -1150,7 +1144,7 @@
 <span class="sd">            ...     grob_name=&quot;TextSpann&quot;,</span>
 <span class="sd">            ...     property_path=(&quot;bound-details&quot;, &quot;left-broken&quot;, &quot;text&quot;),</span>
 <span class="sd">            ...     value=abjad.LilyPondLiteral(r&quot;\markup \upright pont.&quot;),</span>
-<span class="sd">            ...     )</span>
+<span class="sd">            ... )</span>
 <span class="sd">            &gt;&gt;&gt; override.tweak_string(directed=False)</span>
 <span class="sd">            &#39;\\tweak bound-details.left-broken.text \\markup \\upright pont.&#39;</span>
 
@@ -1340,8 +1334,7 @@
 <span class="sd">        Note that the dot-chained user syntax is unproblematic. But the class of each</span>
 <span class="sd">        manager returned in the chain is likely to be surprising at first encounter.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">camel_name</span> <span class="o">=</span> <span class="n">_string</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="n">name</span><span class="p">)</span><span class="o">.</span><span class="n">to_upper_camel_case</span><span class="p">()</span>
-        <span class="c1"># assert name == camel_name, repr((name, camel_name))</span>
+        <span class="n">camel_name</span> <span class="o">=</span> <span class="n">_string</span><span class="o">.</span><span class="n">to_upper_camel_case</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;_&quot;</span><span class="p">):</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="k">return</span> <span class="nb">vars</span><span class="p">(</span><span class="bp">self</span><span class="p">)[</span><span class="n">name</span><span class="p">]</span>
@@ -1542,8 +1535,7 @@
 <span class="sd">            Markup(string=&#39;\\markup &quot;Vn. I&quot;&#39;, direction=None, tweaks=None)</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">camel_name</span> <span class="o">=</span> <span class="n">_string</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="n">name</span><span class="p">)</span><span class="o">.</span><span class="n">to_upper_camel_case</span><span class="p">()</span>
-        <span class="c1"># assert name == camel_name, repr((name, camel_name))</span>
+        <span class="n">camel_name</span> <span class="o">=</span> <span class="n">_string</span><span class="o">.</span><span class="n">to_upper_camel_case</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;_&quot;</span><span class="p">):</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="k">return</span> <span class="nb">vars</span><span class="p">(</span><span class="bp">self</span><span class="p">)[</span><span class="n">name</span><span class="p">]</span>
@@ -1696,7 +1688,7 @@
 
 <span class="sd">        &gt;&gt;&gt; markup = abjad.Markup(r&quot;\markup Allegro&quot;, direction=abjad.Up)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.tweak(markup)</span>
-<span class="sd">        TweakInterface((&#39;_literal&#39;, None))</span>
+<span class="sd">        TweakInterface((&#39;_literal&#39;, False))</span>
 
 <span class="sd">        Set an attribute like this:</span>
 
@@ -1705,7 +1697,7 @@
 <span class="sd">        The state of the tweak manager has changed:</span>
 
 <span class="sd">        &gt;&gt;&gt; abjad.tweak(markup)</span>
-<span class="sd">        TweakInterface((&#39;_literal&#39;, None), (&#39;color&#39;, &#39;#red&#39;))</span>
+<span class="sd">        TweakInterface((&#39;_literal&#39;, False), (&#39;color&#39;, &#39;#red&#39;))</span>
 
 <span class="sd">        And the value of the attribute just set is available like this:</span>
 
@@ -1725,13 +1717,10 @@
     <span class="c1">### INITIALIZER ###</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">deactivate</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">literal</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">tag</span><span class="p">:</span> <span class="n">_tag</span><span class="o">.</span><span class="n">Tag</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">deactivate</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">literal</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">tag</span><span class="p">:</span> <span class="n">_tag</span><span class="o">.</span><span class="n">Tag</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">deactivate</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_currently_deactivated</span> <span class="o">=</span> <span class="n">deactivate</span>
-        <span class="k">if</span> <span class="n">literal</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">literal</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">literal</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_literal</span> <span class="o">=</span> <span class="n">literal</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_currently_deactivated</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">deactivate</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_literal</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">literal</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">tag</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_currently_tagging</span> <span class="o">=</span> <span class="n">tag</span>
 
@@ -1820,24 +1809,24 @@
 <span class="sd">            &gt;&gt;&gt; tweaks.color = &quot;#red&quot;</span>
 <span class="sd">            &gt;&gt;&gt; tweaks.Y_offset = 6</span>
 <span class="sd">            &gt;&gt;&gt; tweaks</span>
-<span class="sd">            TweakInterface((&#39;Y_offset&#39;, 6), (&#39;_literal&#39;, None), (&#39;color&#39;, &#39;#red&#39;))</span>
+<span class="sd">            TweakInterface((&#39;Y_offset&#39;, 6), (&#39;_literal&#39;, False), (&#39;color&#39;, &#39;#red&#39;))</span>
 
 <span class="sd">            Use the ``abjad.tweak()`` factory function for a shortcut:</span>
 
 <span class="sd">            &gt;&gt;&gt; tweaks = abjad.tweak(&quot;#red&quot;).color</span>
 <span class="sd">            &gt;&gt;&gt; tweaks</span>
-<span class="sd">            TweakInterface((&#39;_literal&#39;, None), (&#39;color&#39;, &#39;#red&#39;))</span>
+<span class="sd">            TweakInterface((&#39;_literal&#39;, False), (&#39;color&#39;, &#39;#red&#39;))</span>
 
 <span class="sd">            &gt;&gt;&gt; tweaks.Y_offset = 6</span>
 <span class="sd">            &gt;&gt;&gt; tweaks</span>
-<span class="sd">            TweakInterface((&#39;Y_offset&#39;, 6), (&#39;_literal&#39;, None), (&#39;color&#39;, &#39;#red&#39;))</span>
+<span class="sd">            TweakInterface((&#39;Y_offset&#39;, 6), (&#39;_literal&#39;, False), (&#39;color&#39;, &#39;#red&#39;))</span>
 
 <span class="sd">        ..  container:: example</span>
 
 <span class="sd">            Set long LilyPond grob chains like this:</span>
 
 <span class="sd">            &gt;&gt;&gt; abjad.tweak(False).bound_details__left_broken__text</span>
-<span class="sd">            TweakInterface((&#39;_literal&#39;, None), (&#39;bound_details__left_broken__text&#39;, False))</span>
+<span class="sd">            TweakInterface((&#39;_literal&#39;, False), (&#39;bound_details__left_broken__text&#39;, False))</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;_currently_deactivated&quot;</span><span class="p">:</span>
@@ -1851,8 +1840,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="fm">__setattr__</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">_pending_value</span><span class="p">)</span>
             <span class="nb">delattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;_pending_value&quot;</span><span class="p">)</span>
             <span class="k">return</span> <span class="bp">self</span>
-        <span class="n">camel_name</span> <span class="o">=</span> <span class="n">_string</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="n">name</span><span class="p">)</span><span class="o">.</span><span class="n">to_upper_camel_case</span><span class="p">()</span>
-        <span class="c1"># assert name == camel_name, repr((name, camel_name))</span>
+        <span class="n">camel_name</span> <span class="o">=</span> <span class="n">_string</span><span class="o">.</span><span class="n">to_upper_camel_case</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;_&quot;</span><span class="p">):</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="k">return</span> <span class="nb">vars</span><span class="p">(</span><span class="bp">self</span><span class="p">)[</span><span class="n">name</span><span class="p">]</span>
@@ -1881,10 +1869,10 @@
 <span class="sd">            Allows LilyPond colors:</span>
 
 <span class="sd">            &gt;&gt;&gt; abjad.tweak(&quot;#blue&quot;).color</span>
-<span class="sd">            TweakInterface((&#39;_literal&#39;, None), (&#39;color&#39;, &#39;#blue&#39;))</span>
+<span class="sd">            TweakInterface((&#39;_literal&#39;, False), (&#39;color&#39;, &#39;#blue&#39;))</span>
 
 <span class="sd">            &gt;&gt;&gt; abjad.tweak(&quot;#(x11-color &#39;ForestGreen)&quot;).color</span>
-<span class="sd">            TweakInterface((&#39;_literal&#39;, None), (&#39;color&#39;, &quot;#(x11-color &#39;ForestGreen)&quot;))</span>
+<span class="sd">            TweakInterface((&#39;_literal&#39;, False), (&#39;color&#39;, &quot;#(x11-color &#39;ForestGreen)&quot;))</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">tag</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;_currently_tagging&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
@@ -2020,10 +2008,10 @@
 
 <span class="sd">            &gt;&gt;&gt; tweaks = abjad.tweak(&quot;blue&quot;).color</span>
 <span class="sd">            &gt;&gt;&gt; abjad.TweakInterface.set_dataclass_tweaks(glissando, tweaks)</span>
-<span class="sd">            TweakInterface((&#39;_literal&#39;, None), (&#39;color&#39;, &#39;blue&#39;))</span>
+<span class="sd">            TweakInterface((&#39;_literal&#39;, False), (&#39;color&#39;, &#39;blue&#39;))</span>
 
 <span class="sd">            &gt;&gt;&gt; abjad.tweak(glissando)</span>
-<span class="sd">            TweakInterface((&#39;_literal&#39;, None), (&#39;color&#39;, &#39;blue&#39;))</span>
+<span class="sd">            TweakInterface((&#39;_literal&#39;, False), (&#39;color&#39;, &#39;blue&#39;))</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">assert</span> <span class="n">argument</span><span class="o">.</span><span class="n">_is_dataclass</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span>
@@ -2283,20 +2271,20 @@
 <span class="sd">        Returns LilyPond tweak manager:</span>
 
 <span class="sd">        &gt;&gt;&gt; abjad.tweak(markup_1)</span>
-<span class="sd">        TweakInterface((&#39;_literal&#39;, None), (&#39;color&#39;, &#39;#red&#39;))</span>
+<span class="sd">        TweakInterface((&#39;_literal&#39;, False), (&#39;color&#39;, &#39;#red&#39;))</span>
 
 <span class="sd">    ..  container:: example</span>
 
 <span class="sd">        Tweak expressions work like this:</span>
 
 <span class="sd">        &gt;&gt;&gt; abjad.tweak(&quot;#red&quot;).color</span>
-<span class="sd">        TweakInterface((&#39;_literal&#39;, None), (&#39;color&#39;, &#39;#red&#39;))</span>
+<span class="sd">        TweakInterface((&#39;_literal&#39;, False), (&#39;color&#39;, &#39;#red&#39;))</span>
 
 <span class="sd">        &gt;&gt;&gt; abjad.tweak(6).Y_offset</span>
-<span class="sd">        TweakInterface((&#39;Y_offset&#39;, 6), (&#39;_literal&#39;, None))</span>
+<span class="sd">        TweakInterface((&#39;Y_offset&#39;, 6), (&#39;_literal&#39;, False))</span>
 
 <span class="sd">        &gt;&gt;&gt; abjad.tweak(False).bound_details__left_broken__text</span>
-<span class="sd">        TweakInterface((&#39;_literal&#39;, None), (&#39;bound_details__left_broken__text&#39;, False))</span>
+<span class="sd">        TweakInterface((&#39;_literal&#39;, False), (&#39;bound_details__left_broken__text&#39;, False))</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">tag</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="n">_tag</span><span class="o">.</span><span class="n">Tag</span><span class="p">):</span>

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>abjad.rhythmtrees &mdash; Abjad 3.5 documentation</title>
+  <title>abjad.rhythmtrees &mdash; Abjad 3.6 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/abjad.css" type="text/css" />
@@ -32,11 +32,11 @@
   <div class="wy-grid-for-nav">
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search"  style="background: #00ff55" >
+        <div class="wy-side-nav-search"  style="background: #00dd00" >
 
 
     <a href="../../index.html" class="icon icon-home" alt="Documentation
-    Home"> Abjad 3.5
+    Home"> Abjad 3.6
 
 
 
@@ -110,7 +110,7 @@
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #00ff55" >
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #00dd00" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../index.html">Abjad</a>
       </nav>
@@ -129,7 +129,6 @@
 <span></span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">Tools for modeling IRCAM-style rhythm trees.</span>
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="kn">import</span> <span class="nn">abc</span>
 <span class="kn">import</span> <span class="nn">typing</span>
 
 <span class="kn">import</span> <span class="nn">quicktions</span>
@@ -137,7 +136,6 @@
 <span class="kn">import</span> <span class="nn">uqbar.graphs</span>
 
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">duration</span> <span class="k">as</span> <span class="n">_duration</span>
-<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="nb">format</span> <span class="k">as</span> <span class="n">_format</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">makers</span> <span class="k">as</span> <span class="n">_makers</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">math</span> <span class="k">as</span> <span class="n">_math</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">mutate</span> <span class="k">as</span> <span class="n">_mutate</span>
@@ -154,31 +152,17 @@
 
     <span class="c1">### CLASS VARIABLES ###</span>
 
+    <span class="n">_is_abstract</span> <span class="o">=</span> <span class="kc">True</span>
+
     <span class="n">_state_flag_names</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;_offsets_are_current&quot;</span><span class="p">,)</span>
 
     <span class="c1">### INITIALIZER ###</span>
 
-    <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">preprolated_duration</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_duration</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_offset</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Offset</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_offsets_are_current</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">preprolated_duration</span> <span class="o">=</span> <span class="n">preprolated_duration</span>
-
-    <span class="c1">### SPECIAL METHODS ###</span>
-
-<div class="viewcode-block" id="RhythmTreeMixin.__call__"><a class="viewcode-back" href="../../api/abjad/rhythmtrees.html#abjad.rhythmtrees.RhythmTreeMixin.__call__">[docs]</a>    <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
-    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pulse_duration</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Calls rhythm tree node on ``pulse_duration``.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
-
-<div class="viewcode-block" id="RhythmTreeMixin.__repr__"><a class="viewcode-back" href="../../api/abjad/rhythmtrees.html#abjad.rhythmtrees.RhythmTreeMixin.__repr__">[docs]</a>    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Gets interpreter representation.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">_format</span><span class="o">.</span><span class="n">get_repr</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
 
     <span class="c1">### PRIVATE METHODS ###</span>
 
@@ -194,13 +178,6 @@
         <span class="n">inventory</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="n">recurse</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">inventory</span>
-
-    <span class="k">def</span> <span class="nf">_get_format_specification</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">_format</span><span class="o">.</span><span class="n">FormatSpecification</span><span class="p">()</span>
-
-    <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
-    <span class="k">def</span> <span class="nf">_pretty_rtm_format_pieces</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
 
     <span class="k">def</span> <span class="nf">_update_offsets_of_entire_tree</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">def</span> <span class="nf">recurse</span><span class="p">(</span><span class="n">container</span><span class="p">,</span> <span class="n">current_offset</span><span class="p">):</span>
@@ -255,14 +232,12 @@
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">parentage_ratios</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        A sequence describing the relative durations of the nodes in a</span>
-<span class="sd">        node&#39;s improper parentage.</span>
+<span class="sd">        A sequence describing the relative durations of the nodes in a node&#39;s improper</span>
+<span class="sd">        parentage.</span>
 
-<span class="sd">        The first item in the sequence is the preprolated_duration of</span>
-<span class="sd">        the root node, and subsequent items are pairs of the</span>
-<span class="sd">        preprolated duration of the next node in the parentage and</span>
-<span class="sd">        the total preprolated_duration of that node and its siblings:</span>
-
+<span class="sd">        The first item in the sequence is the preprolated_duration of the root node, and</span>
+<span class="sd">        subsequent items are pairs of the preprolated duration of the next node in the</span>
+<span class="sd">        parentage and the total preprolated_duration of that node and its siblings:</span>
 
 <span class="sd">        &gt;&gt;&gt; a = abjad.rhythmtrees.RhythmTreeContainer(preprolated_duration=1)</span>
 <span class="sd">        &gt;&gt;&gt; b = abjad.rhythmtrees.RhythmTreeContainer(preprolated_duration=2)</span>
@@ -366,7 +341,7 @@
 <span class="sd">        Returns tuple.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">prolations</span> <span class="o">=</span> <span class="p">[</span><span class="n">_duration</span><span class="o">.</span><span class="n">Multiplier</span><span class="p">(</span><span class="mi">1</span><span class="p">)]</span>
-        <span class="n">pairs</span> <span class="o">=</span> <span class="n">_sequence</span><span class="o">.</span><span class="n">Sequence</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parentage</span><span class="p">)</span><span class="o">.</span><span class="n">nwise</span><span class="p">()</span>
+        <span class="n">pairs</span> <span class="o">=</span> <span class="n">_sequence</span><span class="o">.</span><span class="n">nwise</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parentage</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">child</span><span class="p">,</span> <span class="n">parent</span> <span class="ow">in</span> <span class="n">pairs</span><span class="p">:</span>
             <span class="n">prolations</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
                 <span class="n">_duration</span><span class="o">.</span><span class="n">Multiplier</span><span class="p">(</span>
@@ -374,20 +349,6 @@
                 <span class="p">)</span>
             <span class="p">)</span>
         <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">prolations</span><span class="p">)</span>
-
-    <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractproperty</span>
-    <span class="k">def</span> <span class="nf">rtm_format</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        The node&#39;s RTM format:</span>
-
-<span class="sd">        &gt;&gt;&gt; rtm = &#39;(1 ((1 (1 1)) (1 (1 1))))&#39;</span>
-<span class="sd">        &gt;&gt;&gt; tree = abjad.rhythmtrees.RhythmTreeParser()(rtm)[0]</span>
-<span class="sd">        &gt;&gt;&gt; tree.rtm_format</span>
-<span class="sd">        &#39;(1 ((1 (1 1)) (1 (1 1))))&#39;</span>
-
-<span class="sd">        Returns string.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">start_offset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -436,7 +397,7 @@
 
 <span class="sd">        &gt;&gt;&gt; result = leaf((1, 8))</span>
 <span class="sd">        &gt;&gt;&gt; result</span>
-<span class="sd">        Selection([Note(&quot;c&#39;2&quot;), Note(&quot;c&#39;8&quot;)])</span>
+<span class="sd">        [Note(&quot;c&#39;2&quot;), Note(&quot;c&#39;8&quot;)]</span>
 
 <span class="sd">    ..  container:: example</span>
 
@@ -444,18 +405,14 @@
 
 <span class="sd">        &gt;&gt;&gt; abjad.rhythmtrees.RhythmTreeLeaf(</span>
 <span class="sd">        ...     preprolated_duration=7, is_pitched=False)((1, 16))</span>
-<span class="sd">        Selection([Rest(&#39;r4..&#39;)])</span>
+<span class="sd">        [Rest(&#39;r4..&#39;)]</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="c1">### INITIALIZER ###</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">preprolated_duration</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">is_pitched</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="n">uqbar</span><span class="o">.</span><span class="n">containers</span><span class="o">.</span><span class="n">UniqueTreeNode</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">)</span>
         <span class="n">RhythmTreeMixin</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">preprolated_duration</span><span class="o">=</span><span class="n">preprolated_duration</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">is_pitched</span> <span class="o">=</span> <span class="n">is_pitched</span>
-
-    <span class="c1">### SPECIAL METHODS ###</span>
 
 <div class="viewcode-block" id="RhythmTreeLeaf.__call__"><a class="viewcode-back" href="../../api/abjad/rhythmtrees.html#abjad.rhythmtrees.RhythmTreeLeaf.__call__">[docs]</a>    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pulse_duration</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -463,7 +420,7 @@
 
 <span class="sd">        &gt;&gt;&gt; leaf = abjad.rhythmtrees.RhythmTreeLeaf(5)</span>
 <span class="sd">        &gt;&gt;&gt; leaf((1, 4))</span>
-<span class="sd">        Selection([Note(&quot;c&#39;1&quot;), Note(&quot;c&#39;4&quot;)])</span>
+<span class="sd">        [Note(&quot;c&#39;1&quot;), Note(&quot;c&#39;4&quot;)]</span>
 
 <span class="sd">        Returns sequence of components.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -485,12 +442,17 @@
         <span class="n">graph</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">graph</span></div>
 
-    <span class="c1">### PRIVATE METHODS ###</span>
+<div class="viewcode-block" id="RhythmTreeLeaf.__repr__"><a class="viewcode-back" href="../../api/abjad/rhythmtrees.html#abjad.rhythmtrees.RhythmTreeLeaf.__repr__">[docs]</a>    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets repr.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">(preprolated_duration=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">preprolated_duration</span><span class="si">!r}</span><span class="s2">, is_pitched=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">is_pitched</span><span class="si">!r}</span><span class="s2">)&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">(preprolated_duration=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">preprolated_duration</span><span class="si">!r}</span><span class="s2">, is_pitched=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">is_pitched</span><span class="si">!r}</span><span class="s2">, name=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">!r}</span><span class="s2">)&quot;</span></div>
 
     <span class="k">def</span> <span class="nf">_pretty_rtm_format_pieces</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">preprolated_duration</span><span class="p">)]</span>
-
-    <span class="c1">### PUBLIC PROPERTIES ###</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">rtm_format</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -544,38 +506,21 @@
 <span class="sd">        ...     preprolated_duration=1,</span>
 <span class="sd">        ...     children=[],</span>
 <span class="sd">        ...     )</span>
-
-<span class="sd">        &gt;&gt;&gt; string = abjad.storage(container)</span>
-<span class="sd">        &gt;&gt;&gt; print(string)</span>
-<span class="sd">        abjad.rhythmtrees.RhythmTreeContainer(</span>
-<span class="sd">            children=(),</span>
-<span class="sd">            preprolated_duration=abjad.Duration(1, 1),</span>
-<span class="sd">            )</span>
+<span class="sd">        &gt;&gt;&gt; container</span>
+<span class="sd">        RhythmTreeContainer((1, 1))</span>
 
 <span class="sd">    ..  container:: example</span>
 
-<span class="sd">        Similar to Abjad containers, ``RhythmTreeContainer`` supports a list</span>
-<span class="sd">        interface, and can be appended, extended, indexed and so forth by other</span>
-<span class="sd">        ``RhythmTreeMixin`` subclasses:</span>
+<span class="sd">        Similar to Abjad containers, ``RhythmTreeContainer`` supports a list interface,</span>
+<span class="sd">        and can be appended, extended, indexed and so forth by other ``RhythmTreeMixin``</span>
+<span class="sd">        subclasses:</span>
 
 <span class="sd">        &gt;&gt;&gt; leaf_a = abjad.rhythmtrees.RhythmTreeLeaf(preprolated_duration=1)</span>
 <span class="sd">        &gt;&gt;&gt; leaf_b = abjad.rhythmtrees.RhythmTreeLeaf(preprolated_duration=2)</span>
 <span class="sd">        &gt;&gt;&gt; container.extend([leaf_a, leaf_b])</span>
-<span class="sd">        &gt;&gt;&gt; string = abjad.storage(container)</span>
-<span class="sd">        &gt;&gt;&gt; print(string)</span>
-<span class="sd">        abjad.rhythmtrees.RhythmTreeContainer(</span>
-<span class="sd">            children=(</span>
-<span class="sd">                abjad.rhythmtrees.RhythmTreeLeaf(</span>
-<span class="sd">                    preprolated_duration=abjad.Duration(1, 1),</span>
-<span class="sd">                    is_pitched=True,</span>
-<span class="sd">                    ),</span>
-<span class="sd">                abjad.rhythmtrees.RhythmTreeLeaf(</span>
-<span class="sd">                    preprolated_duration=abjad.Duration(2, 1),</span>
-<span class="sd">                    is_pitched=True,</span>
-<span class="sd">                    ),</span>
-<span class="sd">                ),</span>
-<span class="sd">            preprolated_duration=abjad.Duration(1, 1),</span>
-<span class="sd">            )</span>
+<span class="sd">        &gt;&gt;&gt; for _ in container: _</span>
+<span class="sd">        RhythmTreeLeaf(preprolated_duration=Duration(1, 1), is_pitched=True)</span>
+<span class="sd">        RhythmTreeLeaf(preprolated_duration=Duration(2, 1), is_pitched=True)</span>
 
 <span class="sd">        &gt;&gt;&gt; another_container = abjad.rhythmtrees.RhythmTreeContainer(</span>
 <span class="sd">        ...     preprolated_duration=2)</span>
@@ -583,35 +528,14 @@
 <span class="sd">        ...     abjad.rhythmtrees.RhythmTreeLeaf(preprolated_duration=3))</span>
 <span class="sd">        &gt;&gt;&gt; another_container.append(container[1])</span>
 <span class="sd">        &gt;&gt;&gt; container.append(another_container)</span>
-<span class="sd">        &gt;&gt;&gt; string = abjad.storage(container)</span>
-<span class="sd">        &gt;&gt;&gt; print(string)</span>
-<span class="sd">        abjad.rhythmtrees.RhythmTreeContainer(</span>
-<span class="sd">            children=(</span>
-<span class="sd">                abjad.rhythmtrees.RhythmTreeLeaf(</span>
-<span class="sd">                    preprolated_duration=abjad.Duration(1, 1),</span>
-<span class="sd">                    is_pitched=True,</span>
-<span class="sd">                    ),</span>
-<span class="sd">                abjad.rhythmtrees.RhythmTreeContainer(</span>
-<span class="sd">                    children=(</span>
-<span class="sd">                        abjad.rhythmtrees.RhythmTreeLeaf(</span>
-<span class="sd">                            preprolated_duration=abjad.Duration(3, 1),</span>
-<span class="sd">                            is_pitched=True,</span>
-<span class="sd">                            ),</span>
-<span class="sd">                        abjad.rhythmtrees.RhythmTreeLeaf(</span>
-<span class="sd">                            preprolated_duration=abjad.Duration(2, 1),</span>
-<span class="sd">                            is_pitched=True,</span>
-<span class="sd">                            ),</span>
-<span class="sd">                        ),</span>
-<span class="sd">                    preprolated_duration=abjad.Duration(2, 1),</span>
-<span class="sd">                    ),</span>
-<span class="sd">                ),</span>
-<span class="sd">            preprolated_duration=abjad.Duration(1, 1),</span>
-<span class="sd">            )</span>
+<span class="sd">        &gt;&gt;&gt; for _ in container: _</span>
+<span class="sd">        RhythmTreeLeaf(preprolated_duration=Duration(1, 1), is_pitched=True)</span>
+<span class="sd">        RhythmTreeContainer((2, 3))</span>
 
 <span class="sd">    ..  container:: example</span>
 
-<span class="sd">        Call ``RhythmTreeContainer`` with a preprolated_duration to generate a</span>
-<span class="sd">        tuplet structure:</span>
+<span class="sd">        Call ``RhythmTreeContainer`` with a preprolated_duration to generate a tuplet</span>
+<span class="sd">        structure:</span>
 
 <span class="sd">        &gt;&gt;&gt; components = container((1, 4))</span>
 <span class="sd">        &gt;&gt;&gt; tuplet = components[0]</span>
@@ -648,47 +572,24 @@
 
 <div class="viewcode-block" id="RhythmTreeContainer.__add__"><a class="viewcode-back" href="../../api/abjad/rhythmtrees.html#abjad.rhythmtrees.RhythmTreeContainer.__add__">[docs]</a>    <span class="k">def</span> <span class="fm">__add__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">):</span>
         <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Concatenate containers self and argument. The operation c = a + b</span>
-<span class="sd">        returns a new RhythmTreeContainer c with the content of both a and b,</span>
-<span class="sd">        and a preprolated_duration equal to the sum of the durations</span>
-<span class="sd">        of a and b. The operation is non-commutative: the content of the</span>
-<span class="sd">        first operand will be placed before the content of the second operand:</span>
+<span class="sd">        Concatenate containers self and argument. The operation c = a + b returns a new</span>
+<span class="sd">        RhythmTreeContainer c with the content of both a and b, and a</span>
+<span class="sd">        preprolated_duration equal to the sum of the durations of a and b. The operation</span>
+<span class="sd">        is non-commutative: the content of the first operand will be placed before the</span>
+<span class="sd">        content of the second operand:</span>
 
 <span class="sd">        &gt;&gt;&gt; a = abjad.rhythmtrees.RhythmTreeParser()(&#39;(1 (1 1 1))&#39;)[0]</span>
 <span class="sd">        &gt;&gt;&gt; b = abjad.rhythmtrees.RhythmTreeParser()(&#39;(2 (3 4))&#39;)[0]</span>
-
 <span class="sd">        &gt;&gt;&gt; c = a + b</span>
-
 <span class="sd">        &gt;&gt;&gt; c.preprolated_duration</span>
 <span class="sd">        Duration(3, 1)</span>
 
-<span class="sd">        &gt;&gt;&gt; string = abjad.storage(c)</span>
-<span class="sd">        &gt;&gt;&gt; print(string)</span>
-<span class="sd">        abjad.rhythmtrees.RhythmTreeContainer(</span>
-<span class="sd">            children=(</span>
-<span class="sd">                abjad.rhythmtrees.RhythmTreeLeaf(</span>
-<span class="sd">                    preprolated_duration=abjad.Duration(1, 1),</span>
-<span class="sd">                    is_pitched=True,</span>
-<span class="sd">                    ),</span>
-<span class="sd">                abjad.rhythmtrees.RhythmTreeLeaf(</span>
-<span class="sd">                    preprolated_duration=abjad.Duration(1, 1),</span>
-<span class="sd">                    is_pitched=True,</span>
-<span class="sd">                    ),</span>
-<span class="sd">                abjad.rhythmtrees.RhythmTreeLeaf(</span>
-<span class="sd">                    preprolated_duration=abjad.Duration(1, 1),</span>
-<span class="sd">                    is_pitched=True,</span>
-<span class="sd">                    ),</span>
-<span class="sd">                abjad.rhythmtrees.RhythmTreeLeaf(</span>
-<span class="sd">                    preprolated_duration=abjad.Duration(3, 1),</span>
-<span class="sd">                    is_pitched=True,</span>
-<span class="sd">                    ),</span>
-<span class="sd">                abjad.rhythmtrees.RhythmTreeLeaf(</span>
-<span class="sd">                    preprolated_duration=abjad.Duration(4, 1),</span>
-<span class="sd">                    is_pitched=True,</span>
-<span class="sd">                    ),</span>
-<span class="sd">                ),</span>
-<span class="sd">            preprolated_duration=abjad.Duration(3, 1),</span>
-<span class="sd">            )</span>
+<span class="sd">        &gt;&gt;&gt; for _ in c: _</span>
+<span class="sd">        RhythmTreeLeaf(preprolated_duration=Duration(1, 1), is_pitched=True)</span>
+<span class="sd">        RhythmTreeLeaf(preprolated_duration=Duration(1, 1), is_pitched=True)</span>
+<span class="sd">        RhythmTreeLeaf(preprolated_duration=Duration(1, 1), is_pitched=True)</span>
+<span class="sd">        RhythmTreeLeaf(preprolated_duration=Duration(3, 1), is_pitched=True)</span>
+<span class="sd">        RhythmTreeLeaf(preprolated_duration=Duration(4, 1), is_pitched=True)</span>
 
 <span class="sd">        Returns new RhythmTreeContainer.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -845,11 +746,9 @@
         <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">argument</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
         <span class="k">return</span> <span class="n">argument</span><span class="o">.</span><span class="fm">__add__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="RhythmTreeContainer.__repr__"><a class="viewcode-back" href="../../api/abjad/rhythmtrees.html#abjad.rhythmtrees.RhythmTreeContainer.__repr__">[docs]</a>    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="RhythmTreeContainer.__repr__"><a class="viewcode-back" href="../../api/abjad/rhythmtrees.html#abjad.rhythmtrees.RhythmTreeContainer.__repr__">[docs]</a>    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets interpreter representation of rhythm tree container.</span>
-
-<span class="sd">        Returns string.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">class_name</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span>
         <span class="n">numerator</span><span class="p">,</span> <span class="n">denominator</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">duration</span><span class="o">.</span><span class="n">pair</span>
@@ -859,8 +758,8 @@
 
     <span class="k">def</span> <span class="nf">_get_contents_duration</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        The total preprolated_duration of the children</span>
-<span class="sd">        of a ``RhythmTreeContainer`` instance:</span>
+<span class="sd">        The total preprolated_duration of the children of a ``RhythmTreeContainer``</span>
+<span class="sd">        instance:</span>
 
 <span class="sd">        &gt;&gt;&gt; rtm = &#39;(1 (1 (2 (1 1 1)) 2))&#39;</span>
 <span class="sd">        &gt;&gt;&gt; tree = abjad.rhythmtrees.RhythmTreeParser()(rtm)[0]</span>
@@ -921,64 +820,20 @@
 
 <span class="sd">    ..  container:: example</span>
 
-<span class="sd">        Abjad’s rhythm-tree parser parses a micro-language resembling Ircam’s</span>
-<span class="sd">        RTM Lisp syntax, and generates a sequence of RhythmTree structures,</span>
-<span class="sd">        which can be furthered manipulated by composers, before being converted</span>
-<span class="sd">        into an Abjad score object:</span>
+<span class="sd">        Abjad’s rhythm-tree parser parses a micro-language resembling Ircam’s RTM Lisp</span>
+<span class="sd">        syntax, and generates a sequence of RhythmTree structures, which can be furthered</span>
+<span class="sd">        manipulated by composers, before being converted into an Abjad score object:</span>
 
 <span class="sd">        &gt;&gt;&gt; parser = abjad.rhythmtrees.RhythmTreeParser()</span>
-
 <span class="sd">        &gt;&gt;&gt; string = &#39;(3 (1 (1 ((2 (1 1 1)) 2 2 1))))&#39;</span>
 <span class="sd">        &gt;&gt;&gt; rhythm_tree_list = parser(string)</span>
 <span class="sd">        &gt;&gt;&gt; rhythm_tree_container = rhythm_tree_list[0]</span>
 <span class="sd">        &gt;&gt;&gt; rhythm_tree_container.rtm_format</span>
 <span class="sd">        &#39;(3 (1 (1 ((2 (1 1 1)) 2 2 1))))&#39;</span>
 
-<span class="sd">        &gt;&gt;&gt; string = abjad.storage(rhythm_tree_container)</span>
-<span class="sd">        &gt;&gt;&gt; print(string)</span>
-<span class="sd">        abjad.rhythmtrees.RhythmTreeContainer(</span>
-<span class="sd">            children=(</span>
-<span class="sd">                abjad.rhythmtrees.RhythmTreeLeaf(</span>
-<span class="sd">                    preprolated_duration=abjad.Duration(1, 1),</span>
-<span class="sd">                    is_pitched=True,</span>
-<span class="sd">                    ),</span>
-<span class="sd">                abjad.rhythmtrees.RhythmTreeContainer(</span>
-<span class="sd">                    children=(</span>
-<span class="sd">                        abjad.rhythmtrees.RhythmTreeContainer(</span>
-<span class="sd">                            children=(</span>
-<span class="sd">                                abjad.rhythmtrees.RhythmTreeLeaf(</span>
-<span class="sd">                                    preprolated_duration=abjad.Duration(1, 1),</span>
-<span class="sd">                                    is_pitched=True,</span>
-<span class="sd">                                    ),</span>
-<span class="sd">                                abjad.rhythmtrees.RhythmTreeLeaf(</span>
-<span class="sd">                                    preprolated_duration=abjad.Duration(1, 1),</span>
-<span class="sd">                                    is_pitched=True,</span>
-<span class="sd">                                    ),</span>
-<span class="sd">                                abjad.rhythmtrees.RhythmTreeLeaf(</span>
-<span class="sd">                                    preprolated_duration=abjad.Duration(1, 1),</span>
-<span class="sd">                                    is_pitched=True,</span>
-<span class="sd">                                    ),</span>
-<span class="sd">                                ),</span>
-<span class="sd">                            preprolated_duration=abjad.Duration(2, 1),</span>
-<span class="sd">                            ),</span>
-<span class="sd">                        abjad.rhythmtrees.RhythmTreeLeaf(</span>
-<span class="sd">                            preprolated_duration=abjad.Duration(2, 1),</span>
-<span class="sd">                            is_pitched=True,</span>
-<span class="sd">                            ),</span>
-<span class="sd">                        abjad.rhythmtrees.RhythmTreeLeaf(</span>
-<span class="sd">                            preprolated_duration=abjad.Duration(2, 1),</span>
-<span class="sd">                            is_pitched=True,</span>
-<span class="sd">                            ),</span>
-<span class="sd">                        abjad.rhythmtrees.RhythmTreeLeaf(</span>
-<span class="sd">                            preprolated_duration=abjad.Duration(1, 1),</span>
-<span class="sd">                            is_pitched=True,</span>
-<span class="sd">                            ),</span>
-<span class="sd">                        ),</span>
-<span class="sd">                    preprolated_duration=abjad.Duration(1, 1),</span>
-<span class="sd">                    ),</span>
-<span class="sd">                ),</span>
-<span class="sd">            preprolated_duration=abjad.Duration(3, 1),</span>
-<span class="sd">            )</span>
+<span class="sd">        &gt;&gt;&gt; for _ in rhythm_tree_container: _</span>
+<span class="sd">        RhythmTreeLeaf(preprolated_duration=Duration(1, 1), is_pitched=True)</span>
+<span class="sd">        RhythmTreeContainer((3, 2))</span>
 
 <span class="sd">        &gt;&gt;&gt; base_duration = (1, 4)</span>
 <span class="sd">        &gt;&gt;&gt; component_list = rhythm_tree_container(base_duration)</span>

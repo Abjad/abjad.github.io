@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>abjad.typedcollections &mdash; Abjad 3.5 documentation</title>
+  <title>abjad.typedcollections &mdash; Abjad 3.6 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/abjad.css" type="text/css" />
@@ -32,11 +32,11 @@
   <div class="wy-grid-for-nav">
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search"  style="background: #00ff55" >
+        <div class="wy-side-nav-search"  style="background: #00dd00" >
 
 
     <a href="../../index.html" class="icon icon-home" alt="Documentation
-    Home"> Abjad 3.5
+    Home"> Abjad 3.6
 
 
 
@@ -110,7 +110,7 @@
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #00ff55" >
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #00dd00" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../index.html">Abjad</a>
       </nav>
@@ -126,32 +126,25 @@
     <div itemprop="articleBody">
     
   <h1>Source code for abjad.typedcollections</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">abc</span>
-<span class="kn">import</span> <span class="nn">collections.abc</span>
-
-<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="nb">format</span> <span class="k">as</span> <span class="n">_format</span>
-<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">new</span> <span class="k">as</span> <span class="n">_new</span>
+<span></span><span class="kn">import</span> <span class="nn">collections</span>
+<span class="kn">import</span> <span class="nn">dataclasses</span>
+<span class="kn">import</span> <span class="nn">typing</span>
 
 
-<div class="viewcode-block" id="TypedCollection"><a class="viewcode-back" href="../../api/abjad/typedcollections.html#abjad.typedcollections.TypedCollection">[docs]</a><span class="k">class</span> <span class="nc">TypedCollection</span><span class="p">:</span>
+<div class="viewcode-block" id="TypedCollection"><a class="viewcode-back" href="../../api/abjad/typedcollections.html#abjad.typedcollections.TypedCollection">[docs]</a><span class="nd">@dataclasses</span><span class="o">.</span><span class="n">dataclass</span><span class="p">(</span><span class="n">slots</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">unsafe_hash</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">TypedCollection</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Abstract typed collection.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="c1">### CLASS VARIABLES ###</span>
-
-    <span class="vm">__slots__</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;_collection&quot;</span><span class="p">,</span> <span class="s2">&quot;_item_class&quot;</span><span class="p">)</span>
+    <span class="n">items</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Any</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">item_class</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Any</span> <span class="o">=</span> <span class="kc">None</span>
 
     <span class="n">_is_abstract</span> <span class="o">=</span> <span class="kc">True</span>
 
-    <span class="c1">### INITIALIZER ###</span>
-
-    <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">items</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">item_class</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item_class</span><span class="p">,</span> <span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="kc">None</span><span class="p">),</span> <span class="nb">type</span><span class="p">))</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_item_class</span> <span class="o">=</span> <span class="n">item_class</span>
-
-    <span class="c1">### SPECIAL METHODS ###</span>
+<div class="viewcode-block" id="TypedCollection.__post_init__"><a class="viewcode-back" href="../../api/abjad/typedcollections.html#abjad.typedcollections.TypedCollection.__post_init__">[docs]</a>    <span class="k">def</span> <span class="nf">__post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">item_class</span><span class="p">,</span> <span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="kc">None</span><span class="p">),</span> <span class="nb">type</span><span class="p">)),</span> <span class="nb">repr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">item_class</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">items</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span> <span class="ow">or</span> <span class="p">[]</span></div>
 
 <div class="viewcode-block" id="TypedCollection.__contains__"><a class="viewcode-back" href="../../api/abjad/typedcollections.html#abjad.typedcollections.TypedCollection.__contains__">[docs]</a>    <span class="k">def</span> <span class="fm">__contains__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -163,26 +156,17 @@
             <span class="n">item</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_coerce_item</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">False</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_collection</span><span class="o">.</span><span class="fm">__contains__</span><span class="p">(</span><span class="n">item</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="fm">__contains__</span><span class="p">(</span><span class="n">item</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="TypedCollection.__eq__"><a class="viewcode-back" href="../../api/abjad/typedcollections.html#abjad.typedcollections.TypedCollection.__eq__">[docs]</a>    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Is true when ``argument`` is a typed collection with items that</span>
-<span class="sd">        compare equal to those of this typed collection.</span>
-
-<span class="sd">        Returns true or false.</span>
+<span class="sd">        Compares ``items``.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="nb">issubclass</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">argument</span><span class="p">),</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)):</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_collection</span> <span class="o">==</span> <span class="n">argument</span><span class="o">.</span><span class="n">_collection</span>
-        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">argument</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_collection</span><span class="p">)):</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_collection</span> <span class="o">==</span> <span class="n">argument</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span> <span class="o">==</span> <span class="n">argument</span><span class="o">.</span><span class="n">items</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">argument</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">)):</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span> <span class="o">==</span> <span class="n">argument</span>
         <span class="k">return</span> <span class="kc">False</span></div>
-
-<div class="viewcode-block" id="TypedCollection.__hash__"><a class="viewcode-back" href="../../api/abjad/typedcollections.html#abjad.typedcollections.TypedCollection.__hash__">[docs]</a>    <span class="k">def</span> <span class="fm">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Hashes typed collection.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="nb">object</span><span class="o">.</span><span class="fm">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="TypedCollection.__iter__"><a class="viewcode-back" href="../../api/abjad/typedcollections.html#abjad.typedcollections.TypedCollection.__iter__">[docs]</a>    <span class="k">def</span> <span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -190,7 +174,7 @@
 
 <span class="sd">        Returns generator.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_collection</span><span class="o">.</span><span class="fm">__iter__</span><span class="p">()</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="fm">__iter__</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="TypedCollection.__len__"><a class="viewcode-back" href="../../api/abjad/typedcollections.html#abjad.typedcollections.TypedCollection.__len__">[docs]</a>    <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -198,36 +182,17 @@
 
 <span class="sd">        Returns nonnegative integer.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_collection</span><span class="p">)</span></div>
-
-<div class="viewcode-block" id="TypedCollection.__repr__"><a class="viewcode-back" href="../../api/abjad/typedcollections.html#abjad.typedcollections.TypedCollection.__repr__">[docs]</a>    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Gets interpreter representation.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">_format</span><span class="o">.</span><span class="n">get_repr</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
-
-    <span class="c1">### PRIVATE METHODS ###</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">)</span></div>
 
     <span class="k">def</span> <span class="nf">_coerce_item</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
         <span class="k">def</span> <span class="nf">coerce_</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
-            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_item_class</span><span class="p">):</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">item_class</span><span class="p">):</span>
                 <span class="k">return</span> <span class="n">x</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_item_class</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">item_class</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_item_class</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">item_class</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">item</span>
         <span class="k">return</span> <span class="n">coerce_</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
-
-    <span class="k">def</span> <span class="nf">_get_format_specification</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">result</span> <span class="o">=</span> <span class="n">_format</span><span class="o">.</span><span class="n">_inspect_signature</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
-        <span class="n">signature_keyword_names</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-        <span class="n">names</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">signature_keyword_names</span><span class="p">)</span>
-        <span class="k">if</span> <span class="s2">&quot;items&quot;</span> <span class="ow">in</span> <span class="n">names</span><span class="p">:</span>
-            <span class="n">names</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s2">&quot;items&quot;</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">_format</span><span class="o">.</span><span class="n">FormatSpecification</span><span class="p">(</span>
-            <span class="n">storage_format_args_values</span><span class="o">=</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_collection</span><span class="p">],</span>
-            <span class="n">storage_format_keyword_names</span><span class="o">=</span><span class="n">names</span><span class="p">,</span>
-        <span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_on_insertion</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -239,327 +204,20 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Override to operate on item after removal from collection.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">pass</span>
-
-    <span class="c1">### PUBLIC PROPERTIES ###</span>
-
-    <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">item_class</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Gets item class of collection.</span>
-
-<span class="sd">        Collection coerces items according to ``item_class``.</span>
-
-<span class="sd">        Returns class.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_item_class</span>
-
-    <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">items</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Gets items in collection.</span>
-
-<span class="sd">        Returns list.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="p">[</span><span class="n">_</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">]</span></div>
+        <span class="k">pass</span></div>
 
 
-<div class="viewcode-block" id="TypedCounter"><a class="viewcode-back" href="../../api/abjad/typedcollections.html#abjad.typedcollections.TypedCounter">[docs]</a><span class="k">class</span> <span class="nc">TypedCounter</span><span class="p">(</span><span class="n">TypedCollection</span><span class="p">,</span> <span class="n">collections</span><span class="o">.</span><span class="n">abc</span><span class="o">.</span><span class="n">MutableMapping</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Typed counter.</span>
-
-<span class="sd">    ..  container:: example</span>
-
-<span class="sd">        &gt;&gt;&gt; counter = abjad.TypedCounter(</span>
-<span class="sd">        ...     [0, &quot;c&#39;&quot;, 1, True, &quot;cs&#39;&quot;, &quot;df&#39;&quot;],</span>
-<span class="sd">        ...     item_class=abjad.NumberedPitch,</span>
-<span class="sd">        ...     )</span>
-
-<span class="sd">        &gt;&gt;&gt; string = abjad.storage(counter)</span>
-<span class="sd">        &gt;&gt;&gt; print(string)</span>
-<span class="sd">        abjad.TypedCounter(</span>
-<span class="sd">            {</span>
-<span class="sd">                abjad.NumberedPitch(0): 2,</span>
-<span class="sd">                abjad.NumberedPitch(1): 4,</span>
-<span class="sd">                },</span>
-<span class="sd">            item_class=abjad.NumberedPitch,</span>
-<span class="sd">            )</span>
-
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="c1">### CLASS VARIABLES ###</span>
-
-    <span class="vm">__slots__</span> <span class="o">=</span> <span class="p">()</span>
-
-    <span class="c1">### INITIALIZER ###</span>
-
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">items</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">item_class</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">keywords</span><span class="p">):</span>
-        <span class="n">TypedCollection</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item_class</span><span class="o">=</span><span class="n">item_class</span><span class="p">,</span> <span class="n">items</span><span class="o">=</span><span class="n">items</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_collection</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">Counter</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">items</span><span class="p">,</span> <span class="o">**</span><span class="n">keywords</span><span class="p">)</span>
-
-    <span class="c1">### SPECIAL METHODS ###</span>
-
-<div class="viewcode-block" id="TypedCounter.__add__"><a class="viewcode-back" href="../../api/abjad/typedcollections.html#abjad.typedcollections.TypedCounter.__add__">[docs]</a>    <span class="k">def</span> <span class="fm">__add__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Adds typed counter to ``argument``.</span>
-
-<span class="sd">        Returns new typed counter.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="p">(</span>
-            <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">argument</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
-            <span class="ow">or</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">item_class</span> <span class="o">==</span> <span class="n">argument</span><span class="o">.</span><span class="n">item_class</span>
-        <span class="p">):</span>
-            <span class="k">return</span> <span class="bp">NotImplemented</span>
-        <span class="n">result</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)()</span>
-        <span class="n">result</span><span class="o">.</span><span class="n">_collection</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_collection</span> <span class="o">+</span> <span class="n">argument</span><span class="o">.</span><span class="n">_collection</span>
-        <span class="k">return</span> <span class="n">result</span></div>
-
-<div class="viewcode-block" id="TypedCounter.__and__"><a class="viewcode-back" href="../../api/abjad/typedcollections.html#abjad.typedcollections.TypedCounter.__and__">[docs]</a>    <span class="k">def</span> <span class="fm">__and__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Logical AND of typed counter and ``argument``.</span>
-
-<span class="sd">        Returns new typed counter.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="p">(</span>
-            <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">argument</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
-            <span class="ow">or</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">item_class</span> <span class="o">==</span> <span class="n">argument</span><span class="o">.</span><span class="n">item_class</span>
-        <span class="p">):</span>
-            <span class="k">return</span> <span class="bp">NotImplemented</span>
-        <span class="n">result</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)()</span>
-        <span class="n">result</span><span class="o">.</span><span class="n">_collection</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_collection</span> <span class="o">&amp;</span> <span class="n">argument</span><span class="o">.</span><span class="n">_collection</span>
-        <span class="k">return</span> <span class="n">result</span></div>
-
-<div class="viewcode-block" id="TypedCounter.__delitem__"><a class="viewcode-back" href="../../api/abjad/typedcollections.html#abjad.typedcollections.TypedCounter.__delitem__">[docs]</a>    <span class="k">def</span> <span class="fm">__delitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Deletes ``item`` from typed counter.</span>
-
-<span class="sd">        Returns none.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">item</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_coerce_item</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_collection</span><span class="p">:</span>
-            <span class="nb">dict</span><span class="o">.</span><span class="fm">__delitem__</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_collection</span><span class="p">,</span> <span class="n">item</span><span class="p">)</span></div>
-
-<div class="viewcode-block" id="TypedCounter.__getitem__"><a class="viewcode-back" href="../../api/abjad/typedcollections.html#abjad.typedcollections.TypedCounter.__getitem__">[docs]</a>    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Gets item or slice identified by ``argument``.</span>
-
-<span class="sd">        Returns item or slice.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">argument</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_coerce_item</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_collection</span><span class="o">.</span><span class="fm">__getitem__</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span></div>
-
-<div class="viewcode-block" id="TypedCounter.__or__"><a class="viewcode-back" href="../../api/abjad/typedcollections.html#abjad.typedcollections.TypedCounter.__or__">[docs]</a>    <span class="k">def</span> <span class="fm">__or__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Logical OR of typed counter and ``argument``.</span>
-
-<span class="sd">        Returns new typed counter.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="p">(</span>
-            <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">argument</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
-            <span class="ow">or</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">item_class</span> <span class="o">==</span> <span class="n">argument</span><span class="o">.</span><span class="n">item_class</span>
-        <span class="p">):</span>
-            <span class="k">return</span> <span class="bp">NotImplemented</span>
-        <span class="n">result</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)()</span>
-        <span class="n">result</span><span class="o">.</span><span class="n">_collection</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_collection</span> <span class="o">|</span> <span class="n">argument</span><span class="o">.</span><span class="n">_collection</span>
-        <span class="k">return</span> <span class="n">result</span></div>
-
-<div class="viewcode-block" id="TypedCounter.__radd__"><a class="viewcode-back" href="../../api/abjad/typedcollections.html#abjad.typedcollections.TypedCounter.__radd__">[docs]</a>    <span class="k">def</span> <span class="fm">__radd__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Adds ``argument`` to typed counter.</span>
-
-<span class="sd">        Returns new typed counter.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="p">(</span>
-            <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">argument</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
-            <span class="ow">or</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">item_class</span> <span class="o">==</span> <span class="n">argument</span><span class="o">.</span><span class="n">item_class</span>
-        <span class="p">):</span>
-            <span class="k">return</span> <span class="bp">NotImplemented</span>
-        <span class="n">result</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)()</span>
-        <span class="n">result</span><span class="o">.</span><span class="n">_collection</span> <span class="o">=</span> <span class="n">argument</span><span class="o">.</span><span class="n">_collection</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_collection</span>
-        <span class="k">return</span> <span class="n">result</span></div>
-
-    <span class="k">def</span> <span class="nf">__reduce__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Reduces typed counter.</span>
-
-<span class="sd">        Returns new typed counter.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">),</span> <span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_collection</span><span class="p">),)</span>
-
-<div class="viewcode-block" id="TypedCounter.__setitem__"><a class="viewcode-back" href="../../api/abjad/typedcollections.html#abjad.typedcollections.TypedCounter.__setitem__">[docs]</a>    <span class="k">def</span> <span class="fm">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Sets typed counter ``item`` to ``value``.</span>
-
-<span class="sd">        Returns none.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">item</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_coerce_item</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_collection</span><span class="o">.</span><span class="fm">__setitem__</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span></div>
-
-<div class="viewcode-block" id="TypedCounter.__sub__"><a class="viewcode-back" href="../../api/abjad/typedcollections.html#abjad.typedcollections.TypedCounter.__sub__">[docs]</a>    <span class="k">def</span> <span class="fm">__sub__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Subtracts ``argument`` from typed counter.</span>
-
-<span class="sd">        Returns new typed counter.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="p">(</span>
-            <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">argument</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
-            <span class="ow">or</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">item_class</span> <span class="o">==</span> <span class="n">argument</span><span class="o">.</span><span class="n">item_class</span>
-        <span class="p">):</span>
-            <span class="k">return</span> <span class="bp">NotImplemented</span>
-        <span class="n">result</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)()</span>
-        <span class="n">result</span><span class="o">.</span><span class="n">_collection</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_collection</span> <span class="o">-</span> <span class="n">argument</span><span class="o">.</span><span class="n">_collection</span>
-        <span class="k">return</span> <span class="n">result</span></div>
-
-    <span class="c1">### PRIVATE METHODS ###</span>
-
-    <span class="k">def</span> <span class="nf">_coerce_arguments</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">items</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">keywords</span><span class="p">):</span>
-        <span class="k">def</span> <span class="nf">_coerce_mapping</span><span class="p">(</span><span class="n">items</span><span class="p">):</span>
-            <span class="n">the_items</span> <span class="o">=</span> <span class="p">{}</span>
-            <span class="k">for</span> <span class="n">item</span><span class="p">,</span> <span class="n">count</span> <span class="ow">in</span> <span class="n">items</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-                <span class="n">item</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_coerce_item</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
-                <span class="k">if</span> <span class="n">item</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">the_items</span><span class="p">:</span>
-                    <span class="n">the_items</span><span class="p">[</span><span class="n">item</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
-                <span class="n">the_items</span><span class="p">[</span><span class="n">item</span><span class="p">]</span> <span class="o">+=</span> <span class="n">count</span>
-            <span class="k">return</span> <span class="n">the_items</span>
-
-        <span class="n">the_items</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">if</span> <span class="n">items</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">items</span><span class="p">,</span> <span class="n">collections</span><span class="o">.</span><span class="n">abc</span><span class="o">.</span><span class="n">Mapping</span><span class="p">):</span>
-                <span class="n">items</span> <span class="o">=</span> <span class="n">_coerce_mapping</span><span class="p">(</span><span class="n">items</span><span class="p">)</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">the_items</span> <span class="o">=</span> <span class="p">[]</span>
-                <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">items</span><span class="p">:</span>
-                    <span class="n">the_items</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_coerce_item</span><span class="p">(</span><span class="n">item</span><span class="p">))</span>
-        <span class="n">itemdict</span> <span class="o">=</span> <span class="n">_coerce_mapping</span><span class="p">(</span><span class="n">keywords</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">the_items</span><span class="p">,</span> <span class="n">itemdict</span>
-
-    <span class="k">def</span> <span class="nf">_get_format_specification</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">result</span> <span class="o">=</span> <span class="n">_format</span><span class="o">.</span><span class="n">_inspect_signature</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
-        <span class="n">signature_keyword_names</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-        <span class="n">names</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">signature_keyword_names</span><span class="p">)</span>
-        <span class="k">if</span> <span class="s2">&quot;items&quot;</span> <span class="ow">in</span> <span class="n">names</span><span class="p">:</span>
-            <span class="n">names</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s2">&quot;items&quot;</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">_format</span><span class="o">.</span><span class="n">FormatSpecification</span><span class="p">(</span>
-            <span class="n">storage_format_args_values</span><span class="o">=</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_collection</span><span class="p">],</span>
-            <span class="n">storage_format_keyword_names</span><span class="o">=</span><span class="n">names</span><span class="p">,</span>
-            <span class="n">template_names</span><span class="o">=</span><span class="n">names</span><span class="p">,</span>
-        <span class="p">)</span>
-
-    <span class="c1">### PUBLIC METHODS ###</span>
-
-<div class="viewcode-block" id="TypedCounter.clear"><a class="viewcode-back" href="../../api/abjad/typedcollections.html#abjad.typedcollections.TypedCounter.clear">[docs]</a>    <span class="k">def</span> <span class="nf">clear</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Clears typed counter.</span>
-
-<span class="sd">        Returns none.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_collection</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span></div>
-
-<div class="viewcode-block" id="TypedCounter.copy"><a class="viewcode-back" href="../../api/abjad/typedcollections.html#abjad.typedcollections.TypedCounter.copy">[docs]</a>    <span class="k">def</span> <span class="nf">copy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Copies typed counter.</span>
-
-<span class="sd">        Returns new typed counter.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span><span class="bp">self</span><span class="p">)</span></div>
-
-<div class="viewcode-block" id="TypedCounter.elements"><a class="viewcode-back" href="../../api/abjad/typedcollections.html#abjad.typedcollections.TypedCounter.elements">[docs]</a>    <span class="k">def</span> <span class="nf">elements</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Elements in typed counter.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_collection</span><span class="o">.</span><span class="n">elements</span><span class="p">()</span></div>
-
-    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">fromkeys</span><span class="p">(</span><span class="n">class_</span><span class="p">,</span> <span class="n">iterable</span><span class="p">,</span> <span class="n">v</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Makes new typed counter from ``iterable``.</span>
-
-<span class="sd">        Not yet impelemented.</span>
-
-<span class="sd">        Will return new typed counter.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">name</span> <span class="o">=</span> <span class="n">class_</span><span class="o">.</span><span class="vm">__name__</span>
-        <span class="n">message</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">.fromkeys() is undefined. Use </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">(iterable) instead.&quot;</span>
-        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
-
-<div class="viewcode-block" id="TypedCounter.items"><a class="viewcode-back" href="../../api/abjad/typedcollections.html#abjad.typedcollections.TypedCounter.items">[docs]</a>    <span class="k">def</span> <span class="nf">items</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Items in typed counter.</span>
-
-<span class="sd">        Returns tuple.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_collection</span><span class="o">.</span><span class="n">items</span><span class="p">())</span></div>
-
-<div class="viewcode-block" id="TypedCounter.keys"><a class="viewcode-back" href="../../api/abjad/typedcollections.html#abjad.typedcollections.TypedCounter.keys">[docs]</a>    <span class="k">def</span> <span class="nf">keys</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Iterates keys in typed counter.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="nb">iter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_collection</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span></div>
-
-<div class="viewcode-block" id="TypedCounter.most_common"><a class="viewcode-back" href="../../api/abjad/typedcollections.html#abjad.typedcollections.TypedCounter.most_common">[docs]</a>    <span class="k">def</span> <span class="nf">most_common</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Please document.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_collection</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="n">n</span><span class="p">)</span></div>
-
-<div class="viewcode-block" id="TypedCounter.subtract"><a class="viewcode-back" href="../../api/abjad/typedcollections.html#abjad.typedcollections.TypedCounter.subtract">[docs]</a>    <span class="k">def</span> <span class="nf">subtract</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">iterable</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">keywords</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Subtracts ``iterable`` from typed counter.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">items</span><span class="p">,</span> <span class="n">itemdict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_coerce_arguments</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="o">**</span><span class="n">keywords</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_collection</span><span class="o">.</span><span class="n">subtract</span><span class="p">(</span><span class="n">items</span><span class="p">,</span> <span class="o">**</span><span class="n">itemdict</span><span class="p">)</span></div>
-
-<div class="viewcode-block" id="TypedCounter.update"><a class="viewcode-back" href="../../api/abjad/typedcollections.html#abjad.typedcollections.TypedCounter.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">iterable</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">keywords</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Updates typed counter with ``iterable``.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">items</span><span class="p">,</span> <span class="n">itemdict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_coerce_arguments</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="o">**</span><span class="n">keywords</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_collection</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">items</span><span class="p">,</span> <span class="o">**</span><span class="n">itemdict</span><span class="p">)</span></div>
-
-<div class="viewcode-block" id="TypedCounter.values"><a class="viewcode-back" href="../../api/abjad/typedcollections.html#abjad.typedcollections.TypedCounter.values">[docs]</a>    <span class="k">def</span> <span class="nf">values</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Iterates values in typed counter.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="nb">iter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_collection</span><span class="o">.</span><span class="n">values</span><span class="p">())</span></div>
-
-<div class="viewcode-block" id="TypedCounter.viewitems"><a class="viewcode-back" href="../../api/abjad/typedcollections.html#abjad.typedcollections.TypedCounter.viewitems">[docs]</a>    <span class="k">def</span> <span class="nf">viewitems</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Please document.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_collection</span><span class="o">.</span><span class="n">items</span><span class="p">()</span></div>
-
-<div class="viewcode-block" id="TypedCounter.viewkeys"><a class="viewcode-back" href="../../api/abjad/typedcollections.html#abjad.typedcollections.TypedCounter.viewkeys">[docs]</a>    <span class="k">def</span> <span class="nf">viewkeys</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Please document.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_collection</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span></div>
-
-<div class="viewcode-block" id="TypedCounter.viewvalues"><a class="viewcode-back" href="../../api/abjad/typedcollections.html#abjad.typedcollections.TypedCounter.viewvalues">[docs]</a>    <span class="k">def</span> <span class="nf">viewvalues</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Please document.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_collection</span><span class="o">.</span><span class="n">values</span><span class="p">()</span></div></div>
-
-
-<div class="viewcode-block" id="TypedFrozenset"><a class="viewcode-back" href="../../api/abjad/typedcollections.html#abjad.typedcollections.TypedFrozenset">[docs]</a><span class="k">class</span> <span class="nc">TypedFrozenset</span><span class="p">(</span><span class="n">TypedCollection</span><span class="p">,</span> <span class="n">collections</span><span class="o">.</span><span class="n">abc</span><span class="o">.</span><span class="n">Set</span><span class="p">):</span>
+<div class="viewcode-block" id="TypedFrozenset"><a class="viewcode-back" href="../../api/abjad/typedcollections.html#abjad.typedcollections.TypedFrozenset">[docs]</a><span class="nd">@dataclasses</span><span class="o">.</span><span class="n">dataclass</span><span class="p">(</span><span class="n">slots</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">unsafe_hash</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">TypedFrozenset</span><span class="p">(</span><span class="n">TypedCollection</span><span class="p">,</span> <span class="n">collections</span><span class="o">.</span><span class="n">abc</span><span class="o">.</span><span class="n">Set</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Typed fozen set.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="c1">### CLASS VARIABLES ###</span>
-
-    <span class="vm">__slots__</span> <span class="o">=</span> <span class="p">()</span>
-
-    <span class="c1">### INITIALIZER ###</span>
-
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">items</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">item_class</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="n">TypedCollection</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item_class</span><span class="o">=</span><span class="n">item_class</span><span class="p">,</span> <span class="n">items</span><span class="o">=</span><span class="n">items</span><span class="p">)</span>
-        <span class="n">items</span> <span class="o">=</span> <span class="n">items</span> <span class="ow">or</span> <span class="p">[]</span>
-        <span class="n">items</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_coerce_item</span><span class="p">(</span><span class="n">_</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">items</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_collection</span> <span class="o">=</span> <span class="nb">frozenset</span><span class="p">(</span><span class="n">items</span><span class="p">)</span>
-
-    <span class="c1">### SPECIAL METHODS ###</span>
+<div class="viewcode-block" id="TypedFrozenset.__post_init__"><a class="viewcode-back" href="../../api/abjad/typedcollections.html#abjad.typedcollections.TypedFrozenset.__post_init__">[docs]</a>    <span class="k">def</span> <span class="nf">__post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">TypedCollection</span><span class="o">.</span><span class="n">__post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">items</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span> <span class="ow">or</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">items</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_coerce_item</span><span class="p">(</span><span class="n">_</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">items</span> <span class="o">=</span> <span class="nb">frozenset</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="TypedFrozenset.__and__"><a class="viewcode-back" href="../../api/abjad/typedcollections.html#abjad.typedcollections.TypedFrozenset.__and__">[docs]</a>    <span class="k">def</span> <span class="fm">__and__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -568,7 +226,7 @@
 <span class="sd">        Returns new typed frozen set.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">argument</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span><span class="n">argument</span><span class="p">)</span>
-        <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_collection</span><span class="o">.</span><span class="fm">__and__</span><span class="p">(</span><span class="n">argument</span><span class="o">.</span><span class="n">_collection</span><span class="p">)</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="fm">__and__</span><span class="p">(</span><span class="n">argument</span><span class="o">.</span><span class="n">items</span><span class="p">)</span>
         <span class="n">result</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span><span class="n">result</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">result</span></div>
 
@@ -579,7 +237,7 @@
 <span class="sd">        Returns true or false.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">argument</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span><span class="n">argument</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_collection</span><span class="o">.</span><span class="fm">__ge__</span><span class="p">(</span><span class="n">argument</span><span class="o">.</span><span class="n">_collection</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="fm">__ge__</span><span class="p">(</span><span class="n">argument</span><span class="o">.</span><span class="n">items</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="TypedFrozenset.__gt__"><a class="viewcode-back" href="../../api/abjad/typedcollections.html#abjad.typedcollections.TypedFrozenset.__gt__">[docs]</a>    <span class="k">def</span> <span class="fm">__gt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -588,15 +246,7 @@
 <span class="sd">        Returns true or false.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">argument</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span><span class="n">argument</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_collection</span><span class="o">.</span><span class="fm">__gt__</span><span class="p">(</span><span class="n">argument</span><span class="o">.</span><span class="n">_collection</span><span class="p">)</span></div>
-
-<div class="viewcode-block" id="TypedFrozenset.__hash__"><a class="viewcode-back" href="../../api/abjad/typedcollections.html#abjad.typedcollections.TypedFrozenset.__hash__">[docs]</a>    <span class="k">def</span> <span class="fm">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Hashes typed frozen set.</span>
-
-<span class="sd">        Returns integer.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="nb">hash</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="fm">__gt__</span><span class="p">(</span><span class="n">argument</span><span class="o">.</span><span class="n">items</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="TypedFrozenset.__le__"><a class="viewcode-back" href="../../api/abjad/typedcollections.html#abjad.typedcollections.TypedFrozenset.__le__">[docs]</a>    <span class="k">def</span> <span class="fm">__le__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -605,7 +255,7 @@
 <span class="sd">        Returns true or false.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">argument</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span><span class="n">argument</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_collection</span><span class="o">.</span><span class="fm">__le__</span><span class="p">(</span><span class="n">argument</span><span class="o">.</span><span class="n">_collection</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="fm">__le__</span><span class="p">(</span><span class="n">argument</span><span class="o">.</span><span class="n">items</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="TypedFrozenset.__lt__"><a class="viewcode-back" href="../../api/abjad/typedcollections.html#abjad.typedcollections.TypedFrozenset.__lt__">[docs]</a>    <span class="k">def</span> <span class="fm">__lt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -614,7 +264,7 @@
 <span class="sd">        Returns true or false.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">argument</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span><span class="n">argument</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_collection</span><span class="o">.</span><span class="fm">__lt__</span><span class="p">(</span><span class="n">argument</span><span class="o">.</span><span class="n">_collection</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="fm">__lt__</span><span class="p">(</span><span class="n">argument</span><span class="o">.</span><span class="n">items</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="TypedFrozenset.__or__"><a class="viewcode-back" href="../../api/abjad/typedcollections.html#abjad.typedcollections.TypedFrozenset.__or__">[docs]</a>    <span class="k">def</span> <span class="fm">__or__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -623,9 +273,24 @@
 <span class="sd">        Returns new typed frozen set.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">argument</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span><span class="n">argument</span><span class="p">)</span>
-        <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_collection</span><span class="o">.</span><span class="fm">__or__</span><span class="p">(</span><span class="n">argument</span><span class="o">.</span><span class="n">_collection</span><span class="p">)</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="fm">__or__</span><span class="p">(</span><span class="n">argument</span><span class="o">.</span><span class="n">items</span><span class="p">)</span>
         <span class="n">result</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span><span class="n">result</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">result</span></div>
+
+<div class="viewcode-block" id="TypedFrozenset.__repr__"><a class="viewcode-back" href="../../api/abjad/typedcollections.html#abjad.typedcollections.TypedFrozenset.__repr__">[docs]</a>    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets repr of TypedFrozenset.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">(items=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_sorted_repr_items</span><span class="p">()</span><span class="si">}</span><span class="s2">, item_class=abjad.</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">item_class</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">)&quot;</span></div>
+
+<div class="viewcode-block" id="TypedFrozenset.__str__"><a class="viewcode-back" href="../../api/abjad/typedcollections.html#abjad.typedcollections.TypedFrozenset.__str__">[docs]</a>    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets string.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">items</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_sorted_repr_items</span><span class="p">()</span>
+        <span class="n">items</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">_</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">items</span><span class="p">]</span>
+        <span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">items</span><span class="p">)</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="se">{{</span><span class="si">{</span><span class="n">string</span><span class="si">}</span><span class="se">}}</span><span class="s2">&quot;</span></div>
 
 <div class="viewcode-block" id="TypedFrozenset.__sub__"><a class="viewcode-back" href="../../api/abjad/typedcollections.html#abjad.typedcollections.TypedFrozenset.__sub__">[docs]</a>    <span class="k">def</span> <span class="fm">__sub__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -634,7 +299,7 @@
 <span class="sd">        Returns new typed frozen set.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">argument</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span><span class="n">argument</span><span class="p">)</span>
-        <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_collection</span><span class="o">.</span><span class="fm">__sub__</span><span class="p">(</span><span class="n">argument</span><span class="o">.</span><span class="n">_collection</span><span class="p">)</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="fm">__sub__</span><span class="p">(</span><span class="n">argument</span><span class="o">.</span><span class="n">items</span><span class="p">)</span>
         <span class="n">result</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span><span class="n">result</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">result</span></div>
 
@@ -645,11 +310,23 @@
 <span class="sd">        Returns new typed frozen set.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">argument</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span><span class="n">argument</span><span class="p">)</span>
-        <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_collection</span><span class="o">.</span><span class="fm">__xor__</span><span class="p">(</span><span class="n">argument</span><span class="o">.</span><span class="n">_collection</span><span class="p">)</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="fm">__xor__</span><span class="p">(</span><span class="n">argument</span><span class="o">.</span><span class="n">items</span><span class="p">)</span>
         <span class="n">result</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span><span class="n">result</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">result</span></div>
 
-    <span class="c1">### PUBLIC METHODS ###</span>
+    <span class="k">def</span> <span class="nf">_get_sorted_repr_items</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">items</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">_</span><span class="p">:</span> <span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">_</span><span class="o">.</span><span class="n">number</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="n">_</span><span class="p">)))</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">item_class</span><span class="o">.</span><span class="vm">__name__</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;Named&quot;</span><span class="p">):</span>
+            <span class="n">repr_items</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">_</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">items</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">item_class</span><span class="p">,</span> <span class="s2">&quot;number&quot;</span><span class="p">):</span>
+            <span class="n">repr_items</span> <span class="o">=</span> <span class="p">[</span><span class="n">_</span><span class="o">.</span><span class="n">number</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">items</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">item_class</span><span class="p">,</span> <span class="s2">&quot;pitch_class_number&quot;</span><span class="p">):</span>
+            <span class="n">repr_items</span> <span class="o">=</span> <span class="p">[</span><span class="n">_</span><span class="o">.</span><span class="n">pitch_class_number</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">items</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">item_class</span><span class="p">,</span> <span class="s2">&quot;__abs__&quot;</span><span class="p">):</span>
+            <span class="n">repr_items</span> <span class="o">=</span> <span class="p">[</span><span class="nb">abs</span><span class="p">(</span><span class="n">_</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">items</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;invalid item class: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">item_class</span><span class="si">!r}</span><span class="s2">.&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">repr_items</span>
 
 <div class="viewcode-block" id="TypedFrozenset.copy"><a class="viewcode-back" href="../../api/abjad/typedcollections.html#abjad.typedcollections.TypedFrozenset.copy">[docs]</a>    <span class="k">def</span> <span class="nf">copy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -657,7 +334,7 @@
 
 <span class="sd">        Returns new typed frozen set.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span><span class="bp">self</span><span class="o">.</span><span class="n">_collection</span><span class="o">.</span><span class="n">copy</span><span class="p">())</span></div>
+        <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span><span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="n">copy</span><span class="p">())</span></div>
 
 <div class="viewcode-block" id="TypedFrozenset.difference"><a class="viewcode-back" href="../../api/abjad/typedcollections.html#abjad.typedcollections.TypedFrozenset.difference">[docs]</a>    <span class="k">def</span> <span class="nf">difference</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -666,7 +343,7 @@
 <span class="sd">        Returns new typed frozen set.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">argument</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span><span class="n">argument</span><span class="p">)</span>
-        <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_collection</span><span class="o">.</span><span class="n">difference</span><span class="p">(</span><span class="n">argument</span><span class="o">.</span><span class="n">_collection</span><span class="p">)</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="n">difference</span><span class="p">(</span><span class="n">argument</span><span class="o">.</span><span class="n">items</span><span class="p">)</span>
         <span class="n">result</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span><span class="n">result</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">result</span></div>
 
@@ -677,7 +354,7 @@
 <span class="sd">        Returns new typed frozen set.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">argument</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span><span class="n">argument</span><span class="p">)</span>
-        <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_collection</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="n">argument</span><span class="o">.</span><span class="n">_collection</span><span class="p">)</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="n">argument</span><span class="o">.</span><span class="n">items</span><span class="p">)</span>
         <span class="n">result</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span><span class="n">result</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">result</span></div>
 
@@ -688,7 +365,7 @@
 <span class="sd">        Returns true or false.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">argument</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span><span class="n">argument</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_collection</span><span class="o">.</span><span class="n">isdisjoint</span><span class="p">(</span><span class="n">argument</span><span class="o">.</span><span class="n">_collection</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="n">isdisjoint</span><span class="p">(</span><span class="n">argument</span><span class="o">.</span><span class="n">items</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="TypedFrozenset.issubset"><a class="viewcode-back" href="../../api/abjad/typedcollections.html#abjad.typedcollections.TypedFrozenset.issubset">[docs]</a>    <span class="k">def</span> <span class="nf">issubset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -697,7 +374,7 @@
 <span class="sd">        Returns true or false.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">argument</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span><span class="n">argument</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_collection</span><span class="o">.</span><span class="n">issubset</span><span class="p">(</span><span class="n">argument</span><span class="o">.</span><span class="n">_collection</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="n">issubset</span><span class="p">(</span><span class="n">argument</span><span class="o">.</span><span class="n">items</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="TypedFrozenset.issuperset"><a class="viewcode-back" href="../../api/abjad/typedcollections.html#abjad.typedcollections.TypedFrozenset.issuperset">[docs]</a>    <span class="k">def</span> <span class="nf">issuperset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -706,7 +383,7 @@
 <span class="sd">        Returns true or false.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">argument</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span><span class="n">argument</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_collection</span><span class="o">.</span><span class="n">issuperset</span><span class="p">(</span><span class="n">argument</span><span class="o">.</span><span class="n">_collection</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="n">issuperset</span><span class="p">(</span><span class="n">argument</span><span class="o">.</span><span class="n">items</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="TypedFrozenset.symmetric_difference"><a class="viewcode-back" href="../../api/abjad/typedcollections.html#abjad.typedcollections.TypedFrozenset.symmetric_difference">[docs]</a>    <span class="k">def</span> <span class="nf">symmetric_difference</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -715,7 +392,7 @@
 <span class="sd">        Returns new typed frozen set.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">argument</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span><span class="n">argument</span><span class="p">)</span>
-        <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_collection</span><span class="o">.</span><span class="n">symmetric_difference</span><span class="p">(</span><span class="n">argument</span><span class="o">.</span><span class="n">_collection</span><span class="p">)</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="n">symmetric_difference</span><span class="p">(</span><span class="n">argument</span><span class="o">.</span><span class="n">items</span><span class="p">)</span>
         <span class="n">result</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span><span class="n">result</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">result</span></div>
 
@@ -726,12 +403,13 @@
 <span class="sd">        Returns new typed frozen set.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">argument</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span><span class="n">argument</span><span class="p">)</span>
-        <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_collection</span><span class="o">.</span><span class="n">union</span><span class="p">(</span><span class="n">argument</span><span class="o">.</span><span class="n">_collection</span><span class="p">)</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="n">union</span><span class="p">(</span><span class="n">argument</span><span class="o">.</span><span class="n">items</span><span class="p">)</span>
         <span class="n">result</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span><span class="n">result</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">result</span></div></div>
 
 
-<div class="viewcode-block" id="TypedList"><a class="viewcode-back" href="../../api/abjad/typedcollections.html#abjad.typedcollections.TypedList">[docs]</a><span class="k">class</span> <span class="nc">TypedList</span><span class="p">(</span><span class="n">TypedCollection</span><span class="p">,</span> <span class="n">collections</span><span class="o">.</span><span class="n">abc</span><span class="o">.</span><span class="n">MutableSequence</span><span class="p">):</span>
+<div class="viewcode-block" id="TypedList"><a class="viewcode-back" href="../../api/abjad/typedcollections.html#abjad.typedcollections.TypedList">[docs]</a><span class="nd">@dataclasses</span><span class="o">.</span><span class="n">dataclass</span><span class="p">(</span><span class="n">slots</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">TypedList</span><span class="p">(</span><span class="n">TypedCollection</span><span class="p">,</span> <span class="n">collections</span><span class="o">.</span><span class="n">abc</span><span class="o">.</span><span class="n">MutableSequence</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Typed list.</span>
 
@@ -746,17 +424,8 @@
 <span class="sd">        &gt;&gt;&gt; list_.append((1, 2, 3))</span>
 <span class="sd">        &gt;&gt;&gt; list_.append(3.14159)</span>
 
-<span class="sd">        &gt;&gt;&gt; string = abjad.storage(list_)</span>
-<span class="sd">        &gt;&gt;&gt; print(string)</span>
-<span class="sd">        abjad.TypedList(</span>
-<span class="sd">            [</span>
-<span class="sd">                23,</span>
-<span class="sd">                &#39;foo&#39;,</span>
-<span class="sd">                False,</span>
-<span class="sd">                (1, 2, 3),</span>
-<span class="sd">                3.14159,</span>
-<span class="sd">                ]</span>
-<span class="sd">            )</span>
+<span class="sd">        &gt;&gt;&gt; list_</span>
+<span class="sd">        TypedList(items=[23, &#39;foo&#39;, False, (1, 2, 3), 3.14159], item_class=None, keep_sorted=False)</span>
 
 <span class="sd">    ..  container:: example</span>
 
@@ -770,42 +439,20 @@
 <span class="sd">        &gt;&gt;&gt; pitch_list.append((&#39;e&#39;, 4))</span>
 <span class="sd">        &gt;&gt;&gt; pitch_list.append(abjad.NamedPitch(&quot;f&#39;&quot;))</span>
 
-<span class="sd">        &gt;&gt;&gt; string = abjad.storage(pitch_list)</span>
-<span class="sd">        &gt;&gt;&gt; print(string)</span>
-<span class="sd">        abjad.TypedList(</span>
-<span class="sd">            [</span>
-<span class="sd">                abjad.NamedPitch(&quot;c&#39;&quot;),</span>
-<span class="sd">                abjad.NamedPitch(&quot;d&#39;&quot;),</span>
-<span class="sd">                abjad.NamedPitch(&quot;e&#39;&quot;),</span>
-<span class="sd">                abjad.NamedPitch(&quot;f&#39;&quot;),</span>
-<span class="sd">                ],</span>
-<span class="sd">            item_class=abjad.NamedPitch,</span>
-<span class="sd">            )</span>
+<span class="sd">        &gt;&gt;&gt; pitch_list</span>
+<span class="sd">        TypedList(items=[NamedPitch(&quot;c&#39;&quot;), NamedPitch(&quot;d&#39;&quot;), NamedPitch(&quot;e&#39;&quot;), NamedPitch(&quot;f&#39;&quot;)], item_class=&lt;class &#39;abjad.pitch.NamedPitch&#39;&gt;, keep_sorted=False)</span>
 
-<span class="sd">    Ordered collection with optional item coercion.</span>
-
-<span class="sd">    Implements the list interface.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="c1">### CLASS VARIABLES ###</span>
+    <span class="n">keep_sorted</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
 
-    <span class="vm">__slots__</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;_keep_sorted&quot;</span><span class="p">,)</span>
-
-    <span class="c1">### INITIALIZER ###</span>
-
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">items</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">item_class</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">keep_sorted</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-        <span class="n">TypedCollection</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item_class</span><span class="o">=</span><span class="n">item_class</span><span class="p">,</span> <span class="n">items</span><span class="o">=</span><span class="n">items</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_collection</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">if</span> <span class="n">keep_sorted</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">keep_sorted</span><span class="p">,</span> <span class="nb">bool</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">keep_sorted</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_keep_sorted</span> <span class="o">=</span> <span class="n">keep_sorted</span>
-        <span class="n">items</span> <span class="o">=</span> <span class="n">items</span> <span class="ow">or</span> <span class="p">[]</span>
-        <span class="n">the_items</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">items</span><span class="p">:</span>
-            <span class="n">the_items</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_coerce_item</span><span class="p">(</span><span class="n">item</span><span class="p">))</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">the_items</span><span class="p">)</span>
-
-    <span class="c1">### SPECIAL METHODS ###</span>
+<div class="viewcode-block" id="TypedList.__post_init__"><a class="viewcode-back" href="../../api/abjad/typedcollections.html#abjad.typedcollections.TypedList.__post_init__">[docs]</a>    <span class="k">def</span> <span class="nf">__post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">TypedCollection</span><span class="o">.</span><span class="n">__post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">keep_sorted</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">keep_sorted</span><span class="p">,</span> <span class="nb">bool</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">keep_sorted</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">items</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_coerce_item</span><span class="p">(</span><span class="n">_</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span> <span class="ow">or</span> <span class="p">[]]</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">keep_sorted</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="TypedList.__delitem__"><a class="viewcode-back" href="../../api/abjad/typedcollections.html#abjad.typedcollections.TypedList.__delitem__">[docs]</a>    <span class="k">def</span> <span class="fm">__delitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -813,8 +460,8 @@
 
 <span class="sd">        Returns none.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_on_removal</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_collection</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
-        <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">_collection</span><span class="p">[</span><span class="n">i</span><span class="p">]</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_on_removal</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+        <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">[</span><span class="n">i</span><span class="p">]</span></div>
 
 <div class="viewcode-block" id="TypedList.__getitem__"><a class="viewcode-back" href="../../api/abjad/typedcollections.html#abjad.typedcollections.TypedList.__getitem__">[docs]</a>    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -822,7 +469,7 @@
 
 <span class="sd">        Returns item or slice.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_collection</span><span class="o">.</span><span class="fm">__getitem__</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="fm">__getitem__</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="TypedList.__iadd__"><a class="viewcode-back" href="../../api/abjad/typedcollections.html#abjad.typedcollections.TypedList.__iadd__">[docs]</a>    <span class="k">def</span> <span class="fm">__iadd__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -834,18 +481,8 @@
 <span class="sd">            &gt;&gt;&gt; dynamic_list.append(&#39;ppp&#39;)</span>
 <span class="sd">            &gt;&gt;&gt; dynamic_list += [&#39;p&#39;, &#39;mp&#39;, &#39;mf&#39;, &#39;fff&#39;]</span>
 
-<span class="sd">            &gt;&gt;&gt; string = abjad.storage(dynamic_list)</span>
-<span class="sd">            &gt;&gt;&gt; print(string)</span>
-<span class="sd">            abjad.TypedList(</span>
-<span class="sd">                [</span>
-<span class="sd">                    Dynamic(name=&#39;ppp&#39;, command=None, direction=None, format_hairpin_stop=False, hide=False, leak=False, name_is_textual=False, ordinal=-4, tweaks=None),</span>
-<span class="sd">                    Dynamic(name=&#39;p&#39;, command=None, direction=None, format_hairpin_stop=False, hide=False, leak=False, name_is_textual=False, ordinal=-2, tweaks=None),</span>
-<span class="sd">                    Dynamic(name=&#39;mp&#39;, command=None, direction=None, format_hairpin_stop=False, hide=False, leak=False, name_is_textual=False, ordinal=-1, tweaks=None),</span>
-<span class="sd">                    Dynamic(name=&#39;mf&#39;, command=None, direction=None, format_hairpin_stop=False, hide=False, leak=False, name_is_textual=False, ordinal=1, tweaks=None),</span>
-<span class="sd">                    Dynamic(name=&#39;fff&#39;, command=None, direction=None, format_hairpin_stop=False, hide=False, leak=False, name_is_textual=False, ordinal=4, tweaks=None),</span>
-<span class="sd">                    ],</span>
-<span class="sd">                item_class=abjad.Dynamic,</span>
-<span class="sd">                )</span>
+<span class="sd">            &gt;&gt;&gt; dynamic_list</span>
+<span class="sd">            TypedList(items=[Dynamic(name=&#39;ppp&#39;, command=None, direction=None, format_hairpin_stop=False, hide=False, leak=False, name_is_textual=False, ordinal=-4, tweaks=None), Dynamic(name=&#39;p&#39;, command=None, direction=None, format_hairpin_stop=False, hide=False, leak=False, name_is_textual=False, ordinal=-2, tweaks=None), Dynamic(name=&#39;mp&#39;, command=None, direction=None, format_hairpin_stop=False, hide=False, leak=False, name_is_textual=False, ordinal=-1, tweaks=None), Dynamic(name=&#39;mf&#39;, command=None, direction=None, format_hairpin_stop=False, hide=False, leak=False, name_is_textual=False, ordinal=1, tweaks=None), Dynamic(name=&#39;fff&#39;, command=None, direction=None, format_hairpin_stop=False, hide=False, leak=False, name_is_textual=False, ordinal=4, tweaks=None)], item_class=&lt;class &#39;abjad.dynamic.Dynamic&#39;&gt;, keep_sorted=False)</span>
 
 <span class="sd">        Returns typed list.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -858,7 +495,7 @@
 
 <span class="sd">        Returns generator.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_collection</span><span class="o">.</span><span class="fm">__reversed__</span><span class="p">()</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="fm">__reversed__</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="TypedList.__setitem__"><a class="viewcode-back" href="../../api/abjad/typedcollections.html#abjad.typedcollections.TypedList.__setitem__">[docs]</a>    <span class="k">def</span> <span class="fm">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">argument</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -877,74 +514,35 @@
 <span class="sd">            &gt;&gt;&gt; pitch_list.append(abjad.NamedPitch(&quot;f&#39;&quot;))</span>
 
 <span class="sd">            &gt;&gt;&gt; pitch_list[-1] = &#39;gqs,&#39;</span>
-<span class="sd">            &gt;&gt;&gt; string = abjad.storage(pitch_list)</span>
-<span class="sd">            &gt;&gt;&gt; print(string)</span>
-<span class="sd">            abjad.TypedList(</span>
-<span class="sd">                [</span>
-<span class="sd">                    abjad.NamedPitch(&quot;c&#39;&quot;),</span>
-<span class="sd">                    abjad.NamedPitch(&quot;d&#39;&quot;),</span>
-<span class="sd">                    abjad.NamedPitch(&quot;e&#39;&quot;),</span>
-<span class="sd">                    abjad.NamedPitch(&#39;gqs,&#39;),</span>
-<span class="sd">                    ],</span>
-<span class="sd">                item_class=abjad.NamedPitch,</span>
-<span class="sd">                )</span>
+<span class="sd">            &gt;&gt;&gt; pitch_list</span>
+<span class="sd">            TypedList(items=[NamedPitch(&quot;c&#39;&quot;), NamedPitch(&quot;d&#39;&quot;), NamedPitch(&quot;e&#39;&quot;), NamedPitch(&#39;gqs,&#39;)], item_class=&lt;class &#39;abjad.pitch.NamedPitch&#39;&gt;, keep_sorted=False)</span>
 
 <span class="sd">        ..  container:: example</span>
 
 <span class="sd">            Sets slice:</span>
 
 <span class="sd">            &gt;&gt;&gt; pitch_list[-1:] = [&quot;f&#39;&quot;, &quot;g&#39;&quot;, &quot;a&#39;&quot;, &quot;b&#39;&quot;, &quot;c&#39;&#39;&quot;]</span>
-<span class="sd">            &gt;&gt;&gt; string = abjad.storage(pitch_list)</span>
-<span class="sd">            &gt;&gt;&gt; print(string)</span>
-<span class="sd">            abjad.TypedList(</span>
-<span class="sd">                [</span>
-<span class="sd">                    abjad.NamedPitch(&quot;c&#39;&quot;),</span>
-<span class="sd">                    abjad.NamedPitch(&quot;d&#39;&quot;),</span>
-<span class="sd">                    abjad.NamedPitch(&quot;e&#39;&quot;),</span>
-<span class="sd">                    abjad.NamedPitch(&quot;f&#39;&quot;),</span>
-<span class="sd">                    abjad.NamedPitch(&quot;g&#39;&quot;),</span>
-<span class="sd">                    abjad.NamedPitch(&quot;a&#39;&quot;),</span>
-<span class="sd">                    abjad.NamedPitch(&quot;b&#39;&quot;),</span>
-<span class="sd">                    abjad.NamedPitch(&quot;c&#39;&#39;&quot;),</span>
-<span class="sd">                    ],</span>
-<span class="sd">                item_class=abjad.NamedPitch,</span>
-<span class="sd">                )</span>
+<span class="sd">            &gt;&gt;&gt; pitch_list</span>
+<span class="sd">            TypedList(items=[NamedPitch(&quot;c&#39;&quot;), NamedPitch(&quot;d&#39;&quot;), NamedPitch(&quot;e&#39;&quot;), NamedPitch(&quot;f&#39;&quot;), NamedPitch(&quot;g&#39;&quot;), NamedPitch(&quot;a&#39;&quot;), NamedPitch(&quot;b&#39;&quot;), NamedPitch(&quot;c&#39;&#39;&quot;)], item_class=&lt;class &#39;abjad.pitch.NamedPitch&#39;&gt;, keep_sorted=False)</span>
 
 <span class="sd">        Returns none.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
             <span class="n">new_item</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_coerce_item</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span>
-            <span class="n">old_item</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_collection</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="n">old_item</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_on_removal</span><span class="p">(</span><span class="n">old_item</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_on_insertion</span><span class="p">(</span><span class="n">new_item</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_collection</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_item</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_item</span>
         <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="nb">slice</span><span class="p">):</span>
             <span class="n">new_items</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_coerce_item</span><span class="p">(</span><span class="n">item</span><span class="p">)</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">argument</span><span class="p">]</span>
-            <span class="n">old_items</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_collection</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="n">old_items</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
             <span class="k">for</span> <span class="n">old_item</span> <span class="ow">in</span> <span class="n">old_items</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_on_removal</span><span class="p">(</span><span class="n">old_item</span><span class="p">)</span>
             <span class="k">for</span> <span class="n">new_item</span> <span class="ow">in</span> <span class="n">new_items</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_on_insertion</span><span class="p">(</span><span class="n">new_item</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_collection</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_items</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_items</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">keep_sorted</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span></div>
-
-    <span class="c1">### PRIVATE METHODS ###</span>
-
-    <span class="k">def</span> <span class="nf">_get_format_specification</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">result</span> <span class="o">=</span> <span class="n">_format</span><span class="o">.</span><span class="n">_inspect_signature</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
-        <span class="n">signature_keyword_names</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-        <span class="n">names</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">signature_keyword_names</span><span class="p">)</span>
-        <span class="k">if</span> <span class="s2">&quot;items&quot;</span> <span class="ow">in</span> <span class="n">names</span><span class="p">:</span>
-            <span class="n">names</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s2">&quot;items&quot;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="s2">&quot;keep_sorted&quot;</span> <span class="ow">in</span> <span class="n">names</span><span class="p">:</span>
-            <span class="n">names</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s2">&quot;keep_sorted&quot;</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">_format</span><span class="o">.</span><span class="n">FormatSpecification</span><span class="p">(</span>
-            <span class="n">storage_format_args_values</span><span class="o">=</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_collection</span><span class="p">],</span>
-            <span class="n">storage_format_keyword_names</span><span class="o">=</span><span class="n">names</span><span class="p">,</span>
-        <span class="p">)</span>
-
-    <span class="c1">### PUBLIC METHODS ###</span>
 
 <div class="viewcode-block" id="TypedList.append"><a class="viewcode-back" href="../../api/abjad/typedcollections.html#abjad.typedcollections.TypedList.append">[docs]</a>    <span class="k">def</span> <span class="nf">append</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -963,7 +561,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">item</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_coerce_item</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_on_insertion</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_collection</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">keep_sorted</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span></div>
 
@@ -986,9 +584,9 @@
 <span class="sd">        Returns nonnegative integer.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">item</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_coerce_item</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_collection</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">item</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">item</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="TypedList.extend"><a class="viewcode-back" href="../../api/abjad/typedcollections.html#abjad.typedcollections.TypedList.extend">[docs]</a>    <span class="k">def</span> <span class="nf">extend</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">items</span><span class="p">):</span>
+<div class="viewcode-block" id="TypedList.extend"><a class="viewcode-back" href="../../api/abjad/typedcollections.html#abjad.typedcollections.TypedList.extend">[docs]</a>    <span class="k">def</span> <span class="nf">extend</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">items</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Extends typed list with ``items``.</span>
 
@@ -997,7 +595,7 @@
 <span class="sd">            &gt;&gt;&gt; integer_list = abjad.TypedList(item_class=int)</span>
 <span class="sd">            &gt;&gt;&gt; integer_list.extend([&#39;0&#39;, 1.0, 2, 3.14159])</span>
 <span class="sd">            &gt;&gt;&gt; integer_list</span>
-<span class="sd">            TypedList([0, 1, 2, 3], item_class=int)</span>
+<span class="sd">            TypedList(items=[0, 1, 2, 3], item_class=&lt;class &#39;int&#39;&gt;, keep_sorted=False)</span>
 
 <span class="sd">        Returns none.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -1029,7 +627,7 @@
 <span class="sd">        Returns nonnegative integer.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">item</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_coerce_item</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_collection</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">item</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">item</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="TypedList.insert"><a class="viewcode-back" href="../../api/abjad/typedcollections.html#abjad.typedcollections.TypedList.insert">[docs]</a>    <span class="k">def</span> <span class="nf">insert</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -1042,21 +640,21 @@
 <span class="sd">            &gt;&gt;&gt; integer_list = abjad.TypedList(item_class=int)</span>
 <span class="sd">            &gt;&gt;&gt; integer_list.extend([&#39;1&#39;, 2, 4.3])</span>
 <span class="sd">            &gt;&gt;&gt; integer_list</span>
-<span class="sd">            TypedList([1, 2, 4], item_class=int)</span>
+<span class="sd">            TypedList(items=[1, 2, 4], item_class=&lt;class &#39;int&#39;&gt;, keep_sorted=False)</span>
 
 <span class="sd">            &gt;&gt;&gt; integer_list.insert(0, &#39;0&#39;)</span>
 <span class="sd">            &gt;&gt;&gt; integer_list</span>
-<span class="sd">            TypedList([0, 1, 2, 4], item_class=int)</span>
+<span class="sd">            TypedList(items=[0, 1, 2, 4], item_class=&lt;class &#39;int&#39;&gt;, keep_sorted=False)</span>
 
 <span class="sd">            &gt;&gt;&gt; integer_list.insert(1, &#39;9&#39;)</span>
 <span class="sd">            &gt;&gt;&gt; integer_list</span>
-<span class="sd">            TypedList([0, 9, 1, 2, 4], item_class=int)</span>
+<span class="sd">            TypedList(items=[0, 9, 1, 2, 4], item_class=&lt;class &#39;int&#39;&gt;, keep_sorted=False)</span>
 
 <span class="sd">        Returns none.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">item</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_coerce_item</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_on_insertion</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
-        <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_collection</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">item</span><span class="p">)</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">item</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">keep_sorted</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">result</span></div>
@@ -1067,7 +665,7 @@
 
 <span class="sd">        Returns item.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_collection</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_on_removal</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">keep_sorted</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
@@ -1091,10 +689,10 @@
 <span class="sd">        Returns none.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">item</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_coerce_item</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
-        <span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_collection</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
-        <span class="n">item</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_collection</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
+        <span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+        <span class="n">item</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_on_removal</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
-        <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">_collection</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
+        <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">keep_sorted</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span></div>
 
@@ -1102,7 +700,7 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Reverses items in typed list.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_collection</span><span class="o">.</span><span class="n">reverse</span><span class="p">()</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="n">reverse</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="TypedList.sort"><a class="viewcode-back" href="../../api/abjad/typedcollections.html#abjad.typedcollections.TypedList.sort">[docs]</a>    <span class="k">def</span> <span class="nf">sort</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cmp</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -1141,46 +739,19 @@
                 <span class="k">return</span> <span class="n">CmpToKey</span>
 
             <span class="n">key</span> <span class="o">=</span> <span class="n">cmp_to_key</span><span class="p">(</span><span class="n">cmp</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_collection</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="n">key</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="n">reverse</span><span class="p">)</span></div>
-
-    <span class="c1">### PUBLIC PROPERTIES ###</span>
-
-    <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">keep_sorted</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Is true when typed list keeps items sorted.</span>
-
-<span class="sd">        Defaults to none.</span>
-
-<span class="sd">        Set to true, false or none.</span>
-
-<span class="sd">        Returns true, false or none.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_keep_sorted</span>
-
-    <span class="nd">@keep_sorted</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">keep_sorted</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">):</span>
-        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">argument</span><span class="p">,</span> <span class="p">(</span><span class="nb">bool</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="kc">None</span><span class="p">)))</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_keep_sorted</span> <span class="o">=</span> <span class="n">argument</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="n">key</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="n">reverse</span><span class="p">)</span></div></div>
 
 
-<div class="viewcode-block" id="TypedTuple"><a class="viewcode-back" href="../../api/abjad/typedcollections.html#abjad.typedcollections.TypedTuple">[docs]</a><span class="k">class</span> <span class="nc">TypedTuple</span><span class="p">(</span><span class="n">TypedCollection</span><span class="p">,</span> <span class="n">collections</span><span class="o">.</span><span class="n">abc</span><span class="o">.</span><span class="n">Sequence</span><span class="p">):</span>
+<div class="viewcode-block" id="TypedTuple"><a class="viewcode-back" href="../../api/abjad/typedcollections.html#abjad.typedcollections.TypedTuple">[docs]</a><span class="nd">@dataclasses</span><span class="o">.</span><span class="n">dataclass</span><span class="p">(</span><span class="n">slots</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">unsafe_hash</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">TypedTuple</span><span class="p">(</span><span class="n">TypedCollection</span><span class="p">,</span> <span class="n">collections</span><span class="o">.</span><span class="n">abc</span><span class="o">.</span><span class="n">Sequence</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Typed tuple.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="c1">### CLASS VARIABLES ###</span>
-
-    <span class="vm">__slots__</span> <span class="o">=</span> <span class="p">()</span>
-
-    <span class="c1">### INITIALIZER ###</span>
-
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">items</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">item_class</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="n">TypedCollection</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item_class</span><span class="o">=</span><span class="n">item_class</span><span class="p">,</span> <span class="n">items</span><span class="o">=</span><span class="n">items</span><span class="p">)</span>
-        <span class="n">items</span> <span class="o">=</span> <span class="n">items</span> <span class="ow">or</span> <span class="p">[]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_collection</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_coerce_item</span><span class="p">(</span><span class="n">item</span><span class="p">)</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">items</span><span class="p">)</span>
-
-    <span class="c1">### SPECIAL METHODS ###</span>
+<div class="viewcode-block" id="TypedTuple.__post_init__"><a class="viewcode-back" href="../../api/abjad/typedcollections.html#abjad.typedcollections.TypedTuple.__post_init__">[docs]</a>    <span class="k">def</span> <span class="nf">__post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">TypedCollection</span><span class="o">.</span><span class="n">__post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">items</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span> <span class="ow">or</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">items</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_coerce_item</span><span class="p">(</span><span class="n">item</span><span class="p">)</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="TypedTuple.__add__"><a class="viewcode-back" href="../../api/abjad/typedcollections.html#abjad.typedcollections.TypedTuple.__add__">[docs]</a>    <span class="k">def</span> <span class="fm">__add__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -1188,13 +759,12 @@
 
 <span class="sd">        Returns new typed tuple.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">argument</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)):</span>
-            <span class="n">items</span> <span class="o">=</span> <span class="n">argument</span><span class="o">.</span><span class="n">_collection</span>
-            <span class="k">return</span> <span class="n">_new</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">items</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_collection</span><span class="p">[:]</span> <span class="o">+</span> <span class="n">items</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">argument</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_collection</span><span class="p">)):</span>
+            <span class="n">items</span> <span class="o">=</span> <span class="n">argument</span><span class="o">.</span><span class="n">items</span>
+            <span class="k">return</span> <span class="n">dataclasses</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">items</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">[:]</span> <span class="o">+</span> <span class="n">items</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">argument</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">)):</span>
             <span class="n">items</span> <span class="o">=</span> <span class="n">argument</span><span class="p">[:]</span>
-            <span class="k">return</span> <span class="n">_new</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">items</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_collection</span><span class="p">[:]</span> <span class="o">+</span> <span class="n">items</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">dataclasses</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">items</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">[:]</span> <span class="o">+</span> <span class="n">items</span><span class="p">)</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
 
 <div class="viewcode-block" id="TypedTuple.__contains__"><a class="viewcode-back" href="../../api/abjad/typedcollections.html#abjad.typedcollections.TypedTuple.__contains__">[docs]</a>    <span class="k">def</span> <span class="fm">__contains__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
@@ -1209,7 +779,7 @@
             <span class="n">item</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_coerce_item</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">False</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_collection</span><span class="o">.</span><span class="fm">__contains__</span><span class="p">(</span><span class="n">item</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="fm">__contains__</span><span class="p">(</span><span class="n">item</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="TypedTuple.__getitem__"><a class="viewcode-back" href="../../api/abjad/typedcollections.html#abjad.typedcollections.TypedTuple.__getitem__">[docs]</a>    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -1217,19 +787,11 @@
 
 <span class="sd">        Returns item or new typed tuple.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">item</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_collection</span><span class="o">.</span><span class="fm">__getitem__</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span>
+        <span class="n">item</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="fm">__getitem__</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span><span class="n">item</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">item</span></div>
-
-<div class="viewcode-block" id="TypedTuple.__hash__"><a class="viewcode-back" href="../../api/abjad/typedcollections.html#abjad.typedcollections.TypedTuple.__hash__">[docs]</a>    <span class="k">def</span> <span class="fm">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Hashes typed tuple.</span>
-
-<span class="sd">        Returns integer.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="nb">hash</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span></div>
 
 <div class="viewcode-block" id="TypedTuple.__mul__"><a class="viewcode-back" href="../../api/abjad/typedcollections.html#abjad.typedcollections.TypedTuple.__mul__">[docs]</a>    <span class="k">def</span> <span class="fm">__mul__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -1237,15 +799,15 @@
 
 <span class="sd">        Returns new typed tuple.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">items</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_collection</span> <span class="o">*</span> <span class="n">argument</span>
-        <span class="k">return</span> <span class="n">_new</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">items</span><span class="o">=</span><span class="n">items</span><span class="p">)</span></div>
+        <span class="n">items</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span> <span class="o">*</span> <span class="n">argument</span>
+        <span class="k">return</span> <span class="n">dataclasses</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">items</span><span class="o">=</span><span class="n">items</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="TypedTuple.__radd__"><a class="viewcode-back" href="../../api/abjad/typedcollections.html#abjad.typedcollections.TypedTuple.__radd__">[docs]</a>    <span class="k">def</span> <span class="fm">__radd__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Right-adds ``argument`` to typed tuple.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">items</span> <span class="o">=</span> <span class="n">argument</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_collection</span>
-        <span class="k">return</span> <span class="n">_new</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">items</span><span class="o">=</span><span class="n">items</span><span class="p">)</span></div>
+        <span class="n">items</span> <span class="o">=</span> <span class="n">argument</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span>
+        <span class="k">return</span> <span class="n">dataclasses</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">items</span><span class="o">=</span><span class="n">items</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="TypedTuple.__rmul__"><a class="viewcode-back" href="../../api/abjad/typedcollections.html#abjad.typedcollections.TypedTuple.__rmul__">[docs]</a>    <span class="k">def</span> <span class="fm">__rmul__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -1254,8 +816,6 @@
 <span class="sd">        Returns new typed tuple.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="fm">__mul__</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span></div>
-
-    <span class="c1">### PUBLIC METHODS ###</span>
 
 <div class="viewcode-block" id="TypedTuple.count"><a class="viewcode-back" href="../../api/abjad/typedcollections.html#abjad.typedcollections.TypedTuple.count">[docs]</a>    <span class="k">def</span> <span class="nf">count</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -1269,7 +829,7 @@
             <span class="n">item</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_coerce_item</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
         <span class="k">except</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">):</span>
             <span class="k">return</span> <span class="mi">0</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_collection</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">item</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">item</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="TypedTuple.index"><a class="viewcode-back" href="../../api/abjad/typedcollections.html#abjad.typedcollections.TypedTuple.index">[docs]</a>    <span class="k">def</span> <span class="nf">index</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -1280,7 +840,7 @@
 <span class="sd">        Returns nonnegative integer.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">item</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_coerce_item</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_collection</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">item</span><span class="p">)</span></div></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">item</span><span class="p">)</span></div></div>
 </pre></div>
 
     </div>

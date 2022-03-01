@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>abjad.parentage &mdash; Abjad 3.5 documentation</title>
+  <title>abjad.parentage &mdash; Abjad 3.6 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/abjad.css" type="text/css" />
@@ -32,11 +32,11 @@
   <div class="wy-grid-for-nav">
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search"  style="background: #00ff55" >
+        <div class="wy-side-nav-search"  style="background: #00dd00" >
 
 
     <a href="../../index.html" class="icon icon-home" alt="Documentation
-    Home"> Abjad 3.5
+    Home"> Abjad 3.6
 
 
 
@@ -110,7 +110,7 @@
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #00ff55" >
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #00dd00" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../index.html">Abjad</a>
       </nav>
@@ -130,7 +130,6 @@
 <span class="kn">import</span> <span class="nn">typing</span>
 
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">duration</span> <span class="k">as</span> <span class="n">_duration</span>
-<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="nb">format</span> <span class="k">as</span> <span class="n">_format</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">math</span> <span class="k">as</span> <span class="n">_math</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">score</span> <span class="k">as</span> <span class="n">_score</span>
 
@@ -182,14 +181,12 @@
 <span class="sd">        ...</span>
 <span class="sd">        Note(&#39;c4&#39;)</span>
 <span class="sd">        Voice(&#39;c4&#39;, name=&#39;Bass_Voice&#39;)</span>
-<span class="sd">        &lt;Staff-&quot;Bass_Staff&quot;{1}&gt;</span>
-<span class="sd">        &lt;Score&lt;&lt;2&gt;&gt;&gt;</span>
+<span class="sd">        Staff(&#39;{ c4 }&#39;, name=&#39;Bass_Staff&#39;)</span>
+<span class="sd">        Score(&quot;{ { e&#39;4 } } { { c4 } }&quot;, simultaneous=True)</span>
 
 <span class="sd">    &#39;&#39;&#39;</span>
 
     <span class="c1">### CLASS VARIABLES ###</span>
-
-    <span class="n">__documentation_section__</span> <span class="o">=</span> <span class="s2">&quot;Selections&quot;</span>
 
     <span class="vm">__slots__</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;_component&quot;</span><span class="p">,</span> <span class="s2">&quot;_components&quot;</span><span class="p">)</span>
 
@@ -219,11 +216,11 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">components</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Parentage.__repr__"><a class="viewcode-back" href="../../api/abjad/parentage.html#abjad.parentage.Parentage.__repr__">[docs]</a>    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<div class="viewcode-block" id="Parentage.__repr__"><a class="viewcode-back" href="../../api/abjad/parentage.html#abjad.parentage.Parentage.__repr__">[docs]</a>    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Gets interpreter representation.</span>
+<span class="sd">        Gets repr.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">_format</span><span class="o">.</span><span class="n">get_repr</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">(component=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">component</span><span class="si">!r}</span><span class="s2">)&quot;</span></div>
 
     <span class="c1">### PRIVATE METHODS ###</span>
 
@@ -314,16 +311,16 @@
 <span class="sd">                    }</span>
 <span class="sd">                }</span>
 
-<span class="sd">            &gt;&gt;&gt; for component in abjad.select(staff).components():</span>
+<span class="sd">            &gt;&gt;&gt; for component in abjad.select.components(staff):</span>
 <span class="sd">            ...     parentage = abjad.get.parentage(component)</span>
 <span class="sd">            ...     print(f&quot;{repr(component):30} {repr(parentage.component)}&quot;)</span>
-<span class="sd">            &lt;Staff{1}&gt;                     &lt;Staff{1}&gt;</span>
-<span class="sd">            &lt;Voice-&quot;Music_Voice&quot;{4}&gt;       &lt;Voice-&quot;Music_Voice&quot;{4}&gt;</span>
+<span class="sd">            Staff(&quot;{ c&#39;4 d&#39;4 { { &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 } } f&#39;4 }&quot;) Staff(&quot;{ c&#39;4 d&#39;4 { { &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 } } f&#39;4 }&quot;)</span>
+<span class="sd">            Voice(&quot;c&#39;4 d&#39;4 { { &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 } } f&#39;4&quot;, name=&#39;Music_Voice&#39;) Voice(&quot;c&#39;4 d&#39;4 { { &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 } } f&#39;4&quot;, name=&#39;Music_Voice&#39;)</span>
 <span class="sd">            Note(&quot;c&#39;4&quot;)                    Note(&quot;c&#39;4&quot;)</span>
-<span class="sd">            BeforeGraceContainer(&quot;cs&#39;16&quot;)        BeforeGraceContainer(&quot;cs&#39;16&quot;)</span>
+<span class="sd">            BeforeGraceContainer(&quot;cs&#39;16&quot;)  BeforeGraceContainer(&quot;cs&#39;16&quot;)</span>
 <span class="sd">            Note(&quot;cs&#39;16&quot;)                  Note(&quot;cs&#39;16&quot;)</span>
 <span class="sd">            Note(&quot;d&#39;4&quot;)                    Note(&quot;d&#39;4&quot;)</span>
-<span class="sd">            &lt;&lt;&lt;2&gt;&gt;&gt;                        &lt;&lt;&lt;2&gt;&gt;&gt;</span>
+<span class="sd">            Container(&quot;{ &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 }&quot;) Container(&quot;{ &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 }&quot;)</span>
 <span class="sd">            OnBeatGraceContainer(&quot;&lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16&quot;) OnBeatGraceContainer(&quot;&lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16&quot;)</span>
 <span class="sd">            Chord(&quot;&lt;e&#39; g&#39;&gt;16&quot;)             Chord(&quot;&lt;e&#39; g&#39;&gt;16&quot;)</span>
 <span class="sd">            Note(&quot;gs&#39;16&quot;)                  Note(&quot;gs&#39;16&quot;)</span>
@@ -409,91 +406,91 @@
 <span class="sd">                    }</span>
 <span class="sd">                }</span>
 
-<span class="sd">            &gt;&gt;&gt; for component in abjad.select(staff).components():</span>
+<span class="sd">            &gt;&gt;&gt; for component in abjad.select.components(staff):</span>
 <span class="sd">            ...     parentage = abjad.get.parentage(component)</span>
 <span class="sd">            ...     components = parentage.components</span>
 <span class="sd">            ...     print(f&quot;{repr(component)}:&quot;)</span>
 <span class="sd">            ...     for component_ in components:</span>
 <span class="sd">            ...         print(f&quot;    {repr(component_)}&quot;)</span>
-<span class="sd">            &lt;Staff{1}&gt;:</span>
-<span class="sd">                &lt;Staff{1}&gt;</span>
-<span class="sd">            &lt;Voice-&quot;Music_Voice&quot;{4}&gt;:</span>
-<span class="sd">                &lt;Voice-&quot;Music_Voice&quot;{4}&gt;</span>
-<span class="sd">                &lt;Staff{1}&gt;</span>
+<span class="sd">            Staff(&quot;{ c&#39;4 d&#39;4 { { &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 } } f&#39;4 }&quot;):</span>
+<span class="sd">                Staff(&quot;{ c&#39;4 d&#39;4 { { &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 } } f&#39;4 }&quot;)</span>
+<span class="sd">            Voice(&quot;c&#39;4 d&#39;4 { { &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 } } f&#39;4&quot;, name=&#39;Music_Voice&#39;):</span>
+<span class="sd">                Voice(&quot;c&#39;4 d&#39;4 { { &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 } } f&#39;4&quot;, name=&#39;Music_Voice&#39;)</span>
+<span class="sd">                Staff(&quot;{ c&#39;4 d&#39;4 { { &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 } } f&#39;4 }&quot;)</span>
 <span class="sd">            Note(&quot;c&#39;4&quot;):</span>
 <span class="sd">                Note(&quot;c&#39;4&quot;)</span>
-<span class="sd">                &lt;Voice-&quot;Music_Voice&quot;{4}&gt;</span>
-<span class="sd">                &lt;Staff{1}&gt;</span>
+<span class="sd">                Voice(&quot;c&#39;4 d&#39;4 { { &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 } } f&#39;4&quot;, name=&#39;Music_Voice&#39;)</span>
+<span class="sd">                Staff(&quot;{ c&#39;4 d&#39;4 { { &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 } } f&#39;4 }&quot;)</span>
 <span class="sd">            BeforeGraceContainer(&quot;cs&#39;16&quot;):</span>
 <span class="sd">                BeforeGraceContainer(&quot;cs&#39;16&quot;)</span>
-<span class="sd">                &lt;Voice-&quot;Music_Voice&quot;{4}&gt;</span>
-<span class="sd">                &lt;Staff{1}&gt;</span>
+<span class="sd">                Voice(&quot;c&#39;4 d&#39;4 { { &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 } } f&#39;4&quot;, name=&#39;Music_Voice&#39;)</span>
+<span class="sd">                Staff(&quot;{ c&#39;4 d&#39;4 { { &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 } } f&#39;4 }&quot;)</span>
 <span class="sd">            Note(&quot;cs&#39;16&quot;):</span>
 <span class="sd">                Note(&quot;cs&#39;16&quot;)</span>
 <span class="sd">                BeforeGraceContainer(&quot;cs&#39;16&quot;)</span>
-<span class="sd">                &lt;Voice-&quot;Music_Voice&quot;{4}&gt;</span>
-<span class="sd">                &lt;Staff{1}&gt;</span>
+<span class="sd">                Voice(&quot;c&#39;4 d&#39;4 { { &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 } } f&#39;4&quot;, name=&#39;Music_Voice&#39;)</span>
+<span class="sd">                Staff(&quot;{ c&#39;4 d&#39;4 { { &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 } } f&#39;4 }&quot;)</span>
 <span class="sd">            Note(&quot;d&#39;4&quot;):</span>
 <span class="sd">                Note(&quot;d&#39;4&quot;)</span>
-<span class="sd">                &lt;Voice-&quot;Music_Voice&quot;{4}&gt;</span>
-<span class="sd">                &lt;Staff{1}&gt;</span>
-<span class="sd">            &lt;&lt;&lt;2&gt;&gt;&gt;:</span>
-<span class="sd">                &lt;&lt;&lt;2&gt;&gt;&gt;</span>
-<span class="sd">                &lt;Voice-&quot;Music_Voice&quot;{4}&gt;</span>
-<span class="sd">                &lt;Staff{1}&gt;</span>
+<span class="sd">                Voice(&quot;c&#39;4 d&#39;4 { { &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 } } f&#39;4&quot;, name=&#39;Music_Voice&#39;)</span>
+<span class="sd">                Staff(&quot;{ c&#39;4 d&#39;4 { { &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 } } f&#39;4 }&quot;)</span>
+<span class="sd">            Container(&quot;{ &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 }&quot;):</span>
+<span class="sd">                Container(&quot;{ &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 }&quot;)</span>
+<span class="sd">                Voice(&quot;c&#39;4 d&#39;4 { { &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 } } f&#39;4&quot;, name=&#39;Music_Voice&#39;)</span>
+<span class="sd">                Staff(&quot;{ c&#39;4 d&#39;4 { { &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 } } f&#39;4 }&quot;)</span>
 <span class="sd">            OnBeatGraceContainer(&quot;&lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16&quot;):</span>
 <span class="sd">                OnBeatGraceContainer(&quot;&lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16&quot;)</span>
-<span class="sd">                &lt;&lt;&lt;2&gt;&gt;&gt;</span>
-<span class="sd">                &lt;Voice-&quot;Music_Voice&quot;{4}&gt;</span>
-<span class="sd">                &lt;Staff{1}&gt;</span>
+<span class="sd">                Container(&quot;{ &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 }&quot;)</span>
+<span class="sd">                Voice(&quot;c&#39;4 d&#39;4 { { &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 } } f&#39;4&quot;, name=&#39;Music_Voice&#39;)</span>
+<span class="sd">                Staff(&quot;{ c&#39;4 d&#39;4 { { &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 } } f&#39;4 }&quot;)</span>
 <span class="sd">            Chord(&quot;&lt;e&#39; g&#39;&gt;16&quot;):</span>
 <span class="sd">                Chord(&quot;&lt;e&#39; g&#39;&gt;16&quot;)</span>
 <span class="sd">                OnBeatGraceContainer(&quot;&lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16&quot;)</span>
-<span class="sd">                &lt;&lt;&lt;2&gt;&gt;&gt;</span>
-<span class="sd">                &lt;Voice-&quot;Music_Voice&quot;{4}&gt;</span>
-<span class="sd">                &lt;Staff{1}&gt;</span>
+<span class="sd">                Container(&quot;{ &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 }&quot;)</span>
+<span class="sd">                Voice(&quot;c&#39;4 d&#39;4 { { &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 } } f&#39;4&quot;, name=&#39;Music_Voice&#39;)</span>
+<span class="sd">                Staff(&quot;{ c&#39;4 d&#39;4 { { &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 } } f&#39;4 }&quot;)</span>
 <span class="sd">            Note(&quot;gs&#39;16&quot;):</span>
 <span class="sd">                Note(&quot;gs&#39;16&quot;)</span>
 <span class="sd">                OnBeatGraceContainer(&quot;&lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16&quot;)</span>
-<span class="sd">                &lt;&lt;&lt;2&gt;&gt;&gt;</span>
-<span class="sd">                &lt;Voice-&quot;Music_Voice&quot;{4}&gt;</span>
-<span class="sd">                &lt;Staff{1}&gt;</span>
+<span class="sd">                Container(&quot;{ &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 }&quot;)</span>
+<span class="sd">                Voice(&quot;c&#39;4 d&#39;4 { { &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 } } f&#39;4&quot;, name=&#39;Music_Voice&#39;)</span>
+<span class="sd">                Staff(&quot;{ c&#39;4 d&#39;4 { { &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 } } f&#39;4 }&quot;)</span>
 <span class="sd">            Note(&quot;a&#39;16&quot;):</span>
 <span class="sd">                Note(&quot;a&#39;16&quot;)</span>
 <span class="sd">                OnBeatGraceContainer(&quot;&lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16&quot;)</span>
-<span class="sd">                &lt;&lt;&lt;2&gt;&gt;&gt;</span>
-<span class="sd">                &lt;Voice-&quot;Music_Voice&quot;{4}&gt;</span>
-<span class="sd">                &lt;Staff{1}&gt;</span>
+<span class="sd">                Container(&quot;{ &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 }&quot;)</span>
+<span class="sd">                Voice(&quot;c&#39;4 d&#39;4 { { &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 } } f&#39;4&quot;, name=&#39;Music_Voice&#39;)</span>
+<span class="sd">                Staff(&quot;{ c&#39;4 d&#39;4 { { &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 } } f&#39;4 }&quot;)</span>
 <span class="sd">            Note(&quot;as&#39;16&quot;):</span>
 <span class="sd">                Note(&quot;as&#39;16&quot;)</span>
 <span class="sd">                OnBeatGraceContainer(&quot;&lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16&quot;)</span>
-<span class="sd">                &lt;&lt;&lt;2&gt;&gt;&gt;</span>
-<span class="sd">                &lt;Voice-&quot;Music_Voice&quot;{4}&gt;</span>
-<span class="sd">                &lt;Staff{1}&gt;</span>
+<span class="sd">                Container(&quot;{ &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 }&quot;)</span>
+<span class="sd">                Voice(&quot;c&#39;4 d&#39;4 { { &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 } } f&#39;4&quot;, name=&#39;Music_Voice&#39;)</span>
+<span class="sd">                Staff(&quot;{ c&#39;4 d&#39;4 { { &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 } } f&#39;4 }&quot;)</span>
 <span class="sd">            Voice(&quot;e&#39;4&quot;, name=&#39;Music_Voice&#39;):</span>
 <span class="sd">                Voice(&quot;e&#39;4&quot;, name=&#39;Music_Voice&#39;)</span>
-<span class="sd">                &lt;&lt;&lt;2&gt;&gt;&gt;</span>
-<span class="sd">                &lt;Voice-&quot;Music_Voice&quot;{4}&gt;</span>
-<span class="sd">                &lt;Staff{1}&gt;</span>
+<span class="sd">                Container(&quot;{ &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 }&quot;)</span>
+<span class="sd">                Voice(&quot;c&#39;4 d&#39;4 { { &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 } } f&#39;4&quot;, name=&#39;Music_Voice&#39;)</span>
+<span class="sd">                Staff(&quot;{ c&#39;4 d&#39;4 { { &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 } } f&#39;4 }&quot;)</span>
 <span class="sd">            Note(&quot;e&#39;4&quot;):</span>
 <span class="sd">                Note(&quot;e&#39;4&quot;)</span>
 <span class="sd">                Voice(&quot;e&#39;4&quot;, name=&#39;Music_Voice&#39;)</span>
-<span class="sd">                &lt;&lt;&lt;2&gt;&gt;&gt;</span>
-<span class="sd">                &lt;Voice-&quot;Music_Voice&quot;{4}&gt;</span>
-<span class="sd">                &lt;Staff{1}&gt;</span>
+<span class="sd">                Container(&quot;{ &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 }&quot;)</span>
+<span class="sd">                Voice(&quot;c&#39;4 d&#39;4 { { &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 } } f&#39;4&quot;, name=&#39;Music_Voice&#39;)</span>
+<span class="sd">                Staff(&quot;{ c&#39;4 d&#39;4 { { &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 } } f&#39;4 }&quot;)</span>
 <span class="sd">            Note(&quot;f&#39;4&quot;):</span>
 <span class="sd">                Note(&quot;f&#39;4&quot;)</span>
-<span class="sd">                &lt;Voice-&quot;Music_Voice&quot;{4}&gt;</span>
-<span class="sd">                &lt;Staff{1}&gt;</span>
+<span class="sd">                Voice(&quot;c&#39;4 d&#39;4 { { &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 } } f&#39;4&quot;, name=&#39;Music_Voice&#39;)</span>
+<span class="sd">                Staff(&quot;{ c&#39;4 d&#39;4 { { &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 } } f&#39;4 }&quot;)</span>
 <span class="sd">            AfterGraceContainer(&quot;fs&#39;16&quot;):</span>
 <span class="sd">                AfterGraceContainer(&quot;fs&#39;16&quot;)</span>
-<span class="sd">                &lt;Voice-&quot;Music_Voice&quot;{4}&gt;</span>
-<span class="sd">                &lt;Staff{1}&gt;</span>
+<span class="sd">                Voice(&quot;c&#39;4 d&#39;4 { { &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 } } f&#39;4&quot;, name=&#39;Music_Voice&#39;)</span>
+<span class="sd">                Staff(&quot;{ c&#39;4 d&#39;4 { { &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 } } f&#39;4 }&quot;)</span>
 <span class="sd">            Note(&quot;fs&#39;16&quot;):</span>
 <span class="sd">                Note(&quot;fs&#39;16&quot;)</span>
 <span class="sd">                AfterGraceContainer(&quot;fs&#39;16&quot;)</span>
-<span class="sd">                &lt;Voice-&quot;Music_Voice&quot;{4}&gt;</span>
-<span class="sd">                &lt;Staff{1}&gt;</span>
+<span class="sd">                Voice(&quot;c&#39;4 d&#39;4 { { &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 } } f&#39;4&quot;, name=&#39;Music_Voice&#39;)</span>
+<span class="sd">                Staff(&quot;{ c&#39;4 d&#39;4 { { &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 } } f&#39;4 }&quot;)</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_components</span>
@@ -569,16 +566,16 @@
 <span class="sd">                    }</span>
 <span class="sd">                }</span>
 
-<span class="sd">            &gt;&gt;&gt; for component in abjad.select(staff).components():</span>
+<span class="sd">            &gt;&gt;&gt; for component in abjad.select.components(staff):</span>
 <span class="sd">            ...     parentage = abjad.get.parentage(component)</span>
 <span class="sd">            ...     print(f&quot;{repr(component):30} {repr(parentage.orphan)}&quot;)</span>
-<span class="sd">            &lt;Staff{1}&gt;                     True</span>
-<span class="sd">            &lt;Voice-&quot;Music_Voice&quot;{4}&gt;       False</span>
+<span class="sd">            Staff(&quot;{ c&#39;4 d&#39;4 { { &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 } } f&#39;4 }&quot;) True</span>
+<span class="sd">            Voice(&quot;c&#39;4 d&#39;4 { { &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 } } f&#39;4&quot;, name=&#39;Music_Voice&#39;) False</span>
 <span class="sd">            Note(&quot;c&#39;4&quot;)                    False</span>
-<span class="sd">            BeforeGraceContainer(&quot;cs&#39;16&quot;)        False</span>
+<span class="sd">            BeforeGraceContainer(&quot;cs&#39;16&quot;)  False</span>
 <span class="sd">            Note(&quot;cs&#39;16&quot;)                  False</span>
 <span class="sd">            Note(&quot;d&#39;4&quot;)                    False</span>
-<span class="sd">            &lt;&lt;&lt;2&gt;&gt;&gt;                        False</span>
+<span class="sd">            Container(&quot;{ &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 }&quot;) False</span>
 <span class="sd">            OnBeatGraceContainer(&quot;&lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16&quot;) False</span>
 <span class="sd">            Chord(&quot;&lt;e&#39; g&#39;&gt;16&quot;)             False</span>
 <span class="sd">            Note(&quot;gs&#39;16&quot;)                  False</span>
@@ -664,25 +661,25 @@
 <span class="sd">                    }</span>
 <span class="sd">                }</span>
 
-<span class="sd">            &gt;&gt;&gt; for component in abjad.select(staff).components():</span>
+<span class="sd">            &gt;&gt;&gt; for component in abjad.select.components(staff):</span>
 <span class="sd">            ...     parentage = abjad.get.parentage(component)</span>
 <span class="sd">            ...     print(f&quot;{repr(component):30} {repr(parentage.parent)}&quot;)</span>
-<span class="sd">            &lt;Staff{1}&gt;                     None</span>
-<span class="sd">            &lt;Voice-&quot;Music_Voice&quot;{4}&gt;       &lt;Staff{1}&gt;</span>
-<span class="sd">            Note(&quot;c&#39;4&quot;)                    &lt;Voice-&quot;Music_Voice&quot;{4}&gt;</span>
-<span class="sd">            BeforeGraceContainer(&quot;cs&#39;16&quot;)        &lt;Voice-&quot;Music_Voice&quot;{4}&gt;</span>
+<span class="sd">            Staff(&quot;{ c&#39;4 d&#39;4 { { &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 } } f&#39;4 }&quot;) None</span>
+<span class="sd">            Voice(&quot;c&#39;4 d&#39;4 { { &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 } } f&#39;4&quot;, name=&#39;Music_Voice&#39;) Staff(&quot;{ c&#39;4 d&#39;4 { { &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 } } f&#39;4 }&quot;)</span>
+<span class="sd">            Note(&quot;c&#39;4&quot;)                    Voice(&quot;c&#39;4 d&#39;4 { { &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 } } f&#39;4&quot;, name=&#39;Music_Voice&#39;)</span>
+<span class="sd">            BeforeGraceContainer(&quot;cs&#39;16&quot;)  Voice(&quot;c&#39;4 d&#39;4 { { &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 } } f&#39;4&quot;, name=&#39;Music_Voice&#39;)</span>
 <span class="sd">            Note(&quot;cs&#39;16&quot;)                  BeforeGraceContainer(&quot;cs&#39;16&quot;)</span>
-<span class="sd">            Note(&quot;d&#39;4&quot;)                    &lt;Voice-&quot;Music_Voice&quot;{4}&gt;</span>
-<span class="sd">            &lt;&lt;&lt;2&gt;&gt;&gt;                        &lt;Voice-&quot;Music_Voice&quot;{4}&gt;</span>
-<span class="sd">            OnBeatGraceContainer(&quot;&lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16&quot;) &lt;&lt;&lt;2&gt;&gt;&gt;</span>
+<span class="sd">            Note(&quot;d&#39;4&quot;)                    Voice(&quot;c&#39;4 d&#39;4 { { &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 } } f&#39;4&quot;, name=&#39;Music_Voice&#39;)</span>
+<span class="sd">            Container(&quot;{ &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 }&quot;) Voice(&quot;c&#39;4 d&#39;4 { { &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 } } f&#39;4&quot;, name=&#39;Music_Voice&#39;)</span>
+<span class="sd">            OnBeatGraceContainer(&quot;&lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16&quot;) Container(&quot;{ &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 }&quot;)</span>
 <span class="sd">            Chord(&quot;&lt;e&#39; g&#39;&gt;16&quot;)             OnBeatGraceContainer(&quot;&lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16&quot;)</span>
 <span class="sd">            Note(&quot;gs&#39;16&quot;)                  OnBeatGraceContainer(&quot;&lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16&quot;)</span>
 <span class="sd">            Note(&quot;a&#39;16&quot;)                   OnBeatGraceContainer(&quot;&lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16&quot;)</span>
 <span class="sd">            Note(&quot;as&#39;16&quot;)                  OnBeatGraceContainer(&quot;&lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16&quot;)</span>
-<span class="sd">            Voice(&quot;e&#39;4&quot;, name=&#39;Music_Voice&#39;) &lt;&lt;&lt;2&gt;&gt;&gt;</span>
+<span class="sd">            Voice(&quot;e&#39;4&quot;, name=&#39;Music_Voice&#39;) Container(&quot;{ &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 }&quot;)</span>
 <span class="sd">            Note(&quot;e&#39;4&quot;)                    Voice(&quot;e&#39;4&quot;, name=&#39;Music_Voice&#39;)</span>
-<span class="sd">            Note(&quot;f&#39;4&quot;)                    &lt;Voice-&quot;Music_Voice&quot;{4}&gt;</span>
-<span class="sd">            AfterGraceContainer(&quot;fs&#39;16&quot;)   &lt;Voice-&quot;Music_Voice&quot;{4}&gt;</span>
+<span class="sd">            Note(&quot;f&#39;4&quot;)                    Voice(&quot;c&#39;4 d&#39;4 { { &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 } } f&#39;4&quot;, name=&#39;Music_Voice&#39;)</span>
+<span class="sd">            AfterGraceContainer(&quot;fs&#39;16&quot;)   Voice(&quot;c&#39;4 d&#39;4 { { &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 } } f&#39;4&quot;, name=&#39;Music_Voice&#39;)</span>
 <span class="sd">            Note(&quot;fs&#39;16&quot;)                  AfterGraceContainer(&quot;fs&#39;16&quot;)</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -766,19 +763,19 @@
 <span class="sd">                    }</span>
 <span class="sd">                }</span>
 
-<span class="sd">            &gt;&gt;&gt; for component in abjad.select(staff).components():</span>
+<span class="sd">            &gt;&gt;&gt; for component in abjad.select.components(staff):</span>
 <span class="sd">            ...     parentage = abjad.get.parentage(component)</span>
 <span class="sd">            ...     print(f&quot;{repr(component):30} {repr(parentage.prolation)}&quot;)</span>
-<span class="sd">            &lt;Staff{1}&gt;                     Multiplier(1, 1)</span>
-<span class="sd">            &lt;Voice-&quot;Music_Voice&quot;{2}&gt;       Multiplier(1, 1)</span>
-<span class="sd">            Tuplet(&#39;3:2&#39;, &quot;c&#39;4 d&#39;4 e&#39;4&quot;) Multiplier(2, 3)</span>
+<span class="sd">            Staff(&quot;{ { 2/3 c&#39;4 d&#39;4 e&#39;4 } { 2/3 { { &lt;f&#39; a&#39;&gt;8 b&#39;8 } { f&#39;4 } } g&#39;4 a&#39;4 } }&quot;) Multiplier(1, 1)</span>
+<span class="sd">            Voice(&quot;{ 2/3 c&#39;4 d&#39;4 e&#39;4 } { 2/3 { { &lt;f&#39; a&#39;&gt;8 b&#39;8 } { f&#39;4 } } g&#39;4 a&#39;4 }&quot;, name=&#39;Music_Voice&#39;) Multiplier(1, 1)</span>
+<span class="sd">            Tuplet(&#39;3:2&#39;, &quot;c&#39;4 d&#39;4 e&#39;4&quot;)   Multiplier(2, 3)</span>
 <span class="sd">            Note(&quot;c&#39;4&quot;)                    Multiplier(2, 3)</span>
-<span class="sd">            BeforeGraceContainer(&quot;cs&#39;16&quot;)        Multiplier(2, 3)</span>
+<span class="sd">            BeforeGraceContainer(&quot;cs&#39;16&quot;)  Multiplier(2, 3)</span>
 <span class="sd">            Note(&quot;cs&#39;16&quot;)                  Multiplier(2, 3)</span>
 <span class="sd">            Note(&quot;d&#39;4&quot;)                    Multiplier(2, 3)</span>
 <span class="sd">            Note(&quot;e&#39;4&quot;)                    Multiplier(2, 3)</span>
 <span class="sd">            Tuplet(&#39;3:2&#39;, &quot;{ { &lt;f&#39; a&#39;&gt;8 b&#39;8 } { f&#39;4 } } g&#39;4 a&#39;4&quot;) Multiplier(2, 3)</span>
-<span class="sd">            &lt;&lt;&lt;2&gt;&gt;&gt;                        Multiplier(2, 3)</span>
+<span class="sd">            Container(&quot;{ &lt;f&#39; a&#39;&gt;8 b&#39;8 } { f&#39;4 }&quot;) Multiplier(2, 3)</span>
 <span class="sd">            OnBeatGraceContainer(&quot;&lt;f&#39; a&#39;&gt;8 b&#39;8&quot;) Multiplier(2, 3)</span>
 <span class="sd">            Chord(&quot;&lt;f&#39; a&#39;&gt;8&quot;)              Multiplier(2, 3)</span>
 <span class="sd">            Note(&quot;b&#39;8&quot;)                    Multiplier(2, 3)</span>
@@ -865,26 +862,26 @@
 <span class="sd">                    }</span>
 <span class="sd">                }</span>
 
-<span class="sd">            &gt;&gt;&gt; for component in abjad.select(staff).components():</span>
+<span class="sd">            &gt;&gt;&gt; for component in abjad.select.components(staff):</span>
 <span class="sd">            ...     parentage = abjad.get.parentage(component)</span>
 <span class="sd">            ...     print(f&quot;{repr(component):30} {repr(parentage.root)}&quot;)</span>
-<span class="sd">            &lt;Staff{1}&gt;                     &lt;Staff{1}&gt;</span>
-<span class="sd">            &lt;Voice-&quot;Music_Voice&quot;{4}&gt;       &lt;Staff{1}&gt;</span>
-<span class="sd">            Note(&quot;c&#39;4&quot;)                    &lt;Staff{1}&gt;</span>
-<span class="sd">            BeforeGraceContainer(&quot;cs&#39;16&quot;)        &lt;Staff{1}&gt;</span>
-<span class="sd">            Note(&quot;cs&#39;16&quot;)                  &lt;Staff{1}&gt;</span>
-<span class="sd">            Note(&quot;d&#39;4&quot;)                    &lt;Staff{1}&gt;</span>
-<span class="sd">            &lt;&lt;&lt;2&gt;&gt;&gt;                        &lt;Staff{1}&gt;</span>
-<span class="sd">            OnBeatGraceContainer(&quot;&lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16&quot;) &lt;Staff{1}&gt;</span>
-<span class="sd">            Chord(&quot;&lt;e&#39; g&#39;&gt;16&quot;)             &lt;Staff{1}&gt;</span>
-<span class="sd">            Note(&quot;gs&#39;16&quot;)                  &lt;Staff{1}&gt;</span>
-<span class="sd">            Note(&quot;a&#39;16&quot;)                   &lt;Staff{1}&gt;</span>
-<span class="sd">            Note(&quot;as&#39;16&quot;)                  &lt;Staff{1}&gt;</span>
-<span class="sd">            Voice(&quot;e&#39;4&quot;, name=&#39;Music_Voice&#39;) &lt;Staff{1}&gt;</span>
-<span class="sd">            Note(&quot;e&#39;4&quot;)                    &lt;Staff{1}&gt;</span>
-<span class="sd">            Note(&quot;f&#39;4&quot;)                    &lt;Staff{1}&gt;</span>
-<span class="sd">            AfterGraceContainer(&quot;fs&#39;16&quot;)   &lt;Staff{1}&gt;</span>
-<span class="sd">            Note(&quot;fs&#39;16&quot;)                  &lt;Staff{1}&gt;</span>
+<span class="sd">            Staff(&quot;{ c&#39;4 d&#39;4 { { &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 } } f&#39;4 }&quot;) Staff(&quot;{ c&#39;4 d&#39;4 { { &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 } } f&#39;4 }&quot;)</span>
+<span class="sd">            Voice(&quot;c&#39;4 d&#39;4 { { &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 } } f&#39;4&quot;, name=&#39;Music_Voice&#39;) Staff(&quot;{ c&#39;4 d&#39;4 { { &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 } } f&#39;4 }&quot;)</span>
+<span class="sd">            Note(&quot;c&#39;4&quot;)                    Staff(&quot;{ c&#39;4 d&#39;4 { { &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 } } f&#39;4 }&quot;)</span>
+<span class="sd">            BeforeGraceContainer(&quot;cs&#39;16&quot;)  Staff(&quot;{ c&#39;4 d&#39;4 { { &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 } } f&#39;4 }&quot;)</span>
+<span class="sd">            Note(&quot;cs&#39;16&quot;)                  Staff(&quot;{ c&#39;4 d&#39;4 { { &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 } } f&#39;4 }&quot;)</span>
+<span class="sd">            Note(&quot;d&#39;4&quot;)                    Staff(&quot;{ c&#39;4 d&#39;4 { { &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 } } f&#39;4 }&quot;)</span>
+<span class="sd">            Container(&quot;{ &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 }&quot;) Staff(&quot;{ c&#39;4 d&#39;4 { { &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 } } f&#39;4 }&quot;)</span>
+<span class="sd">            OnBeatGraceContainer(&quot;&lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16&quot;) Staff(&quot;{ c&#39;4 d&#39;4 { { &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 } } f&#39;4 }&quot;)</span>
+<span class="sd">            Chord(&quot;&lt;e&#39; g&#39;&gt;16&quot;)             Staff(&quot;{ c&#39;4 d&#39;4 { { &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 } } f&#39;4 }&quot;)</span>
+<span class="sd">            Note(&quot;gs&#39;16&quot;)                  Staff(&quot;{ c&#39;4 d&#39;4 { { &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 } } f&#39;4 }&quot;)</span>
+<span class="sd">            Note(&quot;a&#39;16&quot;)                   Staff(&quot;{ c&#39;4 d&#39;4 { { &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 } } f&#39;4 }&quot;)</span>
+<span class="sd">            Note(&quot;as&#39;16&quot;)                  Staff(&quot;{ c&#39;4 d&#39;4 { { &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 } } f&#39;4 }&quot;)</span>
+<span class="sd">            Voice(&quot;e&#39;4&quot;, name=&#39;Music_Voice&#39;) Staff(&quot;{ c&#39;4 d&#39;4 { { &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 } } f&#39;4 }&quot;)</span>
+<span class="sd">            Note(&quot;e&#39;4&quot;)                    Staff(&quot;{ c&#39;4 d&#39;4 { { &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 } } f&#39;4 }&quot;)</span>
+<span class="sd">            Note(&quot;f&#39;4&quot;)                    Staff(&quot;{ c&#39;4 d&#39;4 { { &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 } } f&#39;4 }&quot;)</span>
+<span class="sd">            AfterGraceContainer(&quot;fs&#39;16&quot;)   Staff(&quot;{ c&#39;4 d&#39;4 { { &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 } } f&#39;4 }&quot;)</span>
+<span class="sd">            Note(&quot;fs&#39;16&quot;)                  Staff(&quot;{ c&#39;4 d&#39;4 { { &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 } } f&#39;4 }&quot;)</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">root</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">n</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
@@ -927,11 +924,11 @@
 <span class="sd">                    }</span>
 <span class="sd">                }</span>
 
-<span class="sd">            &gt;&gt;&gt; for component in abjad.select(staff).components():</span>
+<span class="sd">            &gt;&gt;&gt; for component in abjad.select.components(staff):</span>
 <span class="sd">            ...     parentage = abjad.get.parentage(component)</span>
 <span class="sd">            ...     count = parentage.count(abjad.Tuplet)</span>
 <span class="sd">            ...     print(f&quot;{repr(component):55} {repr(count)}&quot;)</span>
-<span class="sd">            &lt;Staff{2}&gt;                                              0</span>
+<span class="sd">            Staff(&quot;{ 2/3 c&#39;2 { 2/3 d&#39;8 e&#39;8 f&#39;8 } } { 2/3 c&#39;4 d&#39;4 e&#39;4 }&quot;) 0</span>
 <span class="sd">            Tuplet(&#39;3:2&#39;, &quot;c&#39;2 { 2/3 d&#39;8 e&#39;8 f&#39;8 }&quot;)                1</span>
 <span class="sd">            Note(&quot;c&#39;2&quot;)                                             1</span>
 <span class="sd">            Tuplet(&#39;3:2&#39;, &quot;d&#39;8 e&#39;8 f&#39;8&quot;)                            2</span>
@@ -1082,17 +1079,17 @@
 <span class="sd">                    }</span>
 <span class="sd">                }</span>
 
-<span class="sd">            &gt;&gt;&gt; for component in abjad.select(staff).components():</span>
+<span class="sd">            &gt;&gt;&gt; for component in abjad.select.components(staff):</span>
 <span class="sd">            ...     parentage = abjad.get.parentage(component)</span>
 <span class="sd">            ...     count = parentage.count(abjad.Staff)</span>
 <span class="sd">            ...     print(f&quot;{repr(component):30} {repr(count)}&quot;)</span>
-<span class="sd">            &lt;Staff{1}&gt;                     1</span>
-<span class="sd">            &lt;Voice-&quot;Music_Voice&quot;{4}&gt;       1</span>
+<span class="sd">            Staff(&quot;{ c&#39;4 d&#39;4 { { &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 } } f&#39;4 }&quot;) 1</span>
+<span class="sd">            Voice(&quot;c&#39;4 d&#39;4 { { &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 } } f&#39;4&quot;, name=&#39;Music_Voice&#39;) 1</span>
 <span class="sd">            Note(&quot;c&#39;4&quot;)                    1</span>
-<span class="sd">            BeforeGraceContainer(&quot;cs&#39;16&quot;)        1</span>
+<span class="sd">            BeforeGraceContainer(&quot;cs&#39;16&quot;)  1</span>
 <span class="sd">            Note(&quot;cs&#39;16&quot;)                  1</span>
 <span class="sd">            Note(&quot;d&#39;4&quot;)                    1</span>
-<span class="sd">            &lt;&lt;&lt;2&gt;&gt;&gt;                        1</span>
+<span class="sd">            Container(&quot;{ &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 }&quot;) 1</span>
 <span class="sd">            OnBeatGraceContainer(&quot;&lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16&quot;) 1</span>
 <span class="sd">            Chord(&quot;&lt;e&#39; g&#39;&gt;16&quot;)             1</span>
 <span class="sd">            Note(&quot;gs&#39;16&quot;)                  1</span>
@@ -1193,10 +1190,10 @@
 <span class="sd">                Voice(&quot;c&#39;&#39;4 b&#39;4 c&#39;&#39;8&quot;, name=&#39;Red_Voice&#39;)</span>
 
 <span class="sd">                &gt;&gt;&gt; parentage.get(abjad.Component, 2)</span>
-<span class="sd">                &lt;&lt;&lt;2&gt;&gt;&gt;</span>
+<span class="sd">                Container(&quot;{ c&#39;&#39;4 b&#39;4 c&#39;&#39;8 } { e&#39;4 f&#39;4 e&#39;8 }&quot;)</span>
 
 <span class="sd">                &gt;&gt;&gt; parentage.get(abjad.Component, 3)</span>
-<span class="sd">                &lt;Voice-&quot;Red_Voice&quot;{4}&gt;</span>
+<span class="sd">                Voice(&quot;e&#39;&#39;8 d&#39;&#39;8 { { c&#39;&#39;4 b&#39;4 c&#39;&#39;8 } { e&#39;4 f&#39;4 e&#39;8 } } d&#39;&#39;8&quot;, name=&#39;Red_Voice&#39;)</span>
 
 <span class="sd">                Returns none with ``n`` greater than score depth:</span>
 
@@ -1212,12 +1209,12 @@
 <span class="sd">                Returns score root with ``n=-1``:</span>
 
 <span class="sd">                &gt;&gt;&gt; parentage.get(abjad.Component, -1)</span>
-<span class="sd">                &lt;Voice-&quot;Red_Voice&quot;{4}&gt;</span>
+<span class="sd">                Voice(&quot;e&#39;&#39;8 d&#39;&#39;8 { { c&#39;&#39;4 b&#39;4 c&#39;&#39;8 } { e&#39;4 f&#39;4 e&#39;8 } } d&#39;&#39;8&quot;, name=&#39;Red_Voice&#39;)</span>
 
 <span class="sd">                With other negative ``n``:</span>
 
 <span class="sd">                &gt;&gt;&gt; parentage.get(abjad.Component, -2)</span>
-<span class="sd">                &lt;&lt;&lt;2&gt;&gt;&gt;</span>
+<span class="sd">                Container(&quot;{ c&#39;&#39;4 b&#39;4 c&#39;&#39;8 } { e&#39;4 f&#39;4 e&#39;8 }&quot;)</span>
 
 <span class="sd">                &gt;&gt;&gt; parentage.get(abjad.Component, -3)</span>
 <span class="sd">                Voice(&quot;c&#39;&#39;4 b&#39;4 c&#39;&#39;8&quot;, name=&#39;Red_Voice&#39;)</span>
@@ -1251,7 +1248,7 @@
 <span class="sd">                Voice(&quot;c&#39;&#39;4 b&#39;4 c&#39;&#39;8&quot;, name=&#39;Red_Voice&#39;)</span>
 
 <span class="sd">                &gt;&gt;&gt; parentage.get(abjad.Voice, 1)</span>
-<span class="sd">                &lt;Voice-&quot;Red_Voice&quot;{4}&gt;</span>
+<span class="sd">                Voice(&quot;e&#39;&#39;8 d&#39;&#39;8 { { c&#39;&#39;4 b&#39;4 c&#39;&#39;8 } { e&#39;4 f&#39;4 e&#39;8 } } d&#39;&#39;8&quot;, name=&#39;Red_Voice&#39;)</span>
 
 <span class="sd">                &gt;&gt;&gt; parentage.get(abjad.Voice, 2) is None</span>
 <span class="sd">                True</span>
@@ -1262,7 +1259,7 @@
 <span class="sd">                Negative ``n``:</span>
 
 <span class="sd">                &gt;&gt;&gt; parentage.get(abjad.Voice, -1)</span>
-<span class="sd">                &lt;Voice-&quot;Red_Voice&quot;{4}&gt;</span>
+<span class="sd">                Voice(&quot;e&#39;&#39;8 d&#39;&#39;8 { { c&#39;&#39;4 b&#39;4 c&#39;&#39;8 } { e&#39;4 f&#39;4 e&#39;8 } } d&#39;&#39;8&quot;, name=&#39;Red_Voice&#39;)</span>
 
 <span class="sd">                &gt;&gt;&gt; parentage.get(abjad.Voice, -2)</span>
 <span class="sd">                Voice(&quot;c&#39;&#39;4 b&#39;4 c&#39;&#39;8&quot;, name=&#39;Red_Voice&#39;)</span>
@@ -1339,27 +1336,27 @@
 <span class="sd">                    }</span>
 <span class="sd">                }</span>
 
-<span class="sd">            &gt;&gt;&gt; for component in abjad.select(staff).components():</span>
+<span class="sd">            &gt;&gt;&gt; for component in abjad.select.components(staff):</span>
 <span class="sd">            ...     parentage = abjad.get.parentage(component)</span>
 <span class="sd">            ...     result = parentage.get(abjad.Staff)</span>
 <span class="sd">            ...     print(f&quot;{repr(component):30} {repr(result)}&quot;)</span>
-<span class="sd">            &lt;Staff{1}&gt;                     &lt;Staff{1}&gt;</span>
-<span class="sd">            &lt;Voice-&quot;Music_Voice&quot;{4}&gt;       &lt;Staff{1}&gt;</span>
-<span class="sd">            Note(&quot;c&#39;4&quot;)                    &lt;Staff{1}&gt;</span>
-<span class="sd">            BeforeGraceContainer(&quot;cs&#39;16&quot;)        &lt;Staff{1}&gt;</span>
-<span class="sd">            Note(&quot;cs&#39;16&quot;)                  &lt;Staff{1}&gt;</span>
-<span class="sd">            Note(&quot;d&#39;4&quot;)                    &lt;Staff{1}&gt;</span>
-<span class="sd">            &lt;&lt;&lt;2&gt;&gt;&gt;                        &lt;Staff{1}&gt;</span>
-<span class="sd">            OnBeatGraceContainer(&quot;&lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16&quot;) &lt;Staff{1}&gt;</span>
-<span class="sd">            Chord(&quot;&lt;e&#39; g&#39;&gt;16&quot;)             &lt;Staff{1}&gt;</span>
-<span class="sd">            Note(&quot;gs&#39;16&quot;)                  &lt;Staff{1}&gt;</span>
-<span class="sd">            Note(&quot;a&#39;16&quot;)                   &lt;Staff{1}&gt;</span>
-<span class="sd">            Note(&quot;as&#39;16&quot;)                  &lt;Staff{1}&gt;</span>
-<span class="sd">            Voice(&quot;e&#39;4&quot;, name=&#39;Music_Voice&#39;) &lt;Staff{1}&gt;</span>
-<span class="sd">            Note(&quot;e&#39;4&quot;)                    &lt;Staff{1}&gt;</span>
-<span class="sd">            Note(&quot;f&#39;4&quot;)                    &lt;Staff{1}&gt;</span>
-<span class="sd">            AfterGraceContainer(&quot;fs&#39;16&quot;)   &lt;Staff{1}&gt;</span>
-<span class="sd">            Note(&quot;fs&#39;16&quot;)                  &lt;Staff{1}&gt;</span>
+<span class="sd">            Staff(&quot;{ c&#39;4 d&#39;4 { { &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 } } f&#39;4 }&quot;) Staff(&quot;{ c&#39;4 d&#39;4 { { &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 } } f&#39;4 }&quot;)</span>
+<span class="sd">            Voice(&quot;c&#39;4 d&#39;4 { { &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 } } f&#39;4&quot;, name=&#39;Music_Voice&#39;) Staff(&quot;{ c&#39;4 d&#39;4 { { &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 } } f&#39;4 }&quot;)</span>
+<span class="sd">            Note(&quot;c&#39;4&quot;)                    Staff(&quot;{ c&#39;4 d&#39;4 { { &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 } } f&#39;4 }&quot;)</span>
+<span class="sd">            BeforeGraceContainer(&quot;cs&#39;16&quot;)  Staff(&quot;{ c&#39;4 d&#39;4 { { &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 } } f&#39;4 }&quot;)</span>
+<span class="sd">            Note(&quot;cs&#39;16&quot;)                  Staff(&quot;{ c&#39;4 d&#39;4 { { &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 } } f&#39;4 }&quot;)</span>
+<span class="sd">            Note(&quot;d&#39;4&quot;)                    Staff(&quot;{ c&#39;4 d&#39;4 { { &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 } } f&#39;4 }&quot;)</span>
+<span class="sd">            Container(&quot;{ &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 }&quot;) Staff(&quot;{ c&#39;4 d&#39;4 { { &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 } } f&#39;4 }&quot;)</span>
+<span class="sd">            OnBeatGraceContainer(&quot;&lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16&quot;) Staff(&quot;{ c&#39;4 d&#39;4 { { &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 } } f&#39;4 }&quot;)</span>
+<span class="sd">            Chord(&quot;&lt;e&#39; g&#39;&gt;16&quot;)             Staff(&quot;{ c&#39;4 d&#39;4 { { &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 } } f&#39;4 }&quot;)</span>
+<span class="sd">            Note(&quot;gs&#39;16&quot;)                  Staff(&quot;{ c&#39;4 d&#39;4 { { &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 } } f&#39;4 }&quot;)</span>
+<span class="sd">            Note(&quot;a&#39;16&quot;)                   Staff(&quot;{ c&#39;4 d&#39;4 { { &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 } } f&#39;4 }&quot;)</span>
+<span class="sd">            Note(&quot;as&#39;16&quot;)                  Staff(&quot;{ c&#39;4 d&#39;4 { { &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 } } f&#39;4 }&quot;)</span>
+<span class="sd">            Voice(&quot;e&#39;4&quot;, name=&#39;Music_Voice&#39;) Staff(&quot;{ c&#39;4 d&#39;4 { { &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 } } f&#39;4 }&quot;)</span>
+<span class="sd">            Note(&quot;e&#39;4&quot;)                    Staff(&quot;{ c&#39;4 d&#39;4 { { &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 } } f&#39;4 }&quot;)</span>
+<span class="sd">            Note(&quot;f&#39;4&quot;)                    Staff(&quot;{ c&#39;4 d&#39;4 { { &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 } } f&#39;4 }&quot;)</span>
+<span class="sd">            AfterGraceContainer(&quot;fs&#39;16&quot;)   Staff(&quot;{ c&#39;4 d&#39;4 { { &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 } } f&#39;4 }&quot;)</span>
+<span class="sd">            Note(&quot;fs&#39;16&quot;)                  Staff(&quot;{ c&#39;4 d&#39;4 { { &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 } } f&#39;4 }&quot;)</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">prototype</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -1415,17 +1412,8 @@
 
 <span class="sd">            &gt;&gt;&gt; note = voice[0]</span>
 <span class="sd">            &gt;&gt;&gt; parentage = abjad.get.parentage(note)</span>
-<span class="sd">            &gt;&gt;&gt; logical_voice = parentage.logical_voice()</span>
-<span class="sd">            &gt;&gt;&gt; string = abjad.storage(logical_voice)</span>
-<span class="sd">            &gt;&gt;&gt; print(string)</span>
-<span class="sd">            dict(</span>
-<span class="sd">                {</span>
-<span class="sd">                    &#39;score&#39;: &quot;Score-&#39;Score&#39;&quot;,</span>
-<span class="sd">                    &#39;staff&#39;: &quot;Staff-&#39;Music_Staff&#39;&quot;,</span>
-<span class="sd">                    &#39;staff group&#39;: &#39;&#39;,</span>
-<span class="sd">                    &#39;voice&#39;: &quot;Voice-&#39;Music_Voice&#39;&quot;,</span>
-<span class="sd">                    }</span>
-<span class="sd">                )</span>
+<span class="sd">            &gt;&gt;&gt; parentage.logical_voice()</span>
+<span class="sd">            {&#39;score&#39;: &quot;Score-&#39;Score&#39;&quot;, &#39;staff group&#39;: &#39;&#39;, &#39;staff&#39;: &quot;Staff-&#39;Music_Staff&#39;&quot;, &#39;voice&#39;: &quot;Voice-&#39;Music_Voice&#39;&quot;}</span>
 
 <span class="sd">        ..  container:: example</span>
 
@@ -1457,65 +1445,20 @@
 <span class="sd">                    }</span>
 <span class="sd">                }</span>
 
-<span class="sd">            &gt;&gt;&gt; lv = abjad.get.parentage(voice).logical_voice()</span>
-<span class="sd">            &gt;&gt;&gt; string = abjad.storage(lv)</span>
-<span class="sd">            &gt;&gt;&gt; print(string)</span>
-<span class="sd">            dict(</span>
-<span class="sd">                {</span>
-<span class="sd">                    &#39;score&#39;: &#39;&#39;,</span>
-<span class="sd">                    &#39;staff&#39;: &#39;&#39;,</span>
-<span class="sd">                    &#39;staff group&#39;: &#39;&#39;,</span>
-<span class="sd">                    &#39;voice&#39;: &quot;Voice-&#39;Music_Voice&#39;&quot;,</span>
-<span class="sd">                    }</span>
-<span class="sd">                )</span>
+<span class="sd">            &gt;&gt;&gt; abjad.get.parentage(voice).logical_voice()</span>
+<span class="sd">            {&#39;score&#39;: &#39;&#39;, &#39;staff group&#39;: &#39;&#39;, &#39;staff&#39;: &#39;&#39;, &#39;voice&#39;: &quot;Voice-&#39;Music_Voice&#39;&quot;}</span>
 
-<span class="sd">            &gt;&gt;&gt; lv = abjad.get.parentage(container_1).logical_voice()</span>
-<span class="sd">            &gt;&gt;&gt; string = abjad.storage(lv)</span>
-<span class="sd">            &gt;&gt;&gt; print(string)</span>
-<span class="sd">            dict(</span>
-<span class="sd">                {</span>
-<span class="sd">                    &#39;score&#39;: &#39;&#39;,</span>
-<span class="sd">                    &#39;staff&#39;: &#39;&#39;,</span>
-<span class="sd">                    &#39;staff group&#39;: &#39;&#39;,</span>
-<span class="sd">                    &#39;voice&#39;: &quot;Voice-&#39;Music_Voice&#39;&quot;,</span>
-<span class="sd">                    }</span>
-<span class="sd">                )</span>
+<span class="sd">            &gt;&gt;&gt; abjad.get.parentage(container_1).logical_voice()</span>
+<span class="sd">            {&#39;score&#39;: &#39;&#39;, &#39;staff group&#39;: &#39;&#39;, &#39;staff&#39;: &#39;&#39;, &#39;voice&#39;: &quot;Voice-&#39;Music_Voice&#39;&quot;}</span>
 
-<span class="sd">            &gt;&gt;&gt; lv = abjad.get.parentage(container_1[0]).logical_voice()</span>
-<span class="sd">            &gt;&gt;&gt; string = abjad.storage(lv)</span>
-<span class="sd">            &gt;&gt;&gt; print(string)</span>
-<span class="sd">            dict(</span>
-<span class="sd">                {</span>
-<span class="sd">                    &#39;score&#39;: &#39;&#39;,</span>
-<span class="sd">                    &#39;staff&#39;: &#39;&#39;,</span>
-<span class="sd">                    &#39;staff group&#39;: &#39;&#39;,</span>
-<span class="sd">                    &#39;voice&#39;: &quot;Voice-&#39;Music_Voice&#39;&quot;,</span>
-<span class="sd">                    }</span>
-<span class="sd">                )</span>
+<span class="sd">            &gt;&gt;&gt; abjad.get.parentage(container_1[0]).logical_voice()</span>
+<span class="sd">            {&#39;score&#39;: &#39;&#39;, &#39;staff group&#39;: &#39;&#39;, &#39;staff&#39;: &#39;&#39;, &#39;voice&#39;: &quot;Voice-&#39;Music_Voice&#39;&quot;}</span>
 
-<span class="sd">            &gt;&gt;&gt; lv = abjad.get.parentage(container_2).logical_voice()</span>
-<span class="sd">            &gt;&gt;&gt; string = abjad.storage(lv)</span>
-<span class="sd">            &gt;&gt;&gt; print(string)</span>
-<span class="sd">            dict(</span>
-<span class="sd">                {</span>
-<span class="sd">                    &#39;score&#39;: &#39;&#39;,</span>
-<span class="sd">                    &#39;staff&#39;: &#39;&#39;,</span>
-<span class="sd">                    &#39;staff group&#39;: &#39;&#39;,</span>
-<span class="sd">                    &#39;voice&#39;: &quot;Voice-&#39;Music_Voice&#39;&quot;,</span>
-<span class="sd">                    }</span>
-<span class="sd">                )</span>
+<span class="sd">            &gt;&gt;&gt; abjad.get.parentage(container_2).logical_voice()</span>
+<span class="sd">            {&#39;score&#39;: &#39;&#39;, &#39;staff group&#39;: &#39;&#39;, &#39;staff&#39;: &#39;&#39;, &#39;voice&#39;: &quot;Voice-&#39;Music_Voice&#39;&quot;}</span>
 
-<span class="sd">            &gt;&gt;&gt; lv = abjad.get.parentage(container_2[0]).logical_voice()</span>
-<span class="sd">            &gt;&gt;&gt; string = abjad.storage(lv)</span>
-<span class="sd">            &gt;&gt;&gt; print(string)</span>
-<span class="sd">            dict(</span>
-<span class="sd">                {</span>
-<span class="sd">                    &#39;score&#39;: &#39;&#39;,</span>
-<span class="sd">                    &#39;staff&#39;: &#39;&#39;,</span>
-<span class="sd">                    &#39;staff group&#39;: &#39;&#39;,</span>
-<span class="sd">                    &#39;voice&#39;: &quot;Voice-&#39;Music_Voice&#39;&quot;,</span>
-<span class="sd">                    }</span>
-<span class="sd">                )</span>
+<span class="sd">            &gt;&gt;&gt; abjad.get.parentage(container_2[0]).logical_voice()</span>
+<span class="sd">            {&#39;score&#39;: &#39;&#39;, &#39;staff group&#39;: &#39;&#39;, &#39;staff&#39;: &#39;&#39;, &#39;voice&#39;: &quot;Voice-&#39;Music_Voice&#39;&quot;}</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">keys</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;score&quot;</span><span class="p">,</span> <span class="s2">&quot;staff group&quot;</span><span class="p">,</span> <span class="s2">&quot;staff&quot;</span><span class="p">,</span> <span class="s2">&quot;voice&quot;</span><span class="p">)</span>
@@ -1573,12 +1516,12 @@
 <span class="sd">                    }</span>
 <span class="sd">                &gt;&gt;</span>
 
-<span class="sd">            &gt;&gt;&gt; for component in abjad.select(score).components():</span>
+<span class="sd">            &gt;&gt;&gt; for component in abjad.select.components(score):</span>
 <span class="sd">            ...     parentage = abjad.get.parentage(component)</span>
 <span class="sd">            ...     component, parentage.score_index()</span>
 <span class="sd">            ...</span>
-<span class="sd">            (&lt;Score&lt;&lt;2&gt;&gt;&gt;, ())</span>
-<span class="sd">            (&lt;Staff{1}&gt;, (0,))</span>
+<span class="sd">            (Score(&quot;{ { 2/3 c&#39;&#39;2 b&#39;2 a&#39;2 } } { c&#39;2 d&#39;2 }&quot;, simultaneous=True), ())</span>
+<span class="sd">            (Staff(&quot;{ 2/3 c&#39;&#39;2 b&#39;2 a&#39;2 }&quot;), (0,))</span>
 <span class="sd">            (Tuplet(&#39;3:2&#39;, &quot;c&#39;&#39;2 b&#39;2 a&#39;2&quot;), (0, 0))</span>
 <span class="sd">            (Note(&quot;c&#39;&#39;2&quot;), (0, 0, 0))</span>
 <span class="sd">            (Note(&quot;b&#39;2&quot;), (0, 0, 1))</span>
@@ -1655,17 +1598,17 @@
 <span class="sd">                    }</span>
 <span class="sd">                }</span>
 
-<span class="sd">            &gt;&gt;&gt; for component in abjad.select(staff).components():</span>
+<span class="sd">            &gt;&gt;&gt; for component in abjad.select.components(staff):</span>
 <span class="sd">            ...     parentage = abjad.get.parentage(component)</span>
 <span class="sd">            ...     score_index = parentage.score_index()</span>
 <span class="sd">            ...     print(f&quot;{repr(component):30} {repr(score_index)}&quot;)</span>
-<span class="sd">            &lt;Staff{1}&gt;                     ()</span>
-<span class="sd">            &lt;Voice-&quot;Music_Voice&quot;{4}&gt;       (0,)</span>
+<span class="sd">            Staff(&quot;{ c&#39;4 d&#39;4 { { &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 } } f&#39;4 }&quot;) ()</span>
+<span class="sd">            Voice(&quot;c&#39;4 d&#39;4 { { &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 } } f&#39;4&quot;, name=&#39;Music_Voice&#39;) (0,)</span>
 <span class="sd">            Note(&quot;c&#39;4&quot;)                    (0, 0)</span>
-<span class="sd">            BeforeGraceContainer(&quot;cs&#39;16&quot;)        (0, 0, 1, &#39;-G&#39;)</span>
+<span class="sd">            BeforeGraceContainer(&quot;cs&#39;16&quot;)  (0, 0, 1, &#39;-G&#39;)</span>
 <span class="sd">            Note(&quot;cs&#39;16&quot;)                  (0, 0, 1, &#39;-G&#39;, 0)</span>
 <span class="sd">            Note(&quot;d&#39;4&quot;)                    (0, 1)</span>
-<span class="sd">            &lt;&lt;&lt;2&gt;&gt;&gt;                        (0, 2)</span>
+<span class="sd">            Container(&quot;{ &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 }&quot;) (0, 2)</span>
 <span class="sd">            OnBeatGraceContainer(&quot;&lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16&quot;) (0, 2, 0)</span>
 <span class="sd">            Chord(&quot;&lt;e&#39; g&#39;&gt;16&quot;)             (0, 2, 0, 0)</span>
 <span class="sd">            Note(&quot;gs&#39;16&quot;)                  (0, 2, 0, 1)</span>

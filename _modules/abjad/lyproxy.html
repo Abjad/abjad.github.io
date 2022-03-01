@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>abjad.lyproxy &mdash; Abjad 3.5 documentation</title>
+  <title>abjad.lyproxy &mdash; Abjad 3.6 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/abjad.css" type="text/css" />
@@ -32,11 +32,11 @@
   <div class="wy-grid-for-nav">
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search"  style="background: #00ff55" >
+        <div class="wy-side-nav-search"  style="background: #00dd00" >
 
 
     <a href="../../index.html" class="icon icon-home" alt="Documentation
-    Home"> Abjad 3.5
+    Home"> Abjad 3.6
 
 
 
@@ -110,7 +110,7 @@
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #00ff55" >
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #00dd00" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../index.html">Abjad</a>
       </nav>
@@ -128,7 +128,6 @@
   <h1>Source code for abjad.lyproxy</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">typing</span>
 
-<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="nb">format</span> <span class="k">as</span> <span class="n">_format</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">lyenv</span> <span class="k">as</span> <span class="n">_lyenv</span>
 
 
@@ -139,11 +138,8 @@
 <span class="sd">    ..  container:: example</span>
 
 <span class="sd">        &gt;&gt;&gt; context = abjad.LilyPondContext(&#39;MensuralStaff&#39;)</span>
-<span class="sd">        &gt;&gt;&gt; string = abjad.storage(context)</span>
-<span class="sd">        &gt;&gt;&gt; print(string)</span>
-<span class="sd">        abjad.LilyPondContext(</span>
-<span class="sd">            name=&#39;MensuralStaff&#39;,</span>
-<span class="sd">            )</span>
+<span class="sd">        &gt;&gt;&gt; context</span>
+<span class="sd">        LilyPondContext(name=&#39;MensuralStaff&#39;)</span>
 
 <span class="sd">        &gt;&gt;&gt; for lilypond_context in abjad.LilyPondContext.list_all_contexts():</span>
 <span class="sd">        ...     is_global_context = &#39;X&#39; if lilypond_context.is_global_context else &#39; &#39;</span>
@@ -222,9 +218,9 @@
 
 <div class="viewcode-block" id="LilyPondContext.__repr__"><a class="viewcode-back" href="../../api/abjad/lyproxy.html#abjad.lyproxy.LilyPondContext.__repr__">[docs]</a>    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Gets interpreter representation.</span>
+<span class="sd">        Gets repr.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">_format</span><span class="o">.</span><span class="n">get_repr</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">(name=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">!r}</span><span class="s2">)&quot;</span></div>
 
     <span class="c1">### PUBLIC PROPERTIES ###</span>
 
@@ -1071,10 +1067,8 @@
 <span class="sd">            ...     name=&#39;BowingStaff&#39;,</span>
 <span class="sd">            ...     removes=[&#39;Note_heads_engraver&#39;],</span>
 <span class="sd">            ...     )</span>
-<span class="sd">            &gt;&gt;&gt; print(abjad.storage(custom_context))</span>
-<span class="sd">            abjad.LilyPondContext(</span>
-<span class="sd">                name=&#39;BowingStaff&#39;,</span>
-<span class="sd">                )</span>
+<span class="sd">            &gt;&gt;&gt; custom_context</span>
+<span class="sd">            LilyPondContext(name=&#39;BowingStaff&#39;)</span>
 
 <span class="sd">            &gt;&gt;&gt; custom_context.is_custom</span>
 <span class="sd">            True</span>
@@ -1262,11 +1256,8 @@
 
 <span class="sd">    ..  container:: example</span>
 
-<span class="sd">        &gt;&gt;&gt; engraver = abjad.LilyPondEngraver(&#39;Auto_beam_engraver&#39;)</span>
-<span class="sd">        &gt;&gt;&gt; print(abjad.storage(engraver))</span>
-<span class="sd">        abjad.LilyPondEngraver(</span>
-<span class="sd">            name=&#39;Auto_beam_engraver&#39;,</span>
-<span class="sd">            )</span>
+<span class="sd">        &gt;&gt;&gt; abjad.LilyPondEngraver(&#39;Auto_beam_engraver&#39;)</span>
+<span class="sd">        LilyPondEngraver(name=&#39;Auto_beam_engraver&#39;)</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -1294,9 +1285,9 @@
 
 <div class="viewcode-block" id="LilyPondEngraver.__repr__"><a class="viewcode-back" href="../../api/abjad/lyproxy.html#abjad.lyproxy.LilyPondEngraver.__repr__">[docs]</a>    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Gets interpreter representation.</span>
+<span class="sd">        Gets repr.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">_format</span><span class="o">.</span><span class="n">get_repr</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">(name=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">!r}</span><span class="s2">)&quot;</span></div>
 
     <span class="c1">### PUBLIC METHODS ###</span>
 
@@ -1517,11 +1508,8 @@
 
 <span class="sd">    ..  container:: example</span>
 
-<span class="sd">        &gt;&gt;&gt; grob = abjad.LilyPondGrob(&#39;Beam&#39;)</span>
-<span class="sd">        &gt;&gt;&gt; print(abjad.storage(grob))</span>
-<span class="sd">        abjad.LilyPondGrob(</span>
-<span class="sd">            name=&#39;Beam&#39;,</span>
-<span class="sd">            )</span>
+<span class="sd">        &gt;&gt;&gt; abjad.LilyPondGrob(&#39;Beam&#39;)</span>
+<span class="sd">        LilyPondGrob(name=&#39;Beam&#39;)</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -1549,9 +1537,9 @@
 
 <div class="viewcode-block" id="LilyPondGrob.__repr__"><a class="viewcode-back" href="../../api/abjad/lyproxy.html#abjad.lyproxy.LilyPondGrob.__repr__">[docs]</a>    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Gets interpreter representation.</span>
+<span class="sd">        Gets repr.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">_format</span><span class="o">.</span><span class="n">get_repr</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">(name=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">!r}</span><span class="s2">)&quot;</span></div>
 
     <span class="c1">### PUBLIC PROPERTIES ###</span>
 
@@ -1837,11 +1825,8 @@
 
 <span class="sd">    ..  container:: example</span>
 
-<span class="sd">        &gt;&gt;&gt; interface = abjad.LilyPondGrobInterface(&#39;beam-interface&#39;)</span>
-<span class="sd">        &gt;&gt;&gt; print(abjad.storage(interface))</span>
-<span class="sd">        abjad.LilyPondGrobInterface(</span>
-<span class="sd">            name=&#39;beam-interface&#39;,</span>
-<span class="sd">            )</span>
+<span class="sd">        &gt;&gt;&gt; abjad.LilyPondGrobInterface(&#39;beam-interface&#39;)</span>
+<span class="sd">        LilyPondGrobInterface(name=&#39;beam-interface&#39;)</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -1871,9 +1856,9 @@
 
 <div class="viewcode-block" id="LilyPondGrobInterface.__repr__"><a class="viewcode-back" href="../../api/abjad/lyproxy.html#abjad.lyproxy.LilyPondGrobInterface.__repr__">[docs]</a>    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Gets interpreter representation.</span>
+<span class="sd">        Gets repr.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">_format</span><span class="o">.</span><span class="n">get_repr</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">(name=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">!r}</span><span class="s2">)&quot;</span></div>
 
     <span class="c1">### PUBLIC METHODS ###</span>
 

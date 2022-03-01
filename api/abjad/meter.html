@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>meter &mdash; Abjad 3.5 documentation</title>
+  <title>meter &mdash; Abjad 3.6 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/abjad.css" type="text/css" />
@@ -35,11 +35,11 @@
   <div class="wy-grid-for-nav">
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search"  style="background: #00ff55" >
+        <div class="wy-side-nav-search"  style="background: #00dd00" >
 
 
     <a href="../../index.html" class="icon icon-home" alt="Documentation
-    Home"> Abjad 3.5
+    Home"> Abjad 3.6
 
 
 
@@ -113,7 +113,7 @@
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #00ff55" >
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #00dd00" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../index.html">Abjad</a>
       </nav>
@@ -521,7 +521,7 @@ means that <code class="docutils literal notranslate"><span class="pre">5</span>
 <td><p>Iterates meter.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#abjad.meter.Meter.__repr__" title="abjad.meter.Meter.__repr__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__repr__</span></code></a></p></td>
-<td><p>Gets interpreter representation.</p></td>
+<td><p>Gets repr.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#abjad.meter.Meter.__str__" title="abjad.meter.Meter.__str__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__str__</span></code></a></p></td>
 <td><p>Gets string representation of meter.</p></td>
@@ -633,7 +633,7 @@ means that <code class="docutils literal notranslate"><span class="pre">5</span>
 <dl class="py method">
 <dt class="sig sig-object py" id="abjad.meter.Meter.__repr__">
 <em class="property"><span class="pre">overridden</span> </em><span class="sig-name descname"><span class="pre">__repr__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/abjad/meter.html#Meter.__repr__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#abjad.meter.Meter.__repr__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets interpreter representation.</p>
+<dd><p>Gets repr.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.10/library/stdtypes.html#str" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></p>
@@ -698,9 +698,53 @@ given meter.</p>
 <p>Returns dictionary.</p>
 </dd></dl>
 
+<hr/><p class="class-header rubric">Class &amp; static methods</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="abjad.meter.Meter.fit_meters">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">fit_meters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">argument</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">meters</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">denominator</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">32</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">discard_final_orphan_downbeat</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maximum_run_length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">starting_offset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/abjad/meter.html#Meter.fit_meters"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#abjad.meter.Meter.fit_meters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Finds the best-matching sequence of meters for the offsets contained in
+<code class="docutils literal notranslate"><span class="pre">argument</span></code>.</p>
+<div class="example docutils container">
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">meters</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">)]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">meters</span> <span class="o">=</span> <span class="p">[</span><span class="n">abjad</span><span class="o">.</span><span class="n">Meter</span><span class="p">(</span><span class="n">_</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">meters</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="example docutils container">
+<p>Matches a series of hypothetical <code class="docutils literal notranslate"><span class="pre">4/4</span></code> measures:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">argument</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">4</span><span class="p">)]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">meter</span> <span class="ow">in</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Meter</span><span class="o">.</span><span class="n">fit_meters</span><span class="p">(</span><span class="n">argument</span><span class="p">,</span> <span class="n">meters</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="n">meter</span><span class="o">.</span><span class="n">implied_time_signature</span><span class="p">)</span>
+<span class="gp">... </span>
+<span class="go">4/4</span>
+<span class="go">4/4</span>
+<span class="go">4/4</span>
+<span class="go">4/4</span>
+</pre></div>
+</div>
+</div>
+<div class="example docutils container">
+<p>Matches a series of hypothetical <code class="docutils literal notranslate"><span class="pre">5/4</span></code> measures:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">argument</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">4</span><span class="p">)]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">meter</span> <span class="ow">in</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Meter</span><span class="o">.</span><span class="n">fit_meters</span><span class="p">(</span><span class="n">argument</span><span class="p">,</span> <span class="n">meters</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="n">meter</span><span class="o">.</span><span class="n">implied_time_signature</span><span class="p">)</span>
+<span class="gp">... </span>
+<span class="go">3/4</span>
+<span class="go">4/4</span>
+<span class="go">3/4</span>
+<span class="go">5/4</span>
+<span class="go">5/4</span>
+</pre></div>
+</div>
+</div>
+<p>Coerces offsets from <code class="docutils literal notranslate"><span class="pre">argument</span></code> via <code class="docutils literal notranslate"><span class="pre">MetricAccentKernel.count_offsets()</span></code>.</p>
+<p>Coerces Meters from <code class="docutils literal notranslate"><span class="pre">meters</span></code> via <code class="docutils literal notranslate"><span class="pre">MeterList</span></code>.</p>
+<p>Returns list.</p>
+</dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="abjad.meter.Meter.rewrite_meter">
-<span class="sig-name descname"><span class="pre">rewrite_meter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">meter</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">boundary_depth</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initial_offset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maximum_dot_count</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rewrite_tuplets</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/abjad/meter.html#Meter.rewrite_meter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#abjad.meter.Meter.rewrite_meter" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">rewrite_meter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">components</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">meter</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">boundary_depth</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initial_offset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maximum_dot_count</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rewrite_tuplets</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/abjad/meter.html#Meter.rewrite_meter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#abjad.meter.Meter.rewrite_meter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Rewrites the contents of logical ties in an expression to match <code class="docutils literal notranslate"><span class="pre">meter</span></code>.</p>
 <div class="example docutils container">
 <p>Rewrites the contents of a measure in a staff using the default meter for
@@ -1092,50 +1136,6 @@ adjustment.</p>
 <p>Operates in place and returns none.</p>
 </dd></dl>
 
-<hr/><p class="class-header rubric">Class &amp; static methods</p>
-<dl class="py method">
-<dt class="sig sig-object py" id="abjad.meter.Meter.fit_meters">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">fit_meters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">argument</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">meters</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">denominator</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">32</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">discard_final_orphan_downbeat</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maximum_run_length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">starting_offset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/abjad/meter.html#Meter.fit_meters"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#abjad.meter.Meter.fit_meters" title="Permalink to this definition">¶</a></dt>
-<dd><p>Finds the best-matching sequence of meters for the offsets contained in
-<code class="docutils literal notranslate"><span class="pre">argument</span></code>.</p>
-<div class="example docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">meters</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">)]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">meters</span> <span class="o">=</span> <span class="p">[</span><span class="n">abjad</span><span class="o">.</span><span class="n">Meter</span><span class="p">(</span><span class="n">_</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">meters</span><span class="p">]</span>
-</pre></div>
-</div>
-</div>
-<div class="example docutils container">
-<p>Matches a series of hypothetical <code class="docutils literal notranslate"><span class="pre">4/4</span></code> measures:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">argument</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">4</span><span class="p">)]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">meter</span> <span class="ow">in</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Meter</span><span class="o">.</span><span class="n">fit_meters</span><span class="p">(</span><span class="n">argument</span><span class="p">,</span> <span class="n">meters</span><span class="p">):</span>
-<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="n">meter</span><span class="o">.</span><span class="n">implied_time_signature</span><span class="p">)</span>
-<span class="gp">... </span>
-<span class="go">4/4</span>
-<span class="go">4/4</span>
-<span class="go">4/4</span>
-<span class="go">4/4</span>
-</pre></div>
-</div>
-</div>
-<div class="example docutils container">
-<p>Matches a series of hypothetical <code class="docutils literal notranslate"><span class="pre">5/4</span></code> measures:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">argument</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">4</span><span class="p">)]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">meter</span> <span class="ow">in</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Meter</span><span class="o">.</span><span class="n">fit_meters</span><span class="p">(</span><span class="n">argument</span><span class="p">,</span> <span class="n">meters</span><span class="p">):</span>
-<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="n">meter</span><span class="o">.</span><span class="n">implied_time_signature</span><span class="p">)</span>
-<span class="gp">... </span>
-<span class="go">3/4</span>
-<span class="go">4/4</span>
-<span class="go">3/4</span>
-<span class="go">5/4</span>
-<span class="go">5/4</span>
-</pre></div>
-</div>
-</div>
-<p>Coerces offsets from <code class="docutils literal notranslate"><span class="pre">argument</span></code> via <code class="docutils literal notranslate"><span class="pre">MetricAccentKernel.count_offsets()</span></code>.</p>
-<p>Coerces Meters from <code class="docutils literal notranslate"><span class="pre">meters</span></code> via <code class="docutils literal notranslate"><span class="pre">MeterList</span></code>.</p>
-<p>Returns list.</p>
-</dd></dl>
-
 <hr/><p class="class-header rubric">Read-only properties</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abjad.meter.Meter.denominator">
@@ -1454,55 +1454,12 @@ greatest:</p>
 <dd><p>Gets root node of meter.</p>
 <div class="example docutils container">
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">meter</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Meter</span><span class="p">((</span><span class="mi">7</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">abjad</span><span class="o">.</span><span class="n">storage</span><span class="p">(</span><span class="n">meter</span><span class="o">.</span><span class="n">root_node</span><span class="p">))</span>
-<span class="go">abjad.rhythmtrees.RhythmTreeContainer(</span>
-<span class="go">    children=(</span>
-<span class="go">        abjad.rhythmtrees.RhythmTreeContainer(</span>
-<span class="go">            children=(</span>
-<span class="go">                abjad.rhythmtrees.RhythmTreeLeaf(</span>
-<span class="go">                    preprolated_duration=abjad.Duration(1, 4),</span>
-<span class="go">                    is_pitched=True,</span>
-<span class="go">                    ),</span>
-<span class="go">                abjad.rhythmtrees.RhythmTreeLeaf(</span>
-<span class="go">                    preprolated_duration=abjad.Duration(1, 4),</span>
-<span class="go">                    is_pitched=True,</span>
-<span class="go">                    ),</span>
-<span class="go">                abjad.rhythmtrees.RhythmTreeLeaf(</span>
-<span class="go">                    preprolated_duration=abjad.Duration(1, 4),</span>
-<span class="go">                    is_pitched=True,</span>
-<span class="go">                    ),</span>
-<span class="go">                ),</span>
-<span class="go">            preprolated_duration=abjad.NonreducedFraction(3, 4),</span>
-<span class="go">            ),</span>
-<span class="go">        abjad.rhythmtrees.RhythmTreeContainer(</span>
-<span class="go">            children=(</span>
-<span class="go">                abjad.rhythmtrees.RhythmTreeLeaf(</span>
-<span class="go">                    preprolated_duration=abjad.Duration(1, 4),</span>
-<span class="go">                    is_pitched=True,</span>
-<span class="go">                    ),</span>
-<span class="go">                abjad.rhythmtrees.RhythmTreeLeaf(</span>
-<span class="go">                    preprolated_duration=abjad.Duration(1, 4),</span>
-<span class="go">                    is_pitched=True,</span>
-<span class="go">                    ),</span>
-<span class="go">                ),</span>
-<span class="go">            preprolated_duration=abjad.NonreducedFraction(2, 4),</span>
-<span class="go">            ),</span>
-<span class="go">        abjad.rhythmtrees.RhythmTreeContainer(</span>
-<span class="go">            children=(</span>
-<span class="go">                abjad.rhythmtrees.RhythmTreeLeaf(</span>
-<span class="go">                    preprolated_duration=abjad.Duration(1, 4),</span>
-<span class="go">                    is_pitched=True,</span>
-<span class="go">                    ),</span>
-<span class="go">                abjad.rhythmtrees.RhythmTreeLeaf(</span>
-<span class="go">                    preprolated_duration=abjad.Duration(1, 4),</span>
-<span class="go">                    is_pitched=True,</span>
-<span class="go">                    ),</span>
-<span class="go">                ),</span>
-<span class="go">            preprolated_duration=abjad.NonreducedFraction(2, 4),</span>
-<span class="go">            ),</span>
-<span class="go">        ),</span>
-<span class="go">    preprolated_duration=abjad.NonreducedFraction(7, 4),</span>
-<span class="go">    )</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">meter</span><span class="o">.</span><span class="n">root_node</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="n">_</span>
+<span class="gp">... </span>
+<span class="go">RhythmTreeContainer((3, 4))</span>
+<span class="go">RhythmTreeContainer((2, 4))</span>
+<span class="go">RhythmTreeContainer((2, 4))</span>
 </pre></div>
 </div>
 </div>
@@ -1530,30 +1487,13 @@ greatest:</p>
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">abjad.meter.</span></span><span class="sig-name descname"><span class="pre">MeterList</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">items</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">item_class</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">keep_sorted</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/abjad/meter.html#MeterList"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#abjad.meter.MeterList" title="Permalink to this definition">¶</a></dt>
 <dd><p>Meter list.</p>
 <div class="example docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">meters</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">MeterList</span><span class="p">(</span>
-<span class="gp">... </span>    <span class="p">[</span>
-<span class="gp">... </span>        <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span>
-<span class="gp">... </span>        <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">16</span><span class="p">),</span>
-<span class="gp">... </span>        <span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">),</span>
-<span class="gp">... </span>    <span class="p">]</span>
-<span class="gp">... </span><span class="p">)</span>
-</pre></div>
-</div>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">string</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">storage</span><span class="p">(</span><span class="n">meters</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
-<span class="go">abjad.MeterList(</span>
-<span class="go">    [</span>
-<span class="go">        abjad.Meter(</span>
-<span class="go">            &#39;(3/4 (1/4 1/4 1/4))&#39;</span>
-<span class="go">            ),</span>
-<span class="go">        abjad.Meter(</span>
-<span class="go">            &#39;(5/16 ((3/16 (1/16 1/16 1/16)) (2/16 (1/16 1/16))))&#39;</span>
-<span class="go">            ),</span>
-<span class="go">        abjad.Meter(</span>
-<span class="go">            &#39;(7/8 ((3/8 (1/8 1/8 1/8)) (2/8 (1/8 1/8)) (2/8 (1/8 1/8))))&#39;</span>
-<span class="go">            ),</span>
-<span class="go">        ]</span>
-<span class="go">    )</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">meters</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">MeterList</span><span class="p">([(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">16</span><span class="p">),</span> <span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">)])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">meters</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="n">_</span>
+<span class="gp">... </span>
+<span class="go">Meter(&#39;(3/4 (1/4 1/4 1/4))&#39;)</span>
+<span class="go">Meter(&#39;(5/16 ((3/16 (1/16 1/16 1/16)) (2/16 (1/16 1/16))))&#39;)</span>
+<span class="go">Meter(&#39;(7/8 ((3/8 (1/8 1/8 1/8)) (2/8 (1/8 1/8)) (2/8 (1/8 1/8))))&#39;)</span>
 </pre></div>
 </div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">lilypond_file</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">meter</span><span class="o">.</span><span class="n">illustrate_meter_list</span><span class="p">(</span><span class="n">meters</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
@@ -1563,6 +1503,21 @@ greatest:</p>
 <div class="uqbar-book">
     <a href="../../_images/lilypond-644148da084c4b231b6b2fd240581f17c54b71df99c0e85a2f9b023d92fcca98.ly"><img src="../../_images/lilypond-644148da084c4b231b6b2fd240581f17c54b71df99c0e85a2f9b023d92fcca98.cropped.svg"/></a>
 </div></div>
+<hr/><p class="class-header rubric">Attributes Summary</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#abjad.meter.MeterList.__eq__" title="abjad.meter.MeterList.__eq__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__eq__</span></code></a></p></td>
+<td><p>Compares <code class="docutils literal notranslate"><span class="pre">items</span></code>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#abjad.meter.MeterList.__repr__" title="abjad.meter.MeterList.__repr__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__repr__</span></code></a></p></td>
+<td><p>Return repr(self).</p></td>
+</tr>
+</tbody>
+</table>
 <hr/><p class="class-header rubric">Special methods</p>
 <div class="inherited docutils container">
 <dl class="py method">
@@ -1591,30 +1546,18 @@ greatest:</p>
 </dd></dl>
 
 </div>
-<div class="inherited docutils container">
 <dl class="py method">
 <dt class="sig sig-object py" id="abjad.meter.MeterList.__eq__">
-<span class="sig-prename descclassname"><span class="pre">(</span><a class="reference internal" href="typedcollections.html#abjad.typedcollections.TypedCollection" title="abjad.typedcollections.TypedCollection"><code class="descclassname docutils literal notranslate"><span class="pre">TypedCollection</span></code></a><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">__eq__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">argument</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abjad.meter.MeterList.__eq__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Is true when <code class="docutils literal notranslate"><span class="pre">argument</span></code> is a typed collection with items that
-compare equal to those of this typed collection.</p>
-<p>Returns true or false.</p>
+<em class="property"><span class="pre">overridden</span> </em><span class="sig-name descname"><span class="pre">__eq__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abjad.meter.MeterList.__eq__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compares <code class="docutils literal notranslate"><span class="pre">items</span></code>.</p>
 </dd></dl>
 
-</div>
 <div class="inherited docutils container">
 <dl class="py method">
 <dt class="sig sig-object py" id="abjad.meter.MeterList.__getitem__">
 <span class="sig-prename descclassname"><span class="pre">(</span><a class="reference internal" href="typedcollections.html#abjad.typedcollections.TypedList" title="abjad.typedcollections.TypedList"><code class="descclassname docutils literal notranslate"><span class="pre">TypedList</span></code></a><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">__getitem__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">argument</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abjad.meter.MeterList.__getitem__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets item or slice identified  by <code class="docutils literal notranslate"><span class="pre">argument</span></code>.</p>
 <p>Returns item or slice.</p>
-</dd></dl>
-
-</div>
-<div class="inherited docutils container">
-<dl class="py method">
-<dt class="sig sig-object py" id="abjad.meter.MeterList.__hash__">
-<span class="sig-prename descclassname"><span class="pre">(</span><a class="reference internal" href="typedcollections.html#abjad.typedcollections.TypedCollection" title="abjad.typedcollections.TypedCollection"><code class="descclassname docutils literal notranslate"><span class="pre">TypedCollection</span></code></a><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">__hash__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjad.meter.MeterList.__hash__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Hashes typed collection.</p>
 </dd></dl>
 
 </div>
@@ -1629,18 +1572,8 @@ compare equal to those of this typed collection.</p>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">dynamic_list</span> <span class="o">+=</span> <span class="p">[</span><span class="s2">&quot;p&quot;</span><span class="p">,</span> <span class="s2">&quot;mp&quot;</span><span class="p">,</span> <span class="s2">&quot;mf&quot;</span><span class="p">,</span> <span class="s2">&quot;fff&quot;</span><span class="p">]</span>
 </pre></div>
 </div>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">string</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">storage</span><span class="p">(</span><span class="n">dynamic_list</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
-<span class="go">abjad.TypedList(</span>
-<span class="go">    [</span>
-<span class="go">        Dynamic(name=&#39;ppp&#39;, command=None, direction=None, format_hairpin_stop=False, hide=False, leak=False, name_is_textual=False, ordinal=-4, tweaks=None),</span>
-<span class="go">        Dynamic(name=&#39;p&#39;, command=None, direction=None, format_hairpin_stop=False, hide=False, leak=False, name_is_textual=False, ordinal=-2, tweaks=None),</span>
-<span class="go">        Dynamic(name=&#39;mp&#39;, command=None, direction=None, format_hairpin_stop=False, hide=False, leak=False, name_is_textual=False, ordinal=-1, tweaks=None),</span>
-<span class="go">        Dynamic(name=&#39;mf&#39;, command=None, direction=None, format_hairpin_stop=False, hide=False, leak=False, name_is_textual=False, ordinal=1, tweaks=None),</span>
-<span class="go">        Dynamic(name=&#39;fff&#39;, command=None, direction=None, format_hairpin_stop=False, hide=False, leak=False, name_is_textual=False, ordinal=4, tweaks=None),</span>
-<span class="go">        ],</span>
-<span class="go">    item_class=abjad.Dynamic,</span>
-<span class="go">    )</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">dynamic_list</span>
+<span class="go">TypedList(items=[Dynamic(name=&#39;ppp&#39;, command=None, direction=None, format_hairpin_stop=False, hide=False, leak=False, name_is_textual=False, ordinal=-4, tweaks=None), Dynamic(name=&#39;p&#39;, command=None, direction=None, format_hairpin_stop=False, hide=False, leak=False, name_is_textual=False, ordinal=-2, tweaks=None), Dynamic(name=&#39;mp&#39;, command=None, direction=None, format_hairpin_stop=False, hide=False, leak=False, name_is_textual=False, ordinal=-1, tweaks=None), Dynamic(name=&#39;mf&#39;, command=None, direction=None, format_hairpin_stop=False, hide=False, leak=False, name_is_textual=False, ordinal=1, tweaks=None), Dynamic(name=&#39;fff&#39;, command=None, direction=None, format_hairpin_stop=False, hide=False, leak=False, name_is_textual=False, ordinal=4, tweaks=None)], item_class=&lt;class &#39;abjad.dynamic.Dynamic&#39;&gt;, keep_sorted=False)</span>
 </pre></div>
 </div>
 </div>
@@ -1668,17 +1601,17 @@ compare equal to those of this typed collection.</p>
 </div>
 <div class="inherited docutils container">
 <dl class="py method">
-<dt class="sig sig-object py" id="abjad.meter.MeterList.__repr__">
-<span class="sig-prename descclassname"><span class="pre">(</span><a class="reference internal" href="typedcollections.html#abjad.typedcollections.TypedCollection" title="abjad.typedcollections.TypedCollection"><code class="descclassname docutils literal notranslate"><span class="pre">TypedCollection</span></code></a><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">__repr__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjad.meter.MeterList.__repr__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets interpreter representation.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.10/library/stdtypes.html#str" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></p>
-</dd>
-</dl>
-</dd></dl>
+<dt class="sig sig-object py" id="abjad.meter.MeterList.__post_init__">
+<span class="sig-prename descclassname"><span class="pre">(</span><a class="reference internal" href="typedcollections.html#abjad.typedcollections.TypedList" title="abjad.typedcollections.TypedList"><code class="descclassname docutils literal notranslate"><span class="pre">TypedList</span></code></a><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">__post_init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjad.meter.MeterList.__post_init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </div>
+<dl class="py method">
+<dt class="sig sig-object py" id="abjad.meter.MeterList.__repr__">
+<em class="property"><span class="pre">overridden</span> </em><span class="sig-name descname"><span class="pre">__repr__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjad.meter.MeterList.__repr__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return repr(self).</p>
+</dd></dl>
+
 <div class="inherited docutils container">
 <dl class="py method">
 <dt class="sig sig-object py" id="abjad.meter.MeterList.__reversed__">
@@ -1705,38 +1638,16 @@ compare equal to those of this typed collection.</p>
 </pre></div>
 </div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">pitch_list</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;gqs,&quot;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">string</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">storage</span><span class="p">(</span><span class="n">pitch_list</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
-<span class="go">abjad.TypedList(</span>
-<span class="go">    [</span>
-<span class="go">        abjad.NamedPitch(&quot;c&#39;&quot;),</span>
-<span class="go">        abjad.NamedPitch(&quot;d&#39;&quot;),</span>
-<span class="go">        abjad.NamedPitch(&quot;e&#39;&quot;),</span>
-<span class="go">        abjad.NamedPitch(&#39;gqs,&#39;),</span>
-<span class="go">        ],</span>
-<span class="go">    item_class=abjad.NamedPitch,</span>
-<span class="go">    )</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pitch_list</span>
+<span class="go">TypedList(items=[NamedPitch(&quot;c&#39;&quot;), NamedPitch(&quot;d&#39;&quot;), NamedPitch(&quot;e&#39;&quot;), NamedPitch(&#39;gqs,&#39;)], item_class=&lt;class &#39;abjad.pitch.NamedPitch&#39;&gt;, keep_sorted=False)</span>
 </pre></div>
 </div>
 </div>
 <div class="example docutils container">
 <p>Sets slice:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">pitch_list</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">:]</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;f&#39;&quot;</span><span class="p">,</span> <span class="s2">&quot;g&#39;&quot;</span><span class="p">,</span> <span class="s2">&quot;a&#39;&quot;</span><span class="p">,</span> <span class="s2">&quot;b&#39;&quot;</span><span class="p">,</span> <span class="s2">&quot;c&#39;&#39;&quot;</span><span class="p">]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">string</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">storage</span><span class="p">(</span><span class="n">pitch_list</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
-<span class="go">abjad.TypedList(</span>
-<span class="go">    [</span>
-<span class="go">        abjad.NamedPitch(&quot;c&#39;&quot;),</span>
-<span class="go">        abjad.NamedPitch(&quot;d&#39;&quot;),</span>
-<span class="go">        abjad.NamedPitch(&quot;e&#39;&quot;),</span>
-<span class="go">        abjad.NamedPitch(&quot;f&#39;&quot;),</span>
-<span class="go">        abjad.NamedPitch(&quot;g&#39;&quot;),</span>
-<span class="go">        abjad.NamedPitch(&quot;a&#39;&quot;),</span>
-<span class="go">        abjad.NamedPitch(&quot;b&#39;&quot;),</span>
-<span class="go">        abjad.NamedPitch(&quot;c&#39;&#39;&quot;),</span>
-<span class="go">        ],</span>
-<span class="go">    item_class=abjad.NamedPitch,</span>
-<span class="go">    )</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pitch_list</span>
+<span class="go">TypedList(items=[NamedPitch(&quot;c&#39;&quot;), NamedPitch(&quot;d&#39;&quot;), NamedPitch(&quot;e&#39;&quot;), NamedPitch(&quot;f&#39;&quot;), NamedPitch(&quot;g&#39;&quot;), NamedPitch(&quot;a&#39;&quot;), NamedPitch(&quot;b&#39;&quot;), NamedPitch(&quot;c&#39;&#39;&quot;)], item_class=&lt;class &#39;abjad.pitch.NamedPitch&#39;&gt;, keep_sorted=False)</span>
 </pre></div>
 </div>
 </div>
@@ -1807,11 +1718,16 @@ compare equal to those of this typed collection.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">integer_list</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">TypedList</span><span class="p">(</span><span class="n">item_class</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">integer_list</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="s2">&quot;0&quot;</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mf">3.14159</span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">integer_list</span>
-<span class="go">TypedList([0, 1, 2, 3], item_class=int)</span>
+<span class="go">TypedList(items=[0, 1, 2, 3], item_class=&lt;class &#39;int&#39;&gt;, keep_sorted=False)</span>
 </pre></div>
 </div>
 </div>
 <p>Returns none.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.10/library/constants.html#None" title="(in Python v3.10)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></p>
+</dd>
+</dl>
 </dd></dl>
 
 </div>
@@ -1858,17 +1774,17 @@ compare equal to those of this typed collection.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">integer_list</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">TypedList</span><span class="p">(</span><span class="n">item_class</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">integer_list</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="s2">&quot;1&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mf">4.3</span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">integer_list</span>
-<span class="go">TypedList([1, 2, 4], item_class=int)</span>
+<span class="go">TypedList(items=[1, 2, 4], item_class=&lt;class &#39;int&#39;&gt;, keep_sorted=False)</span>
 </pre></div>
 </div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">integer_list</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;0&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">integer_list</span>
-<span class="go">TypedList([0, 1, 2, 4], item_class=int)</span>
+<span class="go">TypedList(items=[0, 1, 2, 4], item_class=&lt;class &#39;int&#39;&gt;, keep_sorted=False)</span>
 </pre></div>
 </div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">integer_list</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;9&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">integer_list</span>
-<span class="go">TypedList([0, 9, 1, 2, 4], item_class=int)</span>
+<span class="go">TypedList(items=[0, 9, 1, 2, 4], item_class=&lt;class &#39;int&#39;&gt;, keep_sorted=False)</span>
 </pre></div>
 </div>
 </div>
@@ -1923,38 +1839,6 @@ compare equal to those of this typed collection.</p>
 </dd></dl>
 
 </div>
-<hr/><p class="class-header rubric">Read/write properties</p>
-<div class="inherited docutils container">
-<dl class="py attribute">
-<dt class="sig sig-object py" id="abjad.meter.MeterList.keep_sorted">
-<span class="sig-prename descclassname"><span class="pre">(</span><a class="reference internal" href="typedcollections.html#abjad.typedcollections.TypedList" title="abjad.typedcollections.TypedList"><code class="descclassname docutils literal notranslate"><span class="pre">TypedList</span></code></a><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">keep_sorted</span></span><a class="headerlink" href="#abjad.meter.MeterList.keep_sorted" title="Permalink to this definition">¶</a></dt>
-<dd><p>Is true when typed list keeps items sorted.</p>
-<p>Defaults to none.</p>
-<p>Set to true, false or none.</p>
-<p>Returns true, false or none.</p>
-</dd></dl>
-
-</div>
-<hr/><p class="class-header rubric">Read-only properties</p>
-<div class="inherited docutils container">
-<dl class="py attribute">
-<dt class="sig sig-object py" id="abjad.meter.MeterList.item_class">
-<span class="sig-prename descclassname"><span class="pre">(</span><a class="reference internal" href="typedcollections.html#abjad.typedcollections.TypedCollection" title="abjad.typedcollections.TypedCollection"><code class="descclassname docutils literal notranslate"><span class="pre">TypedCollection</span></code></a><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">item_class</span></span><a class="headerlink" href="#abjad.meter.MeterList.item_class" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets item class of collection.</p>
-<p>Collection coerces items according to <code class="docutils literal notranslate"><span class="pre">item_class</span></code>.</p>
-<p>Returns class.</p>
-</dd></dl>
-
-</div>
-<div class="inherited docutils container">
-<dl class="py attribute">
-<dt class="sig sig-object py" id="abjad.meter.MeterList.items">
-<span class="sig-prename descclassname"><span class="pre">(</span><a class="reference internal" href="typedcollections.html#abjad.typedcollections.TypedCollection" title="abjad.typedcollections.TypedCollection"><code class="descclassname docutils literal notranslate"><span class="pre">TypedCollection</span></code></a><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">items</span></span><a class="headerlink" href="#abjad.meter.MeterList.items" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets items in collection.</p>
-<p>Returns list.</p>
-</dd></dl>
-
-</div>
 </dd></dl>
 
 <dl class="py class">
@@ -1965,18 +1849,7 @@ compare equal to those of this typed collection.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">hierarchy</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Meter</span><span class="p">((</span><span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">kernel</span> <span class="o">=</span> <span class="n">hierarchy</span><span class="o">.</span><span class="n">generate_offset_kernel_to_denominator</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">kernel</span>
-<span class="go">MetricAccentKernel(</span>
-<span class="go">    {</span>
-<span class="go">        Offset((0, 1)): Multiplier(3, 14),</span>
-<span class="go">        Offset((1, 8)): Multiplier(1, 14),</span>
-<span class="go">        Offset((1, 4)): Multiplier(1, 14),</span>
-<span class="go">        Offset((3, 8)): Multiplier(1, 7),</span>
-<span class="go">        Offset((1, 2)): Multiplier(1, 14),</span>
-<span class="go">        Offset((5, 8)): Multiplier(1, 7),</span>
-<span class="go">        Offset((3, 4)): Multiplier(1, 14),</span>
-<span class="go">        Offset((7, 8)): Multiplier(3, 14),</span>
-<span class="go">        }</span>
-<span class="go">    )</span>
+<span class="go">MetricAccentKernel(kernel={Offset((0, 1)): Multiplier(3, 14), Offset((7, 8)): Multiplier(3, 14), Offset((3, 8)): Multiplier(1, 7), Offset((5, 8)): Multiplier(1, 7), Offset((1, 8)): Multiplier(1, 14), Offset((1, 4)): Multiplier(1, 14), Offset((1, 2)): Multiplier(1, 14), Offset((3, 4)): Multiplier(1, 14)})</span>
 </pre></div>
 </div>
 </div>
@@ -2006,7 +1879,7 @@ impulse-response:</p>
 <td><p>Hashes metric accent kernel.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#abjad.meter.MetricAccentKernel.__repr__" title="abjad.meter.MetricAccentKernel.__repr__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__repr__</span></code></a></p></td>
-<td><p>Gets interpreter representation.</p></td>
+<td><p>Gets repr.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#abjad.meter.MetricAccentKernel.count_offsets" title="abjad.meter.MetricAccentKernel.count_offsets"><code class="xref py py-obj docutils literal notranslate"><span class="pre">count_offsets</span></code></a></p></td>
 <td><p>Count offsets in <code class="docutils literal notranslate"><span class="pre">argument</span></code>.</p></td>
@@ -2058,7 +1931,7 @@ of this metrical accent kernel.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="abjad.meter.MetricAccentKernel.__repr__">
 <em class="property"><span class="pre">overridden</span> </em><span class="sig-name descname"><span class="pre">__repr__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/abjad/meter.html#MetricAccentKernel.__repr__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#abjad.meter.MetricAccentKernel.__repr__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets interpreter representation.</p>
+<dd><p>Gets repr.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.10/library/stdtypes.html#str" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></p>
@@ -2083,9 +1956,9 @@ of this metrical accent kernel.</p>
 <div class="uqbar-book">
     <a href="../../_images/lilypond-209a46cd3a6673aafbb150a98c7e3dd8b049e53e0f0e0e41cb7c1c26cfd09dee.ly"><img src="../../_images/lilypond-209a46cd3a6673aafbb150a98c7e3dd8b049e53e0f0e0e41cb7c1c26cfd09dee.cropped.svg"/></a>
 </div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">MetricAccentKernel</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">MetricAccentKernel</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">leaves</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">score</span><span class="p">)</span><span class="o">.</span><span class="n">leaves</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">leaves</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">select</span><span class="o">.</span><span class="n">leaves</span><span class="p">(</span><span class="n">score</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">counter</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">MetricAccentKernel</span><span class="o">.</span><span class="n">count_offsets</span><span class="p">(</span><span class="n">leaves</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">offset</span><span class="p">,</span> <span class="n">count</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">counter</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">offset</span><span class="p">,</span> <span class="n">count</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">counter</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
 <span class="gp">... </span>    <span class="n">offset</span><span class="p">,</span> <span class="n">count</span>
 <span class="gp">... </span>
 <span class="go">(Offset((0, 1)), 2)</span>
@@ -2104,7 +1977,7 @@ of this metrical accent kernel.</p>
 </pre></div>
 </div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">counter</span> <span class="o">=</span> <span class="n">MetricAccentKernel</span><span class="o">.</span><span class="n">count_offsets</span><span class="p">((</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">))</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">offset</span><span class="p">,</span> <span class="n">count</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">counter</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">offset</span><span class="p">,</span> <span class="n">count</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">counter</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
 <span class="gp">... </span>    <span class="n">offset</span><span class="p">,</span> <span class="n">count</span>
 <span class="gp">... </span>
 <span class="go">(Offset((0, 1)), 1)</span>

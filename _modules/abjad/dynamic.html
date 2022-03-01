@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>abjad.dynamic &mdash; Abjad 3.5 documentation</title>
+  <title>abjad.dynamic &mdash; Abjad 3.6 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/abjad.css" type="text/css" />
@@ -32,11 +32,11 @@
   <div class="wy-grid-for-nav">
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search"  style="background: #00ff55" >
+        <div class="wy-side-nav-search"  style="background: #00dd00" >
 
 
     <a href="../../index.html" class="icon icon-home" alt="Documentation
-    Home"> Abjad 3.5
+    Home"> Abjad 3.6
 
 
 
@@ -110,7 +110,7 @@
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #00ff55" >
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #00dd00" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../index.html">Abjad</a>
       </nav>
@@ -182,7 +182,7 @@
 <span class="sd">        Initializes niente:</span>
 
 <span class="sd">        &gt;&gt;&gt; abjad.Dynamic(&quot;niente&quot;)</span>
-<span class="sd">        Dynamic(name=&#39;niente&#39;, command=None, direction=Down, format_hairpin_stop=False, hide=False, leak=False, name_is_textual=True, ordinal=NegativeInfinity, tweaks=None)</span>
+<span class="sd">        Dynamic(name=&#39;niente&#39;, command=None, direction=Down, format_hairpin_stop=False, hide=False, leak=False, name_is_textual=True, ordinal=NegativeInfinity(), tweaks=None)</span>
 
 <span class="sd">    ..  container:: example</span>
 
@@ -227,7 +227,7 @@
 <span class="sd">                }</span>
 <span class="sd">            &gt;&gt;</span>
 
-<span class="sd">        &gt;&gt;&gt; for leaf in abjad.select(staff).leaves():</span>
+<span class="sd">        &gt;&gt;&gt; for leaf in abjad.select.leaves(staff):</span>
 <span class="sd">        ...     leaf, abjad.get.effective(leaf, abjad.Dynamic)</span>
 <span class="sd">        ...</span>
 <span class="sd">        (Note(&quot;e&#39;8&quot;), Dynamic(name=&#39;f&#39;, command=None, direction=None, format_hairpin_stop=False, hide=False, leak=False, name_is_textual=False, ordinal=2, tweaks=None))</span>
@@ -260,19 +260,11 @@
 <span class="sd">        &lt;BLANKLINE&gt;</span>
 <span class="sd">        Can not attach ...</span>
 <span class="sd">        &lt;BLANKLINE&gt;</span>
-<span class="sd">        abjad.Wrapper(</span>
-<span class="sd">            context=&#39;Voice&#39;,</span>
-<span class="sd">            indicator=Dynamic(name=&#39;p&#39;, command=None, direction=None, format_hairpin_stop=False, hide=False, leak=False, name_is_textual=False, ordinal=-2, tweaks=None),</span>
-<span class="sd">            tag=abjad.Tag(),</span>
-<span class="sd">            )</span>
+<span class="sd">        Wrapper(...)</span>
 <span class="sd">        &lt;BLANKLINE&gt;</span>
 <span class="sd">            ... to Note(&quot;c&#39;4&quot;) in None because ...</span>
 <span class="sd">        &lt;BLANKLINE&gt;</span>
-<span class="sd">        abjad.Wrapper(</span>
-<span class="sd">            context=&#39;Voice&#39;,</span>
-<span class="sd">            indicator=Dynamic(name=&#39;p&#39;, command=None, direction=None, format_hairpin_stop=False, hide=False, leak=False, name_is_textual=False, ordinal=-2, tweaks=None),</span>
-<span class="sd">            tag=abjad.Tag(),</span>
-<span class="sd">            )</span>
+<span class="sd">        Wrapper(...)</span>
 <span class="sd">        &lt;BLANKLINE&gt;</span>
 <span class="sd">            ... is already attached to the same leaf.</span>
 
@@ -312,12 +304,13 @@
 <span class="sd">            - \tweak color #blue</span>
 <span class="sd">            \f</span>
 
-<span class="sd">        Tweaks survive new:</span>
+<span class="sd">        Tweaks survive replace:</span>
 
 <span class="sd">        &gt;&gt;&gt; import copy</span>
+<span class="sd">        &gt;&gt;&gt; import dataclasses</span>
 <span class="sd">        &gt;&gt;&gt; dynamic_1 = abjad.Dynamic(&quot;f&quot;)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.tweak(dynamic_1).color = &quot;#blue&quot;</span>
-<span class="sd">        &gt;&gt;&gt; dynamic_2 = abjad.new(dynamic_1)</span>
+<span class="sd">        &gt;&gt;&gt; dynamic_2 = dataclasses.replace(dynamic_1)</span>
 <span class="sd">        &gt;&gt;&gt; note = abjad.Note(&quot;c&#39;4&quot;)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.attach(dynamic_2, note)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(note) # doctest: +SKIP</span>
@@ -774,14 +767,15 @@
 <span class="sd">            f&#39;4</span>
 <span class="sd">        }</span>
 
-<span class="sd">        REGRESSION. Textual names work with new:</span>
+<span class="sd">        REGRESSION. Textual names work with replace:</span>
 
+<span class="sd">        &gt;&gt;&gt; import dataclasses</span>
 <span class="sd">        &gt;&gt;&gt; dynamic = abjad.Dynamic(&quot;niente&quot;)</span>
-<span class="sd">        &gt;&gt;&gt; abjad.new(dynamic)</span>
-<span class="sd">        Dynamic(name=&#39;niente&#39;, command=None, direction=Down, format_hairpin_stop=False, hide=False, leak=False, name_is_textual=True, ordinal=NegativeInfinity, tweaks=None)</span>
+<span class="sd">        &gt;&gt;&gt; dataclasses.replace(dynamic)</span>
+<span class="sd">        Dynamic(name=&#39;niente&#39;, command=None, direction=Down, format_hairpin_stop=False, hide=False, leak=False, name_is_textual=True, ordinal=NegativeInfinity(), tweaks=None)</span>
 
 <span class="sd">        &gt;&gt;&gt; dynamic = abjad.Dynamic(&quot;appena udibile&quot;, name_is_textual=True)</span>
-<span class="sd">        &gt;&gt;&gt; abjad.new(dynamic)</span>
+<span class="sd">        &gt;&gt;&gt; dataclasses.replace(dynamic)</span>
 <span class="sd">        Dynamic(name=&#39;appena udibile&#39;, command=None, direction=None, format_hairpin_stop=False, hide=False, leak=False, name_is_textual=True, ordinal=None, tweaks=None)</span>
 
 <span class="sd">    ..  container:: example</span>
@@ -795,7 +789,7 @@
 <span class="sd">        -2</span>
 
 <span class="sd">        &gt;&gt;&gt; abjad.Dynamic(&quot;niente&quot;).ordinal</span>
-<span class="sd">        NegativeInfinity</span>
+<span class="sd">        NegativeInfinity()</span>
 
 <span class="sd">        &gt;&gt;&gt; abjad.Dynamic(&#39;&quot;f&quot;&#39;).ordinal</span>
 <span class="sd">        2</span>
@@ -1039,7 +1033,7 @@
         <span class="p">]</span>
         <span class="n">after</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;f&quot;</span><span class="p">:</span> <span class="o">-</span><span class="mf">0.2</span><span class="p">,</span> <span class="s2">&quot;m&quot;</span><span class="p">:</span> <span class="o">-</span><span class="mf">0.1</span><span class="p">,</span> <span class="s2">&quot;p&quot;</span><span class="p">:</span> <span class="o">-</span><span class="mf">0.25</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;s&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;z&quot;</span><span class="p">:</span> <span class="o">-</span><span class="mf">0.2</span><span class="p">}[</span><span class="n">name</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]]</span>
         <span class="n">direction</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">direction</span>
-        <span class="n">direction</span> <span class="o">=</span> <span class="n">_string</span><span class="o">.</span><span class="n">String</span><span class="o">.</span><span class="n">to_tridirectional_lilypond_symbol</span><span class="p">(</span><span class="n">direction</span><span class="p">)</span>
+        <span class="n">direction</span> <span class="o">=</span> <span class="n">_string</span><span class="o">.</span><span class="n">to_tridirectional_lilypond_symbol</span><span class="p">(</span><span class="n">direction</span><span class="p">)</span>
         <span class="n">strings</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">strings</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">direction</span><span class="si">}</span><span class="s2"> #(make-dynamic-script&quot;</span><span class="p">)</span>
         <span class="n">strings</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;    (markup&quot;</span><span class="p">)</span>
@@ -1060,7 +1054,7 @@
     <span class="k">def</span> <span class="nf">_format_textual</span><span class="p">(</span><span class="n">direction</span><span class="p">,</span> <span class="n">string</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">direction</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">direction</span> <span class="o">=</span> <span class="n">_enums</span><span class="o">.</span><span class="n">Down</span>
-        <span class="n">direction</span> <span class="o">=</span> <span class="n">_string</span><span class="o">.</span><span class="n">String</span><span class="o">.</span><span class="n">to_tridirectional_lilypond_symbol</span><span class="p">(</span><span class="n">direction</span><span class="p">)</span>
+        <span class="n">direction</span> <span class="o">=</span> <span class="n">_string</span><span class="o">.</span><span class="n">to_tridirectional_lilypond_symbol</span><span class="p">(</span><span class="n">direction</span><span class="p">)</span>
         <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="nb">str</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
         <span class="n">string</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;(markup #:whiteout #:normal-text #:italic &quot;</span><span class="si">{</span><span class="n">string</span><span class="si">}</span><span class="s1">&quot;)&#39;</span>
         <span class="n">string</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">direction</span><span class="si">}</span><span class="s2"> #(make-dynamic-script </span><span class="si">{</span><span class="n">string</span><span class="si">}</span><span class="s2">)&quot;</span>
@@ -1077,7 +1071,7 @@
             <span class="n">string</span> <span class="o">=</span> <span class="sa">rf</span><span class="s2">&quot;\</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">direction</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="n">direction_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">direction</span>
-                <span class="n">direction</span> <span class="o">=</span> <span class="n">_string</span><span class="o">.</span><span class="n">String</span><span class="o">.</span><span class="n">to_tridirectional_lilypond_symbol</span><span class="p">(</span><span class="n">direction_</span><span class="p">)</span>
+                <span class="n">direction</span> <span class="o">=</span> <span class="n">_string</span><span class="o">.</span><span class="n">to_tridirectional_lilypond_symbol</span><span class="p">(</span><span class="n">direction_</span><span class="p">)</span>
                 <span class="n">string</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">direction</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">string</span><span class="si">}</span><span class="s2">&quot;</span>
         <span class="k">return</span> <span class="n">string</span>
 
@@ -1325,7 +1319,7 @@
 <span class="sd">            4</span>
 
 <span class="sd">            &gt;&gt;&gt; abjad.Dynamic.dynamic_name_to_dynamic_ordinal(&quot;niente&quot;)</span>
-<span class="sd">            NegativeInfinity</span>
+<span class="sd">            NegativeInfinity()</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">try</span><span class="p">:</span>
