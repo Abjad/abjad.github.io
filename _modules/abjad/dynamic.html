@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>abjad.dynamic &mdash; Abjad 3.6 documentation</title>
+  <title>abjad.dynamic &mdash; Abjad 3.7 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/abjad.css" type="text/css" />
@@ -32,11 +32,11 @@
   <div class="wy-grid-for-nav">
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search"  style="background: #00dd00" >
+        <div class="wy-side-nav-search"  style="background: #112233" >
 
 
     <a href="../../index.html" class="icon icon-home" alt="Documentation
-    Home"> Abjad 3.6
+    Home"> Abjad 3.7
 
 
 
@@ -110,7 +110,7 @@
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #00dd00" >
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #112233" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../index.html">Abjad</a>
       </nav>
@@ -129,13 +129,16 @@
 <span></span><span class="kn">import</span> <span class="nn">dataclasses</span>
 <span class="kn">import</span> <span class="nn">typing</span>
 
-<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">bundle</span> <span class="k">as</span> <span class="n">_bundle</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">contributions</span> <span class="k">as</span> <span class="n">_contributions</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">enums</span> <span class="k">as</span> <span class="n">_enums</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">math</span> <span class="k">as</span> <span class="n">_math</span>
-<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">overrides</span> <span class="k">as</span> <span class="n">_overrides</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">string</span> <span class="k">as</span> <span class="n">_string</span>
 
+<span class="n">_EMPTY_CHORD</span> <span class="o">=</span> <span class="s2">&quot;&lt;&gt;&quot;</span>
 
+
+<span class="c1"># TODO: move to indicators.py</span>
+<span class="c1"># TODO: frozen=True</span>
 <div class="viewcode-block" id="Dynamic"><a class="viewcode-back" href="../../api/abjad/dynamic.html#abjad.dynamic.Dynamic">[docs]</a><span class="nd">@dataclasses</span><span class="o">.</span><span class="n">dataclass</span><span class="p">(</span><span class="n">eq</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">slots</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">unsafe_hash</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">class</span> <span class="nc">Dynamic</span><span class="p">:</span>
     <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
@@ -172,17 +175,17 @@
 <span class="sd">        &gt;&gt;&gt; dynamic_2 = abjad.Dynamic(dynamic_1)</span>
 
 <span class="sd">        &gt;&gt;&gt; dynamic_1</span>
-<span class="sd">        Dynamic(name=&#39;f&#39;, command=None, direction=None, format_hairpin_stop=False, hide=False, leak=False, name_is_textual=False, ordinal=2, tweaks=None)</span>
+<span class="sd">        Dynamic(name=&#39;f&#39;, command=None, format_hairpin_stop=False, hide=False, leak=False, name_is_textual=False, ordinal=2)</span>
 
 <span class="sd">        &gt;&gt;&gt; dynamic_2</span>
-<span class="sd">        Dynamic(name=&#39;f&#39;, command=None, direction=None, format_hairpin_stop=False, hide=False, leak=False, name_is_textual=False, ordinal=2, tweaks=None)</span>
+<span class="sd">        Dynamic(name=&#39;f&#39;, command=None, format_hairpin_stop=False, hide=False, leak=False, name_is_textual=False, ordinal=2)</span>
 
 <span class="sd">    ..  container:: example</span>
 
 <span class="sd">        Initializes niente:</span>
 
 <span class="sd">        &gt;&gt;&gt; abjad.Dynamic(&quot;niente&quot;)</span>
-<span class="sd">        Dynamic(name=&#39;niente&#39;, command=None, direction=Down, format_hairpin_stop=False, hide=False, leak=False, name_is_textual=True, ordinal=NegativeInfinity(), tweaks=None)</span>
+<span class="sd">        Dynamic(name=&#39;niente&#39;, command=None, format_hairpin_stop=False, hide=False, leak=False, name_is_textual=True, ordinal=NegativeInfinity())</span>
 
 <span class="sd">    ..  container:: example</span>
 
@@ -192,7 +195,7 @@
 <span class="sd">        &gt;&gt;&gt; abjad.attach(abjad.Dynamic(&#39;f&#39;), voice_1[0], context=&#39;Voice&#39;)</span>
 <span class="sd">        &gt;&gt;&gt; literal = abjad.LilyPondLiteral(r&quot;\voiceOne&quot;, &quot;opening&quot;)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.attach(literal, voice_1)</span>
-<span class="sd">        &gt;&gt;&gt; abjad.override(voice_1).DynamicLineSpanner.direction = abjad.Up</span>
+<span class="sd">        &gt;&gt;&gt; abjad.override(voice_1).DynamicLineSpanner.direction = abjad.UP</span>
 <span class="sd">        &gt;&gt;&gt; voice_2 = abjad.Voice(&quot;c&#39;2&quot;)</span>
 <span class="sd">        &gt;&gt;&gt; literal = abjad.LilyPondLiteral(r&quot;\voiceTwo&quot;, &quot;opening&quot;)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.attach(literal, voice_2)</span>
@@ -228,13 +231,19 @@
 <span class="sd">            &gt;&gt;</span>
 
 <span class="sd">        &gt;&gt;&gt; for leaf in abjad.select.leaves(staff):</span>
-<span class="sd">        ...     leaf, abjad.get.effective(leaf, abjad.Dynamic)</span>
-<span class="sd">        ...</span>
-<span class="sd">        (Note(&quot;e&#39;8&quot;), Dynamic(name=&#39;f&#39;, command=None, direction=None, format_hairpin_stop=False, hide=False, leak=False, name_is_textual=False, ordinal=2, tweaks=None))</span>
-<span class="sd">        (Note(&quot;g&#39;8&quot;), Dynamic(name=&#39;f&#39;, command=None, direction=None, format_hairpin_stop=False, hide=False, leak=False, name_is_textual=False, ordinal=2, tweaks=None))</span>
-<span class="sd">        (Note(&quot;f&#39;8&quot;), Dynamic(name=&#39;f&#39;, command=None, direction=None, format_hairpin_stop=False, hide=False, leak=False, name_is_textual=False, ordinal=2, tweaks=None))</span>
-<span class="sd">        (Note(&quot;a&#39;8&quot;), Dynamic(name=&#39;f&#39;, command=None, direction=None, format_hairpin_stop=False, hide=False, leak=False, name_is_textual=False, ordinal=2, tweaks=None))</span>
-<span class="sd">        (Note(&quot;c&#39;2&quot;), Dynamic(name=&#39;mf&#39;, command=None, direction=None, format_hairpin_stop=False, hide=False, leak=False, name_is_textual=False, ordinal=1, tweaks=None))</span>
+<span class="sd">        ...     dynamic = abjad.get.effective(leaf, abjad.Dynamic)</span>
+<span class="sd">        ...     print(f&quot;{leaf!r}:&quot;)</span>
+<span class="sd">        ...     print(f&quot;    {dynamic!r}&quot;)</span>
+<span class="sd">        Note(&quot;e&#39;8&quot;):</span>
+<span class="sd">            Dynamic(name=&#39;f&#39;, command=None, format_hairpin_stop=False, hide=False, leak=False, name_is_textual=False, ordinal=2)</span>
+<span class="sd">        Note(&quot;g&#39;8&quot;):</span>
+<span class="sd">            Dynamic(name=&#39;f&#39;, command=None, format_hairpin_stop=False, hide=False, leak=False, name_is_textual=False, ordinal=2)</span>
+<span class="sd">        Note(&quot;f&#39;8&quot;):</span>
+<span class="sd">            Dynamic(name=&#39;f&#39;, command=None, format_hairpin_stop=False, hide=False, leak=False, name_is_textual=False, ordinal=2)</span>
+<span class="sd">        Note(&quot;a&#39;8&quot;):</span>
+<span class="sd">            Dynamic(name=&#39;f&#39;, command=None, format_hairpin_stop=False, hide=False, leak=False, name_is_textual=False, ordinal=2)</span>
+<span class="sd">        Note(&quot;c&#39;2&quot;):</span>
+<span class="sd">            Dynamic(name=&#39;mf&#39;, command=None, format_hairpin_stop=False, hide=False, leak=False, name_is_textual=False, ordinal=1)</span>
 
 <span class="sd">    ..  container:: example exception</span>
 
@@ -274,45 +283,8 @@
 
 <span class="sd">        &gt;&gt;&gt; note = abjad.Note(&quot;c&#39;4&quot;)</span>
 <span class="sd">        &gt;&gt;&gt; dynamic = abjad.Dynamic(&quot;f&quot;)</span>
-<span class="sd">        &gt;&gt;&gt; abjad.tweak(dynamic).color = &quot;#blue&quot;</span>
-<span class="sd">        &gt;&gt;&gt; abjad.attach(dynamic, note)</span>
-<span class="sd">        &gt;&gt;&gt; abjad.show(note) # doctest: +SKIP</span>
-
-<span class="sd">        ..  docs::</span>
-
-<span class="sd">            &gt;&gt;&gt; string = abjad.lilypond(note)</span>
-<span class="sd">            &gt;&gt;&gt; print(string)</span>
-<span class="sd">            c&#39;4</span>
-<span class="sd">            - \tweak color #blue</span>
-<span class="sd">            \f</span>
-
-<span class="sd">        Tweaks survive copy:</span>
-
-<span class="sd">        &gt;&gt;&gt; import copy</span>
-<span class="sd">        &gt;&gt;&gt; dynamic_1 = abjad.Dynamic(&quot;f&quot;)</span>
-<span class="sd">        &gt;&gt;&gt; abjad.tweak(dynamic_1).color = &quot;#blue&quot;</span>
-<span class="sd">        &gt;&gt;&gt; dynamic_2 = copy.copy(dynamic_1)</span>
-<span class="sd">        &gt;&gt;&gt; note = abjad.Note(&quot;c&#39;4&quot;)</span>
-<span class="sd">        &gt;&gt;&gt; abjad.attach(dynamic_2, note)</span>
-<span class="sd">        &gt;&gt;&gt; abjad.show(note) # doctest: +SKIP</span>
-
-<span class="sd">        ..  docs::</span>
-
-<span class="sd">            &gt;&gt;&gt; string = abjad.lilypond(note)</span>
-<span class="sd">            &gt;&gt;&gt; print(string)</span>
-<span class="sd">            c&#39;4</span>
-<span class="sd">            - \tweak color #blue</span>
-<span class="sd">            \f</span>
-
-<span class="sd">        Tweaks survive replace:</span>
-
-<span class="sd">        &gt;&gt;&gt; import copy</span>
-<span class="sd">        &gt;&gt;&gt; import dataclasses</span>
-<span class="sd">        &gt;&gt;&gt; dynamic_1 = abjad.Dynamic(&quot;f&quot;)</span>
-<span class="sd">        &gt;&gt;&gt; abjad.tweak(dynamic_1).color = &quot;#blue&quot;</span>
-<span class="sd">        &gt;&gt;&gt; dynamic_2 = dataclasses.replace(dynamic_1)</span>
-<span class="sd">        &gt;&gt;&gt; note = abjad.Note(&quot;c&#39;4&quot;)</span>
-<span class="sd">        &gt;&gt;&gt; abjad.attach(dynamic_2, note)</span>
+<span class="sd">        &gt;&gt;&gt; bundle = abjad.bundle(dynamic, r&quot;- \tweak color #blue&quot;)</span>
+<span class="sd">        &gt;&gt;&gt; abjad.attach(bundle, note)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(note) # doctest: +SKIP</span>
 
 <span class="sd">        ..  docs::</span>
@@ -359,11 +331,11 @@
 <span class="sd">                \f</span>
 <span class="sd">            }</span>
 
-<span class="sd">        With ``direction=abjad.Up``:</span>
+<span class="sd">        With ``direction=abjad.UP``:</span>
 
 <span class="sd">        &gt;&gt;&gt; staff = abjad.Staff(&quot;c&#39;2 c&#39;&#39;2&quot;)</span>
-<span class="sd">        &gt;&gt;&gt; abjad.attach(abjad.Dynamic(&quot;p&quot;, direction=abjad.Up), staff[0])</span>
-<span class="sd">        &gt;&gt;&gt; abjad.attach(abjad.Dynamic(&quot;f&quot;, direction=abjad.Up), staff[1])</span>
+<span class="sd">        &gt;&gt;&gt; abjad.attach(abjad.Dynamic(&quot;p&quot;), staff[0], direction=abjad.UP)</span>
+<span class="sd">        &gt;&gt;&gt; abjad.attach(abjad.Dynamic(&quot;f&quot;), staff[1], direction=abjad.UP)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(staff) # doctest: +SKIP</span>
 
 <span class="sd">        ..  docs::</span>
@@ -378,11 +350,11 @@
 <span class="sd">                ^ \f</span>
 <span class="sd">            }</span>
 
-<span class="sd">        With ``direction=abjad.Down``:</span>
+<span class="sd">        With ``direction=abjad.DOWN``:</span>
 
 <span class="sd">        &gt;&gt;&gt; staff = abjad.Staff(&quot;c&#39;2 c&#39;&#39;2&quot;)</span>
-<span class="sd">        &gt;&gt;&gt; abjad.attach(abjad.Dynamic(&quot;p&quot;, direction=abjad.Down), staff[0])</span>
-<span class="sd">        &gt;&gt;&gt; abjad.attach(abjad.Dynamic(&quot;f&quot;, direction=abjad.Down), staff[1])</span>
+<span class="sd">        &gt;&gt;&gt; abjad.attach(abjad.Dynamic(&quot;p&quot;), staff[0], direction=abjad.DOWN)</span>
+<span class="sd">        &gt;&gt;&gt; abjad.attach(abjad.Dynamic(&quot;f&quot;), staff[1], direction=abjad.DOWN)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(staff) # doctest: +SKIP</span>
 
 <span class="sd">        ..  docs::</span>
@@ -443,8 +415,8 @@
 <span class="sd">        And may be overriden:</span>
 
 <span class="sd">        &gt;&gt;&gt; staff = abjad.Staff(&quot;c&#39;2 c&#39;&#39;2&quot;)</span>
-<span class="sd">        &gt;&gt;&gt; abjad.attach(abjad.Dynamic(&#39;&quot;p&quot;&#39;, direction=abjad.Up), staff[0])</span>
-<span class="sd">        &gt;&gt;&gt; abjad.attach(abjad.Dynamic(&#39;&quot;f&quot;&#39;, direction=abjad.Up), staff[1])</span>
+<span class="sd">        &gt;&gt;&gt; abjad.attach(abjad.Dynamic(&#39;&quot;p&quot;&#39;), staff[0], direction=abjad.UP)</span>
+<span class="sd">        &gt;&gt;&gt; abjad.attach(abjad.Dynamic(&#39;&quot;f&quot;&#39;), staff[1], direction=abjad.UP)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(staff) # doctest: +SKIP</span>
 
 <span class="sd">        ..  docs::</span>
@@ -503,12 +475,17 @@
 <span class="sd">        }</span>
 
 <span class="sd">        &gt;&gt;&gt; for leaf in abjad.iterate.leaves(voice):</span>
-<span class="sd">        ...     leaf, abjad.get.effective(leaf, abjad.Dynamic)</span>
-<span class="sd">        ...</span>
-<span class="sd">        (Note(&quot;c&#39;4&quot;), Dynamic(name=&#39;f&#39;, command=None, direction=None, format_hairpin_stop=False, hide=False, leak=False, name_is_textual=False, ordinal=2, tweaks=None))</span>
-<span class="sd">        (Note(&quot;d&#39;4&quot;), Dynamic(name=&#39;f&#39;, command=None, direction=None, format_hairpin_stop=False, hide=False, leak=False, name_is_textual=False, ordinal=2, tweaks=None))</span>
-<span class="sd">        (Note(&quot;e&#39;4&quot;), Dynamic(name=&#39;mf&#39;, command=None, direction=None, format_hairpin_stop=False, hide=True, leak=False, name_is_textual=False, ordinal=1, tweaks=None))</span>
-<span class="sd">        (Note(&quot;f&#39;4&quot;), Dynamic(name=&#39;mf&#39;, command=None, direction=None, format_hairpin_stop=False, hide=True, leak=False, name_is_textual=False, ordinal=1, tweaks=None))</span>
+<span class="sd">        ...     dynamic = abjad.get.effective(leaf, abjad.Dynamic)</span>
+<span class="sd">        ...     print(f&quot;{leaf!r}:&quot;)</span>
+<span class="sd">        ...     print(f&quot;    {dynamic!r}&quot;)</span>
+<span class="sd">        Note(&quot;c&#39;4&quot;):</span>
+<span class="sd">            Dynamic(name=&#39;f&#39;, command=None, format_hairpin_stop=False, hide=False, leak=False, name_is_textual=False, ordinal=2)</span>
+<span class="sd">        Note(&quot;d&#39;4&quot;):</span>
+<span class="sd">            Dynamic(name=&#39;f&#39;, command=None, format_hairpin_stop=False, hide=False, leak=False, name_is_textual=False, ordinal=2)</span>
+<span class="sd">        Note(&quot;e&#39;4&quot;):</span>
+<span class="sd">            Dynamic(name=&#39;mf&#39;, command=None, format_hairpin_stop=False, hide=True, leak=False, name_is_textual=False, ordinal=1)</span>
+<span class="sd">        Note(&quot;f&#39;4&quot;):</span>
+<span class="sd">            Dynamic(name=&#39;mf&#39;, command=None, format_hairpin_stop=False, hide=True, leak=False, name_is_textual=False, ordinal=1)</span>
 
 <span class="sd">    ..  container:: example</span>
 
@@ -603,8 +580,8 @@
 <span class="sd">            {</span>
 <span class="sd">                c&#39;8</span>
 <span class="sd">                \mf</span>
-<span class="sd">                \&gt;</span>
 <span class="sd">                [</span>
+<span class="sd">                \&gt;</span>
 <span class="sd">                d&#39;8</span>
 <span class="sd">                e&#39;8</span>
 <span class="sd">                ]</span>
@@ -630,7 +607,8 @@
 <span class="sd">            {</span>
 <span class="sd">                c&#39;4</span>
 <span class="sd">                \f</span>
-<span class="sd">                &lt;&gt; \p</span>
+<span class="sd">                &lt;&gt;</span>
+<span class="sd">                \p</span>
 <span class="sd">                d&#39;4</span>
 <span class="sd">                e&#39;4</span>
 <span class="sd">                f&#39;4</span>
@@ -638,13 +616,13 @@
 
 <span class="sd">    ..  container:: example</span>
 
-<span class="sd">        Leaks and tweaks on the same dynamic format correctly;</span>
-<span class="sd">        LilyPond empty chord ``&lt;&gt;`` symbol appears before postevents:</span>
+<span class="sd">        Leaks and tweaks on the same dynamic format correctly; LilyPond empty chord</span>
+<span class="sd">        ``&lt;&gt;`` symbol appears before postevents:</span>
 
 <span class="sd">        &gt;&gt;&gt; staff = abjad.Staff(&quot;r4 d&#39; e&#39; f&#39;&quot;)</span>
 <span class="sd">        &gt;&gt;&gt; dynamic = abjad.Dynamic(&quot;f&quot;, leak=True)</span>
-<span class="sd">        &gt;&gt;&gt; abjad.tweak(dynamic).color = &quot;#blue&quot;</span>
-<span class="sd">        &gt;&gt;&gt; abjad.attach(dynamic, staff[0])</span>
+<span class="sd">        &gt;&gt;&gt; bundle = abjad.bundle(dynamic, r&quot;- \tweak color #blue&quot;)</span>
+<span class="sd">        &gt;&gt;&gt; abjad.attach(bundle, staff[0])</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(staff) # doctest: +SKIP</span>
 
 <span class="sd">        &gt;&gt;&gt; string = abjad.lilypond(staff)</span>
@@ -667,7 +645,7 @@
 <span class="sd">        &gt;&gt;&gt; import copy</span>
 <span class="sd">        &gt;&gt;&gt; dynamic = abjad.Dynamic(&quot;pp&quot;, leak=True)</span>
 <span class="sd">        &gt;&gt;&gt; copy.copy(dynamic)</span>
-<span class="sd">        Dynamic(name=&#39;pp&#39;, command=None, direction=None, format_hairpin_stop=False, hide=False, leak=True, name_is_textual=False, ordinal=-3, tweaks=None)</span>
+<span class="sd">        Dynamic(name=&#39;pp&#39;, command=None, format_hairpin_stop=False, hide=False, leak=True, name_is_textual=False, ordinal=-3)</span>
 
 <span class="sd">    ..  container:: example</span>
 
@@ -720,7 +698,7 @@
 <span class="sd">        &gt;&gt;&gt; abjad.attach(dynamic, voice[0])</span>
 <span class="sd">        &gt;&gt;&gt; abjad.override(voice).DynamicLineSpanner.staff_padding = 4</span>
 <span class="sd">        &gt;&gt;&gt; abjad.override(voice).DynamicText.X_extent = &quot;#&#39;(0 . 0)&quot;</span>
-<span class="sd">        &gt;&gt;&gt; abjad.override(voice).DynamicText.self_alignment_X = abjad.Left</span>
+<span class="sd">        &gt;&gt;&gt; abjad.override(voice).DynamicText.self_alignment_X = abjad.LEFT</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(voice) # doctest: +SKIP</span>
 
 <span class="sd">        ..  docs::</span>
@@ -772,11 +750,11 @@
 <span class="sd">        &gt;&gt;&gt; import dataclasses</span>
 <span class="sd">        &gt;&gt;&gt; dynamic = abjad.Dynamic(&quot;niente&quot;)</span>
 <span class="sd">        &gt;&gt;&gt; dataclasses.replace(dynamic)</span>
-<span class="sd">        Dynamic(name=&#39;niente&#39;, command=None, direction=Down, format_hairpin_stop=False, hide=False, leak=False, name_is_textual=True, ordinal=NegativeInfinity(), tweaks=None)</span>
+<span class="sd">        Dynamic(name=&#39;niente&#39;, command=None, format_hairpin_stop=False, hide=False, leak=False, name_is_textual=True, ordinal=NegativeInfinity())</span>
 
 <span class="sd">        &gt;&gt;&gt; dynamic = abjad.Dynamic(&quot;appena udibile&quot;, name_is_textual=True)</span>
 <span class="sd">        &gt;&gt;&gt; dataclasses.replace(dynamic)</span>
-<span class="sd">        Dynamic(name=&#39;appena udibile&#39;, command=None, direction=None, format_hairpin_stop=False, hide=False, leak=False, name_is_textual=True, ordinal=None, tweaks=None)</span>
+<span class="sd">        Dynamic(name=&#39;appena udibile&#39;, command=None, format_hairpin_stop=False, hide=False, leak=False, name_is_textual=True, ordinal=None)</span>
 
 <span class="sd">    ..  container:: example</span>
 
@@ -823,23 +801,24 @@
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="c1"># TODO: make ``name`` mandatory; remove default</span>
-
     <span class="n">name</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="s2">&quot;Dynamic&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;f&quot;</span>
-    <span class="n">command</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
-    <span class="n">direction</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">_enums</span><span class="o">.</span><span class="n">VerticalAlignment</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">command</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">format_hairpin_stop</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
     <span class="n">hide</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
-    <span class="n">leak</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">leak</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">dataclasses</span><span class="o">.</span><span class="n">field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">compare</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
     <span class="n">name_is_textual</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
-    <span class="n">ordinal</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">_math</span><span class="o">.</span><span class="n">Infinity</span><span class="p">,</span> <span class="n">_math</span><span class="o">.</span><span class="n">NegativeInfinity</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
-    <span class="n">tweaks</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="n">_overrides</span><span class="o">.</span><span class="n">TweakInterface</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">ordinal</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="n">_math</span><span class="o">.</span><span class="n">Infinity</span> <span class="o">|</span> <span class="n">_math</span><span class="o">.</span><span class="n">NegativeInfinity</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
 
-    <span class="n">_is_dataclass</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">context</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">ClassVar</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;Voice&quot;</span>
+    <span class="n">directed</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">ClassVar</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">parameter</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">ClassVar</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;DYNAMIC&quot;</span>
+    <span class="n">persistent</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">ClassVar</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">post_event</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">ClassVar</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">spanner_stop</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">ClassVar</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
 
 <div class="viewcode-block" id="Dynamic.__post_init__"><a class="viewcode-back" href="../../api/abjad/dynamic.html#abjad.dynamic.Dynamic.__post_init__">[docs]</a>    <span class="k">def</span> <span class="nf">__post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">Dynamic</span><span class="p">)),</span> <span class="nb">repr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+            <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">Dynamic</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">Dynamic</span><span class="p">):</span>
             <span class="n">name_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">name</span>
         <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
@@ -855,10 +834,6 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">command</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">command</span><span class="p">,</span> <span class="nb">str</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">command</span><span class="p">)</span>
             <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">command</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\\</span><span class="s2">&quot;</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">command</span><span class="p">)</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">direction</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">direction</span> <span class="ow">in</span> <span class="p">(</span><span class="n">_enums</span><span class="o">.</span><span class="n">Down</span><span class="p">,</span> <span class="n">_enums</span><span class="o">.</span><span class="n">Up</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">direction</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;niente&quot;</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">effort</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">direction</span> <span class="o">=</span> <span class="n">_enums</span><span class="o">.</span><span class="n">Down</span>
         <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">format_hairpin_stop</span><span class="p">,</span> <span class="nb">bool</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">format_hairpin_stop</span>
         <span class="p">)</span>
@@ -890,16 +865,9 @@
                 <span class="n">prototype</span> <span class="o">=</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="n">_math</span><span class="o">.</span><span class="n">Infinity</span><span class="p">,</span> <span class="n">_math</span><span class="o">.</span><span class="n">NegativeInfinity</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="kc">None</span><span class="p">))</span>
                 <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ordinal_</span><span class="p">,</span> <span class="n">prototype</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">ordinal_</span><span class="p">)</span>
                 <span class="n">ordinal</span> <span class="o">=</span> <span class="n">ordinal_</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">ordinal</span> <span class="o">=</span> <span class="n">ordinal</span>
-        <span class="c1"># self._ordinal = ordinal</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">tweaks</span> <span class="o">=</span> <span class="n">_overrides</span><span class="o">.</span><span class="n">TweakInterface</span><span class="o">.</span><span class="n">set_dataclass_tweaks</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tweaks</span><span class="p">)</span></div>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ordinal</span> <span class="o">=</span> <span class="n">ordinal</span></div>
 
-    <span class="n">context</span> <span class="o">=</span> <span class="s2">&quot;Voice&quot;</span>
-    <span class="n">parameter</span> <span class="o">=</span> <span class="s2">&quot;DYNAMIC&quot;</span>
-    <span class="n">persistent</span> <span class="o">=</span> <span class="kc">True</span>
-    <span class="n">spanner_stop</span> <span class="o">=</span> <span class="kc">True</span>
-
-    <span class="n">_composite_dynamic_name_to_steady_state_dynamic_name</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">_composite_dynamic_name_to_steady_state_dynamic_name</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">ClassVar</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s2">&quot;fp&quot;</span><span class="p">:</span> <span class="s2">&quot;p&quot;</span><span class="p">,</span>
         <span class="s2">&quot;sf&quot;</span><span class="p">:</span> <span class="s2">&quot;f&quot;</span><span class="p">,</span>
         <span class="s2">&quot;sff&quot;</span><span class="p">:</span> <span class="s2">&quot;ff&quot;</span><span class="p">,</span>
@@ -913,7 +881,7 @@
         <span class="s2">&quot;rfz&quot;</span><span class="p">:</span> <span class="s2">&quot;f&quot;</span><span class="p">,</span>
     <span class="p">}</span>
 
-    <span class="n">_dynamic_name_to_dynamic_ordinal</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">_dynamic_name_to_dynamic_ordinal</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">ClassVar</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s2">&quot;ppppp&quot;</span><span class="p">:</span> <span class="o">-</span><span class="mi">6</span><span class="p">,</span>
         <span class="s2">&quot;pppp&quot;</span><span class="p">:</span> <span class="o">-</span><span class="mi">5</span><span class="p">,</span>
         <span class="s2">&quot;ppp&quot;</span><span class="p">:</span> <span class="o">-</span><span class="mi">4</span><span class="p">,</span>
@@ -929,7 +897,7 @@
         <span class="s2">&quot;fffff&quot;</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span>
     <span class="p">}</span>
 
-    <span class="n">_dynamic_names</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">_dynamic_names</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">ClassVar</span> <span class="o">=</span> <span class="p">(</span>
         <span class="s2">&quot;ppppp&quot;</span><span class="p">,</span>
         <span class="s2">&quot;pppp&quot;</span><span class="p">,</span>
         <span class="s2">&quot;ppp&quot;</span><span class="p">,</span>
@@ -958,7 +926,7 @@
         <span class="s2">&quot;niente&quot;</span><span class="p">,</span>
     <span class="p">)</span>
 
-    <span class="n">_dynamic_ordinal_to_dynamic_name</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">_dynamic_ordinal_to_dynamic_name</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">ClassVar</span> <span class="o">=</span> <span class="p">{</span>
         <span class="o">-</span><span class="mi">6</span><span class="p">:</span> <span class="s2">&quot;ppppp&quot;</span><span class="p">,</span>
         <span class="o">-</span><span class="mi">5</span><span class="p">:</span> <span class="s2">&quot;pppp&quot;</span><span class="p">,</span>
         <span class="o">-</span><span class="mi">4</span><span class="p">:</span> <span class="s2">&quot;ppp&quot;</span><span class="p">,</span>
@@ -974,13 +942,21 @@
         <span class="mi">6</span><span class="p">:</span> <span class="s2">&quot;fffff&quot;</span><span class="p">,</span>
     <span class="p">}</span>
 
-    <span class="n">_format_slot</span> <span class="o">=</span> <span class="s2">&quot;after&quot;</span>
+    <span class="n">_site</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">ClassVar</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;after&quot;</span>
 
-    <span class="n">_lilypond_dynamic_commands</span> <span class="o">=</span> <span class="p">[</span><span class="n">_</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">_dynamic_names</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">_</span> <span class="o">==</span> <span class="s2">&quot;niente&quot;</span><span class="p">]</span>
+    <span class="n">_lilypond_dynamic_commands</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">ClassVar</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">_</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">_dynamic_names</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">_</span> <span class="o">==</span> <span class="s2">&quot;niente&quot;</span>
+    <span class="p">]</span>
 
-    <span class="n">_lilypond_dynamic_alphabet</span> <span class="o">=</span> <span class="s2">&quot;fmprsz&quot;</span>
+    <span class="n">_lilypond_dynamic_alphabet</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">ClassVar</span> <span class="o">=</span> <span class="s2">&quot;fmprsz&quot;</span>
 
-    <span class="n">_to_width</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;&quot;f&quot;&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;&quot;mf&quot;&#39;</span><span class="p">:</span> <span class="mf">3.5</span><span class="p">,</span> <span class="s1">&#39;&quot;mp&quot;&#39;</span><span class="p">:</span> <span class="mf">3.5</span><span class="p">,</span> <span class="s1">&#39;&quot;p&quot;&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;sfz&quot;</span><span class="p">:</span> <span class="mf">2.5</span><span class="p">}</span>
+    <span class="n">_to_width</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">ClassVar</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;&quot;f&quot;&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+        <span class="s1">&#39;&quot;mf&quot;&#39;</span><span class="p">:</span> <span class="mf">3.5</span><span class="p">,</span>
+        <span class="s1">&#39;&quot;mp&quot;&#39;</span><span class="p">:</span> <span class="mf">3.5</span><span class="p">,</span>
+        <span class="s1">&#39;&quot;p&quot;&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+        <span class="s2">&quot;sfz&quot;</span><span class="p">:</span> <span class="mf">2.5</span><span class="p">,</span>
+    <span class="p">}</span>
 
 <div class="viewcode-block" id="Dynamic.__eq__"><a class="viewcode-back" href="../../api/abjad/dynamic.html#abjad.dynamic.Dynamic.__eq__">[docs]</a>    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -1026,13 +1002,14 @@
             <span class="k">return</span> <span class="n">strings</span>
         <span class="k">return</span> <span class="kc">True</span>
 
-    <span class="k">def</span> <span class="nf">_format_effort_dynamic</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_format_effort_dynamic</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">wrapper</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39;&quot;&#39;</span><span class="p">)</span>
         <span class="n">before</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;f&quot;</span><span class="p">:</span> <span class="o">-</span><span class="mf">0.4</span><span class="p">,</span> <span class="s2">&quot;m&quot;</span><span class="p">:</span> <span class="o">-</span><span class="mf">0.1</span><span class="p">,</span> <span class="s2">&quot;p&quot;</span><span class="p">:</span> <span class="o">-</span><span class="mf">0.1</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">:</span> <span class="o">-</span><span class="mf">0.1</span><span class="p">,</span> <span class="s2">&quot;s&quot;</span><span class="p">:</span> <span class="o">-</span><span class="mf">0.3</span><span class="p">,</span> <span class="s2">&quot;z&quot;</span><span class="p">:</span> <span class="o">-</span><span class="mf">0.2</span><span class="p">}[</span>
             <span class="n">name</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
         <span class="p">]</span>
         <span class="n">after</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;f&quot;</span><span class="p">:</span> <span class="o">-</span><span class="mf">0.2</span><span class="p">,</span> <span class="s2">&quot;m&quot;</span><span class="p">:</span> <span class="o">-</span><span class="mf">0.1</span><span class="p">,</span> <span class="s2">&quot;p&quot;</span><span class="p">:</span> <span class="o">-</span><span class="mf">0.25</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;s&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;z&quot;</span><span class="p">:</span> <span class="o">-</span><span class="mf">0.2</span><span class="p">}[</span><span class="n">name</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]]</span>
-        <span class="n">direction</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">direction</span>
+        <span class="c1"># direction = self.direction</span>
+        <span class="n">direction</span> <span class="o">=</span> <span class="n">wrapper</span><span class="o">.</span><span class="n">direction</span> <span class="ow">or</span> <span class="n">_enums</span><span class="o">.</span><span class="n">DOWN</span>
         <span class="n">direction</span> <span class="o">=</span> <span class="n">_string</span><span class="o">.</span><span class="n">to_tridirectional_lilypond_symbol</span><span class="p">(</span><span class="n">direction</span><span class="p">)</span>
         <span class="n">strings</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">strings</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">direction</span><span class="si">}</span><span class="s2"> #(make-dynamic-script&quot;</span><span class="p">)</span>
@@ -1051,47 +1028,42 @@
         <span class="k">return</span> <span class="n">string</span>
 
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">_format_textual</span><span class="p">(</span><span class="n">direction</span><span class="p">,</span> <span class="n">string</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">direction</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">direction</span> <span class="o">=</span> <span class="n">_enums</span><span class="o">.</span><span class="n">Down</span>
+    <span class="c1"># def _format_textual(direction, string):</span>
+    <span class="k">def</span> <span class="nf">_format_textual</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">wrapper</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">wrapper</span><span class="o">.</span><span class="n">direction</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">direction</span> <span class="o">=</span> <span class="n">_enums</span><span class="o">.</span><span class="n">DOWN</span>
         <span class="n">direction</span> <span class="o">=</span> <span class="n">_string</span><span class="o">.</span><span class="n">to_tridirectional_lilypond_symbol</span><span class="p">(</span><span class="n">direction</span><span class="p">)</span>
         <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="nb">str</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
         <span class="n">string</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;(markup #:whiteout #:normal-text #:italic &quot;</span><span class="si">{</span><span class="n">string</span><span class="si">}</span><span class="s1">&quot;)&#39;</span>
         <span class="n">string</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">direction</span><span class="si">}</span><span class="s2"> #(make-dynamic-script </span><span class="si">{</span><span class="n">string</span><span class="si">}</span><span class="s2">)&quot;</span>
         <span class="k">return</span> <span class="n">string</span>
 
-    <span class="k">def</span> <span class="nf">_get_lilypond_format</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_get_lilypond_format</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">wrapper</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">command</span><span class="p">:</span>
             <span class="n">string</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">command</span>
         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">effort</span><span class="p">:</span>
-            <span class="n">string</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_format_effort_dynamic</span><span class="p">()</span>
+            <span class="n">string</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_format_effort_dynamic</span><span class="p">(</span><span class="n">wrapper</span><span class="o">=</span><span class="n">wrapper</span><span class="p">)</span>
         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">name_is_textual</span><span class="p">:</span>
-            <span class="n">string</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_format_textual</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">direction</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+            <span class="n">string</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_format_textual</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">wrapper</span><span class="o">=</span><span class="n">wrapper</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">string</span> <span class="o">=</span> <span class="sa">rf</span><span class="s2">&quot;\</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">direction</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="n">direction_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">direction</span>
+            <span class="k">if</span> <span class="n">wrapper</span><span class="o">.</span><span class="n">direction</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">direction_</span> <span class="o">=</span> <span class="n">wrapper</span><span class="o">.</span><span class="n">direction</span>
                 <span class="n">direction</span> <span class="o">=</span> <span class="n">_string</span><span class="o">.</span><span class="n">to_tridirectional_lilypond_symbol</span><span class="p">(</span><span class="n">direction_</span><span class="p">)</span>
                 <span class="n">string</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">direction</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">string</span><span class="si">}</span><span class="s2">&quot;</span>
         <span class="k">return</span> <span class="n">string</span>
 
-    <span class="k">def</span> <span class="nf">_get_lilypond_format_bundle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">component</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="n">bundle</span> <span class="o">=</span> <span class="n">_bundle</span><span class="o">.</span><span class="n">LilyPondFormatBundle</span><span class="p">()</span>
+    <span class="k">def</span> <span class="nf">_get_contributions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">component</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">wrapper</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">contributions</span> <span class="o">=</span> <span class="n">_contributions</span><span class="o">.</span><span class="n">ContributionsBySite</span><span class="p">()</span>
+        <span class="n">command</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_lilypond_format</span><span class="p">(</span><span class="n">wrapper</span><span class="o">=</span><span class="n">wrapper</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">leak</span><span class="p">:</span>
-            <span class="n">bundle</span><span class="o">.</span><span class="n">after</span><span class="o">.</span><span class="n">leaks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;&lt;&gt;&quot;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">tweaks</span><span class="p">:</span>
-            <span class="n">tweaks</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tweaks</span><span class="o">.</span><span class="n">_list_format_contributions</span><span class="p">()</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">leak</span><span class="p">:</span>
-                <span class="n">bundle</span><span class="o">.</span><span class="n">after</span><span class="o">.</span><span class="n">leaks</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">tweaks</span><span class="p">)</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">bundle</span><span class="o">.</span><span class="n">after</span><span class="o">.</span><span class="n">articulations</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">tweaks</span><span class="p">)</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">hide</span><span class="p">:</span>
-            <span class="n">string</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_lilypond_format</span><span class="p">()</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">leak</span><span class="p">:</span>
-                <span class="n">bundle</span><span class="o">.</span><span class="n">after</span><span class="o">.</span><span class="n">leaks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">bundle</span><span class="o">.</span><span class="n">after</span><span class="o">.</span><span class="n">articulations</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">bundle</span>
+            <span class="n">contributions</span><span class="o">.</span><span class="n">after</span><span class="o">.</span><span class="n">leak</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">_EMPTY_CHORD</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">hide</span><span class="p">:</span>
+                <span class="n">contributions</span><span class="o">.</span><span class="n">after</span><span class="o">.</span><span class="n">leaks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">command</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">hide</span><span class="p">:</span>
+                <span class="n">contributions</span><span class="o">.</span><span class="n">after</span><span class="o">.</span><span class="n">articulations</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">command</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">contributions</span>
 
     <span class="c1"># TODO: make markup function and shorten docstring</span>
     <span class="nd">@property</span>

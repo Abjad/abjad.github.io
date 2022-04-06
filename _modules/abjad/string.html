@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>abjad.string &mdash; Abjad 3.6 documentation</title>
+  <title>abjad.string &mdash; Abjad 3.7 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/abjad.css" type="text/css" />
@@ -32,11 +32,11 @@
   <div class="wy-grid-for-nav">
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search"  style="background: #00dd00" >
+        <div class="wy-side-nav-search"  style="background: #112233" >
 
 
     <a href="../../index.html" class="icon icon-home" alt="Documentation
-    Home"> Abjad 3.6
+    Home"> Abjad 3.7
 
 
 
@@ -110,7 +110,7 @@
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #00dd00" >
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #112233" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../index.html">Abjad</a>
       </nav>
@@ -580,20 +580,17 @@
 
 
 <div class="viewcode-block" id="to_tridirectional_lilypond_symbol"><a class="viewcode-back" href="../../api/abjad/string.html#abjad.string.to_tridirectional_lilypond_symbol">[docs]</a><span class="k">def</span> <span class="nf">to_tridirectional_lilypond_symbol</span><span class="p">(</span>
-    <span class="n">argument</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">_enums</span><span class="o">.</span><span class="n">VerticalAlignment</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">argument</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Changes ``argument`` to tridirectional LilyPond symbol.</span>
 
 <span class="sd">    ..  container:: example</span>
 
-<span class="sd">        &gt;&gt;&gt; abjad.string.to_tridirectional_lilypond_symbol(abjad.Up)</span>
+<span class="sd">        &gt;&gt;&gt; abjad.string.to_tridirectional_lilypond_symbol(abjad.UP)</span>
 <span class="sd">        &#39;^&#39;</span>
 
-<span class="sd">        &gt;&gt;&gt; abjad.string.to_tridirectional_lilypond_symbol(&#39;center&#39;)</span>
-<span class="sd">        &#39;-&#39;</span>
-
-<span class="sd">        &gt;&gt;&gt; abjad.string.to_tridirectional_lilypond_symbol(abjad.Down)</span>
+<span class="sd">        &gt;&gt;&gt; abjad.string.to_tridirectional_lilypond_symbol(abjad.DOWN)</span>
 <span class="sd">        &#39;_&#39;</span>
 
 <span class="sd">        &gt;&gt;&gt; abjad.string.to_tridirectional_lilypond_symbol(1)</span>
@@ -622,41 +619,44 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">argument</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">return</span> <span class="kc">None</span>
-    <span class="k">try</span><span class="p">:</span>
-        <span class="n">alignment</span> <span class="o">=</span> <span class="n">_enums</span><span class="o">.</span><span class="n">VerticalAlignment</span><span class="o">.</span><span class="n">from_expr</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span>
-    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="nb">repr</span><span class="p">(</span><span class="n">argument</span><span class="p">))</span>
-    <span class="k">return</span> <span class="n">alignment</span><span class="o">.</span><span class="n">_get_lilypond_format</span><span class="p">()</span></div>
+    <span class="k">elif</span> <span class="n">argument</span> <span class="ow">in</span> <span class="p">(</span><span class="n">_enums</span><span class="o">.</span><span class="n">UP</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;^&quot;</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;^&quot;</span>
+    <span class="k">elif</span> <span class="n">argument</span> <span class="ow">in</span> <span class="p">(</span><span class="n">_enums</span><span class="o">.</span><span class="n">DOWN</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;_&quot;</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;_&quot;</span>
+    <span class="k">elif</span> <span class="n">argument</span> <span class="ow">in</span> <span class="p">(</span><span class="n">_enums</span><span class="o">.</span><span class="n">CENTER</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;-&quot;</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;-&quot;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="nb">repr</span><span class="p">(</span><span class="n">argument</span><span class="p">))</span></div>
 
 
 <div class="viewcode-block" id="to_tridirectional_ordinal_constant"><a class="viewcode-back" href="../../api/abjad/string.html#abjad.string.to_tridirectional_ordinal_constant">[docs]</a><span class="k">def</span> <span class="nf">to_tridirectional_ordinal_constant</span><span class="p">(</span>
-    <span class="n">argument</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">_enums</span><span class="o">.</span><span class="n">VerticalAlignment</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">_enums</span><span class="o">.</span><span class="n">VerticalAlignment</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">argument</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">_enums</span><span class="o">.</span><span class="n">Vertical</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Changes ``argument`` to tridirectional ordinal constant.</span>
 
 <span class="sd">    ..  container:: example</span>
 
 <span class="sd">        &gt;&gt;&gt; abjad.string.to_tridirectional_ordinal_constant(&#39;^&#39;)</span>
-<span class="sd">        Up</span>
+<span class="sd">        &lt;Vertical.UP: 1&gt;</span>
 
 <span class="sd">        &gt;&gt;&gt; abjad.string.to_tridirectional_ordinal_constant(&#39;_&#39;)</span>
-<span class="sd">        Down</span>
+<span class="sd">        &lt;Vertical.DOWN: -1&gt;</span>
 
 <span class="sd">        &gt;&gt;&gt; abjad.string.to_tridirectional_ordinal_constant(1)</span>
-<span class="sd">        Up</span>
+<span class="sd">        &lt;Vertical.UP: 1&gt;</span>
 
 <span class="sd">        &gt;&gt;&gt; abjad.string.to_tridirectional_ordinal_constant(-1)</span>
-<span class="sd">        Down</span>
+<span class="sd">        &lt;Vertical.DOWN: -1&gt;</span>
 
-<span class="sd">        &gt;&gt;&gt; abjad.string.to_tridirectional_ordinal_constant(abjad.Up)</span>
-<span class="sd">        Up</span>
+<span class="sd">        &gt;&gt;&gt; abjad.string.to_tridirectional_ordinal_constant(abjad.UP)</span>
+<span class="sd">        &lt;Vertical.UP: 1&gt;</span>
 
-<span class="sd">        &gt;&gt;&gt; abjad.string.to_tridirectional_ordinal_constant(abjad.Down)</span>
-<span class="sd">        Down</span>
+<span class="sd">        &gt;&gt;&gt; abjad.string.to_tridirectional_ordinal_constant(abjad.DOWN)</span>
+<span class="sd">        &lt;Vertical.DOWN: -1&gt;</span>
 
-<span class="sd">        &gt;&gt;&gt; abjad.string.to_tridirectional_ordinal_constant(abjad.Center)</span>
-<span class="sd">        Center</span>
+<span class="sd">        &gt;&gt;&gt; abjad.string.to_tridirectional_ordinal_constant(abjad.CENTER)</span>
+<span class="sd">        &lt;Vertical.CENTER: 0&gt;</span>
 
 <span class="sd">        &gt;&gt;&gt; abjad.string.to_tridirectional_ordinal_constant(None) is None</span>
 <span class="sd">        True</span>
@@ -664,7 +664,14 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">argument</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">return</span> <span class="kc">None</span>
-    <span class="k">return</span> <span class="n">_enums</span><span class="o">.</span><span class="n">VerticalAlignment</span><span class="o">.</span><span class="n">from_expr</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span></div>
+    <span class="k">elif</span> <span class="n">argument</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;^&quot;</span><span class="p">,</span> <span class="n">_enums</span><span class="o">.</span><span class="n">UP</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">_enums</span><span class="o">.</span><span class="n">UP</span>
+    <span class="k">elif</span> <span class="n">argument</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;_&quot;</span><span class="p">,</span> <span class="n">_enums</span><span class="o">.</span><span class="n">DOWN</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">_enums</span><span class="o">.</span><span class="n">DOWN</span>
+    <span class="k">elif</span> <span class="n">argument</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;-&quot;</span><span class="p">,</span> <span class="n">_enums</span><span class="o">.</span><span class="n">CENTER</span><span class="p">,</span> <span class="mi">0</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">_enums</span><span class="o">.</span><span class="n">CENTER</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="nb">repr</span><span class="p">(</span><span class="n">argument</span><span class="p">))</span></div>
 
 
 <div class="viewcode-block" id="to_upper_camel_case"><a class="viewcode-back" href="../../api/abjad/string.html#abjad.string.to_upper_camel_case">[docs]</a><span class="k">def</span> <span class="nf">to_upper_camel_case</span><span class="p">(</span><span class="n">string</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>

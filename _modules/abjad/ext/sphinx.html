@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>abjad.ext.sphinx &mdash; Abjad 3.6 documentation</title>
+  <title>abjad.ext.sphinx &mdash; Abjad 3.7 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/abjad.css" type="text/css" />
@@ -32,11 +32,11 @@
   <div class="wy-grid-for-nav">
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search"  style="background: #00dd00" >
+        <div class="wy-side-nav-search"  style="background: #112233" >
 
 
     <a href="../../../index.html" class="icon icon-home" alt="Documentation
-    Home"> Abjad 3.6
+    Home"> Abjad 3.7
 
 
 
@@ -110,7 +110,7 @@
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #00dd00" >
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #112233" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../../index.html">Abjad</a>
       </nav>
@@ -133,7 +133,6 @@
 <span class="kn">import</span> <span class="nn">pathlib</span>
 <span class="kn">import</span> <span class="nn">shutil</span>
 <span class="kn">import</span> <span class="nn">subprocess</span>
-<span class="kn">import</span> <span class="nn">typing</span>
 
 <span class="kn">import</span> <span class="nn">sphinx</span>
 <span class="kn">from</span> <span class="nn">docutils.nodes</span> <span class="kn">import</span> <span class="p">(</span>
@@ -153,9 +152,9 @@
 <span class="kn">from</span> <span class="nn">uqbar.strings</span> <span class="kn">import</span> <span class="n">normalize</span>
 
 <span class="kn">from</span> <span class="nn">..</span> <span class="kn">import</span> <span class="n">lilypondfile</span> <span class="k">as</span> <span class="n">_lilypondfile</span>
+<span class="kn">from</span> <span class="nn">..</span> <span class="kn">import</span> <span class="n">tag</span> <span class="k">as</span> <span class="n">_tag</span>
 <span class="kn">from</span> <span class="nn">..configuration</span> <span class="kn">import</span> <span class="n">Configuration</span>
 <span class="kn">from</span> <span class="nn">..contextmanagers</span> <span class="kn">import</span> <span class="n">TemporaryDirectoryChange</span>
-<span class="kn">from</span> <span class="nn">..format</span> <span class="kn">import</span> <span class="n">remove_tags</span>
 <span class="kn">from</span> <span class="nn">..illustrators</span> <span class="kn">import</span> <span class="n">illustrate</span>
 <span class="kn">from</span> <span class="nn">..io</span> <span class="kn">import</span> <span class="n">Illustrator</span><span class="p">,</span> <span class="n">LilyPondIO</span><span class="p">,</span> <span class="n">Player</span>
 
@@ -178,7 +177,7 @@
     <span class="n">required_arguments</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="n">optional_arguments</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="n">final_argument_whitespace</span> <span class="o">=</span> <span class="kc">True</span>
-    <span class="n">option_spec</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">option_spec</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
 
     <span class="c1">### PUBLIC METHODS ###</span>
 
@@ -205,7 +204,7 @@
     <span class="n">required_arguments</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="n">optional_arguments</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="n">final_argument_whitespace</span> <span class="o">=</span> <span class="kc">False</span>
-    <span class="n">option_spec</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">option_spec</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
 
     <span class="c1">### PUBLIC METHODS ###</span>
 
@@ -393,7 +392,7 @@
             <span class="n">illustration</span><span class="p">[</span><span class="s2">&quot;score&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">block</span><span class="p">)</span>
         <span class="n">illustration</span><span class="o">.</span><span class="n">lilypond_version_token</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;\version &quot;2.19.83&quot;&#39;</span>
         <span class="n">code</span> <span class="o">=</span> <span class="n">illustration</span><span class="o">.</span><span class="n">_get_lilypond_format</span><span class="p">()</span>
-        <span class="n">code</span> <span class="o">=</span> <span class="n">remove_tags</span><span class="p">(</span><span class="n">code</span><span class="p">)</span>
+        <span class="n">code</span> <span class="o">=</span> <span class="n">_tag</span><span class="o">.</span><span class="n">remove_tags</span><span class="p">(</span><span class="n">code</span><span class="p">)</span>
         <span class="n">node</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lilypond_block</span><span class="p">(</span><span class="n">code</span><span class="p">,</span> <span class="n">code</span><span class="p">)</span>
         <span class="n">node</span><span class="p">[</span><span class="s2">&quot;kind&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">kind</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
         <span class="n">node</span><span class="p">[</span><span class="s2">&quot;no-trim&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">no_trim</span>

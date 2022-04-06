@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>abjad.pitch &mdash; Abjad 3.6 documentation</title>
+  <title>abjad.pitch &mdash; Abjad 3.7 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/abjad.css" type="text/css" />
@@ -32,11 +32,11 @@
   <div class="wy-grid-for-nav">
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search"  style="background: #00dd00" >
+        <div class="wy-side-nav-search"  style="background: #112233" >
 
 
     <a href="../../index.html" class="icon icon-home" alt="Documentation
-    Home"> Abjad 3.6
+    Home"> Abjad 3.7
 
 
 
@@ -110,7 +110,7 @@
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #00dd00" >
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #112233" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../index.html">Abjad</a>
       </nav>
@@ -138,6 +138,7 @@
 
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">enums</span> <span class="k">as</span> <span class="n">_enums</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">math</span> <span class="k">as</span> <span class="n">_math</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">string</span> <span class="k">as</span> <span class="n">_string</span>
 
 <span class="c1">### MAPPINGS (most will become functions) ###</span>
 
@@ -826,8 +827,8 @@
         <span class="n">semitones</span> <span class="o">=</span> <span class="n">_math</span><span class="o">.</span><span class="n">integer_equivalent_number_to_integer</span><span class="p">(</span><span class="n">semitones</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">semitones</span> <span class="o">=</span> <span class="n">semitones</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">arrow</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">arrow</span> <span class="o">=</span> <span class="n">_enums</span><span class="o">.</span><span class="n">VerticalAlignment</span><span class="o">.</span><span class="n">from_expr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">arrow</span><span class="p">)</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">arrow</span> <span class="ow">is</span> <span class="n">_enums</span><span class="o">.</span><span class="n">Center</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">arrow</span> <span class="o">=</span> <span class="n">_string</span><span class="o">.</span><span class="n">to_tridirectional_ordinal_constant</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">arrow</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">arrow</span> <span class="ow">is</span> <span class="n">_enums</span><span class="o">.</span><span class="n">CENTER</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">arrow</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">arrow</span> <span class="o">=</span> <span class="n">_arrow</span>
@@ -949,7 +950,8 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
 
-<div class="viewcode-block" id="Accidental.__str__"><a class="viewcode-back" href="../../api/abjad/pitch.html#abjad.pitch.Accidental.__str__">[docs]</a>    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="c1"># TODO: remove?</span>
+<div class="viewcode-block" id="Accidental.__str__"><a class="viewcode-back" href="../../api/abjad/pitch.html#abjad.pitch.Accidental.__str__">[docs]</a>    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets string representation of accidental.</span>
 
@@ -979,15 +981,13 @@
 <span class="sd">            &gt;&gt;&gt; str(abjad.Accidental(&quot;ss&quot;))</span>
 <span class="sd">            &#39;ss&#39;</span>
 
-<span class="sd">        Returns string.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">semitones</span> <span class="ow">in</span> <span class="n">_accidental_semitones_to_abbreviation</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">_accidental_semitones_to_abbreviation</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">semitones</span><span class="p">]</span>
         <span class="n">character</span> <span class="o">=</span> <span class="s2">&quot;s&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">semitones</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
             <span class="n">character</span> <span class="o">=</span> <span class="s2">&quot;f&quot;</span>
-        <span class="n">semitones</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">semitones</span><span class="p">)</span>
-        <span class="n">semitones</span><span class="p">,</span> <span class="n">remainder</span> <span class="o">=</span> <span class="nb">divmod</span><span class="p">(</span><span class="n">semitones</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)</span>
+        <span class="n">semitones</span><span class="p">,</span> <span class="n">remainder</span> <span class="o">=</span> <span class="nb">divmod</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">semitones</span><span class="p">),</span> <span class="mf">1.0</span><span class="p">)</span>
         <span class="n">abbreviation</span> <span class="o">=</span> <span class="n">character</span> <span class="o">*</span> <span class="nb">int</span><span class="p">(</span><span class="n">semitones</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">remainder</span><span class="p">:</span>
             <span class="n">abbreviation</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;q</span><span class="si">{</span><span class="n">character</span><span class="si">}</span><span class="s2">&quot;</span>
@@ -1156,7 +1156,7 @@
                 <span class="k">else</span><span class="p">:</span>
                     <span class="n">number</span> <span class="o">-=</span> <span class="n">group_dict</span><span class="p">[</span><span class="s2">&quot;octave_tick&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">number</span> <span class="o">=</span> <span class="n">number</span>
-        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">number</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">)):</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">number</span><span class="p">,</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">float</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">number</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">number</span><span class="p">)</span>
         <span class="k">elif</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">number</span><span class="p">,</span> <span class="s2">&quot;octave&quot;</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">number</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">number</span><span class="o">.</span><span class="n">octave</span><span class="o">.</span><span class="n">number</span>
@@ -1182,28 +1182,6 @@
 <span class="sd">        Returns integer.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">number</span><span class="p">)</span></div>
-
-    <span class="c1"># TODO: remove</span>
-<div class="viewcode-block" id="Octave.__str__"><a class="viewcode-back" href="../../api/abjad/pitch.html#abjad.pitch.Octave.__str__">[docs]</a>    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Gets string representation of octave.</span>
-
-<span class="sd">        Defined equal to LilyPond octave / tick representation of octave.</span>
-
-<span class="sd">        ..  container:: example</span>
-
-<span class="sd">            &gt;&gt;&gt; str(abjad.Octave(4))</span>
-<span class="sd">            &quot;&#39;&quot;</span>
-
-<span class="sd">            &gt;&gt;&gt; str(abjad.Octave(1))</span>
-<span class="sd">            &#39;,,&#39;</span>
-
-<span class="sd">            &gt;&gt;&gt; str(abjad.Octave(3))</span>
-<span class="sd">            &#39;&#39;</span>
-
-<span class="sd">        Returns string.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">ticks</span></div>
 
     <span class="k">def</span> <span class="nf">_is_tick_string</span><span class="p">(</span><span class="n">argument</span><span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">argument</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
@@ -1277,7 +1255,7 @@
 <span class="sd">            Octave(number=5)</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">pitch</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">pitch</span><span class="p">,</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">float</span><span class="p">):</span>
             <span class="n">number</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">pitch</span> <span class="o">/</span> <span class="mi">12</span><span class="p">))</span> <span class="o">+</span> <span class="mi">4</span>
             <span class="k">return</span> <span class="n">class_</span><span class="p">(</span><span class="n">number</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">pitch</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">):</span>
@@ -1341,7 +1319,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_from_named_parts</span><span class="p">(</span><span class="n">direction</span><span class="p">,</span> <span class="n">quality</span><span class="p">,</span> <span class="n">diatonic_number</span><span class="p">)</span>
         <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">argument</span><span class="p">,</span> <span class="n">numbers</span><span class="o">.</span><span class="n">Number</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_from_number</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">argument</span><span class="p">,</span> <span class="p">(</span><span class="n">Interval</span><span class="p">,</span> <span class="n">IntervalClass</span><span class="p">)):</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">argument</span><span class="p">,</span> <span class="n">Interval</span> <span class="o">|</span> <span class="n">IntervalClass</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_from_interval_or_interval_class</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">message</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;can not initialize </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2"> from </span><span class="si">{</span><span class="n">argument</span><span class="si">!r}</span><span class="s2">.&quot;</span>
@@ -1367,7 +1345,7 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Hashes interval-class.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="nb">hash</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span></div>
+        <span class="k">return</span> <span class="nb">hash</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">+</span> <span class="nb">repr</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span></div>
 
 <div class="viewcode-block" id="IntervalClass.__lt__"><a class="viewcode-back" href="../../api/abjad/pitch.html#abjad.pitch.IntervalClass.__lt__">[docs]</a>    <span class="k">def</span> <span class="fm">__lt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -1375,15 +1353,6 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">argument</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">number</span> <span class="o">&lt;</span> <span class="n">argument</span><span class="o">.</span><span class="n">number</span></div>
-
-    <span class="c1"># TODO: remove</span>
-<div class="viewcode-block" id="IntervalClass.__str__"><a class="viewcode-back" href="../../api/abjad/pitch.html#abjad.pitch.IntervalClass.__str__">[docs]</a>    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Gets string representation of interval-class.</span>
-
-<span class="sd">        Returns string.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">number</span><span class="p">)</span></div>
 
     <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">_named_to_numbered</span><span class="p">(</span><span class="n">direction</span><span class="p">,</span> <span class="n">quality</span><span class="p">,</span> <span class="n">diatonic_number</span><span class="p">):</span>
@@ -1667,20 +1636,6 @@
 <span class="sd">        Gets repr.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">(</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">!r}</span><span class="s2">)&quot;</span></div>
-
-    <span class="c1"># TODO: remove</span>
-<div class="viewcode-block" id="NamedIntervalClass.__str__"><a class="viewcode-back" href="../../api/abjad/pitch.html#abjad.pitch.NamedIntervalClass.__str__">[docs]</a>    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Gets string representation of named interval-class.</span>
-
-<span class="sd">        ..  container:: example</span>
-
-<span class="sd">            &gt;&gt;&gt; str(abjad.NamedIntervalClass(&quot;-M9&quot;))</span>
-<span class="sd">            &#39;-M2&#39;</span>
-
-<span class="sd">        Returns string.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span></div>
 
 <div class="viewcode-block" id="NamedIntervalClass.__sub__"><a class="viewcode-back" href="../../api/abjad/pitch.html#abjad.pitch.NamedIntervalClass.__sub__">[docs]</a>    <span class="k">def</span> <span class="fm">__sub__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -1978,7 +1933,7 @@
         <span class="n">named_interval</span> <span class="o">=</span> <span class="n">NamedInterval</span><span class="o">.</span><span class="n">from_pitch_carriers</span><span class="p">(</span>
             <span class="n">pitch_carrier_1</span><span class="p">,</span> <span class="n">pitch_carrier_2</span>
         <span class="p">)</span>
-        <span class="n">string</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">named_interval</span><span class="p">)</span>
+        <span class="n">string</span> <span class="o">=</span> <span class="n">named_interval</span><span class="o">.</span><span class="n">name</span>
         <span class="k">return</span> <span class="n">class_</span><span class="p">(</span><span class="n">string</span><span class="p">)</span></div></div>
 
 
@@ -2148,28 +2103,6 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">(</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">number</span><span class="si">!r}</span><span class="s2">)&quot;</span></div>
 
-    <span class="c1"># TODO: remove</span>
-<div class="viewcode-block" id="NumberedIntervalClass.__str__"><a class="viewcode-back" href="../../api/abjad/pitch.html#abjad.pitch.NumberedIntervalClass.__str__">[docs]</a>    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Gets string representation of numbered interval-class.</span>
-
-<span class="sd">        ..  container:: example</span>
-
-<span class="sd">            &gt;&gt;&gt; str(abjad.NumberedIntervalClass(-13))</span>
-<span class="sd">            &#39;-1&#39;</span>
-
-<span class="sd">            &gt;&gt;&gt; str(abjad.NumberedIntervalClass(0))</span>
-<span class="sd">            &#39;0&#39;</span>
-
-<span class="sd">            &gt;&gt;&gt; str(abjad.NumberedIntervalClass(13))</span>
-<span class="sd">            &#39;+1&#39;</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">string</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__str__</span><span class="p">()</span>
-        <span class="k">if</span> <span class="mi">0</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">number</span><span class="p">:</span>
-            <span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;+&quot;</span> <span class="o">+</span> <span class="n">string</span>
-        <span class="k">return</span> <span class="n">string</span></div>
-
 <div class="viewcode-block" id="NumberedIntervalClass.__sub__"><a class="viewcode-back" href="../../api/abjad/pitch.html#abjad.pitch.NumberedIntervalClass.__sub__">[docs]</a>    <span class="k">def</span> <span class="fm">__sub__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Subtracts ``argument`` from numbered interval-class.</span>
@@ -2209,6 +2142,16 @@
             <span class="k">return</span> <span class="mi">0</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="mi">1</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">signed_string</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets signed string.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">direction_symbol</span> <span class="o">=</span> <span class="n">_direction_number_to_direction_symbol</span><span class="p">[</span>
+            <span class="n">_math</span><span class="o">.</span><span class="n">sign</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">number</span><span class="p">)</span>
+        <span class="p">]</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">direction_symbol</span><span class="si">}{</span><span class="nb">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">number</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
 
 <div class="viewcode-block" id="NumberedIntervalClass.from_pitch_carriers"><a class="viewcode-back" href="../../api/abjad/pitch.html#abjad.pitch.NumberedIntervalClass.from_pitch_carriers">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">from_pitch_carriers</span><span class="p">(</span>
@@ -2352,25 +2295,7 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets repr.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">(</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">number</span><span class="si">!r}</span><span class="s2">)&quot;</span></div>
-
-    <span class="c1"># TODO: remove</span>
-<div class="viewcode-block" id="NumberedInversionEquivalentIntervalClass.__str__"><a class="viewcode-back" href="../../api/abjad/pitch.html#abjad.pitch.NumberedInversionEquivalentIntervalClass.__str__">[docs]</a>    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Gets string representation of numbered inversion-equivalent</span>
-<span class="sd">        interval-class.</span>
-
-<span class="sd">        ..  container:: example</span>
-
-<span class="sd">            &gt;&gt;&gt; str(abjad.NumberedInversionEquivalentIntervalClass(0))</span>
-<span class="sd">            &#39;0&#39;</span>
-
-<span class="sd">            &gt;&gt;&gt; str(abjad.NumberedInversionEquivalentIntervalClass(1.5))</span>
-<span class="sd">            &#39;1.5&#39;</span>
-
-<span class="sd">        Returns string.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">number</span><span class="p">)</span></div></div>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">(</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">number</span><span class="si">!r}</span><span class="s2">)&quot;</span></div></div>
 
 
 <div class="viewcode-block" id="Interval"><a class="viewcode-back" href="../../api/abjad/pitch.html#abjad.pitch.Interval">[docs]</a><span class="nd">@functools</span><span class="o">.</span><span class="n">total_ordering</span>
@@ -2427,17 +2352,17 @@
 
 <div class="viewcode-block" id="Interval.__eq__"><a class="viewcode-back" href="../../api/abjad/pitch.html#abjad.pitch.Interval.__eq__">[docs]</a>    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Compares string formats.</span>
+<span class="sd">        Compares repr formats.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">argument</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)):</span>
-            <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">==</span> <span class="nb">str</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span>
+            <span class="k">return</span> <span class="nb">repr</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">==</span> <span class="nb">repr</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span>
         <span class="k">return</span> <span class="kc">False</span></div>
 
 <div class="viewcode-block" id="Interval.__hash__"><a class="viewcode-back" href="../../api/abjad/pitch.html#abjad.pitch.Interval.__hash__">[docs]</a>    <span class="k">def</span> <span class="fm">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Hashes interval.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="nb">hash</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span></div>
+        <span class="k">return</span> <span class="nb">hash</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">+</span> <span class="nb">repr</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span></div>
 
 <div class="viewcode-block" id="Interval.__lt__"><a class="viewcode-back" href="../../api/abjad/pitch.html#abjad.pitch.Interval.__lt__">[docs]</a>    <span class="k">def</span> <span class="fm">__lt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -2446,15 +2371,6 @@
 <span class="sd">        Returns true or false.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
-
-    <span class="c1"># TODO: remove</span>
-<div class="viewcode-block" id="Interval.__str__"><a class="viewcode-back" href="../../api/abjad/pitch.html#abjad.pitch.Interval.__str__">[docs]</a>    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Gets string representation of interval.</span>
-
-<span class="sd">        Returns string.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">number</span><span class="p">)</span></div>
 
     <span class="k">def</span> <span class="nf">_from_interval_or_interval_class</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">):</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span>
@@ -2859,19 +2775,6 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span> <span class="o">*</span> <span class="n">argument</span></div>
 
-    <span class="c1"># TODO: remove</span>
-<div class="viewcode-block" id="NamedInterval.__str__"><a class="viewcode-back" href="../../api/abjad/pitch.html#abjad.pitch.NamedInterval.__str__">[docs]</a>    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Gets string representation of named interval.</span>
-
-<span class="sd">        ..  container:: example</span>
-
-<span class="sd">            &gt;&gt;&gt; str(abjad.NamedInterval(&quot;+M9&quot;))</span>
-<span class="sd">            &#39;+M9&#39;</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span></div>
-
 <div class="viewcode-block" id="NamedInterval.__sub__"><a class="viewcode-back" href="../../api/abjad/pitch.html#abjad.pitch.NamedInterval.__sub__">[docs]</a>    <span class="k">def</span> <span class="fm">__sub__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;NamedInterval&quot;</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Subtracts ``argument`` from named interval.</span>
@@ -3160,7 +3063,7 @@
             <span class="n">quartertone</span> <span class="o">=</span> <span class="s2">&quot;+&quot;</span>
             <span class="n">numbered_ic_number</span> <span class="o">-=</span> <span class="mf">0.5</span>
         <span class="n">quality_to_semitones</span> <span class="o">=</span> <span class="n">_diatonic_number_to_quality_dictionary</span><span class="p">[</span><span class="n">named_ic_number</span><span class="p">]</span>
-        <span class="n">semitones_to_quality</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Dict</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="n">semitones_to_quality</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="p">{</span>
             <span class="n">value</span><span class="p">:</span> <span class="n">key</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">quality_to_semitones</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
         <span class="p">}</span>
         <span class="n">quality</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
@@ -3368,11 +3271,6 @@
 
 <span class="sd">        Returns true or false.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c1">#        if not isinstance(argument, type(self)):</span>
-        <span class="c1">#            raise TypeError(f&quot;must be numbered interval: {argument!r}.&quot;)</span>
-        <span class="c1">#        if not self.direction_number == argument.direction_number:</span>
-        <span class="c1">#            raise ValueError(&quot;can only compare intervals of same direction.&quot;)</span>
-        <span class="c1">#        return abs(self.number) &lt; abs(argument.number)</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">argument</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)):</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">number</span> <span class="o">&lt;</span> <span class="n">argument</span><span class="o">.</span><span class="n">number</span>
         <span class="k">return</span> <span class="kc">False</span></div>
@@ -3415,16 +3313,6 @@
 <span class="sd">        Gets repr.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">(</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">number</span><span class="si">!r}</span><span class="s2">)&quot;</span></div>
-
-    <span class="c1"># TODO: remove</span>
-<div class="viewcode-block" id="NumberedInterval.__str__"><a class="viewcode-back" href="../../api/abjad/pitch.html#abjad.pitch.NumberedInterval.__str__">[docs]</a>    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Gets string.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">direction_symbol</span> <span class="o">=</span> <span class="n">_direction_number_to_direction_symbol</span><span class="p">[</span>
-            <span class="n">_math</span><span class="o">.</span><span class="n">sign</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">number</span><span class="p">)</span>
-        <span class="p">]</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">direction_symbol</span><span class="si">}{</span><span class="nb">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">number</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span></div>
 
 <div class="viewcode-block" id="NumberedInterval.__sub__"><a class="viewcode-back" href="../../api/abjad/pitch.html#abjad.pitch.NumberedInterval.__sub__">[docs]</a>    <span class="k">def</span> <span class="fm">__sub__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;NumberedInterval&quot;</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -3521,6 +3409,16 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">number</span>
 
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">signed_string</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets signed string.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">direction_symbol</span> <span class="o">=</span> <span class="n">_direction_number_to_direction_symbol</span><span class="p">[</span>
+            <span class="n">_math</span><span class="o">.</span><span class="n">sign</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">number</span><span class="p">)</span>
+        <span class="p">]</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">direction_symbol</span><span class="si">}{</span><span class="nb">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">number</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+
 <div class="viewcode-block" id="NumberedInterval.from_pitch_carriers"><a class="viewcode-back" href="../../api/abjad/pitch.html#abjad.pitch.NumberedInterval.from_pitch_carriers">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">from_pitch_carriers</span><span class="p">(</span>
         <span class="n">class_</span><span class="p">,</span> <span class="n">pitch_carrier_1</span><span class="p">,</span> <span class="n">pitch_carrier_2</span>
@@ -3612,7 +3510,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_from_named_parts</span><span class="p">(</span><span class="n">dpc_number</span><span class="p">,</span> <span class="n">alteration</span><span class="p">)</span>
         <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">argument</span><span class="p">,</span> <span class="n">numbers</span><span class="o">.</span><span class="n">Number</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_from_number</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">argument</span><span class="p">,</span> <span class="p">(</span><span class="n">Pitch</span><span class="p">,</span> <span class="n">PitchClass</span><span class="p">)):</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">argument</span><span class="p">,</span> <span class="n">Pitch</span> <span class="o">|</span> <span class="n">PitchClass</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_from_pitch_or_pitch_class</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">try</span><span class="p">:</span>
@@ -3625,10 +3523,10 @@
 
 <div class="viewcode-block" id="PitchClass.__eq__"><a class="viewcode-back" href="../../api/abjad/pitch.html#abjad.pitch.PitchClass.__eq__">[docs]</a>    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Compares string formats.</span>
+<span class="sd">        Compares reprs.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">argument</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)):</span>
-            <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">==</span> <span class="nb">str</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span>
+            <span class="k">return</span> <span class="nb">repr</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">==</span> <span class="nb">repr</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span>
         <span class="k">return</span> <span class="kc">False</span></div>
 
     <span class="c1"># TODO: remove</span>
@@ -3644,7 +3542,7 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Hashes pitch-class.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="nb">hash</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span></div>
+        <span class="k">return</span> <span class="nb">hash</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">+</span> <span class="nb">repr</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span></div>
 
 <div class="viewcode-block" id="PitchClass.__lt__"><a class="viewcode-back" href="../../api/abjad/pitch.html#abjad.pitch.PitchClass.__lt__">[docs]</a>    <span class="k">def</span> <span class="fm">__lt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -3919,20 +3817,6 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">(</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">!r}</span><span class="s2">)&quot;</span></div>
 
-    <span class="c1"># TODO: remove</span>
-<div class="viewcode-block" id="NamedPitchClass.__str__"><a class="viewcode-back" href="../../api/abjad/pitch.html#abjad.pitch.NamedPitchClass.__str__">[docs]</a>    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Gets string representation of named pitch-class.</span>
-
-<span class="sd">        ..  container:: example</span>
-
-<span class="sd">            &gt;&gt;&gt; str(abjad.NamedPitchClass(&quot;cs&quot;))</span>
-<span class="sd">            &#39;cs&#39;</span>
-
-<span class="sd">        Returns string.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span></div>
-
 <div class="viewcode-block" id="NamedPitchClass.__sub__"><a class="viewcode-back" href="../../api/abjad/pitch.html#abjad.pitch.NamedPitchClass.__sub__">[docs]</a>    <span class="k">def</span> <span class="fm">__sub__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;NamedInversionEquivalentIntervalClass&quot;</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Subtracts ``argument`` from named pitch-class.</span>
@@ -4165,8 +4049,8 @@
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">number</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">arrow</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">number</span> <span class="ow">or</span> <span class="mi">0</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">arrow</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">arrow</span> <span class="o">=</span> <span class="n">_enums</span><span class="o">.</span><span class="n">VerticalAlignment</span><span class="o">.</span><span class="n">from_expr</span><span class="p">(</span><span class="n">arrow</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">arrow</span> <span class="ow">is</span> <span class="n">_enums</span><span class="o">.</span><span class="n">Center</span><span class="p">:</span>
+            <span class="n">arrow</span> <span class="o">=</span> <span class="n">_string</span><span class="o">.</span><span class="n">to_tridirectional_ordinal_constant</span><span class="p">(</span><span class="n">arrow</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">arrow</span> <span class="ow">is</span> <span class="n">_enums</span><span class="o">.</span><span class="n">CENTER</span><span class="p">:</span>
                 <span class="n">arrow</span> <span class="o">=</span> <span class="kc">None</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_arrow</span> <span class="o">=</span> <span class="n">arrow</span>
 
@@ -4302,13 +4186,6 @@
 <span class="sd">        Gets repr.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">(</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">number</span><span class="si">!r}</span><span class="s2">)&quot;</span></div>
-
-    <span class="c1"># TODO: remove</span>
-<div class="viewcode-block" id="NumberedPitchClass.__str__"><a class="viewcode-back" href="../../api/abjad/pitch.html#abjad.pitch.NumberedPitchClass.__str__">[docs]</a>    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Gets string.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">number</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="NumberedPitchClass.__sub__"><a class="viewcode-back" href="../../api/abjad/pitch.html#abjad.pitch.NumberedPitchClass.__sub__">[docs]</a>    <span class="k">def</span> <span class="fm">__sub__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">argument</span>
@@ -4558,7 +4435,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_from_named_parts</span><span class="p">(</span><span class="n">_dpc_number</span><span class="p">,</span> <span class="n">_alteration</span><span class="p">,</span> <span class="n">_octave</span><span class="p">)</span>
         <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">argument</span><span class="p">,</span> <span class="n">numbers</span><span class="o">.</span><span class="n">Number</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_from_number</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">argument</span><span class="p">,</span> <span class="p">(</span><span class="n">Pitch</span><span class="p">,</span> <span class="n">PitchClass</span><span class="p">)):</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">argument</span><span class="p">,</span> <span class="n">Pitch</span> <span class="o">|</span> <span class="n">PitchClass</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_from_pitch_or_pitch_class</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span>
         <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">argument</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
             <span class="n">_pitch_class</span> <span class="o">=</span> <span class="n">NamedPitchClass</span><span class="p">(</span><span class="n">argument</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
@@ -4599,7 +4476,7 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Hashes pitch.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="nb">hash</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span></div>
+        <span class="k">return</span> <span class="nb">hash</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">+</span> <span class="nb">repr</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span></div>
 
 <div class="viewcode-block" id="Pitch.__lt__"><a class="viewcode-back" href="../../api/abjad/pitch.html#abjad.pitch.Pitch.__lt__">[docs]</a>    <span class="k">def</span> <span class="fm">__lt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -4757,9 +4634,6 @@
         <span class="k">raise</span> <span class="ne">NotImplementedError</span></div></div>
 
 
-<span class="n">PitchTyping</span> <span class="o">=</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="n">Pitch</span><span class="p">]</span>
-
-
 <div class="viewcode-block" id="NamedPitch"><a class="viewcode-back" href="../../api/abjad/pitch.html#abjad.pitch.NamedPitch">[docs]</a><span class="nd">@functools</span><span class="o">.</span><span class="n">total_ordering</span>
 <span class="k">class</span> <span class="nc">NamedPitch</span><span class="p">(</span><span class="n">Pitch</span><span class="p">):</span>
     <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
@@ -4792,8 +4666,8 @@
 
 <span class="sd">        Initializes arrowed pitch:</span>
 
-<span class="sd">        &gt;&gt;&gt; abjad.NamedPitch(&quot;C#5&quot;, arrow=abjad.Up)</span>
-<span class="sd">        NamedPitch(&quot;cs&#39;&#39;&quot;, arrow=Up)</span>
+<span class="sd">        &gt;&gt;&gt; abjad.NamedPitch(&quot;C#5&quot;, arrow=abjad.UP)</span>
+<span class="sd">        NamedPitch(&quot;cs&#39;&#39;&quot;, arrow=Vertical.UP)</span>
 
 <span class="sd">    ..  container:: example</span>
 
@@ -4861,9 +4735,9 @@
 
 <span class="sd">            Copies arrowed pitch:</span>
 
-<span class="sd">            &gt;&gt;&gt; pitch = abjad.NamedPitch(&quot;cs&#39;&#39;&quot;, arrow=abjad.Up)</span>
+<span class="sd">            &gt;&gt;&gt; pitch = abjad.NamedPitch(&quot;cs&#39;&#39;&quot;, arrow=abjad.UP)</span>
 <span class="sd">            &gt;&gt;&gt; copy.copy(pitch)</span>
-<span class="sd">            NamedPitch(&quot;cs&#39;&#39;&quot;, arrow=Up)</span>
+<span class="sd">            NamedPitch(&quot;cs&#39;&#39;&quot;, arrow=Vertical.UP)</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span><span class="bp">self</span><span class="p">,</span> <span class="n">arrow</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">arrow</span><span class="p">)</span></div>
@@ -5031,25 +4905,6 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">(</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">!r}</span><span class="s2">)&quot;</span></div>
 
-    <span class="c1"># TODO: remove</span>
-<div class="viewcode-block" id="NamedPitch.__str__"><a class="viewcode-back" href="../../api/abjad/pitch.html#abjad.pitch.NamedPitch.__str__">[docs]</a>    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Gets string representation of named pitch.</span>
-
-<span class="sd">        ..  container:: example</span>
-
-<span class="sd">            &gt;&gt;&gt; str(abjad.NamedPitch(&quot;c&#39;&#39;&quot;))</span>
-<span class="sd">            &quot;c&#39;&#39;&quot;</span>
-
-<span class="sd">            &gt;&gt;&gt; str(abjad.NamedPitch(&quot;cs&#39;&#39;&quot;))</span>
-<span class="sd">            &quot;cs&#39;&#39;&quot;</span>
-
-<span class="sd">            &gt;&gt;&gt; str(abjad.NamedPitch(&quot;df&#39;&#39;&quot;))</span>
-<span class="sd">            &quot;df&#39;&#39;&quot;</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span></div>
-
 <div class="viewcode-block" id="NamedPitch.__sub__"><a class="viewcode-back" href="../../api/abjad/pitch.html#abjad.pitch.NamedPitch.__sub__">[docs]</a>    <span class="k">def</span> <span class="fm">__sub__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;NamedInterval&quot;</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Subtracts ``argument`` from named pitch.</span>
@@ -5122,9 +4977,9 @@
         <span class="k">return</span> <span class="n">diatonic_pitch_number</span>
 
     <span class="k">def</span> <span class="nf">_get_lilypond_format</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
 
-    <span class="k">def</span> <span class="nf">_list_format_contributions</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_list_contributions</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">contributions</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">arrow</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">contributions</span>
@@ -5167,16 +5022,16 @@
 <span class="sd">            &gt;&gt;&gt; abjad.NamedPitch(&quot;cs&#39;&#39;&quot;).arrow is None</span>
 <span class="sd">            True</span>
 
-<span class="sd">            &gt;&gt;&gt; abjad.NamedPitch(&quot;cs&#39;&#39;&quot;, arrow=abjad.Up).arrow</span>
-<span class="sd">            Up</span>
+<span class="sd">            &gt;&gt;&gt; abjad.NamedPitch(&quot;cs&#39;&#39;&quot;, arrow=abjad.UP).arrow</span>
+<span class="sd">            &lt;Vertical.UP: 1&gt;</span>
 
-<span class="sd">            &gt;&gt;&gt; abjad.NamedPitch(&quot;cs&#39;&#39;&quot;, arrow=abjad.Down).arrow</span>
-<span class="sd">            Down</span>
+<span class="sd">            &gt;&gt;&gt; abjad.NamedPitch(&quot;cs&#39;&#39;&quot;, arrow=abjad.DOWN).arrow</span>
+<span class="sd">            &lt;Vertical.DOWN: -1&gt;</span>
 
 <span class="sd">            Displays arrow in interpreter representation:</span>
 
-<span class="sd">            &gt;&gt;&gt; abjad.NamedPitch(&quot;cs&#39;&#39;&quot;, arrow=abjad.Down)</span>
-<span class="sd">            NamedPitch(&quot;cs&#39;&#39;&quot;, arrow=Down)</span>
+<span class="sd">            &gt;&gt;&gt; abjad.NamedPitch(&quot;cs&#39;&#39;&quot;, arrow=abjad.DOWN)</span>
+<span class="sd">            NamedPitch(&quot;cs&#39;&#39;&quot;, arrow=Vertical.DOWN)</span>
 
 <span class="sd">        Returns up, down or none.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -5218,7 +5073,7 @@
 <span class="sd">            &quot;df&#39;&#39;&quot;</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">pitch_class</span><span class="si">!s}{</span><span class="bp">self</span><span class="o">.</span><span class="n">octave</span><span class="si">!s}</span><span class="s2">&quot;</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">pitch_class</span><span class="o">.</span><span class="n">name</span><span class="si">}{</span><span class="bp">self</span><span class="o">.</span><span class="n">octave</span><span class="o">.</span><span class="n">ticks</span><span class="si">}</span><span class="s2">&quot;</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">number</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">float</span><span class="p">:</span>
@@ -5537,7 +5392,7 @@
 <span class="sd">        Is true when ``argument`` is a numbered pitch with ``number`` the same as this</span>
 <span class="sd">        numbered pitch.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">argument</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">argument</span><span class="p">,</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">float</span><span class="p">):</span>
             <span class="n">argument</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span><span class="n">argument</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">argument</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)):</span>
             <span class="k">return</span> <span class="p">(</span>
@@ -5672,13 +5527,6 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">(</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">number</span><span class="si">!r}</span><span class="s2">)&quot;</span></div>
 
-    <span class="c1"># TODO: remove</span>
-<div class="viewcode-block" id="NumberedPitch.__str__"><a class="viewcode-back" href="../../api/abjad/pitch.html#abjad.pitch.NumberedPitch.__str__">[docs]</a>    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Gets string.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">number</span><span class="p">)</span></div>
-
 <div class="viewcode-block" id="NumberedPitch.__sub__"><a class="viewcode-back" href="../../api/abjad/pitch.html#abjad.pitch.NumberedPitch.__sub__">[docs]</a>    <span class="k">def</span> <span class="fm">__sub__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;NumberedInterval&quot;</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Subtracts ``argument`` from numbered pitch.</span>
@@ -5766,11 +5614,11 @@
 <span class="sd">            &gt;&gt;&gt; abjad.NumberedPitch(13).arrow is None</span>
 <span class="sd">            True</span>
 
-<span class="sd">            &gt;&gt;&gt; abjad.NumberedPitch(13, arrow=abjad.Up).arrow</span>
-<span class="sd">            Up</span>
+<span class="sd">            &gt;&gt;&gt; abjad.NumberedPitch(13, arrow=abjad.UP).arrow</span>
+<span class="sd">            &lt;Vertical.UP: 1&gt;</span>
 
-<span class="sd">            &gt;&gt;&gt; abjad.NumberedPitch(13, arrow=abjad.Down).arrow</span>
-<span class="sd">            Down</span>
+<span class="sd">            &gt;&gt;&gt; abjad.NumberedPitch(13, arrow=abjad.DOWN).arrow</span>
+<span class="sd">            &lt;Vertical.DOWN: -1&gt;</span>
 
 <span class="sd">        Returns up, down or none.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -5999,6 +5847,36 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">interval</span> <span class="o">=</span> <span class="n">NumberedInterval</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
         <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span><span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">+</span> <span class="nb">float</span><span class="p">(</span><span class="n">interval</span><span class="p">))</span></div></div>
+
+
+<div class="viewcode-block" id="StaffPosition"><a class="viewcode-back" href="../../api/abjad/pitch.html#abjad.pitch.StaffPosition">[docs]</a><span class="nd">@dataclasses</span><span class="o">.</span><span class="n">dataclass</span><span class="p">(</span><span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">slots</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">unsafe_hash</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">StaffPosition</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Staff position.</span>
+
+<span class="sd">    ..  container:: example</span>
+
+<span class="sd">        Middle line of staff:</span>
+
+<span class="sd">        &gt;&gt;&gt; abjad.StaffPosition(0)</span>
+<span class="sd">        StaffPosition(number=0)</span>
+
+<span class="sd">        One space below middle line of staff:</span>
+
+<span class="sd">        &gt;&gt;&gt; abjad.StaffPosition(-1)</span>
+<span class="sd">        StaffPosition(number=-1)</span>
+
+<span class="sd">        One line below middle line of staff:</span>
+
+<span class="sd">        &gt;&gt;&gt; abjad.StaffPosition(-2)</span>
+<span class="sd">        StaffPosition(number=-2)</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">number</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+
+<div class="viewcode-block" id="StaffPosition.__post_init__"><a class="viewcode-back" href="../../api/abjad/pitch.html#abjad.pitch.StaffPosition.__post_init__">[docs]</a>    <span class="k">def</span> <span class="nf">__post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">number</span><span class="p">,</span> <span class="nb">int</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">number</span><span class="p">)</span></div></div>
 </pre></div>
 
     </div>

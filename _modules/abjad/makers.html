@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>abjad.makers &mdash; Abjad 3.6 documentation</title>
+  <title>abjad.makers &mdash; Abjad 3.7 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/abjad.css" type="text/css" />
@@ -32,11 +32,11 @@
   <div class="wy-grid-for-nav">
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search"  style="background: #00dd00" >
+        <div class="wy-side-nav-search"  style="background: #112233" >
 
 
     <a href="../../index.html" class="icon icon-home" alt="Documentation
-    Home"> Abjad 3.6
+    Home"> Abjad 3.7
 
 
 
@@ -110,7 +110,7 @@
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #00dd00" >
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #112233" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../index.html">Abjad</a>
       </nav>
@@ -129,7 +129,6 @@
 <span></span><span class="kn">import</span> <span class="nn">collections</span>
 <span class="kn">import</span> <span class="nn">math</span>
 <span class="kn">import</span> <span class="nn">numbers</span>
-<span class="kn">import</span> <span class="nn">typing</span>
 
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">_inspect</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">duration</span> <span class="k">as</span> <span class="n">_duration</span>
@@ -243,7 +242,7 @@
 <span class="sd">        Works with segments:</span>
 
 <span class="sd">        &gt;&gt;&gt; maker = abjad.LeafMaker()</span>
-<span class="sd">        &gt;&gt;&gt; pitches = abjad.PitchSegment(&quot;e&#39;&#39; ef&#39;&#39; d&#39;&#39; df&#39;&#39; c&#39;&#39;&quot;)</span>
+<span class="sd">        &gt;&gt;&gt; pitches = &quot;e&#39;&#39; ef&#39;&#39; d&#39;&#39; df&#39;&#39; c&#39;&#39;&quot;</span>
 <span class="sd">        &gt;&gt;&gt; durations = [abjad.Duration(1, 4)]</span>
 <span class="sd">        &gt;&gt;&gt; leaves = maker(pitches, durations)</span>
 <span class="sd">        &gt;&gt;&gt; staff = abjad.Staff(leaves)</span>
@@ -612,7 +611,7 @@
             <span class="n">pitches</span> <span class="o">=</span> <span class="n">pitches</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">pitches</span><span class="p">,</span> <span class="n">collections</span><span class="o">.</span><span class="n">abc</span><span class="o">.</span><span class="n">Iterable</span><span class="p">):</span>
             <span class="n">pitches</span> <span class="o">=</span> <span class="p">[</span><span class="n">pitches</span><span class="p">]</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">durations</span><span class="p">,</span> <span class="p">(</span><span class="n">numbers</span><span class="o">.</span><span class="n">Number</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">durations</span><span class="p">,</span> <span class="n">numbers</span><span class="o">.</span><span class="n">Number</span> <span class="o">|</span> <span class="nb">tuple</span><span class="p">):</span>
             <span class="n">durations</span> <span class="o">=</span> <span class="p">[</span><span class="n">durations</span><span class="p">]</span>
         <span class="n">nonreduced_fractions</span> <span class="o">=</span> <span class="p">[</span><span class="n">_duration</span><span class="o">.</span><span class="n">NonreducedFraction</span><span class="p">(</span><span class="n">_</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">durations</span><span class="p">]</span>
         <span class="n">size</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">nonreduced_fractions</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">pitches</span><span class="p">))</span>
@@ -621,7 +620,7 @@
         <span class="n">duration_groups</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Duration</span><span class="o">.</span><span class="n">_group_by_implied_prolation</span><span class="p">(</span>
             <span class="n">nonreduced_fractions</span>
         <span class="p">)</span>
-        <span class="n">result</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">_score</span><span class="o">.</span><span class="n">Tuplet</span><span class="p">,</span> <span class="n">_score</span><span class="o">.</span><span class="n">Leaf</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">result</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">_score</span><span class="o">.</span><span class="n">Tuplet</span> <span class="o">|</span> <span class="n">_score</span><span class="o">.</span><span class="n">Leaf</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">duration_group</span> <span class="ow">in</span> <span class="n">duration_groups</span><span class="p">:</span>
             <span class="c1"># get factors in denominator of duration group other than 1, 2.</span>
             <span class="n">factors_</span> <span class="o">=</span> <span class="n">_math</span><span class="o">.</span><span class="n">factors</span><span class="p">(</span><span class="n">duration_group</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">denominator</span><span class="p">)</span>
@@ -653,7 +652,7 @@
                     <span class="n">ratio</span> <span class="o">*</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="n">duration</span><span class="p">)</span> <span class="k">for</span> <span class="n">duration</span> <span class="ow">in</span> <span class="n">duration_group</span>
                 <span class="p">]</span>
                 <span class="c1"># make tuplet leaves</span>
-                <span class="n">tuplet_leaves</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">_score</span><span class="o">.</span><span class="n">Leaf</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="n">tuplet_leaves</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">_score</span><span class="o">.</span><span class="n">Leaf</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
                 <span class="k">for</span> <span class="n">pitch</span><span class="p">,</span> <span class="n">duration</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">current_pitches</span><span class="p">,</span> <span class="n">duration_group</span><span class="p">):</span>
                     <span class="n">leaves</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_leaf_on_pitch</span><span class="p">(</span>
                         <span class="n">pitch</span><span class="p">,</span>
@@ -813,35 +812,35 @@
     <span class="c1">### PUBLIC PROPERTIES ###</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">forbidden_note_duration</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="n">_duration</span><span class="o">.</span><span class="n">Duration</span><span class="p">]:</span>
+    <span class="k">def</span> <span class="nf">forbidden_note_duration</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Duration</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets forbidden written duration.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_forbidden_note_duration</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">forbidden_rest_duration</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="n">_duration</span><span class="o">.</span><span class="n">Duration</span><span class="p">]:</span>
+    <span class="k">def</span> <span class="nf">forbidden_rest_duration</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Duration</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets forbidden written duration.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_forbidden_rest_duration</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">increase_monotonic</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]:</span>
+    <span class="k">def</span> <span class="nf">increase_monotonic</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Is true when durations increase monotonically.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_increase_monotonic</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">skips_instead_of_rests</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]:</span>
+    <span class="k">def</span> <span class="nf">skips_instead_of_rests</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Is true when skips appear in place of rests.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_skips_instead_of_rests</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">tag</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="n">_tag</span><span class="o">.</span><span class="n">Tag</span><span class="p">]:</span>
+    <span class="k">def</span> <span class="nf">tag</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">_tag</span><span class="o">.</span><span class="n">Tag</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets tag.</span>
 
@@ -876,7 +875,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tag</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">use_multimeasure_rests</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]:</span>
+    <span class="k">def</span> <span class="nf">use_multimeasure_rests</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Is true when rests are multimeasure.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -1055,14 +1054,14 @@
             <span class="n">pitches</span> <span class="o">=</span> <span class="n">pitches</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">pitches</span><span class="p">,</span> <span class="n">collections</span><span class="o">.</span><span class="n">abc</span><span class="o">.</span><span class="n">Iterable</span><span class="p">):</span>
             <span class="n">pitches</span> <span class="o">=</span> <span class="p">[</span><span class="n">pitches</span><span class="p">]</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">durations</span><span class="p">,</span> <span class="p">(</span><span class="n">numbers</span><span class="o">.</span><span class="n">Number</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">durations</span><span class="p">,</span> <span class="n">numbers</span><span class="o">.</span><span class="n">Number</span> <span class="o">|</span> <span class="nb">tuple</span><span class="p">):</span>
             <span class="n">durations</span> <span class="o">=</span> <span class="p">[</span><span class="n">durations</span><span class="p">]</span>
         <span class="n">nonreduced_fractions</span> <span class="o">=</span> <span class="p">[</span><span class="n">_duration</span><span class="o">.</span><span class="n">NonreducedFraction</span><span class="p">(</span><span class="n">_</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">durations</span><span class="p">]</span>
         <span class="n">size</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">nonreduced_fractions</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">pitches</span><span class="p">))</span>
         <span class="n">nonreduced_fractions</span> <span class="o">=</span> <span class="n">_sequence</span><span class="o">.</span><span class="n">repeat_to_length</span><span class="p">(</span><span class="n">nonreduced_fractions</span><span class="p">,</span> <span class="n">size</span><span class="p">)</span>
         <span class="n">pitches</span> <span class="o">=</span> <span class="n">_sequence</span><span class="o">.</span><span class="n">repeat_to_length</span><span class="p">(</span><span class="n">pitches</span><span class="p">,</span> <span class="n">size</span><span class="p">)</span>
         <span class="n">durations</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Duration</span><span class="o">.</span><span class="n">_group_by_implied_prolation</span><span class="p">(</span><span class="n">nonreduced_fractions</span><span class="p">)</span>
-        <span class="n">result</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">_score</span><span class="o">.</span><span class="n">Note</span><span class="p">,</span> <span class="n">_score</span><span class="o">.</span><span class="n">Tuplet</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">result</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">_score</span><span class="o">.</span><span class="n">Note</span> <span class="o">|</span> <span class="n">_score</span><span class="o">.</span><span class="n">Tuplet</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">duration</span> <span class="ow">in</span> <span class="n">durations</span><span class="p">:</span>
             <span class="c1"># get factors in denominator of duration group duration not 1 or 2</span>
             <span class="n">factors</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">_math</span><span class="o">.</span><span class="n">factors</span><span class="p">(</span><span class="n">duration</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">denominator</span><span class="p">))</span>
@@ -1117,14 +1116,14 @@
     <span class="c1">### PUBLIC PROPERTIES ###</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">increase_monotonic</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]:</span>
+    <span class="k">def</span> <span class="nf">increase_monotonic</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Is true when durations increase monotonically.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_increase_monotonic</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">tag</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="n">_tag</span><span class="o">.</span><span class="n">Tag</span><span class="p">]:</span>
+    <span class="k">def</span> <span class="nf">tag</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">_tag</span><span class="o">.</span><span class="n">Tag</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets tag.</span>
 
@@ -1467,7 +1466,7 @@
 
 
 <div class="viewcode-block" id="tuplet_from_leaf_and_ratio"><a class="viewcode-back" href="../../api/abjad/makers.html#abjad.makers.tuplet_from_leaf_and_ratio">[docs]</a><span class="k">def</span> <span class="nf">tuplet_from_leaf_and_ratio</span><span class="p">(</span>
-    <span class="n">leaf</span><span class="p">:</span> <span class="n">_score</span><span class="o">.</span><span class="n">Leaf</span><span class="p">,</span> <span class="n">ratio</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">,</span> <span class="n">_ratio</span><span class="o">.</span><span class="n">Ratio</span><span class="p">]</span>
+    <span class="n">leaf</span><span class="p">:</span> <span class="n">_score</span><span class="o">.</span><span class="n">Leaf</span><span class="p">,</span> <span class="n">ratio</span><span class="p">:</span> <span class="nb">list</span> <span class="o">|</span> <span class="n">_ratio</span><span class="o">.</span><span class="n">Ratio</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">_score</span><span class="o">.</span><span class="n">Tuplet</span><span class="p">:</span>
     <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Makes tuplet from ``leaf`` and ``ratio``.</span>
@@ -1812,8 +1811,8 @@
 
 
 <div class="viewcode-block" id="tuplet_from_ratio_and_pair"><a class="viewcode-back" href="../../api/abjad/makers.html#abjad.makers.tuplet_from_ratio_and_pair">[docs]</a><span class="k">def</span> <span class="nf">tuplet_from_ratio_and_pair</span><span class="p">(</span>
-    <span class="n">ratio</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">typing</span><span class="o">.</span><span class="n">Tuple</span><span class="p">,</span> <span class="n">_ratio</span><span class="o">.</span><span class="n">NonreducedRatio</span><span class="p">],</span>
-    <span class="n">fraction</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">typing</span><span class="o">.</span><span class="n">Tuple</span><span class="p">,</span> <span class="n">_duration</span><span class="o">.</span><span class="n">NonreducedFraction</span><span class="p">],</span>
+    <span class="n">ratio</span><span class="p">:</span> <span class="nb">tuple</span> <span class="o">|</span> <span class="n">_ratio</span><span class="o">.</span><span class="n">NonreducedRatio</span><span class="p">,</span>
+    <span class="n">fraction</span><span class="p">:</span> <span class="nb">tuple</span> <span class="o">|</span> <span class="n">_duration</span><span class="o">.</span><span class="n">NonreducedFraction</span><span class="p">,</span>
     <span class="o">*</span><span class="p">,</span>
     <span class="n">tag</span><span class="p">:</span> <span class="n">_tag</span><span class="o">.</span><span class="n">Tag</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">_score</span><span class="o">.</span><span class="n">Tuplet</span><span class="p">:</span>

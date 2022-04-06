@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Scales, diatonic &mdash; Abjad 3.6 documentation</title>
+  <title>Scales, diatonic &mdash; Abjad 3.7 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/abjad.css" type="text/css" />
@@ -35,11 +35,11 @@
   <div class="wy-grid-for-nav">
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search"  style="background: #00dd00" >
+        <div class="wy-side-nav-search"  style="background: #112233" >
 
 
     <a href="../index.html" class="icon icon-home" alt="Documentation
-    Home"> Abjad 3.6
+    Home"> Abjad 3.7
 
 
 
@@ -113,7 +113,7 @@
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #00dd00" >
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #112233" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../index.html">Abjad</a>
       </nav>
@@ -137,7 +137,9 @@
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">voice</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Voice</span><span class="p">(</span><span class="s2">&quot;a&#39;4 b&#39; cs&#39;&#39; d&#39;&#39; e&#39;&#39; fs&#39;&#39; gs&#39;&#39; a&#39;&#39;&quot;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Example_Voice&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">staff</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Staff</span><span class="p">([</span><span class="n">voice</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Example_Staff&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">note</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">select</span><span class="o">.</span><span class="n">note</span><span class="p">(</span><span class="n">staff</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">key_signature</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">KeySignature</span><span class="p">(</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="s2">&quot;major&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">key_signature</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">KeySignature</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">abjad</span><span class="o">.</span><span class="n">NamedPitchClass</span><span class="p">(</span><span class="s2">&quot;a&quot;</span><span class="p">),</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Mode</span><span class="p">(</span><span class="s2">&quot;major&quot;</span><span class="p">)</span>
+<span class="gp">... </span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">abjad</span><span class="o">.</span><span class="n">attach</span><span class="p">(</span><span class="n">key_signature</span><span class="p">,</span> <span class="n">note</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">abjad</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">staff</span><span class="p">)</span>
 </pre></div>
@@ -148,44 +150,41 @@
 <hr class="docutils" />
 <section id="a-function-to-generate-one-octave-of-a-scale">
 <h2>A function to generate one octave of a scale<a class="headerlink" href="#a-function-to-generate-one-octave-of-a-scale" title="Permalink to this headline">¶</a></h2>
-<p>Use an interval segment to model the structure of any scale. Here’s the interval
+<p>Use a list of intervals to model the structure of any scale. Here’s the interval
 structure of C major, G major, D major and every other scale in the major mode:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;M2 M2 m2 M2 M2 M2 m2&quot;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">major_mode</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">IntervalSegment</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">major_mode</span>
-<span class="go">IntervalSegment(items=(NamedInterval(&#39;+M2&#39;), NamedInterval(&#39;+M2&#39;), NamedInterval(&#39;+m2&#39;), NamedInterval(&#39;+M2&#39;), NamedInterval(&#39;+M2&#39;), NamedInterval(&#39;+M2&#39;), NamedInterval(&#39;+m2&#39;)), item_class=&lt;class &#39;abjad.pitch.NamedInterval&#39;&gt;)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">intervals</span> <span class="o">=</span> <span class="s2">&quot;M2 M2 m2 M2 M2 M2 m2&quot;</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">intervals</span> <span class="o">=</span> <span class="p">[</span><span class="n">abjad</span><span class="o">.</span><span class="n">NamedInterval</span><span class="p">(</span><span class="n">_</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">intervals</span><span class="p">]</span>
 </pre></div>
 </div>
 <p>This function makes one octave of any scale:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">make_scale</span><span class="p">(</span><span class="n">tonic</span><span class="p">,</span> <span class="n">interval_segment</span><span class="p">):</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">make_scale</span><span class="p">(</span><span class="n">tonic</span><span class="p">,</span> <span class="n">intervals</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="n">pitches</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="gp">... </span>    <span class="n">pitch</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">NamedPitch</span><span class="p">(</span><span class="n">tonic</span><span class="p">)</span>
 <span class="gp">... </span>    <span class="n">pitches</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pitch</span><span class="p">)</span>
-<span class="gp">... </span>    <span class="k">for</span> <span class="n">interval</span> <span class="ow">in</span> <span class="n">interval_segment</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="k">for</span> <span class="n">interval</span> <span class="ow">in</span> <span class="n">intervals</span><span class="p">:</span>
 <span class="gp">... </span>        <span class="n">pitch</span> <span class="o">=</span> <span class="n">pitch</span> <span class="o">+</span> <span class="n">interval</span>
 <span class="gp">... </span>        <span class="n">pitches</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pitch</span><span class="p">)</span>
-<span class="gp">... </span>    <span class="n">pitch_segment</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">PitchSegment</span><span class="p">(</span><span class="n">pitches</span><span class="p">)</span>
-<span class="gp">... </span>    <span class="k">return</span> <span class="n">pitch_segment</span>
+<span class="gp">... </span>    <span class="k">return</span> <span class="n">pitches</span>
 <span class="gp">... </span>
 </pre></div>
 </div>
 <p>Here’s one octave of a major scale, rooted on C:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">make_scale</span><span class="p">(</span><span class="s2">&quot;c&#39;&quot;</span><span class="p">,</span> <span class="n">major_mode</span><span class="p">)</span>
-<span class="go">PitchSegment(items=&quot;c&#39; d&#39; e&#39; f&#39; g&#39; a&#39; b&#39; c&#39;&#39;&quot;, item_class=NamedPitch)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">make_scale</span><span class="p">(</span><span class="s2">&quot;c&#39;&quot;</span><span class="p">,</span> <span class="n">intervals</span><span class="p">)</span>
+<span class="go">[NamedPitch(&quot;c&#39;&quot;), NamedPitch(&quot;d&#39;&quot;), NamedPitch(&quot;e&#39;&quot;), NamedPitch(&quot;f&#39;&quot;), NamedPitch(&quot;g&#39;&quot;), NamedPitch(&quot;a&#39;&quot;), NamedPitch(&quot;b&#39;&quot;), NamedPitch(&quot;c&#39;&#39;&quot;)]</span>
 </pre></div>
 </div>
 <p>Here’s one octave of a natural minor scale, rooted on C:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;M2 m2 M2 M2 m2 M2 M2&quot;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">minor_mode</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">IntervalSegment</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">make_scale</span><span class="p">(</span><span class="s2">&quot;c&#39;&quot;</span><span class="p">,</span> <span class="n">minor_mode</span><span class="p">)</span>
-<span class="go">PitchSegment(items=&quot;c&#39; d&#39; ef&#39; f&#39; g&#39; af&#39; bf&#39; c&#39;&#39;&quot;, item_class=NamedPitch)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">intervals</span> <span class="o">=</span> <span class="s2">&quot;M2 m2 M2 M2 m2 M2 M2&quot;</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">intervals</span> <span class="o">=</span> <span class="p">[</span><span class="n">abjad</span><span class="o">.</span><span class="n">NamedInterval</span><span class="p">(</span><span class="n">_</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">intervals</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">make_scale</span><span class="p">(</span><span class="s2">&quot;c&#39;&quot;</span><span class="p">,</span> <span class="n">intervals</span><span class="p">)</span>
+<span class="go">[NamedPitch(&quot;c&#39;&quot;), NamedPitch(&quot;d&#39;&quot;), NamedPitch(&quot;ef&#39;&quot;), NamedPitch(&quot;f&#39;&quot;), NamedPitch(&quot;g&#39;&quot;), NamedPitch(&quot;af&#39;&quot;), NamedPitch(&quot;bf&#39;&quot;), NamedPitch(&quot;c&#39;&#39;&quot;)]</span>
 </pre></div>
 </div>
 <p>Here’s one octave of a Dorian scale, rooted on C:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;M2 m2 M2 M2 M2 m2 M2&quot;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">dorian_mode</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">IntervalSegment</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">make_scale</span><span class="p">(</span><span class="s2">&quot;c&#39;&quot;</span><span class="p">,</span> <span class="n">dorian_mode</span><span class="p">)</span>
-<span class="go">PitchSegment(items=&quot;c&#39; d&#39; ef&#39; f&#39; g&#39; a&#39; bf&#39; c&#39;&#39;&quot;, item_class=NamedPitch)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">intervals</span> <span class="o">=</span> <span class="s2">&quot;M2 m2 M2 M2 M2 m2 M2&quot;</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">intervals</span> <span class="o">=</span> <span class="p">[</span><span class="n">abjad</span><span class="o">.</span><span class="n">NamedInterval</span><span class="p">(</span><span class="n">_</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">intervals</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">make_scale</span><span class="p">(</span><span class="s2">&quot;c&#39;&quot;</span><span class="p">,</span> <span class="n">intervals</span><span class="p">)</span>
+<span class="go">[NamedPitch(&quot;c&#39;&quot;), NamedPitch(&quot;d&#39;&quot;), NamedPitch(&quot;ef&#39;&quot;), NamedPitch(&quot;f&#39;&quot;), NamedPitch(&quot;g&#39;&quot;), NamedPitch(&quot;a&#39;&quot;), NamedPitch(&quot;bf&#39;&quot;), NamedPitch(&quot;c&#39;&#39;&quot;)]</span>
 </pre></div>
 </div>
 </section>
@@ -193,14 +192,18 @@ structure of C major, G major, D major and every other scale in the major mode:<
 <section id="illustrating-one-scale-at-a-time">
 <h2>Illustrating one scale at a time<a class="headerlink" href="#illustrating-one-scale-at-a-time" title="Permalink to this headline">¶</a></h2>
 <p>Change pitches to notes like this:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">pitch_segment</span> <span class="o">=</span> <span class="n">make_scale</span><span class="p">(</span><span class="s2">&quot;a&#39;&quot;</span><span class="p">,</span> <span class="n">major_mode</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">notes</span> <span class="o">=</span> <span class="p">[</span><span class="n">abjad</span><span class="o">.</span><span class="n">Note</span><span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">pitch_segment</span><span class="p">]</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">intervals</span> <span class="o">=</span> <span class="s2">&quot;M2 M2 m2 M2 M2 M2 m2&quot;</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">intervals</span> <span class="o">=</span> <span class="p">[</span><span class="n">abjad</span><span class="o">.</span><span class="n">NamedInterval</span><span class="p">(</span><span class="n">_</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">intervals</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pitches</span> <span class="o">=</span> <span class="n">make_scale</span><span class="p">(</span><span class="s2">&quot;a&#39;&quot;</span><span class="p">,</span> <span class="n">intervals</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">notes</span> <span class="o">=</span> <span class="p">[</span><span class="n">abjad</span><span class="o">.</span><span class="n">Note</span><span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">pitches</span><span class="p">]</span>
 </pre></div>
 </div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">voice</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Voice</span><span class="p">(</span><span class="n">notes</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Example_Voice&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">staff</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Staff</span><span class="p">([</span><span class="n">voice</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Example_Staff&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">note</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">select</span><span class="o">.</span><span class="n">note</span><span class="p">(</span><span class="n">staff</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">key_signature</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">KeySignature</span><span class="p">(</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="s2">&quot;major&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">key_signature</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">KeySignature</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">abjad</span><span class="o">.</span><span class="n">NamedPitchClass</span><span class="p">(</span><span class="s2">&quot;a&quot;</span><span class="p">),</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Mode</span><span class="p">(</span><span class="s2">&quot;major&quot;</span><span class="p">)</span>
+<span class="gp">... </span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">abjad</span><span class="o">.</span><span class="n">attach</span><span class="p">(</span><span class="n">key_signature</span><span class="p">,</span> <span class="n">note</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">abjad</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">staff</span><span class="p">)</span>
 </pre></div>
@@ -208,13 +211,15 @@ structure of C major, G major, D major and every other scale in the major mode:<
 <div class="uqbar-book">
     <a href="../_images/lilypond-175a67206be00ada8aaf9502cd27e7a486f3e9b9238182018c23a597e808ad09.ly"><img src="../_images/lilypond-175a67206be00ada8aaf9502cd27e7a486f3e9b9238182018c23a597e808ad09.cropped.svg"/></a>
 </div><p>Reverse scale direction like this:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">notes</span> <span class="o">=</span> <span class="p">[</span><span class="n">abjad</span><span class="o">.</span><span class="n">Note</span><span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="n">pitch_segment</span><span class="p">)]</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">notes</span> <span class="o">=</span> <span class="p">[</span><span class="n">abjad</span><span class="o">.</span><span class="n">Note</span><span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="n">pitches</span><span class="p">)]</span>
 </pre></div>
 </div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">voice</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Voice</span><span class="p">(</span><span class="n">notes</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Example_Voice&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">staff</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Staff</span><span class="p">([</span><span class="n">voice</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Example_Staff&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">note</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">select</span><span class="o">.</span><span class="n">note</span><span class="p">(</span><span class="n">staff</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">key_signature</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">KeySignature</span><span class="p">(</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="s2">&quot;major&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">key_signature</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">KeySignature</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">abjad</span><span class="o">.</span><span class="n">NamedPitchClass</span><span class="p">(</span><span class="s2">&quot;a&quot;</span><span class="p">),</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Mode</span><span class="p">(</span><span class="s2">&quot;major&quot;</span><span class="p">)</span>
+<span class="gp">... </span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">abjad</span><span class="o">.</span><span class="n">attach</span><span class="p">(</span><span class="n">key_signature</span><span class="p">,</span> <span class="n">note</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">abjad</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">staff</span><span class="p">)</span>
 </pre></div>
@@ -222,8 +227,8 @@ structure of C major, G major, D major and every other scale in the major mode:<
 <div class="uqbar-book">
     <a href="../_images/lilypond-0d3128742241ba71d2582e8b00c87104e53357a6135dfb9b425c80a153e26466.ly"><img src="../_images/lilypond-0d3128742241ba71d2582e8b00c87104e53357a6135dfb9b425c80a153e26466.cropped.svg"/></a>
 </div><p>Join ascending and descending segments like this:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">notes</span> <span class="o">=</span> <span class="p">[</span><span class="n">abjad</span><span class="o">.</span><span class="n">Note</span><span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">pitch_segment</span><span class="p">]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">descending</span> <span class="o">=</span> <span class="p">[</span><span class="n">abjad</span><span class="o">.</span><span class="n">Note</span><span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="n">pitch_segment</span><span class="p">)]</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">notes</span> <span class="o">=</span> <span class="p">[</span><span class="n">abjad</span><span class="o">.</span><span class="n">Note</span><span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">pitches</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">descending</span> <span class="o">=</span> <span class="p">[</span><span class="n">abjad</span><span class="o">.</span><span class="n">Note</span><span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="n">pitches</span><span class="p">)]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">descending</span> <span class="o">=</span> <span class="n">descending</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">notes</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">descending</span><span class="p">)</span>
 </pre></div>
@@ -231,7 +236,9 @@ structure of C major, G major, D major and every other scale in the major mode:<
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">voice</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Voice</span><span class="p">(</span><span class="n">notes</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Example_Voice&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">staff</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Staff</span><span class="p">([</span><span class="n">voice</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Example_Staff&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">note</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">select</span><span class="o">.</span><span class="n">note</span><span class="p">(</span><span class="n">staff</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">key_signature</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">KeySignature</span><span class="p">(</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="s2">&quot;major&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">key_signature</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">KeySignature</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">abjad</span><span class="o">.</span><span class="n">NamedPitchClass</span><span class="p">(</span><span class="s2">&quot;a&quot;</span><span class="p">),</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Mode</span><span class="p">(</span><span class="s2">&quot;major&quot;</span><span class="p">)</span>
+<span class="gp">... </span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">abjad</span><span class="o">.</span><span class="n">attach</span><span class="p">(</span><span class="n">key_signature</span><span class="p">,</span> <span class="n">note</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">abjad</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">staff</span><span class="p">)</span>
 </pre></div>
@@ -242,11 +249,11 @@ structure of C major, G major, D major and every other scale in the major mode:<
 <hr class="docutils" />
 <section id="a-function-to-enumerate-many-scales">
 <h2>A function to enumerate many scales<a class="headerlink" href="#a-function-to-enumerate-many-scales" title="Permalink to this headline">¶</a></h2>
-<p>This dictionary changes mode name to interval segment:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">mode_name_to_interval_segment</span> <span class="o">=</span> <span class="p">{</span>
-<span class="gp">... </span>    <span class="s2">&quot;major&quot;</span><span class="p">:</span> <span class="n">abjad</span><span class="o">.</span><span class="n">IntervalSegment</span><span class="p">(</span><span class="s2">&quot;M2 M2 m2 M2 M2 M2 m2&quot;</span><span class="p">),</span>
-<span class="gp">... </span>    <span class="s2">&quot;minor&quot;</span><span class="p">:</span> <span class="n">abjad</span><span class="o">.</span><span class="n">IntervalSegment</span><span class="p">(</span><span class="s2">&quot;M2 m2 M2 M2 m2 M2 M2&quot;</span><span class="p">),</span>
-<span class="gp">... </span>    <span class="s2">&quot;dorian&quot;</span><span class="p">:</span> <span class="n">abjad</span><span class="o">.</span><span class="n">IntervalSegment</span><span class="p">(</span><span class="s2">&quot;M2 m2 M2 M2 M2 m2 M2&quot;</span><span class="p">),</span>
+<p>This dictionary changes mode to intervals:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">mode_to_intervals</span> <span class="o">=</span> <span class="p">{</span>
+<span class="gp">... </span>    <span class="s2">&quot;major&quot;</span><span class="p">:</span> <span class="s2">&quot;M2 M2 m2 M2 M2 M2 m2&quot;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="s2">&quot;minor&quot;</span><span class="p">:</span> <span class="s2">&quot;M2 m2 M2 M2 m2 M2 M2&quot;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="s2">&quot;dorian&quot;</span><span class="p">:</span> <span class="s2">&quot;M2 m2 M2 M2 M2 m2 M2&quot;</span><span class="p">,</span>
 <span class="gp">... </span><span class="p">}</span>
 </pre></div>
 </div>
@@ -255,27 +262,31 @@ structure of C major, G major, D major and every other scale in the major mode:<
 <span class="gp">... </span>    <span class="n">voice</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Voice</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;Example_Voice&quot;</span><span class="p">)</span>
 <span class="gp">... </span>    <span class="n">staff</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Staff</span><span class="p">([</span><span class="n">voice</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Example_Staff&quot;</span><span class="p">)</span>
 <span class="gp">... </span>    <span class="n">score</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Score</span><span class="p">([</span><span class="n">staff</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Score&quot;</span><span class="p">)</span>
-<span class="gp">... </span>    <span class="n">interval_segment</span> <span class="o">=</span> <span class="n">mode_name_to_interval_segment</span><span class="p">[</span><span class="n">mode_name</span><span class="p">]</span>
+<span class="gp">... </span>    <span class="n">intervals</span> <span class="o">=</span> <span class="n">mode_to_intervals</span><span class="p">[</span><span class="n">mode_name</span><span class="p">]</span>
+<span class="gp">... </span>    <span class="n">intervals</span> <span class="o">=</span> <span class="n">intervals</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+<span class="gp">... </span>    <span class="n">intervals</span> <span class="o">=</span> <span class="p">[</span><span class="n">abjad</span><span class="o">.</span><span class="n">NamedInterval</span><span class="p">(</span><span class="n">_</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">intervals</span><span class="p">]</span>
 <span class="gp">... </span>    <span class="k">for</span> <span class="n">tonic</span> <span class="ow">in</span> <span class="n">tonics</span><span class="p">:</span>
-<span class="gp">... </span>        <span class="n">key_signature</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">KeySignature</span><span class="p">(</span><span class="n">tonic</span><span class="p">,</span> <span class="n">mode_name</span><span class="p">)</span>
+<span class="gp">... </span>        <span class="n">pitch_class</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">NamedPitchClass</span><span class="p">(</span><span class="n">tonic</span><span class="p">)</span>
+<span class="gp">... </span>        <span class="n">mode</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Mode</span><span class="p">(</span><span class="n">mode_name</span><span class="p">)</span>
+<span class="gp">... </span>        <span class="n">key_signature</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">KeySignature</span><span class="p">(</span><span class="n">pitch_class</span><span class="p">,</span> <span class="n">mode</span><span class="p">)</span>
 <span class="gp">... </span>        <span class="n">pitches</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="gp">... </span>        <span class="n">ascending</span> <span class="o">=</span> <span class="n">make_scale</span><span class="p">(</span><span class="n">tonic</span><span class="p">,</span> <span class="n">interval_segment</span><span class="p">)</span>
+<span class="gp">... </span>        <span class="n">ascending</span> <span class="o">=</span> <span class="n">make_scale</span><span class="p">(</span><span class="n">tonic</span><span class="p">,</span> <span class="n">intervals</span><span class="p">)</span>
 <span class="gp">... </span>        <span class="n">pitches</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">ascending</span><span class="p">)</span>
-<span class="gp">... </span>        <span class="n">descending</span> <span class="o">=</span> <span class="n">make_scale</span><span class="p">(</span><span class="n">tonic</span><span class="p">,</span> <span class="n">interval_segment</span><span class="p">)</span>
+<span class="gp">... </span>        <span class="n">descending</span> <span class="o">=</span> <span class="n">make_scale</span><span class="p">(</span><span class="n">tonic</span><span class="p">,</span> <span class="n">intervals</span><span class="p">)</span>
 <span class="gp">... </span>        <span class="n">descending</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">reversed</span><span class="p">(</span><span class="n">descending</span><span class="p">))[</span><span class="mi">1</span><span class="p">:]</span>
 <span class="gp">... </span>        <span class="n">pitches</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">descending</span><span class="p">)</span>
 <span class="gp">... </span>        <span class="n">notes</span> <span class="o">=</span> <span class="p">[</span><span class="n">abjad</span><span class="o">.</span><span class="n">Note</span><span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">pitches</span><span class="p">]</span>
 <span class="gp">... </span>        <span class="n">name</span> <span class="o">=</span> <span class="n">notes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">written_pitch</span><span class="o">.</span><span class="n">get_name</span><span class="p">(</span><span class="n">locale</span><span class="o">=</span><span class="s2">&quot;us&quot;</span><span class="p">)</span>
 <span class="gp">... </span>        <span class="n">name</span> <span class="o">=</span> <span class="n">name</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
 <span class="gp">... </span>        <span class="n">string</span> <span class="o">=</span> <span class="sa">rf</span><span class="s1">&#39;\markup </span><span class="se">{{</span><span class="s1"> &quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1"> </span><span class="si">{</span><span class="n">mode_name</span><span class="si">}</span><span class="s1">&quot; </span><span class="se">}}</span><span class="s1">&#39;</span>
-<span class="gp">... </span>        <span class="n">markup</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Markup</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">direction</span><span class="o">=</span><span class="n">abjad</span><span class="o">.</span><span class="n">Up</span><span class="p">)</span>
-<span class="gp">... </span>        <span class="n">abjad</span><span class="o">.</span><span class="n">attach</span><span class="p">(</span><span class="n">markup</span><span class="p">,</span> <span class="n">notes</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="gp">... </span>        <span class="n">markup</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Markup</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
+<span class="gp">... </span>        <span class="n">abjad</span><span class="o">.</span><span class="n">attach</span><span class="p">(</span><span class="n">markup</span><span class="p">,</span> <span class="n">notes</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">direction</span><span class="o">=</span><span class="n">abjad</span><span class="o">.</span><span class="n">UP</span><span class="p">)</span>
 <span class="gp">... </span>        <span class="n">bar_line</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">BarLine</span><span class="p">(</span><span class="s2">&quot;||&quot;</span><span class="p">)</span>
 <span class="gp">... </span>        <span class="n">abjad</span><span class="o">.</span><span class="n">attach</span><span class="p">(</span><span class="n">bar_line</span><span class="p">,</span> <span class="n">notes</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
 <span class="gp">... </span>        <span class="n">string</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;\markup \transparent A&quot;</span>
-<span class="gp">... </span>        <span class="n">strut</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Markup</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">direction</span><span class="o">=</span><span class="n">abjad</span><span class="o">.</span><span class="n">Up</span><span class="p">)</span>
-<span class="gp">... </span>        <span class="n">abjad</span><span class="o">.</span><span class="n">tweak</span><span class="p">(</span><span class="n">strut</span><span class="p">)</span><span class="o">.</span><span class="n">staff_padding</span> <span class="o">=</span> <span class="mi">8</span>
-<span class="gp">... </span>        <span class="n">abjad</span><span class="o">.</span><span class="n">attach</span><span class="p">(</span><span class="n">strut</span><span class="p">,</span> <span class="n">notes</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+<span class="gp">... </span>        <span class="n">strut</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Markup</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
+<span class="gp">... </span>        <span class="n">bundle</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">bundle</span><span class="p">(</span><span class="n">strut</span><span class="p">,</span> <span class="sa">r</span><span class="s2">&quot;- \tweak staff-padding 8&quot;</span><span class="p">)</span>
+<span class="gp">... </span>        <span class="n">abjad</span><span class="o">.</span><span class="n">attach</span><span class="p">(</span><span class="n">bundle</span><span class="p">,</span> <span class="n">notes</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">direction</span><span class="o">=</span><span class="n">abjad</span><span class="o">.</span><span class="n">UP</span><span class="p">)</span>
 <span class="gp">... </span>        <span class="n">voice</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">notes</span><span class="p">)</span>
 <span class="gp">... </span>    <span class="n">time_signature</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">TimeSignature</span><span class="p">((</span><span class="mi">15</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
 <span class="gp">... </span>    <span class="n">abjad</span><span class="o">.</span><span class="n">attach</span><span class="p">(</span><span class="n">time_signature</span><span class="p">,</span> <span class="n">voice</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
@@ -337,7 +348,7 @@ structure of C major, G major, D major and every other scale in the major mode:<
 </div>
 <div class="uqbar-book">
     <a href="../_images/lilypond-88767b5f33f498ae3820d59dcd3a0d68ef9b9c0eb4ca90350624570283bd122e.ly"><img src="../_images/lilypond-88767b5f33f498ae3820d59dcd3a0d68ef9b9c0eb4ca90350624570283bd122e.cropped.svg"/></a>
-</div><p><span class="author">[Bača (3.3)]</span></p>
+</div><p><span class="author">[Bača (3.3, 3.7)]</span></p>
 </section>
 </section>
 

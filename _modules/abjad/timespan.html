@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>abjad.timespan &mdash; Abjad 3.6 documentation</title>
+  <title>abjad.timespan &mdash; Abjad 3.7 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/abjad.css" type="text/css" />
@@ -32,11 +32,11 @@
   <div class="wy-grid-for-nav">
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search"  style="background: #00dd00" >
+        <div class="wy-side-nav-search"  style="background: #112233" >
 
 
     <a href="../../index.html" class="icon icon-home" alt="Documentation
-    Home"> Abjad 3.6
+    Home"> Abjad 3.7
 
 
 
@@ -110,7 +110,7 @@
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #00dd00" >
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #112233" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../index.html">Abjad</a>
       </nav>
@@ -136,18 +136,16 @@
 
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">duration</span> <span class="k">as</span> <span class="n">_duration</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">enums</span> <span class="k">as</span> <span class="n">_enums</span>
-<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">markups</span> <span class="k">as</span> <span class="n">_markups</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">indicators</span> <span class="k">as</span> <span class="n">_indicators</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">math</span> <span class="k">as</span> <span class="n">_math</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">ratio</span> <span class="k">as</span> <span class="n">_ratio</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">sequence</span> <span class="k">as</span> <span class="n">_sequence</span>
-<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">typedcollections</span> <span class="k">as</span> <span class="n">_typedcollections</span>
 
 <span class="n">infinity</span> <span class="o">=</span> <span class="n">_math</span><span class="o">.</span><span class="n">Infinity</span><span class="p">()</span>
 <span class="n">negative_infinity</span> <span class="o">=</span> <span class="n">_math</span><span class="o">.</span><span class="n">NegativeInfinity</span><span class="p">()</span>
 
 
 <div class="viewcode-block" id="OffsetCounter"><a class="viewcode-back" href="../../api/abjad/timespan.html#abjad.timespan.OffsetCounter">[docs]</a><span class="nd">@dataclasses</span><span class="o">.</span><span class="n">dataclass</span><span class="p">(</span><span class="n">slots</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="c1"># class OffsetCounter(_typedcollections.TypedCounter):</span>
 <span class="k">class</span> <span class="nc">OffsetCounter</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Offset counter.</span>
@@ -196,7 +194,6 @@
                         <span class="n">offset</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Offset</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
                         <span class="n">offsets</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">offset</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">items</span> <span class="o">=</span> <span class="n">offsets</span>
-        <span class="c1"># _typedcollections.TypedCounter.__post_init__(self)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">items</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_coerce_item</span><span class="p">(</span><span class="n">_</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">items</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">Counter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">)</span>
         <span class="n">sorted_item_to_count</span> <span class="o">=</span> <span class="p">{}</span>
@@ -211,7 +208,7 @@
     <span class="k">def</span> <span class="nf">_coerce_item</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Offset</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_make_markup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">range_</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">_markups</span><span class="o">.</span><span class="n">Markup</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">_make_markup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">range_</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">_indicators</span><span class="o">.</span><span class="n">Markup</span><span class="p">:</span>
         <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Illustrates offset counter.</span>
 
@@ -279,7 +276,7 @@
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">_markups</span><span class="o">.</span><span class="n">Markup</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\markup \null&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">_indicators</span><span class="o">.</span><span class="n">Markup</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\markup \null&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">range_</span><span class="p">,</span> <span class="n">Timespan</span><span class="p">):</span>
             <span class="n">minimum</span><span class="p">,</span> <span class="n">maximum</span> <span class="o">=</span> <span class="n">range_</span><span class="o">.</span><span class="n">start_offset</span><span class="p">,</span> <span class="n">range_</span><span class="o">.</span><span class="n">stop_offset</span>
         <span class="k">elif</span> <span class="n">range_</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -303,8 +300,8 @@
             <span class="n">offset</span> <span class="o">-=</span> <span class="n">postscript_x_offset</span>
             <span class="n">postscript_strings</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span>
                 <span class="p">[</span>
-                    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">_markups</span><span class="o">.</span><span class="n">_fpa</span><span class="p">(</span><span class="n">offset</span><span class="p">)</span><span class="si">}</span><span class="s2"> -1 moveto&quot;</span><span class="p">,</span>
-                    <span class="sa">f</span><span class="s2">&quot;0 </span><span class="si">{</span><span class="n">_markups</span><span class="o">.</span><span class="n">_fpa</span><span class="p">((</span><span class="nb">float</span><span class="p">(</span><span class="n">count</span><span class="p">)</span> <span class="o">*</span> <span class="o">-</span><span class="mi">3</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span><span class="si">}</span><span class="s2"> rlineto&quot;</span><span class="p">,</span>
+                    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">_fpa</span><span class="p">(</span><span class="n">offset</span><span class="p">)</span><span class="si">}</span><span class="s2"> -1 moveto&quot;</span><span class="p">,</span>
+                    <span class="sa">f</span><span class="s2">&quot;0 </span><span class="si">{</span><span class="n">_fpa</span><span class="p">((</span><span class="nb">float</span><span class="p">(</span><span class="n">count</span><span class="p">)</span> <span class="o">*</span> <span class="o">-</span><span class="mi">3</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span><span class="si">}</span><span class="s2"> rlineto&quot;</span><span class="p">,</span>
                     <span class="s2">&quot;stroke&quot;</span><span class="p">,</span>
                 <span class="p">]</span>
             <span class="p">)</span>
@@ -328,7 +325,7 @@
             <span class="n">strings</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
         <span class="n">strings</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;}&quot;</span><span class="p">)</span>
         <span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">strings</span><span class="p">)</span>
-        <span class="n">markup</span> <span class="o">=</span> <span class="n">_markups</span><span class="o">.</span><span class="n">Markup</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
+        <span class="n">markup</span> <span class="o">=</span> <span class="n">_indicators</span><span class="o">.</span><span class="n">Markup</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">markup</span></div>
 
 
@@ -907,14 +904,14 @@
         <span class="n">stop</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stop_offset</span><span class="p">)</span> <span class="o">*</span> <span class="n">postscript_scale</span>
         <span class="n">stop</span> <span class="o">-=</span> <span class="n">postscript_x_offset</span>
         <span class="n">strings</span> <span class="o">=</span> <span class="p">[</span>
-            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">_markups</span><span class="o">.</span><span class="n">_fpa</span><span class="p">(</span><span class="n">start</span><span class="p">)</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">_markups</span><span class="o">.</span><span class="n">_fpa</span><span class="p">(</span><span class="n">postscript_y_offset</span><span class="p">)</span><span class="si">}</span><span class="s2"> moveto&quot;</span><span class="p">,</span>
-            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">_markups</span><span class="o">.</span><span class="n">_fpa</span><span class="p">(</span><span class="n">stop</span><span class="p">)</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">_markups</span><span class="o">.</span><span class="n">_fpa</span><span class="p">(</span><span class="n">postscript_y_offset</span><span class="p">)</span><span class="si">}</span><span class="s2"> lineto&quot;</span><span class="p">,</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">_fpa</span><span class="p">(</span><span class="n">start</span><span class="p">)</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">_fpa</span><span class="p">(</span><span class="n">postscript_y_offset</span><span class="p">)</span><span class="si">}</span><span class="s2"> moveto&quot;</span><span class="p">,</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">_fpa</span><span class="p">(</span><span class="n">stop</span><span class="p">)</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">_fpa</span><span class="p">(</span><span class="n">postscript_y_offset</span><span class="p">)</span><span class="si">}</span><span class="s2"> lineto&quot;</span><span class="p">,</span>
             <span class="s2">&quot;stroke&quot;</span><span class="p">,</span>
-            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">_markups</span><span class="o">.</span><span class="n">_fpa</span><span class="p">(</span><span class="n">start</span><span class="p">)</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">_markups</span><span class="o">.</span><span class="n">_fpa</span><span class="p">(</span><span class="n">postscript_y_offset</span> <span class="o">+</span> <span class="mf">0.75</span><span class="p">)</span><span class="si">}</span><span class="s2"> moveto&quot;</span><span class="p">,</span>
-            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">_markups</span><span class="o">.</span><span class="n">_fpa</span><span class="p">(</span><span class="n">start</span><span class="p">)</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">_markups</span><span class="o">.</span><span class="n">_fpa</span><span class="p">(</span><span class="n">postscript_y_offset</span> <span class="o">-</span> <span class="mf">0.75</span><span class="p">)</span><span class="si">}</span><span class="s2"> lineto&quot;</span><span class="p">,</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">_fpa</span><span class="p">(</span><span class="n">start</span><span class="p">)</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">_fpa</span><span class="p">(</span><span class="n">postscript_y_offset</span> <span class="o">+</span> <span class="mf">0.75</span><span class="p">)</span><span class="si">}</span><span class="s2"> moveto&quot;</span><span class="p">,</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">_fpa</span><span class="p">(</span><span class="n">start</span><span class="p">)</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">_fpa</span><span class="p">(</span><span class="n">postscript_y_offset</span> <span class="o">-</span> <span class="mf">0.75</span><span class="p">)</span><span class="si">}</span><span class="s2"> lineto&quot;</span><span class="p">,</span>
             <span class="s2">&quot;stroke&quot;</span><span class="p">,</span>
-            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">_markups</span><span class="o">.</span><span class="n">_fpa</span><span class="p">(</span><span class="n">stop</span><span class="p">)</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">_markups</span><span class="o">.</span><span class="n">_fpa</span><span class="p">(</span><span class="n">postscript_y_offset</span> <span class="o">+</span> <span class="mf">0.75</span><span class="p">)</span><span class="si">}</span><span class="s2"> moveto&quot;</span><span class="p">,</span>
-            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">_markups</span><span class="o">.</span><span class="n">_fpa</span><span class="p">(</span><span class="n">stop</span><span class="p">)</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">_markups</span><span class="o">.</span><span class="n">_fpa</span><span class="p">(</span><span class="n">postscript_y_offset</span> <span class="o">-</span> <span class="mf">0.75</span><span class="p">)</span><span class="si">}</span><span class="s2"> lineto&quot;</span><span class="p">,</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">_fpa</span><span class="p">(</span><span class="n">stop</span><span class="p">)</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">_fpa</span><span class="p">(</span><span class="n">postscript_y_offset</span> <span class="o">+</span> <span class="mf">0.75</span><span class="p">)</span><span class="si">}</span><span class="s2"> moveto&quot;</span><span class="p">,</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">_fpa</span><span class="p">(</span><span class="n">stop</span><span class="p">)</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">_fpa</span><span class="p">(</span><span class="n">postscript_y_offset</span> <span class="o">-</span> <span class="mf">0.75</span><span class="p">)</span><span class="si">}</span><span class="s2"> lineto&quot;</span><span class="p">,</span>
             <span class="s2">&quot;stroke&quot;</span><span class="p">,</span>
         <span class="p">]</span>
         <span class="k">return</span> <span class="n">strings</span>
@@ -959,9 +956,6 @@
             <span class="n">start_offset</span><span class="p">,</span> <span class="n">stop_offset</span> <span class="o">=</span> <span class="n">argument</span><span class="o">.</span><span class="n">timespan</span><span class="o">.</span><span class="n">offsets</span>
         <span class="k">elif</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">argument</span><span class="p">,</span> <span class="s2">&quot;_get_timespan&quot;</span><span class="p">):</span>
             <span class="n">start_offset</span><span class="p">,</span> <span class="n">stop_offset</span> <span class="o">=</span> <span class="n">argument</span><span class="o">.</span><span class="n">_get_timespan</span><span class="p">()</span><span class="o">.</span><span class="n">offsets</span>
-        <span class="c1"># TODO: remove this branch in favor of the _get_timespan above</span>
-        <span class="c1"># elif hasattr(argument, &#39;timespan&#39;):</span>
-        <span class="c1">#    start_offset, stop_offset = argument.timespan().offsets</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">dataclasses</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span>
@@ -976,9 +970,6 @@
         <span class="p">):</span>
             <span class="k">return</span> <span class="kc">True</span>
         <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">timespan</span><span class="p">,</span> <span class="s2">&quot;_get_timespan&quot;</span><span class="p">):</span>
-            <span class="k">return</span> <span class="kc">True</span>
-        <span class="c1"># TODO: remove this branch in favor of the _get_timespan above</span>
-        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">timespan</span><span class="p">,</span> <span class="s2">&quot;timespan&quot;</span><span class="p">):</span>
             <span class="k">return</span> <span class="kc">True</span>
         <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">timespan</span><span class="p">,</span> <span class="s2">&quot;timespan&quot;</span><span class="p">,</span> <span class="s2">&quot;foo&quot;</span><span class="p">)</span> <span class="o">!=</span> <span class="s2">&quot;foo&quot;</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">True</span>
@@ -1018,7 +1009,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">stop_offset</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_offset</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">offsets</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Tuple</span><span class="p">[</span><span class="n">_duration</span><span class="o">.</span><span class="n">Offset</span><span class="p">,</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Offset</span><span class="p">]:</span>
+    <span class="k">def</span> <span class="nf">offsets</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">_duration</span><span class="o">.</span><span class="n">Offset</span><span class="p">,</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Offset</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets offsets.</span>
 
@@ -1121,7 +1112,7 @@
             <span class="ow">and</span> <span class="n">expr_start_offset</span> <span class="o">&lt;</span> <span class="n">self_stop_offset</span>
         <span class="p">)</span></div>
 
-<div class="viewcode-block" id="Timespan.divide_by_ratio"><a class="viewcode-back" href="../../api/abjad/timespan.html#abjad.timespan.Timespan.divide_by_ratio">[docs]</a>    <span class="k">def</span> <span class="nf">divide_by_ratio</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ratio</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Tuple</span><span class="p">[</span><span class="s2">&quot;Timespan&quot;</span><span class="p">,</span> <span class="o">...</span><span class="p">]:</span>
+<div class="viewcode-block" id="Timespan.divide_by_ratio"><a class="viewcode-back" href="../../api/abjad/timespan.html#abjad.timespan.Timespan.divide_by_ratio">[docs]</a>    <span class="k">def</span> <span class="nf">divide_by_ratio</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ratio</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="s2">&quot;Timespan&quot;</span><span class="p">,</span> <span class="o">...</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Divides timespan by ``ratio``.</span>
 
@@ -1149,9 +1140,7 @@
         <span class="n">result</span> <span class="o">=</span> <span class="p">[</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span><span class="o">*</span><span class="n">offset_pair</span><span class="p">)</span> <span class="k">for</span> <span class="n">offset_pair</span> <span class="ow">in</span> <span class="n">offset_pairs</span><span class="p">]</span>
         <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">result</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Timespan.get_overlap_with_timespan"><a class="viewcode-back" href="../../api/abjad/timespan.html#abjad.timespan.Timespan.get_overlap_with_timespan">[docs]</a>    <span class="k">def</span> <span class="nf">get_overlap_with_timespan</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">timespan</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="n">_duration</span><span class="o">.</span><span class="n">Duration</span><span class="p">]:</span>
+<div class="viewcode-block" id="Timespan.get_overlap_with_timespan"><a class="viewcode-back" href="../../api/abjad/timespan.html#abjad.timespan.Timespan.get_overlap_with_timespan">[docs]</a>    <span class="k">def</span> <span class="nf">get_overlap_with_timespan</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timespan</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Duration</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets duration of overlap with ``timespan``.</span>
 
@@ -1470,7 +1459,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">set_offsets</span><span class="p">(</span><span class="n">new_start_offset</span><span class="p">,</span> <span class="n">new_stop_offset</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Timespan.round_offsets"><a class="viewcode-back" href="../../api/abjad/timespan.html#abjad.timespan.Timespan.round_offsets">[docs]</a>    <span class="k">def</span> <span class="nf">round_offsets</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">multiplier</span><span class="p">,</span> <span class="n">anchor</span><span class="o">=</span><span class="n">_enums</span><span class="o">.</span><span class="n">Left</span><span class="p">,</span> <span class="n">must_be_wellformed</span><span class="o">=</span><span class="kc">True</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">multiplier</span><span class="p">,</span> <span class="n">anchor</span><span class="o">=</span><span class="n">_enums</span><span class="o">.</span><span class="n">LEFT</span><span class="p">,</span> <span class="n">must_be_wellformed</span><span class="o">=</span><span class="kc">True</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Timespan&quot;</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Rounds timespan offsets to multiple of ``multiplier``.</span>
@@ -1485,11 +1474,11 @@
 <span class="sd">            &gt;&gt;&gt; timespan.round_offsets(2)</span>
 <span class="sd">            Timespan(Offset((0, 1)), Offset((2, 1)))</span>
 
-<span class="sd">            &gt;&gt;&gt; timespan.round_offsets(2, anchor=abjad.Right)</span>
+<span class="sd">            &gt;&gt;&gt; timespan.round_offsets(2, anchor=abjad.RIGHT)</span>
 <span class="sd">            Timespan(Offset((-2, 1)), Offset((0, 1)))</span>
 
 <span class="sd">            &gt;&gt;&gt; timespan.round_offsets(</span>
-<span class="sd">            ...     2, anchor=abjad.Right, must_be_wellformed=False</span>
+<span class="sd">            ...     2, anchor=abjad.RIGHT, must_be_wellformed=False</span>
 <span class="sd">            ... )</span>
 <span class="sd">            Timespan(Offset((0, 1)), Offset((0, 1)))</span>
 
@@ -1503,7 +1492,7 @@
             <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stop_offset</span> <span class="o">/</span> <span class="n">multiplier</span><span class="p">))</span> <span class="o">*</span> <span class="n">multiplier</span>
         <span class="p">)</span>
         <span class="k">if</span> <span class="p">(</span><span class="n">new_start_offset</span> <span class="o">==</span> <span class="n">new_stop_offset</span><span class="p">)</span> <span class="ow">and</span> <span class="n">must_be_wellformed</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">anchor</span> <span class="ow">is</span> <span class="n">_enums</span><span class="o">.</span><span class="n">Left</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">anchor</span> <span class="ow">is</span> <span class="n">_enums</span><span class="o">.</span><span class="n">LEFT</span><span class="p">:</span>
                 <span class="n">new_stop_offset</span> <span class="o">=</span> <span class="n">new_stop_offset</span> <span class="o">+</span> <span class="n">multiplier</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">new_start_offset</span> <span class="o">=</span> <span class="n">new_start_offset</span> <span class="o">-</span> <span class="n">multiplier</span>
@@ -1512,7 +1501,7 @@
         <span class="p">)</span>
         <span class="k">return</span> <span class="n">result</span></div>
 
-<div class="viewcode-block" id="Timespan.scale"><a class="viewcode-back" href="../../api/abjad/timespan.html#abjad.timespan.Timespan.scale">[docs]</a>    <span class="k">def</span> <span class="nf">scale</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">multiplier</span><span class="p">,</span> <span class="n">anchor</span><span class="o">=</span><span class="n">_enums</span><span class="o">.</span><span class="n">Left</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Timespan&quot;</span><span class="p">:</span>
+<div class="viewcode-block" id="Timespan.scale"><a class="viewcode-back" href="../../api/abjad/timespan.html#abjad.timespan.Timespan.scale">[docs]</a>    <span class="k">def</span> <span class="nf">scale</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">multiplier</span><span class="p">,</span> <span class="n">anchor</span><span class="o">=</span><span class="n">_enums</span><span class="o">.</span><span class="n">LEFT</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Timespan&quot;</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Scales timespan by ``multiplier``.</span>
 
@@ -1529,17 +1518,17 @@
 
 <span class="sd">            Scale timespan relative to timespan stop offset:</span>
 
-<span class="sd">            &gt;&gt;&gt; timespan.scale(abjad.Multiplier(2), anchor=abjad.Right)</span>
+<span class="sd">            &gt;&gt;&gt; timespan.scale(abjad.Multiplier(2), anchor=abjad.RIGHT)</span>
 <span class="sd">            Timespan(Offset((0, 1)), Offset((6, 1)))</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">multiplier</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Multiplier</span><span class="p">(</span><span class="n">multiplier</span><span class="p">)</span>
         <span class="k">assert</span> <span class="mi">0</span> <span class="o">&lt;</span> <span class="n">multiplier</span>
         <span class="n">new_duration</span> <span class="o">=</span> <span class="n">multiplier</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">duration</span>
-        <span class="k">if</span> <span class="n">anchor</span> <span class="o">==</span> <span class="n">_enums</span><span class="o">.</span><span class="n">Left</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">anchor</span> <span class="o">==</span> <span class="n">_enums</span><span class="o">.</span><span class="n">LEFT</span><span class="p">:</span>
             <span class="n">new_start_offset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_offset</span>
             <span class="n">new_stop_offset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_offset</span> <span class="o">+</span> <span class="n">new_duration</span>
-        <span class="k">elif</span> <span class="n">anchor</span> <span class="o">==</span> <span class="n">_enums</span><span class="o">.</span><span class="n">Right</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="n">anchor</span> <span class="o">==</span> <span class="n">_enums</span><span class="o">.</span><span class="n">RIGHT</span><span class="p">:</span>
             <span class="n">new_stop_offset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">stop_offset</span>
             <span class="n">new_start_offset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">stop_offset</span> <span class="o">-</span> <span class="n">new_duration</span>
         <span class="k">else</span><span class="p">:</span>
@@ -1609,7 +1598,6 @@
         <span class="p">)</span>
         <span class="k">return</span> <span class="n">result</span></div>
 
-    <span class="c1"># TODO: extend to self.split_at_offsets()</span>
 <div class="viewcode-block" id="Timespan.split_at_offset"><a class="viewcode-back" href="../../api/abjad/timespan.html#abjad.timespan.Timespan.split_at_offset">[docs]</a>    <span class="k">def</span> <span class="nf">split_at_offset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">offset</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;TimespanList&quot;</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Split into two parts when ``offset`` happens during timespan:</span>
@@ -2330,7 +2318,7 @@
 
 
 <div class="viewcode-block" id="TimespanList"><a class="viewcode-back" href="../../api/abjad/timespan.html#abjad.timespan.TimespanList">[docs]</a><span class="nd">@dataclasses</span><span class="o">.</span><span class="n">dataclass</span><span class="p">(</span><span class="n">slots</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="k">class</span> <span class="nc">TimespanList</span><span class="p">(</span><span class="n">_typedcollections</span><span class="o">.</span><span class="n">TypedList</span><span class="p">):</span>
+<span class="k">class</span> <span class="nc">TimespanList</span><span class="p">(</span><span class="nb">list</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Timespan list.</span>
 
@@ -2398,6 +2386,42 @@
 
     <span class="n">__documentation_section__</span> <span class="o">=</span> <span class="s2">&quot;Timespans&quot;</span>
 
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="o">=</span><span class="p">()):</span>
+        <span class="n">timespans</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_coerce_item</span><span class="p">(</span><span class="n">_</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">argument</span><span class="p">]</span>
+        <span class="nb">list</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timespans</span><span class="p">)</span>
+
+<div class="viewcode-block" id="TimespanList.__setitem__"><a class="viewcode-back" href="../../api/abjad/timespan.html#abjad.timespan.TimespanList.__setitem__">[docs]</a>    <span class="k">def</span> <span class="fm">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">argument</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Coerces ``argument`` and sets at ``i``.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+            <span class="n">item</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_coerce_item</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span>
+            <span class="nb">list</span><span class="o">.</span><span class="fm">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">item</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="nb">slice</span><span class="p">):</span>
+            <span class="n">items</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_coerce_item</span><span class="p">(</span><span class="n">_</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">argument</span><span class="p">]</span>
+            <span class="nb">list</span><span class="o">.</span><span class="fm">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">items</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TimespanList.append"><a class="viewcode-back" href="../../api/abjad/timespan.html#abjad.timespan.TimespanList.append">[docs]</a>    <span class="k">def</span> <span class="nf">append</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Coerces ``item`` and appends.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">item</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_coerce_item</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+        <span class="nb">list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TimespanList.extend"><a class="viewcode-back" href="../../api/abjad/timespan.html#abjad.timespan.TimespanList.extend">[docs]</a>    <span class="k">def</span> <span class="nf">extend</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">items</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Coerces ``items`` and extends.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">items</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_coerce_item</span><span class="p">(</span><span class="n">_</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">items</span><span class="p">]</span>
+        <span class="nb">list</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">items</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TimespanList.remove"><a class="viewcode-back" href="../../api/abjad/timespan.html#abjad.timespan.TimespanList.remove">[docs]</a>    <span class="k">def</span> <span class="nf">remove</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Coerces ``item`` and removes.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">item</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_coerce_item</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+        <span class="nb">list</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">)</span></div>
+
 <div class="viewcode-block" id="TimespanList.__and__"><a class="viewcode-back" href="../../api/abjad/timespan.html#abjad.timespan.TimespanList.__and__">[docs]</a>    <span class="k">def</span> <span class="fm">__and__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timespan</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;TimespanList&quot;</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Keeps material that intersects ``timespan``.</span>
@@ -2422,9 +2446,8 @@
 <span class="sd">            Timespan(Offset((5, 1)), Offset((10, 1)))</span>
 <span class="sd">            Timespan(Offset((5, 1)), Offset((10, 1)))</span>
 
-<span class="sd">        Operates in place and returns timespan list.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">new_timespans</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">Timespan</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">new_timespans</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Timespan</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">current_timespan</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">[:]:</span>
             <span class="n">result</span> <span class="o">=</span> <span class="n">current_timespan</span> <span class="o">&amp;</span> <span class="n">timespan</span>
             <span class="n">new_timespans</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
@@ -2435,7 +2458,7 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets repr.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">(</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="si">}</span><span class="s2">)&quot;</span></div>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">(</span><span class="si">{</span><span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="si">}</span><span class="s2">)&quot;</span></div>
 
     <span class="k">def</span> <span class="nf">_make_markup</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
@@ -2444,7 +2467,7 @@
         <span class="n">sort_callable</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">sortkey</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">scale</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">_markups</span><span class="o">.</span><span class="n">Markup</span><span class="p">:</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">_indicators</span><span class="o">.</span><span class="n">Markup</span><span class="p">:</span>
         <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Makes markup.</span>
 
@@ -2565,8 +2588,8 @@
 
 <span class="sd">        ..  container:: example</span>
 
-<span class="sd">            Set ``key`` and ``sort_callable`` together like this to customize</span>
-<span class="sd">            timespan sorting:</span>
+<span class="sd">            Set ``key`` and ``sort_callable`` together like this to customize timespan</span>
+<span class="sd">            sorting:</span>
 
 <span class="sd">            &gt;&gt;&gt; timespans = abjad.TimespanList([</span>
 <span class="sd">            ...     abjad.Timespan(0, (1, 4), annotation=&quot;voice 1&quot;),</span>
@@ -2708,12 +2731,11 @@
 <span class="sd">                }</span>
 <span class="sd">                }</span>
 
-<span class="sd">        Returns markup.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">_markups</span><span class="o">.</span><span class="n">Markup</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\markup \null&quot;</span><span class="p">)</span>
-        <span class="n">maximum</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">_duration</span><span class="o">.</span><span class="n">Offset</span><span class="p">,</span> <span class="n">_math</span><span class="o">.</span><span class="n">Infinity</span><span class="p">]</span>
-        <span class="n">minimum</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">_duration</span><span class="o">.</span><span class="n">Offset</span><span class="p">,</span> <span class="n">_math</span><span class="o">.</span><span class="n">NegativeInfinity</span><span class="p">]</span>
+            <span class="k">return</span> <span class="n">_indicators</span><span class="o">.</span><span class="n">Markup</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\markup \null&quot;</span><span class="p">)</span>
+        <span class="n">maximum</span><span class="p">:</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Offset</span> <span class="o">|</span> <span class="n">_math</span><span class="o">.</span><span class="n">Infinity</span>
+        <span class="n">minimum</span><span class="p">:</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Offset</span> <span class="o">|</span> <span class="n">_math</span><span class="o">.</span><span class="n">NegativeInfinity</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">range_</span><span class="p">,</span> <span class="n">Timespan</span><span class="p">):</span>
             <span class="n">minimum</span><span class="p">,</span> <span class="n">maximum</span> <span class="o">=</span> <span class="n">range_</span><span class="o">.</span><span class="n">start_offset</span><span class="p">,</span> <span class="n">range_</span><span class="o">.</span><span class="n">stop_offset</span>
         <span class="k">elif</span> <span class="n">range_</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -2732,7 +2754,7 @@
             <span class="n">string</span> <span class="o">=</span> <span class="n">_make_timespan_list_markup</span><span class="p">(</span>
                 <span class="bp">self</span><span class="p">,</span> <span class="n">postscript_x_offset</span><span class="p">,</span> <span class="n">postscript_scale</span><span class="p">,</span> <span class="n">sortkey</span><span class="o">=</span><span class="n">sortkey</span>
             <span class="p">)</span>
-            <span class="n">markup</span> <span class="o">=</span> <span class="n">_markups</span><span class="o">.</span><span class="n">Markup</span><span class="p">(</span><span class="sa">rf</span><span class="s2">&quot;\markup </span><span class="si">{</span><span class="n">string</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">markup</span> <span class="o">=</span> <span class="n">_indicators</span><span class="o">.</span><span class="n">Markup</span><span class="p">(</span><span class="sa">rf</span><span class="s2">&quot;\markup </span><span class="si">{</span><span class="n">string</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">timespan_lists</span> <span class="o">=</span> <span class="p">{}</span>
             <span class="k">for</span> <span class="n">timespan</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
@@ -2760,7 +2782,7 @@
                 <span class="p">)</span>
                 <span class="n">strings</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
             <span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">strings</span><span class="p">)</span>
-            <span class="n">markup</span> <span class="o">=</span> <span class="n">_markups</span><span class="o">.</span><span class="n">Markup</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\\</span><span class="s2">markup</span><span class="se">\n\\</span><span class="s2">left-column </span><span class="se">{{\n</span><span class="si">{</span><span class="n">string</span><span class="si">}</span><span class="se">\n}}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">markup</span> <span class="o">=</span> <span class="n">_indicators</span><span class="o">.</span><span class="n">Markup</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\\</span><span class="s2">markup</span><span class="se">\n\\</span><span class="s2">left-column </span><span class="se">{{\n</span><span class="si">{</span><span class="n">string</span><span class="si">}</span><span class="se">\n}}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">markup</span>
 
 <div class="viewcode-block" id="TimespanList.__invert__"><a class="viewcode-back" href="../../api/abjad/timespan.html#abjad.timespan.TimespanList.__invert__">[docs]</a>    <span class="k">def</span> <span class="fm">__invert__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;TimespanList&quot;</span><span class="p">:</span>
@@ -2833,16 +2855,16 @@
 
 <span class="sd">            &gt;&gt;&gt; abjad.show(timespans, scale=0.5) # doctest: +SKIP</span>
 
-<span class="sd">        Operates in place and returns timespan list.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">new_timespans</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">Timespan</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">new_timespans</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Timespan</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">current_timespan</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">[:]:</span>
             <span class="n">result</span> <span class="o">=</span> <span class="n">current_timespan</span> <span class="o">-</span> <span class="n">timespan</span>
             <span class="n">new_timespans</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
         <span class="bp">self</span><span class="p">[:]</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">new_timespans</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span></div>
 
-    <span class="k">def</span> <span class="nf">_coerce_item</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_coerce_item</span><span class="p">(</span><span class="n">item</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">Timespan</span><span class="o">.</span><span class="n">_implements_timespan_interface</span><span class="p">(</span><span class="n">item</span><span class="p">):</span>
             <span class="k">return</span> <span class="n">item</span>
         <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">Timespan</span><span class="p">):</span>
@@ -2852,7 +2874,8 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">Timespan</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_get_offsets</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">):</span>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_get_offsets</span><span class="p">(</span><span class="n">argument</span><span class="p">):</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">argument</span><span class="o">.</span><span class="n">start_offset</span><span class="p">,</span> <span class="n">argument</span><span class="o">.</span><span class="n">stop_offset</span>
         <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
@@ -2863,8 +2886,9 @@
             <span class="k">pass</span>
         <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_get_timespan</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">):</span>
-        <span class="n">start_offset</span><span class="p">,</span> <span class="n">stop_offset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_offsets</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_get_timespan</span><span class="p">(</span><span class="n">argument</span><span class="p">):</span>
+        <span class="n">start_offset</span><span class="p">,</span> <span class="n">stop_offset</span> <span class="o">=</span> <span class="n">Timespan</span><span class="o">.</span><span class="n">_get_offsets</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">Timespan</span><span class="p">(</span><span class="n">start_offset</span><span class="p">,</span> <span class="n">stop_offset</span><span class="p">)</span>
 
     <span class="nd">@property</span>
@@ -3021,7 +3045,7 @@
         <span class="k">return</span> <span class="nb">all</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_timespan</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span><span class="o">.</span><span class="n">wellformed</span> <span class="k">for</span> <span class="n">argument</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">)</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">axis</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="n">_duration</span><span class="o">.</span><span class="n">Offset</span><span class="p">]:</span>
+    <span class="k">def</span> <span class="nf">axis</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Offset</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets axis defined equal to arithmetic mean of start- and stop-offsets.</span>
 
@@ -3163,7 +3187,7 @@
         <span class="k">return</span> <span class="kc">True</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">start_offset</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">_duration</span><span class="o">.</span><span class="n">Offset</span><span class="p">,</span> <span class="n">_math</span><span class="o">.</span><span class="n">NegativeInfinity</span><span class="p">]:</span>
+    <span class="k">def</span> <span class="nf">start_offset</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Offset</span> <span class="o">|</span> <span class="n">_math</span><span class="o">.</span><span class="n">NegativeInfinity</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets start offset.</span>
 
@@ -3213,7 +3237,7 @@
             <span class="k">return</span> <span class="n">negative_infinity</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">stop_offset</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">_duration</span><span class="o">.</span><span class="n">Offset</span><span class="p">,</span> <span class="n">_math</span><span class="o">.</span><span class="n">Infinity</span><span class="p">]:</span>
+    <span class="k">def</span> <span class="nf">stop_offset</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Offset</span> <span class="o">|</span> <span class="n">_math</span><span class="o">.</span><span class="n">Infinity</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets stop offset.</span>
 
@@ -3316,7 +3340,7 @@
     <span class="c1">### PUBLIC METHODS ###</span>
 
 <div class="viewcode-block" id="TimespanList.clip_timespan_durations"><a class="viewcode-back" href="../../api/abjad/timespan.html#abjad.timespan.TimespanList.clip_timespan_durations">[docs]</a>    <span class="k">def</span> <span class="nf">clip_timespan_durations</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">minimum</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">maximum</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">anchor</span><span class="o">=</span><span class="n">_enums</span><span class="o">.</span><span class="n">Left</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">minimum</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">maximum</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">anchor</span><span class="o">=</span><span class="n">_enums</span><span class="o">.</span><span class="n">LEFT</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;TimespanList&quot;</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Clips timespan durations.</span>
@@ -3391,7 +3415,7 @@
 <span class="sd">            &gt;&gt;&gt; timespans = timespans.clip_timespan_durations(</span>
 <span class="sd">            ...     minimum=3,</span>
 <span class="sd">            ...     maximum=7,</span>
-<span class="sd">            ...     anchor=abjad.Right,</span>
+<span class="sd">            ...     anchor=abjad.RIGHT,</span>
 <span class="sd">            ... )</span>
 <span class="sd">            &gt;&gt;&gt; abjad.show(timespans, range_=(-2, 10), scale=0.5) # doctest: +SKIP</span>
 
@@ -3401,7 +3425,7 @@
 
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">assert</span> <span class="n">anchor</span> <span class="ow">in</span> <span class="p">(</span><span class="n">_enums</span><span class="o">.</span><span class="n">Left</span><span class="p">,</span> <span class="n">_enums</span><span class="o">.</span><span class="n">Right</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">anchor</span> <span class="ow">in</span> <span class="p">(</span><span class="n">_enums</span><span class="o">.</span><span class="n">LEFT</span><span class="p">,</span> <span class="n">_enums</span><span class="o">.</span><span class="n">RIGHT</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">minimum</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">minimum</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="n">minimum</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">maximum</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -3411,7 +3435,7 @@
         <span class="n">timespans</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)()</span>
         <span class="k">for</span> <span class="n">timespan</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">minimum</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">timespan</span><span class="o">.</span><span class="n">duration</span> <span class="o">&lt;</span> <span class="n">minimum</span><span class="p">:</span>
-                <span class="k">if</span> <span class="n">anchor</span> <span class="ow">is</span> <span class="n">_enums</span><span class="o">.</span><span class="n">Left</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">anchor</span> <span class="ow">is</span> <span class="n">_enums</span><span class="o">.</span><span class="n">LEFT</span><span class="p">:</span>
                     <span class="n">new_timespan</span> <span class="o">=</span> <span class="n">timespan</span><span class="o">.</span><span class="n">set_duration</span><span class="p">(</span><span class="n">minimum</span><span class="p">)</span>
                 <span class="k">else</span><span class="p">:</span>
                     <span class="n">new_start_offset</span> <span class="o">=</span> <span class="n">timespan</span><span class="o">.</span><span class="n">stop_offset</span> <span class="o">-</span> <span class="n">minimum</span>
@@ -3421,7 +3445,7 @@
                         <span class="n">stop_offset</span><span class="o">=</span><span class="n">timespan</span><span class="o">.</span><span class="n">stop_offset</span><span class="p">,</span>
                     <span class="p">)</span>
             <span class="k">elif</span> <span class="n">maximum</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">maximum</span> <span class="o">&lt;</span> <span class="n">timespan</span><span class="o">.</span><span class="n">duration</span><span class="p">:</span>
-                <span class="k">if</span> <span class="n">anchor</span> <span class="ow">is</span> <span class="n">_enums</span><span class="o">.</span><span class="n">Left</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">anchor</span> <span class="ow">is</span> <span class="n">_enums</span><span class="o">.</span><span class="n">LEFT</span><span class="p">:</span>
                     <span class="n">new_timespan</span> <span class="o">=</span> <span class="n">timespan</span><span class="o">.</span><span class="n">set_duration</span><span class="p">(</span><span class="n">maximum</span><span class="p">)</span>
                 <span class="k">else</span><span class="p">:</span>
                     <span class="n">new_start_offset</span> <span class="o">=</span> <span class="n">timespan</span><span class="o">.</span><span class="n">stop_offset</span> <span class="o">-</span> <span class="n">maximum</span>
@@ -3590,7 +3614,7 @@
 
 <span class="sd">        Operates in place and returns timespan list.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">timespans</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">Timespan</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">timespans</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Timespan</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">if</span> <span class="bp">self</span><span class="p">:</span>
             <span class="n">timespans</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
             <span class="k">for</span> <span class="n">timespan</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
@@ -3728,7 +3752,7 @@
             <span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="n">timespan_2</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
                 <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="n">j</span><span class="p">:</span>
                     <span class="k">continue</span>
-                <span class="n">revised_timespan_1_fragments</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">Timespan</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="n">revised_timespan_1_fragments</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Timespan</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
                 <span class="k">for</span> <span class="n">timespan_1_fragment</span> <span class="ow">in</span> <span class="n">timespan_1_fragments</span><span class="p">:</span>
                     <span class="k">if</span> <span class="n">timespan_2</span><span class="o">.</span><span class="n">intersects_timespan</span><span class="p">(</span><span class="n">timespan_1_fragment</span><span class="p">):</span>
                         <span class="n">result</span> <span class="o">=</span> <span class="n">timespan_1_fragment</span> <span class="o">-</span> <span class="n">timespan_2</span>
@@ -3965,7 +3989,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">OffsetCounter</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="TimespanList.explode"><a class="viewcode-back" href="../../api/abjad/timespan.html#abjad.timespan.TimespanList.explode">[docs]</a>    <span class="k">def</span> <span class="nf">explode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inventory_count</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Tuple</span><span class="p">[</span><span class="s2">&quot;TimespanList&quot;</span><span class="p">,</span> <span class="o">...</span><span class="p">]:</span>
+<div class="viewcode-block" id="TimespanList.explode"><a class="viewcode-back" href="../../api/abjad/timespan.html#abjad.timespan.TimespanList.explode">[docs]</a>    <span class="k">def</span> <span class="nf">explode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inventory_count</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="s2">&quot;TimespanList&quot;</span><span class="p">,</span> <span class="o">...</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Explodes timespans into timespan lists, avoiding overlap, and</span>
 <span class="sd">        distributing density as evenly as possible.</span>
@@ -4043,7 +4067,7 @@
 <span class="sd">            &#39;---&#39;</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">inventory_count</span><span class="p">,</span> <span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="kc">None</span><span class="p">),</span> <span class="nb">int</span><span class="p">))</span>
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">inventory_count</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span> <span class="o">|</span> <span class="nb">int</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">inventory_count</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
             <span class="k">assert</span> <span class="mi">0</span> <span class="o">&lt;</span> <span class="n">inventory_count</span>
         <span class="n">bounding_timespan</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">timespan</span>
@@ -4197,9 +4221,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_timespans_that_satisfy_time_relation</span><span class="p">(</span><span class="n">time_relation</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="TimespanList.partition"><a class="viewcode-back" href="../../api/abjad/timespan.html#abjad.timespan.TimespanList.partition">[docs]</a>    <span class="k">def</span> <span class="nf">partition</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">include_tangent_timespans</span><span class="o">=</span><span class="kc">False</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Tuple</span><span class="p">[</span><span class="s2">&quot;TimespanList&quot;</span><span class="p">,</span> <span class="o">...</span><span class="p">]:</span>
+<div class="viewcode-block" id="TimespanList.partition"><a class="viewcode-back" href="../../api/abjad/timespan.html#abjad.timespan.TimespanList.partition">[docs]</a>    <span class="k">def</span> <span class="nf">partition</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">include_tangent_timespans</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="s2">&quot;TimespanList&quot;</span><span class="p">,</span> <span class="o">...</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Partitions timespans into timespan lists.</span>
 
@@ -4506,7 +4528,7 @@
         <span class="k">return</span> <span class="bp">self</span></div>
 
 <div class="viewcode-block" id="TimespanList.round_offsets"><a class="viewcode-back" href="../../api/abjad/timespan.html#abjad.timespan.TimespanList.round_offsets">[docs]</a>    <span class="k">def</span> <span class="nf">round_offsets</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">multiplier</span><span class="p">,</span> <span class="n">anchor</span><span class="o">=</span><span class="n">_enums</span><span class="o">.</span><span class="n">Left</span><span class="p">,</span> <span class="n">must_be_wellformed</span><span class="o">=</span><span class="kc">True</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">multiplier</span><span class="p">,</span> <span class="n">anchor</span><span class="o">=</span><span class="n">_enums</span><span class="o">.</span><span class="n">LEFT</span><span class="p">,</span> <span class="n">must_be_wellformed</span><span class="o">=</span><span class="kc">True</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;TimespanList&quot;</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Rounds offsets of timespans in list to multiples of ``multiplier``.</span>
@@ -4562,7 +4584,7 @@
 
 <span class="sd">            &gt;&gt;&gt; rounded_timespans = timespans.round_offsets(</span>
 <span class="sd">            ...     5,</span>
-<span class="sd">            ...     anchor=abjad.Right,</span>
+<span class="sd">            ...     anchor=abjad.RIGHT,</span>
 <span class="sd">            ... )</span>
 <span class="sd">            &gt;&gt;&gt; abjad.show(rounded_timespans, range_=(-5, 10), scale=0.5) # doctest: +SKIP</span>
 
@@ -4584,7 +4606,7 @@
 
 <span class="sd">            &gt;&gt;&gt; rounded_timespans = timespans.round_offsets(</span>
 <span class="sd">            ...     5,</span>
-<span class="sd">            ...     anchor=abjad.Right,</span>
+<span class="sd">            ...     anchor=abjad.RIGHT,</span>
 <span class="sd">            ...     must_be_wellformed=False,</span>
 <span class="sd">            ... )</span>
 
@@ -4606,7 +4628,7 @@
         <span class="bp">self</span><span class="p">[:]</span> <span class="o">=</span> <span class="n">timespans</span>
         <span class="k">return</span> <span class="bp">self</span></div>
 
-<div class="viewcode-block" id="TimespanList.scale"><a class="viewcode-back" href="../../api/abjad/timespan.html#abjad.timespan.TimespanList.scale">[docs]</a>    <span class="k">def</span> <span class="nf">scale</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">multiplier</span><span class="p">,</span> <span class="n">anchor</span><span class="o">=</span><span class="n">_enums</span><span class="o">.</span><span class="n">Left</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;TimespanList&quot;</span><span class="p">:</span>
+<div class="viewcode-block" id="TimespanList.scale"><a class="viewcode-back" href="../../api/abjad/timespan.html#abjad.timespan.TimespanList.scale">[docs]</a>    <span class="k">def</span> <span class="nf">scale</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">multiplier</span><span class="p">,</span> <span class="n">anchor</span><span class="o">=</span><span class="n">_enums</span><span class="o">.</span><span class="n">LEFT</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;TimespanList&quot;</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Scales timespan by ``multiplier`` relative to ``anchor``.</span>
 
@@ -4640,7 +4662,7 @@
 <span class="sd">            ... ])</span>
 <span class="sd">            &gt;&gt;&gt; abjad.show(timespans, range_=(-3, 10), scale=0.5) # doctest: +SKIP</span>
 
-<span class="sd">            &gt;&gt;&gt; timespans = timespans.scale(2, anchor=abjad.Right)</span>
+<span class="sd">            &gt;&gt;&gt; timespans = timespans.scale(2, anchor=abjad.RIGHT)</span>
 <span class="sd">            &gt;&gt;&gt; abjad.show(timespans, range_=(-3, 10), scale=0.5) # doctest: +SKIP</span>
 
 <span class="sd">            &gt;&gt;&gt; for _ in timespans: _</span>
@@ -4657,7 +4679,7 @@
         <span class="bp">self</span><span class="p">[:]</span> <span class="o">=</span> <span class="n">timespans</span>
         <span class="k">return</span> <span class="bp">self</span></div>
 
-<div class="viewcode-block" id="TimespanList.split_at_offset"><a class="viewcode-back" href="../../api/abjad/timespan.html#abjad.timespan.TimespanList.split_at_offset">[docs]</a>    <span class="k">def</span> <span class="nf">split_at_offset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">offset</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Tuple</span><span class="p">[</span><span class="s2">&quot;TimespanList&quot;</span><span class="p">,</span> <span class="s2">&quot;TimespanList&quot;</span><span class="p">]:</span>
+<div class="viewcode-block" id="TimespanList.split_at_offset"><a class="viewcode-back" href="../../api/abjad/timespan.html#abjad.timespan.TimespanList.split_at_offset">[docs]</a>    <span class="k">def</span> <span class="nf">split_at_offset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">offset</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="s2">&quot;TimespanList&quot;</span><span class="p">,</span> <span class="s2">&quot;TimespanList&quot;</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Splits timespans at ``offset``.</span>
 
@@ -4748,7 +4770,7 @@
         <span class="n">after_list</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">before_list</span><span class="p">,</span> <span class="n">after_list</span></div>
 
-<div class="viewcode-block" id="TimespanList.split_at_offsets"><a class="viewcode-back" href="../../api/abjad/timespan.html#abjad.timespan.TimespanList.split_at_offsets">[docs]</a>    <span class="k">def</span> <span class="nf">split_at_offsets</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">offsets</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="s2">&quot;TimespanList&quot;</span><span class="p">]:</span>
+<div class="viewcode-block" id="TimespanList.split_at_offsets"><a class="viewcode-back" href="../../api/abjad/timespan.html#abjad.timespan.TimespanList.split_at_offsets">[docs]</a>    <span class="k">def</span> <span class="nf">split_at_offsets</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">offsets</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="s2">&quot;TimespanList&quot;</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Splits timespans at ``offsets``.</span>
 
@@ -4928,6 +4950,27 @@
         <span class="k">return</span> <span class="bp">self</span></div></div>
 
 
+<span class="k">def</span> <span class="nf">_format_postscript_argument</span><span class="p">(</span><span class="n">argument</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">argument</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">argument</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">argument</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;(</span><span class="si">{</span><span class="n">argument</span><span class="si">}</span><span class="s2">)&quot;</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">argument</span><span class="p">,</span> <span class="n">collections</span><span class="o">.</span><span class="n">abc</span><span class="o">.</span><span class="n">Sequence</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">argument</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;[ ]&quot;</span>
+        <span class="n">string</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">_format_postscript_argument</span><span class="p">(</span><span class="n">_</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">argument</span><span class="p">)</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;[ </span><span class="si">{</span><span class="n">string</span><span class="si">}</span><span class="s2"> ]&quot;</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">argument</span><span class="p">,</span> <span class="nb">bool</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">argument</span><span class="p">,</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">float</span><span class="p">):</span>
+        <span class="n">argument</span> <span class="o">=</span> <span class="n">_math</span><span class="o">.</span><span class="n">integer_equivalent_number_to_integer</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span>
+
+
+<span class="n">_fpa</span> <span class="o">=</span> <span class="n">_format_postscript_argument</span>
+
+
 <span class="k">def</span> <span class="nf">_make_timespan_list_markup</span><span class="p">(</span>
     <span class="n">timespans</span><span class="p">,</span>
     <span class="n">postscript_x_offset</span><span class="p">,</span>
@@ -4967,7 +5010,7 @@
             <span class="s1">&#39;&quot;&#39;</span><span class="p">,</span>
         <span class="p">]</span>
         <span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">strings</span><span class="p">)</span>
-        <span class="n">markup</span> <span class="o">=</span> <span class="n">_markups</span><span class="o">.</span><span class="n">Markup</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
+        <span class="n">markup</span> <span class="o">=</span> <span class="n">_indicators</span><span class="o">.</span><span class="n">Markup</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">markup</span>
     <span class="n">postscript_strings</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span>
         <span class="p">[</span>
@@ -4981,8 +5024,8 @@
         <span class="n">x_offset</span> <span class="o">-=</span> <span class="n">postscript_x_offset</span>
         <span class="n">postscript_strings</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span>
             <span class="p">[</span>
-                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">_markups</span><span class="o">.</span><span class="n">_fpa</span><span class="p">(</span><span class="n">x_offset</span><span class="p">)</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">_markups</span><span class="o">.</span><span class="n">_fpa</span><span class="p">(</span><span class="n">height</span> <span class="o">+</span> <span class="mf">1.5</span><span class="p">)</span><span class="si">}</span><span class="s2"> moveto&quot;</span><span class="p">,</span>
-                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">_markups</span><span class="o">.</span><span class="n">_fpa</span><span class="p">(</span><span class="n">x_offset</span><span class="p">)</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">_markups</span><span class="o">.</span><span class="n">_fpa</span><span class="p">(</span><span class="n">height</span> <span class="o">-</span> <span class="p">(</span><span class="n">level</span> <span class="o">*</span> <span class="mi">3</span><span class="p">))</span><span class="si">}</span><span class="s2"> lineto&quot;</span><span class="p">,</span>
+                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">_fpa</span><span class="p">(</span><span class="n">x_offset</span><span class="p">)</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">_fpa</span><span class="p">(</span><span class="n">height</span> <span class="o">+</span> <span class="mf">1.5</span><span class="p">)</span><span class="si">}</span><span class="s2"> moveto&quot;</span><span class="p">,</span>
+                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">_fpa</span><span class="p">(</span><span class="n">x_offset</span><span class="p">)</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">_fpa</span><span class="p">(</span><span class="n">height</span> <span class="o">-</span> <span class="p">(</span><span class="n">level</span> <span class="o">*</span> <span class="mi">3</span><span class="p">))</span><span class="si">}</span><span class="s2"> lineto&quot;</span><span class="p">,</span>
                 <span class="s2">&quot;stroke&quot;</span><span class="p">,</span>
             <span class="p">]</span>
         <span class="p">)</span>

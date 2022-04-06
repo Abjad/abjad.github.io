@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>abjad.lilypondfile &mdash; Abjad 3.6 documentation</title>
+  <title>abjad.lilypondfile &mdash; Abjad 3.7 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/abjad.css" type="text/css" />
@@ -32,11 +32,11 @@
   <div class="wy-grid-for-nav">
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search"  style="background: #00dd00" >
+        <div class="wy-side-nav-search"  style="background: #112233" >
 
 
     <a href="../../index.html" class="icon icon-home" alt="Documentation
-    Home"> Abjad 3.6
+    Home"> Abjad 3.7
 
 
 
@@ -110,7 +110,7 @@
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #00dd00" >
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #112233" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../index.html">Abjad</a>
       </nav>
@@ -127,10 +127,10 @@
     
   <h1>Source code for abjad.lilypondfile</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">dataclasses</span>
-<span class="kn">import</span> <span class="nn">typing</span>
 
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">_indent</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">configuration</span> <span class="k">as</span> <span class="n">_configuration</span>
-<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="nb">format</span> <span class="k">as</span> <span class="n">_format</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">indicators</span> <span class="k">as</span> <span class="n">_indicators</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">iterate</span> <span class="k">as</span> <span class="n">iterate_</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">score</span> <span class="k">as</span> <span class="n">_score</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">tag</span> <span class="k">as</span> <span class="n">_tag</span>
@@ -258,11 +258,11 @@
     <span class="n">items</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="n">dataclasses</span><span class="o">.</span><span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="nb">list</span><span class="p">)</span>
 
 <div class="viewcode-block" id="Block.__post_init__"><a class="viewcode-back" href="../../api/abjad/lilypondfile.html#abjad.lilypondfile.Block.__post_init__">[docs]</a>    <span class="k">def</span> <span class="nf">__post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">items</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">items</span> <span class="ow">or</span> <span class="p">[])</span></div>
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">,</span> <span class="nb">list</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">)</span></div>
 
     <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">_format_item</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">depth</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
-        <span class="n">indent</span> <span class="o">=</span> <span class="n">depth</span> <span class="o">*</span> <span class="n">_format</span><span class="o">.</span><span class="n">INDENT</span>
+        <span class="n">indent</span> <span class="o">=</span> <span class="n">depth</span> <span class="o">*</span> <span class="n">_indent</span><span class="o">.</span><span class="n">INDENT</span>
         <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">item</span><span class="o">.</span><span class="n">isspace</span><span class="p">():</span>
@@ -270,25 +270,29 @@
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">string</span> <span class="o">=</span> <span class="n">indent</span> <span class="o">+</span> <span class="n">item</span>
             <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">pieces</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">_get_format_pieces</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="s2">&quot;_get_lilypond_format&quot;</span><span class="p">):</span>
+            <span class="n">string</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">_get_lilypond_format</span><span class="p">()</span>
+            <span class="n">pieces</span> <span class="o">=</span> <span class="n">string</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="k">for</span> <span class="n">piece</span> <span class="ow">in</span> <span class="n">pieces</span><span class="p">:</span>
                 <span class="k">if</span> <span class="n">piece</span><span class="o">.</span><span class="n">isspace</span><span class="p">():</span>
                     <span class="n">piece</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
                 <span class="k">else</span><span class="p">:</span>
                     <span class="n">piece</span> <span class="o">=</span> <span class="n">indent</span> <span class="o">+</span> <span class="n">piece</span>
                 <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">piece</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">_indicators</span><span class="o">.</span><span class="n">Markup</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+            <span class="n">string</span> <span class="o">=</span> <span class="n">indent</span> <span class="o">+</span> <span class="n">item</span><span class="o">.</span><span class="n">string</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">result</span>
 
-    <span class="k">def</span> <span class="nf">_get_format_pieces</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_get_lilypond_format</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">):</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>
                 <span class="n">string</span> <span class="o">=</span> <span class="sa">rf</span><span class="s2">&quot;\</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2"> </span><span class="se">{{}}</span><span class="s2">&quot;</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">&quot;</span>
-            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
-            <span class="k">return</span> <span class="n">result</span>
+            <span class="k">return</span> <span class="n">string</span>
         <span class="n">strings</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>
             <span class="n">strings</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">rf</span><span class="s2">&quot;\</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
@@ -303,10 +307,8 @@
         <span class="k">if</span> <span class="n">tag</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">strings</span> <span class="o">=</span> <span class="n">_tag</span><span class="o">.</span><span class="n">double_tag</span><span class="p">(</span><span class="n">strings</span><span class="p">,</span> <span class="n">tag</span><span class="p">)</span>
         <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">strings</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">result</span>
-
-    <span class="k">def</span> <span class="nf">_get_lilypond_format</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="k">return</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_format_pieces</span><span class="p">(</span><span class="n">tag</span><span class="o">=</span><span class="n">tag</span><span class="p">))</span></div>
+        <span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">string</span></div>
 
 
 <div class="viewcode-block" id="LilyPondFile"><a class="viewcode-back" href="../../api/abjad/lilypondfile.html#abjad.lilypondfile.LilyPondFile">[docs]</a><span class="nd">@dataclasses</span><span class="o">.</span><span class="n">dataclass</span><span class="p">(</span><span class="n">slots</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -348,9 +350,9 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">items</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="n">dataclasses</span><span class="o">.</span><span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="nb">list</span><span class="p">)</span>
-    <span class="n">lilypond_language_token</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
-    <span class="n">lilypond_version_token</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
-    <span class="n">tag</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="n">_tag</span><span class="o">.</span><span class="n">Tag</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># TODO: externalize</span>
+    <span class="n">lilypond_language_token</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">|</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">lilypond_version_token</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">|</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">tag</span><span class="p">:</span> <span class="n">_tag</span><span class="o">.</span><span class="n">Tag</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># TODO: externalize</span>
 
 <div class="viewcode-block" id="LilyPondFile.__contains__"><a class="viewcode-back" href="../../api/abjad/lilypondfile.html#abjad.lilypondfile.LilyPondFile.__contains__">[docs]</a>    <span class="k">def</span> <span class="fm">__contains__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -593,7 +595,7 @@
                         <span class="k">return</span> <span class="n">component</span>
         <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;no block or component with name </span><span class="si">{</span><span class="n">argument</span><span class="si">!r}</span><span class="s2">.&quot;</span><span class="p">)</span></div>
 
-    <span class="k">def</span> <span class="nf">_get_format_pieces</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_get_lilypond_format</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">strings</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">lilypond_version_token</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
@@ -605,24 +607,22 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">lilypond_language_token</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
             <span class="n">string</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;\language &quot;english&quot;&#39;</span>
             <span class="n">strings</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
+        <span class="c1"># TODO: change to abjad.LilyPondFile._get_lilypond_format()</span>
         <span class="n">tag</span> <span class="o">=</span> <span class="n">_tag</span><span class="o">.</span><span class="n">Tag</span><span class="p">(</span><span class="s2">&quot;abjad.LilyPondFile._get_format_pieces()&quot;</span><span class="p">)</span>
         <span class="n">tag</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_tag</span><span class="p">(</span><span class="n">tag</span><span class="p">)</span>
         <span class="n">strings</span> <span class="o">=</span> <span class="n">_tag</span><span class="o">.</span><span class="n">double_tag</span><span class="p">(</span><span class="n">strings</span><span class="p">,</span> <span class="n">tag</span><span class="p">)</span>
         <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">strings</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">:</span>
-            <span class="k">if</span> <span class="s2">&quot;_get_lilypond_format&quot;</span> <span class="ow">in</span> <span class="nb">dir</span><span class="p">(</span><span class="n">item</span><span class="p">):</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+                <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
                 <span class="k">try</span><span class="p">:</span>
                     <span class="n">string</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">_get_lilypond_format</span><span class="p">(</span><span class="n">tag</span><span class="o">=</span><span class="n">tag</span><span class="p">)</span>
                 <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
                     <span class="n">string</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">_get_lilypond_format</span><span class="p">()</span>
                 <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="nb">str</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
                 <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">item</span><span class="p">))</span>
-        <span class="k">return</span> <span class="n">result</span>
-
-    <span class="k">def</span> <span class="nf">_get_lilypond_format</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">strings</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_format_pieces</span><span class="p">()</span>
+        <span class="n">strings</span> <span class="o">=</span> <span class="n">result</span>
         <span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">strings</span><span class="p">)</span>
         <span class="n">lines</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">string</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">):</span>
@@ -636,7 +636,10 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets tag.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">tag</span> <span class="o">=</span> <span class="n">_tag</span><span class="o">.</span><span class="n">Tag</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tag</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">tag</span><span class="p">:</span>
+            <span class="n">tag</span> <span class="o">=</span> <span class="n">_tag</span><span class="o">.</span><span class="n">Tag</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tag</span><span class="o">.</span><span class="n">string</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">tag</span> <span class="o">=</span> <span class="n">_tag</span><span class="o">.</span><span class="n">Tag</span><span class="p">()</span>
         <span class="n">tag</span> <span class="o">=</span> <span class="n">tag</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">site</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">tag</span></div></div>
 </pre></div>

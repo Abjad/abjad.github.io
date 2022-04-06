@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>abjad.metricmodulation &mdash; Abjad 3.6 documentation</title>
+  <title>abjad.metricmodulation &mdash; Abjad 3.7 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/abjad.css" type="text/css" />
@@ -32,11 +32,11 @@
   <div class="wy-grid-for-nav">
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search"  style="background: #00dd00" >
+        <div class="wy-side-nav-search"  style="background: #112233" >
 
 
     <a href="../../index.html" class="icon icon-home" alt="Documentation
-    Home"> Abjad 3.6
+    Home"> Abjad 3.7
 
 
 
@@ -110,7 +110,7 @@
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #00dd00" >
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #112233" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../index.html">Abjad</a>
       </nav>
@@ -126,14 +126,12 @@
     <div itemprop="articleBody">
     
   <h1>Source code for abjad.metricmodulation</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">dataclasses</span>
-<span class="kn">import</span> <span class="nn">typing</span>
+<span></span><span class="kn">import</span> <span class="nn">typing</span>
 
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">_inspect</span>
-<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">bundle</span> <span class="k">as</span> <span class="n">_bundle</span>
-<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">enums</span> <span class="k">as</span> <span class="n">_enums</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">contributions</span> <span class="k">as</span> <span class="n">_contributions</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">illustrators</span> <span class="k">as</span> <span class="n">_illustrators</span>
-<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">markups</span> <span class="k">as</span> <span class="n">_markups</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">indicators</span> <span class="k">as</span> <span class="n">_indicators</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">ratio</span> <span class="k">as</span> <span class="n">_ratio</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">score</span> <span class="k">as</span> <span class="n">_score</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">typings</span> <span class="k">as</span> <span class="n">_typings</span>
@@ -186,7 +184,7 @@
 <span class="sd">        &gt;&gt;&gt; metric_modulation = abjad.MetricModulation(</span>
 <span class="sd">        ...     left_rhythm=abjad.Note(&quot;c&#39;4&quot;),</span>
 <span class="sd">        ...     right_rhythm=abjad.Tuplet((4, 5), &quot;c&#39;4&quot;),</span>
-<span class="sd">        ...     )</span>
+<span class="sd">        ... )</span>
 
 <span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile(</span>
 <span class="sd">        ...     [r&#39;\include &quot;abjad.ily&quot;&#39;, metric_modulation]</span>
@@ -206,7 +204,7 @@
 <span class="sd">        &gt;&gt;&gt; metric_modulation = abjad.MetricModulation(</span>
 <span class="sd">        ...     left_rhythm=abjad.Note(&quot;c16.&quot;),</span>
 <span class="sd">        ...     right_rhythm=abjad.Tuplet((2, 3), &quot;c8&quot;),</span>
-<span class="sd">        ...     )</span>
+<span class="sd">        ... )</span>
 
 <span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile(</span>
 <span class="sd">        ...     [r&#39;\include &quot;abjad.ily&quot;&#39;, metric_modulation]</span>
@@ -228,7 +226,7 @@
 <span class="sd">        &gt;&gt;&gt; metric_modulation = abjad.MetricModulation(</span>
 <span class="sd">        ...     left_rhythm=abjad.Note(&quot;c&#39;4&quot;),</span>
 <span class="sd">        ...     right_rhythm=notes,</span>
-<span class="sd">        ...     )</span>
+<span class="sd">        ... )</span>
 
 <span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile(</span>
 <span class="sd">        ...     [r&#39;\include &quot;abjad.ily&quot;&#39;, metric_modulation]</span>
@@ -326,7 +324,7 @@
 <span class="sd">        &gt;&gt;&gt; metric_modulation = abjad.MetricModulation(</span>
 <span class="sd">        ...     left_rhythm=abjad.Note(&quot;c&#39;4&quot;),</span>
 <span class="sd">        ...     right_rhythm=tuplet,</span>
-<span class="sd">        ...     )</span>
+<span class="sd">        ... )</span>
 
 <span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile(</span>
 <span class="sd">        ...     [r&#39;\include &quot;abjad.ily&quot;&#39;, metric_modulation]</span>
@@ -430,8 +428,8 @@
 <span class="sd">        &gt;&gt;&gt; metric_modulation = abjad.MetricModulation(</span>
 <span class="sd">        ...     left_rhythm=abjad.Note(&quot;c4&quot;),</span>
 <span class="sd">        ...     right_rhythm=abjad.Note(&quot;c8.&quot;),</span>
-<span class="sd">        ...     )</span>
-<span class="sd">        &gt;&gt;&gt; abjad.attach(metric_modulation, staff[3])</span>
+<span class="sd">        ... )</span>
+<span class="sd">        &gt;&gt;&gt; abjad.attach(metric_modulation, staff[3], direction=abjad.UP)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.override(staff).TextScript.staff_padding = 2.5</span>
 
 <span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile([r&#39;\include &quot;abjad.ily&quot;&#39;, score])</span>
@@ -462,8 +460,6 @@
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="c1">### CLASS VARIABLES ###</span>
-
     <span class="vm">__slots__</span> <span class="o">=</span> <span class="p">(</span>
         <span class="s2">&quot;_hide&quot;</span><span class="p">,</span>
         <span class="s2">&quot;_left_markup&quot;</span><span class="p">,</span>
@@ -473,7 +469,7 @@
         <span class="s2">&quot;_scale&quot;</span><span class="p">,</span>
     <span class="p">)</span>
 
-    <span class="c1">### INITIALIZER ###</span>
+    <span class="n">directed</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">ClassVar</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
@@ -481,9 +477,9 @@
         <span class="n">right_rhythm</span><span class="p">,</span>
         <span class="o">*</span><span class="p">,</span>
         <span class="n">hide</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-        <span class="n">left_markup</span><span class="p">:</span> <span class="n">_markups</span><span class="o">.</span><span class="n">Markup</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">right_markup</span><span class="p">:</span> <span class="n">_markups</span><span class="o">.</span><span class="n">Markup</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">scale</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Tuple</span><span class="p">[</span><span class="n">_typings</span><span class="o">.</span><span class="n">Number</span><span class="p">,</span> <span class="n">_typings</span><span class="o">.</span><span class="n">Number</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+        <span class="n">left_markup</span><span class="p">:</span> <span class="n">_indicators</span><span class="o">.</span><span class="n">Markup</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">right_markup</span><span class="p">:</span> <span class="n">_indicators</span><span class="o">.</span><span class="n">Markup</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">scale</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">_typings</span><span class="o">.</span><span class="n">Number</span><span class="p">,</span> <span class="n">_typings</span><span class="o">.</span><span class="n">Number</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_hide</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">hide</span><span class="p">)</span>
         <span class="n">left_rhythm</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_initialize_rhythm</span><span class="p">(</span><span class="n">left_rhythm</span><span class="p">)</span>
@@ -492,15 +488,13 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_right_rhythm</span> <span class="o">=</span> <span class="n">right_rhythm</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_right_rhythm</span> <span class="o">=</span> <span class="n">right_rhythm</span>
         <span class="k">if</span> <span class="n">left_markup</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">left_markup</span><span class="p">,</span> <span class="n">_markups</span><span class="o">.</span><span class="n">Markup</span><span class="p">)</span>
+            <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">left_markup</span><span class="p">,</span> <span class="n">_indicators</span><span class="o">.</span><span class="n">Markup</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_left_markup</span> <span class="o">=</span> <span class="n">left_markup</span>
         <span class="k">if</span> <span class="n">right_markup</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">right_markup</span><span class="p">,</span> <span class="n">_markups</span><span class="o">.</span><span class="n">Markup</span><span class="p">)</span>
+            <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">right_markup</span><span class="p">,</span> <span class="n">_indicators</span><span class="o">.</span><span class="n">Markup</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_right_markup</span> <span class="o">=</span> <span class="n">right_markup</span>
         <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">scale</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">scale</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_scale</span> <span class="o">=</span> <span class="n">scale</span>
-
-    <span class="c1">### SPECIAL METHODS ###</span>
 
 <div class="viewcode-block" id="MetricModulation.__eq__"><a class="viewcode-back" href="../../api/abjad/metricmodulation.html#abjad.metricmodulation.MetricModulation.__eq__">[docs]</a>    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -512,17 +506,17 @@
 <span class="sd">            &gt;&gt;&gt; metric_modulation_1 = abjad.MetricModulation(</span>
 <span class="sd">            ...     left_rhythm=abjad.Note(&quot;c&#39;4&quot;),</span>
 <span class="sd">            ...     right_rhythm=abjad.Note(&quot;c&#39;4.&quot;),</span>
-<span class="sd">            ...     )</span>
+<span class="sd">            ... )</span>
 <span class="sd">            &gt;&gt;&gt; metric_modulation_2 = abjad.MetricModulation(</span>
 <span class="sd">            ...     left_rhythm=abjad.Tuplet((2, 3), [abjad.Note(&quot;c&#39;4&quot;)]),</span>
 <span class="sd">            ...     right_rhythm=abjad.Note(&quot;c&#39;4&quot;),</span>
-<span class="sd">            ...     )</span>
+<span class="sd">            ... )</span>
 <span class="sd">            &gt;&gt;&gt; maker = abjad.NoteMaker()</span>
 <span class="sd">            &gt;&gt;&gt; notes = maker([0], [(5, 16)])</span>
 <span class="sd">            &gt;&gt;&gt; metric_modulation_3 = abjad.MetricModulation(</span>
 <span class="sd">            ...     left_rhythm=abjad.Note(&quot;c&#39;4&quot;),</span>
 <span class="sd">            ...     right_rhythm=notes,</span>
-<span class="sd">            ...     )</span>
+<span class="sd">            ... )</span>
 
 <span class="sd">            &gt;&gt;&gt; metric_modulation_1.ratio</span>
 <span class="sd">            Ratio(numbers=(2, 3))</span>
@@ -571,23 +565,6 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">(left_rhythm=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">left_rhythm</span><span class="si">!r}</span><span class="s2">, right_rhythm=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">right_rhythm</span><span class="si">!r}</span><span class="s2">)&quot;</span></div>
 
-<div class="viewcode-block" id="MetricModulation.__str__"><a class="viewcode-back" href="../../api/abjad/metricmodulation.html#abjad.metricmodulation.MetricModulation.__str__">[docs]</a>    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Gets string representation of metric modulation.</span>
-
-<span class="sd">        ..  container:: example</span>
-
-<span class="sd">            &gt;&gt;&gt; metric_modulation = abjad.MetricModulation(</span>
-<span class="sd">            ...     left_rhythm=abjad.Tuplet((2, 3), [abjad.Note(&quot;c&#39;4&quot;)]),</span>
-<span class="sd">            ...     right_rhythm=abjad.Note(&quot;c&#39;4&quot;),</span>
-<span class="sd">            ...     )</span>
-
-<span class="sd">            &gt;&gt;&gt; print(str(metric_modulation))</span>
-<span class="sd">            \markup \abjad-metric-modulation-tuplet-lhs #2 #0 #2 #3 #2 #0 #&#39;(1 . 1)</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_markup</span><span class="p">())</span></div>
-
     <span class="c1">### PRIVATE METHODS ###</span>
 
     <span class="k">def</span> <span class="nf">_get_lilypond_command_string</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -619,21 +596,22 @@
         <span class="k">return</span> <span class="n">string</span>
 
     <span class="k">def</span> <span class="nf">_get_lilypond_format</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="n">markup</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_markup</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">markup</span><span class="o">.</span><span class="n">string</span>
 
-    <span class="k">def</span> <span class="nf">_get_lilypond_format_bundle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">component</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="n">bundle</span> <span class="o">=</span> <span class="n">_bundle</span><span class="o">.</span><span class="n">LilyPondFormatBundle</span><span class="p">()</span>
+    <span class="k">def</span> <span class="nf">_get_contributions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">component</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">wrapper</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">contributions</span> <span class="o">=</span> <span class="n">_contributions</span><span class="o">.</span><span class="n">ContributionsBySite</span><span class="p">()</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">hide</span><span class="p">:</span>
             <span class="n">markup</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_markup</span><span class="p">()</span>
-            <span class="n">markup</span> <span class="o">=</span> <span class="n">dataclasses</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">markup</span><span class="p">,</span> <span class="n">direction</span><span class="o">=</span><span class="n">_enums</span><span class="o">.</span><span class="n">Up</span><span class="p">)</span>
-            <span class="n">markup_format_pieces</span> <span class="o">=</span> <span class="n">markup</span><span class="o">.</span><span class="n">_get_format_pieces</span><span class="p">()</span>
-            <span class="n">bundle</span><span class="o">.</span><span class="n">after</span><span class="o">.</span><span class="n">markup</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">markup_format_pieces</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">bundle</span>
+            <span class="n">contributions</span> <span class="o">=</span> <span class="n">markup</span><span class="o">.</span><span class="n">_get_contributions</span><span class="p">(</span>
+                <span class="n">component</span><span class="o">=</span><span class="n">component</span><span class="p">,</span> <span class="n">wrapper</span><span class="o">=</span><span class="n">wrapper</span>
+            <span class="p">)</span>
+        <span class="k">return</span> <span class="n">contributions</span>
 
     <span class="k">def</span> <span class="nf">_get_markup</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">string</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_lilypond_command_string</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">string</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">markup</span> <span class="o">=</span> <span class="n">_markups</span><span class="o">.</span><span class="n">Markup</span><span class="p">(</span><span class="sa">rf</span><span class="s2">&quot;\markup </span><span class="si">{</span><span class="n">string</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">markup</span> <span class="o">=</span> <span class="n">_indicators</span><span class="o">.</span><span class="n">Markup</span><span class="p">(</span><span class="sa">rf</span><span class="s2">&quot;\markup </span><span class="si">{</span><span class="n">string</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">markup</span>
         <span class="n">strings</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">string</span> <span class="o">=</span> <span class="n">_illustrators</span><span class="o">.</span><span class="n">selection_to_score_markup_string</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">left_rhythm</span><span class="p">)</span>
@@ -644,7 +622,7 @@
         <span class="n">strings</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">string</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">))</span>
         <span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">strings</span><span class="p">)</span>
         <span class="n">string</span> <span class="o">=</span> <span class="sa">rf</span><span class="s2">&quot;\markup </span><span class="se">{{</span><span class="s2"> </span><span class="si">{</span><span class="n">string</span><span class="si">}</span><span class="s2"> </span><span class="se">}}</span><span class="s2">&quot;</span>
-        <span class="n">markup</span> <span class="o">=</span> <span class="n">_markups</span><span class="o">.</span><span class="n">Markup</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
+        <span class="n">markup</span> <span class="o">=</span> <span class="n">_indicators</span><span class="o">.</span><span class="n">Markup</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">markup</span>
 
     <span class="k">def</span> <span class="nf">_get_markup_arguments</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -734,7 +712,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_hide</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">left_markup</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="n">_markups</span><span class="o">.</span><span class="n">Markup</span><span class="p">]:</span>
+    <span class="k">def</span> <span class="nf">left_markup</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">_indicators</span><span class="o">.</span><span class="n">Markup</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets left markup of metric modulation.</span>
 
@@ -743,7 +721,7 @@
 <span class="sd">            &gt;&gt;&gt; metric_modulation = abjad.MetricModulation(</span>
 <span class="sd">            ...     left_rhythm=abjad.Note(&quot;c&#39;4&quot;),</span>
 <span class="sd">            ...     right_rhythm=abjad.Note(&quot;c&#39;4.&quot;),</span>
-<span class="sd">            ...     )</span>
+<span class="sd">            ... )</span>
 <span class="sd">            &gt;&gt;&gt; metric_modulation.left_markup</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -759,7 +737,7 @@
 <span class="sd">            &gt;&gt;&gt; metric_modulation = abjad.MetricModulation(</span>
 <span class="sd">            ...     left_rhythm=abjad.Note(&quot;c&#39;4&quot;),</span>
 <span class="sd">            ...     right_rhythm=abjad.Note(&quot;c&#39;4.&quot;),</span>
-<span class="sd">            ...     )</span>
+<span class="sd">            ... )</span>
 <span class="sd">            &gt;&gt;&gt; metric_modulation.left_rhythm</span>
 <span class="sd">            [Note(&quot;c&#39;4&quot;)]</span>
 
@@ -777,7 +755,7 @@
 <span class="sd">            &gt;&gt;&gt; metric_modulation = abjad.MetricModulation(</span>
 <span class="sd">            ...     left_rhythm=abjad.Tuplet((2, 3), [abjad.Note(&quot;c&#39;4&quot;)]),</span>
 <span class="sd">            ...     right_rhythm=abjad.Note(&quot;c&#39;4&quot;),</span>
-<span class="sd">            ...     )</span>
+<span class="sd">            ... )</span>
 <span class="sd">            &gt;&gt;&gt; metric_modulation.ratio</span>
 <span class="sd">            Ratio(numbers=(2, 3))</span>
 
@@ -789,7 +767,7 @@
         <span class="k">return</span> <span class="n">ratio</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">right_markup</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="n">_markups</span><span class="o">.</span><span class="n">Markup</span><span class="p">]:</span>
+    <span class="k">def</span> <span class="nf">right_markup</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">_indicators</span><span class="o">.</span><span class="n">Markup</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Gets right markup of metric modulation.</span>
 
 <span class="sd">        ..  container:: example</span>
@@ -797,7 +775,7 @@
 <span class="sd">            &gt;&gt;&gt; metric_modulation = abjad.MetricModulation(</span>
 <span class="sd">            ...     left_rhythm=abjad.Note(&quot;c&#39;4&quot;),</span>
 <span class="sd">            ...     right_rhythm=abjad.Note(&quot;c&#39;4.&quot;),</span>
-<span class="sd">            ...     )</span>
+<span class="sd">            ... )</span>
 <span class="sd">            &gt;&gt;&gt; metric_modulation.right_markup</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -813,7 +791,7 @@
 <span class="sd">            &gt;&gt;&gt; metric_modulation = abjad.MetricModulation(</span>
 <span class="sd">            ...     left_rhythm=abjad.Note(&quot;c&#39;4&quot;),</span>
 <span class="sd">            ...     right_rhythm=abjad.Note(&quot;c&#39;4.&quot;),</span>
-<span class="sd">            ...     )</span>
+<span class="sd">            ... )</span>
 <span class="sd">            &gt;&gt;&gt; metric_modulation.right_rhythm</span>
 <span class="sd">            [Note(&quot;c&#39;4.&quot;)]</span>
 
@@ -821,7 +799,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_right_rhythm</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">scale</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Tuple</span><span class="p">[</span><span class="n">_typings</span><span class="o">.</span><span class="n">Number</span><span class="p">,</span> <span class="n">_typings</span><span class="o">.</span><span class="n">Number</span><span class="p">]:</span>
+    <span class="k">def</span> <span class="nf">scale</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">_typings</span><span class="o">.</span><span class="n">Number</span><span class="p">,</span> <span class="n">_typings</span><span class="o">.</span><span class="n">Number</span><span class="p">]:</span>
         <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets scale of output markup.</span>
 
@@ -835,8 +813,8 @@
 <span class="sd">            ...     left_rhythm=abjad.Note(&quot;c4&quot;),</span>
 <span class="sd">            ...     right_rhythm=abjad.Note(&quot;c8.&quot;),</span>
 <span class="sd">            ...     scale=(0.5, 0.5),</span>
-<span class="sd">            ...     )</span>
-<span class="sd">            &gt;&gt;&gt; abjad.attach(metric_modulation, staff[3])</span>
+<span class="sd">            ... )</span>
+<span class="sd">            &gt;&gt;&gt; abjad.attach(metric_modulation, staff[3], direction=abjad.UP)</span>
 <span class="sd">            &gt;&gt;&gt; abjad.override(staff).TextScript.staff_padding = 2.5</span>
 
 <span class="sd">            &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile([r&#39;\include &quot;abjad.ily&quot;&#39;, score])</span>

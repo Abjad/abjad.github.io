@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>abjad.instruments &mdash; Abjad 3.6 documentation</title>
+  <title>abjad.instruments &mdash; Abjad 3.7 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/abjad.css" type="text/css" />
@@ -32,11 +32,11 @@
   <div class="wy-grid-for-nav">
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search"  style="background: #00dd00" >
+        <div class="wy-side-nav-search"  style="background: #112233" >
 
 
     <a href="../../index.html" class="icon icon-home" alt="Documentation
-    Home"> Abjad 3.6
+    Home"> Abjad 3.7
 
 
 
@@ -110,7 +110,7 @@
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #00dd00" >
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #112233" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../index.html">Abjad</a>
       </nav>
@@ -133,8 +133,9 @@
 <span class="kn">import</span> <span class="nn">dataclasses</span>
 <span class="kn">import</span> <span class="nn">typing</span>
 
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">contributions</span> <span class="k">as</span> <span class="n">_contributions</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="nb">enumerate</span> <span class="k">as</span> <span class="n">_enumerate</span>
-<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">markups</span> <span class="k">as</span> <span class="n">_markups</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">indicators</span> <span class="k">as</span> <span class="n">_indicators</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">pcollections</span> <span class="k">as</span> <span class="n">_pcollections</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">pitch</span> <span class="k">as</span> <span class="n">_pitch</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">string</span> <span class="k">as</span> <span class="n">_string</span>
@@ -151,15 +152,15 @@
 <span class="sd">        &gt;&gt;&gt; voice_1 = abjad.Voice(&quot;e&#39;8 g&#39;8 f&#39;8 a&#39;8&quot;)</span>
 <span class="sd">        &gt;&gt;&gt; flute = abjad.Flute()</span>
 <span class="sd">        &gt;&gt;&gt; abjad.attach(flute, voice_1[0], context=&#39;Voice&#39;)</span>
-<span class="sd">        &gt;&gt;&gt; flute_markup = abjad.Markup(r&#39;\markup (flute)&#39;, direction=abjad.Up)</span>
-<span class="sd">        &gt;&gt;&gt; abjad.attach(flute_markup, voice_1[0])</span>
+<span class="sd">        &gt;&gt;&gt; flute_markup = abjad.Markup(r&#39;\markup (flute)&#39;)</span>
+<span class="sd">        &gt;&gt;&gt; abjad.attach(flute_markup, voice_1[0], direction=abjad.UP)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.attach(abjad.LilyPondLiteral(r&#39;\voiceOne&#39;), voice_1)</span>
 <span class="sd">        &gt;&gt;&gt; voice_2 = abjad.Voice(&quot;c&#39;2&quot;)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.attach(abjad.LilyPondLiteral(r&#39;\voiceTwo&#39;), voice_2)</span>
 <span class="sd">        &gt;&gt;&gt; viola = abjad.Viola()</span>
 <span class="sd">        &gt;&gt;&gt; abjad.attach(viola, voice_2[0], context=&#39;Voice&#39;)</span>
-<span class="sd">        &gt;&gt;&gt; viola_markup = abjad.Markup(r&#39;\markup (viola)&#39;, direction=abjad.Down)</span>
-<span class="sd">        &gt;&gt;&gt; abjad.attach(viola_markup, voice_2[0])</span>
+<span class="sd">        &gt;&gt;&gt; viola_markup = abjad.Markup(r&#39;\markup (viola)&#39;)</span>
+<span class="sd">        &gt;&gt;&gt; abjad.attach(viola_markup, voice_2[0], direction=abjad.DOWN)</span>
 <span class="sd">        &gt;&gt;&gt; staff = abjad.Staff([voice_1, voice_2], simultaneous=True)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(staff) # doctest: +SKIP</span>
 
@@ -201,8 +202,6 @@
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="c1">### CLASS VARIABLES ###</span>
-
     <span class="vm">__slots__</span> <span class="o">=</span> <span class="p">(</span>
         <span class="s2">&quot;_allowable_clefs&quot;</span><span class="p">,</span>
         <span class="s2">&quot;_context&quot;</span><span class="p">,</span>
@@ -218,15 +217,11 @@
         <span class="s2">&quot;_starting_clefs&quot;</span><span class="p">,</span>
     <span class="p">)</span>
 
-    <span class="n">_format_slot</span> <span class="o">=</span> <span class="s2">&quot;opening&quot;</span>
-
-    <span class="n">_latent</span> <span class="o">=</span> <span class="kc">True</span>
-
-    <span class="n">_persistent</span> <span class="o">=</span> <span class="kc">True</span>
-
-    <span class="n">_redraw</span> <span class="o">=</span> <span class="kc">True</span>
-
-    <span class="c1">### INITIALIZER ###</span>
+    <span class="n">_site</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">ClassVar</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;opening&quot;</span>
+    <span class="n">_latent</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">ClassVar</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">_persistent</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">ClassVar</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">_redraw</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">ClassVar</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">check_effective_context</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">ClassVar</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
@@ -246,13 +241,13 @@
             <span class="n">name</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_name</span> <span class="o">=</span> <span class="n">name</span>
         <span class="k">if</span> <span class="n">markup</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">markup</span> <span class="o">=</span> <span class="n">_markups</span><span class="o">.</span><span class="n">Markup</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">markup</span><span class="p">))</span>
+            <span class="n">markup</span> <span class="o">=</span> <span class="n">_indicators</span><span class="o">.</span><span class="n">Markup</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">markup</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_name_markup</span> <span class="o">=</span> <span class="n">markup</span>
         <span class="k">if</span> <span class="n">short_name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">short_name</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">short_name</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_short_name</span> <span class="o">=</span> <span class="n">short_name</span>
         <span class="k">if</span> <span class="n">short_markup</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">short_markup</span> <span class="o">=</span> <span class="n">_markups</span><span class="o">.</span><span class="n">Markup</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">short_markup</span><span class="p">))</span>
+            <span class="n">short_markup</span> <span class="o">=</span> <span class="n">_indicators</span><span class="o">.</span><span class="n">Markup</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">short_markup</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_short_name_markup</span> <span class="o">=</span> <span class="n">short_markup</span>
         <span class="n">allowable_clefs</span> <span class="o">=</span> <span class="n">allowable_clefs</span> <span class="ow">or</span> <span class="p">(</span><span class="s2">&quot;treble&quot;</span><span class="p">,)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_allowable_clefs</span> <span class="o">=</span> <span class="n">allowable_clefs</span>
@@ -273,8 +268,6 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_primary</span> <span class="o">=</span> <span class="n">primary</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_performer_names</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;instrumentalist&quot;</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_starting_clefs</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">allowable_clefs</span><span class="p">)</span>
-
-    <span class="c1">### SPECIAL METHODS ###</span>
 
 <div class="viewcode-block" id="Instrument.__eq__"><a class="viewcode-back" href="../../api/abjad/instruments.html#abjad.instruments.Instrument.__eq__">[docs]</a>    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -306,8 +299,6 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">()&quot;</span></div>
 
-    <span class="c1">### PRIVATE PROPERTIES ###</span>
-
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">_lilypond_type</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="p">,</span> <span class="nb">type</span><span class="p">):</span>
@@ -317,14 +308,19 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span>
 
-    <span class="c1">### PRIVATE METHODS ###</span>
-
     <span class="k">def</span> <span class="nf">_attachment_test_all</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">leaf</span><span class="p">):</span>
         <span class="k">assert</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">leaf</span><span class="p">,</span> <span class="s2">&quot;written_duration&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">leaf</span><span class="o">.</span><span class="n">_has_indicator</span><span class="p">(</span><span class="n">Instrument</span><span class="p">):</span>
             <span class="n">string</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Already has instrument: </span><span class="si">{</span><span class="n">leaf</span><span class="si">}</span><span class="s2">.&quot;</span>
             <span class="k">return</span> <span class="n">string</span>
         <span class="k">return</span> <span class="kc">True</span>
+
+    <span class="k">def</span> <span class="nf">_get_contributions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">component</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">wrapper</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">contributions</span> <span class="o">=</span> <span class="n">_contributions</span><span class="o">.</span><span class="n">ContributionsBySite</span><span class="p">()</span>
+        <span class="n">strings</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_lilypond_format</span><span class="p">()</span>
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">strings</span><span class="p">,</span> <span class="nb">list</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">strings</span><span class="p">)</span>
+        <span class="n">contributions</span><span class="o">.</span><span class="n">opening</span><span class="o">.</span><span class="n">commands</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">strings</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">contributions</span>
 
     <span class="k">def</span> <span class="nf">_get_lilypond_format</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">context</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="k">return</span> <span class="p">[]</span>
@@ -334,7 +330,7 @@
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>
                 <span class="n">string</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
                 <span class="n">string</span> <span class="o">=</span> <span class="n">_string</span><span class="o">.</span><span class="n">capitalize_start</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
-                <span class="n">markup</span> <span class="o">=</span> <span class="n">_markups</span><span class="o">.</span><span class="n">Markup</span><span class="p">(</span><span class="sa">rf</span><span class="s2">&quot;\markup </span><span class="si">{</span><span class="n">string</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="n">markup</span> <span class="o">=</span> <span class="n">_indicators</span><span class="o">.</span><span class="n">Markup</span><span class="p">(</span><span class="sa">rf</span><span class="s2">&quot;\markup </span><span class="si">{</span><span class="n">string</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_name_markup</span> <span class="o">=</span> <span class="n">markup</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_name_markup</span> <span class="o">=</span> <span class="kc">None</span>
@@ -342,11 +338,9 @@
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">short_name</span><span class="p">:</span>
                 <span class="n">string</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">short_name</span>
                 <span class="n">string</span> <span class="o">=</span> <span class="n">_string</span><span class="o">.</span><span class="n">capitalize_start</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
-                <span class="n">markup</span> <span class="o">=</span> <span class="n">_markups</span><span class="o">.</span><span class="n">Markup</span><span class="p">(</span><span class="sa">rf</span><span class="s2">&quot;\markup </span><span class="si">{</span><span class="n">string</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="n">markup</span> <span class="o">=</span> <span class="n">_indicators</span><span class="o">.</span><span class="n">Markup</span><span class="p">(</span><span class="sa">rf</span><span class="s2">&quot;\markup </span><span class="si">{</span><span class="n">string</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_short_name_markup</span> <span class="o">=</span> <span class="kc">None</span>
-
-    <span class="c1">### PUBLIC PROPERTIES ###</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">allowable_clefs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -394,9 +388,9 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_initialize_default_name_markups</span><span class="p">()</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name_markup</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_name_markup</span><span class="p">,</span> <span class="n">_markups</span><span class="o">.</span><span class="n">Markup</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_name_markup</span><span class="p">,</span> <span class="n">_indicators</span><span class="o">.</span><span class="n">Markup</span><span class="p">):</span>
             <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_name_markup</span><span class="p">,</span> <span class="nb">str</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_name_markup</span><span class="p">)</span>
-            <span class="n">markup</span> <span class="o">=</span> <span class="n">_markups</span><span class="o">.</span><span class="n">Markup</span><span class="p">(</span><span class="sa">rf</span><span class="s2">&quot;\markup </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_name_markup</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">markup</span> <span class="o">=</span> <span class="n">_indicators</span><span class="o">.</span><span class="n">Markup</span><span class="p">(</span><span class="sa">rf</span><span class="s2">&quot;\markup </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_name_markup</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_name_markup</span> <span class="o">=</span> <span class="n">markup</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name_markup</span><span class="o">.</span><span class="n">string</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name_markup</span>
@@ -467,11 +461,11 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_initialize_default_name_markups</span><span class="p">()</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_short_name_markup</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_short_name_markup</span><span class="p">,</span> <span class="n">_markups</span><span class="o">.</span><span class="n">Markup</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_short_name_markup</span><span class="p">,</span> <span class="n">_indicators</span><span class="o">.</span><span class="n">Markup</span><span class="p">):</span>
             <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_short_name_markup</span><span class="p">,</span> <span class="nb">str</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_short_name_markup</span>
             <span class="p">)</span>
-            <span class="n">markup</span> <span class="o">=</span> <span class="n">_markups</span><span class="o">.</span><span class="n">Markup</span><span class="p">(</span><span class="sa">rf</span><span class="s2">&quot;\markup </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_short_name_markup</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">markup</span> <span class="o">=</span> <span class="n">_indicators</span><span class="o">.</span><span class="n">Markup</span><span class="p">(</span><span class="sa">rf</span><span class="s2">&quot;\markup </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_short_name_markup</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_short_name_markup</span> <span class="o">=</span> <span class="n">markup</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_short_name_markup</span><span class="o">.</span><span class="n">string</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_short_name_markup</span>
@@ -515,7 +509,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">numbers</span> <span class="o">=</span> <span class="n">numbers_</span></div>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">roman_numerals</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="o">...</span><span class="p">]:</span>
+    <span class="k">def</span> <span class="nf">roman_numerals</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="o">...</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets roman numerals of string number indicator.</span>
 
@@ -542,7 +536,7 @@
         <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">result</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="Tuning"><a class="viewcode-back" href="../../api/abjad/instruments.html#abjad.instruments.Tuning">[docs]</a><span class="nd">@dataclasses</span><span class="o">.</span><span class="n">dataclass</span><span class="p">(</span><span class="n">slots</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="viewcode-block" id="Tuning"><a class="viewcode-back" href="../../api/abjad/instruments.html#abjad.instruments.Tuning">[docs]</a><span class="nd">@dataclasses</span><span class="o">.</span><span class="n">dataclass</span><span class="p">(</span><span class="n">slots</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">unsafe_hash</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">class</span> <span class="nc">Tuning</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Tuning.</span>
@@ -551,28 +545,18 @@
 
 <span class="sd">        Violin tuning:</span>
 
-<span class="sd">        &gt;&gt;&gt; abjad.Tuning(pitches=(&#39;G3&#39;, &#39;D4&#39;, &#39;A4&#39;, &#39;E5&#39;))</span>
-<span class="sd">        Tuning(pitches=PitchSegment(items=&quot;g d&#39; a&#39; e&#39;&#39;&quot;, item_class=NamedPitch))</span>
+<span class="sd">        &gt;&gt;&gt; abjad.Tuning(pitches=(&quot;G3&quot;, &quot;D4&quot;, &quot;A4&quot;, &quot;E5&quot;))</span>
+<span class="sd">        Tuning(pitches=(NamedPitch(&#39;g&#39;), NamedPitch(&quot;d&#39;&quot;), NamedPitch(&quot;a&#39;&quot;), NamedPitch(&quot;e&#39;&#39;&quot;)))</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">pitches</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Sequence</span>
+    <span class="n">pitches</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Sequence</span><span class="p">[</span><span class="n">_pitch</span><span class="o">.</span><span class="n">NamedPitch</span><span class="p">]</span> <span class="o">=</span> <span class="p">()</span>
 
 <div class="viewcode-block" id="Tuning.__post_init__"><a class="viewcode-back" href="../../api/abjad/instruments.html#abjad.instruments.Tuning.__post_init__">[docs]</a>    <span class="k">def</span> <span class="nf">__post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pitches</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">pitches</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pitches</span><span class="o">.</span><span class="n">pitches</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">pitches</span> <span class="o">=</span> <span class="n">_pcollections</span><span class="o">.</span><span class="n">PitchSegment</span><span class="p">(</span>
-            <span class="n">items</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pitches</span><span class="p">,</span> <span class="n">item_class</span><span class="o">=</span><span class="n">_pitch</span><span class="o">.</span><span class="n">NamedPitch</span>
-        <span class="p">)</span></div>
-
-<div class="viewcode-block" id="Tuning.__hash__"><a class="viewcode-back" href="../../api/abjad/instruments.html#abjad.instruments.Tuning.__hash__">[docs]</a>    <span class="k">def</span> <span class="fm">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Hashes tuning.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="nb">hash</span><span class="p">(</span><span class="nb">repr</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pitches</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">_pitch</span><span class="o">.</span><span class="n">NamedPitch</span><span class="p">(</span><span class="n">_</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">pitches</span><span class="p">)</span></div>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">pitch_ranges</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">_pcollections</span><span class="o">.</span><span class="n">PitchRange</span><span class="p">]:</span>
+    <span class="k">def</span> <span class="nf">pitch_ranges</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">_pcollections</span><span class="o">.</span><span class="n">PitchRange</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets two-octave pitch-ranges for each pitch in this tuning.</span>
 
@@ -589,13 +573,15 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">pitch</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">pitches</span> <span class="ow">or</span> <span class="p">[]:</span>
-            <span class="n">pitch_range</span> <span class="o">=</span> <span class="n">_pcollections</span><span class="o">.</span><span class="n">PitchRange</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[</span><span class="si">{</span><span class="n">pitch</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">pitch</span> <span class="o">+</span> <span class="mi">24</span><span class="si">}</span><span class="s2">]&quot;</span><span class="p">)</span>
+            <span class="n">pitch_range</span> <span class="o">=</span> <span class="n">_pcollections</span><span class="o">.</span><span class="n">PitchRange</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;[</span><span class="si">{</span><span class="n">pitch</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="p">(</span><span class="n">pitch</span> <span class="o">+</span> <span class="mi">24</span><span class="p">)</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">]&quot;</span>
+            <span class="p">)</span>
             <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pitch_range</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">result</span>
 
 <div class="viewcode-block" id="Tuning.get_pitch_ranges_by_string_number"><a class="viewcode-back" href="../../api/abjad/instruments.html#abjad.instruments.Tuning.get_pitch_ranges_by_string_number">[docs]</a>    <span class="k">def</span> <span class="nf">get_pitch_ranges_by_string_number</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">string_number</span><span class="p">:</span> <span class="n">StringNumber</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Tuple</span><span class="p">[</span><span class="n">_pcollections</span><span class="o">.</span><span class="n">PitchRange</span><span class="p">,</span> <span class="o">...</span><span class="p">]:</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">_pcollections</span><span class="o">.</span><span class="n">PitchRange</span><span class="p">,</span> <span class="o">...</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets tuning pitch ranges by string number.</span>
 
@@ -622,7 +608,7 @@
 
 <div class="viewcode-block" id="Tuning.get_pitches_by_string_number"><a class="viewcode-back" href="../../api/abjad/instruments.html#abjad.instruments.Tuning.get_pitches_by_string_number">[docs]</a>    <span class="k">def</span> <span class="nf">get_pitches_by_string_number</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">string_number</span><span class="p">:</span> <span class="n">StringNumber</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Tuple</span><span class="p">[</span><span class="n">_pitch</span><span class="o">.</span><span class="n">NamedPitch</span><span class="p">,</span> <span class="o">...</span><span class="p">]:</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">_pitch</span><span class="o">.</span><span class="n">NamedPitch</span><span class="p">,</span> <span class="o">...</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets tuning pitches by string number.</span>
 
@@ -671,7 +657,7 @@
 <span class="sd">            &gt;&gt;&gt; voicings = tuning.voice_pitch_classes(</span>
 <span class="sd">            ...     (&#39;a&#39;, &#39;d&#39;),</span>
 <span class="sd">            ...     allow_open_strings=False,</span>
-<span class="sd">            ...     )</span>
+<span class="sd">            ... )</span>
 <span class="sd">            &gt;&gt;&gt; for voicing in voicings:</span>
 <span class="sd">            ...     voicing</span>
 <span class="sd">            ...</span>
@@ -731,13 +717,11 @@
         <span class="n">permutations</span> <span class="o">=</span> <span class="n">_enumerate</span><span class="o">.</span><span class="n">yield_permutations</span><span class="p">(</span><span class="n">pitch_classes</span><span class="p">)</span>
         <span class="n">permutations</span> <span class="o">=</span> <span class="nb">set</span><span class="p">([</span><span class="nb">tuple</span><span class="p">(</span><span class="n">_</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">permutations</span><span class="p">])</span>
         <span class="n">pitch_ranges</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pitch_ranges</span>
-        <span class="n">result</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span>
-            <span class="n">typing</span><span class="o">.</span><span class="n">Tuple</span><span class="p">[</span><span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="n">_pitch</span><span class="o">.</span><span class="n">NamedPitch</span><span class="p">,</span> <span class="kc">None</span><span class="p">],</span> <span class="o">...</span><span class="p">]</span>
-        <span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">result</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="n">_pitch</span><span class="o">.</span><span class="n">NamedPitch</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span> <span class="o">...</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">permutation</span> <span class="ow">in</span> <span class="n">permutations</span><span class="p">:</span>
-            <span class="n">sequences</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">sequences</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="p">[]</span>
             <span class="k">for</span> <span class="n">pitch_range</span><span class="p">,</span> <span class="n">pitch_class</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">pitch_ranges</span><span class="p">,</span> <span class="n">permutation</span><span class="p">):</span>
-                <span class="n">pitches</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="n">_pitch</span><span class="o">.</span><span class="n">NamedPitch</span><span class="p">]]</span>
+                <span class="n">pitches</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">_pitch</span><span class="o">.</span><span class="n">NamedPitch</span> <span class="o">|</span> <span class="kc">None</span><span class="p">]</span>
                 <span class="k">if</span> <span class="n">pitch_class</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                     <span class="n">sequences</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="kc">None</span><span class="p">])</span>
                     <span class="k">continue</span>
@@ -1595,7 +1579,7 @@
 
 <span class="sd">            &gt;&gt;&gt; cello = abjad.Cello()</span>
 <span class="sd">            &gt;&gt;&gt; cello.default_tuning</span>
-<span class="sd">            Tuning(pitches=PitchSegment(items=&quot;c, g, d a&quot;, item_class=NamedPitch))</span>
+<span class="sd">            Tuning(pitches=(NamedPitch(&#39;c,&#39;), NamedPitch(&#39;g,&#39;), NamedPitch(&#39;d&#39;), NamedPitch(&#39;a&#39;)))</span>
 
 <span class="sd">        Returns tuning.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -1847,7 +1831,7 @@
 
 <span class="sd">            &gt;&gt;&gt; contrabass = abjad.Contrabass()</span>
 <span class="sd">            &gt;&gt;&gt; contrabass.default_tuning</span>
-<span class="sd">            Tuning(pitches=PitchSegment(items=&quot;c,, a,, d, g,&quot;, item_class=NamedPitch))</span>
+<span class="sd">            Tuning(pitches=(NamedPitch(&#39;c,,&#39;), NamedPitch(&#39;a,,&#39;), NamedPitch(&#39;d,&#39;), NamedPitch(&#39;g,&#39;)))</span>
 
 <span class="sd">        Returns tuning.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -2406,7 +2390,7 @@
 
 <span class="sd">            &gt;&gt;&gt; guitar = abjad.Guitar()</span>
 <span class="sd">            &gt;&gt;&gt; guitar.default_tuning</span>
-<span class="sd">            Tuning(pitches=PitchSegment(items=&quot;e, a, d g b e&#39;&quot;, item_class=NamedPitch))</span>
+<span class="sd">            Tuning(pitches=(NamedPitch(&#39;e,&#39;), NamedPitch(&#39;a,&#39;), NamedPitch(&#39;d&#39;), NamedPitch(&#39;g&#39;), NamedPitch(&#39;b&#39;), NamedPitch(&quot;e&#39;&quot;)))</span>
 
 <span class="sd">        Returns tuning.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -2495,7 +2479,7 @@
 <span class="sd">        &gt;&gt;&gt; staff_group = abjad.StaffGroup(</span>
 <span class="sd">        ...     [upper_staff, lower_staff],</span>
 <span class="sd">        ...     lilypond_type=&#39;PianoStaff&#39;,</span>
-<span class="sd">        ...     )</span>
+<span class="sd">        ... )</span>
 <span class="sd">        &gt;&gt;&gt; harpsichord = abjad.Harpsichord()</span>
 <span class="sd">        &gt;&gt;&gt; abjad.attach(harpsichord, staff_group[0][0])</span>
 <span class="sd">        &gt;&gt;&gt; abjad.attach(abjad.Clef(&#39;bass&#39;), lower_staff[0])</span>
@@ -3567,7 +3551,7 @@
 
 <span class="sd">            &gt;&gt;&gt; viola = abjad.Viola()</span>
 <span class="sd">            &gt;&gt;&gt; viola.default_tuning</span>
-<span class="sd">            Tuning(pitches=PitchSegment(items=&quot;c g d&#39; a&#39;&quot;, item_class=NamedPitch))</span>
+<span class="sd">            Tuning(pitches=(NamedPitch(&#39;c&#39;), NamedPitch(&#39;g&#39;), NamedPitch(&quot;d&#39;&quot;), NamedPitch(&quot;a&#39;&quot;)))</span>
 
 <span class="sd">        Returns tuning.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -3644,7 +3628,7 @@
 
 <span class="sd">            &gt;&gt;&gt; violin = abjad.Violin()</span>
 <span class="sd">            &gt;&gt;&gt; violin.default_tuning</span>
-<span class="sd">            Tuning(pitches=PitchSegment(items=&quot;g d&#39; a&#39; e&#39;&#39;&quot;, item_class=NamedPitch))</span>
+<span class="sd">            Tuning(pitches=(NamedPitch(&#39;g&#39;), NamedPitch(&quot;d&#39;&quot;), NamedPitch(&quot;a&#39;&quot;), NamedPitch(&quot;e&#39;&#39;&quot;)))</span>
 
 <span class="sd">        Returns tuning.</span>
 <span class="sd">        &quot;&quot;&quot;</span>

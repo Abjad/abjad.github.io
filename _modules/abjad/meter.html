@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>abjad.meter &mdash; Abjad 3.6 documentation</title>
+  <title>abjad.meter &mdash; Abjad 3.7 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/abjad.css" type="text/css" />
@@ -32,11 +32,11 @@
   <div class="wy-grid-for-nav">
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search"  style="background: #00dd00" >
+        <div class="wy-side-nav-search"  style="background: #112233" >
 
 
     <a href="../../index.html" class="icon icon-home" alt="Documentation
-    Home"> Abjad 3.6
+    Home"> Abjad 3.7
 
 
 
@@ -110,7 +110,7 @@
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #00dd00" >
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #112233" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../index.html">Abjad</a>
       </nav>
@@ -131,8 +131,6 @@
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">bisect</span>
 <span class="kn">import</span> <span class="nn">collections</span>
-<span class="kn">import</span> <span class="nn">dataclasses</span>
-<span class="kn">import</span> <span class="nn">typing</span>
 
 <span class="kn">import</span> <span class="nn">uqbar.graphs</span>
 
@@ -140,7 +138,6 @@
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">duration</span> <span class="k">as</span> <span class="n">_duration</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">indicators</span> <span class="k">as</span> <span class="n">_indicators</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">lilypondfile</span> <span class="k">as</span> <span class="n">_lilypondfile</span>
-<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">markups</span> <span class="k">as</span> <span class="n">_markups</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">math</span> <span class="k">as</span> <span class="n">_math</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">mutate</span> <span class="k">as</span> <span class="n">_mutate</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">parentage</span> <span class="k">as</span> <span class="n">_parentage</span>
@@ -149,7 +146,6 @@
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">select</span> <span class="k">as</span> <span class="n">_select</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">sequence</span> <span class="k">as</span> <span class="n">_sequence</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">timespan</span> <span class="k">as</span> <span class="n">_timespan</span>
-<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">typedcollections</span> <span class="k">as</span> <span class="n">_typedcollections</span>
 
 
 <div class="viewcode-block" id="Meter"><a class="viewcode-back" href="../../api/abjad/meter.html#abjad.meter.Meter">[docs]</a><span class="k">class</span> <span class="nc">Meter</span><span class="p">:</span>
@@ -397,7 +393,7 @@
         <span class="n">preferred_boundary_depth</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="p">):</span>
         <span class="n">argument</span> <span class="o">=</span> <span class="n">argument</span> <span class="ow">or</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
-        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">preferred_boundary_depth</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="kc">None</span><span class="p">)))</span>
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">preferred_boundary_depth</span><span class="p">,</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">type</span><span class="p">(</span><span class="kc">None</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_preferred_boundary_depth</span> <span class="o">=</span> <span class="n">preferred_boundary_depth</span>
 
         <span class="k">def</span> <span class="nf">recurse</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">factors</span><span class="p">,</span> <span class="n">denominator</span><span class="p">,</span> <span class="n">increase_monotonic</span><span class="p">):</span>
@@ -474,7 +470,7 @@
             <span class="n">root</span> <span class="o">=</span> <span class="n">argument</span><span class="o">.</span><span class="n">root_node</span>
             <span class="n">numerator</span><span class="p">,</span> <span class="n">denominator</span> <span class="o">=</span> <span class="n">argument</span><span class="o">.</span><span class="n">numerator</span><span class="p">,</span> <span class="n">argument</span><span class="o">.</span><span class="n">denominator</span>
             <span class="n">increase_monotonic</span> <span class="o">=</span> <span class="n">argument</span><span class="o">.</span><span class="n">increase_monotonic</span>
-        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">argument</span><span class="p">,</span> <span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">_rhythmtrees</span><span class="o">.</span><span class="n">RhythmTreeContainer</span><span class="p">)):</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">argument</span><span class="p">,</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">_rhythmtrees</span><span class="o">.</span><span class="n">RhythmTreeContainer</span><span class="p">):</span>
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">argument</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
                 <span class="n">parsed</span> <span class="o">=</span> <span class="n">_rhythmtrees</span><span class="o">.</span><span class="n">RhythmTreeParser</span><span class="p">()(</span><span class="n">argument</span><span class="p">)</span>
                 <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">parsed</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span>
@@ -782,29 +778,6 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">(</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">rtm_format</span><span class="si">!r}</span><span class="s2">)&quot;</span></div>
 
-<div class="viewcode-block" id="Meter.__str__"><a class="viewcode-back" href="../../api/abjad/meter.html#abjad.meter.Meter.__str__">[docs]</a>    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Gets string representation of meter.</span>
-
-<span class="sd">        ..  container:: example</span>
-
-<span class="sd">            Gets string representation of meters over ``8``:</span>
-
-<span class="sd">            &gt;&gt;&gt; for numerator in range(1, 9):</span>
-<span class="sd">            ...     meter = abjad.Meter((numerator, 8))</span>
-<span class="sd">            ...     print(str(meter))</span>
-<span class="sd">            1/8</span>
-<span class="sd">            2/8</span>
-<span class="sd">            3/8</span>
-<span class="sd">            4/8</span>
-<span class="sd">            5/8</span>
-<span class="sd">            6/8</span>
-<span class="sd">            7/8</span>
-<span class="sd">            8/8</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">numerator</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">denominator</span><span class="si">}</span><span class="s2">&quot;</span></div>
-
     <span class="c1">### PUBLIC PROPERTIES ###</span>
 
     <span class="nd">@property</span>
@@ -864,6 +837,13 @@
         <span class="k">return</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">numerator</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">denominator</span><span class="p">)</span>
 
     <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">fraction</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets nonreduced fraction.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">_duration</span><span class="o">.</span><span class="n">NonreducedFraction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pair</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">implied_time_signature</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets implied time signature of meter.</span>
@@ -878,7 +858,7 @@
         <span class="k">return</span> <span class="n">_indicators</span><span class="o">.</span><span class="n">TimeSignature</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root_node</span><span class="o">.</span><span class="n">preprolated_duration</span><span class="p">)</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">increase_monotonic</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]:</span>
+    <span class="k">def</span> <span class="nf">increase_monotonic</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Is true when meter divides large primes into collections of ``2``</span>
 <span class="sd">        and ``3`` that increase monotonically.</span>
@@ -951,7 +931,7 @@
 <span class="sd">            &gt;&gt;&gt; for numerator in range(1, 13):</span>
 <span class="sd">            ...     meter = abjad.Meter((numerator, 4))</span>
 <span class="sd">            ...     string = True if meter.is_compound else &#39;&#39;</span>
-<span class="sd">            ...     print(str(meter), string)</span>
+<span class="sd">            ...     print(str(meter.fraction), string)</span>
 <span class="sd">            ...</span>
 <span class="sd">            1/4</span>
 <span class="sd">            2/4</span>
@@ -973,7 +953,7 @@
 <span class="sd">            &gt;&gt;&gt; for numerator in range(1, 13):</span>
 <span class="sd">            ...     meter = abjad.Meter((numerator, 8))</span>
 <span class="sd">            ...     string = True if meter.is_compound else &#39;&#39;</span>
-<span class="sd">            ...     print(str(meter), string)</span>
+<span class="sd">            ...     print(str(meter.fraction), string)</span>
 <span class="sd">            ...</span>
 <span class="sd">            1/8</span>
 <span class="sd">            2/8</span>
@@ -1010,7 +990,7 @@
 <span class="sd">            &gt;&gt;&gt; for numerator in range(1, 13):</span>
 <span class="sd">            ...     meter = abjad.Meter((numerator, 4))</span>
 <span class="sd">            ...     string = True if meter.is_simple else &#39;&#39;</span>
-<span class="sd">            ...     print(str(meter), string)</span>
+<span class="sd">            ...     print(str(meter.fraction), string)</span>
 <span class="sd">            ...</span>
 <span class="sd">            1/4     True</span>
 <span class="sd">            2/4     True</span>
@@ -1032,7 +1012,7 @@
 <span class="sd">            &gt;&gt;&gt; for numerator in range(1, 13):</span>
 <span class="sd">            ...     meter = abjad.Meter((numerator, 8))</span>
 <span class="sd">            ...     string = True if meter.is_simple else &#39;&#39;</span>
-<span class="sd">            ...     print(str(meter), string)</span>
+<span class="sd">            ...     print(str(meter.fraction), string)</span>
 <span class="sd">            ...</span>
 <span class="sd">            1/8     True</span>
 <span class="sd">            2/8     True</span>
@@ -1204,10 +1184,10 @@
 <span class="sd">            &gt;&gt;&gt; for meter in abjad.Meter.fit_meters(argument, meters):</span>
 <span class="sd">            ...     print(meter.implied_time_signature)</span>
 <span class="sd">            ...</span>
-<span class="sd">            4/4</span>
-<span class="sd">            4/4</span>
-<span class="sd">            4/4</span>
-<span class="sd">            4/4</span>
+<span class="sd">            TimeSignature(pair=(4, 4), hide=False, partial=None)</span>
+<span class="sd">            TimeSignature(pair=(4, 4), hide=False, partial=None)</span>
+<span class="sd">            TimeSignature(pair=(4, 4), hide=False, partial=None)</span>
+<span class="sd">            TimeSignature(pair=(4, 4), hide=False, partial=None)</span>
 
 <span class="sd">        ..  container:: example</span>
 
@@ -1217,15 +1197,13 @@
 <span class="sd">            &gt;&gt;&gt; for meter in abjad.Meter.fit_meters(argument, meters):</span>
 <span class="sd">            ...     print(meter.implied_time_signature)</span>
 <span class="sd">            ...</span>
-<span class="sd">            3/4</span>
-<span class="sd">            4/4</span>
-<span class="sd">            3/4</span>
-<span class="sd">            5/4</span>
-<span class="sd">            5/4</span>
+<span class="sd">            TimeSignature(pair=(3, 4), hide=False, partial=None)</span>
+<span class="sd">            TimeSignature(pair=(4, 4), hide=False, partial=None)</span>
+<span class="sd">            TimeSignature(pair=(3, 4), hide=False, partial=None)</span>
+<span class="sd">            TimeSignature(pair=(5, 4), hide=False, partial=None)</span>
+<span class="sd">            TimeSignature(pair=(5, 4), hide=False, partial=None)</span>
 
 <span class="sd">        Coerces offsets from ``argument`` via ``MetricAccentKernel.count_offsets()``.</span>
-
-<span class="sd">        Coerces Meters from ``meters`` via ``MeterList``.</span>
 
 <span class="sd">        Returns list.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -2583,28 +2561,6 @@
                 <span class="p">)</span></div></div>
 
 
-<div class="viewcode-block" id="MeterList"><a class="viewcode-back" href="../../api/abjad/meter.html#abjad.meter.MeterList">[docs]</a><span class="nd">@dataclasses</span><span class="o">.</span><span class="n">dataclass</span><span class="p">(</span><span class="n">slots</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="k">class</span> <span class="nc">MeterList</span><span class="p">(</span><span class="n">_typedcollections</span><span class="o">.</span><span class="n">TypedList</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Meter list.</span>
-
-<span class="sd">    ..  container:: example</span>
-
-<span class="sd">        &gt;&gt;&gt; meters = abjad.MeterList([(3, 4), (5, 16), (7, 8)])</span>
-<span class="sd">        &gt;&gt;&gt; for _ in meters: _</span>
-<span class="sd">        Meter(&#39;(3/4 (1/4 1/4 1/4))&#39;)</span>
-<span class="sd">        Meter(&#39;(5/16 ((3/16 (1/16 1/16 1/16)) (2/16 (1/16 1/16))))&#39;)</span>
-<span class="sd">        Meter(&#39;(7/8 ((3/8 (1/8 1/8 1/8)) (2/8 (1/8 1/8)) (2/8 (1/8 1/8))))&#39;)</span>
-
-<span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.meter.illustrate_meter_list(meters, scale=0.5)</span>
-<span class="sd">        &gt;&gt;&gt; abjad.show(lilypond_file) # doctest: +SKIP</span>
-
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="k">def</span> <span class="nf">_coerce_item</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">Meter</span><span class="p">(</span><span class="n">item</span><span class="p">)</span></div>
-
-
 <div class="viewcode-block" id="illustrate_meter_list"><a class="viewcode-back" href="../../api/abjad/meter.html#abjad.meter.illustrate_meter_list">[docs]</a><span class="k">def</span> <span class="nf">illustrate_meter_list</span><span class="p">(</span>
     <span class="n">meter_list</span><span class="p">,</span> <span class="n">denominator</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> <span class="n">range_</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="kc">None</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">_lilypondfile</span><span class="o">.</span><span class="n">LilyPondFile</span><span class="p">:</span>
@@ -2613,7 +2569,7 @@
 
 <span class="sd">    ..  container:: example</span>
 
-<span class="sd">        &gt;&gt;&gt; meters = abjad.MeterList([(3, 4), (5, 16), (7, 8)])</span>
+<span class="sd">        &gt;&gt;&gt; meters = [abjad.Meter(_) for _ in [(3, 4), (5, 16), (7, 8)]]</span>
 <span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.meter.illustrate_meter_list(meters, scale=0.5)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(lilypond_file) # doctest: +SKIP</span>
 
@@ -2809,8 +2765,8 @@
             <span class="n">ps_x_offset</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">rational_x_offset</span> <span class="o">+</span> <span class="n">offset</span><span class="p">)</span>
             <span class="n">ps_x_offset</span> <span class="o">*=</span> <span class="n">postscript_scale</span>
             <span class="n">ps_x_offset</span> <span class="o">+=</span> <span class="mi">1</span>
-            <span class="n">postscript_strings</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">_markups</span><span class="o">.</span><span class="n">_fpa</span><span class="p">(</span><span class="n">ps_x_offset</span><span class="p">)</span><span class="si">}</span><span class="s2"> -2 moveto&quot;</span><span class="p">)</span>
-            <span class="n">postscript_strings</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;0 </span><span class="si">{</span><span class="n">_markups</span><span class="o">.</span><span class="n">_fpa</span><span class="p">(</span><span class="n">weight</span><span class="p">)</span><span class="si">}</span><span class="s2"> rlineto&quot;</span><span class="p">)</span>
+            <span class="n">postscript_strings</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">_timespan</span><span class="o">.</span><span class="n">_fpa</span><span class="p">(</span><span class="n">ps_x_offset</span><span class="p">)</span><span class="si">}</span><span class="s2"> -2 moveto&quot;</span><span class="p">)</span>
+            <span class="n">postscript_strings</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;0 </span><span class="si">{</span><span class="n">_timespan</span><span class="o">.</span><span class="n">_fpa</span><span class="p">(</span><span class="n">weight</span><span class="p">)</span><span class="si">}</span><span class="s2"> rlineto&quot;</span><span class="p">)</span>
             <span class="n">postscript_strings</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;stroke&quot;</span><span class="p">)</span>
         <span class="n">rational_x_offset</span> <span class="o">+=</span> <span class="n">meter</span><span class="o">.</span><span class="n">duration</span>
     <span class="n">fraction_pairs</span> <span class="o">=</span> <span class="p">[]</span>
@@ -2836,16 +2792,15 @@
     <span class="n">strings</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;{&quot;</span><span class="p">)</span>
     <span class="n">strings</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">fraction_strings</span><span class="p">)</span>
     <span class="n">strings</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\combine&quot;</span><span class="p">)</span>
-    <span class="n">strings</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">timespan_markup</span><span class="p">))</span>
+    <span class="n">strings</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">timespan_markup</span><span class="o">.</span><span class="n">string</span><span class="p">)</span>
     <span class="n">strings</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\postscript&quot;</span><span class="p">)</span>
     <span class="n">strings</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;#&quot;&#39;</span><span class="p">)</span>
     <span class="n">strings</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">postscript_strings</span><span class="p">)</span>
     <span class="n">strings</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;&quot;&#39;</span><span class="p">)</span>
     <span class="n">strings</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;}&quot;</span><span class="p">)</span>
     <span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">strings</span><span class="p">)</span>
-    <span class="n">markup</span> <span class="o">=</span> <span class="n">_markups</span><span class="o">.</span><span class="n">Markup</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
+    <span class="n">markup</span> <span class="o">=</span> <span class="n">_indicators</span><span class="o">.</span><span class="n">Markup</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
     <span class="n">lilypond_file</span> <span class="o">=</span> <span class="n">_lilypondfile</span><span class="o">.</span><span class="n">LilyPondFile</span><span class="p">()</span>
-    <span class="n">markup</span> <span class="o">=</span> <span class="n">dataclasses</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">markup</span><span class="p">,</span> <span class="n">direction</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
     <span class="n">lilypond_file</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">markup</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">lilypond_file</span></div>
 
@@ -3131,7 +3086,6 @@
             <span class="n">selected_kernels</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">winning_kernel</span><span class="p">)</span>
             <span class="n">current_offset</span> <span class="o">+=</span> <span class="n">winning_kernel</span><span class="o">.</span><span class="n">duration</span>
         <span class="n">selected_meters</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">kernels</span><span class="p">[</span><span class="n">_</span><span class="p">]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">selected_kernels</span><span class="p">)</span>
-        <span class="n">selected_meters</span> <span class="o">=</span> <span class="n">MeterList</span><span class="p">(</span><span class="n">selected_meters</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">selected_meters</span>
 
     <span class="c1">### PRIVATE METHODS ###</span>
@@ -3425,7 +3379,7 @@
         <span class="n">current_leaf_group</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="n">current_leaf_group_is_silent</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="k">for</span> <span class="n">component</span> <span class="ow">in</span> <span class="n">argument</span><span class="p">:</span>
-            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">component</span><span class="p">,</span> <span class="p">(</span><span class="n">_score</span><span class="o">.</span><span class="n">Note</span><span class="p">,</span> <span class="n">_score</span><span class="o">.</span><span class="n">Chord</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">component</span><span class="p">,</span> <span class="n">_score</span><span class="o">.</span><span class="n">Note</span> <span class="o">|</span> <span class="n">_score</span><span class="o">.</span><span class="n">Chord</span><span class="p">):</span>
                 <span class="n">this_tie_leaves</span> <span class="o">=</span> <span class="n">_iterate</span><span class="o">.</span><span class="n">_get_logical_tie_leaves</span><span class="p">(</span><span class="n">component</span><span class="p">)</span>
                 <span class="n">this_tie</span> <span class="o">=</span> <span class="n">_select</span><span class="o">.</span><span class="n">LogicalTie</span><span class="p">(</span><span class="n">this_tie_leaves</span><span class="p">)</span>
                 <span class="k">if</span> <span class="n">current_leaf_group</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -3440,7 +3394,7 @@
                 <span class="n">current_leaf_group_is_silent</span> <span class="o">=</span> <span class="kc">False</span>
                 <span class="n">current_leaf_group</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">component</span><span class="p">)</span>
                 <span class="n">last_tie</span> <span class="o">=</span> <span class="n">this_tie</span>
-            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">component</span><span class="p">,</span> <span class="p">(</span><span class="n">_score</span><span class="o">.</span><span class="n">Rest</span><span class="p">,</span> <span class="n">_score</span><span class="o">.</span><span class="n">Skip</span><span class="p">)):</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">component</span><span class="p">,</span> <span class="n">_score</span><span class="o">.</span><span class="n">Rest</span> <span class="o">|</span> <span class="n">_score</span><span class="o">.</span><span class="n">Skip</span><span class="p">):</span>
                 <span class="k">if</span> <span class="n">current_leaf_group</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                     <span class="n">current_leaf_group</span> <span class="o">=</span> <span class="p">[]</span>
                 <span class="k">elif</span> <span class="ow">not</span> <span class="n">current_leaf_group_is_silent</span><span class="p">:</span>

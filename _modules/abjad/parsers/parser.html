@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>abjad.parsers.parser &mdash; Abjad 3.6 documentation</title>
+  <title>abjad.parsers.parser &mdash; Abjad 3.7 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/abjad.css" type="text/css" />
@@ -32,11 +32,11 @@
   <div class="wy-grid-for-nav">
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search"  style="background: #00dd00" >
+        <div class="wy-side-nav-search"  style="background: #112233" >
 
 
     <a href="../../../index.html" class="icon icon-home" alt="Documentation
-    Home"> Abjad 3.6
+    Home"> Abjad 3.7
 
 
 
@@ -110,7 +110,7 @@
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #00dd00" >
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #112233" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../../index.html">Abjad</a>
       </nav>
@@ -143,17 +143,15 @@
     <span class="n">format_stack_entry</span><span class="p">,</span>
 <span class="p">)</span>
 
+<span class="kn">from</span> <span class="nn">..</span> <span class="kn">import</span> <span class="n">_indent</span>
 <span class="kn">from</span> <span class="nn">..</span> <span class="kn">import</span> <span class="n">bind</span> <span class="k">as</span> <span class="n">_bind</span>
 <span class="kn">from</span> <span class="nn">..</span> <span class="kn">import</span> <span class="n">duration</span> <span class="k">as</span> <span class="n">_duration</span>
 <span class="kn">from</span> <span class="nn">..</span> <span class="kn">import</span> <span class="n">dynamic</span> <span class="k">as</span> <span class="n">_dynamic</span>
 <span class="kn">from</span> <span class="nn">..</span> <span class="kn">import</span> <span class="n">exceptions</span> <span class="k">as</span> <span class="n">_exceptions</span>
-<span class="kn">from</span> <span class="nn">..</span> <span class="kn">import</span> <span class="nb">format</span> <span class="k">as</span> <span class="n">_format</span>
 <span class="kn">from</span> <span class="nn">..</span> <span class="kn">import</span> <span class="n">indicators</span> <span class="k">as</span> <span class="n">_indicators</span>
 <span class="kn">from</span> <span class="nn">..</span> <span class="kn">import</span> <span class="n">lilypondfile</span> <span class="k">as</span> <span class="n">_lilypondfile</span>
 <span class="kn">from</span> <span class="nn">..</span> <span class="kn">import</span> <span class="n">lyconst</span> <span class="k">as</span> <span class="n">_lyconst</span>
 <span class="kn">from</span> <span class="nn">..</span> <span class="kn">import</span> <span class="n">lyenv</span> <span class="k">as</span> <span class="n">_lyenv</span>
-<span class="kn">from</span> <span class="nn">..</span> <span class="kn">import</span> <span class="n">markups</span> <span class="k">as</span> <span class="n">_markups</span>
-<span class="kn">from</span> <span class="nn">..</span> <span class="kn">import</span> <span class="n">overrides</span> <span class="k">as</span> <span class="n">_overrides</span>
 <span class="kn">from</span> <span class="nn">..</span> <span class="kn">import</span> <span class="n">pitch</span> <span class="k">as</span> <span class="n">_pitch</span>
 <span class="kn">from</span> <span class="nn">..</span> <span class="kn">import</span> <span class="n">score</span> <span class="k">as</span> <span class="n">_score</span>
 <span class="kn">from</span> <span class="nn">..</span> <span class="kn">import</span> <span class="n">string</span> <span class="k">as</span> <span class="n">_string</span>
@@ -224,41 +222,32 @@
             <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">(name=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">!r}</span><span class="s2">, arguments=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">arguments</span><span class="si">!r}</span><span class="s2">)&quot;</span>
         <span class="p">)</span></div>
 
-<div class="viewcode-block" id="MarkupCommand.__str__"><a class="viewcode-back" href="../../../api/abjad/parsers/parser.html#abjad.parsers.parser.MarkupCommand.__str__">[docs]</a>    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Gets string representation of markup command.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_lilypond_format</span><span class="p">()</span></div>
-
-    <span class="k">def</span> <span class="nf">_get_format_pieces</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_get_lilypond_format</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">def</span> <span class="nf">recurse</span><span class="p">(</span><span class="n">iterable</span><span class="p">):</span>
             <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
             <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">iterable</span><span class="p">:</span>
-                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)):</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="nb">list</span> <span class="o">|</span> <span class="nb">tuple</span><span class="p">):</span>
                     <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;{&quot;</span><span class="p">)</span>
                     <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">recurse</span><span class="p">(</span><span class="n">item</span><span class="p">))</span>
                     <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;}&quot;</span><span class="p">)</span>
-                <span class="k">elif</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="s2">&quot;_get_format_pieces&quot;</span><span class="p">):</span>
-                    <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">_get_format_pieces</span><span class="p">())</span>
+                <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">MarkupCommand</span><span class="p">):</span>
+                    <span class="n">string</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">_get_lilypond_format</span><span class="p">()</span>
+                    <span class="n">pieces</span> <span class="o">=</span> <span class="n">string</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+                    <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">pieces</span><span class="p">)</span>
                 <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">and</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="ow">in</span> <span class="n">item</span><span class="p">:</span>
                     <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;#&quot;&#39;</span><span class="p">)</span>
                     <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">splitlines</span><span class="p">())</span>
                     <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;&quot;&#39;</span><span class="p">)</span>
                 <span class="k">else</span><span class="p">:</span>
-                    <span class="n">formatted</span> <span class="o">=</span> <span class="n">_overrides</span><span class="o">.</span><span class="n">format_scheme_value</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
-                    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-                        <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">formatted</span><span class="p">)</span>
-                    <span class="k">else</span><span class="p">:</span>
-                        <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;#</span><span class="si">{</span><span class="n">formatted</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="nb">str</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+                    <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
             <span class="k">return</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">indent</span><span class="si">}{</span><span class="n">item</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">result</span><span class="p">]</span>
 
-        <span class="n">indent</span> <span class="o">=</span> <span class="n">_format</span><span class="o">.</span><span class="n">INDENT</span>
+        <span class="n">indent</span> <span class="o">=</span> <span class="n">_indent</span><span class="o">.</span><span class="n">INDENT</span>
         <span class="n">parts</span> <span class="o">=</span> <span class="p">[</span><span class="sa">rf</span><span class="s2">&quot;\</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">]</span>
         <span class="n">parts</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">recurse</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">arguments</span><span class="p">))</span>
-        <span class="k">return</span> <span class="n">parts</span>
-
-    <span class="k">def</span> <span class="nf">_get_lilypond_format</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_format_pieces</span><span class="p">())</span></div>
+        <span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">parts</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">string</span></div>
 
 
 <div class="viewcode-block" id="Music"><a class="viewcode-back" href="../../../api/abjad/parsers/parser.html#abjad.parsers.parser.Music">[docs]</a><span class="k">class</span> <span class="nc">Music</span><span class="p">:</span>
@@ -368,7 +357,7 @@
 
     <span class="c1">### CLASS VARIABLES ###</span>
 
-    <span class="n">_function_name_mapping</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">typing</span><span class="o">.</span><span class="n">Callable</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">_function_name_mapping</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">typing</span><span class="o">.</span><span class="n">Callable</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
 
     <span class="c1">### INITIALIZER ###</span>
 
@@ -421,7 +410,7 @@
         <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Handles LilyPond ``\breathe`` command.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">_overrides</span><span class="o">.</span><span class="n">LilyPondLiteral</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\breathe&quot;</span><span class="p">,</span> <span class="s2">&quot;after&quot;</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">_indicators</span><span class="o">.</span><span class="n">LilyPondLiteral</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\breathe&quot;</span><span class="p">,</span> <span class="s2">&quot;after&quot;</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="GuileProxy.clef"><a class="viewcode-back" href="../../../api/abjad/parsers/parser.html#abjad.parsers.parser.GuileProxy.clef">[docs]</a>    <span class="k">def</span> <span class="nf">clef</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">string</span><span class="p">):</span>
         <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
@@ -444,7 +433,9 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">number_list</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">number_list</span> <span class="o">=</span> <span class="s2">&quot;major&quot;</span>
-        <span class="k">return</span> <span class="n">_indicators</span><span class="o">.</span><span class="n">KeySignature</span><span class="p">(</span><span class="n">notename_pitch</span><span class="p">,</span> <span class="n">number_list</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">_indicators</span><span class="o">.</span><span class="n">KeySignature</span><span class="p">(</span>
+            <span class="n">_pitch</span><span class="o">.</span><span class="n">NamedPitchClass</span><span class="p">(</span><span class="n">notename_pitch</span><span class="p">),</span> <span class="n">_indicators</span><span class="o">.</span><span class="n">Mode</span><span class="p">(</span><span class="n">number_list</span><span class="p">)</span>
+        <span class="p">)</span></div>
 
 <div class="viewcode-block" id="GuileProxy.language"><a class="viewcode-back" href="../../../api/abjad/parsers/parser.html#abjad.parsers.parser.GuileProxy.language">[docs]</a>    <span class="k">def</span> <span class="nf">language</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">string</span><span class="p">):</span>
         <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
@@ -473,13 +464,13 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">label</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">label</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;\default&quot;</span>
-        <span class="k">return</span> <span class="n">_overrides</span><span class="o">.</span><span class="n">LilyPondLiteral</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\mark </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">label</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">_indicators</span><span class="o">.</span><span class="n">LilyPondLiteral</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\mark </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">label</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="GuileProxy.oneVoice"><a class="viewcode-back" href="../../../api/abjad/parsers/parser.html#abjad.parsers.parser.GuileProxy.oneVoice">[docs]</a>    <span class="k">def</span> <span class="nf">oneVoice</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Handles LilyPond ``\oneVoice`` command.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">_overrides</span><span class="o">.</span><span class="n">LilyPondLiteral</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\oneVoice&quot;</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">_indicators</span><span class="o">.</span><span class="n">LilyPondLiteral</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\oneVoice&quot;</span><span class="p">)</span></div>
 
     <span class="c1"># pitchedTrill</span>
 
@@ -509,7 +500,7 @@
         <span class="k">def</span> <span class="nf">recurse</span><span class="p">(</span><span class="n">component</span><span class="p">,</span> <span class="n">pitch</span><span class="p">):</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_unrelativable</span><span class="p">(</span><span class="n">component</span><span class="p">):</span>
                 <span class="k">return</span> <span class="n">pitch</span>
-            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">component</span><span class="p">,</span> <span class="p">(</span><span class="n">_score</span><span class="o">.</span><span class="n">Chord</span><span class="p">,</span> <span class="n">_score</span><span class="o">.</span><span class="n">Note</span><span class="p">)):</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">component</span><span class="p">,</span> <span class="n">_score</span><span class="o">.</span><span class="n">Chord</span> <span class="o">|</span> <span class="n">_score</span><span class="o">.</span><span class="n">Note</span><span class="p">):</span>
                 <span class="n">pitch</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_relative_leaf</span><span class="p">(</span><span class="n">component</span><span class="p">,</span> <span class="n">pitch</span><span class="p">)</span>
                 <span class="k">if</span> <span class="n">component</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">_repeated_chords</span><span class="p">:</span>
                     <span class="k">for</span> <span class="n">repeated_chord</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">_repeated_chords</span><span class="p">[</span><span class="n">component</span><span class="p">]:</span>
@@ -568,12 +559,16 @@
         <span class="k">def</span> <span class="nf">recurse</span><span class="p">(</span><span class="n">music</span><span class="p">):</span>
             <span class="n">key_signatures</span> <span class="o">=</span> <span class="n">music</span><span class="o">.</span><span class="n">_get_indicators</span><span class="p">(</span><span class="n">_indicators</span><span class="o">.</span><span class="n">KeySignature</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">key_signatures</span><span class="p">:</span>
-                <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">key_signatures</span><span class="p">:</span>
-                    <span class="n">tonic</span> <span class="o">=</span> <span class="n">_pitch</span><span class="o">.</span><span class="n">NamedPitch</span><span class="p">((</span><span class="n">x</span><span class="o">.</span><span class="n">tonic</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
-                    <span class="c1"># TODO: cheating to assign to a read-only property</span>
-                    <span class="n">x</span><span class="o">.</span><span class="n">tonic</span> <span class="o">=</span> <span class="n">LilyPondParser</span><span class="o">.</span><span class="n">_transpose_enharmonically</span><span class="p">(</span>
-                        <span class="n">from_pitch</span><span class="p">,</span> <span class="n">to_pitch</span><span class="p">,</span> <span class="n">tonic</span>
+                <span class="k">for</span> <span class="n">key_signature</span> <span class="ow">in</span> <span class="n">key_signatures</span><span class="p">:</span>
+                    <span class="n">new_tonic</span> <span class="o">=</span> <span class="n">_pitch</span><span class="o">.</span><span class="n">NamedPitch</span><span class="p">((</span><span class="n">key_signature</span><span class="o">.</span><span class="n">tonic</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+                    <span class="n">new_tonic</span> <span class="o">=</span> <span class="n">LilyPondParser</span><span class="o">.</span><span class="n">_transpose_enharmonically</span><span class="p">(</span>
+                        <span class="n">from_pitch</span><span class="p">,</span> <span class="n">to_pitch</span><span class="p">,</span> <span class="n">new_tonic</span>
                     <span class="p">)</span><span class="o">.</span><span class="n">pitch_class</span>
+                    <span class="n">new_key_signature</span> <span class="o">=</span> <span class="n">_indicators</span><span class="o">.</span><span class="n">KeySignature</span><span class="p">(</span>
+                        <span class="n">new_tonic</span><span class="p">,</span> <span class="n">key_signature</span><span class="o">.</span><span class="n">mode</span>
+                    <span class="p">)</span>
+                    <span class="n">_bind</span><span class="o">.</span><span class="n">detach</span><span class="p">(</span><span class="n">key_signature</span><span class="p">,</span> <span class="n">music</span><span class="p">)</span>
+                    <span class="n">_bind</span><span class="o">.</span><span class="n">attach</span><span class="p">(</span><span class="n">new_key_signature</span><span class="p">,</span> <span class="n">music</span><span class="p">)</span>
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">music</span><span class="p">,</span> <span class="n">_score</span><span class="o">.</span><span class="n">Note</span><span class="p">):</span>
                 <span class="n">music</span><span class="o">.</span><span class="n">written_pitch</span> <span class="o">=</span> <span class="n">LilyPondParser</span><span class="o">.</span><span class="n">_transpose_enharmonically</span><span class="p">(</span>
                     <span class="n">from_pitch</span><span class="p">,</span> <span class="n">to_pitch</span><span class="p">,</span> <span class="n">music</span><span class="o">.</span><span class="n">written_pitch</span>
@@ -584,8 +579,8 @@
                         <span class="n">from_pitch</span><span class="p">,</span> <span class="n">to_pitch</span><span class="p">,</span> <span class="n">note_head</span><span class="o">.</span><span class="n">written_pitch</span>
                     <span class="p">)</span>
             <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">music</span><span class="p">,</span> <span class="n">_score</span><span class="o">.</span><span class="n">Container</span><span class="p">):</span>
-                <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">music</span><span class="p">:</span>
-                    <span class="n">recurse</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">component</span> <span class="ow">in</span> <span class="n">music</span><span class="p">:</span>
+                    <span class="n">recurse</span><span class="p">(</span><span class="n">component</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_make_unrelativable</span><span class="p">(</span><span class="n">music</span><span class="p">)</span>
         <span class="n">recurse</span><span class="p">(</span><span class="n">music</span><span class="p">)</span>
@@ -614,25 +609,25 @@
         <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Handles LilyPond ``\voiceFour`` command.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">_overrides</span><span class="o">.</span><span class="n">LilyPondLiteral</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\voiceFour&quot;</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">_indicators</span><span class="o">.</span><span class="n">LilyPondLiteral</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\voiceFour&quot;</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="GuileProxy.voiceOne"><a class="viewcode-back" href="../../../api/abjad/parsers/parser.html#abjad.parsers.parser.GuileProxy.voiceOne">[docs]</a>    <span class="k">def</span> <span class="nf">voiceOne</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Handles LilyPond ``\voiceOnce`` command.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">_overrides</span><span class="o">.</span><span class="n">LilyPondLiteral</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\voiceOne&quot;</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">_indicators</span><span class="o">.</span><span class="n">LilyPondLiteral</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\voiceOne&quot;</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="GuileProxy.voiceThree"><a class="viewcode-back" href="../../../api/abjad/parsers/parser.html#abjad.parsers.parser.GuileProxy.voiceThree">[docs]</a>    <span class="k">def</span> <span class="nf">voiceThree</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Handles LilyPond ``\voiceThree`` command.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">_overrides</span><span class="o">.</span><span class="n">LilyPondLiteral</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\voiceThree&quot;</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">_indicators</span><span class="o">.</span><span class="n">LilyPondLiteral</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\voiceThree&quot;</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="GuileProxy.voiceTwo"><a class="viewcode-back" href="../../../api/abjad/parsers/parser.html#abjad.parsers.parser.GuileProxy.voiceTwo">[docs]</a>    <span class="k">def</span> <span class="nf">voiceTwo</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Handles LilyPond ``\voiceTwo`` command.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">_overrides</span><span class="o">.</span><span class="n">LilyPondLiteral</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\voiceTwo&quot;</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">_indicators</span><span class="o">.</span><span class="n">LilyPondLiteral</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\voiceTwo&quot;</span><span class="p">)</span></div>
 
     <span class="c1">### HELPER FUNCTIONS ###</span>
 
@@ -720,9 +715,9 @@
 
     <span class="c1">### SPECIAL METHODS ###</span>
 
-<div class="viewcode-block" id="LilyPondEvent.__str__"><a class="viewcode-back" href="../../../api/abjad/parsers/parser.html#abjad.parsers.parser.LilyPondEvent.__str__">[docs]</a>    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="LilyPondEvent.__repr__"><a class="viewcode-back" href="../../../api/abjad/parsers/parser.html#abjad.parsers.parser.LilyPondEvent.__repr__">[docs]</a>    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Gets string representation of LilyPond event.</span>
+<span class="sd">        Gets interpreter representation of LilyPond event.</span>
 
 <span class="sd">        Returns string.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -731,16 +726,8 @@
             <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="s2">&quot;name&quot;</span><span class="p">:</span>
                 <span class="k">continue</span>
             <span class="n">result</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;, </span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2"> = </span><span class="si">{</span><span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span><span class="si">!r}</span><span class="s2">&quot;</span>
-        <span class="k">return</span> <span class="n">result</span></div>
-
-<div class="viewcode-block" id="LilyPondEvent.__repr__"><a class="viewcode-back" href="../../../api/abjad/parsers/parser.html#abjad.parsers.parser.LilyPondEvent.__repr__">[docs]</a>    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Gets interpreter representation of LilyPond event.</span>
-
-<span class="sd">        Returns string.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">name</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">(</span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="si">}</span><span class="s2">)&quot;</span></div></div>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">(</span><span class="si">{</span><span class="n">result</span><span class="si">}</span><span class="s2">)&quot;</span></div></div>
 
 
 <div class="viewcode-block" id="LilyPondFraction"><a class="viewcode-back" href="../../../api/abjad/parsers/parser.html#abjad.parsers.parser.LilyPondFraction">[docs]</a><span class="k">class</span> <span class="nc">LilyPondFraction</span><span class="p">:</span>
@@ -2599,8 +2586,8 @@
 <span class="sd">                \ppp</span>
 <span class="sd">                \&lt;</span>
 <span class="sd">                g&#39;8</span>
-<span class="sd">                \startTrillSpan</span>
 <span class="sd">                \(</span>
+<span class="sd">                \startTrillSpan</span>
 <span class="sd">                a&#39;8</span>
 <span class="sd">                \)</span>
 <span class="sd">                b&#39;8</span>
@@ -2965,7 +2952,7 @@
         <span class="k">return</span> <span class="n">context</span>
 
     <span class="k">def</span> <span class="nf">_construct_sequential_music</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">music</span><span class="p">):</span>
-        <span class="c1"># indicator sorting could be rewritten into a single list using tuplets</span>
+        <span class="c1"># indicator sorting could be rewritten into a single list using tuples</span>
         <span class="c1"># with t[0] being &#39;forward&#39; or &#39;backward&#39; and t[1] being the indicator</span>
         <span class="c1"># as this better preserves attachment order. Not clear if we need it.</span>
         <span class="n">container</span> <span class="o">=</span> <span class="n">_score</span><span class="o">.</span><span class="n">Container</span><span class="p">()</span>
@@ -2991,9 +2978,9 @@
                 <span class="n">previous_leaf</span> <span class="o">=</span> <span class="n">x</span>
                 <span class="n">container</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="p">(</span><span class="n">_indicators</span><span class="o">.</span><span class="n">BarLine</span><span class="p">,)):</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">_indicators</span><span class="o">.</span><span class="n">BarLine</span><span class="p">):</span>
                     <span class="n">apply_backward</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-                <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">_overrides</span><span class="o">.</span><span class="n">LilyPondLiteral</span><span class="p">)</span> <span class="ow">and</span> <span class="n">x</span><span class="o">.</span><span class="n">argument</span> <span class="ow">in</span> <span class="p">(</span>
+                <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">_indicators</span><span class="o">.</span><span class="n">LilyPondLiteral</span><span class="p">)</span> <span class="ow">and</span> <span class="n">x</span><span class="o">.</span><span class="n">argument</span> <span class="ow">in</span> <span class="p">(</span>
                     <span class="sa">r</span><span class="s2">&quot;\break&quot;</span><span class="p">,</span>
                     <span class="sa">r</span><span class="s2">&quot;\breathe&quot;</span><span class="p">,</span>
                     <span class="sa">r</span><span class="s2">&quot;\pageBreak&quot;</span><span class="p">,</span>
@@ -3045,19 +3032,19 @@
     <span class="k">def</span> <span class="nf">_get_scheme_predicates</span><span class="p">(</span><span class="n">class_</span><span class="p">):</span>
         <span class="k">return</span> <span class="p">{</span>
             <span class="s2">&quot;boolean?&quot;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">bool</span><span class="p">),</span>
-            <span class="s2">&quot;cheap-list?&quot;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)),</span>
+            <span class="s2">&quot;cheap-list?&quot;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">list</span> <span class="o">|</span> <span class="nb">tuple</span><span class="p">),</span>
             <span class="s2">&quot;cheap-markup?&quot;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">MarkupCommand</span><span class="p">),</span>
             <span class="s2">&quot;fraction?&quot;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">LilyPondFraction</span><span class="p">),</span>
             <span class="s2">&quot;integer?&quot;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">int</span><span class="p">),</span>
-            <span class="s2">&quot;list?&quot;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)),</span>
+            <span class="s2">&quot;list?&quot;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">list</span> <span class="o">|</span> <span class="nb">tuple</span><span class="p">),</span>
             <span class="s2">&quot;ly:duration?&quot;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">LilyPondDuration</span><span class="p">),</span>
             <span class="s2">&quot;ly:music?&quot;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">_score</span><span class="o">.</span><span class="n">Component</span><span class="p">),</span>
             <span class="s2">&quot;ly:pitch?&quot;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">_pitch</span><span class="o">.</span><span class="n">NamedPitch</span><span class="p">),</span>
             <span class="s2">&quot;markup?&quot;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">MarkupCommand</span><span class="p">),</span>
-            <span class="s2">&quot;number-list?&quot;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">))</span>
-            <span class="ow">and</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">))</span> <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">x</span><span class="p">),</span>
-            <span class="s2">&quot;number?&quot;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">)),</span>
-            <span class="s2">&quot;real?&quot;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">)),</span>
+            <span class="s2">&quot;number-list?&quot;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">list</span> <span class="o">|</span> <span class="nb">tuple</span><span class="p">)</span>
+            <span class="ow">and</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">float</span><span class="p">)</span> <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">x</span><span class="p">),</span>
+            <span class="s2">&quot;number?&quot;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">float</span><span class="p">),</span>
+            <span class="s2">&quot;real?&quot;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">float</span><span class="p">),</span>
             <span class="s2">&quot;string?&quot;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">str</span><span class="p">),</span>
             <span class="s2">&quot;void?&quot;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="kc">None</span><span class="p">)),</span>
             <span class="c1"># the following predicates have not yet been implemented in Abjad</span>
@@ -3081,33 +3068,36 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_scope_stack</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">_process_post_events</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">leaf</span><span class="p">,</span> <span class="n">post_events</span><span class="p">):</span>
-        <span class="n">nonspanner_post_event_types</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">prototype</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">_dynamic</span><span class="o">.</span><span class="n">Dynamic</span><span class="p">,</span>
             <span class="n">_indicators</span><span class="o">.</span><span class="n">Articulation</span><span class="p">,</span>
             <span class="n">_indicators</span><span class="o">.</span><span class="n">BarLine</span><span class="p">,</span>
-            <span class="n">_dynamic</span><span class="o">.</span><span class="n">Dynamic</span><span class="p">,</span>
             <span class="n">_indicators</span><span class="o">.</span><span class="n">Glissando</span><span class="p">,</span>
-            <span class="n">_indicators</span><span class="o">.</span><span class="n">StartHairpin</span><span class="p">,</span>
-            <span class="n">_overrides</span><span class="o">.</span><span class="n">LilyPondLiteral</span><span class="p">,</span>
+            <span class="n">_indicators</span><span class="o">.</span><span class="n">LilyPondLiteral</span><span class="p">,</span>
+            <span class="n">_indicators</span><span class="o">.</span><span class="n">Markup</span><span class="p">,</span>
             <span class="n">_indicators</span><span class="o">.</span><span class="n">StartBeam</span><span class="p">,</span>
             <span class="n">_indicators</span><span class="o">.</span><span class="n">StartGroup</span><span class="p">,</span>
+            <span class="n">_indicators</span><span class="o">.</span><span class="n">StartHairpin</span><span class="p">,</span>
             <span class="n">_indicators</span><span class="o">.</span><span class="n">StartPhrasingSlur</span><span class="p">,</span>
             <span class="n">_indicators</span><span class="o">.</span><span class="n">StartSlur</span><span class="p">,</span>
             <span class="n">_indicators</span><span class="o">.</span><span class="n">StartTextSpan</span><span class="p">,</span>
             <span class="n">_indicators</span><span class="o">.</span><span class="n">StartTrillSpan</span><span class="p">,</span>
+            <span class="n">_indicators</span><span class="o">.</span><span class="n">StemTremolo</span><span class="p">,</span>
             <span class="n">_indicators</span><span class="o">.</span><span class="n">StopBeam</span><span class="p">,</span>
             <span class="n">_indicators</span><span class="o">.</span><span class="n">StopGroup</span><span class="p">,</span>
             <span class="n">_indicators</span><span class="o">.</span><span class="n">StopHairpin</span><span class="p">,</span>
-            <span class="n">_indicators</span><span class="o">.</span><span class="n">StopSlur</span><span class="p">,</span>
             <span class="n">_indicators</span><span class="o">.</span><span class="n">StopPhrasingSlur</span><span class="p">,</span>
+            <span class="n">_indicators</span><span class="o">.</span><span class="n">StopSlur</span><span class="p">,</span>
             <span class="n">_indicators</span><span class="o">.</span><span class="n">StopTextSpan</span><span class="p">,</span>
             <span class="n">_indicators</span><span class="o">.</span><span class="n">StopTrillSpan</span><span class="p">,</span>
-            <span class="n">_indicators</span><span class="o">.</span><span class="n">StemTremolo</span><span class="p">,</span>
             <span class="n">_indicators</span><span class="o">.</span><span class="n">Tie</span><span class="p">,</span>
-            <span class="n">_markups</span><span class="o">.</span><span class="n">Markup</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="k">for</span> <span class="n">post_event</span> <span class="ow">in</span> <span class="n">post_events</span><span class="p">:</span>
-            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">post_event</span><span class="p">,</span> <span class="n">nonspanner_post_event_types</span><span class="p">):</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">post_event</span><span class="p">,</span> <span class="n">prototype</span><span class="p">):</span>
                 <span class="n">_bind</span><span class="o">.</span><span class="n">attach</span><span class="p">(</span><span class="n">post_event</span><span class="p">,</span> <span class="n">leaf</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">post_event</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">post_event</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">prototype</span><span class="p">):</span>
+                <span class="n">indicator</span><span class="p">,</span> <span class="n">direction</span> <span class="o">=</span> <span class="n">post_event</span>
+                <span class="n">_bind</span><span class="o">.</span><span class="n">attach</span><span class="p">(</span><span class="n">indicator</span><span class="p">,</span> <span class="n">leaf</span><span class="p">,</span> <span class="n">direction</span><span class="o">=</span><span class="n">direction</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_push_extra_token</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">token</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_parser</span><span class="o">.</span><span class="n">lookaheadstack</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
@@ -3183,9 +3173,9 @@
         <span class="k">elif</span> <span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;GlissandoEvent&quot;</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">_indicators</span><span class="o">.</span><span class="n">Glissando</span><span class="p">()</span>
         <span class="k">elif</span> <span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;LaissezVibrerEvent&quot;</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">_overrides</span><span class="o">.</span><span class="n">LilyPondLiteral</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\laissezVibrer&quot;</span><span class="p">,</span> <span class="s2">&quot;after&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">_indicators</span><span class="o">.</span><span class="n">LilyPondLiteral</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\laissezVibrer&quot;</span><span class="p">,</span> <span class="s2">&quot;after&quot;</span><span class="p">)</span>
         <span class="k">elif</span> <span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;LineBreakEvent&quot;</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">_overrides</span><span class="o">.</span><span class="n">LilyPondLiteral</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\break&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">_indicators</span><span class="o">.</span><span class="n">LilyPondLiteral</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\break&quot;</span><span class="p">)</span>
         <span class="k">elif</span> <span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;NoteGroupingEvent&quot;</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">lookup</span><span class="p">[</span><span class="s2">&quot;span-direction&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">_indicators</span><span class="o">.</span><span class="n">StartGroup</span><span class="p">()</span>
@@ -3298,7 +3288,7 @@
         <span class="n">new_step</span><span class="p">,</span> <span class="n">new_alt</span> <span class="o">=</span> <span class="n">normalize_alteration</span><span class="p">(</span><span class="n">new_step</span><span class="p">,</span> <span class="n">new_alt</span><span class="p">)</span>
         <span class="n">new_oct</span><span class="p">,</span> <span class="n">new_step</span> <span class="o">=</span> <span class="n">normalize_octave</span><span class="p">(</span><span class="n">new_oct</span><span class="p">,</span> <span class="n">new_step</span><span class="p">)</span>
         <span class="c1"># print &#39;NEW(norm):&#39;, new_oct, new_step, new_alt</span>
-        <span class="n">octave_ticks</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">_pitch</span><span class="o">.</span><span class="n">Octave</span><span class="p">(</span><span class="n">new_oct</span><span class="p">))</span>
+        <span class="n">octave_ticks</span> <span class="o">=</span> <span class="n">_pitch</span><span class="o">.</span><span class="n">Octave</span><span class="p">(</span><span class="n">new_oct</span><span class="p">)</span><span class="o">.</span><span class="n">ticks</span>
         <span class="n">pitch_class_name</span> <span class="o">=</span> <span class="n">_pitch</span><span class="o">.</span><span class="n">_diatonic_pc_number_to_diatonic_pc_name</span><span class="p">[</span><span class="n">new_step</span> <span class="o">%</span> <span class="mi">7</span><span class="p">]</span>
         <span class="n">accidental</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">_pitch</span><span class="o">.</span><span class="n">Accidental</span><span class="p">(</span><span class="n">new_alt</span><span class="p">))</span>
         <span class="n">tmp_pitch</span> <span class="o">=</span> <span class="n">_pitch</span><span class="o">.</span><span class="n">NamedPitch</span><span class="p">(</span><span class="n">pitch_class_name</span> <span class="o">+</span> <span class="n">accidental</span> <span class="o">+</span> <span class="n">octave_ticks</span><span class="p">)</span>
@@ -3308,7 +3298,7 @@
         <span class="n">new_step</span><span class="p">,</span> <span class="n">new_alt</span> <span class="o">=</span> <span class="n">normalize_alteration</span><span class="p">(</span><span class="n">new_step</span><span class="p">,</span> <span class="n">new_alt</span><span class="p">)</span>
         <span class="n">new_oct</span><span class="p">,</span> <span class="n">new_step</span> <span class="o">=</span> <span class="n">normalize_octave</span><span class="p">(</span><span class="n">new_oct</span><span class="p">,</span> <span class="n">new_step</span><span class="p">)</span>
         <span class="c1"># print &#39;NEW(norm):&#39;, new_oct, new_step, new_alt</span>
-        <span class="n">octave_ticks</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">_pitch</span><span class="o">.</span><span class="n">Octave</span><span class="p">(</span><span class="n">new_oct</span><span class="p">))</span>
+        <span class="n">octave_ticks</span> <span class="o">=</span> <span class="n">_pitch</span><span class="o">.</span><span class="n">Octave</span><span class="p">(</span><span class="n">new_oct</span><span class="p">)</span><span class="o">.</span><span class="n">ticks</span>
         <span class="n">pitch_class_name</span> <span class="o">=</span> <span class="n">_pitch</span><span class="o">.</span><span class="n">_diatonic_pc_number_to_diatonic_pc_name</span><span class="p">[</span><span class="n">new_step</span> <span class="o">%</span> <span class="mi">7</span><span class="p">]</span>
         <span class="n">accidental</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">_pitch</span><span class="o">.</span><span class="n">Accidental</span><span class="p">(</span><span class="n">new_alt</span><span class="p">))</span>
         <span class="k">return</span> <span class="n">_pitch</span><span class="o">.</span><span class="n">NamedPitch</span><span class="p">(</span><span class="n">pitch_class_name</span> <span class="o">+</span> <span class="n">accidental</span> <span class="o">+</span> <span class="n">octave_ticks</span><span class="p">)</span>
@@ -3316,7 +3306,7 @@
     <span class="c1">### PUBLIC METHODS ###</span>
 
 <div class="viewcode-block" id="LilyPondParser.list_known_contexts"><a class="viewcode-back" href="../../../api/abjad/parsers/parser.html#abjad.parsers.parser.LilyPondParser.list_known_contexts">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">list_known_contexts</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+    <span class="k">def</span> <span class="nf">list_known_contexts</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Lists all LilyPond contexts recognized by LilyPond parser.</span>
 
@@ -3365,7 +3355,7 @@
         <span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">_lyenv</span><span class="o">.</span><span class="n">contexts</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span></div>
 
 <div class="viewcode-block" id="LilyPondParser.list_known_dynamics"><a class="viewcode-back" href="../../../api/abjad/parsers/parser.html#abjad.parsers.parser.LilyPondParser.list_known_dynamics">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">list_known_dynamics</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="o">...</span><span class="p">]:</span>
+    <span class="k">def</span> <span class="nf">list_known_dynamics</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="o">...</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Lists all dynamics recognized by LilyPond parser.</span>
 
@@ -3408,7 +3398,7 @@
         <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">result</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="LilyPondParser.list_known_grobs"><a class="viewcode-back" href="../../../api/abjad/parsers/parser.html#abjad.parsers.parser.LilyPondParser.list_known_grobs">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">list_known_grobs</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+    <span class="k">def</span> <span class="nf">list_known_grobs</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Lists all LilyPond grobs recognized by LilyPond parser.</span>
 
@@ -3553,7 +3543,7 @@
 <span class="sd">            UnaCordaPedal</span>
 <span class="sd">            UnaCordaPedalLineSpanner</span>
 <span class="sd">            VaticanaLigature</span>
-<span class="sd">            VerticalAlignment</span>
+<span class="sd">            Vertical</span>
 <span class="sd">            VerticalAxisGroup</span>
 <span class="sd">            VoiceFollower</span>
 <span class="sd">            VoltaBracket</span>
@@ -3564,7 +3554,7 @@
         <span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">_lyenv</span><span class="o">.</span><span class="n">grob_interfaces</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span></div>
 
 <div class="viewcode-block" id="LilyPondParser.list_known_languages"><a class="viewcode-back" href="../../../api/abjad/parsers/parser.html#abjad.parsers.parser.LilyPondParser.list_known_languages">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">list_known_languages</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+    <span class="k">def</span> <span class="nf">list_known_languages</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Lists all note-input languages recognized by LilyPond parser.</span>
 
@@ -3592,7 +3582,7 @@
         <span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">_lyenv</span><span class="o">.</span><span class="n">language_pitch_names</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span></div>
 
 <div class="viewcode-block" id="LilyPondParser.list_known_markup_functions"><a class="viewcode-back" href="../../../api/abjad/parsers/parser.html#abjad.parsers.parser.LilyPondParser.list_known_markup_functions">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">list_known_markup_functions</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+    <span class="k">def</span> <span class="nf">list_known_markup_functions</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Lists all markup functions recognized by LilyPond parser.</span>
 
@@ -3764,7 +3754,7 @@
         <span class="p">)</span></div>
 
 <div class="viewcode-block" id="LilyPondParser.list_known_music_functions"><a class="viewcode-back" href="../../../api/abjad/parsers/parser.html#abjad.parsers.parser.LilyPondParser.list_known_music_functions">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">list_known_music_functions</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+    <span class="k">def</span> <span class="nf">list_known_music_functions</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Lists all music functions recognized by LilyPond parser.</span>
 
@@ -3861,7 +3851,7 @@
     <span class="c1">### PUBLIC PROPERTIES ###</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">available_languages</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="o">...</span><span class="p">]:</span>
+    <span class="k">def</span> <span class="nf">available_languages</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="o">...</span><span class="p">]:</span>
         <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Tuple of pitch-name languages supported by LilyPondParser.</span>
 
@@ -4906,13 +4896,15 @@
 
 <div class="viewcode-block" id="LilyPondSyntacticalDefinition.p_full_markup__MARKUP__markup_top"><a class="viewcode-back" href="../../../api/abjad/parsers/parser.html#abjad.parsers.parser.LilyPondSyntacticalDefinition.p_full_markup__MARKUP__markup_top">[docs]</a>    <span class="k">def</span> <span class="nf">p_full_markup__MARKUP__markup_top</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
         <span class="s2">&quot;full_markup : MARKUP markup_top&quot;</span>
-        <span class="c1"># assert isinstance(p[2], list), repr(p[2])</span>
-        <span class="c1"># item = (str, MarkupCommand)</span>
-        <span class="c1"># assert all(isinstance(_, item) for _ in p[2]), repr(p[2])</span>
-        <span class="c1"># p[0] = _markups.Markup(p[2])</span>
-        <span class="n">string</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="nb">str</span><span class="p">(</span><span class="n">_</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">]])</span>
+        <span class="n">parts</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">MarkupCommand</span><span class="p">):</span>
+                <span class="n">parts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">_get_lilypond_format</span><span class="p">())</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">parts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+        <span class="n">string</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">parts</span><span class="p">)</span>
         <span class="n">string</span> <span class="o">=</span> <span class="sa">rf</span><span class="s2">&quot;\markup </span><span class="se">{{</span><span class="s2"> </span><span class="si">{</span><span class="n">string</span><span class="si">}</span><span class="s2"> </span><span class="se">}}</span><span class="s2">&quot;</span>
-        <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">_markups</span><span class="o">.</span><span class="n">Markup</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
+        <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">_indicators</span><span class="o">.</span><span class="n">Markup</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">_lexer</span><span class="o">.</span><span class="n">pop_state</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">_relex_lookahead</span><span class="p">()</span></div>
 
@@ -5404,7 +5396,7 @@
 <div class="viewcode-block" id="LilyPondSyntacticalDefinition.p_gen_text_def__simple_string"><a class="viewcode-back" href="../../../api/abjad/parsers/parser.html#abjad.parsers.parser.LilyPondSyntacticalDefinition.p_gen_text_def__simple_string">[docs]</a>    <span class="k">def</span> <span class="nf">p_gen_text_def__simple_string</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
         <span class="s2">&quot;gen_text_def : simple_string&quot;</span>
         <span class="c1"># assert isinstance(p[1], str), repr(p[1])</span>
-        <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">_markups</span><span class="o">.</span><span class="n">Markup</span><span class="p">(</span><span class="sa">rf</span><span class="s2">&quot;\markup </span><span class="se">{{</span><span class="s2"> </span><span class="si">{</span><span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2"> </span><span class="se">}}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+        <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">_indicators</span><span class="o">.</span><span class="n">Markup</span><span class="p">(</span><span class="sa">rf</span><span class="s2">&quot;\markup </span><span class="se">{{</span><span class="s2"> </span><span class="si">{</span><span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2"> </span><span class="se">}}</span><span class="s2">&quot;</span><span class="p">)</span></div>
 
     <span class="c1">### grouped_music_list ###</span>
 
@@ -6145,31 +6137,32 @@
 
 <div class="viewcode-block" id="LilyPondSyntacticalDefinition.p_post_event_nofinger__script_dir__direction_less_event"><a class="viewcode-back" href="../../../api/abjad/parsers/parser.html#abjad.parsers.parser.LilyPondSyntacticalDefinition.p_post_event_nofinger__script_dir__direction_less_event">[docs]</a>    <span class="k">def</span> <span class="nf">p_post_event_nofinger__script_dir__direction_less_event</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
         <span class="s2">&quot;post_event_nofinger : script_dir direction_less_event&quot;</span>
-        <span class="c1"># TODO: this is cheating; articulation direction should be given</span>
-        <span class="c1">#       at initialization and not after (as is done here)</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">direction</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-        <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
-            <span class="n">direction</span> <span class="o">=</span> <span class="n">_string</span><span class="o">.</span><span class="n">to_tridirectional_lilypond_symbol</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
-            <span class="k">assert</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="s2">&quot;_direction&quot;</span><span class="p">)</span>
-            <span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">_direction</span> <span class="o">=</span> <span class="n">direction</span>
-        <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span></div>
+        <span class="c1">#        try:</span>
+        <span class="c1">#            p[2].direction = p[1]</span>
+        <span class="c1">#            direction = _string.to_tridirectional_lilypond_symbol(p[1])</span>
+        <span class="c1">#        except AttributeError:</span>
+        <span class="c1">#            direction = _string.to_tridirectional_lilypond_symbol(p[1])</span>
+        <span class="c1">#            # assert hasattr(p[2], &quot;_direction&quot;)</span>
+        <span class="c1">#            # p[2]._direction = direction</span>
+        <span class="c1"># p[0] = p[2]</span>
+        <span class="n">direction</span> <span class="o">=</span> <span class="n">_string</span><span class="o">.</span><span class="n">to_tridirectional_lilypond_symbol</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">direction</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="LilyPondSyntacticalDefinition.p_post_event_nofinger__script_dir__direction_reqd_event"><a class="viewcode-back" href="../../../api/abjad/parsers/parser.html#abjad.parsers.parser.LilyPondSyntacticalDefinition.p_post_event_nofinger__script_dir__direction_reqd_event">[docs]</a>    <span class="k">def</span> <span class="nf">p_post_event_nofinger__script_dir__direction_reqd_event</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
         <span class="s2">&quot;post_event_nofinger : script_dir direction_reqd_event&quot;</span>
-        <span class="c1"># TODO: this is cheating; articulation and markup direction should be given</span>
-        <span class="c1">#       at initialization and not after (as is done here)</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">_markups</span><span class="o">.</span><span class="n">Markup</span><span class="p">):</span>
-            <span class="n">direction</span> <span class="o">=</span> <span class="n">_string</span><span class="o">.</span><span class="n">to_tridirectional_ordinal_constant</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
-            <span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">direction</span> <span class="o">=</span> <span class="n">direction</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">try</span><span class="p">:</span>
-                <span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">direction</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-            <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
-                <span class="n">direction</span> <span class="o">=</span> <span class="n">_string</span><span class="o">.</span><span class="n">to_tridirectional_ordinal_constant</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
-                <span class="k">assert</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="s2">&quot;_direction&quot;</span><span class="p">)</span>
-                <span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">_direction</span> <span class="o">=</span> <span class="n">direction</span>
-        <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span></div>
+        <span class="c1">#        if isinstance(p[2], _indicators.Markup):</span>
+        <span class="c1">#            direction = _string.to_tridirectional_ordinal_constant(p[1])</span>
+        <span class="c1">#            p[2].direction = direction</span>
+        <span class="c1">#        else:</span>
+        <span class="c1">#            try:</span>
+        <span class="c1">#                p[2].direction = p[1]</span>
+        <span class="c1">#            except AttributeError:</span>
+        <span class="c1">#                direction = _string.to_tridirectional_ordinal_constant(p[1])</span>
+        <span class="c1">#                assert hasattr(p[2], &quot;_direction&quot;)</span>
+        <span class="c1">#                p[2]._direction = direction</span>
+        <span class="c1">#        p[0] = p[2]</span>
+        <span class="n">direction</span> <span class="o">=</span> <span class="n">_string</span><span class="o">.</span><span class="n">to_tridirectional_ordinal_constant</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">direction</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="LilyPondSyntacticalDefinition.p_post_event_nofinger__script_dir__music_function_event"><a class="viewcode-back" href="../../../api/abjad/parsers/parser.html#abjad.parsers.parser.LilyPondSyntacticalDefinition.p_post_event_nofinger__script_dir__music_function_event">[docs]</a>    <span class="k">def</span> <span class="nf">p_post_event_nofinger__script_dir__music_function_event</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
         <span class="s2">&quot;post_event_nofinger : script_dir music_function_event&quot;</span>
@@ -6565,17 +6558,17 @@
 <div class="viewcode-block" id="LilyPondSyntacticalDefinition.p_steno_pitch__NOTENAME_PITCH"><a class="viewcode-back" href="../../../api/abjad/parsers/parser.html#abjad.parsers.parser.LilyPondSyntacticalDefinition.p_steno_pitch__NOTENAME_PITCH">[docs]</a>    <span class="k">def</span> <span class="nf">p_steno_pitch__NOTENAME_PITCH</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
         <span class="s2">&quot;steno_pitch : NOTENAME_PITCH&quot;</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">_pitch</span><span class="o">.</span><span class="n">NamedPitchClass</span><span class="p">):</span>
-            <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">_pitch</span><span class="o">.</span><span class="n">NamedPitch</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+            <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">_pitch</span><span class="o">.</span><span class="n">NamedPitch</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
         <span class="k">elif</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="ow">in</span> <span class="n">_lyconst</span><span class="o">.</span><span class="n">drums</span><span class="p">:</span>
             <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span></div>
 
 <div class="viewcode-block" id="LilyPondSyntacticalDefinition.p_steno_pitch__NOTENAME_PITCH__sub_quotes"><a class="viewcode-back" href="../../../api/abjad/parsers/parser.html#abjad.parsers.parser.LilyPondSyntacticalDefinition.p_steno_pitch__NOTENAME_PITCH__sub_quotes">[docs]</a>    <span class="k">def</span> <span class="nf">p_steno_pitch__NOTENAME_PITCH__sub_quotes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
         <span class="s2">&quot;steno_pitch : NOTENAME_PITCH sub_quotes&quot;</span>
-        <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">_pitch</span><span class="o">.</span><span class="n">NamedPitch</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">+</span> <span class="s2">&quot;,&quot;</span> <span class="o">*</span> <span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span></div>
+        <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">_pitch</span><span class="o">.</span><span class="n">NamedPitch</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span> <span class="s2">&quot;,&quot;</span> <span class="o">*</span> <span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span></div>
 
 <div class="viewcode-block" id="LilyPondSyntacticalDefinition.p_steno_pitch__NOTENAME_PITCH__sup_quotes"><a class="viewcode-back" href="../../../api/abjad/parsers/parser.html#abjad.parsers.parser.LilyPondSyntacticalDefinition.p_steno_pitch__NOTENAME_PITCH__sup_quotes">[docs]</a>    <span class="k">def</span> <span class="nf">p_steno_pitch__NOTENAME_PITCH__sup_quotes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
         <span class="s2">&quot;steno_pitch : NOTENAME_PITCH sup_quotes&quot;</span>
-        <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">_pitch</span><span class="o">.</span><span class="n">NamedPitch</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">+</span> <span class="s2">&quot;&#39;&quot;</span> <span class="o">*</span> <span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span></div>
+        <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">_pitch</span><span class="o">.</span><span class="n">NamedPitch</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span> <span class="s2">&quot;&#39;&quot;</span> <span class="o">*</span> <span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span></div>
 
     <span class="c1">### steno_tonic_pitch ###</span>
 
@@ -6665,7 +6658,6 @@
         <span class="bp">self</span><span class="p">,</span> <span class="n">p</span>
     <span class="p">):</span>
         <span class="s2">&quot;tempo_event : TEMPO scalar_closed steno_duration &#39;=&#39; tempo_range&quot;</span>
-        <span class="c1"># p[0] = _indicators.MetronomeMark(str(p[2]), p[3].duration, p[5])</span>
         <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">_indicators</span><span class="o">.</span><span class="n">MetronomeMark</span><span class="p">(</span>
             <span class="n">reference_duration</span><span class="o">=</span><span class="n">p</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">duration</span><span class="p">,</span>
             <span class="n">units_per_minute</span><span class="o">=</span><span class="n">p</span><span class="p">[</span><span class="mi">5</span><span class="p">],</span>
@@ -6800,7 +6792,7 @@
 
 <span class="sd">        Returns item or slice.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="nb">list</span> <span class="o">|</span> <span class="nb">tuple</span><span class="p">):</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="fm">__getitem__</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span>
         <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;can not get: </span><span class="si">{</span><span class="n">argument</span><span class="si">!r}</span><span class="s2">.&quot;</span><span class="p">)</span></div>
 
@@ -6808,7 +6800,7 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets length.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="nb">list</span> <span class="o">|</span> <span class="nb">tuple</span><span class="p">):</span>
             <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
         <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;value must be list or tuple.&quot;</span><span class="p">)</span></div>
 
@@ -6818,17 +6810,11 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">(</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span><span class="si">}</span><span class="s2">)&quot;</span></div>
 
-<div class="viewcode-block" id="SyntaxNode.__str__"><a class="viewcode-back" href="../../../api/abjad/parsers/parser.html#abjad.parsers.parser.SyntaxNode.__str__">[docs]</a>    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Gets string.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_format</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span></div>
-
     <span class="k">def</span> <span class="nf">_format</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
         <span class="n">space</span> <span class="o">=</span> <span class="s2">&quot;.  &quot;</span> <span class="o">*</span> <span class="n">indent</span>
         <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)):</span>
-            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="nb">list</span> <span class="o">|</span> <span class="nb">tuple</span><span class="p">):</span>
                 <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">space</span><span class="si">}</span><span class="s2">&lt;</span><span class="si">{</span><span class="n">obj</span><span class="o">.</span><span class="n">type</span><span class="si">}</span><span class="s2">&gt;: [&quot;</span><span class="p">)</span>
                 <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">obj</span><span class="o">.</span><span class="n">value</span><span class="p">:</span>
                     <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_format</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">indent</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>

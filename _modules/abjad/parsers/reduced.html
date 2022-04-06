@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>abjad.parsers.reduced &mdash; Abjad 3.6 documentation</title>
+  <title>abjad.parsers.reduced &mdash; Abjad 3.7 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/abjad.css" type="text/css" />
@@ -32,11 +32,11 @@
   <div class="wy-grid-for-nav">
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search"  style="background: #00dd00" >
+        <div class="wy-side-nav-search"  style="background: #112233" >
 
 
     <a href="../../../index.html" class="icon icon-home" alt="Documentation
-    Home"> Abjad 3.6
+    Home"> Abjad 3.7
 
 
 
@@ -110,7 +110,7 @@
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #00dd00" >
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #112233" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../../index.html">Abjad</a>
       </nav>
@@ -128,12 +128,12 @@
   <h1>Source code for abjad.parsers.reduced</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">..</span> <span class="kn">import</span> <span class="n">_iterate</span>
 <span class="kn">from</span> <span class="nn">..</span> <span class="kn">import</span> <span class="n">bind</span> <span class="k">as</span> <span class="n">_bind</span>
+<span class="kn">from</span> <span class="nn">..</span> <span class="kn">import</span> <span class="n">duration</span> <span class="k">as</span> <span class="n">_duration</span>
+<span class="kn">from</span> <span class="nn">..</span> <span class="kn">import</span> <span class="n">enums</span> <span class="k">as</span> <span class="n">_enums</span>
+<span class="kn">from</span> <span class="nn">..</span> <span class="kn">import</span> <span class="n">indicators</span> <span class="k">as</span> <span class="n">_indicators</span>
 <span class="kn">from</span> <span class="nn">..</span> <span class="kn">import</span> <span class="n">pitch</span> <span class="k">as</span> <span class="n">_pitch</span>
+<span class="kn">from</span> <span class="nn">..</span> <span class="kn">import</span> <span class="n">score</span> <span class="k">as</span> <span class="n">_score</span>
 <span class="kn">from</span> <span class="nn">..</span> <span class="kn">import</span> <span class="n">select</span> <span class="k">as</span> <span class="n">_select</span>
-<span class="kn">from</span> <span class="nn">..duration</span> <span class="kn">import</span> <span class="n">Duration</span><span class="p">,</span> <span class="n">NonreducedFraction</span>
-<span class="kn">from</span> <span class="nn">..enums</span> <span class="kn">import</span> <span class="n">Left</span><span class="p">,</span> <span class="n">Right</span>
-<span class="kn">from</span> <span class="nn">..indicators</span> <span class="kn">import</span> <span class="n">StartBeam</span><span class="p">,</span> <span class="n">StartSlur</span><span class="p">,</span> <span class="n">StopBeam</span><span class="p">,</span> <span class="n">StopSlur</span><span class="p">,</span> <span class="n">Tie</span><span class="p">,</span> <span class="n">TimeSignature</span>
-<span class="kn">from</span> <span class="nn">..score</span> <span class="kn">import</span> <span class="n">Chord</span><span class="p">,</span> <span class="n">Container</span><span class="p">,</span> <span class="n">Note</span><span class="p">,</span> <span class="n">Rest</span><span class="p">,</span> <span class="n">Tuplet</span>
 <span class="kn">from</span> <span class="nn">.base</span> <span class="kn">import</span> <span class="n">Parser</span>
 
 
@@ -310,7 +310,7 @@
     <span class="c1">### INITIALIZER ###</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_default_duration</span> <span class="o">=</span> <span class="n">Duration</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_default_duration</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Duration</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_toplevel_component_count</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="n">Parser</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="n">debug</span><span class="p">)</span>
 
@@ -363,7 +363,7 @@
 <div class="viewcode-block" id="ReducedLyParser.t_FRACTION"><a class="viewcode-back" href="../../../api/abjad/parsers/reduced.html#abjad.parsers.reduced.ReducedLyParser.t_FRACTION">[docs]</a>    <span class="k">def</span> <span class="nf">t_FRACTION</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
         <span class="sa">r</span><span class="s2">&quot;([1-9]\d*/[1-9]\d*)&quot;</span>
         <span class="n">parts</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)</span>
-        <span class="n">t</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">NonreducedFraction</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">parts</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="nb">int</span><span class="p">(</span><span class="n">parts</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+        <span class="n">t</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">NonreducedFraction</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">parts</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="nb">int</span><span class="p">(</span><span class="n">parts</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
         <span class="k">return</span> <span class="n">t</span></div>
 
 <div class="viewcode-block" id="ReducedLyParser.t_INTEGER_N"><a class="viewcode-back" href="../../../api/abjad/parsers/reduced.html#abjad.parsers.reduced.ReducedLyParser.t_INTEGER_N">[docs]</a>    <span class="k">def</span> <span class="nf">t_INTEGER_N</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
@@ -407,25 +407,25 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        beam : BRACKET_L</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">StartBeam</span><span class="p">,</span> <span class="n">Left</span><span class="p">)</span></div>
+        <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">_indicators</span><span class="o">.</span><span class="n">StartBeam</span><span class="p">,</span> <span class="n">_enums</span><span class="o">.</span><span class="n">LEFT</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="ReducedLyParser.p_beam__BRACKET_R"><a class="viewcode-back" href="../../../api/abjad/parsers/reduced.html#abjad.parsers.reduced.ReducedLyParser.p_beam__BRACKET_R">[docs]</a>    <span class="k">def</span> <span class="nf">p_beam__BRACKET_R</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        beam : BRACKET_R</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">StopBeam</span><span class="p">,</span> <span class="n">Right</span><span class="p">)</span></div>
+        <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">_indicators</span><span class="o">.</span><span class="n">StopBeam</span><span class="p">,</span> <span class="n">_enums</span><span class="o">.</span><span class="n">RIGHT</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="ReducedLyParser.p_chord_body__chord_pitches"><a class="viewcode-back" href="../../../api/abjad/parsers/reduced.html#abjad.parsers.reduced.ReducedLyParser.p_chord_body__chord_pitches">[docs]</a>    <span class="k">def</span> <span class="nf">p_chord_body__chord_pitches</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        chord_body : chord_pitches</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">Chord</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">_default_duration</span><span class="p">)</span></div>
+        <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">_score</span><span class="o">.</span><span class="n">Chord</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">_default_duration</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="ReducedLyParser.p_chord_body__chord_pitches__positive_leaf_duration"><a class="viewcode-back" href="../../../api/abjad/parsers/reduced.html#abjad.parsers.reduced.ReducedLyParser.p_chord_body__chord_pitches__positive_leaf_duration">[docs]</a>    <span class="k">def</span> <span class="nf">p_chord_body__chord_pitches__positive_leaf_duration</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        chord_body : chord_pitches positive_leaf_duration</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">Chord</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span></div>
+        <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">_score</span><span class="o">.</span><span class="n">Chord</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span></div>
 
 <div class="viewcode-block" id="ReducedLyParser.p_chord_pitches__CARAT_L__pitches__CARAT_R"><a class="viewcode-back" href="../../../api/abjad/parsers/reduced.html#abjad.parsers.reduced.ReducedLyParser.p_chord_pitches__CARAT_L__pitches__CARAT_R">[docs]</a>    <span class="k">def</span> <span class="nf">p_chord_pitches__CARAT_L__pitches__CARAT_R</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -483,7 +483,7 @@
 
 <div class="viewcode-block" id="ReducedLyParser.p_container__BRACE_L__component_list__BRACE_R"><a class="viewcode-back" href="../../../api/abjad/parsers/reduced.html#abjad.parsers.reduced.ReducedLyParser.p_container__BRACE_L__component_list__BRACE_R">[docs]</a>    <span class="k">def</span> <span class="nf">p_container__BRACE_L__component_list__BRACE_R</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
         <span class="sa">r</span><span class="sd">&quot;&quot;&quot;container : BRACE_L component_list BRACE_R&quot;&quot;&quot;</span>
-        <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">Container</span><span class="p">()</span>
+        <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">_score</span><span class="o">.</span><span class="n">Container</span><span class="p">()</span>
         <span class="k">for</span> <span class="n">component</span> <span class="ow">in</span> <span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">]:</span>
             <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">component</span><span class="p">)</span></div>
 
@@ -542,11 +542,11 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        measure : PIPE FRACTION component_list PIPE</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">measure</span> <span class="o">=</span> <span class="n">Container</span><span class="p">()</span>
+        <span class="n">measure</span> <span class="o">=</span> <span class="n">_score</span><span class="o">.</span><span class="n">Container</span><span class="p">()</span>
         <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">p</span><span class="p">[</span><span class="mi">3</span><span class="p">]:</span>
             <span class="n">measure</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
         <span class="n">leaf</span> <span class="o">=</span> <span class="n">_iterate</span><span class="o">.</span><span class="n">_get_leaf</span><span class="p">(</span><span class="n">measure</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-        <span class="n">time_signature</span> <span class="o">=</span> <span class="n">TimeSignature</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">pair</span><span class="p">)</span>
+        <span class="n">time_signature</span> <span class="o">=</span> <span class="n">_indicators</span><span class="o">.</span><span class="n">TimeSignature</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">pair</span><span class="p">)</span>
         <span class="n">_bind</span><span class="o">.</span><span class="n">attach</span><span class="p">(</span><span class="n">time_signature</span><span class="p">,</span> <span class="n">leaf</span><span class="p">)</span>
         <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">measure</span></div>
 
@@ -557,7 +557,7 @@
         <span class="n">duration_log</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
         <span class="n">dots</span> <span class="o">=</span> <span class="s2">&quot;.&quot;</span> <span class="o">*</span> <span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
         <span class="n">string</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">abs</span><span class="p">(</span><span class="n">duration_log</span><span class="p">)</span><span class="si">}{</span><span class="n">dots</span><span class="si">}</span><span class="s2">&quot;</span>
-        <span class="n">duration</span> <span class="o">=</span> <span class="n">Duration</span><span class="o">.</span><span class="n">from_lilypond_duration_string</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
+        <span class="n">duration</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Duration</span><span class="o">.</span><span class="n">from_lilypond_duration_string</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_default_duration</span> <span class="o">=</span> <span class="n">duration</span>
         <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">duration</span></div>
 
@@ -565,37 +565,37 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        note_body : pitch</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">Note</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">_default_duration</span><span class="p">)</span></div>
+        <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">_score</span><span class="o">.</span><span class="n">Note</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">_default_duration</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="ReducedLyParser.p_note_body__pitch__positive_leaf_duration"><a class="viewcode-back" href="../../../api/abjad/parsers/reduced.html#abjad.parsers.reduced.ReducedLyParser.p_note_body__pitch__positive_leaf_duration">[docs]</a>    <span class="k">def</span> <span class="nf">p_note_body__pitch__positive_leaf_duration</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        note_body : pitch positive_leaf_duration</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">Note</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span></div>
+        <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">_score</span><span class="o">.</span><span class="n">Note</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span></div>
 
 <div class="viewcode-block" id="ReducedLyParser.p_note_body__positive_leaf_duration"><a class="viewcode-back" href="../../../api/abjad/parsers/reduced.html#abjad.parsers.reduced.ReducedLyParser.p_note_body__positive_leaf_duration">[docs]</a>    <span class="k">def</span> <span class="nf">p_note_body__positive_leaf_duration</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        note_body : positive_leaf_duration</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">Note</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span></div>
+        <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">_score</span><span class="o">.</span><span class="n">Note</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span></div>
 
 <div class="viewcode-block" id="ReducedLyParser.p_pitch__PITCHNAME"><a class="viewcode-back" href="../../../api/abjad/parsers/reduced.html#abjad.parsers.reduced.ReducedLyParser.p_pitch__PITCHNAME">[docs]</a>    <span class="k">def</span> <span class="nf">p_pitch__PITCHNAME</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        pitch : PITCHNAME</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">_pitch</span><span class="o">.</span><span class="n">NamedPitch</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span></div>
+        <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">_pitch</span><span class="o">.</span><span class="n">NamedPitch</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">name</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="ReducedLyParser.p_pitch__PITCHNAME__apostrophes"><a class="viewcode-back" href="../../../api/abjad/parsers/reduced.html#abjad.parsers.reduced.ReducedLyParser.p_pitch__PITCHNAME__apostrophes">[docs]</a>    <span class="k">def</span> <span class="nf">p_pitch__PITCHNAME__apostrophes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        pitch : PITCHNAME apostrophes</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">_pitch</span><span class="o">.</span><span class="n">NamedPitch</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">+</span> <span class="s2">&quot;&#39;&quot;</span> <span class="o">*</span> <span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span></div>
+        <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">_pitch</span><span class="o">.</span><span class="n">NamedPitch</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span> <span class="s2">&quot;&#39;&quot;</span> <span class="o">*</span> <span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span></div>
 
 <div class="viewcode-block" id="ReducedLyParser.p_pitch__PITCHNAME__commas"><a class="viewcode-back" href="../../../api/abjad/parsers/reduced.html#abjad.parsers.reduced.ReducedLyParser.p_pitch__PITCHNAME__commas">[docs]</a>    <span class="k">def</span> <span class="nf">p_pitch__PITCHNAME__commas</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        pitch : PITCHNAME commas</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">_pitch</span><span class="o">.</span><span class="n">NamedPitch</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">+</span> <span class="s2">&quot;,&quot;</span> <span class="o">*</span> <span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span></div>
+        <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">_pitch</span><span class="o">.</span><span class="n">NamedPitch</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span> <span class="s2">&quot;,&quot;</span> <span class="o">*</span> <span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span></div>
 
 <div class="viewcode-block" id="ReducedLyParser.p_pitches__pitch"><a class="viewcode-back" href="../../../api/abjad/parsers/reduced.html#abjad.parsers.reduced.ReducedLyParser.p_pitches__pitch">[docs]</a>    <span class="k">def</span> <span class="nf">p_pitches__pitch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -615,7 +615,9 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">duration_log</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
         <span class="n">dots</span> <span class="o">=</span> <span class="s2">&quot;.&quot;</span> <span class="o">*</span> <span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
-        <span class="n">duration</span> <span class="o">=</span> <span class="n">Duration</span><span class="o">.</span><span class="n">from_lilypond_duration_string</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">abs</span><span class="p">(</span><span class="n">duration_log</span><span class="p">)</span><span class="si">}{</span><span class="n">dots</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">duration</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Duration</span><span class="o">.</span><span class="n">from_lilypond_duration_string</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">abs</span><span class="p">(</span><span class="n">duration_log</span><span class="p">)</span><span class="si">}{</span><span class="n">dots</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_default_duration</span> <span class="o">=</span> <span class="n">duration</span>
         <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">duration</span></div>
 
@@ -658,31 +660,31 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        rest_body : RESTNAME</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">Rest</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_default_duration</span><span class="p">)</span></div>
+        <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">_score</span><span class="o">.</span><span class="n">Rest</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_default_duration</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="ReducedLyParser.p_rest_body__RESTNAME__positive_leaf_duration"><a class="viewcode-back" href="../../../api/abjad/parsers/reduced.html#abjad.parsers.reduced.ReducedLyParser.p_rest_body__RESTNAME__positive_leaf_duration">[docs]</a>    <span class="k">def</span> <span class="nf">p_rest_body__RESTNAME__positive_leaf_duration</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        rest_body : RESTNAME positive_leaf_duration</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">Rest</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span></div>
+        <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">_score</span><span class="o">.</span><span class="n">Rest</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span></div>
 
 <div class="viewcode-block" id="ReducedLyParser.p_rest_body__negative_leaf_duration"><a class="viewcode-back" href="../../../api/abjad/parsers/reduced.html#abjad.parsers.reduced.ReducedLyParser.p_rest_body__negative_leaf_duration">[docs]</a>    <span class="k">def</span> <span class="nf">p_rest_body__negative_leaf_duration</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        rest_body : negative_leaf_duration</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">Rest</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span></div>
+        <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">_score</span><span class="o">.</span><span class="n">Rest</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span></div>
 
 <div class="viewcode-block" id="ReducedLyParser.p_slur__PAREN_L"><a class="viewcode-back" href="../../../api/abjad/parsers/reduced.html#abjad.parsers.reduced.ReducedLyParser.p_slur__PAREN_L">[docs]</a>    <span class="k">def</span> <span class="nf">p_slur__PAREN_L</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        slur : PAREN_L</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">StartSlur</span><span class="p">,</span> <span class="n">Left</span><span class="p">)</span></div>
+        <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">_indicators</span><span class="o">.</span><span class="n">StartSlur</span><span class="p">,</span> <span class="n">_enums</span><span class="o">.</span><span class="n">LEFT</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="ReducedLyParser.p_slur__PAREN_R"><a class="viewcode-back" href="../../../api/abjad/parsers/reduced.html#abjad.parsers.reduced.ReducedLyParser.p_slur__PAREN_R">[docs]</a>    <span class="k">def</span> <span class="nf">p_slur__PAREN_R</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        slur : PAREN_R</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">StopSlur</span><span class="p">,</span> <span class="n">Right</span><span class="p">)</span></div>
+        <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">_indicators</span><span class="o">.</span><span class="n">StopSlur</span><span class="p">,</span> <span class="n">_enums</span><span class="o">.</span><span class="n">RIGHT</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="ReducedLyParser.p_start__EMPTY"><a class="viewcode-back" href="../../../api/abjad/parsers/reduced.html#abjad.parsers.reduced.ReducedLyParser.p_start__EMPTY">[docs]</a>    <span class="k">def</span> <span class="nf">p_start__EMPTY</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -709,16 +711,16 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        tie : TILDE</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">Tie</span><span class="p">,</span> <span class="n">Left</span><span class="p">)</span></div>
+        <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">_indicators</span><span class="o">.</span><span class="n">Tie</span><span class="p">,</span> <span class="n">_enums</span><span class="o">.</span><span class="n">LEFT</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="ReducedLyParser.p_tuplet__FRACTION__container"><a class="viewcode-back" href="../../../api/abjad/parsers/reduced.html#abjad.parsers.reduced.ReducedLyParser.p_tuplet__FRACTION__container">[docs]</a>    <span class="k">def</span> <span class="nf">p_tuplet__FRACTION__container</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        tuplet : FRACTION container</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">Container</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">_score</span><span class="o">.</span><span class="n">Container</span><span class="p">)</span>
         <span class="n">leaves</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">][:]</span>
         <span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">][:]</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">Tuplet</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">leaves</span><span class="p">)</span></div>
+        <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">_score</span><span class="o">.</span><span class="n">Tuplet</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">leaves</span><span class="p">)</span></div>
 
     <span class="c1">### PRIVATE METHODS ###</span>
 
@@ -727,26 +729,26 @@
             <span class="n">span_events</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_span_events</span><span class="p">(</span><span class="n">leaf</span><span class="p">)</span>
             <span class="k">for</span> <span class="n">current_class</span><span class="p">,</span> <span class="n">directions</span> <span class="ow">in</span> <span class="n">span_events</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
                 <span class="k">if</span> <span class="n">current_class</span> <span class="ow">in</span> <span class="p">(</span>
-                    <span class="n">StartSlur</span><span class="p">,</span>
-                    <span class="n">StopSlur</span><span class="p">,</span>
+                    <span class="n">_indicators</span><span class="o">.</span><span class="n">StartSlur</span><span class="p">,</span>
+                    <span class="n">_indicators</span><span class="o">.</span><span class="n">StopSlur</span><span class="p">,</span>
                 <span class="p">):</span>
                     <span class="n">indicator</span> <span class="o">=</span> <span class="n">current_class</span><span class="p">()</span>
                     <span class="n">_bind</span><span class="o">.</span><span class="n">attach</span><span class="p">(</span><span class="n">indicator</span><span class="p">,</span> <span class="n">leaf</span><span class="p">)</span>
                     <span class="k">continue</span>
                 <span class="k">if</span> <span class="n">current_class</span> <span class="ow">in</span> <span class="p">(</span>
-                    <span class="n">StartBeam</span><span class="p">,</span>
-                    <span class="n">StopBeam</span><span class="p">,</span>
+                    <span class="n">_indicators</span><span class="o">.</span><span class="n">StartBeam</span><span class="p">,</span>
+                    <span class="n">_indicators</span><span class="o">.</span><span class="n">StopBeam</span><span class="p">,</span>
                 <span class="p">):</span>
                     <span class="n">indicator</span> <span class="o">=</span> <span class="n">current_class</span><span class="p">()</span>
                     <span class="n">_bind</span><span class="o">.</span><span class="n">attach</span><span class="p">(</span><span class="n">indicator</span><span class="p">,</span> <span class="n">leaf</span><span class="p">)</span>
                     <span class="k">continue</span>
-                <span class="k">if</span> <span class="n">current_class</span> <span class="ow">is</span> <span class="n">Tie</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">current_class</span> <span class="ow">is</span> <span class="n">_indicators</span><span class="o">.</span><span class="n">Tie</span><span class="p">:</span>
                     <span class="n">indicator</span> <span class="o">=</span> <span class="n">current_class</span><span class="p">()</span>
                     <span class="n">_bind</span><span class="o">.</span><span class="n">attach</span><span class="p">(</span><span class="n">indicator</span><span class="p">,</span> <span class="n">leaf</span><span class="p">)</span>
                     <span class="k">continue</span>
 
     <span class="k">def</span> <span class="nf">_cleanup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parsed</span><span class="p">):</span>
-        <span class="n">container</span> <span class="o">=</span> <span class="n">Container</span><span class="p">()</span>
+        <span class="n">container</span> <span class="o">=</span> <span class="n">_score</span><span class="o">.</span><span class="n">Container</span><span class="p">()</span>
         <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">parsed</span><span class="p">:</span>
             <span class="n">container</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
         <span class="n">parsed</span> <span class="o">=</span> <span class="n">container</span>
@@ -769,7 +771,7 @@
 
     <span class="k">def</span> <span class="nf">_setup</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_toplevel_component_count</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_default_duration</span> <span class="o">=</span> <span class="n">Duration</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_default_duration</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Duration</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
 
     <span class="c1">### PUBLIC PROPERTIES ###</span>
 
@@ -800,7 +802,7 @@
 <span class="c1">### FUNCTIONS ###</span>
 
 
-<div class="viewcode-block" id="parse_reduced_ly_syntax"><a class="viewcode-back" href="../../../api/abjad/parsers/reduced.html#abjad.parsers.reduced.parse_reduced_ly_syntax">[docs]</a><span class="k">def</span> <span class="nf">parse_reduced_ly_syntax</span><span class="p">(</span><span class="n">string</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Container</span><span class="p">:</span>
+<div class="viewcode-block" id="parse_reduced_ly_syntax"><a class="viewcode-back" href="../../../api/abjad/parsers/reduced.html#abjad.parsers.reduced.parse_reduced_ly_syntax">[docs]</a><span class="k">def</span> <span class="nf">parse_reduced_ly_syntax</span><span class="p">(</span><span class="n">string</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">_score</span><span class="o">.</span><span class="n">Container</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Parse the reduced LilyPond rhythmic syntax:</span>
 

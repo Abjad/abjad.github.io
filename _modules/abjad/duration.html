@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>abjad.duration &mdash; Abjad 3.6 documentation</title>
+  <title>abjad.duration &mdash; Abjad 3.7 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/abjad.css" type="text/css" />
@@ -32,11 +32,11 @@
   <div class="wy-grid-for-nav">
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search"  style="background: #00dd00" >
+        <div class="wy-side-nav-search"  style="background: #112233" >
 
 
     <a href="../../index.html" class="icon icon-home" alt="Documentation
-    Home"> Abjad 3.6
+    Home"> Abjad 3.7
 
 
 
@@ -110,7 +110,7 @@
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #00dd00" >
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #112233" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../index.html">Abjad</a>
       </nav>
@@ -128,7 +128,6 @@
   <h1>Source code for abjad.duration</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">math</span>
 <span class="kn">import</span> <span class="nn">re</span>
-<span class="kn">import</span> <span class="nn">typing</span>
 
 <span class="kn">import</span> <span class="nn">quicktions</span>
 
@@ -650,7 +649,7 @@
 <span class="sd">        general, return the ``i`` th integer power of 2 greater than the least</span>
 <span class="sd">        integer power of 2 greater than or equal to ``n``.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="n">quicktions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">)),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">float</span> <span class="o">|</span> <span class="n">quicktions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
         <span class="k">assert</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">n</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
         <span class="n">result</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">**</span> <span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="mi">2</span><span class="p">)))</span> <span class="o">+</span> <span class="n">i</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">result</span>
@@ -1076,7 +1075,7 @@
         <span class="k">return</span> <span class="n">dotted_duration_string</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">pair</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
+    <span class="k">def</span> <span class="nf">pair</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets numerator and denominator.</span>
 
@@ -1124,8 +1123,8 @@
 
 <div class="viewcode-block" id="Duration.durations_to_nonreduced_fractions"><a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.Duration.durations_to_nonreduced_fractions">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">durations_to_nonreduced_fractions</span><span class="p">(</span>
-        <span class="n">durations</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">,</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="s2">&quot;NonreducedFraction&quot;</span><span class="p">]:</span>
+        <span class="n">durations</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="s2">&quot;NonreducedFraction&quot;</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Changes ``durations`` to nonreduced fractions sharing least common</span>
 <span class="sd">        denominator.</span>
@@ -1236,8 +1235,8 @@
 <span class="sd">            &quot;1&#39;57&#39;&#39;&quot;</span>
 
 <span class="sd">            &gt;&gt;&gt; string = rf&quot;\markup {{ {clock_string} }}&quot;</span>
-<span class="sd">            &gt;&gt;&gt; markup = abjad.Markup(string, direction=abjad.Up)</span>
-<span class="sd">            &gt;&gt;&gt; abjad.attach(markup, note)</span>
+<span class="sd">            &gt;&gt;&gt; markup = abjad.Markup(string)</span>
+<span class="sd">            &gt;&gt;&gt; abjad.attach(markup, note, direction=abjad.UP)</span>
 <span class="sd">            &gt;&gt;&gt; abjad.show(note) # doctest: +SKIP</span>
 
 <span class="sd">            ..  docs::</span>
@@ -2146,14 +2145,6 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_denominator</span> <span class="o">=</span> <span class="n">denominator</span>
         <span class="k">return</span> <span class="bp">self</span></div>
 
-    <span class="c1">### INITIALIZER ###</span>
-
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">arguments</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Dummy initializer to satisfy mypy.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">pass</span>
-
     <span class="c1">### SPECIAL METHODS ###</span>
 
 <div class="viewcode-block" id="NonreducedFraction.__abs__"><a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.NonreducedFraction.__abs__">[docs]</a>    <span class="k">def</span> <span class="fm">__abs__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;NonreducedFraction&quot;</span><span class="p">:</span>
@@ -2518,8 +2509,8 @@
 
 <div class="viewcode-block" id="NonreducedFraction.durations_to_nonreduced_fractions"><a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.NonreducedFraction.durations_to_nonreduced_fractions">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">durations_to_nonreduced_fractions</span><span class="p">(</span>
-        <span class="n">durations</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">,</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="s2">&quot;NonreducedFraction&quot;</span><span class="p">]:</span>
+        <span class="n">durations</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="s2">&quot;NonreducedFraction&quot;</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Changes ``durations`` to nonreduced fractions sharing least common</span>
 <span class="sd">        denominator.</span>
@@ -2826,7 +2817,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_numerator</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">pair</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
+    <span class="k">def</span> <span class="nf">pair</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets (numerator, denominator) pair of nonreduced fraction.</span>
 
