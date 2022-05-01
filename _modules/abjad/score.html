@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>abjad.score &mdash; Abjad 3.8 documentation</title>
+  <title>abjad.score &mdash; Abjad 3.9 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/abjad.css" type="text/css" />
@@ -32,11 +32,11 @@
   <div class="wy-grid-for-nav">
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search"  style="background: #224466" >
+        <div class="wy-side-nav-search"  style="background: #336699" >
 
 
     <a href="../../index.html" class="icon icon-home" alt="Documentation
-    Home"> Abjad 3.8
+    Home"> Abjad 3.9
 
 
 
@@ -66,7 +66,6 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Overview</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../overview/about-the-docs.html">About the docs</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../overview/containers.html">Containers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../overview/containers-basic-operations-on.html">Containers, basic operations on</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../overview/containers-retrieving-by-name.html">Containers, retrieving by name</a></li>
@@ -110,7 +109,7 @@
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #224466" >
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #336699" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../index.html">Abjad</a>
       </nav>
@@ -134,7 +133,8 @@
 
 <span class="kn">import</span> <span class="nn">quicktions</span>
 
-<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">_indent</span><span class="p">,</span> <span class="n">_update</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">_indentlib</span><span class="p">,</span> <span class="n">_updatelib</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">contributions</span> <span class="k">as</span> <span class="n">_contributions</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">duration</span> <span class="k">as</span> <span class="n">_duration</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">enums</span> <span class="k">as</span> <span class="n">_enums</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">exceptions</span> <span class="k">as</span> <span class="n">_exceptions</span>
@@ -147,8 +147,20 @@
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">pitch</span> <span class="k">as</span> <span class="n">_pitch</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">tag</span> <span class="k">as</span> <span class="n">_tag</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">timespan</span> <span class="k">as</span> <span class="n">_timespan</span>
-<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">tweaks</span> <span class="k">as</span> <span class="n">tweaksmodule</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">tweaks</span> <span class="k">as</span> <span class="n">_tweaks</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">typings</span> <span class="k">as</span> <span class="n">_typings</span>
+
+
+<span class="k">def</span> <span class="nf">_indent_strings</span><span class="p">(</span><span class="n">strings</span><span class="p">):</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">string</span> <span class="ow">in</span> <span class="n">strings</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">string</span><span class="o">.</span><span class="n">isspace</span><span class="p">():</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">_indentlib</span><span class="o">.</span><span class="n">INDENT</span> <span class="o">+</span> <span class="n">string</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">result</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">result</span>
 
 
 <div class="viewcode-block" id="Component"><a class="viewcode-back" href="../../api/abjad/score.html#abjad.score.Component">[docs]</a><span class="k">class</span> <span class="nc">Component</span><span class="p">:</span>
@@ -273,55 +285,21 @@
 
     <span class="k">def</span> <span class="nf">_format_absolute_after_site</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">contributions</span><span class="p">):</span>
         <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">contributions</span><span class="o">.</span><span class="n">absolute_after</span><span class="o">.</span><span class="n">commands</span><span class="p">)</span>
+        <span class="n">strings</span> <span class="o">=</span> <span class="n">contributions</span><span class="o">.</span><span class="n">alphabetize</span><span class="p">(</span><span class="n">contributions</span><span class="o">.</span><span class="n">absolute_after</span><span class="o">.</span><span class="n">commands</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">strings</span><span class="p">:</span>
+            <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span>
+                <span class="bp">self</span><span class="p">,</span> <span class="n">AfterGraceContainer</span> <span class="o">|</span> <span class="n">BeforeGraceContainer</span> <span class="o">|</span> <span class="n">Leaf</span>
+            <span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;% </span><span class="si">{</span><span class="n">_contributions</span><span class="o">.</span><span class="n">Types</span><span class="o">.</span><span class="n">COMMANDS</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">:&quot;</span><span class="p">)</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">strings</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">result</span>
 
     <span class="k">def</span> <span class="nf">_format_absolute_before_site</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">contributions</span><span class="p">):</span>
         <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">contributions</span><span class="o">.</span><span class="n">absolute_before</span><span class="o">.</span><span class="n">commands</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">result</span>
-
-    <span class="k">def</span> <span class="nf">_format_after_site</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">contributions</span><span class="p">):</span>
-        <span class="k">return</span> <span class="p">[]</span>
-
-    <span class="k">def</span> <span class="nf">_format_before_site</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">contributions</span><span class="p">):</span>
-        <span class="k">return</span> <span class="p">[]</span>
-
-    <span class="k">def</span> <span class="nf">_format_close_brackets_site</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">contributions</span><span class="p">):</span>
-        <span class="k">return</span> <span class="p">[]</span>
-
-    <span class="k">def</span> <span class="nf">_format_closing_site</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">contributions</span><span class="p">):</span>
-        <span class="k">return</span> <span class="p">[]</span>
-
-    <span class="k">def</span> <span class="nf">_format_contents_site</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">contributions</span><span class="p">):</span>
-        <span class="k">return</span> <span class="p">[]</span>
-
-    <span class="k">def</span> <span class="nf">_format_open_brackets_site</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">contributions</span><span class="p">):</span>
-        <span class="k">return</span> <span class="p">[]</span>
-
-    <span class="k">def</span> <span class="nf">_format_opening_site</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">contributions</span><span class="p">):</span>
-        <span class="k">return</span> <span class="p">[]</span>
-
-    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">_contributions_with_indent</span><span class="p">(</span><span class="n">lists</span><span class="p">):</span>
-        <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">list_</span> <span class="ow">in</span> <span class="n">lists</span><span class="p">:</span>
-            <span class="n">strings</span> <span class="o">=</span> <span class="p">[]</span>
-            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">list_</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
-                <span class="k">for</span> <span class="n">string</span> <span class="ow">in</span> <span class="n">list_</span><span class="p">:</span>
-                    <span class="k">if</span> <span class="n">string</span><span class="o">.</span><span class="n">isspace</span><span class="p">():</span>
-                        <span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-                    <span class="k">else</span><span class="p">:</span>
-                        <span class="n">string</span> <span class="o">=</span> <span class="n">_indent</span><span class="o">.</span><span class="n">INDENT</span> <span class="o">+</span> <span class="n">string</span>
-                    <span class="n">strings</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">list_</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span>
-                <span class="k">if</span> <span class="n">list_</span><span class="o">.</span><span class="n">isspace</span><span class="p">():</span>
-                    <span class="n">strings</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
-                <span class="k">else</span><span class="p">:</span>
-                    <span class="n">strings</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">_indent</span><span class="o">.</span><span class="n">INDENT</span> <span class="o">+</span> <span class="n">list_</span><span class="p">)</span>
+        <span class="n">strings</span> <span class="o">=</span> <span class="n">contributions</span><span class="o">.</span><span class="n">alphabetize</span><span class="p">(</span><span class="n">contributions</span><span class="o">.</span><span class="n">absolute_before</span><span class="o">.</span><span class="n">commands</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">strings</span><span class="p">:</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;% </span><span class="si">{</span><span class="n">_contributions</span><span class="o">.</span><span class="n">Types</span><span class="o">.</span><span class="n">COMMANDS</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">:&quot;</span><span class="p">)</span>
             <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">strings</span><span class="p">)</span>
-        <span class="k">assert</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">result</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">result</span>
 
     <span class="nd">@staticmethod</span>
@@ -388,7 +366,6 @@
             <span class="n">result_</span> <span class="o">=</span> <span class="p">[]</span>
             <span class="k">for</span> <span class="n">wrapper</span> <span class="ow">in</span> <span class="n">result</span><span class="p">:</span>
                 <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">attributes</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-                    <span class="c1"># if getattr(wrapper.indicator, name, None) != value:</span>
                     <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">wrapper</span><span class="o">.</span><span class="n">unbundle_indicator</span><span class="p">(),</span> <span class="n">name</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="o">!=</span> <span class="n">value</span><span class="p">:</span>
                         <span class="k">break</span>
                 <span class="k">else</span><span class="p">:</span>
@@ -403,7 +380,7 @@
         <span class="k">return</span> <span class="n">result</span>
 
     <span class="k">def</span> <span class="nf">_get_lilypond_format</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">_update</span><span class="o">.</span><span class="n">_update_now</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">indicators</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">_updatelib</span><span class="o">.</span><span class="n">_update_now</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">indicators</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="n">string</span> <span class="o">=</span> <span class="n">_format</span><span class="o">.</span><span class="n">format_component</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">string</span>
 
@@ -444,7 +421,7 @@
 
     <span class="k">def</span> <span class="nf">_get_timespan</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">in_seconds</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">in_seconds</span><span class="p">:</span>
-            <span class="n">_update</span><span class="o">.</span><span class="n">_update_now</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">offsets_in_seconds</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">_updatelib</span><span class="o">.</span><span class="n">_update_now</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">offsets_in_seconds</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_start_offset_in_seconds</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="n">_exceptions</span><span class="o">.</span><span class="n">MissingMetronomeMarkError</span>
             <span class="k">return</span> <span class="n">_timespan</span><span class="o">.</span><span class="n">Timespan</span><span class="p">(</span>
@@ -452,7 +429,7 @@
                 <span class="n">stop_offset</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_stop_offset_in_seconds</span><span class="p">,</span>
             <span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">_update</span><span class="o">.</span><span class="n">_update_now</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">offsets</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">_updatelib</span><span class="o">.</span><span class="n">_update_now</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">offsets</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_timespan</span>
 
     <span class="k">def</span> <span class="nf">_has_indicator</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prototype</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">attributes</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
@@ -614,69 +591,98 @@
             <span class="n">wrapper_</span><span class="o">.</span><span class="n">_component</span> <span class="o">=</span> <span class="bp">self</span>
             <span class="n">wrapper_</span><span class="o">.</span><span class="n">_bind_component</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_format_after_grace_body</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">container</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_after_grace_container</span>
-        <span class="k">if</span> <span class="n">container</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">string</span> <span class="o">=</span> <span class="n">container</span><span class="o">.</span><span class="n">_get_lilypond_format</span><span class="p">()</span>
-            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">result</span>
-
-    <span class="k">def</span> <span class="nf">_format_after_grace_command</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_after_grace_container</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\afterGrace&quot;</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">result</span>
-
     <span class="k">def</span> <span class="nf">_format_after_site</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">contributions</span><span class="p">):</span>
         <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">contributions</span><span class="o">.</span><span class="n">after</span><span class="o">.</span><span class="n">stem_tremolos</span><span class="p">)</span>
-        <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">contributions</span><span class="o">.</span><span class="n">after</span><span class="o">.</span><span class="n">articulations</span><span class="p">)</span>
-        <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">contributions</span><span class="o">.</span><span class="n">after</span><span class="o">.</span><span class="n">markup</span><span class="p">)</span>
-        <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">contributions</span><span class="o">.</span><span class="n">after</span><span class="o">.</span><span class="n">spanner_stops</span><span class="p">)</span>
-        <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">contributions</span><span class="o">.</span><span class="n">after</span><span class="o">.</span><span class="n">start_beam</span><span class="p">)</span>
-        <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">contributions</span><span class="o">.</span><span class="n">after</span><span class="o">.</span><span class="n">stop_beam</span><span class="p">)</span>
-        <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">contributions</span><span class="o">.</span><span class="n">after</span><span class="o">.</span><span class="n">spanner_starts</span><span class="p">)</span>
+        <span class="n">strings</span> <span class="o">=</span> <span class="n">contributions</span><span class="o">.</span><span class="n">alphabetize</span><span class="p">(</span><span class="n">contributions</span><span class="o">.</span><span class="n">after</span><span class="o">.</span><span class="n">stem_tremolos</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">strings</span><span class="p">:</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;% </span><span class="si">{</span><span class="n">_contributions</span><span class="o">.</span><span class="n">Types</span><span class="o">.</span><span class="n">STEM_TREMOLOS</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">:&quot;</span><span class="p">)</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">strings</span><span class="p">)</span>
+        <span class="n">strings</span> <span class="o">=</span> <span class="n">contributions</span><span class="o">.</span><span class="n">alphabetize</span><span class="p">(</span><span class="n">contributions</span><span class="o">.</span><span class="n">after</span><span class="o">.</span><span class="n">articulations</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">strings</span><span class="p">:</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;% </span><span class="si">{</span><span class="n">_contributions</span><span class="o">.</span><span class="n">Types</span><span class="o">.</span><span class="n">ARTICULATIONS</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">:&quot;</span><span class="p">)</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">strings</span><span class="p">)</span>
+        <span class="n">strings</span> <span class="o">=</span> <span class="n">contributions</span><span class="o">.</span><span class="n">alphabetize</span><span class="p">(</span><span class="n">contributions</span><span class="o">.</span><span class="n">after</span><span class="o">.</span><span class="n">markup</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">strings</span><span class="p">:</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;% </span><span class="si">{</span><span class="n">_contributions</span><span class="o">.</span><span class="n">Types</span><span class="o">.</span><span class="n">MARKUP</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">:&quot;</span><span class="p">)</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">strings</span><span class="p">)</span>
+        <span class="n">strings</span> <span class="o">=</span> <span class="n">contributions</span><span class="o">.</span><span class="n">alphabetize</span><span class="p">(</span><span class="n">contributions</span><span class="o">.</span><span class="n">after</span><span class="o">.</span><span class="n">spanner_stops</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">strings</span><span class="p">:</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;% </span><span class="si">{</span><span class="n">_contributions</span><span class="o">.</span><span class="n">Types</span><span class="o">.</span><span class="n">SPANNER_STOPS</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">:&quot;</span><span class="p">)</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">strings</span><span class="p">)</span>
+        <span class="n">strings</span> <span class="o">=</span> <span class="n">contributions</span><span class="o">.</span><span class="n">alphabetize</span><span class="p">(</span><span class="n">contributions</span><span class="o">.</span><span class="n">after</span><span class="o">.</span><span class="n">start_beam</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">strings</span><span class="p">:</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;% </span><span class="si">{</span><span class="n">_contributions</span><span class="o">.</span><span class="n">Types</span><span class="o">.</span><span class="n">START_BEAM</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">:&quot;</span><span class="p">)</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">strings</span><span class="p">)</span>
+        <span class="n">strings</span> <span class="o">=</span> <span class="n">contributions</span><span class="o">.</span><span class="n">alphabetize</span><span class="p">(</span><span class="n">contributions</span><span class="o">.</span><span class="n">after</span><span class="o">.</span><span class="n">stop_beam</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">strings</span><span class="p">:</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;% </span><span class="si">{</span><span class="n">_contributions</span><span class="o">.</span><span class="n">Types</span><span class="o">.</span><span class="n">STOP_BEAM</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">:&quot;</span><span class="p">)</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">strings</span><span class="p">)</span>
+        <span class="n">strings</span> <span class="o">=</span> <span class="n">contributions</span><span class="o">.</span><span class="n">alphabetize</span><span class="p">(</span><span class="n">contributions</span><span class="o">.</span><span class="n">after</span><span class="o">.</span><span class="n">spanner_starts</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">strings</span><span class="p">:</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;% </span><span class="si">{</span><span class="n">_contributions</span><span class="o">.</span><span class="n">Types</span><span class="o">.</span><span class="n">SPANNER_STARTS</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">:&quot;</span><span class="p">)</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">strings</span><span class="p">)</span>
         <span class="c1"># NOTE: LilyPond demands \startTrillSpan appear after almost all</span>
         <span class="c1">#       other contributions; pitched trills dangerously</span>
         <span class="c1">#       suppress markup and the starts of other spanners when</span>
         <span class="c1">#       \startTrillSpan appears lexically prior to those commands;</span>
         <span class="c1">#       but \startTrillSpan must appear before calls to \set.</span>
-        <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">contributions</span><span class="o">.</span><span class="n">after</span><span class="o">.</span><span class="n">trill_spanner_starts</span><span class="p">)</span>
-        <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">contributions</span><span class="o">.</span><span class="n">after</span><span class="o">.</span><span class="n">commands</span><span class="p">)</span>
-        <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">contributions</span><span class="o">.</span><span class="n">after</span><span class="o">.</span><span class="n">leak</span><span class="p">)</span>
-        <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">contributions</span><span class="o">.</span><span class="n">after</span><span class="o">.</span><span class="n">leaks</span><span class="p">)</span>
-        <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_format_after_grace_body</span><span class="p">())</span>
+        <span class="n">strings</span> <span class="o">=</span> <span class="n">contributions</span><span class="o">.</span><span class="n">alphabetize</span><span class="p">(</span><span class="n">contributions</span><span class="o">.</span><span class="n">after</span><span class="o">.</span><span class="n">trill_spanner_starts</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">strings</span><span class="p">:</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;% </span><span class="si">{</span><span class="n">_contributions</span><span class="o">.</span><span class="n">Types</span><span class="o">.</span><span class="n">TRILL_SPANNER_STARTS</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">:&quot;</span><span class="p">)</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">strings</span><span class="p">)</span>
+        <span class="n">strings</span> <span class="o">=</span> <span class="n">contributions</span><span class="o">.</span><span class="n">alphabetize</span><span class="p">(</span><span class="n">contributions</span><span class="o">.</span><span class="n">after</span><span class="o">.</span><span class="n">commands</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">strings</span><span class="p">:</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;% </span><span class="si">{</span><span class="n">_contributions</span><span class="o">.</span><span class="n">Types</span><span class="o">.</span><span class="n">COMMANDS</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">:&quot;</span><span class="p">)</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">strings</span><span class="p">)</span>
+        <span class="n">strings</span> <span class="o">=</span> <span class="n">contributions</span><span class="o">.</span><span class="n">alphabetize</span><span class="p">(</span><span class="n">contributions</span><span class="o">.</span><span class="n">after</span><span class="o">.</span><span class="n">leak</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">strings</span><span class="p">:</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;% </span><span class="si">{</span><span class="n">_contributions</span><span class="o">.</span><span class="n">Types</span><span class="o">.</span><span class="n">LEAK</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">:&quot;</span><span class="p">)</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">strings</span><span class="p">)</span>
+        <span class="n">strings</span> <span class="o">=</span> <span class="n">contributions</span><span class="o">.</span><span class="n">alphabetize</span><span class="p">(</span><span class="n">contributions</span><span class="o">.</span><span class="n">after</span><span class="o">.</span><span class="n">leaks</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">strings</span><span class="p">:</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;% </span><span class="si">{</span><span class="n">_contributions</span><span class="o">.</span><span class="n">Types</span><span class="o">.</span><span class="n">LEAKS</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">:&quot;</span><span class="p">)</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">strings</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_after_grace_container</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">string</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_after_grace_container</span><span class="o">.</span><span class="n">_get_lilypond_format</span><span class="p">()</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">result</span>
 
     <span class="k">def</span> <span class="nf">_format_before_site</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">contributions</span><span class="p">):</span>
         <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_format_grace_body</span><span class="p">())</span>
-        <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">contributions</span><span class="o">.</span><span class="n">before</span><span class="o">.</span><span class="n">commands</span><span class="p">)</span>
-        <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">contributions</span><span class="o">.</span><span class="n">grob_reverts</span><span class="p">)</span>
-        <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">contributions</span><span class="o">.</span><span class="n">grob_overrides</span><span class="p">)</span>
-        <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">contributions</span><span class="o">.</span><span class="n">context_settings</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_before_grace_container</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">string</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_before_grace_container</span><span class="o">.</span><span class="n">_get_lilypond_format</span><span class="p">()</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
+        <span class="n">strings</span> <span class="o">=</span> <span class="n">contributions</span><span class="o">.</span><span class="n">alphabetize</span><span class="p">(</span><span class="n">contributions</span><span class="o">.</span><span class="n">before</span><span class="o">.</span><span class="n">commands</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">strings</span><span class="p">:</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;% </span><span class="si">{</span><span class="n">_contributions</span><span class="o">.</span><span class="n">Types</span><span class="o">.</span><span class="n">COMMANDS</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">:&quot;</span><span class="p">)</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">strings</span><span class="p">)</span>
+        <span class="n">strings</span> <span class="o">=</span> <span class="n">contributions</span><span class="o">.</span><span class="n">grob_reverts</span>
+        <span class="k">if</span> <span class="n">strings</span><span class="p">:</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;% </span><span class="si">{</span><span class="n">_contributions</span><span class="o">.</span><span class="n">Types</span><span class="o">.</span><span class="n">GROB_REVERTS</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">:&quot;</span><span class="p">)</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">strings</span><span class="p">)</span>
+        <span class="n">strings</span> <span class="o">=</span> <span class="n">contributions</span><span class="o">.</span><span class="n">grob_overrides</span>
+        <span class="k">if</span> <span class="n">strings</span><span class="p">:</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;% </span><span class="si">{</span><span class="n">_contributions</span><span class="o">.</span><span class="n">Types</span><span class="o">.</span><span class="n">GROB_OVERRIDES</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">:&quot;</span><span class="p">)</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">strings</span><span class="p">)</span>
+        <span class="n">strings</span> <span class="o">=</span> <span class="n">contributions</span><span class="o">.</span><span class="n">context_settings</span>
+        <span class="k">if</span> <span class="n">strings</span><span class="p">:</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;% </span><span class="si">{</span><span class="n">_contributions</span><span class="o">.</span><span class="n">Types</span><span class="o">.</span><span class="n">CONTEXT_SETTINGS</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">:&quot;</span><span class="p">)</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">strings</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">result</span>
 
     <span class="k">def</span> <span class="nf">_format_closing_site</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">contributions</span><span class="p">):</span>
         <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">contributions</span><span class="o">.</span><span class="n">closing</span><span class="o">.</span><span class="n">commands</span><span class="p">)</span>
+        <span class="n">strings</span> <span class="o">=</span> <span class="n">contributions</span><span class="o">.</span><span class="n">alphabetize</span><span class="p">(</span><span class="n">contributions</span><span class="o">.</span><span class="n">closing</span><span class="o">.</span><span class="n">commands</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">strings</span><span class="p">:</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;% </span><span class="si">{</span><span class="n">_contributions</span><span class="o">.</span><span class="n">Types</span><span class="o">.</span><span class="n">COMMANDS</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">:&quot;</span><span class="p">)</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">strings</span><span class="p">)</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">_indent_strings</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">result</span>
 
-    <span class="k">def</span> <span class="nf">_format_contents_site</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">contributions</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_format_contents</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_format_leaf_body</span><span class="p">(</span><span class="n">contributions</span><span class="p">))</span>
-        <span class="k">return</span> <span class="n">result</span>
-
-    <span class="k">def</span> <span class="nf">_format_grace_body</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">container</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_before_grace_container</span>
-        <span class="k">if</span> <span class="n">container</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">container</span><span class="o">.</span><span class="n">_get_lilypond_format</span><span class="p">())</span>
-        <span class="k">return</span> <span class="n">result</span>
-
-    <span class="k">def</span> <span class="nf">_format_leaf_body</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">contributions</span><span class="p">):</span>
-        <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_format_leaf_nucleus</span><span class="p">()</span>
+        <span class="n">strings</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_format_leaf_nucleus</span><span class="p">()</span>
+        <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">strings</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">result</span>
 
     <span class="k">def</span> <span class="nf">_format_leaf_nucleus</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -687,12 +693,19 @@
 
     <span class="k">def</span> <span class="nf">_format_opening_site</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">contributions</span><span class="p">):</span>
         <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">contributions</span><span class="o">.</span><span class="n">opening</span><span class="o">.</span><span class="n">commands</span><span class="p">)</span>
-        <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">contributions</span><span class="o">.</span><span class="n">opening</span><span class="o">.</span><span class="n">pitched_trill</span><span class="p">)</span>
+        <span class="n">strings</span> <span class="o">=</span> <span class="n">contributions</span><span class="o">.</span><span class="n">alphabetize</span><span class="p">(</span><span class="n">contributions</span><span class="o">.</span><span class="n">opening</span><span class="o">.</span><span class="n">commands</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">strings</span><span class="p">:</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;% </span><span class="si">{</span><span class="n">_contributions</span><span class="o">.</span><span class="n">Types</span><span class="o">.</span><span class="n">COMMANDS</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">:&quot;</span><span class="p">)</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">strings</span><span class="p">)</span>
+        <span class="n">strings</span> <span class="o">=</span> <span class="n">contributions</span><span class="o">.</span><span class="n">alphabetize</span><span class="p">(</span><span class="n">contributions</span><span class="o">.</span><span class="n">opening</span><span class="o">.</span><span class="n">pitched_trill</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">strings</span><span class="p">:</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;% </span><span class="si">{</span><span class="n">_contributions</span><span class="o">.</span><span class="n">Types</span><span class="o">.</span><span class="n">PITCHED_TRILL</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">:&quot;</span><span class="p">)</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">strings</span><span class="p">)</span>
         <span class="c1"># IMPORTANT: LilyPond \pitchedTrill must appear immediately before leaf!</span>
         <span class="c1"># IMPORTANT: LilyPond \afterGrace must appear immediately before leaf!</span>
         <span class="c1"># TODO: figure out \pitchedTrill, \afterGrace ordering</span>
-        <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_format_after_grace_command</span><span class="p">())</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_after_grace_container</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\afterGrace&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">result</span>
 
     <span class="k">def</span> <span class="nf">_get_compact_representation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -734,12 +747,12 @@
         <span class="k">for</span> <span class="n">contributor</span><span class="p">,</span> <span class="n">contributions</span> <span class="ow">in</span> <span class="n">contribution_packet</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">contributions</span><span class="p">:</span>
                 <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">contributor</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
-                    <span class="n">contributor</span> <span class="o">=</span> <span class="n">_indent</span><span class="o">.</span><span class="n">INDENT</span> <span class="o">+</span> <span class="n">contributor</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;:</span><span class="se">\n</span><span class="s2">&quot;</span>
+                    <span class="n">contributor</span> <span class="o">=</span> <span class="n">_indentlib</span><span class="o">.</span><span class="n">INDENT</span> <span class="o">+</span> <span class="n">contributor</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;:</span><span class="se">\n</span><span class="s2">&quot;</span>
                 <span class="k">else</span><span class="p">:</span>
-                    <span class="n">contributor</span> <span class="o">=</span> <span class="n">_indent</span><span class="o">.</span><span class="n">INDENT</span> <span class="o">+</span> <span class="n">contributor</span> <span class="o">+</span> <span class="s2">&quot;:</span><span class="se">\n</span><span class="s2">&quot;</span>
+                    <span class="n">contributor</span> <span class="o">=</span> <span class="n">_indentlib</span><span class="o">.</span><span class="n">INDENT</span> <span class="o">+</span> <span class="n">contributor</span> <span class="o">+</span> <span class="s2">&quot;:</span><span class="se">\n</span><span class="s2">&quot;</span>
                 <span class="n">result</span> <span class="o">+=</span> <span class="n">contributor</span>
                 <span class="k">for</span> <span class="n">contribution</span> <span class="ow">in</span> <span class="n">contributions</span><span class="p">:</span>
-                    <span class="n">contribution</span> <span class="o">=</span> <span class="p">(</span><span class="n">_indent</span><span class="o">.</span><span class="n">INDENT</span> <span class="o">*</span> <span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="n">contribution</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+                    <span class="n">contribution</span> <span class="o">=</span> <span class="p">(</span><span class="n">_indentlib</span><span class="o">.</span><span class="n">INDENT</span> <span class="o">*</span> <span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="n">contribution</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
                     <span class="n">result</span> <span class="o">+=</span> <span class="n">contribution</span>
         <span class="k">return</span> <span class="n">result</span>
 
@@ -1204,15 +1217,21 @@
 
     <span class="k">def</span> <span class="nf">_format_after_site</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">contributions</span><span class="p">):</span>
         <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">contributions</span><span class="o">.</span><span class="n">after</span><span class="o">.</span><span class="n">commands</span><span class="p">)</span>
+        <span class="n">strings</span> <span class="o">=</span> <span class="n">contributions</span><span class="o">.</span><span class="n">alphabetize</span><span class="p">(</span><span class="n">contributions</span><span class="o">.</span><span class="n">after</span><span class="o">.</span><span class="n">commands</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">strings</span><span class="p">:</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;% </span><span class="si">{</span><span class="n">_contributions</span><span class="o">.</span><span class="n">Types</span><span class="o">.</span><span class="n">COMMANDS</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">:&quot;</span><span class="p">)</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">strings</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">result</span>
 
     <span class="k">def</span> <span class="nf">_format_before_site</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">contributions</span><span class="p">):</span>
         <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">contributions</span><span class="o">.</span><span class="n">before</span><span class="o">.</span><span class="n">commands</span><span class="p">)</span>
+        <span class="n">strings</span> <span class="o">=</span> <span class="n">contributions</span><span class="o">.</span><span class="n">alphabetize</span><span class="p">(</span><span class="n">contributions</span><span class="o">.</span><span class="n">before</span><span class="o">.</span><span class="n">commands</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">strings</span><span class="p">:</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;% </span><span class="si">{</span><span class="n">_contributions</span><span class="o">.</span><span class="n">Types</span><span class="o">.</span><span class="n">COMMANDS</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">:&quot;</span><span class="p">)</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">strings</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">result</span>
 
-    <span class="k">def</span> <span class="nf">_format_close_brackets_site</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">contributions</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_format_close_brackets</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">strings</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">simultaneous</span><span class="p">:</span>
@@ -1233,9 +1252,15 @@
 
     <span class="k">def</span> <span class="nf">_format_closing_site</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">contributions</span><span class="p">):</span>
         <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">contributions</span><span class="o">.</span><span class="n">grob_reverts</span><span class="p">)</span>
-        <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">contributions</span><span class="o">.</span><span class="n">closing</span><span class="o">.</span><span class="n">commands</span><span class="p">)</span>
-        <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_contributions_with_indent</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+        <span class="n">strings</span> <span class="o">=</span> <span class="n">contributions</span><span class="o">.</span><span class="n">grob_reverts</span>
+        <span class="k">if</span> <span class="n">strings</span><span class="p">:</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;% </span><span class="si">{</span><span class="n">_contributions</span><span class="o">.</span><span class="n">Types</span><span class="o">.</span><span class="n">GROB_REVERTS</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">:&quot;</span><span class="p">)</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">strings</span><span class="p">)</span>
+        <span class="n">strings</span> <span class="o">=</span> <span class="n">contributions</span><span class="o">.</span><span class="n">alphabetize</span><span class="p">(</span><span class="n">contributions</span><span class="o">.</span><span class="n">closing</span><span class="o">.</span><span class="n">commands</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">strings</span><span class="p">:</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;% </span><span class="si">{</span><span class="n">_contributions</span><span class="o">.</span><span class="n">Types</span><span class="o">.</span><span class="n">COMMANDS</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">:&quot;</span><span class="p">)</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">strings</span><span class="p">)</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">_indent_strings</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">result</span>
 
     <span class="k">def</span> <span class="nf">_format_content_pieces</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -1246,13 +1271,14 @@
                 <span class="k">if</span> <span class="n">string</span><span class="o">.</span><span class="n">isspace</span><span class="p">():</span>
                     <span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
                 <span class="k">else</span><span class="p">:</span>
-                    <span class="n">string</span> <span class="o">=</span> <span class="n">_indent</span><span class="o">.</span><span class="n">INDENT</span> <span class="o">+</span> <span class="n">string</span>
+                    <span class="n">string</span> <span class="o">=</span> <span class="n">_indentlib</span><span class="o">.</span><span class="n">INDENT</span> <span class="o">+</span> <span class="n">string</span>
                 <span class="n">strings</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">strings</span>
 
-    <span class="k">def</span> <span class="nf">_format_contents_site</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">contributions</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_format_contents</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_format_content_pieces</span><span class="p">())</span>
+        <span class="n">strings</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_format_content_pieces</span><span class="p">()</span>
+        <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">strings</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">result</span>
 
     <span class="k">def</span> <span class="nf">_format_open_brackets_site</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">contributions</span><span class="p">):</span>
@@ -1276,10 +1302,20 @@
 
     <span class="k">def</span> <span class="nf">_format_opening_site</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">contributions</span><span class="p">):</span>
         <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">contributions</span><span class="o">.</span><span class="n">opening</span><span class="o">.</span><span class="n">commands</span><span class="p">)</span>
-        <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">contributions</span><span class="o">.</span><span class="n">grob_overrides</span><span class="p">)</span>
-        <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">contributions</span><span class="o">.</span><span class="n">context_settings</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_contributions_with_indent</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+        <span class="n">strings</span> <span class="o">=</span> <span class="n">contributions</span><span class="o">.</span><span class="n">alphabetize</span><span class="p">(</span><span class="n">contributions</span><span class="o">.</span><span class="n">opening</span><span class="o">.</span><span class="n">commands</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">strings</span><span class="p">:</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;% </span><span class="si">{</span><span class="n">_contributions</span><span class="o">.</span><span class="n">Types</span><span class="o">.</span><span class="n">COMMANDS</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">:&quot;</span><span class="p">)</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">strings</span><span class="p">)</span>
+        <span class="n">strings</span> <span class="o">=</span> <span class="n">contributions</span><span class="o">.</span><span class="n">grob_overrides</span>
+        <span class="k">if</span> <span class="n">strings</span><span class="p">:</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;% </span><span class="si">{</span><span class="n">_contributions</span><span class="o">.</span><span class="n">Types</span><span class="o">.</span><span class="n">GROB_OVERRIDES</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">:&quot;</span><span class="p">)</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">strings</span><span class="p">)</span>
+        <span class="n">strings</span> <span class="o">=</span> <span class="n">contributions</span><span class="o">.</span><span class="n">context_settings</span>
+        <span class="k">if</span> <span class="n">strings</span><span class="p">:</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;% </span><span class="si">{</span><span class="n">_contributions</span><span class="o">.</span><span class="n">Types</span><span class="o">.</span><span class="n">CONTEXT_SETTINGS</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">:&quot;</span><span class="p">)</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">strings</span><span class="p">)</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">_indent_strings</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">result</span>
 
     <span class="k">def</span> <span class="nf">_get_abbreviated_string_format</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="mi">0</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -2659,7 +2695,7 @@
         <span class="bp">self</span><span class="p">,</span>
         <span class="o">*</span><span class="n">arguments</span><span class="p">,</span>
         <span class="n">language</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;english&quot;</span><span class="p">,</span>
-        <span class="n">multiplier</span><span class="p">:</span> <span class="n">_typings</span><span class="o">.</span><span class="n">DurationTyping</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">multiplier</span><span class="p">:</span> <span class="n">_typings</span><span class="o">.</span><span class="n">Duration</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">tag</span><span class="p">:</span> <span class="n">_tag</span><span class="o">.</span><span class="n">Tag</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">arguments</span><span class="p">)</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
@@ -2769,10 +2805,21 @@
 
     <span class="k">def</span> <span class="nf">_format_before_site</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">contributions</span><span class="p">):</span>
         <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_format_grace_body</span><span class="p">())</span>
-        <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">contributions</span><span class="o">.</span><span class="n">before</span><span class="o">.</span><span class="n">commands</span><span class="p">)</span>
-        <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">contributions</span><span class="o">.</span><span class="n">grob_overrides</span><span class="p">)</span>
-        <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">contributions</span><span class="o">.</span><span class="n">context_settings</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_before_grace_container</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">string</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_before_grace_container</span><span class="o">.</span><span class="n">_get_lilypond_format</span><span class="p">()</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
+        <span class="n">strings</span> <span class="o">=</span> <span class="n">contributions</span><span class="o">.</span><span class="n">alphabetize</span><span class="p">(</span><span class="n">contributions</span><span class="o">.</span><span class="n">before</span><span class="o">.</span><span class="n">commands</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">strings</span><span class="p">:</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;% </span><span class="si">{</span><span class="n">_contributions</span><span class="o">.</span><span class="n">Types</span><span class="o">.</span><span class="n">COMMANDS</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">:&quot;</span><span class="p">)</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">strings</span><span class="p">)</span>
+        <span class="n">strings</span> <span class="o">=</span> <span class="n">contributions</span><span class="o">.</span><span class="n">grob_overrides</span>
+        <span class="k">if</span> <span class="n">strings</span><span class="p">:</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;% </span><span class="si">{</span><span class="n">_contributions</span><span class="o">.</span><span class="n">Types</span><span class="o">.</span><span class="n">GROB_OVERRIDES</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">:&quot;</span><span class="p">)</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">strings</span><span class="p">)</span>
+        <span class="n">strings</span> <span class="o">=</span> <span class="n">contributions</span><span class="o">.</span><span class="n">context_settings</span>
+        <span class="k">if</span> <span class="n">strings</span><span class="p">:</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;% </span><span class="si">{</span><span class="n">_contributions</span><span class="o">.</span><span class="n">Types</span><span class="o">.</span><span class="n">CONTEXT_SETTINGS</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">:&quot;</span><span class="p">)</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">strings</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">result</span>
 
     <span class="k">def</span> <span class="nf">_format_leaf_nucleus</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -2782,7 +2829,7 @@
             <span class="k">for</span> <span class="n">note_head</span> <span class="ow">in</span> <span class="n">note_heads</span><span class="p">:</span>
                 <span class="n">current_format</span> <span class="o">=</span> <span class="n">note_head</span><span class="o">.</span><span class="n">_get_lilypond_format</span><span class="p">()</span>
                 <span class="n">format_list</span> <span class="o">=</span> <span class="n">current_format</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-                <span class="n">format_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">_indent</span><span class="o">.</span><span class="n">INDENT</span> <span class="o">+</span> <span class="n">_</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">format_list</span><span class="p">]</span>
+                <span class="n">format_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">_indentlib</span><span class="o">.</span><span class="n">INDENT</span> <span class="o">+</span> <span class="n">_</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">format_list</span><span class="p">]</span>
                 <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">format_list</span><span class="p">)</span>
             <span class="n">result</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;&lt;&quot;</span><span class="p">)</span>
             <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;&gt;&quot;</span><span class="p">)</span>
@@ -2974,8 +3021,8 @@
             <span class="n">brackets_open</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;&lt;&lt;&quot;</span><span class="p">]</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">brackets_open</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;{&quot;</span><span class="p">]</span>
-        <span class="n">contributions</span> <span class="o">=</span> <span class="p">[</span><span class="sa">rf</span><span class="s2">&quot;\makeClusters </span><span class="si">{</span><span class="n">brackets_open</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">]</span>
-        <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">contributions</span><span class="p">)</span>
+        <span class="n">string</span> <span class="o">=</span> <span class="sa">rf</span><span class="s2">&quot;\makeClusters </span><span class="si">{</span><span class="n">brackets_open</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">result</span></div>
 
 
@@ -3117,8 +3164,12 @@
 
     <span class="k">def</span> <span class="nf">_format_closing_site</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">contributions</span><span class="p">):</span>
         <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">contributions</span><span class="o">.</span><span class="n">closing</span><span class="o">.</span><span class="n">commands</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_contributions_with_indent</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+        <span class="n">strings</span> <span class="o">=</span> <span class="n">contributions</span><span class="o">.</span><span class="n">alphabetize</span><span class="p">(</span><span class="n">contributions</span><span class="o">.</span><span class="n">closing</span><span class="o">.</span><span class="n">commands</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">strings</span><span class="p">:</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;% </span><span class="si">{</span><span class="n">_contributions</span><span class="o">.</span><span class="n">Types</span><span class="o">.</span><span class="n">COMMANDS</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">:&quot;</span><span class="p">)</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">strings</span><span class="p">)</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">_indent_strings</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">result</span>
 
     <span class="k">def</span> <span class="nf">_format_consists_commands</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
@@ -3155,16 +3206,16 @@
             <span class="n">contributions</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_format_invocation</span><span class="p">(),</span> <span class="sa">r</span><span class="s2">&quot;\with&quot;</span><span class="p">,</span> <span class="s2">&quot;{&quot;</span><span class="p">]</span>
             <span class="n">contributions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tag_strings</span><span class="p">(</span><span class="n">contributions</span><span class="p">)</span>
             <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">contributions</span><span class="p">)</span>
-            <span class="n">contributions</span> <span class="o">=</span> <span class="p">[</span><span class="n">_indent</span><span class="o">.</span><span class="n">INDENT</span> <span class="o">+</span> <span class="n">_</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">remove_commands</span><span class="p">]</span>
+            <span class="n">contributions</span> <span class="o">=</span> <span class="p">[</span><span class="n">_indentlib</span><span class="o">.</span><span class="n">INDENT</span> <span class="o">+</span> <span class="n">_</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">remove_commands</span><span class="p">]</span>
             <span class="n">contributions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tag_strings</span><span class="p">(</span><span class="n">contributions</span><span class="p">)</span>
             <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">contributions</span><span class="p">)</span>
-            <span class="n">contributions</span> <span class="o">=</span> <span class="p">[</span><span class="n">_indent</span><span class="o">.</span><span class="n">INDENT</span> <span class="o">+</span> <span class="n">_</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">consists_commands</span><span class="p">]</span>
+            <span class="n">contributions</span> <span class="o">=</span> <span class="p">[</span><span class="n">_indentlib</span><span class="o">.</span><span class="n">INDENT</span> <span class="o">+</span> <span class="n">_</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">consists_commands</span><span class="p">]</span>
             <span class="n">contributions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tag_strings</span><span class="p">(</span><span class="n">contributions</span><span class="p">)</span>
             <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">contributions</span><span class="p">)</span>
-            <span class="n">contributions</span> <span class="o">=</span> <span class="p">[</span><span class="n">_indent</span><span class="o">.</span><span class="n">INDENT</span> <span class="o">+</span> <span class="n">_</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">overrides</span><span class="p">]</span>
+            <span class="n">contributions</span> <span class="o">=</span> <span class="p">[</span><span class="n">_indentlib</span><span class="o">.</span><span class="n">INDENT</span> <span class="o">+</span> <span class="n">_</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">overrides</span><span class="p">]</span>
             <span class="n">contributions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tag_strings</span><span class="p">(</span><span class="n">contributions</span><span class="p">)</span>
             <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">contributions</span><span class="p">)</span>
-            <span class="n">contributions</span> <span class="o">=</span> <span class="p">[</span><span class="n">_indent</span><span class="o">.</span><span class="n">INDENT</span> <span class="o">+</span> <span class="n">_</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">settings</span><span class="p">]</span>
+            <span class="n">contributions</span> <span class="o">=</span> <span class="p">[</span><span class="n">_indentlib</span><span class="o">.</span><span class="n">INDENT</span> <span class="o">+</span> <span class="n">_</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">settings</span><span class="p">]</span>
             <span class="n">contributions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tag_strings</span><span class="p">(</span><span class="n">contributions</span><span class="p">)</span>
             <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">contributions</span><span class="p">)</span>
             <span class="n">contributions</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">}}</span><span class="s2"> </span><span class="si">{</span><span class="n">brackets_open</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">]</span>
@@ -3182,8 +3233,12 @@
 
     <span class="k">def</span> <span class="nf">_format_opening_site</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">contributions</span><span class="p">):</span>
         <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">contributions</span><span class="o">.</span><span class="n">opening</span><span class="o">.</span><span class="n">commands</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_contributions_with_indent</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+        <span class="n">strings</span> <span class="o">=</span> <span class="n">contributions</span><span class="o">.</span><span class="n">alphabetize</span><span class="p">(</span><span class="n">contributions</span><span class="o">.</span><span class="n">opening</span><span class="o">.</span><span class="n">commands</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">strings</span><span class="p">:</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;% </span><span class="si">{</span><span class="n">_contributions</span><span class="o">.</span><span class="n">Types</span><span class="o">.</span><span class="n">COMMANDS</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">:&quot;</span><span class="p">)</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">strings</span><span class="p">)</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">_indent_strings</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">result</span>
 
     <span class="k">def</span> <span class="nf">_format_remove_commands</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
@@ -3366,7 +3421,7 @@
         <span class="bp">self</span><span class="p">,</span>
         <span class="o">*</span><span class="n">arguments</span><span class="p">,</span>
         <span class="n">language</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;english&quot;</span><span class="p">,</span>
-        <span class="n">multiplier</span><span class="p">:</span> <span class="n">_typings</span><span class="o">.</span><span class="n">DurationTyping</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">multiplier</span><span class="p">:</span> <span class="n">_typings</span><span class="o">.</span><span class="n">Duration</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">tag</span><span class="p">:</span> <span class="n">_tag</span><span class="o">.</span><span class="n">Tag</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">arguments</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
@@ -3483,10 +3538,10 @@
         <span class="n">tweaks</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_alternative</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="n">_tweaks</span> <span class="o">=</span> <span class="p">()</span>
+        <span class="n">tweaks_</span> <span class="o">=</span> <span class="p">()</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">written_pitch</span><span class="p">,</span> <span class="n">NoteHead</span><span class="p">):</span>
             <span class="n">note_head</span> <span class="o">=</span> <span class="n">written_pitch</span>
-            <span class="n">_tweaks</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">note_head</span><span class="o">.</span><span class="n">tweaks</span><span class="p">)</span>
+            <span class="n">tweaks_</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">note_head</span><span class="o">.</span><span class="n">tweaks</span><span class="p">)</span>
             <span class="n">written_pitch</span> <span class="o">=</span> <span class="n">note_head</span><span class="o">.</span><span class="n">written_pitch</span>
             <span class="n">is_cautionary</span> <span class="o">=</span> <span class="n">note_head</span><span class="o">.</span><span class="n">is_cautionary</span>
             <span class="n">is_forced</span> <span class="o">=</span> <span class="n">note_head</span><span class="o">.</span><span class="n">is_forced</span>
@@ -3498,9 +3553,9 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">is_parenthesized</span> <span class="o">=</span> <span class="n">is_parenthesized</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">tweaks</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">if</span> <span class="n">tweaks</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">assert</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="n">tweaksmodule</span><span class="o">.</span><span class="n">Tweak</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">tweaks</span><span class="p">)</span>
-            <span class="n">_tweaks</span> <span class="o">=</span> <span class="n">_tweaks</span> <span class="o">+</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">tweaks</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">tweaks</span> <span class="o">=</span> <span class="n">_tweaks</span>
+            <span class="k">assert</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="n">_tweaks</span><span class="o">.</span><span class="n">Tweak</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">tweaks</span><span class="p">)</span>
+            <span class="n">tweaks_</span> <span class="o">=</span> <span class="n">tweaks_</span> <span class="o">+</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">tweaks</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tweaks</span> <span class="o">=</span> <span class="n">tweaks_</span>
 
 <div class="viewcode-block" id="NoteHead.__copy__"><a class="viewcode-back" href="../../api/abjad/score.html#abjad.score.NoteHead.__copy__">[docs]</a>    <span class="k">def</span> <span class="nf">__copy__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">arguments</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;NoteHead&quot;</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -3907,7 +3962,7 @@
         <span class="n">is_cautionary</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
         <span class="n">is_forced</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
         <span class="n">is_parenthesized</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-        <span class="n">tweaks</span><span class="p">:</span> <span class="n">tweaksmodule</span><span class="o">.</span><span class="n">Tweak</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">tweaks</span><span class="p">:</span> <span class="n">_tweaks</span><span class="o">.</span><span class="n">Tweak</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">NoteHead</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
             <span class="bp">self</span><span class="p">,</span>
@@ -4195,7 +4250,7 @@
         <span class="bp">self</span><span class="p">,</span>
         <span class="o">*</span><span class="n">arguments</span><span class="p">,</span>
         <span class="n">language</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;english&quot;</span><span class="p">,</span>
-        <span class="n">multiplier</span><span class="p">:</span> <span class="n">_typings</span><span class="o">.</span><span class="n">DurationTyping</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">multiplier</span><span class="p">:</span> <span class="n">_typings</span><span class="o">.</span><span class="n">Duration</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">tag</span><span class="p">:</span> <span class="n">_tag</span><span class="o">.</span><span class="n">Tag</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">arguments</span><span class="p">)</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
@@ -4476,7 +4531,7 @@
         <span class="n">written_duration</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="o">*</span><span class="p">,</span>
         <span class="n">language</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;english&quot;</span><span class="p">,</span>
-        <span class="n">multiplier</span><span class="p">:</span> <span class="n">_typings</span><span class="o">.</span><span class="n">DurationTyping</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">multiplier</span><span class="p">:</span> <span class="n">_typings</span><span class="o">.</span><span class="n">Duration</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">tag</span><span class="p">:</span> <span class="n">_tag</span><span class="o">.</span><span class="n">Tag</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">original_input</span> <span class="o">=</span> <span class="n">written_duration</span>
@@ -4670,7 +4725,7 @@
         <span class="bp">self</span><span class="p">,</span>
         <span class="o">*</span><span class="n">arguments</span><span class="p">,</span>
         <span class="n">language</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;english&quot;</span><span class="p">,</span>
-        <span class="n">multiplier</span><span class="p">:</span> <span class="n">_typings</span><span class="o">.</span><span class="n">DurationTyping</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">multiplier</span><span class="p">:</span> <span class="n">_typings</span><span class="o">.</span><span class="n">Duration</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">tag</span><span class="p">:</span> <span class="n">_tag</span><span class="o">.</span><span class="n">Tag</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">input_leaf</span> <span class="o">=</span> <span class="kc">None</span>
@@ -5202,7 +5257,7 @@
         <span class="n">hide</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
         <span class="n">language</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;english&quot;</span><span class="p">,</span>
         <span class="n">tag</span><span class="p">:</span> <span class="n">_tag</span><span class="o">.</span><span class="n">Tag</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">tweaks</span><span class="p">:</span> <span class="n">tweaksmodule</span><span class="o">.</span><span class="n">Tweak</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">tweaks</span><span class="p">:</span> <span class="n">_tweaks</span><span class="o">.</span><span class="n">Tweak</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">Container</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">components</span><span class="p">,</span> <span class="n">language</span><span class="o">=</span><span class="n">language</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="n">tag</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">tweaks</span> <span class="o">=</span> <span class="p">()</span>
@@ -5234,18 +5289,33 @@
 
     <span class="k">def</span> <span class="nf">_format_after_site</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">contributions</span><span class="p">):</span>
         <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">contributions</span><span class="o">.</span><span class="n">grob_reverts</span><span class="p">)</span>
-        <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">contributions</span><span class="o">.</span><span class="n">after</span><span class="o">.</span><span class="n">commands</span><span class="p">)</span>
+        <span class="n">strings</span> <span class="o">=</span> <span class="n">contributions</span><span class="o">.</span><span class="n">grob_reverts</span>
+        <span class="k">if</span> <span class="n">strings</span><span class="p">:</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;% </span><span class="si">{</span><span class="n">_contributions</span><span class="o">.</span><span class="n">Types</span><span class="o">.</span><span class="n">GROB_REVERTS</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">:&quot;</span><span class="p">)</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">strings</span><span class="p">)</span>
+        <span class="n">strings</span> <span class="o">=</span> <span class="n">contributions</span><span class="o">.</span><span class="n">alphabetize</span><span class="p">(</span><span class="n">contributions</span><span class="o">.</span><span class="n">after</span><span class="o">.</span><span class="n">commands</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">strings</span><span class="p">:</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;% </span><span class="si">{</span><span class="n">_contributions</span><span class="o">.</span><span class="n">Types</span><span class="o">.</span><span class="n">COMMANDS</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">:&quot;</span><span class="p">)</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">strings</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">result</span>
 
     <span class="k">def</span> <span class="nf">_format_before_site</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">contributions</span><span class="p">):</span>
         <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">contributions</span><span class="o">.</span><span class="n">before</span><span class="o">.</span><span class="n">commands</span><span class="p">)</span>
-        <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">contributions</span><span class="o">.</span><span class="n">grob_overrides</span><span class="p">)</span>
-        <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">contributions</span><span class="o">.</span><span class="n">context_settings</span><span class="p">)</span>
+        <span class="n">strings</span> <span class="o">=</span> <span class="n">contributions</span><span class="o">.</span><span class="n">alphabetize</span><span class="p">(</span><span class="n">contributions</span><span class="o">.</span><span class="n">before</span><span class="o">.</span><span class="n">commands</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">strings</span><span class="p">:</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;% </span><span class="si">{</span><span class="n">_contributions</span><span class="o">.</span><span class="n">Types</span><span class="o">.</span><span class="n">COMMANDS</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">:&quot;</span><span class="p">)</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">strings</span><span class="p">)</span>
+        <span class="n">strings</span> <span class="o">=</span> <span class="n">contributions</span><span class="o">.</span><span class="n">grob_overrides</span>
+        <span class="k">if</span> <span class="n">strings</span><span class="p">:</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;% </span><span class="si">{</span><span class="n">_contributions</span><span class="o">.</span><span class="n">Types</span><span class="o">.</span><span class="n">GROB_OVERRIDES</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">:&quot;</span><span class="p">)</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">strings</span><span class="p">)</span>
+        <span class="n">strings</span> <span class="o">=</span> <span class="n">contributions</span><span class="o">.</span><span class="n">context_settings</span>
+        <span class="k">if</span> <span class="n">strings</span><span class="p">:</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;% </span><span class="si">{</span><span class="n">_contributions</span><span class="o">.</span><span class="n">Types</span><span class="o">.</span><span class="n">CONTEXT_SETTINGS</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">:&quot;</span><span class="p">)</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">strings</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">result</span>
 
-    <span class="k">def</span> <span class="nf">_format_close_brackets_site</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">contributions</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_format_close_brackets</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">multiplier</span><span class="p">:</span>
             <span class="n">strings</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;}&quot;</span><span class="p">]</span>
@@ -5256,8 +5326,12 @@
 
     <span class="k">def</span> <span class="nf">_format_closing_site</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">contributions</span><span class="p">):</span>
         <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">contributions</span><span class="o">.</span><span class="n">closing</span><span class="o">.</span><span class="n">commands</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_contributions_with_indent</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+        <span class="n">strings</span> <span class="o">=</span> <span class="n">contributions</span><span class="o">.</span><span class="n">alphabetize</span><span class="p">(</span><span class="n">contributions</span><span class="o">.</span><span class="n">closing</span><span class="o">.</span><span class="n">commands</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">strings</span><span class="p">:</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;% </span><span class="si">{</span><span class="n">_contributions</span><span class="o">.</span><span class="n">Types</span><span class="o">.</span><span class="n">COMMANDS</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">:&quot;</span><span class="p">)</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">strings</span><span class="p">)</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">_indent_strings</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">result</span>
 
     <span class="k">def</span> <span class="nf">_format_lilypond_fraction_command_string</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">hide</span><span class="p">:</span>
@@ -5302,8 +5376,12 @@
 
     <span class="k">def</span> <span class="nf">_format_opening_site</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">contributions</span><span class="p">):</span>
         <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">contributions</span><span class="o">.</span><span class="n">opening</span><span class="o">.</span><span class="n">commands</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_contributions_with_indent</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+        <span class="n">strings</span> <span class="o">=</span> <span class="n">contributions</span><span class="o">.</span><span class="n">alphabetize</span><span class="p">(</span><span class="n">contributions</span><span class="o">.</span><span class="n">opening</span><span class="o">.</span><span class="n">commands</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">strings</span><span class="p">:</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;% </span><span class="si">{</span><span class="n">_contributions</span><span class="o">.</span><span class="n">Types</span><span class="o">.</span><span class="n">COMMANDS</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">:&quot;</span><span class="p">)</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">strings</span><span class="p">)</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">_indent_strings</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">result</span>
 
     <span class="k">def</span> <span class="nf">_get_compact_representation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="p">:</span>
@@ -6102,7 +6180,7 @@
 
 <div class="viewcode-block" id="Tuplet.from_duration"><a class="viewcode-back" href="../../api/abjad/score.html#abjad.score.Tuplet.from_duration">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">from_duration</span><span class="p">(</span>
-        <span class="n">duration</span><span class="p">:</span> <span class="n">_typings</span><span class="o">.</span><span class="n">DurationTyping</span><span class="p">,</span> <span class="n">components</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">tag</span><span class="p">:</span> <span class="n">_tag</span><span class="o">.</span><span class="n">Tag</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">duration</span><span class="p">:</span> <span class="n">_typings</span><span class="o">.</span><span class="n">Duration</span><span class="p">,</span> <span class="n">components</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">tag</span><span class="p">:</span> <span class="n">_tag</span><span class="o">.</span><span class="n">Tag</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Tuplet&quot;</span><span class="p">:</span>
         <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Makes tuplet from ``duration`` and ``components``.</span>

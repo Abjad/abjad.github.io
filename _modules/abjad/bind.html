@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>abjad.bind &mdash; Abjad 3.8 documentation</title>
+  <title>abjad.bind &mdash; Abjad 3.9 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/abjad.css" type="text/css" />
@@ -32,11 +32,11 @@
   <div class="wy-grid-for-nav">
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search"  style="background: #224466" >
+        <div class="wy-side-nav-search"  style="background: #336699" >
 
 
     <a href="../../index.html" class="icon icon-home" alt="Documentation
-    Home"> Abjad 3.8
+    Home"> Abjad 3.9
 
 
 
@@ -66,7 +66,6 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Overview</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../overview/about-the-docs.html">About the docs</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../overview/containers.html">Containers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../overview/containers-basic-operations-on.html">Containers, basic operations on</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../overview/containers-retrieving-by-name.html">Containers, retrieving by name</a></li>
@@ -110,7 +109,7 @@
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #224466" >
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #336699" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../index.html">Abjad</a>
       </nav>
@@ -127,10 +126,11 @@
     
   <h1>Source code for abjad.bind</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">copy</span>
+<span class="kn">import</span> <span class="nn">enum</span>
 <span class="kn">import</span> <span class="nn">importlib</span>
 <span class="kn">import</span> <span class="nn">typing</span>
 
-<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">_inspect</span><span class="p">,</span> <span class="n">_update</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">_getlib</span><span class="p">,</span> <span class="n">_updatelib</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">duration</span> <span class="k">as</span> <span class="n">_duration</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">enums</span> <span class="k">as</span> <span class="n">_enums</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">exceptions</span> <span class="k">as</span> <span class="n">_exceptions</span>
@@ -212,7 +212,7 @@
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
-        <span class="n">annotation</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">annotation</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">enum</span><span class="o">.</span><span class="n">Enum</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">check_duplicate_indicator</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
         <span class="n">component</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">context</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -224,7 +224,7 @@
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">assert</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">indicator</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">indicator</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">annotation</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">annotation</span><span class="p">,</span> <span class="nb">str</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">annotation</span><span class="p">)</span>
+            <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">annotation</span><span class="p">,</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">enum</span><span class="o">.</span><span class="n">Enum</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">annotation</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_annotation</span> <span class="o">=</span> <span class="n">annotation</span>
         <span class="k">if</span> <span class="n">component</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">component</span><span class="p">,</span> <span class="n">_score</span><span class="o">.</span><span class="n">Component</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">component</span><span class="p">)</span>
@@ -299,8 +299,8 @@
 <span class="sd">            &gt;&gt;&gt; print(string)</span>
 <span class="sd">            \new Staff</span>
 <span class="sd">            {</span>
-<span class="sd">                %! RED</span>
 <span class="sd">                %! M1</span>
+<span class="sd">                %! RED</span>
 <span class="sd">                \clef &quot;alto&quot;</span>
 <span class="sd">                c&#39;4</span>
 <span class="sd">                d&#39;4</span>
@@ -317,8 +317,8 @@
 <span class="sd">            &gt;&gt;&gt; print(string)</span>
 <span class="sd">            \new Staff</span>
 <span class="sd">            {</span>
-<span class="sd">                %! RED</span>
 <span class="sd">                %! M1</span>
+<span class="sd">                %! RED</span>
 <span class="sd">                \clef &quot;alto&quot;</span>
 <span class="sd">                c&#39;4</span>
 <span class="sd">                d&#39;4</span>
@@ -345,8 +345,8 @@
 <span class="sd">            &gt;&gt;&gt; print(string)</span>
 <span class="sd">            \new Staff</span>
 <span class="sd">            {</span>
-<span class="sd">                %! RED</span>
 <span class="sd">                %! M1</span>
+<span class="sd">                %! RED</span>
 <span class="sd">                %@% \clef &quot;alto&quot;</span>
 <span class="sd">                c&#39;4</span>
 <span class="sd">                d&#39;4</span>
@@ -363,8 +363,8 @@
 <span class="sd">            &gt;&gt;&gt; print(string)</span>
 <span class="sd">            \new Staff</span>
 <span class="sd">            {</span>
-<span class="sd">                %! RED</span>
 <span class="sd">                %! M1</span>
+<span class="sd">                %! RED</span>
 <span class="sd">                %@% \clef &quot;alto&quot;</span>
 <span class="sd">                c&#39;4</span>
 <span class="sd">                d&#39;4</span>
@@ -506,7 +506,7 @@
 
     <span class="k">def</span> <span class="nf">_get_effective_context</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">component</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">_update</span><span class="o">.</span><span class="n">_update_now</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">component</span><span class="p">,</span> <span class="n">indicators</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">_updatelib</span><span class="o">.</span><span class="n">_update_now</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">component</span><span class="p">,</span> <span class="n">indicators</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_effective_context</span>
 
     <span class="k">def</span> <span class="nf">_unbind_component</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -536,7 +536,7 @@
             <span class="n">indicator</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">indicator</span>
         <span class="n">prototype</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="n">indicator</span><span class="p">)</span>
         <span class="n">command</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">indicator</span><span class="p">,</span> <span class="s2">&quot;command&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
-        <span class="n">wrapper</span> <span class="o">=</span> <span class="n">_inspect</span><span class="o">.</span><span class="n">_get_effective</span><span class="p">(</span>
+        <span class="n">wrapper</span> <span class="o">=</span> <span class="n">_getlib</span><span class="o">.</span><span class="n">_get_effective</span><span class="p">(</span>
             <span class="n">component</span><span class="p">,</span>
             <span class="n">prototype</span><span class="p">,</span>
             <span class="n">attributes</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;command&quot;</span><span class="p">:</span> <span class="n">command</span><span class="p">},</span>
@@ -583,7 +583,7 @@
         <span class="k">raise</span> <span class="n">_exceptions</span><span class="o">.</span><span class="n">PersistentIndicatorError</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">annotation</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">annotation</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">enum</span><span class="o">.</span><span class="n">Enum</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets wrapper annotation.</span>
 
@@ -595,8 +595,6 @@
 <span class="sd">            &gt;&gt;&gt; wrapper = abjad.get.wrapper(note)</span>
 <span class="sd">            &gt;&gt;&gt; wrapper.annotation is None</span>
 <span class="sd">            True</span>
-
-<span class="sd">        ..  container:: example</span>
 
 <span class="sd">            &gt;&gt;&gt; note = abjad.Note(&quot;c&#39;4&quot;)</span>
 <span class="sd">            &gt;&gt;&gt; articulation = abjad.Articulation(&quot;accent&quot;)</span>
@@ -800,7 +798,7 @@
         <span class="n">message</span> <span class="o">=</span> <span class="s2">&quot;use the tag=None keyword instead of annotate():</span><span class="se">\n</span><span class="s2">&quot;</span>
         <span class="n">message</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;   </span><span class="si">{</span><span class="nb">repr</span><span class="p">(</span><span class="n">annotation</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
         <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
-    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">annotation</span><span class="p">,</span> <span class="nb">str</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">annotation</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">annotation</span><span class="p">,</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">enum</span><span class="o">.</span><span class="n">Enum</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">annotation</span><span class="p">)</span>
     <span class="n">Wrapper</span><span class="p">(</span><span class="n">annotation</span><span class="o">=</span><span class="n">annotation</span><span class="p">,</span> <span class="n">component</span><span class="o">=</span><span class="n">component</span><span class="p">,</span> <span class="n">indicator</span><span class="o">=</span><span class="n">indicator</span><span class="p">)</span></div>
 
 
@@ -939,11 +937,11 @@
 <span class="sd">            &gt;&gt;&gt; print(string)</span>
 <span class="sd">            \new Staff</span>
 <span class="sd">            {</span>
-<span class="sd">                \clef &quot;treble&quot;</span>
 <span class="sd">                %! +PARTS</span>
 <span class="sd">                %@% \clef &quot;alto&quot;</span>
 <span class="sd">                %! +PARTS</span>
 <span class="sd">                %@% \clef &quot;tenor&quot;</span>
+<span class="sd">                \clef &quot;treble&quot;</span>
 <span class="sd">                c&#39;4</span>
 <span class="sd">                d&#39;4</span>
 <span class="sd">                e&#39;4</span>
@@ -1056,7 +1054,6 @@
             <span class="n">message</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
             <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
 
-    <span class="c1"># HERE:</span>
     <span class="n">prototype</span> <span class="o">=</span> <span class="p">(</span><span class="n">_score</span><span class="o">.</span><span class="n">AfterGraceContainer</span><span class="p">,</span> <span class="n">_score</span><span class="o">.</span><span class="n">BeforeGraceContainer</span><span class="p">)</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">nonbundle_attachable</span><span class="p">,</span> <span class="n">prototype</span><span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="s2">&quot;written_duration&quot;</span><span class="p">):</span>
@@ -1068,7 +1065,9 @@
 
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">_score</span><span class="o">.</span><span class="n">Container</span><span class="p">):</span>
         <span class="n">acceptable</span> <span class="o">=</span> <span class="kc">False</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">nonbundle_attachable</span><span class="p">,</span> <span class="nb">dict</span> <span class="o">|</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">_tag</span><span class="o">.</span><span class="n">Tag</span> <span class="o">|</span> <span class="n">Wrapper</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span>
+            <span class="n">nonbundle_attachable</span><span class="p">,</span> <span class="nb">dict</span> <span class="o">|</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">enum</span><span class="o">.</span><span class="n">Enum</span> <span class="o">|</span> <span class="n">_tag</span><span class="o">.</span><span class="n">Tag</span> <span class="o">|</span> <span class="n">Wrapper</span>
+        <span class="p">):</span>
             <span class="n">acceptable</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">nonbundle_attachable</span><span class="p">,</span> <span class="s2">&quot;_can_attach_to_containers&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span>
             <span class="n">acceptable</span> <span class="o">=</span> <span class="kc">True</span>
