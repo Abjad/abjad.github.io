@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>abjad.tag &mdash; Abjad 3.9 documentation</title>
+  <title>abjad.tag &mdash; Abjad 3.10 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/abjad.css" type="text/css" />
@@ -32,11 +32,11 @@
   <div class="wy-grid-for-nav">
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search"  style="background: #336699" >
+        <div class="wy-side-nav-search"  style="background: #4488cc" >
 
 
     <a href="../../index.html" class="icon icon-home" alt="Documentation
-    Home"> Abjad 3.9
+    Home"> Abjad 3.10
 
 
 
@@ -109,7 +109,7 @@
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #336699" >
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #4488cc" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../index.html">Abjad</a>
       </nav>
@@ -191,7 +191,7 @@
         <span class="n">words</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">string</span><span class="p">:</span>
             <span class="n">words</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">string</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">word</span><span class="o">.</span><span class="n">string</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">string</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">word</span><span class="o">.</span><span class="n">string</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">words</span><span class="p">():</span>
             <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">word</span><span class="si">}</span><span class="s2"> duplicates </span><span class="si">{</span><span class="bp">self</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
         <span class="n">words</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">word</span><span class="o">.</span><span class="n">string</span><span class="p">)</span>
         <span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;:&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">words</span><span class="p">)</span>
@@ -338,190 +338,6 @@
         <span class="k">return</span> <span class="n">words_</span></div></div>
 
 
-<div class="viewcode-block" id="Line"><a class="viewcode-back" href="../../api/abjad/tag.html#abjad.tag.Line">[docs]</a><span class="nd">@dataclasses</span><span class="o">.</span><span class="n">dataclass</span><span class="p">(</span><span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">slots</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">unsafe_hash</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="k">class</span> <span class="nc">Line</span><span class="p">:</span>
-    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Line in a LilyPond file.</span>
-
-<span class="sd">    ..  container:: example</span>
-
-<span class="sd">        &gt;&gt;&gt; string = r&quot;    %@%  \with-color %! MEASURE_NUMBER:SM31&quot;</span>
-<span class="sd">        &gt;&gt;&gt; abjad.Line(string)</span>
-<span class="sd">        Line(string=&#39;    %@%  \\with-color %! MEASURE_NUMBER:SM31&#39;)</span>
-
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="n">string</span><span class="p">:</span> <span class="nb">str</span>
-
-<div class="viewcode-block" id="Line.get_tags"><a class="viewcode-back" href="../../api/abjad/tag.html#abjad.tag.Line.get_tags">[docs]</a>    <span class="k">def</span> <span class="nf">get_tags</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Gets tags.</span>
-
-<span class="sd">        ..  container:: example</span>
-
-<span class="sd">            &gt;&gt;&gt; string = r&quot;    %@%  \with-color %! MEASURE_NUMBER:SM31&quot;</span>
-<span class="sd">            &gt;&gt;&gt; abjad.Line(string).get_tags()</span>
-<span class="sd">            [Tag(string=&#39;MEASURE_NUMBER&#39;), Tag(string=&#39;SM31&#39;)]</span>
-
-<span class="sd">        ..  container:: example</span>
-
-<span class="sd">            REGRESSION. Works with multiple ``%!`` prefixes:</span>
-
-<span class="sd">            &gt;&gt;&gt; string = r&quot;    %@%  \with-color %! SM31 %! SM32&quot;</span>
-<span class="sd">            &gt;&gt;&gt; line = abjad.Line(string)</span>
-<span class="sd">            &gt;&gt;&gt; line.get_tags()</span>
-<span class="sd">            [Tag(string=&#39;SM31&#39;), Tag(string=&#39;SM32&#39;)]</span>
-
-<span class="sd">        Returns list of zero or more strings.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">tags</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">if</span> <span class="s2">&quot; %! &quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">string</span><span class="p">:</span>
-            <span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">string</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; %! &quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">:]:</span>
-                <span class="n">parts</span> <span class="o">=</span> <span class="n">chunk</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
-                <span class="n">parts</span> <span class="o">=</span> <span class="n">parts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">)</span>
-                <span class="n">tags_</span> <span class="o">=</span> <span class="p">[</span><span class="n">Tag</span><span class="p">(</span><span class="n">_</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">parts</span><span class="p">]</span>
-                <span class="n">tags</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">tags_</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">tags</span></div>
-
-<div class="viewcode-block" id="Line.is_active"><a class="viewcode-back" href="../../api/abjad/tag.html#abjad.tag.Line.is_active">[docs]</a>    <span class="k">def</span> <span class="nf">is_active</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Is true when line is active.</span>
-
-<span class="sd">        ..  container:: example</span>
-
-<span class="sd">            &gt;&gt;&gt; string = &#39;              \\clef &quot;treble&quot; %! EXPLICT_CLEF&#39;</span>
-<span class="sd">            &gt;&gt;&gt; abjad.Line(string).is_active()</span>
-<span class="sd">            True</span>
-
-<span class="sd">            &gt;&gt;&gt; string = &#39;          %@% \\clef &quot;treble&quot; %! EXPLICT_CLEF&#39;</span>
-<span class="sd">            &gt;&gt;&gt; abjad.Line(string).is_active()</span>
-<span class="sd">            False</span>
-
-<span class="sd">            &gt;&gt;&gt; string = &#39;          %%% \\clef &quot;treble&quot; %! EXPLICT_CLEF&#39;</span>
-<span class="sd">            &gt;&gt;&gt; abjad.Line(string).is_active()</span>
-<span class="sd">            False</span>
-
-<span class="sd">        Returns true or false.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_deactivated</span><span class="p">()</span></div>
-
-<div class="viewcode-block" id="Line.is_deactivated"><a class="viewcode-back" href="../../api/abjad/tag.html#abjad.tag.Line.is_deactivated">[docs]</a>    <span class="k">def</span> <span class="nf">is_deactivated</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Is true when line is deactivated.</span>
-
-<span class="sd">        ..  container:: example</span>
-
-<span class="sd">            &gt;&gt;&gt; string = &#39;              \\clef &quot;treble&quot; %! EXPLICT_CLEF&#39;</span>
-<span class="sd">            &gt;&gt;&gt; abjad.Line(string).is_deactivated()</span>
-<span class="sd">            False</span>
-
-<span class="sd">            &gt;&gt;&gt; string = &#39;          %@% \\clef &quot;treble&quot; %! EXPLICT_CLEF&#39;</span>
-<span class="sd">            &gt;&gt;&gt; abjad.Line(string).is_deactivated()</span>
-<span class="sd">            True</span>
-
-<span class="sd">            &gt;&gt;&gt; string = &#39;          %%% \\clef &quot;treble&quot; %! EXPLICT_CLEF&#39;</span>
-<span class="sd">            &gt;&gt;&gt; abjad.Line(string).is_deactivated()</span>
-<span class="sd">            True</span>
-
-<span class="sd">        Returns true or false.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">string</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">string</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
-        <span class="k">if</span> <span class="n">string</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;%@%&quot;</span><span class="p">):</span>
-            <span class="k">return</span> <span class="kc">True</span>
-        <span class="k">if</span> <span class="n">string</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%%</span><span class="s2">%&quot;</span><span class="p">):</span>
-            <span class="k">return</span> <span class="kc">True</span>
-        <span class="k">return</span> <span class="kc">False</span></div>
-
-<div class="viewcode-block" id="Line.match"><a class="viewcode-back" href="../../api/abjad/tag.html#abjad.tag.Line.match">[docs]</a>    <span class="k">def</span> <span class="nf">match</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">predicate</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Is true when ``predicate`` matches tags.</span>
-
-<span class="sd">        ..  container:: example</span>
-
-<span class="sd">            &gt;&gt;&gt; string = r&quot;    %@%  \with-color %! MEASURE_NUMBER:SM31&quot;</span>
-<span class="sd">            &gt;&gt;&gt; line = abjad.Line(string)</span>
-
-<span class="sd">        ..  container:: example</span>
-
-<span class="sd">            Tags:</span>
-
-<span class="sd">            &gt;&gt;&gt; line.match(abjad.Tag(&quot;MEASURE_NUMBER&quot;))</span>
-<span class="sd">            True</span>
-
-<span class="sd">            &gt;&gt;&gt; line.match(abjad.Tag(&quot;SM31&quot;))</span>
-<span class="sd">            True</span>
-
-<span class="sd">            &gt;&gt;&gt; line.match(abjad.Tag(&quot;%@%&quot;))</span>
-<span class="sd">            False</span>
-
-<span class="sd">            &gt;&gt;&gt; line.match(abjad.Tag(&quot;with-color&quot;))</span>
-<span class="sd">            False</span>
-
-<span class="sd">            &gt;&gt;&gt; line.match(abjad.Tag(&quot;%!&quot;))</span>
-<span class="sd">            False</span>
-
-<span class="sd">        ..  container:: example</span>
-
-<span class="sd">            Lambdas:</span>
-
-<span class="sd">            &gt;&gt;&gt; line.match(lambda x: any(_ for _ in x if _.string.startswith(&quot;M&quot;)))</span>
-<span class="sd">            True</span>
-
-<span class="sd">            &gt;&gt;&gt; line.match(lambda x: any(_ for _ in x if _.string.startswith(&quot;S&quot;)))</span>
-<span class="sd">            True</span>
-
-<span class="sd">            &gt;&gt;&gt; line.match(lambda x: any(_ for _ in x if _.string[0] in &quot;SM&quot;))</span>
-<span class="sd">            True</span>
-
-<span class="sd">        ..  container:: example</span>
-
-<span class="sd">            Functions:</span>
-
-<span class="sd">            &gt;&gt;&gt; def predicate(tags):</span>
-<span class="sd">            ...     if abjad.Tag(&quot;SM31&quot;) in tags and abjad.Tag(&quot;MEASURE_NUMBER&quot;) in tags:</span>
-<span class="sd">            ...         return True</span>
-<span class="sd">            ...     else:</span>
-<span class="sd">            ...         return False</span>
-
-<span class="sd">            &gt;&gt;&gt; line.match(predicate)</span>
-<span class="sd">            True</span>
-
-<span class="sd">            &gt;&gt;&gt; def predicate(tags):</span>
-<span class="sd">            ...     if abjad.Tag(&quot;SM31&quot;) in tags and abjad.Tag(&quot;MEASURE_NUMBER&quot;) not in tags:</span>
-<span class="sd">            ...         return True</span>
-<span class="sd">            ...     else:</span>
-<span class="sd">            ...         return False</span>
-
-<span class="sd">            &gt;&gt;&gt; line.match(predicate)</span>
-<span class="sd">            False</span>
-
-<span class="sd">        ..  container:: example</span>
-
-<span class="sd">            REGRESSION. Works with multiple ``%!`` prefixes:</span>
-
-<span class="sd">            &gt;&gt;&gt; string = r&quot;    %@%  \with-color %! SM31 %! SM32&quot;</span>
-<span class="sd">            &gt;&gt;&gt; line = abjad.Line(string)</span>
-
-<span class="sd">            &gt;&gt;&gt; line.match(abjad.Tag(&quot;SM31&quot;))</span>
-<span class="sd">            True</span>
-
-<span class="sd">            &gt;&gt;&gt; line.match(abjad.Tag(&quot;SM32&quot;))</span>
-<span class="sd">            True</span>
-
-<span class="sd">        Returns true or false.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">callable</span><span class="p">(</span><span class="n">predicate</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">predicate</span><span class="p">,</span> <span class="n">Tag</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;must be callable or tag: </span><span class="si">{</span><span class="n">predicate</span><span class="si">!r}</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="n">tags</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_tags</span><span class="p">()</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">tags</span><span class="p">:</span>
-            <span class="k">return</span> <span class="kc">False</span>
-        <span class="k">if</span> <span class="n">predicate</span> <span class="ow">in</span> <span class="n">tags</span><span class="p">:</span>
-            <span class="k">return</span> <span class="kc">True</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">callable</span><span class="p">(</span><span class="n">predicate</span><span class="p">):</span>
-            <span class="k">return</span> <span class="kc">False</span>
-        <span class="k">return</span> <span class="n">predicate</span><span class="p">(</span><span class="n">tags</span><span class="p">)</span></div></div>
-
-
 <span class="k">def</span> <span class="nf">_match_line</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="n">tag</span><span class="p">,</span> <span class="n">current_tags</span><span class="p">):</span>
     <span class="k">assert</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="n">Tag</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">current_tags</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">current_tags</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">tag</span> <span class="ow">in</span> <span class="n">current_tags</span><span class="p">:</span>
@@ -540,12 +356,10 @@
 
 <span class="sd">    ..  container:: example</span>
 
-<span class="sd">        Writes (deactivated) tag with ``&quot;%@%&quot;`` prefix into LilyPond</span>
-<span class="sd">        input:</span>
+<span class="sd">        Writes (deactivated) tag with ``&quot;%@%&quot;`` prefix into LilyPond input:</span>
 
 <span class="sd">        &gt;&gt;&gt; staff = abjad.Staff(&quot;c&#39;4 d&#39; e&#39; f&#39;&quot;)</span>
-<span class="sd">        &gt;&gt;&gt; string = r&quot;\markup { \with-color #red Allegro }&quot;</span>
-<span class="sd">        &gt;&gt;&gt; markup = abjad.Markup(string)</span>
+<span class="sd">        &gt;&gt;&gt; markup = abjad.Markup(r&quot;\markup { \with-color #red Allegro }&quot;)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.attach(</span>
 <span class="sd">        ...     markup,</span>
 <span class="sd">        ...     staff[0],</span>
@@ -576,7 +390,7 @@
 <span class="sd">        {</span>
 <span class="sd">            c&#39;4</span>
 <span class="sd">            %! RED_MARKUP</span>
-<span class="sd">                - \markup { \with-color #red Allegro } %@%</span>
+<span class="sd">            - \markup { \with-color #red Allegro } %@%</span>
 <span class="sd">            d&#39;4</span>
 <span class="sd">            e&#39;4</span>
 <span class="sd">            f&#39;4</span>
@@ -614,7 +428,7 @@
 <span class="sd">        {</span>
 <span class="sd">            c&#39;4</span>
 <span class="sd">            %! RED_MARKUP</span>
-<span class="sd">                - \markup { \with-color #red Allegro } %@%</span>
+<span class="sd">            - \markup { \with-color #red Allegro } %@%</span>
 <span class="sd">            d&#39;4</span>
 <span class="sd">            e&#39;4</span>
 <span class="sd">            f&#39;4</span>
@@ -657,9 +471,10 @@
         <span class="n">index</span> <span class="o">=</span> <span class="n">first_nonwhitespace_index</span>
         <span class="k">if</span> <span class="n">line</span><span class="p">[</span><span class="n">index</span> <span class="p">:</span> <span class="n">index</span> <span class="o">+</span> <span class="mi">4</span><span class="p">]</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;</span><span class="si">%%</span><span class="s2">% &quot;</span><span class="p">,</span> <span class="s2">&quot;%@% &quot;</span><span class="p">):</span>
             <span class="k">if</span> <span class="s2">&quot;%@% &quot;</span> <span class="ow">in</span> <span class="n">line</span><span class="p">:</span>
-                <span class="n">line</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;%@%&quot;</span><span class="p">,</span> <span class="s2">&quot;   &quot;</span><span class="p">)</span>
+                <span class="n">line</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;%@% &quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
                 <span class="n">suffix</span> <span class="o">=</span> <span class="s2">&quot; %@%&quot;</span>
             <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># TODO: replace with &quot;&quot; instead of &quot;    &quot;?</span>
                 <span class="n">line</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%%</span><span class="s2">%&quot;</span><span class="p">,</span> <span class="s2">&quot;   &quot;</span><span class="p">)</span>
                 <span class="n">suffix</span> <span class="o">=</span> <span class="kc">None</span>
             <span class="k">assert</span> <span class="n">line</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>

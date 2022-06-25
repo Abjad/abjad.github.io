@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>abjad.pitch &mdash; Abjad 3.9 documentation</title>
+  <title>abjad.pitch &mdash; Abjad 3.10 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/abjad.css" type="text/css" />
@@ -32,11 +32,11 @@
   <div class="wy-grid-for-nav">
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search"  style="background: #336699" >
+        <div class="wy-side-nav-search"  style="background: #4488cc" >
 
 
     <a href="../../index.html" class="icon icon-home" alt="Documentation
-    Home"> Abjad 3.9
+    Home"> Abjad 3.10
 
 
 
@@ -109,7 +109,7 @@
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #336699" >
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #4488cc" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../index.html">Abjad</a>
       </nav>
@@ -1092,13 +1092,6 @@
 
 <span class="sd">    ..  container:: example</span>
 
-<span class="sd">        Initializes octave from octave-tick string:</span>
-
-<span class="sd">        &gt;&gt;&gt; abjad.Octave(&quot;,,&quot;)</span>
-<span class="sd">        Octave(number=1)</span>
-
-<span class="sd">    ..  container:: example</span>
-
 <span class="sd">        Initializes octave from named pitch:</span>
 
 <span class="sd">        &gt;&gt;&gt; abjad.Octave(abjad.NamedPitch(&quot;cs&#39;&#39;&quot;))</span>
@@ -1143,19 +1136,7 @@
     <span class="n">number</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">4</span>
 
 <div class="viewcode-block" id="Octave.__post_init__"><a class="viewcode-back" href="../../api/abjad/pitch.html#abjad.pitch.Octave.__post_init__">[docs]</a>    <span class="k">def</span> <span class="nf">__post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">number</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-            <span class="n">match</span> <span class="o">=</span> <span class="n">_comprehensive_octave_regex</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">number</span><span class="p">)</span>
-            <span class="n">group_dict</span> <span class="o">=</span> <span class="n">match</span><span class="o">.</span><span class="n">groupdict</span><span class="p">()</span>
-            <span class="n">number</span> <span class="o">=</span> <span class="mi">3</span>
-            <span class="k">if</span> <span class="n">group_dict</span><span class="p">[</span><span class="s2">&quot;octave_number&quot;</span><span class="p">]:</span>
-                <span class="n">number</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">group_dict</span><span class="p">[</span><span class="s2">&quot;octave_number&quot;</span><span class="p">])</span>
-            <span class="k">elif</span> <span class="n">group_dict</span><span class="p">[</span><span class="s2">&quot;octave_tick&quot;</span><span class="p">]:</span>
-                <span class="k">if</span> <span class="n">group_dict</span><span class="p">[</span><span class="s2">&quot;octave_tick&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;&#39;&quot;</span><span class="p">):</span>
-                    <span class="n">number</span> <span class="o">+=</span> <span class="n">group_dict</span><span class="p">[</span><span class="s2">&quot;octave_tick&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="s2">&quot;&#39;&quot;</span><span class="p">)</span>
-                <span class="k">else</span><span class="p">:</span>
-                    <span class="n">number</span> <span class="o">-=</span> <span class="n">group_dict</span><span class="p">[</span><span class="s2">&quot;octave_tick&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">number</span> <span class="o">=</span> <span class="n">number</span>
-        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">number</span><span class="p">,</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">float</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">number</span><span class="p">,</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">float</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">number</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">number</span><span class="p">)</span>
         <span class="k">elif</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">number</span><span class="p">,</span> <span class="s2">&quot;octave&quot;</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">number</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">number</span><span class="o">.</span><span class="n">octave</span><span class="o">.</span><span class="n">number</span>
@@ -1266,7 +1247,29 @@
         <span class="n">match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;^([a-z]+)(\,*|&#39;*)$&quot;</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
         <span class="k">assert</span> <span class="n">match</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">match</span><span class="p">)</span>
         <span class="n">name</span><span class="p">,</span> <span class="n">ticks</span> <span class="o">=</span> <span class="n">match</span><span class="o">.</span><span class="n">groups</span><span class="p">()</span>
-        <span class="k">return</span> <span class="n">class_</span><span class="p">(</span><span class="n">ticks</span><span class="p">)</span></div></div>
+        <span class="k">return</span> <span class="n">class_</span><span class="o">.</span><span class="n">from_ticks</span><span class="p">(</span><span class="n">ticks</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Octave.from_ticks"><a class="viewcode-back" href="../../api/abjad/pitch.html#abjad.pitch.Octave.from_ticks">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_ticks</span><span class="p">(</span><span class="n">class_</span><span class="p">,</span> <span class="n">ticks</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Makes octave from ``ticks`` string.</span>
+
+<span class="sd">        ..  container:: example</span>
+
+<span class="sd">            &gt;&gt;&gt; abjad.Octave.from_ticks(&quot;&#39;&quot;)</span>
+<span class="sd">            Octave(number=4)</span>
+
+<span class="sd">            &gt;&gt;&gt; abjad.Octave.from_ticks(&quot;,,&quot;)</span>
+<span class="sd">            Octave(number=1)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ticks</span><span class="p">,</span> <span class="nb">str</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">ticks</span><span class="p">)</span>
+        <span class="n">number</span> <span class="o">=</span> <span class="mi">3</span>
+        <span class="k">if</span> <span class="n">ticks</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;&#39;&quot;</span><span class="p">):</span>
+            <span class="n">number</span> <span class="o">+=</span> <span class="n">ticks</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="s2">&quot;&#39;&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">number</span> <span class="o">-=</span> <span class="n">ticks</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">class_</span><span class="p">(</span><span class="n">number</span><span class="p">)</span></div></div>
 
 
 <div class="viewcode-block" id="IntervalClass"><a class="viewcode-back" href="../../api/abjad/pitch.html#abjad.pitch.IntervalClass">[docs]</a><span class="nd">@functools</span><span class="o">.</span><span class="n">total_ordering</span>
@@ -4430,7 +4433,13 @@
             <span class="n">_dpc_name</span> <span class="o">=</span> <span class="n">group_dict</span><span class="p">[</span><span class="s2">&quot;diatonic_pc_name&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
             <span class="n">_dpc_number</span> <span class="o">=</span> <span class="n">_diatonic_pc_name_to_diatonic_pc_number</span><span class="p">[</span><span class="n">_dpc_name</span><span class="p">]</span>
             <span class="n">_alteration</span> <span class="o">=</span> <span class="n">Accidental</span><span class="p">(</span><span class="n">group_dict</span><span class="p">[</span><span class="s2">&quot;comprehensive_accidental&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">semitones</span>
-            <span class="n">_octave</span> <span class="o">=</span> <span class="n">Octave</span><span class="p">(</span><span class="n">group_dict</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;comprehensive_octave&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">number</span>
+            <span class="n">foo</span> <span class="o">=</span> <span class="n">group_dict</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;comprehensive_octave&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+            <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">foo</span><span class="p">,</span> <span class="nb">str</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">foo</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">foo</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span>
+                <span class="n">number</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">foo</span><span class="p">)</span>
+                <span class="n">_octave</span> <span class="o">=</span> <span class="n">Octave</span><span class="p">(</span><span class="n">number</span><span class="p">)</span><span class="o">.</span><span class="n">number</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">_octave</span> <span class="o">=</span> <span class="n">Octave</span><span class="o">.</span><span class="n">from_ticks</span><span class="p">(</span><span class="n">foo</span><span class="p">)</span><span class="o">.</span><span class="n">number</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_from_named_parts</span><span class="p">(</span><span class="n">_dpc_number</span><span class="p">,</span> <span class="n">_alteration</span><span class="p">,</span> <span class="n">_octave</span><span class="p">)</span>
         <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">argument</span><span class="p">,</span> <span class="n">numbers</span><span class="o">.</span><span class="n">Number</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_from_number</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span>
