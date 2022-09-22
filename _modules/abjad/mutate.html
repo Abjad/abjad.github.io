@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>abjad.mutate &mdash; Abjad 3.11 documentation</title>
+  <title>abjad.mutate &mdash; Abjad 3.12 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/abjad.css" type="text/css" />
@@ -33,11 +33,11 @@
   <div class="wy-grid-for-nav">
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search"  style="background: #55aaff" >
+        <div class="wy-side-nav-search"  style="background: #66cc22" >
 
 
     <a href="../../index.html" class="icon icon-home" alt="Documentation
-    Home"> Abjad 3.11
+    Home"> Abjad 3.12
 
 
 
@@ -110,7 +110,7 @@
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #55aaff" >
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #66cc22" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../index.html">Abjad</a>
       </nav>
@@ -146,6 +146,7 @@
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">select</span> <span class="k">as</span> <span class="n">_select</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">sequence</span> <span class="k">as</span> <span class="n">_sequence</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">spanners</span> <span class="k">as</span> <span class="n">_spanners</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">tag</span> <span class="k">as</span> <span class="n">_tag</span>
 
 
 <span class="k">def</span> <span class="nf">_are_contiguous_logical_voice</span><span class="p">(</span>
@@ -422,17 +423,17 @@
     <span class="k">return</span> <span class="n">component</span>
 
 
-<span class="k">def</span> <span class="nf">_fuse</span><span class="p">(</span><span class="n">components</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">_fuse</span><span class="p">(</span><span class="n">components</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="k">assert</span> <span class="n">_are_contiguous_logical_voice</span><span class="p">(</span><span class="n">components</span><span class="p">)</span>
     <span class="k">if</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="n">_score</span><span class="o">.</span><span class="n">Leaf</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">components</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">_fuse_leaves</span><span class="p">(</span><span class="n">components</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">_fuse_leaves</span><span class="p">(</span><span class="n">components</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="n">tag</span><span class="p">)</span>
     <span class="k">elif</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="n">_score</span><span class="o">.</span><span class="n">Tuplet</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">components</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">_fuse_tuplets</span><span class="p">(</span><span class="n">components</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">_fuse_tuplets</span><span class="p">(</span><span class="n">components</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="n">tag</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;can only fuse leaves and tuplets (not </span><span class="si">{</span><span class="n">components</span><span class="si">}</span><span class="s2">).&quot;</span><span class="p">)</span>
 
 
-<span class="k">def</span> <span class="nf">_fuse_leaves</span><span class="p">(</span><span class="n">leaves</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">_fuse_leaves</span><span class="p">(</span><span class="n">leaves</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="k">assert</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="n">_score</span><span class="o">.</span><span class="n">Leaf</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">leaves</span><span class="p">)</span>
     <span class="k">assert</span> <span class="n">_are_contiguous_logical_voice</span><span class="p">(</span><span class="n">leaves</span><span class="p">)</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">leaves</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">:</span>
@@ -444,23 +445,23 @@
         <span class="k">if</span> <span class="n">parent</span><span class="p">:</span>
             <span class="n">index</span> <span class="o">=</span> <span class="n">parent</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">leaf</span><span class="p">)</span>
             <span class="k">del</span> <span class="n">parent</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
-    <span class="n">result</span> <span class="o">=</span> <span class="n">_set_leaf_duration</span><span class="p">(</span><span class="n">leaves</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">total_preprolated</span><span class="p">)</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">_set_leaf_duration</span><span class="p">(</span><span class="n">leaves</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">total_preprolated</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="n">tag</span><span class="p">)</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">originally_tied</span><span class="p">:</span>
         <span class="n">last_leaf</span> <span class="o">=</span> <span class="n">_select</span><span class="o">.</span><span class="n">leaf</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
         <span class="n">_bind</span><span class="o">.</span><span class="n">detach</span><span class="p">(</span><span class="n">_indicators</span><span class="o">.</span><span class="n">Tie</span><span class="p">,</span> <span class="n">last_leaf</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">result</span>
 
 
-<span class="k">def</span> <span class="nf">_fuse_leaves_by_immediate_parent</span><span class="p">(</span><span class="n">leaves</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">_fuse_leaves_by_immediate_parent</span><span class="p">(</span><span class="n">leaves</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">parts</span> <span class="o">=</span> <span class="n">_get_leaves_grouped_by_immediate_parents</span><span class="p">(</span><span class="n">leaves</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">part</span> <span class="ow">in</span> <span class="n">parts</span><span class="p">:</span>
-        <span class="n">fused</span> <span class="o">=</span> <span class="n">_fuse</span><span class="p">(</span><span class="n">part</span><span class="p">)</span>
+        <span class="n">fused</span> <span class="o">=</span> <span class="n">_fuse</span><span class="p">(</span><span class="n">part</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="n">tag</span><span class="p">)</span>
         <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">fused</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">result</span>
 
 
-<span class="k">def</span> <span class="nf">_fuse_tuplets</span><span class="p">(</span><span class="n">tuplets</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">_fuse_tuplets</span><span class="p">(</span><span class="n">tuplets</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="k">assert</span> <span class="n">_are_contiguous_same_parent</span><span class="p">(</span><span class="n">tuplets</span><span class="p">,</span> <span class="n">prototype</span><span class="o">=</span><span class="n">_score</span><span class="o">.</span><span class="n">Tuplet</span><span class="p">)</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">tuplets</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
         <span class="k">return</span> <span class="kc">None</span>
@@ -470,7 +471,7 @@
         <span class="k">if</span> <span class="n">tuplet</span><span class="o">.</span><span class="n">multiplier</span> <span class="o">!=</span> <span class="n">first_multiplier</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;tuplets must carry same multiplier.&quot;</span><span class="p">)</span>
     <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">first</span><span class="p">,</span> <span class="n">_score</span><span class="o">.</span><span class="n">Tuplet</span><span class="p">)</span>
-    <span class="n">new_tuplet</span> <span class="o">=</span> <span class="n">_score</span><span class="o">.</span><span class="n">Tuplet</span><span class="p">(</span><span class="n">first_multiplier</span><span class="p">,</span> <span class="p">[])</span>
+    <span class="n">new_tuplet</span> <span class="o">=</span> <span class="n">_score</span><span class="o">.</span><span class="n">Tuplet</span><span class="p">(</span><span class="n">first_multiplier</span><span class="p">,</span> <span class="p">[],</span> <span class="n">tag</span><span class="o">=</span><span class="n">tag</span><span class="p">)</span>
     <span class="n">wrapped</span> <span class="o">=</span> <span class="kc">False</span>
     <span class="k">if</span> <span class="n">_get</span><span class="o">.</span><span class="n">parentage</span><span class="p">(</span><span class="n">tuplets</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">.</span><span class="n">root</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">_get</span><span class="o">.</span><span class="n">parentage</span><span class="p">(</span><span class="n">tuplets</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">root</span><span class="p">:</span>
         <span class="n">dummy_container</span> <span class="o">=</span> <span class="n">_score</span><span class="o">.</span><span class="n">Container</span><span class="p">(</span><span class="n">tuplets</span><span class="p">)</span>
@@ -555,7 +556,7 @@
         <span class="n">_bind</span><span class="o">.</span><span class="n">attach</span><span class="p">(</span><span class="n">wrapper</span><span class="p">,</span> <span class="n">recipient_component</span><span class="p">)</span>
 
 
-<span class="k">def</span> <span class="nf">_set_leaf_duration</span><span class="p">(</span><span class="n">leaf</span><span class="p">,</span> <span class="n">new_duration</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">_set_leaf_duration</span><span class="p">(</span><span class="n">leaf</span><span class="p">,</span> <span class="n">new_duration</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="n">new_duration</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="n">new_duration</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">leaf</span><span class="o">.</span><span class="n">multiplier</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">multiplier</span> <span class="o">=</span> <span class="n">new_duration</span><span class="o">.</span><span class="n">__div__</span><span class="p">(</span><span class="n">leaf</span><span class="o">.</span><span class="n">written_duration</span><span class="p">)</span>
@@ -566,8 +567,7 @@
         <span class="k">return</span> <span class="p">[</span><span class="n">leaf</span><span class="p">]</span>
     <span class="k">except</span> <span class="n">_exceptions</span><span class="o">.</span><span class="n">AssignabilityError</span><span class="p">:</span>
         <span class="k">pass</span>
-    <span class="n">maker</span> <span class="o">=</span> <span class="n">_makers</span><span class="o">.</span><span class="n">NoteMaker</span><span class="p">()</span>
-    <span class="n">components</span> <span class="o">=</span> <span class="n">maker</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">new_duration</span><span class="p">)</span>
+    <span class="n">components</span> <span class="o">=</span> <span class="n">_makers</span><span class="o">.</span><span class="n">make_notes</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">new_duration</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="n">tag</span><span class="p">)</span>
     <span class="n">new_leaves</span> <span class="o">=</span> <span class="n">_select</span><span class="o">.</span><span class="n">leaves</span><span class="p">(</span><span class="n">components</span><span class="p">)</span>
     <span class="n">following_leaf_count</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">new_leaves</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
     <span class="n">following_leaves</span> <span class="o">=</span> <span class="p">[]</span>
@@ -674,9 +674,9 @@
     <span class="k">return</span> <span class="n">halves</span>
 
 
-<span class="k">def</span> <span class="nf">_split_container_by_duration</span><span class="p">(</span><span class="n">CONTAINER</span><span class="p">,</span> <span class="n">duration</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">_split_container_by_duration</span><span class="p">(</span><span class="n">CONTAINER</span><span class="p">,</span> <span class="n">duration</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">CONTAINER</span><span class="o">.</span><span class="n">simultaneous</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">_split_simultaneous_by_duration</span><span class="p">(</span><span class="n">CONTAINER</span><span class="p">,</span> <span class="n">duration</span><span class="o">=</span><span class="n">duration</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">_split_simultaneous_by_duration</span><span class="p">(</span><span class="n">CONTAINER</span><span class="p">,</span> <span class="n">duration</span><span class="o">=</span><span class="n">duration</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="n">tag</span><span class="p">)</span>
     <span class="n">duration</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="n">duration</span><span class="p">)</span>
     <span class="k">assert</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">duration</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">duration</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">duration</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
@@ -707,6 +707,7 @@
         <span class="n">new_leaves</span> <span class="o">=</span> <span class="n">_split_leaf_by_durations</span><span class="p">(</span>
             <span class="n">bottom</span><span class="p">,</span>
             <span class="p">[</span><span class="n">split_point_in_bottom</span><span class="p">],</span>
+            <span class="n">tag</span><span class="o">=</span><span class="n">tag</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="k">if</span> <span class="n">new_leaves</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">_parent</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">original_bottom_parent</span><span class="p">:</span>
             <span class="n">new_leaves_tuplet_wrapper</span> <span class="o">=</span> <span class="n">new_leaves</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">_parent</span>
@@ -715,6 +716,7 @@
             <span class="n">_split_container_by_duration</span><span class="p">(</span>
                 <span class="n">new_leaves_tuplet_wrapper</span><span class="p">,</span>
                 <span class="n">split_point_in_bottom</span><span class="p">,</span>
+                <span class="n">tag</span><span class="o">=</span><span class="n">tag</span><span class="p">,</span>
             <span class="p">)</span>
         <span class="k">for</span> <span class="n">leaf</span> <span class="ow">in</span> <span class="n">new_leaves</span><span class="p">:</span>
             <span class="n">timespan</span> <span class="o">=</span> <span class="n">_get</span><span class="o">.</span><span class="n">timespan</span><span class="p">(</span><span class="n">leaf</span><span class="p">)</span>
@@ -770,11 +772,11 @@
     <span class="k">return</span> <span class="p">[</span><span class="n">left</span><span class="p">],</span> <span class="p">[</span><span class="n">right</span><span class="p">]</span>
 
 
-<span class="k">def</span> <span class="nf">_split_simultaneous_by_duration</span><span class="p">(</span><span class="n">CONTAINER</span><span class="p">,</span> <span class="n">duration</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">_split_simultaneous_by_duration</span><span class="p">(</span><span class="n">CONTAINER</span><span class="p">,</span> <span class="n">duration</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="k">assert</span> <span class="n">CONTAINER</span><span class="o">.</span><span class="n">simultaneous</span>
     <span class="n">left_components</span><span class="p">,</span> <span class="n">right_components</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">component</span> <span class="ow">in</span> <span class="n">CONTAINER</span><span class="p">[:]:</span>
-        <span class="n">halves</span> <span class="o">=</span> <span class="n">_split_container_by_duration</span><span class="p">(</span><span class="n">component</span><span class="p">,</span> <span class="n">duration</span><span class="o">=</span><span class="n">duration</span><span class="p">)</span>
+        <span class="n">halves</span> <span class="o">=</span> <span class="n">_split_container_by_duration</span><span class="p">(</span><span class="n">component</span><span class="p">,</span> <span class="n">duration</span><span class="o">=</span><span class="n">duration</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="n">tag</span><span class="p">)</span>
         <span class="n">left_components_</span><span class="p">,</span> <span class="n">right_components_</span> <span class="o">=</span> <span class="n">halves</span>
         <span class="n">left_components</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">left_components_</span><span class="p">)</span>
         <span class="n">right_components</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">right_components_</span><span class="p">)</span>
@@ -789,7 +791,7 @@
     <span class="k">return</span> <span class="p">[</span><span class="n">left_container</span><span class="p">],</span> <span class="p">[</span><span class="n">right_container</span><span class="p">]</span>
 
 
-<span class="k">def</span> <span class="nf">_split_leaf_by_durations</span><span class="p">(</span><span class="n">leaf</span><span class="p">,</span> <span class="n">durations</span><span class="p">,</span> <span class="n">cyclic</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">_split_leaf_by_durations</span><span class="p">(</span><span class="n">leaf</span><span class="p">,</span> <span class="n">durations</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">cyclic</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="n">durations</span> <span class="o">=</span> <span class="p">[</span><span class="n">_duration</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="n">_</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">durations</span><span class="p">]</span>
     <span class="n">leaf_duration</span> <span class="o">=</span> <span class="n">_get</span><span class="o">.</span><span class="n">duration</span><span class="p">(</span><span class="n">leaf</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">cyclic</span><span class="p">:</span>
@@ -814,7 +816,7 @@
     <span class="k">for</span> <span class="n">duration</span> <span class="ow">in</span> <span class="n">durations</span><span class="p">:</span>
         <span class="n">new_leaf</span> <span class="o">=</span> <span class="n">python_copy</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">leaf</span><span class="p">)</span>
         <span class="n">preprolated_duration</span> <span class="o">=</span> <span class="n">duration</span> <span class="o">/</span> <span class="n">leaf_prolation</span>
-        <span class="n">selection</span> <span class="o">=</span> <span class="n">_set_leaf_duration</span><span class="p">(</span><span class="n">new_leaf</span><span class="p">,</span> <span class="n">preprolated_duration</span><span class="p">)</span>
+        <span class="n">selection</span> <span class="o">=</span> <span class="n">_set_leaf_duration</span><span class="p">(</span><span class="n">new_leaf</span><span class="p">,</span> <span class="n">preprolated_duration</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="n">tag</span><span class="p">)</span>
         <span class="n">result_selections</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">selection</span><span class="p">)</span>
     <span class="n">result_components</span> <span class="o">=</span> <span class="n">_sequence</span><span class="o">.</span><span class="n">flatten</span><span class="p">(</span><span class="n">result_selections</span><span class="p">,</span> <span class="n">depth</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
     <span class="n">result_leaves</span> <span class="o">=</span> <span class="n">_select</span><span class="o">.</span><span class="n">leaves</span><span class="p">(</span><span class="n">result_components</span><span class="p">,</span> <span class="n">grace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
@@ -1368,7 +1370,9 @@
     <span class="k">return</span> <span class="n">result</span></div>
 
 
-<div class="viewcode-block" id="logical_tie_to_tuplet"><a class="viewcode-back" href="../../api/abjad/mutate.html#abjad.mutate.logical_tie_to_tuplet">[docs]</a><span class="k">def</span> <span class="nf">logical_tie_to_tuplet</span><span class="p">(</span><span class="n">argument</span><span class="p">,</span> <span class="n">proportions</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">_score</span><span class="o">.</span><span class="n">Tuplet</span><span class="p">:</span>
+<div class="viewcode-block" id="logical_tie_to_tuplet"><a class="viewcode-back" href="../../api/abjad/mutate.html#abjad.mutate.logical_tie_to_tuplet">[docs]</a><span class="k">def</span> <span class="nf">logical_tie_to_tuplet</span><span class="p">(</span>
+    <span class="n">argument</span><span class="p">,</span> <span class="n">proportions</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">tag</span><span class="p">:</span> <span class="n">_tag</span><span class="o">.</span><span class="n">Tag</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">_score</span><span class="o">.</span><span class="n">Tuplet</span><span class="p">:</span>
     <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Changes logical tie to tuplet.</span>
 
@@ -1480,9 +1484,8 @@
         <span class="n">note_durations</span> <span class="o">=</span> <span class="p">[</span>
             <span class="n">_duration</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="n">denominator</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">proportions</span><span class="o">.</span><span class="n">numbers</span>
         <span class="p">]</span>
-        <span class="n">maker</span> <span class="o">=</span> <span class="n">_makers</span><span class="o">.</span><span class="n">NoteMaker</span><span class="p">()</span>
-        <span class="n">notes</span> <span class="o">=</span> <span class="n">maker</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">note_durations</span><span class="p">)</span>
-    <span class="n">tuplet</span> <span class="o">=</span> <span class="n">_score</span><span class="o">.</span><span class="n">Tuplet</span><span class="o">.</span><span class="n">from_duration</span><span class="p">(</span><span class="n">target_duration</span><span class="p">,</span> <span class="n">notes</span><span class="p">)</span>
+        <span class="n">notes</span> <span class="o">=</span> <span class="n">_makers</span><span class="o">.</span><span class="n">make_notes</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">note_durations</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="n">tag</span><span class="p">)</span>
+    <span class="n">tuplet</span> <span class="o">=</span> <span class="n">_score</span><span class="o">.</span><span class="n">Tuplet</span><span class="o">.</span><span class="n">from_duration</span><span class="p">(</span><span class="n">target_duration</span><span class="p">,</span> <span class="n">notes</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="n">tag</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">leaf</span> <span class="ow">in</span> <span class="n">argument</span><span class="p">:</span>
         <span class="n">_bind</span><span class="o">.</span><span class="n">detach</span><span class="p">(</span><span class="n">_indicators</span><span class="o">.</span><span class="n">Tie</span><span class="p">,</span> <span class="n">leaf</span><span class="p">)</span>
         <span class="n">_bind</span><span class="o">.</span><span class="n">detach</span><span class="p">(</span><span class="n">_indicators</span><span class="o">.</span><span class="n">RepeatTie</span><span class="p">,</span> <span class="n">leaf</span><span class="p">)</span>
@@ -1532,8 +1535,7 @@
 <span class="sd">                }</span>
 <span class="sd">            }</span>
 
-<span class="sd">        &gt;&gt;&gt; maker = abjad.NoteMaker()</span>
-<span class="sd">        &gt;&gt;&gt; notes = maker(&quot;c&#39; d&#39; e&#39; f&#39; c&#39; d&#39; e&#39; f&#39;&quot;, (1, 16))</span>
+<span class="sd">        &gt;&gt;&gt; notes = abjad.makers.make_notes(&quot;c&#39; d&#39; e&#39; f&#39; c&#39; d&#39; e&#39; f&#39;&quot;, (1, 16))</span>
 <span class="sd">        &gt;&gt;&gt; abjad.mutate.replace([tuplet_1], notes)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.attach(abjad.Dynamic(&#39;p&#39;), staff[0])</span>
 <span class="sd">        &gt;&gt;&gt; abjad.attach(abjad.StartHairpin(&#39;&lt;&#39;), staff[0])</span>
@@ -1681,8 +1683,7 @@
 <span class="sd">        Introduces duplicate ties:</span>
 
 <span class="sd">        &gt;&gt;&gt; staff = abjad.Staff(&quot;c&#39;2 ~ c&#39;2&quot;)</span>
-<span class="sd">        &gt;&gt;&gt; maker = abjad.NoteMaker()</span>
-<span class="sd">        &gt;&gt;&gt; tied_notes = maker(0, abjad.Duration(5, 8))</span>
+<span class="sd">        &gt;&gt;&gt; tied_notes = abjad.makers.make_notes(0, abjad.Duration(5, 8))</span>
 <span class="sd">        &gt;&gt;&gt; abjad.mutate.replace(staff[:1], tied_notes)</span>
 
 <span class="sd">        &gt;&gt;&gt; string = abjad.lilypond(staff)</span>
@@ -1925,7 +1926,7 @@
 <span class="c1"># TODO: add tests of tupletted notes and rests.</span>
 <span class="c1"># TODO: add examples that show indicator handling.</span>
 <span class="c1"># TODO: add example showing grace and after grace handling.</span>
-<div class="viewcode-block" id="split"><a class="viewcode-back" href="../../api/abjad/mutate.html#abjad.mutate.split">[docs]</a><span class="k">def</span> <span class="nf">split</span><span class="p">(</span><span class="n">argument</span><span class="p">,</span> <span class="n">durations</span><span class="p">,</span> <span class="n">cyclic</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<div class="viewcode-block" id="split"><a class="viewcode-back" href="../../api/abjad/mutate.html#abjad.mutate.split">[docs]</a><span class="k">def</span> <span class="nf">split</span><span class="p">(</span><span class="n">argument</span><span class="p">,</span> <span class="n">durations</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">cyclic</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Splits ``argument`` by ``durations``.</span>
 
@@ -2385,6 +2386,7 @@
                     <span class="n">current_component</span><span class="p">,</span>
                     <span class="n">leaf_split_durations</span><span class="p">,</span>
                     <span class="n">cyclic</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                    <span class="n">tag</span><span class="o">=</span><span class="n">tag</span><span class="p">,</span>
                 <span class="p">)</span>
                 <span class="n">shard</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">leaf_shards</span><span class="p">)</span>
                 <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">shard</span><span class="p">)</span>
@@ -2394,6 +2396,7 @@
                 <span class="n">pair</span> <span class="o">=</span> <span class="n">_split_container_by_duration</span><span class="p">(</span>
                     <span class="n">current_component</span><span class="p">,</span>
                     <span class="n">local_split_duration</span><span class="p">,</span>
+                    <span class="n">tag</span><span class="o">=</span><span class="n">tag</span><span class="p">,</span>
                 <span class="p">)</span>
                 <span class="n">left_list</span><span class="p">,</span> <span class="n">right_list</span> <span class="o">=</span> <span class="n">pair</span>
                 <span class="n">shard</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">left_list</span><span class="p">)</span>
@@ -2646,8 +2649,7 @@
 
 <span class="sd">        Wraps outside-score notes in tuplet:</span>
 
-<span class="sd">        &gt;&gt;&gt; maker = abjad.NoteMaker()</span>
-<span class="sd">        &gt;&gt;&gt; notes = maker([0, 2, 4], [(1, 8)])</span>
+<span class="sd">        &gt;&gt;&gt; notes = abjad.makers.make_notes([0, 2, 4], [(1, 8)])</span>
 <span class="sd">        &gt;&gt;&gt; tuplet = abjad.Tuplet((2, 3), [])</span>
 <span class="sd">        &gt;&gt;&gt; abjad.mutate.wrap(notes, tuplet)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(tuplet) # doctest: +SKIP</span>
