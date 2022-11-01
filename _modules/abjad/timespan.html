@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>abjad.timespan &mdash; Abjad 3.13 documentation</title>
+  <title>abjad.timespan &mdash; Abjad 3.14 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/abjad.css" type="text/css" />
@@ -21,6 +21,7 @@
         <script src="../../_static/underscore.js"></script>
         <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
         <script defer="defer" src="../../_static/copybutton.js"></script>
         <script src="../../_static/ga.js"></script>
         <script defer="defer" src="../../_static/lightbox2/js/lightbox.js"></script>
@@ -33,11 +34,11 @@
   <div class="wy-grid-for-nav">
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search"  style="background: #77ee55" >
+        <div class="wy-side-nav-search"  style="background: #880088" >
 
 
     <a href="../../index.html" class="icon icon-home" alt="Documentation
-    Home"> Abjad 3.13
+    Home"> Abjad 3.14
 
 
 
@@ -110,7 +111,7 @@
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #77ee55" >
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #880088" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../index.html">Abjad</a>
       </nav>
@@ -417,7 +418,13 @@
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">argument</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_timespan</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">intersects_timespan</span><span class="p">(</span><span class="n">argument</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span>
+            <span class="n">argument</span><span class="o">.</span><span class="n">start_offset</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_offset</span>
+            <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_offset</span> <span class="o">&lt;</span> <span class="n">argument</span><span class="o">.</span><span class="n">stop_offset</span>
+        <span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">start_offset</span> <span class="o">&lt;=</span> <span class="n">argument</span><span class="o">.</span><span class="n">start_offset</span>
+            <span class="ow">and</span> <span class="n">argument</span><span class="o">.</span><span class="n">start_offset</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">stop_offset</span>
+        <span class="p">):</span>
             <span class="k">return</span> <span class="n">TimespanList</span><span class="p">()</span>
         <span class="n">new_start_offset</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">start_offset</span><span class="p">,</span> <span class="n">argument</span><span class="o">.</span><span class="n">start_offset</span><span class="p">)</span>
         <span class="n">new_stop_offset</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stop_offset</span><span class="p">,</span> <span class="n">argument</span><span class="o">.</span><span class="n">stop_offset</span><span class="p">)</span>
@@ -472,7 +479,10 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="n">timespan</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span><span class="n">argument</span><span class="p">,</span> <span class="n">argument</span><span class="p">)</span>
         <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">timespan</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">contains_timespan_improperly</span><span class="p">(</span><span class="n">timespan</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">start_offset</span> <span class="o">&lt;=</span> <span class="n">timespan</span><span class="o">.</span><span class="n">start_offset</span>
+            <span class="ow">and</span> <span class="n">timespan</span><span class="o">.</span><span class="n">stop_offset</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">stop_offset</span>
+        <span class="p">)</span></div>
 
 <div class="viewcode-block" id="Timespan.__eq__"><a class="viewcode-back" href="../../api/abjad/timespan.html#abjad.timespan.Timespan.__eq__">[docs]</a>    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -675,8 +685,10 @@
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">argument</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_timespan</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">intersects_timespan</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_tangent_to_timespan</span><span class="p">(</span>
-            <span class="n">argument</span>
+        <span class="k">if</span> <span class="p">(</span>
+            <span class="ow">not</span> <span class="nb">bool</span><span class="p">(</span><span class="bp">self</span> <span class="o">&amp;</span> <span class="n">argument</span><span class="p">)</span>
+            <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">stop_offset</span> <span class="o">==</span> <span class="n">argument</span><span class="o">.</span><span class="n">start_offset</span>
+            <span class="ow">and</span> <span class="ow">not</span> <span class="n">argument</span><span class="o">.</span><span class="n">stop_offset</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_offset</span>
         <span class="p">):</span>
             <span class="n">result</span> <span class="o">=</span> <span class="n">TimespanList</span><span class="p">([</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">])</span>
             <span class="n">result</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
@@ -760,9 +772,12 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">argument</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_timespan</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span>
         <span class="n">timespans</span> <span class="o">=</span> <span class="n">TimespanList</span><span class="p">()</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">intersects_timespan</span><span class="p">(</span><span class="n">argument</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">bool</span><span class="p">(</span><span class="bp">self</span> <span class="o">&amp;</span> <span class="n">argument</span><span class="p">):</span>
             <span class="n">timespans</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
-        <span class="k">elif</span> <span class="n">argument</span><span class="o">.</span><span class="n">trisects_timespan</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">elif</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">start_offset</span> <span class="o">&lt;</span> <span class="n">argument</span><span class="o">.</span><span class="n">start_offset</span>
+            <span class="ow">and</span> <span class="n">argument</span><span class="o">.</span><span class="n">stop_offset</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">stop_offset</span>
+        <span class="p">):</span>
             <span class="n">new_start_offset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_offset</span>
             <span class="n">new_stop_offset</span> <span class="o">=</span> <span class="n">argument</span><span class="o">.</span><span class="n">start_offset</span>
             <span class="n">timespan</span> <span class="o">=</span> <span class="n">dataclasses</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span>
@@ -779,9 +794,13 @@
                 <span class="n">stop_offset</span><span class="o">=</span><span class="n">new_stop_offset</span><span class="p">,</span>
             <span class="p">)</span>
             <span class="n">timespans</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">timespan</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="n">argument</span><span class="o">.</span><span class="n">contains_timespan_improperly</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">elif</span> <span class="bp">self</span> <span class="ow">in</span> <span class="n">argument</span><span class="p">:</span>
             <span class="k">pass</span>
-        <span class="k">elif</span> <span class="n">argument</span><span class="o">.</span><span class="n">overlaps_only_start_of_timespan</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">elif</span> <span class="p">(</span>
+            <span class="n">argument</span><span class="o">.</span><span class="n">start_offset</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_offset</span>
+            <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_offset</span> <span class="o">&lt;</span> <span class="n">argument</span><span class="o">.</span><span class="n">stop_offset</span>
+            <span class="ow">and</span> <span class="n">argument</span><span class="o">.</span><span class="n">stop_offset</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">stop_offset</span>
+        <span class="p">):</span>
             <span class="n">new_start_offset</span> <span class="o">=</span> <span class="n">argument</span><span class="o">.</span><span class="n">stop_offset</span>
             <span class="n">new_stop_offset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">stop_offset</span>
             <span class="n">timespan</span> <span class="o">=</span> <span class="n">dataclasses</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span>
@@ -790,7 +809,11 @@
                 <span class="n">stop_offset</span><span class="o">=</span><span class="n">new_stop_offset</span><span class="p">,</span>
             <span class="p">)</span>
             <span class="n">timespans</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">timespan</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="n">argument</span><span class="o">.</span><span class="n">overlaps_only_stop_of_timespan</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">elif</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">start_offset</span> <span class="o">&lt;=</span> <span class="n">argument</span><span class="o">.</span><span class="n">start_offset</span>
+            <span class="ow">and</span> <span class="n">argument</span><span class="o">.</span><span class="n">start_offset</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">stop_offset</span>
+            <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">stop_offset</span> <span class="o">&lt;</span> <span class="n">argument</span><span class="o">.</span><span class="n">stop_offset</span>
+        <span class="p">):</span>
             <span class="n">new_start_offset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_offset</span>
             <span class="n">new_stop_offset</span> <span class="o">=</span> <span class="n">argument</span><span class="o">.</span><span class="n">start_offset</span>
             <span class="n">timespan</span> <span class="o">=</span> <span class="n">dataclasses</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span>
@@ -799,9 +822,10 @@
                 <span class="n">stop_offset</span><span class="o">=</span><span class="n">new_stop_offset</span><span class="p">,</span>
             <span class="p">)</span>
             <span class="n">timespans</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">timespan</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="n">argument</span><span class="o">.</span><span class="n">starts_when_timespan_starts</span><span class="p">(</span>
-            <span class="bp">self</span>
-        <span class="p">)</span> <span class="ow">and</span> <span class="n">argument</span><span class="o">.</span><span class="n">stops_before_timespan_stops</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">elif</span> <span class="p">(</span>
+            <span class="n">argument</span><span class="o">.</span><span class="n">start_offset</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_offset</span>
+            <span class="ow">and</span> <span class="n">argument</span><span class="o">.</span><span class="n">stop_offset</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">stop_offset</span>
+        <span class="p">):</span>
             <span class="n">new_start_offset</span> <span class="o">=</span> <span class="n">argument</span><span class="o">.</span><span class="n">stop_offset</span>
             <span class="n">new_stop_offset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">stop_offset</span>
             <span class="n">timespan</span> <span class="o">=</span> <span class="n">dataclasses</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span>
@@ -810,9 +834,10 @@
                 <span class="n">stop_offset</span><span class="o">=</span><span class="n">new_stop_offset</span><span class="p">,</span>
             <span class="p">)</span>
             <span class="n">timespans</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">timespan</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="n">argument</span><span class="o">.</span><span class="n">stops_when_timespan_stops</span><span class="p">(</span>
-            <span class="bp">self</span>
-        <span class="p">)</span> <span class="ow">and</span> <span class="n">argument</span><span class="o">.</span><span class="n">starts_after_timespan_starts</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">elif</span> <span class="p">(</span>
+            <span class="n">argument</span><span class="o">.</span><span class="n">stop_offset</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">stop_offset</span>
+            <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_offset</span> <span class="o">&lt;</span> <span class="n">argument</span><span class="o">.</span><span class="n">start_offset</span>
+        <span class="p">):</span>
             <span class="n">new_start_offset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_offset</span>
             <span class="n">new_stop_offset</span> <span class="o">=</span> <span class="n">argument</span><span class="o">.</span><span class="n">start_offset</span>
             <span class="n">timespan</span> <span class="o">=</span> <span class="n">dataclasses</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span>
@@ -868,8 +893,10 @@
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">argument</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_timespan</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">intersects_timespan</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_tangent_to_timespan</span><span class="p">(</span>
-            <span class="n">argument</span>
+        <span class="k">if</span> <span class="p">(</span>
+            <span class="ow">not</span> <span class="nb">bool</span><span class="p">(</span><span class="bp">self</span> <span class="o">&amp;</span> <span class="n">argument</span><span class="p">)</span>
+            <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">stop_offset</span> <span class="o">==</span> <span class="n">argument</span><span class="o">.</span><span class="n">start_offset</span>
+            <span class="ow">and</span> <span class="ow">not</span> <span class="n">argument</span><span class="o">.</span><span class="n">stop_offset</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_offset</span>
         <span class="p">):</span>
             <span class="n">result</span> <span class="o">=</span> <span class="n">TimespanList</span><span class="p">()</span>
             <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
@@ -918,9 +945,7 @@
 
     <span class="k">def</span> <span class="nf">_can_fuse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">):</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">argument</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)):</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">intersects_timespan</span><span class="p">(</span>
-                <span class="n">argument</span>
-            <span class="p">)</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">stops_when_timespan_starts</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span>
+            <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="bp">self</span> <span class="o">&amp;</span> <span class="n">argument</span><span class="p">)</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">stop_offset</span> <span class="o">==</span> <span class="n">argument</span><span class="o">.</span><span class="n">start_offset</span>
         <span class="k">return</span> <span class="kc">False</span>
 
     <span class="nd">@staticmethod</span>
@@ -1036,82 +1061,6 @@
 
     <span class="c1">### PUBLIC METHODS ###</span>
 
-<div class="viewcode-block" id="Timespan.contains_timespan_improperly"><a class="viewcode-back" href="../../api/abjad/timespan.html#abjad.timespan.Timespan.contains_timespan_improperly">[docs]</a>    <span class="k">def</span> <span class="nf">contains_timespan_improperly</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timespan</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Is true when timespan contains ``timespan`` improperly.</span>
-
-<span class="sd">        ..  container:: example</span>
-
-<span class="sd">            &gt;&gt;&gt; timespan_1 = abjad.Timespan(0, 10)</span>
-<span class="sd">            &gt;&gt;&gt; timespan_2 = abjad.Timespan(5, 10)</span>
-
-<span class="sd">            &gt;&gt;&gt; timespan_1.contains_timespan_improperly(timespan_1)</span>
-<span class="sd">            True</span>
-<span class="sd">            &gt;&gt;&gt; timespan_1.contains_timespan_improperly(timespan_2)</span>
-<span class="sd">            True</span>
-<span class="sd">            &gt;&gt;&gt; timespan_2.contains_timespan_improperly(timespan_1)</span>
-<span class="sd">            False</span>
-<span class="sd">            &gt;&gt;&gt; timespan_2.contains_timespan_improperly(timespan_2)</span>
-<span class="sd">            True</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">self_start_offset</span><span class="p">,</span> <span class="n">self_stop_offset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">offsets</span>
-        <span class="n">expr_start_offset</span><span class="p">,</span> <span class="n">expr_stop_offset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_offsets</span><span class="p">(</span><span class="n">timespan</span><span class="p">)</span>
-        <span class="k">return</span> <span class="p">(</span>
-            <span class="n">self_start_offset</span> <span class="o">&lt;=</span> <span class="n">expr_start_offset</span>
-            <span class="ow">and</span> <span class="n">expr_stop_offset</span> <span class="o">&lt;=</span> <span class="n">self_stop_offset</span>
-        <span class="p">)</span></div>
-
-<div class="viewcode-block" id="Timespan.curtails_timespan"><a class="viewcode-back" href="../../api/abjad/timespan.html#abjad.timespan.Timespan.curtails_timespan">[docs]</a>    <span class="k">def</span> <span class="nf">curtails_timespan</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timespan</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Is true when timespan curtails ``timespan``.</span>
-
-<span class="sd">        ..  container:: example</span>
-
-<span class="sd">            &gt;&gt;&gt; timespan_1 = abjad.Timespan(0, 10)</span>
-<span class="sd">            &gt;&gt;&gt; timespan_2 = abjad.Timespan(5, 10)</span>
-
-<span class="sd">            &gt;&gt;&gt; timespan_1.curtails_timespan(timespan_1)</span>
-<span class="sd">            False</span>
-<span class="sd">            &gt;&gt;&gt; timespan_1.curtails_timespan(timespan_2)</span>
-<span class="sd">            False</span>
-<span class="sd">            &gt;&gt;&gt; timespan_2.curtails_timespan(timespan_1)</span>
-<span class="sd">            True</span>
-<span class="sd">            &gt;&gt;&gt; timespan_2.curtails_timespan(timespan_2)</span>
-<span class="sd">            False</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">self_start_offset</span><span class="p">,</span> <span class="n">self_stop_offset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">offsets</span>
-        <span class="n">expr_start_offset</span><span class="p">,</span> <span class="n">expr_stop_offset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_offsets</span><span class="p">(</span><span class="n">timespan</span><span class="p">)</span>
-        <span class="k">return</span> <span class="p">(</span>
-            <span class="n">expr_start_offset</span> <span class="o">&lt;</span> <span class="n">self_start_offset</span>
-            <span class="ow">and</span> <span class="n">self_start_offset</span> <span class="o">&lt;=</span> <span class="n">expr_stop_offset</span>
-            <span class="ow">and</span> <span class="n">expr_stop_offset</span> <span class="o">&lt;=</span> <span class="n">self_stop_offset</span>
-        <span class="p">)</span></div>
-
-<div class="viewcode-block" id="Timespan.delays_timespan"><a class="viewcode-back" href="../../api/abjad/timespan.html#abjad.timespan.Timespan.delays_timespan">[docs]</a>    <span class="k">def</span> <span class="nf">delays_timespan</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timespan</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Is true when timespan delays ``timespan``.</span>
-
-<span class="sd">        ..  container:: example</span>
-
-<span class="sd">            &gt;&gt;&gt; timespan_1 = abjad.Timespan(0, 10)</span>
-<span class="sd">            &gt;&gt;&gt; timespan_2 = abjad.Timespan(5, 15)</span>
-<span class="sd">            &gt;&gt;&gt; timespan_3 = abjad.Timespan(10, 20)</span>
-
-<span class="sd">            &gt;&gt;&gt; timespan_1.delays_timespan(timespan_2)</span>
-<span class="sd">            True</span>
-<span class="sd">            &gt;&gt;&gt; timespan_2.delays_timespan(timespan_3)</span>
-<span class="sd">            True</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">self_start_offset</span><span class="p">,</span> <span class="n">self_stop_offset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">offsets</span>
-        <span class="n">expr_start_offset</span><span class="p">,</span> <span class="n">expr_stop_offset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_offsets</span><span class="p">(</span><span class="n">timespan</span><span class="p">)</span>
-        <span class="k">return</span> <span class="p">(</span>
-            <span class="n">self_start_offset</span> <span class="o">&lt;=</span> <span class="n">expr_start_offset</span>
-            <span class="ow">and</span> <span class="n">expr_start_offset</span> <span class="o">&lt;</span> <span class="n">self_stop_offset</span>
-        <span class="p">)</span></div>
-
 <div class="viewcode-block" id="Timespan.divide_by_ratio"><a class="viewcode-back" href="../../api/abjad/timespan.html#abjad.timespan.Timespan.divide_by_ratio">[docs]</a>    <span class="k">def</span> <span class="nf">divide_by_ratio</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ratio</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="s2">&quot;Timespan&quot;</span><span class="p">,</span> <span class="o">...</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Divides timespan by ``ratio``.</span>
@@ -1186,250 +1135,6 @@
             <span class="n">result</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">duration</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span> <span class="o">&amp;</span> <span class="n">timespan</span><span class="p">))</span>
             <span class="k">return</span> <span class="n">result</span>
         <span class="k">return</span> <span class="kc">None</span></div>
-
-<div class="viewcode-block" id="Timespan.happens_during_timespan"><a class="viewcode-back" href="../../api/abjad/timespan.html#abjad.timespan.Timespan.happens_during_timespan">[docs]</a>    <span class="k">def</span> <span class="nf">happens_during_timespan</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timespan</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Is true when timespan happens during ``timespan``.</span>
-
-<span class="sd">        ..  container:: example</span>
-
-<span class="sd">            &gt;&gt;&gt; timespan_1 = abjad.Timespan(0, 10)</span>
-<span class="sd">            &gt;&gt;&gt; timespan_2 = abjad.Timespan(5, 10)</span>
-
-<span class="sd">            &gt;&gt;&gt; timespan_1.happens_during_timespan(timespan_1)</span>
-<span class="sd">            True</span>
-<span class="sd">            &gt;&gt;&gt; timespan_1.happens_during_timespan(timespan_2)</span>
-<span class="sd">            False</span>
-<span class="sd">            &gt;&gt;&gt; timespan_2.happens_during_timespan(timespan_1)</span>
-<span class="sd">            True</span>
-<span class="sd">            &gt;&gt;&gt; timespan_2.happens_during_timespan(timespan_2)</span>
-<span class="sd">            True</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">self_start_offset</span><span class="p">,</span> <span class="n">self_stop_offset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">offsets</span>
-        <span class="n">expr_start_offset</span><span class="p">,</span> <span class="n">expr_stop_offset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_offsets</span><span class="p">(</span><span class="n">timespan</span><span class="p">)</span>
-        <span class="k">return</span> <span class="p">(</span>
-            <span class="n">expr_start_offset</span> <span class="o">&lt;=</span> <span class="n">self_start_offset</span>
-            <span class="ow">and</span> <span class="n">self_stop_offset</span> <span class="o">&lt;=</span> <span class="n">expr_stop_offset</span>
-        <span class="p">)</span></div>
-
-<div class="viewcode-block" id="Timespan.intersects_timespan"><a class="viewcode-back" href="../../api/abjad/timespan.html#abjad.timespan.Timespan.intersects_timespan">[docs]</a>    <span class="k">def</span> <span class="nf">intersects_timespan</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timespan</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Is true when timespan intersects ``timespan``.</span>
-
-<span class="sd">        ..  container:: example</span>
-
-<span class="sd">            &gt;&gt;&gt; timespan_1 = abjad.Timespan(0, 10)</span>
-<span class="sd">            &gt;&gt;&gt; timespan_2 = abjad.Timespan(5, 15)</span>
-<span class="sd">            &gt;&gt;&gt; timespan_3 = abjad.Timespan(10, 15)</span>
-
-<span class="sd">            &gt;&gt;&gt; timespan_1.intersects_timespan(timespan_1)</span>
-<span class="sd">            True</span>
-<span class="sd">            &gt;&gt;&gt; timespan_1.intersects_timespan(timespan_2)</span>
-<span class="sd">            True</span>
-<span class="sd">            &gt;&gt;&gt; timespan_1.intersects_timespan(timespan_3)</span>
-<span class="sd">            False</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">self_start_offset</span><span class="p">,</span> <span class="n">self_stop_offset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">offsets</span>
-        <span class="n">expr_start_offset</span><span class="p">,</span> <span class="n">expr_stop_offset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_offsets</span><span class="p">(</span><span class="n">timespan</span><span class="p">)</span>
-        <span class="k">return</span> <span class="p">(</span>
-            <span class="n">expr_start_offset</span> <span class="o">&lt;=</span> <span class="n">self_start_offset</span>
-            <span class="ow">and</span> <span class="n">self_start_offset</span> <span class="o">&lt;</span> <span class="n">expr_stop_offset</span>
-        <span class="p">)</span> <span class="ow">or</span> <span class="p">(</span>
-            <span class="n">self_start_offset</span> <span class="o">&lt;=</span> <span class="n">expr_start_offset</span>
-            <span class="ow">and</span> <span class="n">expr_start_offset</span> <span class="o">&lt;</span> <span class="n">self_stop_offset</span>
-        <span class="p">)</span></div>
-
-<div class="viewcode-block" id="Timespan.is_congruent_to_timespan"><a class="viewcode-back" href="../../api/abjad/timespan.html#abjad.timespan.Timespan.is_congruent_to_timespan">[docs]</a>    <span class="k">def</span> <span class="nf">is_congruent_to_timespan</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timespan</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Is true when timespan is congruent to ``timespan``.</span>
-
-<span class="sd">        ..  container:: example</span>
-
-<span class="sd">            &gt;&gt;&gt; timespan_1 = abjad.Timespan(0, 10)</span>
-<span class="sd">            &gt;&gt;&gt; timespan_2 = abjad.Timespan(5, 15)</span>
-
-<span class="sd">            &gt;&gt;&gt; timespan_1.is_congruent_to_timespan(timespan_1)</span>
-<span class="sd">            True</span>
-<span class="sd">            &gt;&gt;&gt; timespan_1.is_congruent_to_timespan(timespan_2)</span>
-<span class="sd">            False</span>
-<span class="sd">            &gt;&gt;&gt; timespan_2.is_congruent_to_timespan(timespan_1)</span>
-<span class="sd">            False</span>
-<span class="sd">            &gt;&gt;&gt; timespan_2.is_congruent_to_timespan(timespan_2)</span>
-<span class="sd">            True</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">self_start_offset</span><span class="p">,</span> <span class="n">self_stop_offset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">offsets</span>
-        <span class="n">expr_start_offset</span><span class="p">,</span> <span class="n">expr_stop_offset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_offsets</span><span class="p">(</span><span class="n">timespan</span><span class="p">)</span>
-        <span class="k">return</span> <span class="p">(</span>
-            <span class="n">expr_start_offset</span> <span class="o">==</span> <span class="n">self_start_offset</span>
-            <span class="ow">and</span> <span class="n">expr_stop_offset</span> <span class="o">==</span> <span class="n">self_stop_offset</span>
-        <span class="p">)</span></div>
-
-<div class="viewcode-block" id="Timespan.is_tangent_to_timespan"><a class="viewcode-back" href="../../api/abjad/timespan.html#abjad.timespan.Timespan.is_tangent_to_timespan">[docs]</a>    <span class="k">def</span> <span class="nf">is_tangent_to_timespan</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timespan</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Is true when timespan is tangent to ``timespan``.</span>
-
-<span class="sd">        ..  container:: example</span>
-
-<span class="sd">            &gt;&gt;&gt; timespan_1 = abjad.Timespan(0, 10)</span>
-<span class="sd">            &gt;&gt;&gt; timespan_2 = abjad.Timespan(10, 20)</span>
-
-<span class="sd">            &gt;&gt;&gt; timespan_1.is_tangent_to_timespan(timespan_1)</span>
-<span class="sd">            False</span>
-<span class="sd">            &gt;&gt;&gt; timespan_1.is_tangent_to_timespan(timespan_2)</span>
-<span class="sd">            True</span>
-<span class="sd">            &gt;&gt;&gt; timespan_2.is_tangent_to_timespan(timespan_1)</span>
-<span class="sd">            True</span>
-<span class="sd">            &gt;&gt;&gt; timespan_2.is_tangent_to_timespan(timespan_2)</span>
-<span class="sd">            False</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">self_start_offset</span><span class="p">,</span> <span class="n">self_stop_offset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">offsets</span>
-        <span class="n">expr_start_offset</span><span class="p">,</span> <span class="n">expr_stop_offset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_offsets</span><span class="p">(</span><span class="n">timespan</span><span class="p">)</span>
-        <span class="k">return</span> <span class="p">(</span>
-            <span class="n">self_stop_offset</span> <span class="o">==</span> <span class="n">expr_start_offset</span>
-            <span class="ow">or</span> <span class="n">expr_stop_offset</span> <span class="o">==</span> <span class="n">self_start_offset</span>
-        <span class="p">)</span></div>
-
-<div class="viewcode-block" id="Timespan.overlaps_all_of_timespan"><a class="viewcode-back" href="../../api/abjad/timespan.html#abjad.timespan.Timespan.overlaps_all_of_timespan">[docs]</a>    <span class="k">def</span> <span class="nf">overlaps_all_of_timespan</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timespan</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Is true when timespan overlaps all of ``timespan``.</span>
-
-<span class="sd">        ..  container:: example</span>
-
-<span class="sd">            &gt;&gt;&gt; timespan_1 = abjad.Timespan(0, 10)</span>
-<span class="sd">            &gt;&gt;&gt; timespan_2 = abjad.Timespan(5, 6)</span>
-<span class="sd">            &gt;&gt;&gt; timespan_3 = abjad.Timespan(5, 10)</span>
-
-<span class="sd">            &gt;&gt;&gt; timespan_1.overlaps_all_of_timespan(timespan_1)</span>
-<span class="sd">            False</span>
-<span class="sd">            &gt;&gt;&gt; timespan_1.overlaps_all_of_timespan(timespan_2)</span>
-<span class="sd">            True</span>
-<span class="sd">            &gt;&gt;&gt; timespan_1.overlaps_all_of_timespan(timespan_3)</span>
-<span class="sd">            False</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">self_start_offset</span><span class="p">,</span> <span class="n">self_stop_offset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">offsets</span>
-        <span class="n">expr_start_offset</span><span class="p">,</span> <span class="n">expr_stop_offset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_offsets</span><span class="p">(</span><span class="n">timespan</span><span class="p">)</span>
-        <span class="k">return</span> <span class="p">(</span>
-            <span class="n">self_start_offset</span> <span class="o">&lt;</span> <span class="n">expr_start_offset</span>
-            <span class="ow">and</span> <span class="n">expr_stop_offset</span> <span class="o">&lt;</span> <span class="n">self_stop_offset</span>
-        <span class="p">)</span></div>
-
-<div class="viewcode-block" id="Timespan.overlaps_only_start_of_timespan"><a class="viewcode-back" href="../../api/abjad/timespan.html#abjad.timespan.Timespan.overlaps_only_start_of_timespan">[docs]</a>    <span class="k">def</span> <span class="nf">overlaps_only_start_of_timespan</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timespan</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Is true when timespan overlaps only start of ``timespan``.</span>
-
-<span class="sd">        ..  container:: example</span>
-
-<span class="sd">            &gt;&gt;&gt; timespan_1 = abjad.Timespan(0, 10)</span>
-<span class="sd">            &gt;&gt;&gt; timespan_2 = abjad.Timespan(-5, 5)</span>
-<span class="sd">            &gt;&gt;&gt; timespan_3 = abjad.Timespan(4, 6)</span>
-<span class="sd">            &gt;&gt;&gt; timespan_4 = abjad.Timespan(5, 15)</span>
-
-<span class="sd">            &gt;&gt;&gt; timespan_1.overlaps_only_start_of_timespan(timespan_1)</span>
-<span class="sd">            False</span>
-<span class="sd">            &gt;&gt;&gt; timespan_1.overlaps_only_start_of_timespan(timespan_2)</span>
-<span class="sd">            False</span>
-<span class="sd">            &gt;&gt;&gt; timespan_1.overlaps_only_start_of_timespan(timespan_3)</span>
-<span class="sd">            False</span>
-<span class="sd">            &gt;&gt;&gt; timespan_1.overlaps_only_start_of_timespan(timespan_4)</span>
-<span class="sd">            True</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">self_start_offset</span><span class="p">,</span> <span class="n">self_stop_offset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">offsets</span>
-        <span class="n">expr_start_offset</span><span class="p">,</span> <span class="n">expr_stop_offset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_offsets</span><span class="p">(</span><span class="n">timespan</span><span class="p">)</span>
-        <span class="k">return</span> <span class="p">(</span>
-            <span class="n">self_start_offset</span> <span class="o">&lt;</span> <span class="n">expr_start_offset</span>
-            <span class="ow">and</span> <span class="n">expr_start_offset</span> <span class="o">&lt;</span> <span class="n">self_stop_offset</span>
-            <span class="ow">and</span> <span class="n">self_stop_offset</span> <span class="o">&lt;=</span> <span class="n">expr_stop_offset</span>
-        <span class="p">)</span></div>
-
-<div class="viewcode-block" id="Timespan.overlaps_only_stop_of_timespan"><a class="viewcode-back" href="../../api/abjad/timespan.html#abjad.timespan.Timespan.overlaps_only_stop_of_timespan">[docs]</a>    <span class="k">def</span> <span class="nf">overlaps_only_stop_of_timespan</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timespan</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Is true when timespan overlaps only stop of ``timespan``.</span>
-
-<span class="sd">        ..  container:: example</span>
-
-<span class="sd">            &gt;&gt;&gt; timespan_1 = abjad.Timespan(0, 10)</span>
-<span class="sd">            &gt;&gt;&gt; timespan_2 = abjad.Timespan(-5, 5)</span>
-<span class="sd">            &gt;&gt;&gt; timespan_3 = abjad.Timespan(4, 6)</span>
-<span class="sd">            &gt;&gt;&gt; timespan_4 = abjad.Timespan(5, 15)</span>
-
-<span class="sd">            &gt;&gt;&gt; timespan_1.overlaps_only_stop_of_timespan(timespan_1)</span>
-<span class="sd">            False</span>
-<span class="sd">            &gt;&gt;&gt; timespan_1.overlaps_only_stop_of_timespan(timespan_2)</span>
-<span class="sd">            True</span>
-<span class="sd">            &gt;&gt;&gt; timespan_1.overlaps_only_stop_of_timespan(timespan_3)</span>
-<span class="sd">            False</span>
-<span class="sd">            &gt;&gt;&gt; timespan_1.overlaps_only_stop_of_timespan(timespan_4)</span>
-<span class="sd">            False</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">self_start_offset</span><span class="p">,</span> <span class="n">self_stop_offset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">offsets</span>
-        <span class="n">expr_start_offset</span><span class="p">,</span> <span class="n">expr_stop_offset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_offsets</span><span class="p">(</span><span class="n">timespan</span><span class="p">)</span>
-        <span class="k">return</span> <span class="p">(</span>
-            <span class="n">expr_start_offset</span> <span class="o">&lt;=</span> <span class="n">self_start_offset</span>
-            <span class="ow">and</span> <span class="n">self_start_offset</span> <span class="o">&lt;</span> <span class="n">expr_stop_offset</span>
-            <span class="ow">and</span> <span class="n">expr_stop_offset</span> <span class="o">&lt;</span> <span class="n">self_stop_offset</span>
-        <span class="p">)</span></div>
-
-<div class="viewcode-block" id="Timespan.overlaps_start_of_timespan"><a class="viewcode-back" href="../../api/abjad/timespan.html#abjad.timespan.Timespan.overlaps_start_of_timespan">[docs]</a>    <span class="k">def</span> <span class="nf">overlaps_start_of_timespan</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timespan</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Is true when timespan overlaps start of ``timespan``.</span>
-
-<span class="sd">        ..  container:: example</span>
-
-<span class="sd">            &gt;&gt;&gt; timespan_1 = abjad.Timespan(0, 10)</span>
-<span class="sd">            &gt;&gt;&gt; timespan_2 = abjad.Timespan(-5, 5)</span>
-<span class="sd">            &gt;&gt;&gt; timespan_3 = abjad.Timespan(4, 6)</span>
-<span class="sd">            &gt;&gt;&gt; timespan_4 = abjad.Timespan(5, 15)</span>
-
-<span class="sd">            &gt;&gt;&gt; timespan_1.overlaps_start_of_timespan(timespan_1)</span>
-<span class="sd">            False</span>
-<span class="sd">            &gt;&gt;&gt; timespan_1.overlaps_start_of_timespan(timespan_2)</span>
-<span class="sd">            False</span>
-<span class="sd">            &gt;&gt;&gt; timespan_1.overlaps_start_of_timespan(timespan_3)</span>
-<span class="sd">            True</span>
-<span class="sd">            &gt;&gt;&gt; timespan_1.overlaps_start_of_timespan(timespan_4)</span>
-<span class="sd">            True</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">self_start_offset</span><span class="p">,</span> <span class="n">self_stop_offset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">offsets</span>
-        <span class="n">expr_start_offset</span><span class="p">,</span> <span class="n">expr_stop_offset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_offsets</span><span class="p">(</span><span class="n">timespan</span><span class="p">)</span>
-        <span class="k">return</span> <span class="p">(</span>
-            <span class="n">self_start_offset</span> <span class="o">&lt;</span> <span class="n">expr_start_offset</span>
-            <span class="ow">and</span> <span class="n">expr_start_offset</span> <span class="o">&lt;</span> <span class="n">self_stop_offset</span>
-        <span class="p">)</span></div>
-
-<div class="viewcode-block" id="Timespan.overlaps_stop_of_timespan"><a class="viewcode-back" href="../../api/abjad/timespan.html#abjad.timespan.Timespan.overlaps_stop_of_timespan">[docs]</a>    <span class="k">def</span> <span class="nf">overlaps_stop_of_timespan</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timespan</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Is true when timespan overlaps start of ``timespan``.</span>
-
-<span class="sd">        ..  container:: example</span>
-
-<span class="sd">            &gt;&gt;&gt; timespan_1 = abjad.Timespan(0, 10)</span>
-<span class="sd">            &gt;&gt;&gt; timespan_2 = abjad.Timespan(-5, 5)</span>
-<span class="sd">            &gt;&gt;&gt; timespan_3 = abjad.Timespan(4, 6)</span>
-<span class="sd">            &gt;&gt;&gt; timespan_4 = abjad.Timespan(5, 15)</span>
-
-<span class="sd">            &gt;&gt;&gt; timespan_1.overlaps_stop_of_timespan(timespan_1)</span>
-<span class="sd">            False</span>
-<span class="sd">            &gt;&gt;&gt; timespan_1.overlaps_stop_of_timespan(timespan_2)</span>
-<span class="sd">            True</span>
-<span class="sd">            &gt;&gt;&gt; timespan_1.overlaps_stop_of_timespan(timespan_3)</span>
-<span class="sd">            True</span>
-<span class="sd">            &gt;&gt;&gt; timespan_1.overlaps_stop_of_timespan(timespan_4)</span>
-<span class="sd">            False</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">self_start_offset</span><span class="p">,</span> <span class="n">self_stop_offset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">offsets</span>
-        <span class="n">expr_start_offset</span><span class="p">,</span> <span class="n">expr_stop_offset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_offsets</span><span class="p">(</span><span class="n">timespan</span><span class="p">)</span>
-        <span class="k">return</span> <span class="p">(</span>
-            <span class="n">self_start_offset</span> <span class="o">&lt;</span> <span class="n">expr_stop_offset</span> <span class="ow">and</span> <span class="n">expr_stop_offset</span> <span class="o">&lt;</span> <span class="n">self_stop_offset</span>
-        <span class="p">)</span></div>
 
 <div class="viewcode-block" id="Timespan.reflect"><a class="viewcode-back" href="../../api/abjad/timespan.html#abjad.timespan.Timespan.reflect">[docs]</a>    <span class="k">def</span> <span class="nf">reflect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Timespan&quot;</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -1672,526 +1377,6 @@
         <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">right</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">result</span></div>
 
-<div class="viewcode-block" id="Timespan.starts_after_offset"><a class="viewcode-back" href="../../api/abjad/timespan.html#abjad.timespan.Timespan.starts_after_offset">[docs]</a>    <span class="k">def</span> <span class="nf">starts_after_offset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">offset</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Is true when timespan overlaps start of ``timespan``.</span>
-
-<span class="sd">        ..  container:: example</span>
-
-<span class="sd">            &gt;&gt;&gt; timespan_1 = abjad.Timespan(0, 10)</span>
-
-<span class="sd">            &gt;&gt;&gt; timespan_1.starts_after_offset((-5, 1))</span>
-<span class="sd">            True</span>
-<span class="sd">            &gt;&gt;&gt; timespan_1.starts_after_offset((0, 1))</span>
-<span class="sd">            False</span>
-<span class="sd">            &gt;&gt;&gt; timespan_1.starts_after_offset((5, 1))</span>
-<span class="sd">            False</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">offset</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Offset</span><span class="p">(</span><span class="n">offset</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">offset</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_offset</span></div>
-
-<div class="viewcode-block" id="Timespan.starts_after_timespan_starts"><a class="viewcode-back" href="../../api/abjad/timespan.html#abjad.timespan.Timespan.starts_after_timespan_starts">[docs]</a>    <span class="k">def</span> <span class="nf">starts_after_timespan_starts</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timespan</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Is true when timespan starts after ``timespan`` starts.</span>
-
-<span class="sd">        ..  container:: example</span>
-
-<span class="sd">            &gt;&gt;&gt; timespan_1 = abjad.Timespan(0, 10)</span>
-<span class="sd">            &gt;&gt;&gt; timespan_2 = abjad.Timespan(5, 15)</span>
-
-<span class="sd">            &gt;&gt;&gt; timespan_1.starts_after_timespan_starts(timespan_1)</span>
-<span class="sd">            False</span>
-<span class="sd">            &gt;&gt;&gt; timespan_1.starts_after_timespan_starts(timespan_2)</span>
-<span class="sd">            False</span>
-<span class="sd">            &gt;&gt;&gt; timespan_2.starts_after_timespan_starts(timespan_1)</span>
-<span class="sd">            True</span>
-<span class="sd">            &gt;&gt;&gt; timespan_2.starts_after_timespan_starts(timespan_2)</span>
-<span class="sd">            False</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">self_start_offset</span><span class="p">,</span> <span class="n">self_stop_offset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">offsets</span>
-        <span class="n">expr_start_offset</span><span class="p">,</span> <span class="n">expr_stop_offset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_offsets</span><span class="p">(</span><span class="n">timespan</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">expr_start_offset</span> <span class="o">&lt;</span> <span class="n">self_start_offset</span></div>
-
-<div class="viewcode-block" id="Timespan.starts_after_timespan_stops"><a class="viewcode-back" href="../../api/abjad/timespan.html#abjad.timespan.Timespan.starts_after_timespan_stops">[docs]</a>    <span class="k">def</span> <span class="nf">starts_after_timespan_stops</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timespan</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Is true when timespan starts after ``timespan`` stops.</span>
-
-<span class="sd">        ..  container:: example</span>
-
-<span class="sd">            &gt;&gt;&gt; timespan_1 = abjad.Timespan(0, 10)</span>
-<span class="sd">            &gt;&gt;&gt; timespan_2 = abjad.Timespan(5, 15)</span>
-<span class="sd">            &gt;&gt;&gt; timespan_3 = abjad.Timespan(10, 20)</span>
-<span class="sd">            &gt;&gt;&gt; timespan_4 = abjad.Timespan(15, 25)</span>
-
-<span class="sd">            &gt;&gt;&gt; timespan_1.starts_after_timespan_stops(timespan_1)</span>
-<span class="sd">            False</span>
-<span class="sd">            &gt;&gt;&gt; timespan_2.starts_after_timespan_stops(timespan_1)</span>
-<span class="sd">            False</span>
-<span class="sd">            &gt;&gt;&gt; timespan_3.starts_after_timespan_stops(timespan_1)</span>
-<span class="sd">            True</span>
-<span class="sd">            &gt;&gt;&gt; timespan_4.starts_after_timespan_stops(timespan_1)</span>
-<span class="sd">            True</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">self_start_offset</span><span class="p">,</span> <span class="n">self_stop_offset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">offsets</span>
-        <span class="n">expr_start_offset</span><span class="p">,</span> <span class="n">expr_stop_offset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_offsets</span><span class="p">(</span><span class="n">timespan</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">expr_stop_offset</span> <span class="o">&lt;=</span> <span class="n">self_start_offset</span></div>
-
-<div class="viewcode-block" id="Timespan.starts_at_offset"><a class="viewcode-back" href="../../api/abjad/timespan.html#abjad.timespan.Timespan.starts_at_offset">[docs]</a>    <span class="k">def</span> <span class="nf">starts_at_offset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">offset</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Is true when timespan starts at ``offset``.</span>
-
-<span class="sd">        ..  container:: example</span>
-
-<span class="sd">            &gt;&gt;&gt; timespan_1 = abjad.Timespan(0, 10)</span>
-
-<span class="sd">            &gt;&gt;&gt; timespan_1.starts_at_offset((-5, 1))</span>
-<span class="sd">            False</span>
-<span class="sd">            &gt;&gt;&gt; timespan_1.starts_at_offset((0, 1))</span>
-<span class="sd">            True</span>
-<span class="sd">            &gt;&gt;&gt; timespan_1.starts_at_offset((5, 1))</span>
-<span class="sd">            False</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">offset</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Offset</span><span class="p">(</span><span class="n">offset</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_offset</span> <span class="o">==</span> <span class="n">offset</span></div>
-
-<div class="viewcode-block" id="Timespan.starts_at_or_after_offset"><a class="viewcode-back" href="../../api/abjad/timespan.html#abjad.timespan.Timespan.starts_at_or_after_offset">[docs]</a>    <span class="k">def</span> <span class="nf">starts_at_or_after_offset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">offset</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Is true when timespan starts at or after ``offset``.</span>
-
-<span class="sd">        ..  container:: example</span>
-
-<span class="sd">            &gt;&gt;&gt; timespan_1 = abjad.Timespan(0, 10)</span>
-
-<span class="sd">            &gt;&gt;&gt; timespan_1.starts_at_or_after_offset((-5, 1))</span>
-<span class="sd">            True</span>
-<span class="sd">            &gt;&gt;&gt; timespan_1.starts_at_or_after_offset((0, 1))</span>
-<span class="sd">            True</span>
-<span class="sd">            &gt;&gt;&gt; timespan_1.starts_at_or_after_offset((5, 1))</span>
-<span class="sd">            False</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">offset</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Offset</span><span class="p">(</span><span class="n">offset</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">offset</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_offset</span></div>
-
-<div class="viewcode-block" id="Timespan.starts_before_offset"><a class="viewcode-back" href="../../api/abjad/timespan.html#abjad.timespan.Timespan.starts_before_offset">[docs]</a>    <span class="k">def</span> <span class="nf">starts_before_offset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">offset</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Is true when timespan starts before ``offset``.</span>
-
-<span class="sd">        ..  container:: example</span>
-
-<span class="sd">            &gt;&gt;&gt; timespan_1 = abjad.Timespan(0, 10)</span>
-
-<span class="sd">            &gt;&gt;&gt; timespan_1.starts_before_offset((-5, 1))</span>
-<span class="sd">            False</span>
-<span class="sd">            &gt;&gt;&gt; timespan_1.starts_before_offset((0, 1))</span>
-<span class="sd">            False</span>
-<span class="sd">            &gt;&gt;&gt; timespan_1.starts_before_offset((5, 1))</span>
-<span class="sd">            True</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">offset</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Offset</span><span class="p">(</span><span class="n">offset</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_offset</span> <span class="o">&lt;</span> <span class="n">offset</span></div>
-
-<div class="viewcode-block" id="Timespan.starts_before_or_at_offset"><a class="viewcode-back" href="../../api/abjad/timespan.html#abjad.timespan.Timespan.starts_before_or_at_offset">[docs]</a>    <span class="k">def</span> <span class="nf">starts_before_or_at_offset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">offset</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Is true when timespan starts before or at ``offset``.</span>
-
-<span class="sd">        ..  container:: example</span>
-
-<span class="sd">            &gt;&gt;&gt; timespan_1 = abjad.Timespan(0, 10)</span>
-
-<span class="sd">            &gt;&gt;&gt; timespan_1.starts_before_or_at_offset((-5, 1))</span>
-<span class="sd">            False</span>
-<span class="sd">            &gt;&gt;&gt; timespan_1.starts_before_or_at_offset((0, 1))</span>
-<span class="sd">            True</span>
-<span class="sd">            &gt;&gt;&gt; timespan_1.starts_before_or_at_offset((5, 1))</span>
-<span class="sd">            True</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">offset</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Offset</span><span class="p">(</span><span class="n">offset</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_offset</span> <span class="o">&lt;=</span> <span class="n">offset</span></div>
-
-<div class="viewcode-block" id="Timespan.starts_before_timespan_starts"><a class="viewcode-back" href="../../api/abjad/timespan.html#abjad.timespan.Timespan.starts_before_timespan_starts">[docs]</a>    <span class="k">def</span> <span class="nf">starts_before_timespan_starts</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timespan</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Is true when timespan starts before ``timespan`` starts.</span>
-
-<span class="sd">        ..  container:: example</span>
-
-<span class="sd">            &gt;&gt;&gt; timespan_1 = abjad.Timespan(0, 10)</span>
-<span class="sd">            &gt;&gt;&gt; timespan_2 = abjad.Timespan(5, 15)</span>
-
-<span class="sd">            &gt;&gt;&gt; timespan_1.starts_before_timespan_starts(timespan_1)</span>
-<span class="sd">            False</span>
-<span class="sd">            &gt;&gt;&gt; timespan_1.starts_before_timespan_starts(timespan_2)</span>
-<span class="sd">            True</span>
-<span class="sd">            &gt;&gt;&gt; timespan_2.starts_before_timespan_starts(timespan_1)</span>
-<span class="sd">            False</span>
-<span class="sd">            &gt;&gt;&gt; timespan_2.starts_before_timespan_starts(timespan_2)</span>
-<span class="sd">            False</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">self_start_offset</span><span class="p">,</span> <span class="n">self_stop_offset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">offsets</span>
-        <span class="n">expr_start_offset</span><span class="p">,</span> <span class="n">expr_stop_offset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_offsets</span><span class="p">(</span><span class="n">timespan</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">self_start_offset</span> <span class="o">&lt;</span> <span class="n">expr_start_offset</span></div>
-
-<div class="viewcode-block" id="Timespan.starts_before_timespan_stops"><a class="viewcode-back" href="../../api/abjad/timespan.html#abjad.timespan.Timespan.starts_before_timespan_stops">[docs]</a>    <span class="k">def</span> <span class="nf">starts_before_timespan_stops</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timespan</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Is true when timespan starts before ``timespan`` stops.</span>
-
-<span class="sd">        ..  container:: example</span>
-
-<span class="sd">            &gt;&gt;&gt; timespan_1 = abjad.Timespan(0, 10)</span>
-<span class="sd">            &gt;&gt;&gt; timespan_2 = abjad.Timespan(5, 15)</span>
-
-<span class="sd">            &gt;&gt;&gt; timespan_1.starts_before_timespan_stops(timespan_1)</span>
-<span class="sd">            True</span>
-<span class="sd">            &gt;&gt;&gt; timespan_1.starts_before_timespan_stops(timespan_2)</span>
-<span class="sd">            True</span>
-<span class="sd">            &gt;&gt;&gt; timespan_2.starts_before_timespan_stops(timespan_1)</span>
-<span class="sd">            True</span>
-<span class="sd">            &gt;&gt;&gt; timespan_2.starts_before_timespan_stops(timespan_2)</span>
-<span class="sd">            True</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">self_start_offset</span><span class="p">,</span> <span class="n">self_stop_offset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">offsets</span>
-        <span class="n">expr_start_offset</span><span class="p">,</span> <span class="n">expr_stop_offset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_offsets</span><span class="p">(</span><span class="n">timespan</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">self_start_offset</span> <span class="o">&lt;</span> <span class="n">expr_stop_offset</span></div>
-
-<div class="viewcode-block" id="Timespan.starts_during_timespan"><a class="viewcode-back" href="../../api/abjad/timespan.html#abjad.timespan.Timespan.starts_during_timespan">[docs]</a>    <span class="k">def</span> <span class="nf">starts_during_timespan</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timespan</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Is true when timespan starts during ``timespan``.</span>
-
-<span class="sd">        ..  container:: example</span>
-
-<span class="sd">            &gt;&gt;&gt; timespan_1 = abjad.Timespan(0, 10)</span>
-<span class="sd">            &gt;&gt;&gt; timespan_2 = abjad.Timespan(5, 15)</span>
-
-<span class="sd">            &gt;&gt;&gt; timespan_1.starts_during_timespan(timespan_1)</span>
-<span class="sd">            True</span>
-<span class="sd">            &gt;&gt;&gt; timespan_1.starts_during_timespan(timespan_2)</span>
-<span class="sd">            False</span>
-<span class="sd">            &gt;&gt;&gt; timespan_2.starts_during_timespan(timespan_1)</span>
-<span class="sd">            True</span>
-<span class="sd">            &gt;&gt;&gt; timespan_2.starts_during_timespan(timespan_2)</span>
-<span class="sd">            True</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">self_start_offset</span><span class="p">,</span> <span class="n">self_stop_offset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">offsets</span>
-        <span class="n">expr_start_offset</span><span class="p">,</span> <span class="n">expr_stop_offset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_offsets</span><span class="p">(</span><span class="n">timespan</span><span class="p">)</span>
-        <span class="k">return</span> <span class="p">(</span>
-            <span class="n">expr_start_offset</span> <span class="o">&lt;=</span> <span class="n">self_start_offset</span>
-            <span class="ow">and</span> <span class="n">self_start_offset</span> <span class="o">&lt;</span> <span class="n">expr_stop_offset</span>
-        <span class="p">)</span></div>
-
-<div class="viewcode-block" id="Timespan.starts_when_timespan_starts"><a class="viewcode-back" href="../../api/abjad/timespan.html#abjad.timespan.Timespan.starts_when_timespan_starts">[docs]</a>    <span class="k">def</span> <span class="nf">starts_when_timespan_starts</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timespan</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Is true when timespan starts when ``timespan`` starts.</span>
-
-<span class="sd">        ..  container:: example</span>
-
-<span class="sd">            &gt;&gt;&gt; timespan_1 = abjad.Timespan(0, 10)</span>
-<span class="sd">            &gt;&gt;&gt; timespan_2 = abjad.Timespan(5, 15)</span>
-
-<span class="sd">            &gt;&gt;&gt; timespan_1.starts_when_timespan_starts(timespan_1)</span>
-<span class="sd">            True</span>
-<span class="sd">            &gt;&gt;&gt; timespan_1.starts_when_timespan_starts(timespan_2)</span>
-<span class="sd">            False</span>
-<span class="sd">            &gt;&gt;&gt; timespan_2.starts_when_timespan_starts(timespan_1)</span>
-<span class="sd">            False</span>
-<span class="sd">            &gt;&gt;&gt; timespan_2.starts_when_timespan_starts(timespan_2)</span>
-<span class="sd">            True</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">self_start_offset</span><span class="p">,</span> <span class="n">self_stop_offset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">offsets</span>
-        <span class="n">expr_start_offset</span><span class="p">,</span> <span class="n">expr_stop_offset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_offsets</span><span class="p">(</span><span class="n">timespan</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">expr_start_offset</span> <span class="o">==</span> <span class="n">self_start_offset</span></div>
-
-<div class="viewcode-block" id="Timespan.starts_when_timespan_stops"><a class="viewcode-back" href="../../api/abjad/timespan.html#abjad.timespan.Timespan.starts_when_timespan_stops">[docs]</a>    <span class="k">def</span> <span class="nf">starts_when_timespan_stops</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timespan</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Is true when timespan starts when ``timespan`` stops.</span>
-
-<span class="sd">        ..  container:: example</span>
-
-<span class="sd">            &gt;&gt;&gt; timespan_1 = abjad.Timespan(0, 10)</span>
-<span class="sd">            &gt;&gt;&gt; timespan_2 = abjad.Timespan(10, 20)</span>
-
-<span class="sd">            &gt;&gt;&gt; timespan_1.starts_when_timespan_stops(timespan_1)</span>
-<span class="sd">            False</span>
-<span class="sd">            &gt;&gt;&gt; timespan_1.starts_when_timespan_stops(timespan_2)</span>
-<span class="sd">            False</span>
-<span class="sd">            &gt;&gt;&gt; timespan_2.starts_when_timespan_stops(timespan_1)</span>
-<span class="sd">            True</span>
-<span class="sd">            &gt;&gt;&gt; timespan_2.starts_when_timespan_stops(timespan_2)</span>
-<span class="sd">            False</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">self_start_offset</span><span class="p">,</span> <span class="n">self_stop_offset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">offsets</span>
-        <span class="n">expr_start_offset</span><span class="p">,</span> <span class="n">expr_stop_offset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_offsets</span><span class="p">(</span><span class="n">timespan</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">self_start_offset</span> <span class="o">==</span> <span class="n">expr_stop_offset</span></div>
-
-<div class="viewcode-block" id="Timespan.stops_after_offset"><a class="viewcode-back" href="../../api/abjad/timespan.html#abjad.timespan.Timespan.stops_after_offset">[docs]</a>    <span class="k">def</span> <span class="nf">stops_after_offset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">offset</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Is true when timespan stops after ``offset``.</span>
-
-<span class="sd">        ..  container:: example</span>
-
-<span class="sd">            &gt;&gt;&gt; timespan_1 = abjad.Timespan(0, 10)</span>
-
-<span class="sd">            &gt;&gt;&gt; timespan_1.starts_after_offset((-5, 1))</span>
-<span class="sd">            True</span>
-<span class="sd">            &gt;&gt;&gt; timespan_1.starts_after_offset((0, 1))</span>
-<span class="sd">            False</span>
-<span class="sd">            &gt;&gt;&gt; timespan_1.starts_after_offset((5, 1))</span>
-<span class="sd">            False</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">offset</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Offset</span><span class="p">(</span><span class="n">offset</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">offset</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">stop_offset</span></div>
-
-<div class="viewcode-block" id="Timespan.stops_after_timespan_starts"><a class="viewcode-back" href="../../api/abjad/timespan.html#abjad.timespan.Timespan.stops_after_timespan_starts">[docs]</a>    <span class="k">def</span> <span class="nf">stops_after_timespan_starts</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timespan</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Is true when timespan stops when ``timespan`` starts.</span>
-
-<span class="sd">        ..  container:: example</span>
-
-<span class="sd">            &gt;&gt;&gt; timespan_1 = abjad.Timespan(0, 10)</span>
-<span class="sd">            &gt;&gt;&gt; timespan_2 = abjad.Timespan(10, 20)</span>
-
-<span class="sd">            &gt;&gt;&gt; timespan_1.stops_after_timespan_starts(timespan_1)</span>
-<span class="sd">            True</span>
-<span class="sd">            &gt;&gt;&gt; timespan_1.stops_after_timespan_starts(timespan_2)</span>
-<span class="sd">            False</span>
-<span class="sd">            &gt;&gt;&gt; timespan_2.stops_after_timespan_starts(timespan_1)</span>
-<span class="sd">            True</span>
-<span class="sd">            &gt;&gt;&gt; timespan_2.stops_after_timespan_starts(timespan_2)</span>
-<span class="sd">            True</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">self_start_offset</span><span class="p">,</span> <span class="n">self_stop_offset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">offsets</span>
-        <span class="n">expr_start_offset</span><span class="p">,</span> <span class="n">expr_stop_offset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_offsets</span><span class="p">(</span><span class="n">timespan</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">expr_start_offset</span> <span class="o">&lt;</span> <span class="n">self_stop_offset</span></div>
-
-<div class="viewcode-block" id="Timespan.stops_after_timespan_stops"><a class="viewcode-back" href="../../api/abjad/timespan.html#abjad.timespan.Timespan.stops_after_timespan_stops">[docs]</a>    <span class="k">def</span> <span class="nf">stops_after_timespan_stops</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timespan</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Is true when timespan stops when ``timespan`` stops.</span>
-
-<span class="sd">        ..  container:: example</span>
-
-<span class="sd">            &gt;&gt;&gt; timespan_1 = abjad.Timespan(0, 10)</span>
-<span class="sd">            &gt;&gt;&gt; timespan_2 = abjad.Timespan(10, 20)</span>
-
-<span class="sd">            &gt;&gt;&gt; timespan_1.stops_after_timespan_stops(timespan_1)</span>
-<span class="sd">            False</span>
-<span class="sd">            &gt;&gt;&gt; timespan_1.stops_after_timespan_stops(timespan_2)</span>
-<span class="sd">            False</span>
-<span class="sd">            &gt;&gt;&gt; timespan_2.stops_after_timespan_stops(timespan_1)</span>
-<span class="sd">            True</span>
-<span class="sd">            &gt;&gt;&gt; timespan_2.stops_after_timespan_stops(timespan_2)</span>
-<span class="sd">            False</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">self_start_offset</span><span class="p">,</span> <span class="n">self_stop_offset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">offsets</span>
-        <span class="n">expr_start_offset</span><span class="p">,</span> <span class="n">expr_stop_offset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_offsets</span><span class="p">(</span><span class="n">timespan</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">expr_stop_offset</span> <span class="o">&lt;</span> <span class="n">self_stop_offset</span></div>
-
-<div class="viewcode-block" id="Timespan.stops_at_offset"><a class="viewcode-back" href="../../api/abjad/timespan.html#abjad.timespan.Timespan.stops_at_offset">[docs]</a>    <span class="k">def</span> <span class="nf">stops_at_offset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">offset</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Is true when timespan stops at ``offset``.</span>
-
-<span class="sd">        ..  container:: example</span>
-
-<span class="sd">            &gt;&gt;&gt; timespan_1 = abjad.Timespan(0, 10)</span>
-
-<span class="sd">            &gt;&gt;&gt; timespan_1.stops_at_offset((-5, 1))</span>
-<span class="sd">            False</span>
-<span class="sd">            &gt;&gt;&gt; timespan_1.stops_at_offset((0, 1))</span>
-<span class="sd">            False</span>
-<span class="sd">            &gt;&gt;&gt; timespan_1.stops_at_offset((5, 1))</span>
-<span class="sd">            False</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">offset</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Offset</span><span class="p">(</span><span class="n">offset</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">stop_offset</span> <span class="o">==</span> <span class="n">offset</span></div>
-
-<div class="viewcode-block" id="Timespan.stops_at_or_after_offset"><a class="viewcode-back" href="../../api/abjad/timespan.html#abjad.timespan.Timespan.stops_at_or_after_offset">[docs]</a>    <span class="k">def</span> <span class="nf">stops_at_or_after_offset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">offset</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Is true when timespan stops at or after ``offset``.</span>
-
-<span class="sd">        ..  container:: example</span>
-
-<span class="sd">            &gt;&gt;&gt; timespan_1 = abjad.Timespan(0, 10)</span>
-
-<span class="sd">            &gt;&gt;&gt; timespan_1.stops_at_or_after_offset((-5, 1))</span>
-<span class="sd">            True</span>
-<span class="sd">            &gt;&gt;&gt; timespan_1.stops_at_or_after_offset((0, 1))</span>
-<span class="sd">            True</span>
-<span class="sd">            &gt;&gt;&gt; timespan_1.stops_at_or_after_offset((5, 1))</span>
-<span class="sd">            True</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">offset</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Offset</span><span class="p">(</span><span class="n">offset</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">offset</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">stop_offset</span></div>
-
-<div class="viewcode-block" id="Timespan.stops_before_offset"><a class="viewcode-back" href="../../api/abjad/timespan.html#abjad.timespan.Timespan.stops_before_offset">[docs]</a>    <span class="k">def</span> <span class="nf">stops_before_offset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">offset</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Is true when timespan stops before ``offset``.</span>
-
-<span class="sd">        ..  container:: example</span>
-
-<span class="sd">            &gt;&gt;&gt; timespan_1 = abjad.Timespan(0, 10)</span>
-
-<span class="sd">            &gt;&gt;&gt; timespan_1.stops_before_offset((-5, 1))</span>
-<span class="sd">            False</span>
-<span class="sd">            &gt;&gt;&gt; timespan_1.stops_before_offset((0, 1))</span>
-<span class="sd">            False</span>
-<span class="sd">            &gt;&gt;&gt; timespan_1.stops_before_offset((5, 1))</span>
-<span class="sd">            False</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">offset</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Offset</span><span class="p">(</span><span class="n">offset</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">stop_offset</span> <span class="o">&lt;</span> <span class="n">offset</span></div>
-
-<div class="viewcode-block" id="Timespan.stops_before_or_at_offset"><a class="viewcode-back" href="../../api/abjad/timespan.html#abjad.timespan.Timespan.stops_before_or_at_offset">[docs]</a>    <span class="k">def</span> <span class="nf">stops_before_or_at_offset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">offset</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Is true when timespan stops before or at ``offset``.</span>
-
-<span class="sd">        ..  container:: example</span>
-
-<span class="sd">            &gt;&gt;&gt; timespan_1 = abjad.Timespan(0, 10)</span>
-
-<span class="sd">            &gt;&gt;&gt; timespan_1.stops_before_or_at_offset((-5, 1))</span>
-<span class="sd">            False</span>
-<span class="sd">            &gt;&gt;&gt; timespan_1.stops_before_or_at_offset((0, 1))</span>
-<span class="sd">            False</span>
-<span class="sd">            &gt;&gt;&gt; timespan_1.stops_before_or_at_offset((5, 1))</span>
-<span class="sd">            False</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">offset</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Offset</span><span class="p">(</span><span class="n">offset</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">stop_offset</span> <span class="o">&lt;=</span> <span class="n">offset</span></div>
-
-<div class="viewcode-block" id="Timespan.stops_before_timespan_starts"><a class="viewcode-back" href="../../api/abjad/timespan.html#abjad.timespan.Timespan.stops_before_timespan_starts">[docs]</a>    <span class="k">def</span> <span class="nf">stops_before_timespan_starts</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timespan</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Is true when timespan stops before ``timespan`` starts.</span>
-
-<span class="sd">        ..  container:: example</span>
-
-<span class="sd">            &gt;&gt;&gt; timespan_1 = abjad.Timespan(0, 10)</span>
-<span class="sd">            &gt;&gt;&gt; timespan_2 = abjad.Timespan(10, 20)</span>
-
-<span class="sd">            &gt;&gt;&gt; timespan_1.stops_before_timespan_starts(timespan_1)</span>
-<span class="sd">            False</span>
-<span class="sd">            &gt;&gt;&gt; timespan_1.stops_before_timespan_starts(timespan_2)</span>
-<span class="sd">            False</span>
-<span class="sd">            &gt;&gt;&gt; timespan_2.stops_before_timespan_starts(timespan_1)</span>
-<span class="sd">            False</span>
-<span class="sd">            &gt;&gt;&gt; timespan_2.stops_before_timespan_starts(timespan_2)</span>
-<span class="sd">            False</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">self_start_offset</span><span class="p">,</span> <span class="n">self_stop_offset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">offsets</span>
-        <span class="n">expr_start_offset</span><span class="p">,</span> <span class="n">expr_stop_offset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_offsets</span><span class="p">(</span><span class="n">timespan</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">self_stop_offset</span> <span class="o">&lt;</span> <span class="n">expr_start_offset</span></div>
-
-<div class="viewcode-block" id="Timespan.stops_before_timespan_stops"><a class="viewcode-back" href="../../api/abjad/timespan.html#abjad.timespan.Timespan.stops_before_timespan_stops">[docs]</a>    <span class="k">def</span> <span class="nf">stops_before_timespan_stops</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timespan</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Is true when timespan stops before ``timespan`` stops.</span>
-
-<span class="sd">        ..  container:: example</span>
-
-<span class="sd">            &gt;&gt;&gt; timespan_1 = abjad.Timespan(0, 10)</span>
-<span class="sd">            &gt;&gt;&gt; timespan_2 = abjad.Timespan(10, 20)</span>
-
-<span class="sd">            &gt;&gt;&gt; timespan_1.stops_before_timespan_stops(timespan_1)</span>
-<span class="sd">            False</span>
-<span class="sd">            &gt;&gt;&gt; timespan_1.stops_before_timespan_stops(timespan_2)</span>
-<span class="sd">            True</span>
-<span class="sd">            &gt;&gt;&gt; timespan_2.stops_before_timespan_stops(timespan_1)</span>
-<span class="sd">            False</span>
-<span class="sd">            &gt;&gt;&gt; timespan_2.stops_before_timespan_stops(timespan_2)</span>
-<span class="sd">            False</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">self_start_offset</span><span class="p">,</span> <span class="n">self_stop_offset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">offsets</span>
-        <span class="n">expr_start_offset</span><span class="p">,</span> <span class="n">expr_stop_offset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_offsets</span><span class="p">(</span><span class="n">timespan</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">self_stop_offset</span> <span class="o">&lt;</span> <span class="n">expr_stop_offset</span></div>
-
-<div class="viewcode-block" id="Timespan.stops_during_timespan"><a class="viewcode-back" href="../../api/abjad/timespan.html#abjad.timespan.Timespan.stops_during_timespan">[docs]</a>    <span class="k">def</span> <span class="nf">stops_during_timespan</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timespan</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Is true when timespan stops during ``timespan``.</span>
-
-<span class="sd">        ..  container:: example</span>
-
-<span class="sd">            &gt;&gt;&gt; timespan_1 = abjad.Timespan(0, 10)</span>
-<span class="sd">            &gt;&gt;&gt; timespan_2 = abjad.Timespan(10, 20)</span>
-
-<span class="sd">            &gt;&gt;&gt; timespan_1.stops_during_timespan(timespan_1)</span>
-<span class="sd">            True</span>
-<span class="sd">            &gt;&gt;&gt; timespan_1.stops_during_timespan(timespan_2)</span>
-<span class="sd">            False</span>
-<span class="sd">            &gt;&gt;&gt; timespan_2.stops_during_timespan(timespan_1)</span>
-<span class="sd">            False</span>
-<span class="sd">            &gt;&gt;&gt; timespan_2.stops_during_timespan(timespan_2)</span>
-<span class="sd">            True</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">self_start_offset</span><span class="p">,</span> <span class="n">self_stop_offset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">offsets</span>
-        <span class="n">expr_start_offset</span><span class="p">,</span> <span class="n">expr_stop_offset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_offsets</span><span class="p">(</span><span class="n">timespan</span><span class="p">)</span>
-        <span class="k">return</span> <span class="p">(</span>
-            <span class="n">expr_start_offset</span> <span class="o">&lt;</span> <span class="n">self_stop_offset</span>
-            <span class="ow">and</span> <span class="n">self_stop_offset</span> <span class="o">&lt;=</span> <span class="n">expr_stop_offset</span>
-        <span class="p">)</span></div>
-
-<div class="viewcode-block" id="Timespan.stops_when_timespan_starts"><a class="viewcode-back" href="../../api/abjad/timespan.html#abjad.timespan.Timespan.stops_when_timespan_starts">[docs]</a>    <span class="k">def</span> <span class="nf">stops_when_timespan_starts</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timespan</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Is true when timespan stops when ``timespan`` starts.</span>
-
-<span class="sd">        ..  container:: example</span>
-
-<span class="sd">            &gt;&gt;&gt; timespan_1 = abjad.Timespan(0, 10)</span>
-<span class="sd">            &gt;&gt;&gt; timespan_2 = abjad.Timespan(10, 20)</span>
-
-<span class="sd">            &gt;&gt;&gt; timespan_1.stops_when_timespan_starts(timespan_1)</span>
-<span class="sd">            False</span>
-<span class="sd">            &gt;&gt;&gt; timespan_1.stops_when_timespan_starts(timespan_2)</span>
-<span class="sd">            True</span>
-<span class="sd">            &gt;&gt;&gt; timespan_2.stops_when_timespan_starts(timespan_1)</span>
-<span class="sd">            False</span>
-<span class="sd">            &gt;&gt;&gt; timespan_2.stops_when_timespan_starts(timespan_2)</span>
-<span class="sd">            False</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">self_start_offset</span><span class="p">,</span> <span class="n">self_stop_offset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">offsets</span>
-        <span class="n">expr_start_offset</span><span class="p">,</span> <span class="n">expr_stop_offset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_offsets</span><span class="p">(</span><span class="n">timespan</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">self_stop_offset</span> <span class="o">==</span> <span class="n">expr_start_offset</span></div>
-
-<div class="viewcode-block" id="Timespan.stops_when_timespan_stops"><a class="viewcode-back" href="../../api/abjad/timespan.html#abjad.timespan.Timespan.stops_when_timespan_stops">[docs]</a>    <span class="k">def</span> <span class="nf">stops_when_timespan_stops</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timespan</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Is true when timespan stops when ``timespan`` stops.</span>
-
-<span class="sd">        ..  container:: example</span>
-
-<span class="sd">            &gt;&gt;&gt; timespan_1 = abjad.Timespan(0, 10)</span>
-<span class="sd">            &gt;&gt;&gt; timespan_2 = abjad.Timespan(10, 20)</span>
-
-<span class="sd">            &gt;&gt;&gt; timespan_1.stops_when_timespan_stops(timespan_1)</span>
-<span class="sd">            True</span>
-<span class="sd">            &gt;&gt;&gt; timespan_1.stops_when_timespan_stops(timespan_2)</span>
-<span class="sd">            False</span>
-<span class="sd">            &gt;&gt;&gt; timespan_2.stops_when_timespan_stops(timespan_1)</span>
-<span class="sd">            False</span>
-<span class="sd">            &gt;&gt;&gt; timespan_2.stops_when_timespan_stops(timespan_2)</span>
-<span class="sd">            True</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">self_start_offset</span><span class="p">,</span> <span class="n">self_stop_offset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">offsets</span>
-        <span class="n">expr_start_offset</span><span class="p">,</span> <span class="n">expr_stop_offset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_offsets</span><span class="p">(</span><span class="n">timespan</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">self_stop_offset</span> <span class="o">==</span> <span class="n">expr_stop_offset</span></div>
-
 <div class="viewcode-block" id="Timespan.stretch"><a class="viewcode-back" href="../../api/abjad/timespan.html#abjad.timespan.Timespan.stretch">[docs]</a>    <span class="k">def</span> <span class="nf">stretch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">multiplier</span><span class="p">,</span> <span class="n">anchor</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Timespan&quot;</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Stretches timespan by ``multiplier`` relative to ``anchor``.</span>
@@ -2288,32 +1473,6 @@
         <span class="n">new_stop_offset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">stop_offset</span> <span class="o">+</span> <span class="n">stop_offset_translation</span>
         <span class="k">return</span> <span class="n">dataclasses</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span>
             <span class="bp">self</span><span class="p">,</span> <span class="n">start_offset</span><span class="o">=</span><span class="n">new_start_offset</span><span class="p">,</span> <span class="n">stop_offset</span><span class="o">=</span><span class="n">new_stop_offset</span>
-        <span class="p">)</span></div>
-
-<div class="viewcode-block" id="Timespan.trisects_timespan"><a class="viewcode-back" href="../../api/abjad/timespan.html#abjad.timespan.Timespan.trisects_timespan">[docs]</a>    <span class="k">def</span> <span class="nf">trisects_timespan</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timespan</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Is true when timespan trisects ``timespan``.</span>
-
-<span class="sd">        ..  container:: example</span>
-
-<span class="sd">            &gt;&gt;&gt; timespan_1 = abjad.Timespan(0, 10)</span>
-<span class="sd">            &gt;&gt;&gt; timespan_2 = abjad.Timespan(5, 6)</span>
-
-<span class="sd">            &gt;&gt;&gt; timespan_1.trisects_timespan(timespan_1)</span>
-<span class="sd">            False</span>
-<span class="sd">            &gt;&gt;&gt; timespan_1.trisects_timespan(timespan_2)</span>
-<span class="sd">            False</span>
-<span class="sd">            &gt;&gt;&gt; timespan_2.trisects_timespan(timespan_1)</span>
-<span class="sd">            True</span>
-<span class="sd">            &gt;&gt;&gt; timespan_2.trisects_timespan(timespan_2)</span>
-<span class="sd">            False</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">self_start_offset</span><span class="p">,</span> <span class="n">self_stop_offset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">offsets</span>
-        <span class="n">expr_start_offset</span><span class="p">,</span> <span class="n">expr_stop_offset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_offsets</span><span class="p">(</span><span class="n">timespan</span><span class="p">)</span>
-        <span class="k">return</span> <span class="p">(</span>
-            <span class="n">expr_start_offset</span> <span class="o">&lt;</span> <span class="n">self_start_offset</span>
-            <span class="ow">and</span> <span class="n">self_stop_offset</span> <span class="o">&lt;</span> <span class="n">expr_stop_offset</span>
         <span class="p">)</span></div></div>
 
 
@@ -3520,7 +2679,7 @@
         <span class="k">if</span> <span class="mi">1</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
             <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
             <span class="k">for</span> <span class="n">timespan</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
-                <span class="k">if</span> <span class="ow">not</span> <span class="n">timespan</span><span class="o">.</span><span class="n">intersects_timespan</span><span class="p">(</span><span class="n">result</span><span class="p">):</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="nb">bool</span><span class="p">(</span><span class="n">timespan</span> <span class="o">&amp;</span> <span class="n">result</span><span class="p">):</span>
                     <span class="bp">self</span><span class="p">[:]</span> <span class="o">=</span> <span class="p">[]</span>
                     <span class="k">return</span> <span class="bp">self</span>
                 <span class="k">else</span><span class="p">:</span>
@@ -3754,7 +2913,7 @@
                     <span class="k">continue</span>
                 <span class="n">revised_timespan_1_fragments</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Timespan</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
                 <span class="k">for</span> <span class="n">timespan_1_fragment</span> <span class="ow">in</span> <span class="n">timespan_1_fragments</span><span class="p">:</span>
-                    <span class="k">if</span> <span class="n">timespan_2</span><span class="o">.</span><span class="n">intersects_timespan</span><span class="p">(</span><span class="n">timespan_1_fragment</span><span class="p">):</span>
+                    <span class="k">if</span> <span class="nb">bool</span><span class="p">(</span><span class="n">timespan_2</span> <span class="o">&amp;</span> <span class="n">timespan_1_fragment</span><span class="p">):</span>
                         <span class="n">result</span> <span class="o">=</span> <span class="n">timespan_1_fragment</span> <span class="o">-</span> <span class="n">timespan_2</span>
                         <span class="n">revised_timespan_1_fragments</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
                     <span class="k">else</span><span class="p">:</span>
@@ -3847,7 +3006,7 @@
         <span class="k">if</span> <span class="n">timespan</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">timespan</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">timespan</span>
         <span class="n">timespans</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_timespans_that_satisfy_time_relation</span><span class="p">(</span>
-            <span class="k">lambda</span> <span class="n">_</span><span class="p">:</span> <span class="n">_</span><span class="o">.</span><span class="n">intersects_timespan</span><span class="p">(</span><span class="n">timespan</span><span class="p">)</span>
+            <span class="k">lambda</span> <span class="n">_</span><span class="p">:</span> <span class="nb">bool</span><span class="p">(</span><span class="n">_</span> <span class="o">&amp;</span> <span class="n">timespan</span><span class="p">)</span>
         <span class="p">)</span>
         <span class="n">total_overlap</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span>
             <span class="nb">sum</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">get_overlap_with_timespan</span><span class="p">(</span><span class="n">timespan</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">timespans</span><span class="p">)</span>
@@ -4134,7 +3293,7 @@
 <span class="sd">            &gt;&gt;&gt; abjad.show(timespans, scale=0.5) # doctest: +SKIP</span>
 
 <span class="sd">            &gt;&gt;&gt; timespan = abjad.Timespan(2, 5)</span>
-<span class="sd">            &gt;&gt;&gt; time_relation = lambda _: _.starts_during_timespan(timespan)</span>
+<span class="sd">            &gt;&gt;&gt; time_relation = lambda _: timespan.start_offset &lt; _.start_offset &lt; timespan.stop_offset</span>
 <span class="sd">            &gt;&gt;&gt; timespan = timespans.get_timespan_that_satisfies_time_relation(</span>
 <span class="sd">            ...     time_relation</span>
 <span class="sd">            ... )</span>
@@ -4176,7 +3335,7 @@
 <span class="sd">            &gt;&gt;&gt; abjad.show(timespans, scale=0.5) # doctest: +SKIP</span>
 
 <span class="sd">            &gt;&gt;&gt; timespan = abjad.Timespan(2, 8)</span>
-<span class="sd">            &gt;&gt;&gt; time_relation = lambda _: _.starts_during_timespan(timespan)</span>
+<span class="sd">            &gt;&gt;&gt; time_relation = lambda _: timespan.start_offset &lt; _.start_offset &lt; timespan.stop_offset</span>
 <span class="sd">            &gt;&gt;&gt; timespans = timespans.get_timespans_that_satisfy_time_relation(</span>
 <span class="sd">            ...     time_relation)</span>
 <span class="sd">            &gt;&gt;&gt; abjad.show(timespans, range_=(0, 10), scale=0.5) # doctest: +SKIP</span>
@@ -4206,15 +3365,13 @@
 <span class="sd">            &gt;&gt;&gt; abjad.show(timespans, scale=0.5) # doctest: +SKIP</span>
 
 <span class="sd">            &gt;&gt;&gt; timespan = abjad.Timespan(2, 8)</span>
-<span class="sd">            &gt;&gt;&gt; time_relation = lambda _: _.starts_during_timespan(timespan)</span>
+<span class="sd">            &gt;&gt;&gt; time_relation = lambda _: timespan.start_offset &lt; _.start_offset &lt; timespan.stop_offset</span>
 <span class="sd">            &gt;&gt;&gt; timespans.has_timespan_that_satisfies_time_relation(time_relation)</span>
 <span class="sd">            True</span>
 
 <span class="sd">            Is false when list does not have matching timespan:</span>
 
 <span class="sd">            &gt;&gt;&gt; timespan = abjad.Timespan(10, 20)</span>
-<span class="sd">            &gt;&gt;&gt; time_relation = lambda _: _.starts_during_timespan(timespan)</span>
-
 <span class="sd">            &gt;&gt;&gt; timespans.has_timespan_that_satisfies_time_relation(time_relation)</span>
 <span class="sd">            False</span>
 

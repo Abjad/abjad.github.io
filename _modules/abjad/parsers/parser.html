@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>abjad.parsers.parser &mdash; Abjad 3.13 documentation</title>
+  <title>abjad.parsers.parser &mdash; Abjad 3.14 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/abjad.css" type="text/css" />
@@ -21,6 +21,7 @@
         <script src="../../../_static/underscore.js"></script>
         <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/sphinx_highlight.js"></script>
         <script defer="defer" src="../../../_static/copybutton.js"></script>
         <script src="../../../_static/ga.js"></script>
         <script defer="defer" src="../../../_static/lightbox2/js/lightbox.js"></script>
@@ -33,11 +34,11 @@
   <div class="wy-grid-for-nav">
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search"  style="background: #77ee55" >
+        <div class="wy-side-nav-search"  style="background: #880088" >
 
 
     <a href="../../../index.html" class="icon icon-home" alt="Documentation
-    Home"> Abjad 3.13
+    Home"> Abjad 3.14
 
 
 
@@ -110,7 +111,7 @@
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #77ee55" >
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #880088" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../../index.html">Abjad</a>
       </nav>
@@ -128,12 +129,12 @@
   <h1>Source code for abjad.parsers.parser</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">collections</span>
 <span class="kn">import</span> <span class="nn">copy</span>
+<span class="kn">import</span> <span class="nn">fractions</span>
 <span class="kn">import</span> <span class="nn">itertools</span>
 <span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">import</span> <span class="nn">typing</span>
 
 <span class="kn">import</span> <span class="nn">ply</span>
-<span class="kn">import</span> <span class="nn">quicktions</span>
 <span class="kn">from</span> <span class="nn">ply</span> <span class="kn">import</span> <span class="n">lex</span>
 <span class="kn">from</span> <span class="nn">ply.yacc</span> <span class="kn">import</span> <span class="p">(</span>  <span class="c1"># type: ignore</span>
     <span class="n">YaccProduction</span><span class="p">,</span>
@@ -4886,7 +4887,7 @@
 
 <div class="viewcode-block" id="LilyPondSyntacticalDefinition.p_fraction__UNSIGNED__Chr47__UNSIGNED"><a class="viewcode-back" href="../../../api/abjad/parsers/parser.html#abjad.parsers.parser.LilyPondSyntacticalDefinition.p_fraction__UNSIGNED__Chr47__UNSIGNED">[docs]</a>    <span class="k">def</span> <span class="nf">p_fraction__UNSIGNED__Chr47__UNSIGNED</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
         <span class="s2">&quot;fraction : UNSIGNED &#39;/&#39; UNSIGNED&quot;</span>
-        <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">quicktions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">p</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span></div>
+        <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">p</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span></div>
 
     <span class="c1">### full_markup ###</span>
 
@@ -5772,7 +5773,7 @@
             <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">LilyPondDuration</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">duration</span><span class="p">,</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">multiplier</span> <span class="o">*</span> <span class="n">p</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">LilyPondDuration</span><span class="p">(</span>
-                <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">duration</span><span class="p">,</span> <span class="n">quicktions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">numerator</span><span class="p">,</span> <span class="n">p</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">denominator</span><span class="p">)</span>
+                <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">duration</span><span class="p">,</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">numerator</span><span class="p">,</span> <span class="n">p</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">denominator</span><span class="p">)</span>
             <span class="p">)</span></div>
 
 <div class="viewcode-block" id="LilyPondSyntacticalDefinition.p_multiplied_duration__multiplied_duration__Chr42__bare_unsigned"><a class="viewcode-back" href="../../../api/abjad/parsers/parser.html#abjad.parsers.parser.LilyPondSyntacticalDefinition.p_multiplied_duration__multiplied_duration__Chr42__bare_unsigned">[docs]</a>    <span class="k">def</span> <span class="nf">p_multiplied_duration__multiplied_duration__Chr42__bare_unsigned</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
@@ -6652,16 +6653,24 @@
 
 <div class="viewcode-block" id="LilyPondSyntacticalDefinition.p_tempo_event__TEMPO__scalar"><a class="viewcode-back" href="../../../api/abjad/parsers/parser.html#abjad.parsers.parser.LilyPondSyntacticalDefinition.p_tempo_event__TEMPO__scalar">[docs]</a>    <span class="k">def</span> <span class="nf">p_tempo_event__TEMPO__scalar</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
         <span class="s2">&quot;tempo_event : TEMPO scalar&quot;</span>
-        <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">_indicators</span><span class="o">.</span><span class="n">MetronomeMark</span><span class="p">(</span><span class="n">textual_indication</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">]))</span></div>
+        <span class="k">if</span> <span class="s2">&quot; &quot;</span> <span class="ow">in</span> <span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">]:</span>
+            <span class="n">string</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;&quot;</span><span class="si">{</span><span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="si">}</span><span class="s1">&quot;&#39;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">string</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+        <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">_indicators</span><span class="o">.</span><span class="n">MetronomeMark</span><span class="p">(</span><span class="n">textual_indication</span><span class="o">=</span><span class="n">string</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="LilyPondSyntacticalDefinition.p_tempo_event__TEMPO__scalar_closed__steno_duration__Chr61__tempo_range"><a class="viewcode-back" href="../../../api/abjad/parsers/parser.html#abjad.parsers.parser.LilyPondSyntacticalDefinition.p_tempo_event__TEMPO__scalar_closed__steno_duration__Chr61__tempo_range">[docs]</a>    <span class="k">def</span> <span class="nf">p_tempo_event__TEMPO__scalar_closed__steno_duration__Chr61__tempo_range</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">p</span>
     <span class="p">):</span>
         <span class="s2">&quot;tempo_event : TEMPO scalar_closed steno_duration &#39;=&#39; tempo_range&quot;</span>
+        <span class="k">if</span> <span class="s2">&quot; &quot;</span> <span class="ow">in</span> <span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">]:</span>
+            <span class="n">string</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;&quot;</span><span class="si">{</span><span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="si">}</span><span class="s1">&quot;&#39;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">string</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
         <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">_indicators</span><span class="o">.</span><span class="n">MetronomeMark</span><span class="p">(</span>
             <span class="n">reference_duration</span><span class="o">=</span><span class="n">p</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">duration</span><span class="p">,</span>
             <span class="n">units_per_minute</span><span class="o">=</span><span class="n">p</span><span class="p">[</span><span class="mi">5</span><span class="p">],</span>
-            <span class="n">textual_indication</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">]),</span>
+            <span class="n">textual_indication</span><span class="o">=</span><span class="n">string</span><span class="p">,</span>
         <span class="p">)</span></div>
 
 <div class="viewcode-block" id="LilyPondSyntacticalDefinition.p_tempo_event__TEMPO__steno_duration__Chr61__tempo_range"><a class="viewcode-back" href="../../../api/abjad/parsers/parser.html#abjad.parsers.parser.LilyPondSyntacticalDefinition.p_tempo_event__TEMPO__steno_duration__Chr61__tempo_range">[docs]</a>    <span class="k">def</span> <span class="nf">p_tempo_event__TEMPO__steno_duration__Chr61__tempo_range</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>

@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>duration &mdash; Abjad 3.13 documentation</title>
+  <title>duration &mdash; Abjad 3.14 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/abjad.css" type="text/css" />
@@ -22,6 +22,7 @@
         <script src="../../_static/underscore.js"></script>
         <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
         <script defer="defer" src="../../_static/copybutton.js"></script>
         <script src="../../_static/ga.js"></script>
         <script defer="defer" src="../../_static/lightbox2/js/lightbox.js"></script>
@@ -36,11 +37,11 @@
   <div class="wy-grid-for-nav">
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search"  style="background: #77ee55" >
+        <div class="wy-side-nav-search"  style="background: #880088" >
 
 
     <a href="../../index.html" class="icon icon-home" alt="Documentation
-    Home"> Abjad 3.13
+    Home"> Abjad 3.14
 
 
 
@@ -113,7 +114,7 @@
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #77ee55" >
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #880088" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../index.html">Abjad</a>
       </nav>
@@ -131,7 +132,7 @@
   <section id="module-abjad.duration">
 <span id="duration"></span><span id="abjad-duration"></span><h1>duration<a class="headerlink" href="#module-abjad.duration" title="Permalink to this heading">¶</a></h1>
 <div class="svg-container docutils container">
-<div class="graphviz"><object data="../../_images/inheritance-d4b8e1670a1a0642171de07a5cc50ad967651469.svg" type="image/svg+xml" class="inheritance graphviz">
+<div class="graphviz"><object data="../../_images/inheritance-dacc074299d83de0a26261c258e8682a5c7d8d2b.svg" type="image/svg+xml" class="inheritance graphviz">
 <p class="warning">digraph InheritanceGraph {
     graph [bgcolor=transparent,
         color=lightsteelblue2,
@@ -187,14 +188,42 @@
             label=object,
             target=_top];
     }
-    subgraph cluster_quicktions {
-        graph [label=quicktions];
+    subgraph cluster_fractions {
+        graph [label=fractions];
         node [color=3];
-        &quot;quicktions.Fraction&quot; [label=Fraction];
+        &quot;fractions.Fraction&quot; [URL=&quot;https://docs.python.org/3.10/library/fractions.html#fractions.Fraction&quot;,
+            label=Fraction,
+            target=_top];
     }
-    &quot;builtins.object&quot; -&gt; &quot;quicktions.Fraction&quot;;
-    &quot;quicktions.Fraction&quot; -&gt; &quot;abjad.duration.Duration&quot;;
-    &quot;quicktions.Fraction&quot; -&gt; &quot;abjad.duration.NonreducedFraction&quot;;
+    subgraph cluster_numbers {
+        graph [label=numbers];
+        node [color=4];
+        &quot;numbers.Complex&quot; [URL=&quot;https://docs.python.org/3.10/library/numbers.html#numbers.Complex&quot;,
+            label=Complex,
+            shape=oval,
+            style=bold,
+            target=_top];
+        &quot;numbers.Number&quot; [URL=&quot;https://docs.python.org/3.10/library/numbers.html#numbers.Number&quot;,
+            label=Number,
+            target=_top];
+        &quot;numbers.Rational&quot; [URL=&quot;https://docs.python.org/3.10/library/numbers.html#numbers.Rational&quot;,
+            label=Rational,
+            shape=oval,
+            style=bold,
+            target=_top];
+        &quot;numbers.Real&quot; [URL=&quot;https://docs.python.org/3.10/library/numbers.html#numbers.Real&quot;,
+            label=Real,
+            shape=oval,
+            style=bold,
+            target=_top];
+        &quot;numbers.Complex&quot; -&gt; &quot;numbers.Real&quot;;
+        &quot;numbers.Number&quot; -&gt; &quot;numbers.Complex&quot;;
+        &quot;numbers.Real&quot; -&gt; &quot;numbers.Rational&quot;;
+    }
+    &quot;builtins.object&quot; -&gt; &quot;numbers.Number&quot;;
+    &quot;fractions.Fraction&quot; -&gt; &quot;abjad.duration.Duration&quot;;
+    &quot;fractions.Fraction&quot; -&gt; &quot;abjad.duration.NonreducedFraction&quot;;
+    &quot;numbers.Rational&quot; -&gt; &quot;fractions.Fraction&quot;;
 }</p></object></div>
 </div>
 <hr/><p class="section-header rubric">Classes</p>
@@ -273,8 +302,8 @@
 </div>
 <div class="example docutils container">
 <p>Intializes from fraction:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">quicktions</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">abjad</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="n">quicktions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">16</span><span class="p">))</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">fractions</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">abjad</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">16</span><span class="p">))</span>
 <span class="go">Duration(3, 16)</span>
 </pre></div>
 </div>
@@ -295,7 +324,7 @@
 </div>
 <div class="example docutils container">
 <p>Durations inherit from built-in fraction:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">isinstance</span><span class="p">(</span><span class="n">abjad</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">16</span><span class="p">),</span> <span class="n">quicktions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">isinstance</span><span class="p">(</span><span class="n">abjad</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">16</span><span class="p">),</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">)</span>
 <span class="go">True</span>
 </pre></div>
 </div>
@@ -351,10 +380,10 @@
 <td><p>Modulus operator applied to duration.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#abjad.duration.Duration.__mul__" title="abjad.duration.Duration.__mul__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__mul__</span></code></a></p></td>
-<td><p>Duration multiplied by <code class="docutils literal notranslate"><span class="pre">arguments</span></code>.</p></td>
+<td><p>Duration multiplied by <code class="docutils literal notranslate"><span class="pre">argument</span></code>.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#abjad.duration.Duration.__ne__" title="abjad.duration.Duration.__ne__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__ne__</span></code></a></p></td>
-<td><p>Redefined explicitly because <code class="docutils literal notranslate"><span class="pre">abjad.Duration</span></code> inherits from built-in <code class="docutils literal notranslate"><span class="pre">quicktions.Fraction</span></code>:</p></td>
+<td><p>Redefined explicitly because <code class="docutils literal notranslate"><span class="pre">abjad.Duration</span></code> inherits from built-in <code class="docutils literal notranslate"><span class="pre">fractions.Fraction</span></code>:</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#abjad.duration.Duration.__neg__" title="abjad.duration.Duration.__neg__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__neg__</span></code></a></p></td>
 <td><p>Negates duration.</p></td>
@@ -500,15 +529,15 @@ fraction:</p>
 <div class="inherited docutils container">
 <dl class="py method">
 <dt class="sig sig-object py" id="abjad.duration.Duration.__bool__">
-<span class="sig-prename descclassname"><span class="pre">(</span><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">__bool__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.Duration.__bool__" title="Permalink to this definition">¶</a></dt>
-<dd><p>True if self else False</p>
+<span class="sig-prename descclassname"><span class="pre">(</span><a class="reference external" href="https://docs.python.org/3.10/library/fractions.html#fractions.Fraction" title="(in Python v3.10)"><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code></a><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">__bool__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.Duration.__bool__" title="Permalink to this definition">¶</a></dt>
+<dd><p>a != 0</p>
 </dd></dl>
 
 </div>
 <div class="inherited docutils container">
 <dl class="py method">
 <dt class="sig sig-object py" id="abjad.duration.Duration.__ceil__">
-<span class="sig-prename descclassname"><span class="pre">(</span><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">__ceil__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.Duration.__ceil__" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">(</span><a class="reference external" href="https://docs.python.org/3.10/library/fractions.html#fractions.Fraction" title="(in Python v3.10)"><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code></a><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">__ceil__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.Duration.__ceil__" title="Permalink to this definition">¶</a></dt>
 <dd><p>math.ceil(a)</p>
 </dd></dl>
 
@@ -516,7 +545,7 @@ fraction:</p>
 <div class="inherited docutils container">
 <dl class="py method">
 <dt class="sig sig-object py" id="abjad.duration.Duration.__complex__">
-<span class="sig-prename descclassname"><span class="pre">(</span><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">__complex__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.Duration.__complex__" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">(</span><a class="reference external" href="https://docs.python.org/3.10/library/numbers.html#numbers.Real" title="(in Python v3.10)"><code class="descclassname docutils literal notranslate"><span class="pre">Real</span></code></a><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">__complex__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.Duration.__complex__" title="Permalink to this definition">¶</a></dt>
 <dd><p>complex(self) == complex(float(self), 0)</p>
 </dd></dl>
 
@@ -524,14 +553,14 @@ fraction:</p>
 <div class="inherited docutils container">
 <dl class="py method">
 <dt class="sig sig-object py" id="abjad.duration.Duration.__copy__">
-<span class="sig-prename descclassname"><span class="pre">(</span><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">__copy__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.Duration.__copy__" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">(</span><a class="reference external" href="https://docs.python.org/3.10/library/fractions.html#fractions.Fraction" title="(in Python v3.10)"><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code></a><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">__copy__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.Duration.__copy__" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </div>
 <div class="inherited docutils container">
 <dl class="py method">
 <dt class="sig sig-object py" id="abjad.duration.Duration.__deepcopy__">
-<span class="sig-prename descclassname"><span class="pre">(</span><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">__deepcopy__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">memo</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.Duration.__deepcopy__" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">(</span><a class="reference external" href="https://docs.python.org/3.10/library/fractions.html#fractions.Fraction" title="(in Python v3.10)"><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code></a><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">__deepcopy__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">memo</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.Duration.__deepcopy__" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </div>
@@ -573,7 +602,7 @@ fraction:</p>
 <div class="inherited docutils container">
 <dl class="py method">
 <dt class="sig sig-object py" id="abjad.duration.Duration.__float__">
-<span class="sig-prename descclassname"><span class="pre">(</span><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">__float__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.Duration.__float__" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">(</span><a class="reference external" href="https://docs.python.org/3.10/library/numbers.html#numbers.Rational" title="(in Python v3.10)"><code class="descclassname docutils literal notranslate"><span class="pre">Rational</span></code></a><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">__float__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.Duration.__float__" title="Permalink to this definition">¶</a></dt>
 <dd><p>float(self) = self.numerator / self.denominator</p>
 <p>It’s important that this conversion use the integer’s “true”
 division rather than casting one side to float before dividing
@@ -584,7 +613,7 @@ so that ratios of huge integers convert without overflowing.</p>
 <div class="inherited docutils container">
 <dl class="py method">
 <dt class="sig sig-object py" id="abjad.duration.Duration.__floor__">
-<span class="sig-prename descclassname"><span class="pre">(</span><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">__floor__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.Duration.__floor__" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">(</span><a class="reference external" href="https://docs.python.org/3.10/library/fractions.html#fractions.Fraction" title="(in Python v3.10)"><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code></a><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">__floor__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.Duration.__floor__" title="Permalink to this definition">¶</a></dt>
 <dd><p>math.floor(a)</p>
 </dd></dl>
 
@@ -592,7 +621,7 @@ so that ratios of huge integers convert without overflowing.</p>
 <div class="inherited docutils container">
 <dl class="py method">
 <dt class="sig sig-object py" id="abjad.duration.Duration.__floordiv__">
-<span class="sig-prename descclassname"><span class="pre">(</span><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">__floordiv__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.Duration.__floordiv__" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">(</span><a class="reference external" href="https://docs.python.org/3.10/library/fractions.html#fractions.Fraction" title="(in Python v3.10)"><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code></a><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">__floordiv__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">b</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.Duration.__floordiv__" title="Permalink to this definition">¶</a></dt>
 <dd><p>a // b</p>
 </dd></dl>
 
@@ -633,7 +662,7 @@ so that ratios of huge integers convert without overflowing.</p>
 <div class="inherited docutils container">
 <dl class="py method">
 <dt class="sig sig-object py" id="abjad.duration.Duration.__int__">
-<span class="sig-prename descclassname"><span class="pre">(</span><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">__int__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.Duration.__int__" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">(</span><a class="reference external" href="https://docs.python.org/3.10/library/fractions.html#fractions.Fraction" title="(in Python v3.10)"><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code></a><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">__int__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">_index=&lt;built-in</span> <span class="pre">function</span> <span class="pre">index&gt;</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.Duration.__int__" title="Permalink to this definition">¶</a></dt>
 <dd><p>int(a)</p>
 </dd></dl>
 
@@ -669,10 +698,10 @@ so that ratios of huge integers convert without overflowing.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abjad.duration.Duration.__mul__">
-<em class="property"><span class="pre">overridden</span> </em><span class="sig-name descname"><span class="pre">__mul__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">arguments</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/abjad/duration.html#Duration.__mul__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#abjad.duration.Duration.__mul__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Duration multiplied by <code class="docutils literal notranslate"><span class="pre">arguments</span></code>.</p>
+<em class="property"><span class="pre">overridden</span> </em><span class="sig-name descname"><span class="pre">__mul__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">argument</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/abjad/duration.html#Duration.__mul__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#abjad.duration.Duration.__mul__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Duration multiplied by <code class="docutils literal notranslate"><span class="pre">argument</span></code>.</p>
 <div class="example docutils container">
-<p>Returns a new duration when <code class="docutils literal notranslate"><span class="pre">arguments</span></code> is a duration:</p>
+<p>Returns a new duration when <code class="docutils literal notranslate"><span class="pre">argument</span></code> is a duration:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">duration_1</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">duration_2</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">duration_1</span> <span class="o">*</span> <span class="n">duration_2</span>
@@ -681,8 +710,7 @@ so that ratios of huge integers convert without overflowing.</p>
 </div>
 </div>
 <div class="example docutils container">
-<p>Returns nonreduced fraction when <code class="docutils literal notranslate"><span class="pre">arguments</span></code> is a nonreduced
-fraction:</p>
+<p>Returns nonreduced fraction when <code class="docutils literal notranslate"><span class="pre">argument</span></code> is a nonreduced fraction:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">duration</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">nonreduced_fraction</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">NonreducedFraction</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">duration</span> <span class="o">*</span> <span class="n">nonreduced_fraction</span>
@@ -697,7 +725,7 @@ fraction:</p>
 <dt class="sig sig-object py" id="abjad.duration.Duration.__ne__">
 <em class="property"><span class="pre">overridden</span> </em><span class="sig-name descname"><span class="pre">__ne__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">argument</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/abjad/duration.html#Duration.__ne__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#abjad.duration.Duration.__ne__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Redefined explicitly because <code class="docutils literal notranslate"><span class="pre">abjad.Duration</span></code> inherits from built-in
-<code class="docutils literal notranslate"><span class="pre">quicktions.Fraction</span></code>:</p>
+<code class="docutils literal notranslate"><span class="pre">fractions.Fraction</span></code>:</p>
 <p>“The __ne__ method follows automatically from __eq__ only if __ne__
 isn’t already defined in a superclass.  So, if you’re inheriting from a
 builtin, it’s best to override both.”</p>
@@ -785,7 +813,7 @@ builtin, it’s best to override both.”</p>
 <div class="inherited docutils container">
 <dl class="py method">
 <dt class="sig sig-object py" id="abjad.duration.Duration.__rfloordiv__">
-<span class="sig-prename descclassname"><span class="pre">(</span><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">__rfloordiv__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.Duration.__rfloordiv__" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">(</span><a class="reference external" href="https://docs.python.org/3.10/library/fractions.html#fractions.Fraction" title="(in Python v3.10)"><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code></a><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">__rfloordiv__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.Duration.__rfloordiv__" title="Permalink to this definition">¶</a></dt>
 <dd><p>a // b</p>
 </dd></dl>
 
@@ -806,7 +834,7 @@ builtin, it’s best to override both.”</p>
 <div class="inherited docutils container">
 <dl class="py method">
 <dt class="sig sig-object py" id="abjad.duration.Duration.__round__">
-<span class="sig-prename descclassname"><span class="pre">(</span><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">__round__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ndigits</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.Duration.__round__" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">(</span><a class="reference external" href="https://docs.python.org/3.10/library/fractions.html#fractions.Fraction" title="(in Python v3.10)"><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code></a><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">__round__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ndigits</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.Duration.__round__" title="Permalink to this definition">¶</a></dt>
 <dd><p>round(self, ndigits)</p>
 <p>Rounds half toward even.</p>
 </dd></dl>
@@ -836,7 +864,7 @@ builtin, it’s best to override both.”</p>
 <div class="inherited docutils container">
 <dl class="py method">
 <dt class="sig sig-object py" id="abjad.duration.Duration.__str__">
-<span class="sig-prename descclassname"><span class="pre">(</span><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">__str__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.Duration.__str__" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">(</span><a class="reference external" href="https://docs.python.org/3.10/library/fractions.html#fractions.Fraction" title="(in Python v3.10)"><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code></a><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">__str__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.Duration.__str__" title="Permalink to this definition">¶</a></dt>
 <dd><p>str(self)</p>
 </dd></dl>
 
@@ -867,7 +895,7 @@ builtin, it’s best to override both.”</p>
 <div class="inherited docutils container">
 <dl class="py method">
 <dt class="sig sig-object py" id="abjad.duration.Duration.__trunc__">
-<span class="sig-prename descclassname"><span class="pre">(</span><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">__trunc__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.Duration.__trunc__" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">(</span><a class="reference external" href="https://docs.python.org/3.10/library/fractions.html#fractions.Fraction" title="(in Python v3.10)"><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code></a><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">__trunc__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.Duration.__trunc__" title="Permalink to this definition">¶</a></dt>
 <dd><p>math.trunc(a)</p>
 </dd></dl>
 
@@ -876,7 +904,7 @@ builtin, it’s best to override both.”</p>
 <div class="inherited docutils container">
 <dl class="py method">
 <dt class="sig sig-object py" id="abjad.duration.Duration.as_integer_ratio">
-<span class="sig-prename descclassname"><span class="pre">(</span><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">as_integer_ratio</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.Duration.as_integer_ratio" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">(</span><a class="reference external" href="https://docs.python.org/3.10/library/fractions.html#fractions.Fraction" title="(in Python v3.10)"><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code></a><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">as_integer_ratio</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.Duration.as_integer_ratio" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the integer ratio as a tuple.</p>
 <p>Return a tuple of two integers, whose ratio is equal to the
 Fraction and with a positive denominator.</p>
@@ -886,7 +914,7 @@ Fraction and with a positive denominator.</p>
 <div class="inherited docutils container">
 <dl class="py method">
 <dt class="sig sig-object py" id="abjad.duration.Duration.conjugate">
-<span class="sig-prename descclassname"><span class="pre">(</span><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">conjugate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.Duration.conjugate" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">(</span><a class="reference external" href="https://docs.python.org/3.10/library/numbers.html#numbers.Real" title="(in Python v3.10)"><code class="descclassname docutils literal notranslate"><span class="pre">Real</span></code></a><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">conjugate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.Duration.conjugate" title="Permalink to this definition">¶</a></dt>
 <dd><p>Conjugate is a no-op for Reals.</p>
 </dd></dl>
 
@@ -894,7 +922,7 @@ Fraction and with a positive denominator.</p>
 <div class="inherited docutils container">
 <dl class="py method">
 <dt class="sig sig-object py" id="abjad.duration.Duration.limit_denominator">
-<span class="sig-prename descclassname"><span class="pre">(</span><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">limit_denominator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">max_denominator</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1000000</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.Duration.limit_denominator" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">(</span><a class="reference external" href="https://docs.python.org/3.10/library/fractions.html#fractions.Fraction" title="(in Python v3.10)"><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code></a><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">limit_denominator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">max_denominator</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1000000</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.Duration.limit_denominator" title="Permalink to this definition">¶</a></dt>
 <dd><p>Closest Fraction to self with denominator at most max_denominator.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Fraction</span><span class="p">(</span><span class="s2">&quot;3.141592653589793&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">limit_denominator</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
 <span class="go">Fraction(22, 7)</span>
@@ -986,7 +1014,7 @@ denominator.</p>
 </div>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.10/library/stdtypes.html#list" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a>[NonreducedFraction]</p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.10/library/stdtypes.html#list" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a>[<a class="reference internal" href="#abjad.duration.NonreducedFraction" title="abjad.duration.NonreducedFraction"><code class="xref py py-class docutils literal notranslate"><span class="pre">NonreducedFraction</span></code></a>]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1023,7 +1051,7 @@ denominator.</p>
 <div class="inherited docutils container">
 <dl class="py method">
 <dt class="sig sig-object py" id="abjad.duration.Duration.from_decimal">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">(</span><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">from_decimal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dec</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.Duration.from_decimal" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">(</span><a class="reference external" href="https://docs.python.org/3.10/library/fractions.html#fractions.Fraction" title="(in Python v3.10)"><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code></a><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">from_decimal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dec</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.Duration.from_decimal" title="Permalink to this definition">¶</a></dt>
 <dd><p>Converts a finite Decimal instance to a rational number, exactly.</p>
 </dd></dl>
 
@@ -1031,7 +1059,7 @@ denominator.</p>
 <div class="inherited docutils container">
 <dl class="py method">
 <dt class="sig sig-object py" id="abjad.duration.Duration.from_float">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">(</span><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">from_float</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">f</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.Duration.from_float" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">(</span><a class="reference external" href="https://docs.python.org/3.10/library/fractions.html#fractions.Fraction" title="(in Python v3.10)"><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code></a><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">from_float</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">f</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.Duration.from_float" title="Permalink to this definition">¶</a></dt>
 <dd><p>Converts a finite float to a rational number, exactly.</p>
 <p>Beware that Fraction.from_float(0.3) != Fraction(3, 10).</p>
 </dd></dl>
@@ -1074,6 +1102,13 @@ denominator.</p>
 </dd></dl>
 
 <hr/><p class="class-header rubric">Read-only properties</p>
+<div class="inherited docutils container">
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abjad.duration.Duration.denominator">
+<span class="sig-prename descclassname"><span class="pre">(</span><a class="reference external" href="https://docs.python.org/3.10/library/fractions.html#fractions.Fraction" title="(in Python v3.10)"><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code></a><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">denominator</span></span><a class="headerlink" href="#abjad.duration.Duration.denominator" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abjad.duration.Duration.dot_count">
 <span class="sig-name descname"><span class="pre">dot_count</span></span><a class="headerlink" href="#abjad.duration.Duration.dot_count" title="Permalink to this definition">¶</a></dt>
@@ -1350,6 +1385,14 @@ duration.</p>
 </dl>
 </dd></dl>
 
+<div class="inherited docutils container">
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abjad.duration.Duration.imag">
+<span class="sig-prename descclassname"><span class="pre">(</span><a class="reference external" href="https://docs.python.org/3.10/library/numbers.html#numbers.Real" title="(in Python v3.10)"><code class="descclassname docutils literal notranslate"><span class="pre">Real</span></code></a><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">imag</span></span><a class="headerlink" href="#abjad.duration.Duration.imag" title="Permalink to this definition">¶</a></dt>
+<dd><p>Real numbers have no imaginary component.</p>
+</dd></dl>
+
+</div>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abjad.duration.Duration.implied_prolation">
 <span class="sig-name descname"><span class="pre">implied_prolation</span></span><a class="headerlink" href="#abjad.duration.Duration.implied_prolation" title="Permalink to this definition">¶</a></dt>
@@ -1477,6 +1520,13 @@ duration.</p>
 </dl>
 </dd></dl>
 
+<div class="inherited docutils container">
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abjad.duration.Duration.numerator">
+<span class="sig-prename descclassname"><span class="pre">(</span><a class="reference external" href="https://docs.python.org/3.10/library/fractions.html#fractions.Fraction" title="(in Python v3.10)"><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code></a><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">numerator</span></span><a class="headerlink" href="#abjad.duration.Duration.numerator" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abjad.duration.Duration.pair">
 <span class="sig-name descname"><span class="pre">pair</span></span><a class="headerlink" href="#abjad.duration.Duration.pair" title="Permalink to this definition">¶</a></dt>
@@ -1516,7 +1566,7 @@ duration.</p>
 <div class="inherited docutils container">
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abjad.duration.Duration.real">
-<span class="sig-prename descclassname"><span class="pre">(</span><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">real</span></span><a class="headerlink" href="#abjad.duration.Duration.real" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">(</span><a class="reference external" href="https://docs.python.org/3.10/library/numbers.html#numbers.Real" title="(in Python v3.10)"><code class="descclassname docutils literal notranslate"><span class="pre">Real</span></code></a><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">real</span></span><a class="headerlink" href="#abjad.duration.Duration.real" title="Permalink to this definition">¶</a></dt>
 <dd><p>Real numbers are their real component.</p>
 </dd></dl>
 
@@ -1596,8 +1646,8 @@ duration.</p>
 </div>
 <div class="example docutils container">
 <p>Intializes from fraction:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">quicktions</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">abjad</span><span class="o">.</span><span class="n">Multiplier</span><span class="p">(</span><span class="n">quicktions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">16</span><span class="p">))</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">fractions</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">abjad</span><span class="o">.</span><span class="n">Multiplier</span><span class="p">(</span><span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">16</span><span class="p">))</span>
 <span class="go">Multiplier(3, 16)</span>
 </pre></div>
 </div>
@@ -1618,7 +1668,7 @@ duration.</p>
 </div>
 <div class="example docutils container">
 <p>Multipliers inherit from built-in fraction:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">isinstance</span><span class="p">(</span><span class="n">abjad</span><span class="o">.</span><span class="n">Multiplier</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">16</span><span class="p">),</span> <span class="n">quicktions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">isinstance</span><span class="p">(</span><span class="n">abjad</span><span class="o">.</span><span class="n">Multiplier</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">16</span><span class="p">),</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">)</span>
 <span class="go">True</span>
 </pre></div>
 </div>
@@ -1692,15 +1742,15 @@ fraction:</p>
 <div class="inherited docutils container">
 <dl class="py method">
 <dt class="sig sig-object py" id="abjad.duration.Multiplier.__bool__">
-<span class="sig-prename descclassname"><span class="pre">(</span><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">__bool__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.Multiplier.__bool__" title="Permalink to this definition">¶</a></dt>
-<dd><p>True if self else False</p>
+<span class="sig-prename descclassname"><span class="pre">(</span><a class="reference external" href="https://docs.python.org/3.10/library/fractions.html#fractions.Fraction" title="(in Python v3.10)"><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code></a><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">__bool__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.Multiplier.__bool__" title="Permalink to this definition">¶</a></dt>
+<dd><p>a != 0</p>
 </dd></dl>
 
 </div>
 <div class="inherited docutils container">
 <dl class="py method">
 <dt class="sig sig-object py" id="abjad.duration.Multiplier.__ceil__">
-<span class="sig-prename descclassname"><span class="pre">(</span><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">__ceil__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.Multiplier.__ceil__" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">(</span><a class="reference external" href="https://docs.python.org/3.10/library/fractions.html#fractions.Fraction" title="(in Python v3.10)"><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code></a><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">__ceil__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.Multiplier.__ceil__" title="Permalink to this definition">¶</a></dt>
 <dd><p>math.ceil(a)</p>
 </dd></dl>
 
@@ -1708,7 +1758,7 @@ fraction:</p>
 <div class="inherited docutils container">
 <dl class="py method">
 <dt class="sig sig-object py" id="abjad.duration.Multiplier.__complex__">
-<span class="sig-prename descclassname"><span class="pre">(</span><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">__complex__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.Multiplier.__complex__" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">(</span><a class="reference external" href="https://docs.python.org/3.10/library/numbers.html#numbers.Real" title="(in Python v3.10)"><code class="descclassname docutils literal notranslate"><span class="pre">Real</span></code></a><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">__complex__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.Multiplier.__complex__" title="Permalink to this definition">¶</a></dt>
 <dd><p>complex(self) == complex(float(self), 0)</p>
 </dd></dl>
 
@@ -1716,14 +1766,14 @@ fraction:</p>
 <div class="inherited docutils container">
 <dl class="py method">
 <dt class="sig sig-object py" id="abjad.duration.Multiplier.__copy__">
-<span class="sig-prename descclassname"><span class="pre">(</span><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">__copy__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.Multiplier.__copy__" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">(</span><a class="reference external" href="https://docs.python.org/3.10/library/fractions.html#fractions.Fraction" title="(in Python v3.10)"><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code></a><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">__copy__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.Multiplier.__copy__" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </div>
 <div class="inherited docutils container">
 <dl class="py method">
 <dt class="sig sig-object py" id="abjad.duration.Multiplier.__deepcopy__">
-<span class="sig-prename descclassname"><span class="pre">(</span><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">__deepcopy__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">memo</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.Multiplier.__deepcopy__" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">(</span><a class="reference external" href="https://docs.python.org/3.10/library/fractions.html#fractions.Fraction" title="(in Python v3.10)"><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code></a><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">__deepcopy__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">memo</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.Multiplier.__deepcopy__" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </div>
@@ -1771,7 +1821,7 @@ fraction:</p>
 <div class="inherited docutils container">
 <dl class="py method">
 <dt class="sig sig-object py" id="abjad.duration.Multiplier.__float__">
-<span class="sig-prename descclassname"><span class="pre">(</span><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">__float__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.Multiplier.__float__" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">(</span><a class="reference external" href="https://docs.python.org/3.10/library/numbers.html#numbers.Rational" title="(in Python v3.10)"><code class="descclassname docutils literal notranslate"><span class="pre">Rational</span></code></a><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">__float__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.Multiplier.__float__" title="Permalink to this definition">¶</a></dt>
 <dd><p>float(self) = self.numerator / self.denominator</p>
 <p>It’s important that this conversion use the integer’s “true”
 division rather than casting one side to float before dividing
@@ -1782,7 +1832,7 @@ so that ratios of huge integers convert without overflowing.</p>
 <div class="inherited docutils container">
 <dl class="py method">
 <dt class="sig sig-object py" id="abjad.duration.Multiplier.__floor__">
-<span class="sig-prename descclassname"><span class="pre">(</span><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">__floor__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.Multiplier.__floor__" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">(</span><a class="reference external" href="https://docs.python.org/3.10/library/fractions.html#fractions.Fraction" title="(in Python v3.10)"><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code></a><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">__floor__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.Multiplier.__floor__" title="Permalink to this definition">¶</a></dt>
 <dd><p>math.floor(a)</p>
 </dd></dl>
 
@@ -1790,7 +1840,7 @@ so that ratios of huge integers convert without overflowing.</p>
 <div class="inherited docutils container">
 <dl class="py method">
 <dt class="sig sig-object py" id="abjad.duration.Multiplier.__floordiv__">
-<span class="sig-prename descclassname"><span class="pre">(</span><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">__floordiv__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.Multiplier.__floordiv__" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">(</span><a class="reference external" href="https://docs.python.org/3.10/library/fractions.html#fractions.Fraction" title="(in Python v3.10)"><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code></a><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">__floordiv__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">b</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.Multiplier.__floordiv__" title="Permalink to this definition">¶</a></dt>
 <dd><p>a // b</p>
 </dd></dl>
 
@@ -1837,7 +1887,7 @@ so that ratios of huge integers convert without overflowing.</p>
 <div class="inherited docutils container">
 <dl class="py method">
 <dt class="sig sig-object py" id="abjad.duration.Multiplier.__int__">
-<span class="sig-prename descclassname"><span class="pre">(</span><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">__int__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.Multiplier.__int__" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">(</span><a class="reference external" href="https://docs.python.org/3.10/library/fractions.html#fractions.Fraction" title="(in Python v3.10)"><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code></a><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">__int__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">_index=&lt;built-in</span> <span class="pre">function</span> <span class="pre">index&gt;</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.Multiplier.__int__" title="Permalink to this definition">¶</a></dt>
 <dd><p>int(a)</p>
 </dd></dl>
 
@@ -1881,11 +1931,6 @@ so that ratios of huge integers convert without overflowing.</p>
 <dt class="sig sig-object py" id="abjad.duration.Multiplier.__mul__">
 <em class="property"><span class="pre">overridden</span> </em><span class="sig-name descname"><span class="pre">__mul__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">arguments</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/abjad/duration.html#Multiplier.__mul__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#abjad.duration.Multiplier.__mul__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Multiplier times duration gives duration.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference internal" href="#abjad.duration.Duration" title="abjad.duration.Duration"><code class="xref py py-class docutils literal notranslate"><span class="pre">Duration</span></code></a></p>
-</dd>
-</dl>
 </dd></dl>
 
 <div class="inherited docutils container">
@@ -1893,7 +1938,7 @@ so that ratios of huge integers convert without overflowing.</p>
 <dt class="sig sig-object py" id="abjad.duration.Multiplier.__ne__">
 <span class="sig-prename descclassname"><span class="pre">(</span><a class="reference internal" href="#abjad.duration.Duration" title="abjad.duration.Duration"><code class="descclassname docutils literal notranslate"><span class="pre">Duration</span></code></a><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">__ne__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">argument</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.Multiplier.__ne__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Redefined explicitly because <code class="docutils literal notranslate"><span class="pre">abjad.Duration</span></code> inherits from built-in
-<code class="docutils literal notranslate"><span class="pre">quicktions.Fraction</span></code>:</p>
+<code class="docutils literal notranslate"><span class="pre">fractions.Fraction</span></code>:</p>
 <p>“The __ne__ method follows automatically from __eq__ only if __ne__
 isn’t already defined in a superclass.  So, if you’re inheriting from a
 builtin, it’s best to override both.”</p>
@@ -1998,7 +2043,7 @@ builtin, it’s best to override both.”</p>
 <div class="inherited docutils container">
 <dl class="py method">
 <dt class="sig sig-object py" id="abjad.duration.Multiplier.__rfloordiv__">
-<span class="sig-prename descclassname"><span class="pre">(</span><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">__rfloordiv__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.Multiplier.__rfloordiv__" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">(</span><a class="reference external" href="https://docs.python.org/3.10/library/fractions.html#fractions.Fraction" title="(in Python v3.10)"><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code></a><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">__rfloordiv__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.Multiplier.__rfloordiv__" title="Permalink to this definition">¶</a></dt>
 <dd><p>a // b</p>
 </dd></dl>
 
@@ -2023,7 +2068,7 @@ builtin, it’s best to override both.”</p>
 <div class="inherited docutils container">
 <dl class="py method">
 <dt class="sig sig-object py" id="abjad.duration.Multiplier.__round__">
-<span class="sig-prename descclassname"><span class="pre">(</span><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">__round__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ndigits</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.Multiplier.__round__" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">(</span><a class="reference external" href="https://docs.python.org/3.10/library/fractions.html#fractions.Fraction" title="(in Python v3.10)"><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code></a><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">__round__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ndigits</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.Multiplier.__round__" title="Permalink to this definition">¶</a></dt>
 <dd><p>round(self, ndigits)</p>
 <p>Rounds half toward even.</p>
 </dd></dl>
@@ -2059,7 +2104,7 @@ builtin, it’s best to override both.”</p>
 <div class="inherited docutils container">
 <dl class="py method">
 <dt class="sig sig-object py" id="abjad.duration.Multiplier.__str__">
-<span class="sig-prename descclassname"><span class="pre">(</span><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">__str__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.Multiplier.__str__" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">(</span><a class="reference external" href="https://docs.python.org/3.10/library/fractions.html#fractions.Fraction" title="(in Python v3.10)"><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code></a><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">__str__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.Multiplier.__str__" title="Permalink to this definition">¶</a></dt>
 <dd><p>str(self)</p>
 </dd></dl>
 
@@ -2094,7 +2139,7 @@ builtin, it’s best to override both.”</p>
 <div class="inherited docutils container">
 <dl class="py method">
 <dt class="sig sig-object py" id="abjad.duration.Multiplier.__trunc__">
-<span class="sig-prename descclassname"><span class="pre">(</span><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">__trunc__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.Multiplier.__trunc__" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">(</span><a class="reference external" href="https://docs.python.org/3.10/library/fractions.html#fractions.Fraction" title="(in Python v3.10)"><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code></a><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">__trunc__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.Multiplier.__trunc__" title="Permalink to this definition">¶</a></dt>
 <dd><p>math.trunc(a)</p>
 </dd></dl>
 
@@ -2103,7 +2148,7 @@ builtin, it’s best to override both.”</p>
 <div class="inherited docutils container">
 <dl class="py method">
 <dt class="sig sig-object py" id="abjad.duration.Multiplier.as_integer_ratio">
-<span class="sig-prename descclassname"><span class="pre">(</span><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">as_integer_ratio</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.Multiplier.as_integer_ratio" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">(</span><a class="reference external" href="https://docs.python.org/3.10/library/fractions.html#fractions.Fraction" title="(in Python v3.10)"><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code></a><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">as_integer_ratio</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.Multiplier.as_integer_ratio" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the integer ratio as a tuple.</p>
 <p>Return a tuple of two integers, whose ratio is equal to the
 Fraction and with a positive denominator.</p>
@@ -2113,7 +2158,7 @@ Fraction and with a positive denominator.</p>
 <div class="inherited docutils container">
 <dl class="py method">
 <dt class="sig sig-object py" id="abjad.duration.Multiplier.conjugate">
-<span class="sig-prename descclassname"><span class="pre">(</span><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">conjugate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.Multiplier.conjugate" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">(</span><a class="reference external" href="https://docs.python.org/3.10/library/numbers.html#numbers.Real" title="(in Python v3.10)"><code class="descclassname docutils literal notranslate"><span class="pre">Real</span></code></a><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">conjugate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.Multiplier.conjugate" title="Permalink to this definition">¶</a></dt>
 <dd><p>Conjugate is a no-op for Reals.</p>
 </dd></dl>
 
@@ -2121,7 +2166,7 @@ Fraction and with a positive denominator.</p>
 <div class="inherited docutils container">
 <dl class="py method">
 <dt class="sig sig-object py" id="abjad.duration.Multiplier.limit_denominator">
-<span class="sig-prename descclassname"><span class="pre">(</span><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">limit_denominator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">max_denominator</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1000000</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.Multiplier.limit_denominator" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">(</span><a class="reference external" href="https://docs.python.org/3.10/library/fractions.html#fractions.Fraction" title="(in Python v3.10)"><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code></a><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">limit_denominator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">max_denominator</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1000000</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.Multiplier.limit_denominator" title="Permalink to this definition">¶</a></dt>
 <dd><p>Closest Fraction to self with denominator at most max_denominator.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Fraction</span><span class="p">(</span><span class="s2">&quot;3.141592653589793&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">limit_denominator</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
 <span class="go">Fraction(22, 7)</span>
@@ -2231,7 +2276,7 @@ denominator.</p>
 </div>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.10/library/stdtypes.html#list" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a>[NonreducedFraction]</p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.10/library/stdtypes.html#list" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a>[<a class="reference internal" href="#abjad.duration.NonreducedFraction" title="abjad.duration.NonreducedFraction"><code class="xref py py-class docutils literal notranslate"><span class="pre">NonreducedFraction</span></code></a>]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -2271,7 +2316,7 @@ denominator.</p>
 <div class="inherited docutils container">
 <dl class="py method">
 <dt class="sig sig-object py" id="abjad.duration.Multiplier.from_decimal">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">(</span><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">from_decimal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dec</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.Multiplier.from_decimal" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">(</span><a class="reference external" href="https://docs.python.org/3.10/library/fractions.html#fractions.Fraction" title="(in Python v3.10)"><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code></a><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">from_decimal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dec</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.Multiplier.from_decimal" title="Permalink to this definition">¶</a></dt>
 <dd><p>Converts a finite Decimal instance to a rational number, exactly.</p>
 </dd></dl>
 
@@ -2312,7 +2357,7 @@ denominator.</p>
 <div class="inherited docutils container">
 <dl class="py method">
 <dt class="sig sig-object py" id="abjad.duration.Multiplier.from_float">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">(</span><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">from_float</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">f</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.Multiplier.from_float" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">(</span><a class="reference external" href="https://docs.python.org/3.10/library/fractions.html#fractions.Fraction" title="(in Python v3.10)"><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code></a><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">from_float</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">f</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.Multiplier.from_float" title="Permalink to this definition">¶</a></dt>
 <dd><p>Converts a finite float to a rational number, exactly.</p>
 <p>Beware that Fraction.from_float(0.3) != Fraction(3, 10).</p>
 </dd></dl>
@@ -2359,6 +2404,13 @@ denominator.</p>
 
 </div>
 <hr/><p class="class-header rubric">Read-only properties</p>
+<div class="inherited docutils container">
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abjad.duration.Multiplier.denominator">
+<span class="sig-prename descclassname"><span class="pre">(</span><a class="reference external" href="https://docs.python.org/3.10/library/fractions.html#fractions.Fraction" title="(in Python v3.10)"><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code></a><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">denominator</span></span><a class="headerlink" href="#abjad.duration.Multiplier.denominator" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
 <div class="inherited docutils container">
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abjad.duration.Multiplier.dot_count">
@@ -2651,6 +2703,14 @@ duration.</p>
 </div>
 <div class="inherited docutils container">
 <dl class="py attribute">
+<dt class="sig sig-object py" id="abjad.duration.Multiplier.imag">
+<span class="sig-prename descclassname"><span class="pre">(</span><a class="reference external" href="https://docs.python.org/3.10/library/numbers.html#numbers.Real" title="(in Python v3.10)"><code class="descclassname docutils literal notranslate"><span class="pre">Real</span></code></a><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">imag</span></span><a class="headerlink" href="#abjad.duration.Multiplier.imag" title="Permalink to this definition">¶</a></dt>
+<dd><p>Real numbers have no imaginary component.</p>
+</dd></dl>
+
+</div>
+<div class="inherited docutils container">
+<dl class="py attribute">
 <dt class="sig sig-object py" id="abjad.duration.Multiplier.implied_prolation">
 <span class="sig-prename descclassname"><span class="pre">(</span><a class="reference internal" href="#abjad.duration.Duration" title="abjad.duration.Duration"><code class="descclassname docutils literal notranslate"><span class="pre">Duration</span></code></a><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">implied_prolation</span></span><a class="headerlink" href="#abjad.duration.Multiplier.implied_prolation" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets implied prolation.</p>
@@ -2786,6 +2846,13 @@ duration.</p>
 </div>
 <div class="inherited docutils container">
 <dl class="py attribute">
+<dt class="sig sig-object py" id="abjad.duration.Multiplier.numerator">
+<span class="sig-prename descclassname"><span class="pre">(</span><a class="reference external" href="https://docs.python.org/3.10/library/fractions.html#fractions.Fraction" title="(in Python v3.10)"><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code></a><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">numerator</span></span><a class="headerlink" href="#abjad.duration.Multiplier.numerator" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="inherited docutils container">
+<dl class="py attribute">
 <dt class="sig sig-object py" id="abjad.duration.Multiplier.pair">
 <span class="sig-prename descclassname"><span class="pre">(</span><a class="reference internal" href="#abjad.duration.Duration" title="abjad.duration.Duration"><code class="descclassname docutils literal notranslate"><span class="pre">Duration</span></code></a><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">pair</span></span><a class="headerlink" href="#abjad.duration.Multiplier.pair" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets numerator and denominator.</p>
@@ -2827,7 +2894,7 @@ duration.</p>
 <div class="inherited docutils container">
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abjad.duration.Multiplier.real">
-<span class="sig-prename descclassname"><span class="pre">(</span><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">real</span></span><a class="headerlink" href="#abjad.duration.Multiplier.real" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">(</span><a class="reference external" href="https://docs.python.org/3.10/library/numbers.html#numbers.Real" title="(in Python v3.10)"><code class="descclassname docutils literal notranslate"><span class="pre">Real</span></code></a><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">real</span></span><a class="headerlink" href="#abjad.duration.Multiplier.real" title="Permalink to this definition">¶</a></dt>
 <dd><p>Real numbers are their real component.</p>
 </dd></dl>
 
@@ -2888,8 +2955,8 @@ duration.</p>
 </div>
 <div class="example docutils container">
 <p>Nonreduced fractions inherit from built-in fraction:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">quicktions</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">isinstance</span><span class="p">(</span><span class="n">abjad</span><span class="o">.</span><span class="n">NonreducedFraction</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span> <span class="n">quicktions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">fractions</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">isinstance</span><span class="p">(</span><span class="n">abjad</span><span class="o">.</span><span class="n">NonreducedFraction</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">)</span>
 <span class="go">True</span>
 </pre></div>
 </div>
@@ -2972,7 +3039,7 @@ duration.</p>
 <td><p>Subtracts nonreduced fraction from <code class="docutils literal notranslate"><span class="pre">argument</span></code>.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#abjad.duration.NonreducedFraction.__rtruediv__" title="abjad.duration.NonreducedFraction.__rtruediv__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__rtruediv__</span></code></a></p></td>
-<td><p>Divides <code class="docutils literal notranslate"><span class="pre">argument</span></code> by nonreduced fraction.</p></td>
+<td><p>Aliases __rdiv__</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#abjad.duration.NonreducedFraction.__str__" title="abjad.duration.NonreducedFraction.__str__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__str__</span></code></a></p></td>
 <td><p>Gets string representation of nonreduced fraction.</p></td>
@@ -3053,25 +3120,20 @@ duration.</p>
 </pre></div>
 </div>
 </div>
-<dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference internal" href="#abjad.duration.NonreducedFraction" title="abjad.duration.NonreducedFraction"><code class="xref py py-class docutils literal notranslate"><span class="pre">NonreducedFraction</span></code></a></p>
-</dd>
-</dl>
 </dd></dl>
 
 <div class="inherited docutils container">
 <dl class="py method">
 <dt class="sig sig-object py" id="abjad.duration.NonreducedFraction.__bool__">
-<span class="sig-prename descclassname"><span class="pre">(</span><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">__bool__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.NonreducedFraction.__bool__" title="Permalink to this definition">¶</a></dt>
-<dd><p>True if self else False</p>
+<span class="sig-prename descclassname"><span class="pre">(</span><a class="reference external" href="https://docs.python.org/3.10/library/fractions.html#fractions.Fraction" title="(in Python v3.10)"><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code></a><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">__bool__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.NonreducedFraction.__bool__" title="Permalink to this definition">¶</a></dt>
+<dd><p>a != 0</p>
 </dd></dl>
 
 </div>
 <div class="inherited docutils container">
 <dl class="py method">
 <dt class="sig sig-object py" id="abjad.duration.NonreducedFraction.__ceil__">
-<span class="sig-prename descclassname"><span class="pre">(</span><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">__ceil__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.NonreducedFraction.__ceil__" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">(</span><a class="reference external" href="https://docs.python.org/3.10/library/fractions.html#fractions.Fraction" title="(in Python v3.10)"><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code></a><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">__ceil__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.NonreducedFraction.__ceil__" title="Permalink to this definition">¶</a></dt>
 <dd><p>math.ceil(a)</p>
 </dd></dl>
 
@@ -3079,7 +3141,7 @@ duration.</p>
 <div class="inherited docutils container">
 <dl class="py method">
 <dt class="sig sig-object py" id="abjad.duration.NonreducedFraction.__complex__">
-<span class="sig-prename descclassname"><span class="pre">(</span><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">__complex__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.NonreducedFraction.__complex__" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">(</span><a class="reference external" href="https://docs.python.org/3.10/library/numbers.html#numbers.Real" title="(in Python v3.10)"><code class="descclassname docutils literal notranslate"><span class="pre">Real</span></code></a><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">__complex__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.NonreducedFraction.__complex__" title="Permalink to this definition">¶</a></dt>
 <dd><p>complex(self) == complex(float(self), 0)</p>
 </dd></dl>
 
@@ -3176,10 +3238,8 @@ duration.</p>
 <div class="inherited docutils container">
 <dl class="py method">
 <dt class="sig sig-object py" id="abjad.duration.NonreducedFraction.__divmod__">
-<span class="sig-prename descclassname"><span class="pre">(</span><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">__divmod__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.NonreducedFraction.__divmod__" title="Permalink to this definition">¶</a></dt>
-<dd><p>divmod(self, other): The pair (self // other, self % other).</p>
-<p>Sometimes this can be computed faster than the pair of
-operations.</p>
+<span class="sig-prename descclassname"><span class="pre">(</span><a class="reference external" href="https://docs.python.org/3.10/library/fractions.html#fractions.Fraction" title="(in Python v3.10)"><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code></a><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">__divmod__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">b</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.NonreducedFraction.__divmod__" title="Permalink to this definition">¶</a></dt>
+<dd><p>(a // b, a % b)</p>
 </dd></dl>
 
 </div>
@@ -3203,7 +3263,7 @@ operations.</p>
 <div class="inherited docutils container">
 <dl class="py method">
 <dt class="sig sig-object py" id="abjad.duration.NonreducedFraction.__float__">
-<span class="sig-prename descclassname"><span class="pre">(</span><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">__float__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.NonreducedFraction.__float__" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">(</span><a class="reference external" href="https://docs.python.org/3.10/library/numbers.html#numbers.Rational" title="(in Python v3.10)"><code class="descclassname docutils literal notranslate"><span class="pre">Rational</span></code></a><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">__float__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.NonreducedFraction.__float__" title="Permalink to this definition">¶</a></dt>
 <dd><p>float(self) = self.numerator / self.denominator</p>
 <p>It’s important that this conversion use the integer’s “true”
 division rather than casting one side to float before dividing
@@ -3214,7 +3274,7 @@ so that ratios of huge integers convert without overflowing.</p>
 <div class="inherited docutils container">
 <dl class="py method">
 <dt class="sig sig-object py" id="abjad.duration.NonreducedFraction.__floor__">
-<span class="sig-prename descclassname"><span class="pre">(</span><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">__floor__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.NonreducedFraction.__floor__" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">(</span><a class="reference external" href="https://docs.python.org/3.10/library/fractions.html#fractions.Fraction" title="(in Python v3.10)"><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code></a><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">__floor__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.NonreducedFraction.__floor__" title="Permalink to this definition">¶</a></dt>
 <dd><p>math.floor(a)</p>
 </dd></dl>
 
@@ -3222,7 +3282,7 @@ so that ratios of huge integers convert without overflowing.</p>
 <div class="inherited docutils container">
 <dl class="py method">
 <dt class="sig sig-object py" id="abjad.duration.NonreducedFraction.__floordiv__">
-<span class="sig-prename descclassname"><span class="pre">(</span><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">__floordiv__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.NonreducedFraction.__floordiv__" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">(</span><a class="reference external" href="https://docs.python.org/3.10/library/fractions.html#fractions.Fraction" title="(in Python v3.10)"><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code></a><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">__floordiv__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">b</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.NonreducedFraction.__floordiv__" title="Permalink to this definition">¶</a></dt>
 <dd><p>a // b</p>
 </dd></dl>
 
@@ -3276,7 +3336,7 @@ so that ratios of huge integers convert without overflowing.</p>
 <div class="inherited docutils container">
 <dl class="py method">
 <dt class="sig sig-object py" id="abjad.duration.NonreducedFraction.__int__">
-<span class="sig-prename descclassname"><span class="pre">(</span><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">__int__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.NonreducedFraction.__int__" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">(</span><a class="reference external" href="https://docs.python.org/3.10/library/fractions.html#fractions.Fraction" title="(in Python v3.10)"><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code></a><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">__int__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">_index=&lt;built-in</span> <span class="pre">function</span> <span class="pre">index&gt;</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.NonreducedFraction.__int__" title="Permalink to this definition">¶</a></dt>
 <dd><p>int(a)</p>
 </dd></dl>
 
@@ -3319,7 +3379,7 @@ so that ratios of huge integers convert without overflowing.</p>
 <div class="inherited docutils container">
 <dl class="py method">
 <dt class="sig sig-object py" id="abjad.duration.NonreducedFraction.__mod__">
-<span class="sig-prename descclassname"><span class="pre">(</span><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">__mod__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.NonreducedFraction.__mod__" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">(</span><a class="reference external" href="https://docs.python.org/3.10/library/fractions.html#fractions.Fraction" title="(in Python v3.10)"><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code></a><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">__mod__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">b</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.NonreducedFraction.__mod__" title="Permalink to this definition">¶</a></dt>
 <dd><p>a % b</p>
 </dd></dl>
 
@@ -3334,21 +3394,8 @@ so that ratios of huge integers convert without overflowing.</p>
 </pre></div>
 </div>
 </div>
-<dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference internal" href="#abjad.duration.NonreducedFraction" title="abjad.duration.NonreducedFraction"><code class="xref py py-class docutils literal notranslate"><span class="pre">NonreducedFraction</span></code></a></p>
-</dd>
-</dl>
 </dd></dl>
 
-<div class="inherited docutils container">
-<dl class="py method">
-<dt class="sig sig-object py" id="abjad.duration.NonreducedFraction.__ne__">
-<span class="sig-prename descclassname"><span class="pre">(</span><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">__ne__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.NonreducedFraction.__ne__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return self!=value.</p>
-</dd></dl>
-
-</div>
 <dl class="py method">
 <dt class="sig sig-object py" id="abjad.duration.NonreducedFraction.__neg__">
 <em class="property"><span class="pre">overridden</span> </em><span class="sig-name descname"><span class="pre">__neg__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/abjad/duration.html#NonreducedFraction.__neg__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#abjad.duration.NonreducedFraction.__neg__" title="Permalink to this definition">¶</a></dt>
@@ -3375,7 +3422,7 @@ so that ratios of huge integers convert without overflowing.</p>
 <div class="inherited docutils container">
 <dl class="py method">
 <dt class="sig sig-object py" id="abjad.duration.NonreducedFraction.__pos__">
-<span class="sig-prename descclassname"><span class="pre">(</span><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">__pos__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.NonreducedFraction.__pos__" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">(</span><a class="reference external" href="https://docs.python.org/3.10/library/fractions.html#fractions.Fraction" title="(in Python v3.10)"><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code></a><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">__pos__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.NonreducedFraction.__pos__" title="Permalink to this definition">¶</a></dt>
 <dd><p>+a: Coerces a subclass instance to Fraction</p>
 </dd></dl>
 
@@ -3390,11 +3437,6 @@ so that ratios of huge integers convert without overflowing.</p>
 </pre></div>
 </div>
 </div>
-<dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference internal" href="#abjad.duration.NonreducedFraction" title="abjad.duration.NonreducedFraction"><code class="xref py py-class docutils literal notranslate"><span class="pre">NonreducedFraction</span></code></a></p>
-</dd>
-</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -3407,11 +3449,6 @@ so that ratios of huge integers convert without overflowing.</p>
 </pre></div>
 </div>
 </div>
-<dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference internal" href="#abjad.duration.NonreducedFraction" title="abjad.duration.NonreducedFraction"><code class="xref py py-class docutils literal notranslate"><span class="pre">NonreducedFraction</span></code></a></p>
-</dd>
-</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -3434,10 +3471,8 @@ so that ratios of huge integers convert without overflowing.</p>
 <div class="inherited docutils container">
 <dl class="py method">
 <dt class="sig sig-object py" id="abjad.duration.NonreducedFraction.__rdivmod__">
-<span class="sig-prename descclassname"><span class="pre">(</span><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">__rdivmod__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.NonreducedFraction.__rdivmod__" title="Permalink to this definition">¶</a></dt>
-<dd><p>divmod(self, other): The pair (self // other, self % other).</p>
-<p>Sometimes this can be computed faster than the pair of
-operations.</p>
+<span class="sig-prename descclassname"><span class="pre">(</span><a class="reference external" href="https://docs.python.org/3.10/library/fractions.html#fractions.Fraction" title="(in Python v3.10)"><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code></a><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">__rdivmod__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.NonreducedFraction.__rdivmod__" title="Permalink to this definition">¶</a></dt>
+<dd><p>(a // b, a % b)</p>
 </dd></dl>
 
 </div>
@@ -3461,7 +3496,7 @@ operations.</p>
 <div class="inherited docutils container">
 <dl class="py method">
 <dt class="sig sig-object py" id="abjad.duration.NonreducedFraction.__rfloordiv__">
-<span class="sig-prename descclassname"><span class="pre">(</span><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">__rfloordiv__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.NonreducedFraction.__rfloordiv__" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">(</span><a class="reference external" href="https://docs.python.org/3.10/library/fractions.html#fractions.Fraction" title="(in Python v3.10)"><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code></a><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">__rfloordiv__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.NonreducedFraction.__rfloordiv__" title="Permalink to this definition">¶</a></dt>
 <dd><p>a // b</p>
 </dd></dl>
 
@@ -3469,7 +3504,7 @@ operations.</p>
 <div class="inherited docutils container">
 <dl class="py method">
 <dt class="sig sig-object py" id="abjad.duration.NonreducedFraction.__rmod__">
-<span class="sig-prename descclassname"><span class="pre">(</span><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">__rmod__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.NonreducedFraction.__rmod__" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">(</span><a class="reference external" href="https://docs.python.org/3.10/library/fractions.html#fractions.Fraction" title="(in Python v3.10)"><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code></a><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">__rmod__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.NonreducedFraction.__rmod__" title="Permalink to this definition">¶</a></dt>
 <dd><p>a % b</p>
 </dd></dl>
 
@@ -3484,17 +3519,12 @@ operations.</p>
 </pre></div>
 </div>
 </div>
-<dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference internal" href="#abjad.duration.NonreducedFraction" title="abjad.duration.NonreducedFraction"><code class="xref py py-class docutils literal notranslate"><span class="pre">NonreducedFraction</span></code></a></p>
-</dd>
-</dl>
 </dd></dl>
 
 <div class="inherited docutils container">
 <dl class="py method">
 <dt class="sig sig-object py" id="abjad.duration.NonreducedFraction.__round__">
-<span class="sig-prename descclassname"><span class="pre">(</span><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">__round__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ndigits</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.NonreducedFraction.__round__" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">(</span><a class="reference external" href="https://docs.python.org/3.10/library/fractions.html#fractions.Fraction" title="(in Python v3.10)"><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code></a><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">__round__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ndigits</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.NonreducedFraction.__round__" title="Permalink to this definition">¶</a></dt>
 <dd><p>round(self, ndigits)</p>
 <p>Rounds half toward even.</p>
 </dd></dl>
@@ -3503,11 +3533,8 @@ operations.</p>
 <div class="inherited docutils container">
 <dl class="py method">
 <dt class="sig sig-object py" id="abjad.duration.NonreducedFraction.__rpow__">
-<span class="sig-prename descclassname"><span class="pre">(</span><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">__rpow__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.NonreducedFraction.__rpow__" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">(</span><a class="reference external" href="https://docs.python.org/3.10/library/fractions.html#fractions.Fraction" title="(in Python v3.10)"><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code></a><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">__rpow__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.NonreducedFraction.__rpow__" title="Permalink to this definition">¶</a></dt>
 <dd><p>a ** b</p>
-<p>If b is not an integer, the result will be a float or complex
-since roots are generally irrational. If b is an integer, the
-result will be rational.</p>
 </dd></dl>
 
 </div>
@@ -3521,28 +3548,12 @@ result will be rational.</p>
 </pre></div>
 </div>
 </div>
-<dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference internal" href="#abjad.duration.NonreducedFraction" title="abjad.duration.NonreducedFraction"><code class="xref py py-class docutils literal notranslate"><span class="pre">NonreducedFraction</span></code></a></p>
-</dd>
-</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abjad.duration.NonreducedFraction.__rtruediv__">
-<em class="property"><span class="pre">overridden</span> </em><span class="sig-name descname"><span class="pre">__rtruediv__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">argument</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.NonreducedFraction.__rtruediv__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Divides <code class="docutils literal notranslate"><span class="pre">argument</span></code> by nonreduced fraction.</p>
-<div class="example docutils container">
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="mi">1</span> <span class="o">/</span> <span class="n">abjad</span><span class="o">.</span><span class="n">NonreducedFraction</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
-<span class="go">NonreducedFraction(3, 3)</span>
-</pre></div>
-</div>
-</div>
-<dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference internal" href="#abjad.duration.NonreducedFraction" title="abjad.duration.NonreducedFraction"><code class="xref py py-class docutils literal notranslate"><span class="pre">NonreducedFraction</span></code></a></p>
-</dd>
-</dl>
+<em class="property"><span class="pre">overridden</span> </em><span class="sig-name descname"><span class="pre">__rtruediv__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">argument</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/abjad/duration.html#NonreducedFraction.__rtruediv__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#abjad.duration.NonreducedFraction.__rtruediv__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Aliases __rdiv__</p>
 </dd></dl>
 
 <dl class="py method">
@@ -3583,28 +3594,18 @@ result will be rational.</p>
 </pre></div>
 </div>
 </div>
-<dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference internal" href="#abjad.duration.NonreducedFraction" title="abjad.duration.NonreducedFraction"><code class="xref py py-class docutils literal notranslate"><span class="pre">NonreducedFraction</span></code></a></p>
-</dd>
-</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="abjad.duration.NonreducedFraction.__truediv__">
 <em class="property"><span class="pre">overridden</span> </em><span class="sig-name descname"><span class="pre">__truediv__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">argument</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/abjad/duration.html#NonreducedFraction.__truediv__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#abjad.duration.NonreducedFraction.__truediv__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Divides nonreduced fraction in Python 3.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference internal" href="#abjad.duration.NonreducedFraction" title="abjad.duration.NonreducedFraction"><code class="xref py py-class docutils literal notranslate"><span class="pre">NonreducedFraction</span></code></a></p>
-</dd>
-</dl>
 </dd></dl>
 
 <div class="inherited docutils container">
 <dl class="py method">
 <dt class="sig sig-object py" id="abjad.duration.NonreducedFraction.__trunc__">
-<span class="sig-prename descclassname"><span class="pre">(</span><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">__trunc__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.NonreducedFraction.__trunc__" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">(</span><a class="reference external" href="https://docs.python.org/3.10/library/fractions.html#fractions.Fraction" title="(in Python v3.10)"><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code></a><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">__trunc__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.NonreducedFraction.__trunc__" title="Permalink to this definition">¶</a></dt>
 <dd><p>math.trunc(a)</p>
 </dd></dl>
 
@@ -3613,7 +3614,7 @@ result will be rational.</p>
 <div class="inherited docutils container">
 <dl class="py method">
 <dt class="sig sig-object py" id="abjad.duration.NonreducedFraction.as_integer_ratio">
-<span class="sig-prename descclassname"><span class="pre">(</span><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">as_integer_ratio</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.NonreducedFraction.as_integer_ratio" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">(</span><a class="reference external" href="https://docs.python.org/3.10/library/fractions.html#fractions.Fraction" title="(in Python v3.10)"><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code></a><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">as_integer_ratio</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.NonreducedFraction.as_integer_ratio" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the integer ratio as a tuple.</p>
 <p>Return a tuple of two integers, whose ratio is equal to the
 Fraction and with a positive denominator.</p>
@@ -3623,7 +3624,7 @@ Fraction and with a positive denominator.</p>
 <div class="inherited docutils container">
 <dl class="py method">
 <dt class="sig sig-object py" id="abjad.duration.NonreducedFraction.conjugate">
-<span class="sig-prename descclassname"><span class="pre">(</span><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">conjugate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.NonreducedFraction.conjugate" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">(</span><a class="reference external" href="https://docs.python.org/3.10/library/numbers.html#numbers.Real" title="(in Python v3.10)"><code class="descclassname docutils literal notranslate"><span class="pre">Real</span></code></a><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">conjugate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.NonreducedFraction.conjugate" title="Permalink to this definition">¶</a></dt>
 <dd><p>Conjugate is a no-op for Reals.</p>
 </dd></dl>
 
@@ -3631,7 +3632,7 @@ Fraction and with a positive denominator.</p>
 <div class="inherited docutils container">
 <dl class="py method">
 <dt class="sig sig-object py" id="abjad.duration.NonreducedFraction.limit_denominator">
-<span class="sig-prename descclassname"><span class="pre">(</span><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">limit_denominator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">max_denominator</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1000000</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.NonreducedFraction.limit_denominator" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">(</span><a class="reference external" href="https://docs.python.org/3.10/library/fractions.html#fractions.Fraction" title="(in Python v3.10)"><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code></a><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">limit_denominator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">max_denominator</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1000000</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.NonreducedFraction.limit_denominator" title="Permalink to this definition">¶</a></dt>
 <dd><p>Closest Fraction to self with denominator at most max_denominator.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Fraction</span><span class="p">(</span><span class="s2">&quot;3.141592653589793&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">limit_denominator</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
 <span class="go">Fraction(22, 7)</span>
@@ -3767,7 +3768,7 @@ preservation where possible.</p>
 </div>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Fraction</span></code></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.10/library/fractions.html#fractions.Fraction" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Fraction</span></code></a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -3906,7 +3907,7 @@ denominator.</p>
 </div>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.10/library/stdtypes.html#list" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a>[NonreducedFraction]</p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.10/library/stdtypes.html#list" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a>[<a class="reference internal" href="#abjad.duration.NonreducedFraction" title="abjad.duration.NonreducedFraction"><code class="xref py py-class docutils literal notranslate"><span class="pre">NonreducedFraction</span></code></a>]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -3914,7 +3915,7 @@ denominator.</p>
 <div class="inherited docutils container">
 <dl class="py method">
 <dt class="sig sig-object py" id="abjad.duration.NonreducedFraction.from_decimal">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">(</span><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">from_decimal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dec</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.NonreducedFraction.from_decimal" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">(</span><a class="reference external" href="https://docs.python.org/3.10/library/fractions.html#fractions.Fraction" title="(in Python v3.10)"><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code></a><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">from_decimal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dec</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.NonreducedFraction.from_decimal" title="Permalink to this definition">¶</a></dt>
 <dd><p>Converts a finite Decimal instance to a rational number, exactly.</p>
 </dd></dl>
 
@@ -3922,7 +3923,7 @@ denominator.</p>
 <div class="inherited docutils container">
 <dl class="py method">
 <dt class="sig sig-object py" id="abjad.duration.NonreducedFraction.from_float">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">(</span><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">from_float</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">f</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.NonreducedFraction.from_float" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">(</span><a class="reference external" href="https://docs.python.org/3.10/library/fractions.html#fractions.Fraction" title="(in Python v3.10)"><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code></a><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">from_float</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">f</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.NonreducedFraction.from_float" title="Permalink to this definition">¶</a></dt>
 <dd><p>Converts a finite float to a rational number, exactly.</p>
 <p>Beware that Fraction.from_float(0.3) != Fraction(3, 10).</p>
 </dd></dl>
@@ -3939,11 +3940,6 @@ denominator.</p>
 </pre></div>
 </div>
 </div>
-<dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.10/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></p>
-</dd>
-</dl>
 </dd></dl>
 
 <dl class="py attribute">
@@ -3958,7 +3954,7 @@ denominator.</p>
 </div>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.10/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.10/library/typing.html#typing.Literal" title="(in Python v3.10)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Literal</span></code></a>[0]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -4087,8 +4083,8 @@ real component.</p>
 </div>
 <div class="example docutils container">
 <p>Intializes from fraction:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">quicktions</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">abjad</span><span class="o">.</span><span class="n">Offset</span><span class="p">(</span><span class="n">quicktions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">16</span><span class="p">))</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">fractions</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">abjad</span><span class="o">.</span><span class="n">Offset</span><span class="p">(</span><span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">16</span><span class="p">))</span>
 <span class="go">Offset((3, 16))</span>
 </pre></div>
 </div>
@@ -4109,7 +4105,7 @@ real component.</p>
 </div>
 <div class="example docutils container">
 <p>Offsets inherit from built-in fraction:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">isinstance</span><span class="p">(</span><span class="n">abjad</span><span class="o">.</span><span class="n">Offset</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">16</span><span class="p">),</span> <span class="n">quicktions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">isinstance</span><span class="p">(</span><span class="n">abjad</span><span class="o">.</span><span class="n">Offset</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">16</span><span class="p">),</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">)</span>
 <span class="go">True</span>
 </pre></div>
 </div>
@@ -4210,15 +4206,15 @@ fraction:</p>
 <div class="inherited docutils container">
 <dl class="py method">
 <dt class="sig sig-object py" id="abjad.duration.Offset.__bool__">
-<span class="sig-prename descclassname"><span class="pre">(</span><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">__bool__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.Offset.__bool__" title="Permalink to this definition">¶</a></dt>
-<dd><p>True if self else False</p>
+<span class="sig-prename descclassname"><span class="pre">(</span><a class="reference external" href="https://docs.python.org/3.10/library/fractions.html#fractions.Fraction" title="(in Python v3.10)"><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code></a><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">__bool__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.Offset.__bool__" title="Permalink to this definition">¶</a></dt>
+<dd><p>a != 0</p>
 </dd></dl>
 
 </div>
 <div class="inherited docutils container">
 <dl class="py method">
 <dt class="sig sig-object py" id="abjad.duration.Offset.__ceil__">
-<span class="sig-prename descclassname"><span class="pre">(</span><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">__ceil__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.Offset.__ceil__" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">(</span><a class="reference external" href="https://docs.python.org/3.10/library/fractions.html#fractions.Fraction" title="(in Python v3.10)"><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code></a><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">__ceil__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.Offset.__ceil__" title="Permalink to this definition">¶</a></dt>
 <dd><p>math.ceil(a)</p>
 </dd></dl>
 
@@ -4226,7 +4222,7 @@ fraction:</p>
 <div class="inherited docutils container">
 <dl class="py method">
 <dt class="sig sig-object py" id="abjad.duration.Offset.__complex__">
-<span class="sig-prename descclassname"><span class="pre">(</span><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">__complex__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.Offset.__complex__" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">(</span><a class="reference external" href="https://docs.python.org/3.10/library/numbers.html#numbers.Real" title="(in Python v3.10)"><code class="descclassname docutils literal notranslate"><span class="pre">Real</span></code></a><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">__complex__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.Offset.__complex__" title="Permalink to this definition">¶</a></dt>
 <dd><p>complex(self) == complex(float(self), 0)</p>
 </dd></dl>
 
@@ -4418,7 +4414,7 @@ displacements:</p>
 <div class="inherited docutils container">
 <dl class="py method">
 <dt class="sig sig-object py" id="abjad.duration.Offset.__float__">
-<span class="sig-prename descclassname"><span class="pre">(</span><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">__float__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.Offset.__float__" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">(</span><a class="reference external" href="https://docs.python.org/3.10/library/numbers.html#numbers.Rational" title="(in Python v3.10)"><code class="descclassname docutils literal notranslate"><span class="pre">Rational</span></code></a><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">__float__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.Offset.__float__" title="Permalink to this definition">¶</a></dt>
 <dd><p>float(self) = self.numerator / self.denominator</p>
 <p>It’s important that this conversion use the integer’s “true”
 division rather than casting one side to float before dividing
@@ -4429,7 +4425,7 @@ so that ratios of huge integers convert without overflowing.</p>
 <div class="inherited docutils container">
 <dl class="py method">
 <dt class="sig sig-object py" id="abjad.duration.Offset.__floor__">
-<span class="sig-prename descclassname"><span class="pre">(</span><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">__floor__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.Offset.__floor__" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">(</span><a class="reference external" href="https://docs.python.org/3.10/library/fractions.html#fractions.Fraction" title="(in Python v3.10)"><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code></a><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">__floor__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.Offset.__floor__" title="Permalink to this definition">¶</a></dt>
 <dd><p>math.floor(a)</p>
 </dd></dl>
 
@@ -4437,7 +4433,7 @@ so that ratios of huge integers convert without overflowing.</p>
 <div class="inherited docutils container">
 <dl class="py method">
 <dt class="sig sig-object py" id="abjad.duration.Offset.__floordiv__">
-<span class="sig-prename descclassname"><span class="pre">(</span><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">__floordiv__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.Offset.__floordiv__" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">(</span><a class="reference external" href="https://docs.python.org/3.10/library/fractions.html#fractions.Fraction" title="(in Python v3.10)"><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code></a><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">__floordiv__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">b</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.Offset.__floordiv__" title="Permalink to this definition">¶</a></dt>
 <dd><p>a // b</p>
 </dd></dl>
 
@@ -4620,7 +4616,7 @@ displacements:</p>
 <div class="inherited docutils container">
 <dl class="py method">
 <dt class="sig sig-object py" id="abjad.duration.Offset.__int__">
-<span class="sig-prename descclassname"><span class="pre">(</span><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">__int__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.Offset.__int__" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">(</span><a class="reference external" href="https://docs.python.org/3.10/library/fractions.html#fractions.Fraction" title="(in Python v3.10)"><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code></a><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">__int__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">_index=&lt;built-in</span> <span class="pre">function</span> <span class="pre">index&gt;</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.Offset.__int__" title="Permalink to this definition">¶</a></dt>
 <dd><p>int(a)</p>
 </dd></dl>
 
@@ -4825,10 +4821,10 @@ displacements:</p>
 <div class="inherited docutils container">
 <dl class="py method">
 <dt class="sig sig-object py" id="abjad.duration.Offset.__mul__">
-<span class="sig-prename descclassname"><span class="pre">(</span><a class="reference internal" href="#abjad.duration.Duration" title="abjad.duration.Duration"><code class="descclassname docutils literal notranslate"><span class="pre">Duration</span></code></a><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">__mul__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">arguments</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.Offset.__mul__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Duration multiplied by <code class="docutils literal notranslate"><span class="pre">arguments</span></code>.</p>
+<span class="sig-prename descclassname"><span class="pre">(</span><a class="reference internal" href="#abjad.duration.Duration" title="abjad.duration.Duration"><code class="descclassname docutils literal notranslate"><span class="pre">Duration</span></code></a><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">__mul__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">argument</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.Offset.__mul__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Duration multiplied by <code class="docutils literal notranslate"><span class="pre">argument</span></code>.</p>
 <div class="example docutils container">
-<p>Returns a new duration when <code class="docutils literal notranslate"><span class="pre">arguments</span></code> is a duration:</p>
+<p>Returns a new duration when <code class="docutils literal notranslate"><span class="pre">argument</span></code> is a duration:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">duration_1</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">duration_2</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">duration_1</span> <span class="o">*</span> <span class="n">duration_2</span>
@@ -4837,8 +4833,7 @@ displacements:</p>
 </div>
 </div>
 <div class="example docutils container">
-<p>Returns nonreduced fraction when <code class="docutils literal notranslate"><span class="pre">arguments</span></code> is a nonreduced
-fraction:</p>
+<p>Returns nonreduced fraction when <code class="docutils literal notranslate"><span class="pre">argument</span></code> is a nonreduced fraction:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">duration</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">nonreduced_fraction</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">NonreducedFraction</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">duration</span> <span class="o">*</span> <span class="n">nonreduced_fraction</span>
@@ -4855,7 +4850,7 @@ fraction:</p>
 <dt class="sig sig-object py" id="abjad.duration.Offset.__ne__">
 <span class="sig-prename descclassname"><span class="pre">(</span><a class="reference internal" href="#abjad.duration.Duration" title="abjad.duration.Duration"><code class="descclassname docutils literal notranslate"><span class="pre">Duration</span></code></a><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">__ne__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">argument</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.Offset.__ne__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Redefined explicitly because <code class="docutils literal notranslate"><span class="pre">abjad.Duration</span></code> inherits from built-in
-<code class="docutils literal notranslate"><span class="pre">quicktions.Fraction</span></code>:</p>
+<code class="docutils literal notranslate"><span class="pre">fractions.Fraction</span></code>:</p>
 <p>“The __ne__ method follows automatically from __eq__ only if __ne__
 isn’t already defined in a superclass.  So, if you’re inheriting from a
 builtin, it’s best to override both.”</p>
@@ -4966,7 +4961,7 @@ builtin, it’s best to override both.”</p>
 <div class="inherited docutils container">
 <dl class="py method">
 <dt class="sig sig-object py" id="abjad.duration.Offset.__rfloordiv__">
-<span class="sig-prename descclassname"><span class="pre">(</span><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">__rfloordiv__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.Offset.__rfloordiv__" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">(</span><a class="reference external" href="https://docs.python.org/3.10/library/fractions.html#fractions.Fraction" title="(in Python v3.10)"><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code></a><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">__rfloordiv__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.Offset.__rfloordiv__" title="Permalink to this definition">¶</a></dt>
 <dd><p>a // b</p>
 </dd></dl>
 
@@ -4991,7 +4986,7 @@ builtin, it’s best to override both.”</p>
 <div class="inherited docutils container">
 <dl class="py method">
 <dt class="sig sig-object py" id="abjad.duration.Offset.__round__">
-<span class="sig-prename descclassname"><span class="pre">(</span><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">__round__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ndigits</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.Offset.__round__" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">(</span><a class="reference external" href="https://docs.python.org/3.10/library/fractions.html#fractions.Fraction" title="(in Python v3.10)"><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code></a><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">__round__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ndigits</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.Offset.__round__" title="Permalink to this definition">¶</a></dt>
 <dd><p>round(self, ndigits)</p>
 <p>Rounds half toward even.</p>
 </dd></dl>
@@ -5027,7 +5022,7 @@ builtin, it’s best to override both.”</p>
 <div class="inherited docutils container">
 <dl class="py method">
 <dt class="sig sig-object py" id="abjad.duration.Offset.__str__">
-<span class="sig-prename descclassname"><span class="pre">(</span><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">__str__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.Offset.__str__" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">(</span><a class="reference external" href="https://docs.python.org/3.10/library/fractions.html#fractions.Fraction" title="(in Python v3.10)"><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code></a><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">__str__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.Offset.__str__" title="Permalink to this definition">¶</a></dt>
 <dd><p>str(self)</p>
 </dd></dl>
 
@@ -5051,8 +5046,8 @@ builtin, it’s best to override both.”</p>
 <div class="docutils container">
 <p>Coerces <code class="docutils literal notranslate"><span class="pre">argument</span></code> to offset when <code class="docutils literal notranslate"><span class="pre">argument</span></code> is neither offset nor
 duration:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">quicktions</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">abjad</span><span class="o">.</span><span class="n">Offset</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="n">quicktions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">fractions</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">abjad</span><span class="o">.</span><span class="n">Offset</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
 <span class="go">Duration(3, 2)</span>
 </pre></div>
 </div>
@@ -5070,7 +5065,7 @@ duration:</p>
 <div class="inherited docutils container">
 <dl class="py method">
 <dt class="sig sig-object py" id="abjad.duration.Offset.__trunc__">
-<span class="sig-prename descclassname"><span class="pre">(</span><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">__trunc__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.Offset.__trunc__" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">(</span><a class="reference external" href="https://docs.python.org/3.10/library/fractions.html#fractions.Fraction" title="(in Python v3.10)"><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code></a><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">__trunc__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.Offset.__trunc__" title="Permalink to this definition">¶</a></dt>
 <dd><p>math.trunc(a)</p>
 </dd></dl>
 
@@ -5079,7 +5074,7 @@ duration:</p>
 <div class="inherited docutils container">
 <dl class="py method">
 <dt class="sig sig-object py" id="abjad.duration.Offset.as_integer_ratio">
-<span class="sig-prename descclassname"><span class="pre">(</span><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">as_integer_ratio</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.Offset.as_integer_ratio" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">(</span><a class="reference external" href="https://docs.python.org/3.10/library/fractions.html#fractions.Fraction" title="(in Python v3.10)"><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code></a><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">as_integer_ratio</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.Offset.as_integer_ratio" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the integer ratio as a tuple.</p>
 <p>Return a tuple of two integers, whose ratio is equal to the
 Fraction and with a positive denominator.</p>
@@ -5089,7 +5084,7 @@ Fraction and with a positive denominator.</p>
 <div class="inherited docutils container">
 <dl class="py method">
 <dt class="sig sig-object py" id="abjad.duration.Offset.conjugate">
-<span class="sig-prename descclassname"><span class="pre">(</span><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">conjugate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.Offset.conjugate" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">(</span><a class="reference external" href="https://docs.python.org/3.10/library/numbers.html#numbers.Real" title="(in Python v3.10)"><code class="descclassname docutils literal notranslate"><span class="pre">Real</span></code></a><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">conjugate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.Offset.conjugate" title="Permalink to this definition">¶</a></dt>
 <dd><p>Conjugate is a no-op for Reals.</p>
 </dd></dl>
 
@@ -5097,7 +5092,7 @@ Fraction and with a positive denominator.</p>
 <div class="inherited docutils container">
 <dl class="py method">
 <dt class="sig sig-object py" id="abjad.duration.Offset.limit_denominator">
-<span class="sig-prename descclassname"><span class="pre">(</span><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">limit_denominator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">max_denominator</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1000000</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.Offset.limit_denominator" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">(</span><a class="reference external" href="https://docs.python.org/3.10/library/fractions.html#fractions.Fraction" title="(in Python v3.10)"><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code></a><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">limit_denominator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">max_denominator</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1000000</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.Offset.limit_denominator" title="Permalink to this definition">¶</a></dt>
 <dd><p>Closest Fraction to self with denominator at most max_denominator.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Fraction</span><span class="p">(</span><span class="s2">&quot;3.141592653589793&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">limit_denominator</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
 <span class="go">Fraction(22, 7)</span>
@@ -5194,7 +5189,7 @@ denominator.</p>
 </div>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.10/library/stdtypes.html#list" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a>[NonreducedFraction]</p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3.10/library/stdtypes.html#list" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a>[<a class="reference internal" href="#abjad.duration.NonreducedFraction" title="abjad.duration.NonreducedFraction"><code class="xref py py-class docutils literal notranslate"><span class="pre">NonreducedFraction</span></code></a>]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -5234,7 +5229,7 @@ denominator.</p>
 <div class="inherited docutils container">
 <dl class="py method">
 <dt class="sig sig-object py" id="abjad.duration.Offset.from_decimal">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">(</span><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">from_decimal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dec</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.Offset.from_decimal" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">(</span><a class="reference external" href="https://docs.python.org/3.10/library/fractions.html#fractions.Fraction" title="(in Python v3.10)"><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code></a><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">from_decimal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dec</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.Offset.from_decimal" title="Permalink to this definition">¶</a></dt>
 <dd><p>Converts a finite Decimal instance to a rational number, exactly.</p>
 </dd></dl>
 
@@ -5242,7 +5237,7 @@ denominator.</p>
 <div class="inherited docutils container">
 <dl class="py method">
 <dt class="sig sig-object py" id="abjad.duration.Offset.from_float">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">(</span><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">from_float</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">f</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.Offset.from_float" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">(</span><a class="reference external" href="https://docs.python.org/3.10/library/fractions.html#fractions.Fraction" title="(in Python v3.10)"><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code></a><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">from_float</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">f</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#abjad.duration.Offset.from_float" title="Permalink to this definition">¶</a></dt>
 <dd><p>Converts a finite float to a rational number, exactly.</p>
 <p>Beware that Fraction.from_float(0.3) != Fraction(3, 10).</p>
 </dd></dl>
@@ -5289,6 +5284,13 @@ denominator.</p>
 
 </div>
 <hr/><p class="class-header rubric">Read-only properties</p>
+<div class="inherited docutils container">
+<dl class="py attribute">
+<dt class="sig sig-object py" id="abjad.duration.Offset.denominator">
+<span class="sig-prename descclassname"><span class="pre">(</span><a class="reference external" href="https://docs.python.org/3.10/library/fractions.html#fractions.Fraction" title="(in Python v3.10)"><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code></a><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">denominator</span></span><a class="headerlink" href="#abjad.duration.Offset.denominator" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abjad.duration.Offset.displacement">
 <span class="sig-name descname"><span class="pre">displacement</span></span><a class="headerlink" href="#abjad.duration.Offset.displacement" title="Permalink to this definition">¶</a></dt>
@@ -5321,11 +5323,6 @@ denominator.</p>
 </pre></div>
 </div>
 </div>
-<dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference internal" href="#abjad.duration.Duration" title="abjad.duration.Duration"><code class="xref py py-class docutils literal notranslate"><span class="pre">Duration</span></code></a></p>
-</dd>
-</dl>
 </dd></dl>
 
 <div class="inherited docutils container">
@@ -5620,6 +5617,14 @@ duration.</p>
 </div>
 <div class="inherited docutils container">
 <dl class="py attribute">
+<dt class="sig sig-object py" id="abjad.duration.Offset.imag">
+<span class="sig-prename descclassname"><span class="pre">(</span><a class="reference external" href="https://docs.python.org/3.10/library/numbers.html#numbers.Real" title="(in Python v3.10)"><code class="descclassname docutils literal notranslate"><span class="pre">Real</span></code></a><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">imag</span></span><a class="headerlink" href="#abjad.duration.Offset.imag" title="Permalink to this definition">¶</a></dt>
+<dd><p>Real numbers have no imaginary component.</p>
+</dd></dl>
+
+</div>
+<div class="inherited docutils container">
+<dl class="py attribute">
 <dt class="sig sig-object py" id="abjad.duration.Offset.implied_prolation">
 <span class="sig-prename descclassname"><span class="pre">(</span><a class="reference internal" href="#abjad.duration.Duration" title="abjad.duration.Duration"><code class="descclassname docutils literal notranslate"><span class="pre">Duration</span></code></a><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">implied_prolation</span></span><a class="headerlink" href="#abjad.duration.Offset.implied_prolation" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets implied prolation.</p>
@@ -5755,6 +5760,13 @@ duration.</p>
 </div>
 <div class="inherited docutils container">
 <dl class="py attribute">
+<dt class="sig sig-object py" id="abjad.duration.Offset.numerator">
+<span class="sig-prename descclassname"><span class="pre">(</span><a class="reference external" href="https://docs.python.org/3.10/library/fractions.html#fractions.Fraction" title="(in Python v3.10)"><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code></a><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">numerator</span></span><a class="headerlink" href="#abjad.duration.Offset.numerator" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="inherited docutils container">
+<dl class="py attribute">
 <dt class="sig sig-object py" id="abjad.duration.Offset.pair">
 <span class="sig-prename descclassname"><span class="pre">(</span><a class="reference internal" href="#abjad.duration.Duration" title="abjad.duration.Duration"><code class="descclassname docutils literal notranslate"><span class="pre">Duration</span></code></a><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">pair</span></span><a class="headerlink" href="#abjad.duration.Offset.pair" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets numerator and denominator.</p>
@@ -5796,7 +5808,7 @@ duration.</p>
 <div class="inherited docutils container">
 <dl class="py attribute">
 <dt class="sig sig-object py" id="abjad.duration.Offset.real">
-<span class="sig-prename descclassname"><span class="pre">(</span><code class="descclassname docutils literal notranslate"><span class="pre">Fraction</span></code><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">real</span></span><a class="headerlink" href="#abjad.duration.Offset.real" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">(</span><a class="reference external" href="https://docs.python.org/3.10/library/numbers.html#numbers.Real" title="(in Python v3.10)"><code class="descclassname docutils literal notranslate"><span class="pre">Real</span></code></a><span class="pre">).</span></span><span class="sig-name descname"><span class="pre">real</span></span><a class="headerlink" href="#abjad.duration.Offset.real" title="Permalink to this definition">¶</a></dt>
 <dd><p>Real numbers are their real component.</p>
 </dd></dl>
 
