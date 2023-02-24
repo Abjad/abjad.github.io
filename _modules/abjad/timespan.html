@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>abjad.timespan &mdash; Abjad 3.15 documentation</title>
+  <title>abjad.timespan &mdash; Abjad 3.16 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/abjad.css" type="text/css" />
@@ -34,11 +34,11 @@
   <div class="wy-grid-for-nav">
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search"  style="background: #9922bb" >
+        <div class="wy-side-nav-search"  style="background: #aa44ee" >
 
 
     <a href="../../index.html" class="icon icon-home" alt="Documentation
-    Home"> Abjad 3.15
+    Home"> Abjad 3.16
 
 
 
@@ -111,7 +111,7 @@
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #9922bb" >
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #aa44ee" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../index.html">Abjad</a>
       </nav>
@@ -133,13 +133,13 @@
 <span class="kn">import</span> <span class="nn">collections</span>
 <span class="kn">import</span> <span class="nn">copy</span>
 <span class="kn">import</span> <span class="nn">dataclasses</span>
+<span class="kn">import</span> <span class="nn">fractions</span>
 <span class="kn">import</span> <span class="nn">typing</span>
 
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">duration</span> <span class="k">as</span> <span class="n">_duration</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">enums</span> <span class="k">as</span> <span class="n">_enums</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">indicators</span> <span class="k">as</span> <span class="n">_indicators</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">math</span> <span class="k">as</span> <span class="n">_math</span>
-<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">ratio</span> <span class="k">as</span> <span class="n">_ratio</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">sequence</span> <span class="k">as</span> <span class="n">_sequence</span>
 
 <span class="n">infinity</span> <span class="o">=</span> <span class="n">_math</span><span class="o">.</span><span class="n">Infinity</span><span class="p">()</span>
@@ -316,7 +316,7 @@
             <span class="s1">&#39;&quot;&#39;</span><span class="p">,</span>
         <span class="p">]</span>
         <span class="k">for</span> <span class="n">offset</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">):</span>
-            <span class="n">offset</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Multiplier</span><span class="p">(</span><span class="n">offset</span><span class="p">)</span>
+            <span class="n">offset</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Offset</span><span class="p">(</span><span class="n">offset</span><span class="p">)</span>
             <span class="n">n</span><span class="p">,</span> <span class="n">d</span> <span class="o">=</span> <span class="n">offset</span><span class="o">.</span><span class="n">numerator</span><span class="p">,</span> <span class="n">offset</span><span class="o">.</span><span class="n">denominator</span>
             <span class="n">x_translation</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">offset</span><span class="p">)</span> <span class="o">*</span> <span class="n">postscript_scale</span>
             <span class="n">x_translation</span> <span class="o">-=</span> <span class="n">postscript_x_offset</span>
@@ -437,9 +437,9 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Is true when timespan contains ``argument``.</span>
 
-<span class="sd">        ..  container:: example</span>
+<span class="sd">        Works with offsets:</span>
 
-<span class="sd">            Works with offsets:</span>
+<span class="sd">        ..  container:: example</span>
 
 <span class="sd">            &gt;&gt;&gt; timespan = abjad.Timespan(0, (1, 4))</span>
 
@@ -615,10 +615,10 @@
         <span class="k">return</span> <span class="mi">1</span></div>
 
 <div class="viewcode-block" id="Timespan.__lt__"><a class="viewcode-back" href="../../api/abjad/timespan.html#abjad.timespan.Timespan.__lt__">[docs]</a>    <span class="k">def</span> <span class="fm">__lt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Is true when ``argument`` start offset is less than timespan start offset.</span>
 
-<span class="sd">        ..  container::: example</span>
+<span class="sd">        ..  container:: example</span>
 
 <span class="sd">            &gt;&gt;&gt; timespan_1 = abjad.Timespan(0, 10)</span>
 <span class="sd">            &gt;&gt;&gt; timespan_2 = abjad.Timespan(5, 12)</span>
@@ -1079,9 +1079,8 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ratio</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
             <span class="n">ratio</span> <span class="o">=</span> <span class="n">ratio</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span><span class="p">,)</span>
-        <span class="n">ratio</span> <span class="o">=</span> <span class="n">_ratio</span><span class="o">.</span><span class="n">Ratio</span><span class="p">(</span><span class="n">ratio</span><span class="p">)</span>
-        <span class="n">unit_duration</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">duration</span> <span class="o">/</span> <span class="nb">sum</span><span class="p">(</span><span class="n">ratio</span><span class="o">.</span><span class="n">numbers</span><span class="p">)</span>
-        <span class="n">part_durations</span> <span class="o">=</span> <span class="p">[</span><span class="n">numerator</span> <span class="o">*</span> <span class="n">unit_duration</span> <span class="k">for</span> <span class="n">numerator</span> <span class="ow">in</span> <span class="n">ratio</span><span class="o">.</span><span class="n">numbers</span><span class="p">]</span>
+        <span class="n">unit_duration</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">duration</span> <span class="o">/</span> <span class="nb">sum</span><span class="p">(</span><span class="n">ratio</span><span class="p">)</span>
+        <span class="n">part_durations</span> <span class="o">=</span> <span class="p">[</span><span class="n">numerator</span> <span class="o">*</span> <span class="n">unit_duration</span> <span class="k">for</span> <span class="n">numerator</span> <span class="ow">in</span> <span class="n">ratio</span><span class="p">]</span>
         <span class="n">start_offsets</span> <span class="o">=</span> <span class="n">_math</span><span class="o">.</span><span class="n">cumulative_sums</span><span class="p">(</span>
             <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">start_offset</span><span class="p">]</span> <span class="o">+</span> <span class="n">part_durations</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="kc">None</span>
         <span class="p">)</span>
@@ -1140,9 +1139,9 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Reflects timespan about ``axis``.</span>
 
-<span class="sd">        ..  container:: example</span>
+<span class="sd">        Reverse timespan about timespan axis:</span>
 
-<span class="sd">            Reverse timespan about timespan axis:</span>
+<span class="sd">        ..  container:: example</span>
 
 <span class="sd">            &gt;&gt;&gt; abjad.Timespan(3, 6).reflect()</span>
 <span class="sd">            Timespan(Offset((3, 1)), Offset((6, 1)))</span>
@@ -1188,7 +1187,7 @@
 <span class="sd">            Timespan(Offset((0, 1)), Offset((0, 1)))</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">multiplier</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">_duration</span><span class="o">.</span><span class="n">Multiplier</span><span class="p">(</span><span class="n">multiplier</span><span class="p">))</span>
+        <span class="n">multiplier</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">(</span><span class="n">multiplier</span><span class="p">))</span>
         <span class="k">assert</span> <span class="mi">0</span> <span class="o">&lt;</span> <span class="n">multiplier</span>
         <span class="n">new_start_offset</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Offset</span><span class="p">(</span>
             <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">start_offset</span> <span class="o">/</span> <span class="n">multiplier</span><span class="p">))</span> <span class="o">*</span> <span class="n">multiplier</span>
@@ -1216,18 +1215,18 @@
 
 <span class="sd">            Scale timespan relative to timespan start offset:</span>
 
-<span class="sd">            &gt;&gt;&gt; timespan.scale(abjad.Multiplier(2))</span>
+<span class="sd">            &gt;&gt;&gt; timespan.scale(abjad.Fraction(2))</span>
 <span class="sd">            Timespan(Offset((3, 1)), Offset((9, 1)))</span>
 
 <span class="sd">        ..  container:: example</span>
 
 <span class="sd">            Scale timespan relative to timespan stop offset:</span>
 
-<span class="sd">            &gt;&gt;&gt; timespan.scale(abjad.Multiplier(2), anchor=abjad.RIGHT)</span>
+<span class="sd">            &gt;&gt;&gt; timespan.scale(abjad.Fraction(2), anchor=abjad.RIGHT)</span>
 <span class="sd">            Timespan(Offset((0, 1)), Offset((6, 1)))</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">multiplier</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Multiplier</span><span class="p">(</span><span class="n">multiplier</span><span class="p">)</span>
+        <span class="n">multiplier</span> <span class="o">=</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">(</span><span class="n">multiplier</span><span class="p">)</span>
         <span class="k">assert</span> <span class="mi">0</span> <span class="o">&lt;</span> <span class="n">multiplier</span>
         <span class="n">new_duration</span> <span class="o">=</span> <span class="n">multiplier</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">duration</span>
         <span class="k">if</span> <span class="n">anchor</span> <span class="o">==</span> <span class="n">_enums</span><span class="o">.</span><span class="n">LEFT</span><span class="p">:</span>
@@ -1381,51 +1380,43 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Stretches timespan by ``multiplier`` relative to ``anchor``.</span>
 
+<span class="sd">        Stretch relative to timespan start offset:</span>
+
 <span class="sd">        .. container:: example</span>
 
-<span class="sd">            Stretch relative to timespan start offset:</span>
-
-<span class="sd">            &gt;&gt;&gt; abjad.Timespan(3, 10).stretch(abjad.Multiplier(2))</span>
+<span class="sd">            &gt;&gt;&gt; abjad.Timespan(3, 10).stretch(abjad.Fraction(2))</span>
 <span class="sd">            Timespan(Offset((3, 1)), Offset((17, 1)))</span>
 
 <span class="sd">        .. container:: example</span>
 
 <span class="sd">            Stretch relative to timespan stop offset:</span>
 
-<span class="sd">            &gt;&gt;&gt; abjad.Timespan(3, 10).stretch(</span>
-<span class="sd">            ...     abjad.Multiplier(2), abjad.Offset(10)</span>
-<span class="sd">            ... )</span>
+<span class="sd">            &gt;&gt;&gt; abjad.Timespan(3, 10).stretch(abjad.Fraction(2), abjad.Offset(10))</span>
 <span class="sd">            Timespan(Offset((-4, 1)), Offset((10, 1)))</span>
 
 <span class="sd">        .. container:: example</span>
 
 <span class="sd">            Stretch relative to offset prior to timespan:</span>
 
-<span class="sd">            &gt;&gt;&gt; abjad.Timespan(3, 10).stretch(</span>
-<span class="sd">            ...     abjad.Multiplier(2), abjad.Offset(0, 1)</span>
-<span class="sd">            ... )</span>
+<span class="sd">            &gt;&gt;&gt; abjad.Timespan(3, 10).stretch(abjad.Fraction(2), abjad.Offset(0, 1))</span>
 <span class="sd">            Timespan(Offset((6, 1)), Offset((20, 1)))</span>
 
 <span class="sd">        .. container:: example</span>
 
 <span class="sd">            Stretch relative to offset after timespan:</span>
 
-<span class="sd">            &gt;&gt;&gt; abjad.Timespan(3, 10).stretch(</span>
-<span class="sd">            ...     abjad.Multiplier(3), abjad.Offset(12)</span>
-<span class="sd">            ... )</span>
+<span class="sd">            &gt;&gt;&gt; abjad.Timespan(3, 10).stretch(abjad.Fraction(3), abjad.Offset(12))</span>
 <span class="sd">            Timespan(Offset((-15, 1)), Offset((6, 1)))</span>
 
 <span class="sd">        .. container:: example</span>
 
 <span class="sd">            Stretch relative to offset that happens during timespan:</span>
 
-<span class="sd">            &gt;&gt;&gt; abjad.Timespan(3, 10).stretch(</span>
-<span class="sd">            ...     abjad.Multiplier(2), abjad.Offset(4)</span>
-<span class="sd">            ... )</span>
+<span class="sd">            &gt;&gt;&gt; abjad.Timespan(3, 10).stretch(abjad.Fraction(2), abjad.Offset(4))</span>
 <span class="sd">            Timespan(Offset((2, 1)), Offset((16, 1)))</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">multiplier</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Multiplier</span><span class="p">(</span><span class="n">multiplier</span><span class="p">)</span>
+        <span class="n">multiplier</span> <span class="o">=</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">(</span><span class="n">multiplier</span><span class="p">)</span>
         <span class="k">assert</span> <span class="mi">0</span> <span class="o">&lt;</span> <span class="n">multiplier</span>
         <span class="k">if</span> <span class="n">anchor</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">anchor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_offset</span>
@@ -1585,9 +1576,9 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Keeps material that intersects ``timespan``.</span>
 
-<span class="sd">        ..  container:: example</span>
+<span class="sd">        Keeps material that intersects timespan:</span>
 
-<span class="sd">            Keeps material that intersects timespan:</span>
+<span class="sd">        ..  container:: example</span>
 
 <span class="sd">            &gt;&gt;&gt; timespans = abjad.TimespanList([</span>
 <span class="sd">            ...     abjad.Timespan(0, 16),</span>
@@ -1948,9 +1939,9 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Inverts timespans.</span>
 
-<span class="sd">        ..  container:: example</span>
+<span class="sd">        Inverts timespans:</span>
 
-<span class="sd">            Inverts timespans:</span>
+<span class="sd">        ..  container:: example</span>
 
 <span class="sd">            &gt;&gt;&gt; timespans = abjad.TimespanList([</span>
 <span class="sd">            ...     abjad.Timespan(-2, 8),</span>
@@ -1991,9 +1982,9 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Deletes material that intersects ``timespan``.</span>
 
-<span class="sd">        ..  container:: example</span>
+<span class="sd">        Deletes material that intersects timespan:</span>
 
-<span class="sd">            Deletes material that intersects timespan:</span>
+<span class="sd">        ..  container:: example</span>
 
 <span class="sd">            &gt;&gt;&gt; timespans = abjad.TimespanList([</span>
 <span class="sd">            ...     abjad.Timespan(0, 16),</span>
@@ -2504,9 +2495,9 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Clips timespan durations.</span>
 
-<span class="sd">        ..  container:: example</span>
+<span class="sd">        Clips timespan durations:</span>
 
-<span class="sd">            Clips timespan durations:</span>
+<span class="sd">        ..  container:: example</span>
 
 <span class="sd">            &gt;&gt;&gt; timespans = abjad.TimespanList([</span>
 <span class="sd">            ...     abjad.Timespan(0, 1),</span>
@@ -2622,9 +2613,9 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Computes logical AND of timespans.</span>
 
-<span class="sd">        ..  container:: example</span>
+<span class="sd">        Computes logical AND:</span>
 
-<span class="sd">            Computes logical AND:</span>
+<span class="sd">        ..  container:: example</span>
 
 <span class="sd">            &gt;&gt;&gt; timespans = abjad.TimespanList([</span>
 <span class="sd">            ...     abjad.Timespan(0, 10),</span>
@@ -2694,8 +2685,6 @@
 
 <span class="sd">        ..  container:: example</span>
 
-<span class="sd">            Computes logical OR:</span>
-
 <span class="sd">            &gt;&gt;&gt; timespans = abjad.TimespanList()</span>
 <span class="sd">            &gt;&gt;&gt; timespans = timespans.compute_logical_or()</span>
 
@@ -2703,8 +2692,6 @@
 <span class="sd">            TimespanList([])</span>
 
 <span class="sd">        ..  container:: example</span>
-
-<span class="sd">            Computes logical OR:</span>
 
 <span class="sd">            &gt;&gt;&gt; timespans = abjad.TimespanList([</span>
 <span class="sd">            ...     abjad.Timespan(0, 10),</span>
@@ -2717,10 +2704,7 @@
 <span class="sd">            &gt;&gt;&gt; for _ in timespans: _</span>
 <span class="sd">            Timespan(Offset((0, 1)), Offset((10, 1)))</span>
 
-
 <span class="sd">        ..  container:: example</span>
-
-<span class="sd">            Computes logical OR:</span>
 
 <span class="sd">            &gt;&gt;&gt; timespans = abjad.TimespanList([</span>
 <span class="sd">            ...     abjad.Timespan(0, 10),</span>
@@ -2734,10 +2718,7 @@
 <span class="sd">            &gt;&gt;&gt; for _ in timespans: _</span>
 <span class="sd">            Timespan(Offset((0, 1)), Offset((12, 1)))</span>
 
-
 <span class="sd">        ..  container:: example</span>
-
-<span class="sd">            Computes logical OR:</span>
 
 <span class="sd">            &gt;&gt;&gt; timespans = abjad.TimespanList([</span>
 <span class="sd">            ...     abjad.Timespan(0, 10),</span>
@@ -2752,10 +2733,7 @@
 <span class="sd">            &gt;&gt;&gt; for _ in timespans: _</span>
 <span class="sd">            Timespan(Offset((-2, 1)), Offset((12, 1)))</span>
 
-
 <span class="sd">        ..  container:: example</span>
-
-<span class="sd">            Computes logical OR:</span>
 
 <span class="sd">            &gt;&gt;&gt; timespans = abjad.TimespanList([</span>
 <span class="sd">            ...     abjad.Timespan(-2, 2),</span>
@@ -2769,7 +2747,6 @@
 <span class="sd">            &gt;&gt;&gt; for _ in timespans: _</span>
 <span class="sd">            Timespan(Offset((-2, 1)), Offset((2, 1)))</span>
 <span class="sd">            Timespan(Offset((10, 1)), Offset((20, 1)))</span>
-
 
 <span class="sd">        Operates in place and returns timespan list.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -2791,8 +2768,6 @@
 
 <span class="sd">        ..  container:: example</span>
 
-<span class="sd">            Computes logical XOR:</span>
-
 <span class="sd">            &gt;&gt;&gt; timespans = abjad.TimespanList()</span>
 <span class="sd">            &gt;&gt;&gt; timespans = timespans.compute_logical_xor()</span>
 
@@ -2800,8 +2775,6 @@
 <span class="sd">            TimespanList([])</span>
 
 <span class="sd">        ..  container:: example</span>
-
-<span class="sd">            Computes logical XOR:</span>
 
 <span class="sd">            &gt;&gt;&gt; timespans = abjad.TimespanList([</span>
 <span class="sd">            ...     abjad.Timespan(0, 10),</span>
@@ -2814,10 +2787,7 @@
 <span class="sd">            &gt;&gt;&gt; for _ in timespans: _</span>
 <span class="sd">            Timespan(Offset((0, 1)), Offset((10, 1)))</span>
 
-
 <span class="sd">        ..  container:: example</span>
-
-<span class="sd">            Computes logical XOR:</span>
 
 <span class="sd">            &gt;&gt;&gt; timespans = abjad.TimespanList([</span>
 <span class="sd">            ...     abjad.Timespan(0, 10),</span>
@@ -2834,8 +2804,6 @@
 
 <span class="sd">        ..  container:: example</span>
 
-<span class="sd">            Computes logical XOR:</span>
-
 <span class="sd">            &gt;&gt;&gt; timespans = abjad.TimespanList([</span>
 <span class="sd">            ...     abjad.Timespan(0, 10),</span>
 <span class="sd">            ...     abjad.Timespan(5, 12),</span>
@@ -2851,10 +2819,7 @@
 <span class="sd">            Timespan(Offset((2, 1)), Offset((5, 1)))</span>
 <span class="sd">            Timespan(Offset((10, 1)), Offset((12, 1)))</span>
 
-
 <span class="sd">        ..  container:: example</span>
-
-<span class="sd">            Computes logical XOR:</span>
 
 <span class="sd">            &gt;&gt;&gt; timespans = abjad.TimespanList([</span>
 <span class="sd">            ...     abjad.Timespan(-2, 2),</span>
@@ -2871,8 +2836,6 @@
 
 <span class="sd">        ..  container:: example</span>
 
-<span class="sd">            Computes logical XOR:</span>
-
 <span class="sd">            &gt;&gt;&gt; timespans = abjad.TimespanList([</span>
 <span class="sd">            ...     abjad.Timespan(0, 10),</span>
 <span class="sd">            ...     abjad.Timespan(4, 8),</span>
@@ -2887,10 +2850,7 @@
 <span class="sd">            Timespan(Offset((0, 1)), Offset((2, 1)))</span>
 <span class="sd">            Timespan(Offset((8, 1)), Offset((10, 1)))</span>
 
-
 <span class="sd">        ..  container:: example</span>
-
-<span class="sd">            Computes logical XOR:</span>
 
 <span class="sd">            &gt;&gt;&gt; timespans = abjad.TimespanList([</span>
 <span class="sd">            ...     abjad.Timespan(0, 10),</span>
@@ -2924,13 +2884,13 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
         <span class="k">return</span> <span class="bp">self</span></div>
 
-<div class="viewcode-block" id="TimespanList.compute_overlap_factor"><a class="viewcode-back" href="../../api/abjad/timespan.html#abjad.timespan.TimespanList.compute_overlap_factor">[docs]</a>    <span class="k">def</span> <span class="nf">compute_overlap_factor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timespan</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Multiplier</span><span class="p">:</span>
+<div class="viewcode-block" id="TimespanList.compute_overlap_factor"><a class="viewcode-back" href="../../api/abjad/timespan.html#abjad.timespan.TimespanList.compute_overlap_factor">[docs]</a>    <span class="k">def</span> <span class="nf">compute_overlap_factor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timespan</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Computes overlap factor of timespans.</span>
 
-<span class="sd">        ..  container:: example</span>
+<span class="sd">        Example timespan list:</span>
 
-<span class="sd">            Example timespan list:</span>
+<span class="sd">        ..  container:: example</span>
 
 <span class="sd">            &gt;&gt;&gt; timespans = abjad.TimespanList([</span>
 <span class="sd">            ...     abjad.Timespan(0, 10),</span>
@@ -2945,7 +2905,7 @@
 <span class="sd">            Computes overlap factor across the entire list:</span>
 
 <span class="sd">            &gt;&gt;&gt; timespans.compute_overlap_factor()</span>
-<span class="sd">            Multiplier(7, 6)</span>
+<span class="sd">            Fraction(7, 6)</span>
 
 <span class="sd">        ..  container:: example</span>
 
@@ -2953,14 +2913,14 @@
 
 <span class="sd">            &gt;&gt;&gt; timespans.compute_overlap_factor(</span>
 <span class="sd">            ...     timespan=abjad.Timespan(-15, 0))</span>
-<span class="sd">            Multiplier(0, 1)</span>
+<span class="sd">            Fraction(0, 1)</span>
 
 <span class="sd">        ..  container:: example</span>
 
 <span class="sd">            Computes overlap factor:</span>
 
 <span class="sd">            &gt;&gt;&gt; timespans.compute_overlap_factor(timespan=abjad.Timespan(-10, 5))</span>
-<span class="sd">            Multiplier(1, 3)</span>
+<span class="sd">            Fraction(1, 3)</span>
 
 <span class="sd">        ..  container:: example</span>
 
@@ -2968,7 +2928,7 @@
 
 <span class="sd">            &gt;&gt;&gt; timespans.compute_overlap_factor(</span>
 <span class="sd">            ...     timespan=abjad.Timespan(-5, 10))</span>
-<span class="sd">            Multiplier(1, 1)</span>
+<span class="sd">            Fraction(1, 1)</span>
 
 <span class="sd">        ..  container:: example</span>
 
@@ -2976,7 +2936,7 @@
 
 <span class="sd">            &gt;&gt;&gt; timespans.compute_overlap_factor(</span>
 <span class="sd">            ...     timespan=abjad.Timespan(0, 15))</span>
-<span class="sd">            Multiplier(4, 3)</span>
+<span class="sd">            Fraction(4, 3)</span>
 
 <span class="sd">        ..  container:: example</span>
 
@@ -2984,7 +2944,7 @@
 
 <span class="sd">            &gt;&gt;&gt; timespans.compute_overlap_factor(</span>
 <span class="sd">            ...     timespan=abjad.Timespan(5, 20))</span>
-<span class="sd">            Multiplier(1, 1)</span>
+<span class="sd">            Fraction(1, 1)</span>
 
 <span class="sd">        ..  container:: example</span>
 
@@ -2992,7 +2952,7 @@
 
 <span class="sd">            &gt;&gt;&gt; timespans.compute_overlap_factor(</span>
 <span class="sd">            ...     timespan=abjad.Timespan(10, 25))</span>
-<span class="sd">            Multiplier(1, 1)</span>
+<span class="sd">            Fraction(1, 1)</span>
 
 <span class="sd">        ..  container:: example</span>
 
@@ -3000,7 +2960,7 @@
 
 <span class="sd">            &gt;&gt;&gt; timespans.compute_overlap_factor(</span>
 <span class="sd">            ...     timespan=abjad.Timespan(15, 30))</span>
-<span class="sd">            Multiplier(1, 1)</span>
+<span class="sd">            Fraction(1, 1)</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">timespan</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -3011,7 +2971,7 @@
         <span class="n">total_overlap</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span>
             <span class="nb">sum</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">get_overlap_with_timespan</span><span class="p">(</span><span class="n">timespan</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">timespans</span><span class="p">)</span>
         <span class="p">)</span>
-        <span class="n">overlap_factor</span> <span class="o">=</span> <span class="n">total_overlap</span> <span class="o">/</span> <span class="n">timespan</span><span class="o">.</span><span class="n">duration</span>
+        <span class="n">overlap_factor</span> <span class="o">=</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">(</span><span class="n">total_overlap</span> <span class="o">/</span> <span class="n">timespan</span><span class="o">.</span><span class="n">duration</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">overlap_factor</span></div>
 
 <div class="viewcode-block" id="TimespanList.compute_overlap_factor_mapping"><a class="viewcode-back" href="../../api/abjad/timespan.html#abjad.timespan.TimespanList.compute_overlap_factor_mapping">[docs]</a>    <span class="k">def</span> <span class="nf">compute_overlap_factor_mapping</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
@@ -3019,8 +2979,6 @@
 <span class="sd">        Computes overlap factor for each consecutive offset pair in timespans.</span>
 
 <span class="sd">        ..  container:: example</span>
-
-<span class="sd">            Computes overlap factor mapping:</span>
 
 <span class="sd">            &gt;&gt;&gt; timespans = abjad.TimespanList([</span>
 <span class="sd">            ...     abjad.Timespan(0, 10),</span>
@@ -3034,12 +2992,12 @@
 <span class="sd">            &gt;&gt;&gt; for timespan, overlap_factor in mapping.items():</span>
 <span class="sd">            ...     timespan.start_offset, timespan.stop_offset, overlap_factor</span>
 <span class="sd">            ...</span>
-<span class="sd">            (Offset((0, 1)), Offset((5, 1)), Multiplier(1, 1))</span>
-<span class="sd">            (Offset((5, 1)), Offset((10, 1)), Multiplier(2, 1))</span>
-<span class="sd">            (Offset((10, 1)), Offset((15, 1)), Multiplier(1, 1))</span>
-<span class="sd">            (Offset((15, 1)), Offset((20, 1)), Multiplier(0, 1))</span>
-<span class="sd">            (Offset((20, 1)), Offset((25, 1)), Multiplier(2, 1))</span>
-<span class="sd">            (Offset((25, 1)), Offset((30, 1)), Multiplier(1, 1))</span>
+<span class="sd">            (Offset((0, 1)), Offset((5, 1)), Fraction(1, 1))</span>
+<span class="sd">            (Offset((5, 1)), Offset((10, 1)), Fraction(2, 1))</span>
+<span class="sd">            (Offset((10, 1)), Offset((15, 1)), Fraction(1, 1))</span>
+<span class="sd">            (Offset((15, 1)), Offset((20, 1)), Fraction(0, 1))</span>
+<span class="sd">            (Offset((20, 1)), Offset((25, 1)), Fraction(2, 1))</span>
+<span class="sd">            (Offset((25, 1)), Offset((30, 1)), Fraction(1, 1))</span>
 
 <span class="sd">        Returns mapping.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -3153,9 +3111,9 @@
 <span class="sd">        Explodes timespans into timespan lists, avoiding overlap, and</span>
 <span class="sd">        distributing density as evenly as possible.</span>
 
-<span class="sd">        ..  container:: example</span>
+<span class="sd">        Example timespan list:</span>
 
-<span class="sd">            Example timespan list:</span>
+<span class="sd">        ..  container:: example</span>
 
 <span class="sd">            &gt;&gt;&gt; timespans = abjad.TimespanList([</span>
 <span class="sd">            ...     abjad.Timespan(0, 3),</span>
@@ -3283,8 +3241,6 @@
 
 <span class="sd">        ..  container:: example</span>
 
-<span class="sd">            Gets timespan:</span>
-
 <span class="sd">            &gt;&gt;&gt; timespans = abjad.TimespanList([</span>
 <span class="sd">            ...     abjad.Timespan(0, 3),</span>
 <span class="sd">            ...     abjad.Timespan(3, 6),</span>
@@ -3324,8 +3280,6 @@
 <span class="sd">        Gets timespans that satisfy ``time_relation``.</span>
 
 <span class="sd">        ..  container:: example</span>
-
-<span class="sd">            Gets timespans:</span>
 
 <span class="sd">            &gt;&gt;&gt; timespans = abjad.TimespanList([</span>
 <span class="sd">            ...     abjad.Timespan(0, 3),</span>
@@ -3383,8 +3337,6 @@
 <span class="sd">        Partitions timespans into timespan lists.</span>
 
 <span class="sd">        ..  container:: example</span>
-
-<span class="sd">            Partitions timespans:</span>
 
 <span class="sd">            &gt;&gt;&gt; timespans = abjad.TimespanList([</span>
 <span class="sd">            ...     abjad.Timespan(0, 3),</span>
@@ -3493,9 +3445,9 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Reflects timespans.</span>
 
-<span class="sd">        ..  container:: example</span>
+<span class="sd">        Reflects timespans about timespan list axis:</span>
 
-<span class="sd">            Reflects timespans about timespan list axis:</span>
+<span class="sd">        ..  container:: example</span>
 
 <span class="sd">            &gt;&gt;&gt; timespans = abjad.TimespanList([</span>
 <span class="sd">            ...     abjad.Timespan(0, 3),</span>
@@ -3549,8 +3501,6 @@
 
 <span class="sd">        ..  container:: example</span>
 
-<span class="sd">            Removes degenerate timespans:</span>
-
 <span class="sd">            &gt;&gt;&gt; timespans = abjad.TimespanList([</span>
 <span class="sd">            ...     abjad.Timespan(5, 5),</span>
 <span class="sd">            ...     abjad.Timespan(5, 10),</span>
@@ -3576,8 +3526,6 @@
 <span class="sd">        Repeats timespans to ``stop_offset``.</span>
 
 <span class="sd">        ..  container:: example</span>
-
-<span class="sd">            Repeats timespans to stop offset:</span>
 
 <span class="sd">            &gt;&gt;&gt; timespans = abjad.TimespanList([</span>
 <span class="sd">            ...     abjad.Timespan(0, 3),</span>
@@ -3617,9 +3565,9 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Rotates by ``count`` contiguous timespans.</span>
 
-<span class="sd">        ..  container:: example</span>
+<span class="sd">        Rotates by one timespan to the left:</span>
 
-<span class="sd">            Rotates by one timespan to the left:</span>
+<span class="sd">        ..  container:: example</span>
 
 <span class="sd">            &gt;&gt;&gt; timespans = abjad.TimespanList([</span>
 <span class="sd">            ...     abjad.Timespan(0, 3),</span>
@@ -3692,8 +3640,6 @@
 
 <span class="sd">        ..  container:: example</span>
 
-<span class="sd">            Rounds offsets:</span>
-
 <span class="sd">            &gt;&gt;&gt; timespans = abjad.TimespanList([</span>
 <span class="sd">            ...     abjad.Timespan(0, 2),</span>
 <span class="sd">            ...     abjad.Timespan(3, 6),</span>
@@ -3711,8 +3657,6 @@
 
 <span class="sd">        ..  container:: example</span>
 
-<span class="sd">            Rounds offsets:</span>
-
 <span class="sd">            &gt;&gt;&gt; timespans = abjad.TimespanList([</span>
 <span class="sd">            ...     abjad.Timespan(0, 2),</span>
 <span class="sd">            ...     abjad.Timespan(3, 6),</span>
@@ -3729,8 +3673,6 @@
 <span class="sd">            Timespan(Offset((5, 1)), Offset((10, 1)))</span>
 
 <span class="sd">        ..  container:: example</span>
-
-<span class="sd">            Rounds offsets:</span>
 
 <span class="sd">            &gt;&gt;&gt; timespans = abjad.TimespanList([</span>
 <span class="sd">            ...     abjad.Timespan(0, 2),</span>
@@ -3751,8 +3693,6 @@
 <span class="sd">            Timespan(Offset((5, 1)), Offset((10, 1)))</span>
 
 <span class="sd">        ..  container:: example</span>
-
-<span class="sd">            Rounds offsets:</span>
 
 <span class="sd">            &gt;&gt;&gt; timespans = abjad.TimespanList([</span>
 <span class="sd">            ...     abjad.Timespan(0, 2),</span>
@@ -3789,9 +3729,9 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Scales timespan by ``multiplier`` relative to ``anchor``.</span>
 
-<span class="sd">        ..  container:: example</span>
+<span class="sd">        Scales timespans relative to timespan list start offset:</span>
 
-<span class="sd">            Scales timespans relative to timespan list start offset:</span>
+<span class="sd">        ..  container:: example</span>
 
 <span class="sd">            &gt;&gt;&gt; timespans = abjad.TimespanList([</span>
 <span class="sd">            ...     abjad.Timespan(0, 3),</span>
@@ -3841,8 +3781,6 @@
 <span class="sd">        Splits timespans at ``offset``.</span>
 
 <span class="sd">        ..  container:: example</span>
-
-<span class="sd">            Splits at offset:</span>
 
 <span class="sd">            &gt;&gt;&gt; timespans = abjad.TimespanList([</span>
 <span class="sd">            ...     abjad.Timespan(0, 3),</span>
@@ -3933,8 +3871,6 @@
 
 <span class="sd">        ..  container:: example</span>
 
-<span class="sd">            Splits at offsets:</span>
-
 <span class="sd">            &gt;&gt;&gt; timespans = abjad.TimespanList([</span>
 <span class="sd">            ...     abjad.Timespan(0, 3),</span>
 <span class="sd">            ...     abjad.Timespan(3, 6),</span>
@@ -3975,8 +3911,6 @@
 <span class="sd">        Stretches timespans by ``multiplier`` relative to ``anchor``.</span>
 
 <span class="sd">        ..  container:: example</span>
-
-<span class="sd">            Stretches timespans relative to timespan list start offset:</span>
 
 <span class="sd">            &gt;&gt;&gt; timespans = abjad.TimespanList([</span>
 <span class="sd">            ...     abjad.Timespan(0, 3),</span>
@@ -4027,9 +3961,9 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Translates timespans by ``translation``.</span>
 
-<span class="sd">        ..  container:: example</span>
+<span class="sd">        Translates timespan by offset ``50``:</span>
 
-<span class="sd">            Translates timespan by offset ``50``:</span>
+<span class="sd">        ..  container:: example</span>
 
 <span class="sd">            &gt;&gt;&gt; timespans = abjad.TimespanList([</span>
 <span class="sd">            ...     abjad.Timespan(0, 3),</span>
@@ -4057,9 +3991,9 @@
 <span class="sd">        Translates timespans by ``start_offset_translation`` and</span>
 <span class="sd">        ``stop_offset_translation``.</span>
 
-<span class="sd">        ..  container:: example</span>
+<span class="sd">        Translates timespan start- and stop-offsets equally:</span>
 
-<span class="sd">            Translates timespan start- and stop-offsets equally:</span>
+<span class="sd">        ..  container:: example</span>
 
 <span class="sd">            &gt;&gt;&gt; timespans = abjad.TimespanList([</span>
 <span class="sd">            ...     abjad.Timespan(0, 3),</span>
@@ -4076,9 +4010,9 @@
 <span class="sd">            Timespan(Offset((53, 1)), Offset((56, 1)))</span>
 <span class="sd">            Timespan(Offset((56, 1)), Offset((60, 1)))</span>
 
-<span class="sd">        ..  container:: example</span>
+<span class="sd">        Translates timespan stop-offsets only:</span>
 
-<span class="sd">            Translates timespan stop-offsets only:</span>
+<span class="sd">        ..  container:: example</span>
 
 <span class="sd">            &gt;&gt;&gt; timespans = abjad.TimespanList([</span>
 <span class="sd">            ...     abjad.Timespan(0, 3),</span>
@@ -4204,7 +4138,7 @@
     <span class="n">lines_string</span> <span class="o">+=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="se">\n\\</span><span class="s1">postscript #&quot;</span><span class="se">\n</span><span class="si">{</span><span class="n">postscript</span><span class="si">}</span><span class="s1">&quot;&#39;</span>
     <span class="n">fraction_strings</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">offset</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">offset_mapping</span><span class="p">):</span>
-        <span class="n">offset</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Multiplier</span><span class="p">(</span><span class="n">offset</span><span class="p">)</span>
+        <span class="n">offset</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Offset</span><span class="p">(</span><span class="n">offset</span><span class="p">)</span>
         <span class="n">numerator</span><span class="p">,</span> <span class="n">denominator</span> <span class="o">=</span> <span class="n">offset</span><span class="o">.</span><span class="n">numerator</span><span class="p">,</span> <span class="n">offset</span><span class="o">.</span><span class="n">denominator</span>
         <span class="n">x_translation</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">offset</span><span class="p">)</span> <span class="o">*</span> <span class="n">postscript_scale</span>
         <span class="n">x_translation</span> <span class="o">-=</span> <span class="n">postscript_x_offset</span>

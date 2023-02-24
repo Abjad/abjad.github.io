@@ -20,7 +20,7 @@
     {
         \tweak text #tuplet-number::calc-fraction-text
         \tweak edge-height #'(0.7 . 0)
-        \times 16/14
+        \times 8/7
         {
             #(ly:expect-warning "strange time signature found")
             \time 5/14

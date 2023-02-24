@@ -5,7 +5,7 @@
     \new RhythmicStaff
     {
         \tweak text #tuplet-number::calc-fraction-text
-        \times 6/8
+        \times 3/4
         {
             \time 3/16
             c'32

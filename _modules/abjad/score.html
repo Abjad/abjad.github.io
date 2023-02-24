@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>abjad.score &mdash; Abjad 3.15 documentation</title>
+  <title>abjad.score &mdash; Abjad 3.16 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/abjad.css" type="text/css" />
@@ -34,11 +34,11 @@
   <div class="wy-grid-for-nav">
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search"  style="background: #9922bb" >
+        <div class="wy-side-nav-search"  style="background: #aa44ee" >
 
 
     <a href="../../index.html" class="icon icon-home" alt="Documentation
-    Home"> Abjad 3.15
+    Home"> Abjad 3.16
 
 
 
@@ -111,7 +111,7 @@
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #9922bb" >
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #aa44ee" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../index.html">Abjad</a>
       </nav>
@@ -324,7 +324,7 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parent</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">duration</span>
         <span class="k">for</span> <span class="n">parent</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parent</span><span class="o">.</span><span class="n">_get_parentage</span><span class="p">():</span>
-            <span class="n">multiplier</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;implied_prolation&quot;</span><span class="p">,</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Multiplier</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+            <span class="n">multiplier</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;implied_prolation&quot;</span><span class="p">,</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
             <span class="n">duration</span> <span class="o">*=</span> <span class="n">multiplier</span>
         <span class="k">return</span> <span class="n">duration</span>
 
@@ -716,7 +716,7 @@
         <span class="n">strings</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">strings</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">written_duration</span><span class="o">.</span><span class="n">lilypond_duration_string</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">multiplier</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">strings</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">multiplier</span><span class="p">))</span>
+            <span class="n">strings</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">multiplier</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">multiplier</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_parent</span><span class="p">,</span> <span class="s2">&quot;_leaf_multiplier&quot;</span><span class="p">):</span>
             <span class="n">multiplier</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parent</span><span class="o">.</span><span class="n">_leaf_multiplier</span><span class="p">()</span>
             <span class="k">if</span> <span class="n">multiplier</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -727,7 +727,7 @@
     <span class="k">def</span> <span class="nf">_get_multiplied_duration</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">written_duration</span><span class="p">:</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">multiplier</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="n">duration</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">multiplier</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">written_duration</span>
+                <span class="n">duration</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">multiplier</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">written_duration</span>
                 <span class="k">return</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="n">duration</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">written_duration</span><span class="p">)</span>
 
@@ -762,11 +762,8 @@
 
     <span class="c1">### PUBLIC PROPERTIES ###</span>
 
-    <span class="c1"># TODO: restrict to NonreducedFraction | None</span>
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">multiplier</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Multiplier</span> <span class="o">|</span> <span class="n">_duration</span><span class="o">.</span><span class="n">NonreducedFraction</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">multiplier</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets multiplier.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -774,11 +771,12 @@
 
     <span class="nd">@multiplier</span><span class="o">.</span><span class="n">setter</span>
     <span class="k">def</span> <span class="nf">multiplier</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">):</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">argument</span><span class="p">,</span> <span class="n">_duration</span><span class="o">.</span><span class="n">NonreducedFraction</span> <span class="o">|</span> <span class="nb">type</span><span class="p">(</span><span class="kc">None</span><span class="p">)):</span>
-            <span class="n">multiplier</span> <span class="o">=</span> <span class="n">argument</span>
+        <span class="k">if</span> <span class="n">argument</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_multiplier</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">multiplier</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Multiplier</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_multiplier</span> <span class="o">=</span> <span class="n">multiplier</span>
+            <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">argument</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span>
+            <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_multiplier</span> <span class="o">=</span> <span class="n">argument</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">written_duration</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Duration</span><span class="p">:</span>
@@ -1484,7 +1482,7 @@
     <span class="nd">@identifier</span><span class="o">.</span><span class="n">setter</span>
     <span class="k">def</span> <span class="nf">identifier</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">):</span>
         <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">argument</span><span class="p">,</span> <span class="nb">str</span> <span class="o">|</span> <span class="nb">type</span><span class="p">(</span><span class="kc">None</span><span class="p">)),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_identifier</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">argument</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_identifier</span> <span class="o">=</span> <span class="n">argument</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
@@ -1659,9 +1657,9 @@
         <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Appends ``component`` to container.</span>
 
-<span class="sd">        ..  container:: example</span>
+<span class="sd">        Appends note to container:</span>
 
-<span class="sd">            Appends note to container:</span>
+<span class="sd">        ..  container:: example</span>
 
 <span class="sd">            &gt;&gt;&gt; container = abjad.Container(&quot;c&#39;4 ( d&#39;4 f&#39;4 )&quot;)</span>
 <span class="sd">            &gt;&gt;&gt; abjad.show(container) # doctest: +SKIP</span>
@@ -1706,9 +1704,9 @@
         <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Extends container with ``argument``.</span>
 
-<span class="sd">        ..  container:: example</span>
+<span class="sd">        Extends container with three notes:</span>
 
-<span class="sd">            Extends container with three notes:</span>
+<span class="sd">        ..  container:: example</span>
 
 <span class="sd">            &gt;&gt;&gt; container = abjad.Container(&quot;c&#39;4 ( d&#39;4 f&#39;4 )&quot;)</span>
 <span class="sd">            &gt;&gt;&gt; abjad.show(container) # doctest: +SKIP</span>
@@ -1756,9 +1754,9 @@
         <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns index of ``component`` in container.</span>
 
-<span class="sd">        ..  container:: example</span>
+<span class="sd">        Gets index of last element in container:</span>
 
-<span class="sd">            Gets index of last element in container:</span>
+<span class="sd">        ..  container:: example</span>
 
 <span class="sd">            &gt;&gt;&gt; container = abjad.Container(&quot;c&#39;4 d&#39;4 f&#39;4 e&#39;4&quot;)</span>
 <span class="sd">            &gt;&gt;&gt; abjad.show(container) # doctest: +SKIP</span>
@@ -1794,9 +1792,9 @@
         <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Inserts ``component`` at index ``i`` in container.</span>
 
-<span class="sd">        ..  container:: example</span>
+<span class="sd">        Inserts note.</span>
 
-<span class="sd">            Inserts note.</span>
+<span class="sd">        ..  container:: example</span>
 
 <span class="sd">            &gt;&gt;&gt; container = abjad.Container([])</span>
 <span class="sd">            &gt;&gt;&gt; container.extend(&quot;fs16 cs&#39; e&#39; a&#39;&quot;)</span>
@@ -1866,9 +1864,9 @@
         <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Pops component from container at index ``i``.</span>
 
-<span class="sd">        ..  container:: example</span>
+<span class="sd">        Pops last element from container:</span>
 
-<span class="sd">            Pops last element from container:</span>
+<span class="sd">        ..  container:: example</span>
 
 <span class="sd">            &gt;&gt;&gt; container = abjad.Container(&quot;c&#39;4 ( d&#39;4 f&#39;4 ) e&#39;4&quot;)</span>
 <span class="sd">            &gt;&gt;&gt; abjad.show(container) # doctest: +SKIP</span>
@@ -1912,9 +1910,9 @@
         <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Removes ``component`` from container.</span>
 
-<span class="sd">        ..  container:: example</span>
+<span class="sd">        Removes note from container:</span>
 
-<span class="sd">            Removes note from container:</span>
+<span class="sd">        ..  container:: example</span>
 
 <span class="sd">            &gt;&gt;&gt; container = abjad.Container(&quot;c&#39;4 d&#39;4 f&#39;4 e&#39;4&quot;)</span>
 <span class="sd">            &gt;&gt;&gt; abjad.show(container) # doctest: +SKIP</span>
@@ -2688,7 +2686,7 @@
         <span class="bp">self</span><span class="p">,</span>
         <span class="o">*</span><span class="n">arguments</span><span class="p">,</span>
         <span class="n">language</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;english&quot;</span><span class="p">,</span>
-        <span class="n">multiplier</span><span class="p">:</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Multiplier</span> <span class="o">|</span> <span class="n">_duration</span><span class="o">.</span><span class="n">NonreducedFraction</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">multiplier</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">tag</span><span class="p">:</span> <span class="n">_tag</span><span class="o">.</span><span class="n">Tag</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">arguments</span><span class="p">)</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
@@ -3414,7 +3412,7 @@
         <span class="bp">self</span><span class="p">,</span>
         <span class="o">*</span><span class="n">arguments</span><span class="p">,</span>
         <span class="n">language</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;english&quot;</span><span class="p">,</span>
-        <span class="n">multiplier</span><span class="p">:</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Multiplier</span> <span class="o">|</span> <span class="n">_duration</span><span class="o">.</span><span class="n">NonreducedFraction</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">multiplier</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">tag</span><span class="p">:</span> <span class="n">_tag</span><span class="o">.</span><span class="n">Tag</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">arguments</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
@@ -4059,9 +4057,9 @@
         <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets note-head by ``pitch``.</span>
 
-<span class="sd">        ..  container:: example</span>
+<span class="sd">        Gets note-head by pitch name:</span>
 
-<span class="sd">            Gets note-head by pitch name:</span>
+<span class="sd">        ..  container:: example</span>
 
 <span class="sd">            &gt;&gt;&gt; chord = abjad.Chord(&quot;&lt;e&#39; cs&#39;&#39; f&#39;&#39;&gt;4&quot;)</span>
 <span class="sd">            &gt;&gt;&gt; abjad.show(chord) # doctest: +SKIP</span>
@@ -4211,7 +4209,7 @@
 
 <span class="sd">            &gt;&gt;&gt; string = abjad.lilypond(note)</span>
 <span class="sd">            &gt;&gt;&gt; print(string)</span>
-<span class="sd">            cs&#39;&#39;4 * 1</span>
+<span class="sd">            cs&#39;&#39;4 * 1/1</span>
 
 <span class="sd">        &gt;&gt;&gt; new_note = abjad.Note(note)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(new_note) # doctest: +SKIP</span>
@@ -4220,7 +4218,7 @@
 
 <span class="sd">            &gt;&gt;&gt; string = abjad.lilypond(new_note)</span>
 <span class="sd">            &gt;&gt;&gt; print(string)</span>
-<span class="sd">            cs&#39;&#39;4 * 1</span>
+<span class="sd">            cs&#39;&#39;4 * 1/1</span>
 
 <span class="sd">    ..  container:: example</span>
 
@@ -4243,7 +4241,7 @@
         <span class="bp">self</span><span class="p">,</span>
         <span class="o">*</span><span class="n">arguments</span><span class="p">,</span>
         <span class="n">language</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;english&quot;</span><span class="p">,</span>
-        <span class="n">multiplier</span><span class="p">:</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Multiplier</span> <span class="o">|</span> <span class="n">_duration</span><span class="o">.</span><span class="n">NonreducedFraction</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">multiplier</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">tag</span><span class="p">:</span> <span class="n">_tag</span><span class="o">.</span><span class="n">Tag</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">arguments</span><span class="p">)</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
@@ -4524,7 +4522,7 @@
         <span class="n">written_duration</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="o">*</span><span class="p">,</span>
         <span class="n">language</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;english&quot;</span><span class="p">,</span>
-        <span class="n">multiplier</span><span class="p">:</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Multiplier</span> <span class="o">|</span> <span class="n">_duration</span><span class="o">.</span><span class="n">NonreducedFraction</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">multiplier</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">tag</span><span class="p">:</span> <span class="n">_tag</span><span class="o">.</span><span class="n">Tag</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">original_input</span> <span class="o">=</span> <span class="n">written_duration</span>
@@ -4718,7 +4716,7 @@
         <span class="bp">self</span><span class="p">,</span>
         <span class="o">*</span><span class="n">arguments</span><span class="p">,</span>
         <span class="n">language</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;english&quot;</span><span class="p">,</span>
-        <span class="n">multiplier</span><span class="p">:</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Multiplier</span> <span class="o">|</span> <span class="n">_duration</span><span class="o">.</span><span class="n">NonreducedFraction</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">multiplier</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">tag</span><span class="p">:</span> <span class="n">_tag</span><span class="o">.</span><span class="n">Tag</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">input_leaf</span> <span class="o">=</span> <span class="kc">None</span>
@@ -5010,7 +5008,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_count</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">implied_prolation</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Multiplier</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">implied_prolation</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">:</span>
         <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets implied prolation of tremolo container.</span>
 
@@ -5022,11 +5020,11 @@
 <span class="sd">            &gt;&gt;&gt; abjad.show(tremolo_container) # doctest: +SKIP</span>
 
 <span class="sd">            &gt;&gt;&gt; tremolo_container.implied_prolation</span>
-<span class="sd">            Multiplier(2, 1)</span>
+<span class="sd">            Fraction(2, 1)</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">multiplier</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Multiplier</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">count</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">multiplier</span></div>
+        <span class="n">fraction</span> <span class="o">=</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">count</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">fraction</span></div>
 
 
 <div class="viewcode-block" id="Tuplet"><a class="viewcode-back" href="../../api/abjad/score.html#abjad.score.Tuplet">[docs]</a><span class="k">class</span> <span class="nc">Tuplet</span><span class="p">(</span><span class="n">Container</span><span class="p">):</span>
@@ -5257,8 +5255,13 @@
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">multiplier</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">and</span> <span class="s2">&quot;:&quot;</span> <span class="ow">in</span> <span class="n">multiplier</span><span class="p">:</span>
             <span class="n">strings</span> <span class="o">=</span> <span class="n">multiplier</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">)</span>
             <span class="n">numbers</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">_</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">strings</span><span class="p">]</span>
-            <span class="n">multiplier</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">NonreducedFraction</span><span class="p">(</span><span class="n">numbers</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">numbers</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">multiplier</span> <span class="o">=</span> <span class="n">multiplier</span>
+            <span class="n">pair</span> <span class="o">=</span> <span class="n">numbers</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">numbers</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">multiplier</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
+            <span class="n">pair</span> <span class="o">=</span> <span class="n">multiplier</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">multiplier</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">message</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;tuplet multiplier must be pair or string (not </span><span class="si">{</span><span class="n">multiplier</span><span class="si">!r}</span><span class="s2">).&quot;</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">multiplier</span> <span class="o">=</span> <span class="n">pair</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">denominator</span> <span class="o">=</span> <span class="n">denominator</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">force_fraction</span> <span class="o">=</span> <span class="n">force_fraction</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">hide</span> <span class="o">=</span> <span class="n">hide</span>
@@ -5334,7 +5337,7 @@
         <span class="k">if</span> <span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">augmentation</span><span class="p">()</span>
             <span class="ow">or</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_dyadic_rational</span><span class="p">()</span>
-            <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">multiplier</span><span class="o">.</span><span class="n">denominator</span> <span class="o">==</span> <span class="mi">1</span>
+            <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">multiplier</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span>
             <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">force_fraction</span>
         <span class="p">):</span>
             <span class="k">return</span> <span class="sa">r</span><span class="s2">&quot;\tweak text #tuplet-number::calc-fraction-text&quot;</span>
@@ -5377,9 +5380,10 @@
         <span class="k">return</span> <span class="n">result</span>
 
     <span class="k">def</span> <span class="nf">_get_compact_representation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">n</span><span class="p">,</span> <span class="n">d</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">multiplier</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="p">:</span>
-            <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="se">{{</span><span class="s2"> </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">multiplier</span><span class="si">!s}</span><span class="s2"> </span><span class="se">}}</span><span class="s2">&quot;</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="se">{{</span><span class="s2"> </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">multiplier</span><span class="si">!s}</span><span class="s2"> </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_contents_summary</span><span class="p">()</span><span class="si">}</span><span class="s2"> </span><span class="se">}}</span><span class="s2">&quot;</span>
+            <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="se">{{</span><span class="s2"> </span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">d</span><span class="si">}</span><span class="s2"> </span><span class="se">}}</span><span class="s2">&quot;</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="se">{{</span><span class="s2"> </span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">d</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_contents_summary</span><span class="p">()</span><span class="si">}</span><span class="s2"> </span><span class="se">}}</span><span class="s2">&quot;</span>
 
     <span class="k">def</span> <span class="nf">_get_edge_height_tweak_string</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">duration</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_preprolated_duration</span><span class="p">()</span>
@@ -5388,21 +5392,16 @@
             <span class="k">return</span> <span class="sa">r</span><span class="s2">&quot;\tweak edge-height #&#39;(0.7 . 0)&quot;</span>
 
     <span class="k">def</span> <span class="nf">_get_multiplier_fraction_string</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">numerator</span><span class="p">,</span> <span class="n">denominator</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">multiplier</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">denominator</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">inverse_multiplier</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Multiplier</span><span class="p">(</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">multiplier</span><span class="o">.</span><span class="n">denominator</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">multiplier</span><span class="o">.</span><span class="n">numerator</span>
-            <span class="p">)</span>
-            <span class="n">nonreduced_fraction</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">NonreducedFraction</span><span class="p">(</span><span class="n">inverse_multiplier</span><span class="p">)</span>
-            <span class="n">nonreduced_fraction</span> <span class="o">=</span> <span class="n">nonreduced_fraction</span><span class="o">.</span><span class="n">with_denominator</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">denominator</span><span class="p">)</span>
-            <span class="n">denominator</span><span class="p">,</span> <span class="n">numerator</span> <span class="o">=</span> <span class="n">nonreduced_fraction</span><span class="o">.</span><span class="n">pair</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">numerator</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">multiplier</span><span class="o">.</span><span class="n">numerator</span>
-            <span class="n">denominator</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">multiplier</span><span class="o">.</span><span class="n">denominator</span>
+            <span class="n">inverse_multiplier</span> <span class="o">=</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">(</span><span class="n">denominator</span><span class="p">,</span> <span class="n">numerator</span><span class="p">)</span>
+            <span class="n">pair</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">with_denominator</span><span class="p">(</span><span class="n">inverse_multiplier</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">denominator</span><span class="p">)</span>
+            <span class="n">denominator</span><span class="p">,</span> <span class="n">numerator</span> <span class="o">=</span> <span class="n">pair</span>
         <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">numerator</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">denominator</span><span class="si">}</span><span class="s2">&quot;</span>
 
     <span class="k">def</span> <span class="nf">_is_dyadic_rational</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">multiplier</span><span class="p">:</span>
-            <span class="n">numerator</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">multiplier</span><span class="o">.</span><span class="n">numerator</span>
+            <span class="n">numerator</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">multiplier</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
             <span class="k">return</span> <span class="n">_math</span><span class="o">.</span><span class="n">is_nonnegative_integer_power_of_two</span><span class="p">(</span><span class="n">numerator</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">True</span>
@@ -5411,19 +5410,15 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">multiplied_duration</span>
 
     <span class="k">def</span> <span class="nf">_get_ratio_string</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">multiplier</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">multiplier</span>
-        <span class="k">if</span> <span class="n">multiplier</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">numerator</span> <span class="o">=</span> <span class="n">multiplier</span><span class="o">.</span><span class="n">numerator</span>
-            <span class="n">denominator</span> <span class="o">=</span> <span class="n">multiplier</span><span class="o">.</span><span class="n">denominator</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">multiplier</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">numerator</span><span class="p">,</span> <span class="n">denominator</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">multiplier</span>
             <span class="n">ratio_string</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">denominator</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">numerator</span><span class="si">}</span><span class="s2">&quot;</span>
             <span class="k">return</span> <span class="n">ratio_string</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">None</span>
 
     <span class="k">def</span> <span class="nf">_get_scale_durations_command_string</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">multiplier</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Multiplier</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">multiplier</span><span class="p">)</span>
-        <span class="n">numerator</span> <span class="o">=</span> <span class="n">multiplier</span><span class="o">.</span><span class="n">numerator</span>
-        <span class="n">denominator</span> <span class="o">=</span> <span class="n">multiplier</span><span class="o">.</span><span class="n">denominator</span>
+        <span class="n">numerator</span><span class="p">,</span> <span class="n">denominator</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">multiplier</span>
         <span class="n">string</span> <span class="o">=</span> <span class="sa">rf</span><span class="s2">&quot;\scaleDurations #&#39;(</span><span class="si">{</span><span class="n">numerator</span><span class="si">}</span><span class="s2"> . </span><span class="si">{</span><span class="n">denominator</span><span class="si">}</span><span class="s2">)&quot;</span>
         <span class="k">return</span> <span class="n">string</span>
 
@@ -5438,7 +5433,7 @@
         <span class="k">return</span> <span class="n">string</span>
 
     <span class="k">def</span> <span class="nf">_scale</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">multiplier</span><span class="p">):</span>
-        <span class="n">multiplier</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Multiplier</span><span class="p">(</span><span class="n">multiplier</span><span class="p">)</span>
+        <span class="n">multiplier</span> <span class="o">=</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">(</span><span class="n">multiplier</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">component</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">[:]:</span>
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">component</span><span class="p">,</span> <span class="n">Leaf</span><span class="p">):</span>
                 <span class="n">component</span><span class="o">.</span><span class="n">_scale</span><span class="p">(</span><span class="n">multiplier</span><span class="p">)</span>
@@ -5471,7 +5466,7 @@
 <span class="sd">            &#39;3:2&#39;</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">numerator</span><span class="p">,</span> <span class="n">denominator</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">multiplier</span><span class="o">.</span><span class="n">pair</span>
+        <span class="n">numerator</span><span class="p">,</span> <span class="n">denominator</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">multiplier</span>
         <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">denominator</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">numerator</span><span class="si">}</span><span class="s2">&quot;</span>
 
     <span class="nd">@property</span>
@@ -5788,7 +5783,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_hide</span> <span class="o">=</span> <span class="n">argument</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">implied_prolation</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Multiplier</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">implied_prolation</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">:</span>
         <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets implied prolation of tuplet.</span>
 
@@ -5798,10 +5793,10 @@
 <span class="sd">            &gt;&gt;&gt; abjad.show(tuplet) # doctest: +SKIP</span>
 
 <span class="sd">            &gt;&gt;&gt; tuplet.implied_prolation</span>
-<span class="sd">            Multiplier(2, 3)</span>
+<span class="sd">            Fraction(2, 3)</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Multiplier</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">multiplier</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">multiplier</span><span class="p">)</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">multiplied_duration</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Duration</span><span class="p">:</span>
@@ -5818,10 +5813,12 @@
 <span class="sd">            Duration(1, 4)</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">multiplier</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_contents_duration</span><span class="p">())</span>
+        <span class="n">multiplier</span> <span class="o">=</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">multiplier</span><span class="p">)</span>
+        <span class="n">contents_duration</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_contents_duration</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="n">multiplier</span> <span class="o">*</span> <span class="n">contents_duration</span><span class="p">)</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">multiplier</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">_duration</span><span class="o">.</span><span class="n">NonreducedFraction</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">multiplier</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
         <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets and sets multiplier of tuplet.</span>
 
@@ -5833,13 +5830,13 @@
 <span class="sd">                &gt;&gt;&gt; abjad.show(tuplet) # doctest: +SKIP</span>
 
 <span class="sd">            &gt;&gt;&gt; tuplet.multiplier</span>
-<span class="sd">            NonreducedFraction(2, 3)</span>
+<span class="sd">            (2, 3)</span>
 
 <span class="sd">        ..  container:: example</span>
 
 <span class="sd">            Sets tuplet multiplier:</span>
 
-<span class="sd">                &gt;&gt;&gt; tuplet.multiplier = abjad.Multiplier(4, 3)</span>
+<span class="sd">                &gt;&gt;&gt; tuplet.multiplier = (4, 3)</span>
 <span class="sd">                &gt;&gt;&gt; abjad.show(tuplet) # doctest: +SKIP</span>
 
 <span class="sd">            ..  docs::</span>
@@ -5859,16 +5856,13 @@
 
     <span class="nd">@multiplier</span><span class="o">.</span><span class="n">setter</span>
     <span class="k">def</span> <span class="nf">multiplier</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">):</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">argument</span><span class="p">,</span> <span class="nb">int</span> <span class="o">|</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">):</span>
-            <span class="n">multiplier</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">NonreducedFraction</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">argument</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
-            <span class="n">multiplier</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">NonreducedFraction</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">argument</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
+            <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;can not set tuplet multiplier: </span><span class="si">{</span><span class="n">argument</span><span class="si">!r}</span><span class="s2">.&quot;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="mi">0</span> <span class="o">&lt;</span> <span class="n">multiplier</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_multiplier</span> <span class="o">=</span> <span class="n">multiplier</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;tuplet multiplier must be positive: </span><span class="si">{</span><span class="n">argument</span><span class="si">!r}</span><span class="s2">.&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;tuplet multiplier must be pair, not </span><span class="si">{</span><span class="n">argument</span><span class="si">!r}</span><span class="s2">.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">(</span><span class="o">*</span><span class="n">argument</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;tuplet multiplier must be positive, not </span><span class="si">{</span><span class="n">argument</span><span class="si">!r}</span><span class="s2">.&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_multiplier</span> <span class="o">=</span> <span class="n">argument</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">tag</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">_tag</span><span class="o">.</span><span class="n">Tag</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
@@ -5909,9 +5903,9 @@
         <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Appends ``component`` to tuplet.</span>
 
-<span class="sd">        ..  container:: example</span>
+<span class="sd">        Appends note to tuplet:</span>
 
-<span class="sd">            Appends note to tuplet:</span>
+<span class="sd">        ..  container:: example</span>
 
 <span class="sd">            &gt;&gt;&gt; tuplet = abjad.Tuplet((2, 3), &quot;c&#39;4 ( d&#39;4 f&#39;4 )&quot;)</span>
 <span class="sd">            &gt;&gt;&gt; abjad.show(tuplet) # doctest: +SKIP</span>
@@ -5991,16 +5985,16 @@
         <span class="k">if</span> <span class="n">preserve_duration</span><span class="p">:</span>
             <span class="n">new_duration</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_contents_duration</span><span class="p">()</span>
             <span class="n">multiplier</span> <span class="o">=</span> <span class="n">old_duration</span> <span class="o">/</span> <span class="n">new_duration</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">multiplier</span> <span class="o">=</span> <span class="n">multiplier</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">multiplier</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">pair</span><span class="p">(</span><span class="n">multiplier</span><span class="p">)</span>
             <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_duration</span><span class="p">()</span> <span class="o">==</span> <span class="n">old_duration</span></div>
 
 <div class="viewcode-block" id="Tuplet.augmentation"><a class="viewcode-back" href="../../api/abjad/score.html#abjad.score.Tuplet.augmentation">[docs]</a>    <span class="k">def</span> <span class="nf">augmentation</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
         <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Is true when tuplet multiplier is greater than ``1``.</span>
 
-<span class="sd">        ..  container:: example</span>
+<span class="sd">        Augmented tuplet:</span>
 
-<span class="sd">            Augmented tuplet:</span>
+<span class="sd">        ..  container:: example</span>
 
 <span class="sd">            &gt;&gt;&gt; tuplet = abjad.Tuplet((4, 3), &quot;c&#39;8 d&#39;8 e&#39;8&quot;)</span>
 <span class="sd">            &gt;&gt;&gt; abjad.show(tuplet) # doctest: +SKIP</span>
@@ -6030,7 +6024,7 @@
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">multiplier</span><span class="p">:</span>
-            <span class="k">return</span> <span class="mi">1</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">multiplier</span>
+            <span class="k">return</span> <span class="mi">1</span> <span class="o">&lt;</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">multiplier</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">False</span></div>
 
@@ -6038,9 +6032,9 @@
         <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Is true when tuplet multiplier is less than ``1``.</span>
 
-<span class="sd">        ..  container:: example</span>
+<span class="sd">        Augmented tuplet:</span>
 
-<span class="sd">            Augmented tuplet:</span>
+<span class="sd">        ..  container:: example</span>
 
 <span class="sd">            &gt;&gt;&gt; tuplet = abjad.Tuplet((4, 3), &quot;c&#39;8 d&#39;8 e&#39;8&quot;)</span>
 <span class="sd">            &gt;&gt;&gt; abjad.show(tuplet) # doctest: +SKIP</span>
@@ -6070,7 +6064,7 @@
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">multiplier</span><span class="p">:</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">multiplier</span> <span class="o">&lt;</span> <span class="mi">1</span>
+            <span class="k">return</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">multiplier</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">1</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">False</span></div>
 
@@ -6080,9 +6074,9 @@
         <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Extends tuplet with ``argument``.</span>
 
-<span class="sd">        ..  container:: example</span>
+<span class="sd">        Extends tuplet with three notes:</span>
 
-<span class="sd">            Extends tuplet with three notes:</span>
+<span class="sd">        ..  container:: example</span>
 
 <span class="sd">            &gt;&gt;&gt; tuplet = abjad.Tuplet((2, 3), &quot;c&#39;4 ( d&#39;4 f&#39;4 )&quot;)</span>
 <span class="sd">            &gt;&gt;&gt; abjad.show(tuplet) # doctest: +SKIP</span>
@@ -6168,7 +6162,7 @@
         <span class="k">if</span> <span class="n">preserve_duration</span><span class="p">:</span>
             <span class="n">new_duration</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_contents_duration</span><span class="p">()</span>
             <span class="n">multiplier</span> <span class="o">=</span> <span class="n">old_duration</span> <span class="o">/</span> <span class="n">new_duration</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">multiplier</span> <span class="o">=</span> <span class="n">multiplier</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">multiplier</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">pair</span><span class="p">(</span><span class="n">multiplier</span><span class="p">)</span>
             <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_duration</span><span class="p">()</span> <span class="o">==</span> <span class="n">old_duration</span></div>
 
 <div class="viewcode-block" id="Tuplet.from_duration"><a class="viewcode-back" href="../../api/abjad/score.html#abjad.score.Tuplet.from_duration">[docs]</a>    <span class="nd">@staticmethod</span>
@@ -6178,9 +6172,9 @@
         <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Makes tuplet from ``duration`` and ``components``.</span>
 
-<span class="sd">        ..  container:: example</span>
+<span class="sd">        Makes diminution:</span>
 
-<span class="sd">            Makes diminution:</span>
+<span class="sd">        ..  container:: example</span>
 
 <span class="sd">            &gt;&gt;&gt; tuplet = abjad.Tuplet.from_duration((2, 8), &quot;c&#39;8 d&#39; e&#39;&quot;)</span>
 <span class="sd">            &gt;&gt;&gt; abjad.show(tuplet) # doctest: +SKIP</span>
@@ -6200,10 +6194,10 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">len</span><span class="p">(</span><span class="n">components</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;components must be nonempty: </span><span class="si">{</span><span class="n">components</span><span class="si">!r}</span><span class="s2">.&quot;</span><span class="p">)</span>
         <span class="n">target_duration</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="n">duration</span><span class="p">)</span>
-        <span class="n">tuplet</span> <span class="o">=</span> <span class="n">Tuplet</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">components</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="n">tag</span><span class="p">)</span>
+        <span class="n">tuplet</span> <span class="o">=</span> <span class="n">Tuplet</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">components</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="n">tag</span><span class="p">)</span>
         <span class="n">contents_duration</span> <span class="o">=</span> <span class="n">tuplet</span><span class="o">.</span><span class="n">_get_duration</span><span class="p">()</span>
         <span class="n">multiplier</span> <span class="o">=</span> <span class="n">target_duration</span> <span class="o">/</span> <span class="n">contents_duration</span>
-        <span class="n">tuplet</span><span class="o">.</span><span class="n">multiplier</span> <span class="o">=</span> <span class="n">multiplier</span>
+        <span class="n">tuplet</span><span class="o">.</span><span class="n">multiplier</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">pair</span><span class="p">(</span><span class="n">multiplier</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">tuplet</span></div>
 
 <div class="viewcode-block" id="Tuplet.normalize_multiplier"><a class="viewcode-back" href="../../api/abjad/score.html#abjad.score.Tuplet.normalize_multiplier">[docs]</a>    <span class="k">def</span> <span class="nf">normalize_multiplier</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
@@ -6226,7 +6220,7 @@
 <span class="sd">                    e&#39;4</span>
 <span class="sd">                }</span>
 
-<span class="sd">            &gt;&gt;&gt; abjad.Multiplier(tuplet.multiplier).normalized()</span>
+<span class="sd">            &gt;&gt;&gt; abjad.Duration(tuplet.multiplier).normalized()</span>
 <span class="sd">            False</span>
 
 <span class="sd">            &gt;&gt;&gt; tuplet.normalize_multiplier()</span>
@@ -6243,7 +6237,7 @@
 <span class="sd">                    e&#39;8</span>
 <span class="sd">                }</span>
 
-<span class="sd">            &gt;&gt;&gt; abjad.Multiplier(tuplet.multiplier).normalized()</span>
+<span class="sd">            &gt;&gt;&gt; abjad.Duration(tuplet.multiplier).normalized()</span>
 <span class="sd">            True</span>
 
 <span class="sd">        ..  container:: example</span>
@@ -6263,7 +6257,7 @@
 <span class="sd">                    e&#39;32</span>
 <span class="sd">                }</span>
 
-<span class="sd">            &gt;&gt;&gt; abjad.Multiplier(tuplet.multiplier).normalized()</span>
+<span class="sd">            &gt;&gt;&gt; abjad.Duration(tuplet.multiplier).normalized()</span>
 <span class="sd">            False</span>
 
 <span class="sd">            &gt;&gt;&gt; tuplet.normalize_multiplier()</span>
@@ -6281,7 +6275,7 @@
 <span class="sd">                    e&#39;16</span>
 <span class="sd">                }</span>
 
-<span class="sd">            &gt;&gt;&gt; abjad.Multiplier(tuplet.multiplier).normalized()</span>
+<span class="sd">            &gt;&gt;&gt; abjad.Duration(tuplet.multiplier).normalized()</span>
 <span class="sd">            True</span>
 
 <span class="sd">        ..  container:: example</span>
@@ -6301,7 +6295,7 @@
 <span class="sd">                    e&#39;4</span>
 <span class="sd">                }</span>
 
-<span class="sd">            &gt;&gt;&gt; abjad.Multiplier(tuplet.multiplier).normalized()</span>
+<span class="sd">            &gt;&gt;&gt; abjad.Duration(tuplet.multiplier).normalized()</span>
 <span class="sd">            False</span>
 
 <span class="sd">            &gt;&gt;&gt; tuplet.normalize_multiplier()</span>
@@ -6312,20 +6306,21 @@
 <span class="sd">                &gt;&gt;&gt; string = abjad.lilypond(tuplet)</span>
 <span class="sd">                &gt;&gt;&gt; print(string)</span>
 <span class="sd">                \tweak text #tuplet-number::calc-fraction-text</span>
-<span class="sd">                \times 10/12</span>
+<span class="sd">                \times 5/6</span>
 <span class="sd">                {</span>
 <span class="sd">                    c&#39;8</span>
 <span class="sd">                    d&#39;8</span>
 <span class="sd">                    e&#39;8</span>
 <span class="sd">                }</span>
 
-<span class="sd">            &gt;&gt;&gt; abjad.Multiplier(tuplet.multiplier).normalized()</span>
+<span class="sd">            &gt;&gt;&gt; abjad.Duration(tuplet.multiplier).normalized()</span>
 <span class="sd">            True</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># find tuplet multiplier</span>
-        <span class="n">integer_exponent</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">multiplier</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
-        <span class="n">leaf_multiplier</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Multiplier</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">**</span> <span class="n">integer_exponent</span>
+        <span class="n">multiplier</span> <span class="o">=</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">multiplier</span><span class="p">)</span>
+        <span class="n">integer_exponent</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">multiplier</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+        <span class="n">leaf_multiplier</span> <span class="o">=</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">**</span> <span class="n">integer_exponent</span>
         <span class="c1"># scale leaves in tuplet by power of two</span>
         <span class="k">for</span> <span class="n">component</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">component</span><span class="p">,</span> <span class="n">Leaf</span><span class="p">):</span>
@@ -6333,9 +6328,11 @@
                 <span class="n">new_written_duration</span> <span class="o">=</span> <span class="n">leaf_multiplier</span> <span class="o">*</span> <span class="n">old_written_duration</span>
                 <span class="n">multiplier</span> <span class="o">=</span> <span class="n">new_written_duration</span> <span class="o">/</span> <span class="n">old_written_duration</span>
                 <span class="n">component</span><span class="o">.</span><span class="n">_scale</span><span class="p">(</span><span class="n">multiplier</span><span class="p">)</span>
-        <span class="n">numerator</span><span class="p">,</span> <span class="n">denominator</span> <span class="o">=</span> <span class="n">leaf_multiplier</span><span class="o">.</span><span class="n">pair</span>
-        <span class="n">multiplier</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Multiplier</span><span class="p">(</span><span class="n">denominator</span><span class="p">,</span> <span class="n">numerator</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">multiplier</span> <span class="o">*=</span> <span class="n">multiplier</span></div>
+        <span class="n">numerator</span><span class="p">,</span> <span class="n">denominator</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">pair</span><span class="p">(</span><span class="n">leaf_multiplier</span><span class="p">)</span>
+        <span class="n">multiplier</span> <span class="o">=</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">(</span><span class="n">denominator</span><span class="p">,</span> <span class="n">numerator</span><span class="p">)</span>
+        <span class="n">multiplier</span> <span class="o">*=</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">multiplier</span><span class="p">)</span>
+        <span class="n">pair</span> <span class="o">=</span> <span class="n">multiplier</span><span class="o">.</span><span class="n">numerator</span><span class="p">,</span> <span class="n">multiplier</span><span class="o">.</span><span class="n">denominator</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">multiplier</span> <span class="o">=</span> <span class="n">pair</span></div>
 
 <div class="viewcode-block" id="Tuplet.rest_filled"><a class="viewcode-back" href="../../api/abjad/score.html#abjad.score.Tuplet.rest_filled">[docs]</a>    <span class="k">def</span> <span class="nf">rest_filled</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
         <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
@@ -6368,11 +6365,11 @@
         <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Rewrites dots.</span>
 
+<span class="sd">        Rewrites single dots as 3:2 prolation:</span>
+
 <span class="sd">        ..  container:: example</span>
 
-<span class="sd">            Rewrites single dots as 3:2 prolation:</span>
-
-<span class="sd">            &gt;&gt;&gt; tuplet = abjad.Tuplet(1, &quot;c&#39;8. c&#39;8.&quot;)</span>
+<span class="sd">            &gt;&gt;&gt; tuplet = abjad.Tuplet((1, 1), &quot;c&#39;8. c&#39;8.&quot;)</span>
 <span class="sd">            &gt;&gt;&gt; abjad.show(tuplet) # doctest: +SKIP</span>
 
 <span class="sd">            ..  docs::</span>
@@ -6404,7 +6401,7 @@
 
 <span class="sd">            Rewrites double dots as 7:4 prolation:</span>
 
-<span class="sd">            &gt;&gt;&gt; tuplet = abjad.Tuplet(1, &quot;c&#39;8.. c&#39;8..&quot;)</span>
+<span class="sd">            &gt;&gt;&gt; tuplet = abjad.Tuplet((1, 1), &quot;c&#39;8.. c&#39;8..&quot;)</span>
 <span class="sd">            &gt;&gt;&gt; abjad.show(tuplet) # doctest: +SKIP</span>
 
 <span class="sd">            ..  docs::</span>
@@ -6436,7 +6433,7 @@
 
 <span class="sd">            Does nothing when dot counts differ:</span>
 
-<span class="sd">            &gt;&gt;&gt; tuplet = abjad.Tuplet(1, &quot;c&#39;8. d&#39;8. e&#39;8&quot;)</span>
+<span class="sd">            &gt;&gt;&gt; tuplet = abjad.Tuplet((1, 1), &quot;c&#39;8. d&#39;8. e&#39;8&quot;)</span>
 <span class="sd">            &gt;&gt;&gt; abjad.show(tuplet) # doctest: +SKIP</span>
 
 <span class="sd">            ..  docs::</span>
@@ -6514,8 +6511,9 @@
         <span class="n">global_dot_count</span> <span class="o">=</span> <span class="n">dot_counts</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">global_dot_count</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">return</span>
-        <span class="n">dot_multiplier</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Multiplier</span><span class="o">.</span><span class="n">from_dot_count</span><span class="p">(</span><span class="n">global_dot_count</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">multiplier</span> <span class="o">*=</span> <span class="n">dot_multiplier</span>
+        <span class="n">dot_multiplier</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Duration</span><span class="o">.</span><span class="n">from_dot_count</span><span class="p">(</span><span class="n">global_dot_count</span><span class="p">)</span>
+        <span class="n">multiplier</span> <span class="o">=</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">multiplier</span><span class="p">)</span> <span class="o">*</span> <span class="n">dot_multiplier</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">multiplier</span> <span class="o">=</span> <span class="n">multiplier</span><span class="o">.</span><span class="n">pair</span>
         <span class="n">dot_multiplier_reciprocal</span> <span class="o">=</span> <span class="n">dot_multiplier</span><span class="o">.</span><span class="n">reciprocal</span>
         <span class="k">for</span> <span class="n">component</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
             <span class="n">component</span><span class="o">.</span><span class="n">written_duration</span> <span class="o">*=</span> <span class="n">dot_multiplier_reciprocal</span></div>
@@ -6524,9 +6522,9 @@
         <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Sets preferred denominator of tuplet to at least ``denominator``.</span>
 
-<span class="sd">        ..  container:: example</span>
+<span class="sd">        Sets preferred denominator of tuplet to ``8`` at least:</span>
 
-<span class="sd">            Sets preferred denominator of tuplet to ``8`` at least:</span>
+<span class="sd">        ..  container:: example</span>
 
 <span class="sd">            &gt;&gt;&gt; tuplet = abjad.Tuplet((3, 5), &quot;c&#39;4 d&#39;8 e&#39;8 f&#39;4 g&#39;2&quot;)</span>
 <span class="sd">            &gt;&gt;&gt; abjad.show(tuplet) # doctest: +SKIP</span>
@@ -6570,18 +6568,16 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_get_preprolated_duration</span><span class="p">(),</span>
             <span class="n">_duration</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">denominator</span><span class="p">),</span>
         <span class="p">]</span>
-        <span class="n">nonreduced_fractions</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Duration</span><span class="o">.</span><span class="n">durations_to_nonreduced_fractions</span><span class="p">(</span>
-            <span class="n">durations</span>
-        <span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">denominator</span> <span class="o">=</span> <span class="n">nonreduced_fractions</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">numerator</span></div>
+        <span class="n">pairs</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Duration</span><span class="o">.</span><span class="n">durations_to_nonreduced_fractions</span><span class="p">(</span><span class="n">durations</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">denominator</span> <span class="o">=</span> <span class="n">pairs</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span></div>
 
 <div class="viewcode-block" id="Tuplet.toggle_prolation"><a class="viewcode-back" href="../../api/abjad/score.html#abjad.score.Tuplet.toggle_prolation">[docs]</a>    <span class="k">def</span> <span class="nf">toggle_prolation</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Changes augmented tuplets to diminished; changes diminished tuplets to augmented.</span>
 
-<span class="sd">        ..  container:: example</span>
+<span class="sd">        Changes augmented tuplet to diminished:</span>
 
-<span class="sd">            Changes augmented tuplet to diminished:</span>
+<span class="sd">        ..  container:: example</span>
 
 <span class="sd">            &gt;&gt;&gt; tuplet = abjad.Tuplet((4, 3), &quot;c&#39;8 d&#39;8 e&#39;8&quot;)</span>
 <span class="sd">            &gt;&gt;&gt; abjad.show(tuplet) # doctest: +SKIP</span>
@@ -6655,7 +6651,7 @@
 
 <span class="sd">            REGRESSION. Leaves trivial tuplets unchanged:</span>
 
-<span class="sd">            &gt;&gt;&gt; tuplet = abjad.Tuplet(1, &quot;c&#39;4 d&#39;4 e&#39;4&quot;)</span>
+<span class="sd">            &gt;&gt;&gt; tuplet = abjad.Tuplet((1, 1), &quot;c&#39;4 d&#39;4 e&#39;4&quot;)</span>
 <span class="sd">            &gt;&gt;&gt; abjad.show(tuplet) # doctest: +SKIP</span>
 
 <span class="sd">            ..  docs::</span>
@@ -6689,13 +6685,17 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">diminution</span><span class="p">():</span>
             <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">diminution</span><span class="p">():</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">multiplier</span> <span class="o">*=</span> <span class="mi">2</span>
+                <span class="n">multiplier</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">multiplier</span><span class="p">)</span>
+                <span class="n">pair</span> <span class="o">=</span> <span class="n">multiplier</span><span class="o">.</span><span class="n">numerator</span><span class="p">,</span> <span class="n">multiplier</span><span class="o">.</span><span class="n">denominator</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">multiplier</span> <span class="o">=</span> <span class="n">pair</span>
                 <span class="k">for</span> <span class="n">component</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_subtree</span><span class="p">():</span>
                     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">component</span><span class="p">,</span> <span class="n">Leaf</span><span class="p">):</span>
                         <span class="n">component</span><span class="o">.</span><span class="n">written_duration</span> <span class="o">/=</span> <span class="mi">2</span>
         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">augmentation</span><span class="p">():</span>
             <span class="k">while</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">diminution</span><span class="p">():</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">multiplier</span> <span class="o">/=</span> <span class="mi">2</span>
+                <span class="n">multiplier</span> <span class="o">=</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">multiplier</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span>
+                <span class="n">pair</span> <span class="o">=</span> <span class="n">multiplier</span><span class="o">.</span><span class="n">numerator</span><span class="p">,</span> <span class="n">multiplier</span><span class="o">.</span><span class="n">denominator</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">multiplier</span> <span class="o">=</span> <span class="n">pair</span>
                 <span class="k">for</span> <span class="n">component</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_subtree</span><span class="p">():</span>
                     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">component</span><span class="p">,</span> <span class="n">Leaf</span><span class="p">):</span>
                         <span class="n">component</span><span class="o">.</span><span class="n">written_duration</span> <span class="o">*=</span> <span class="mi">2</span></div>
@@ -6750,7 +6750,7 @@
 <span class="sd">            False</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">multiplier</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">multiplier</span> <span class="o">!=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
             <span class="k">return</span> <span class="kc">False</span>
         <span class="k">for</span> <span class="n">component</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">component</span><span class="p">,</span> <span class="n">Tuplet</span><span class="p">):</span>
@@ -6764,9 +6764,9 @@
         <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Is true when tuplet is trivializable (can be rewritten with a ratio of 1:1).</span>
 
-<span class="sd">        ..  container:: example</span>
+<span class="sd">        Redudant tuplet:</span>
 
-<span class="sd">            Redudant tuplet:</span>
+<span class="sd">        ..  container:: example</span>
 
 <span class="sd">            &gt;&gt;&gt; tuplet = abjad.Tuplet((3, 4), &quot;c&#39;4 c&#39;4&quot;)</span>
 <span class="sd">            &gt;&gt;&gt; abjad.attach(abjad.TimeSignature((3, 8)), tuplet[0])</span>
@@ -6869,7 +6869,8 @@
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">component</span><span class="p">,</span> <span class="n">Tuplet</span><span class="p">):</span>
                 <span class="k">continue</span>
             <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">component</span><span class="p">,</span> <span class="n">Leaf</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">component</span><span class="p">)</span>
-            <span class="n">duration</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">multiplier</span> <span class="o">*</span> <span class="n">component</span><span class="o">.</span><span class="n">written_duration</span><span class="p">)</span>
+            <span class="n">fraction</span> <span class="o">=</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">multiplier</span><span class="p">)</span> <span class="o">*</span> <span class="n">component</span><span class="o">.</span><span class="n">written_duration</span>
+            <span class="n">duration</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="n">fraction</span><span class="p">)</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">duration</span><span class="o">.</span><span class="n">is_assignable</span><span class="p">:</span>
                 <span class="k">return</span> <span class="kc">False</span>
         <span class="k">return</span> <span class="kc">True</span></div>
@@ -6914,12 +6915,15 @@
             <span class="k">return</span>
         <span class="k">for</span> <span class="n">component</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">component</span><span class="p">,</span> <span class="n">Tuplet</span><span class="p">):</span>
-                <span class="n">component</span><span class="o">.</span><span class="n">multiplier</span> <span class="o">*=</span> <span class="bp">self</span><span class="o">.</span><span class="n">multiplier</span>
+                <span class="n">multiplier</span> <span class="o">=</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">(</span><span class="o">*</span><span class="n">component</span><span class="o">.</span><span class="n">multiplier</span><span class="p">)</span>
+                <span class="n">multiplier</span> <span class="o">*=</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">multiplier</span><span class="p">)</span>
+                <span class="n">pair</span> <span class="o">=</span> <span class="n">multiplier</span><span class="o">.</span><span class="n">numerator</span><span class="p">,</span> <span class="n">multiplier</span><span class="o">.</span><span class="n">denominator</span>
+                <span class="n">component</span><span class="o">.</span><span class="n">multiplier</span> <span class="o">=</span> <span class="n">pair</span>
             <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">component</span><span class="p">,</span> <span class="n">Leaf</span><span class="p">):</span>
-                <span class="n">component</span><span class="o">.</span><span class="n">written_duration</span> <span class="o">*=</span> <span class="bp">self</span><span class="o">.</span><span class="n">multiplier</span>
+                <span class="n">component</span><span class="o">.</span><span class="n">written_duration</span> <span class="o">*=</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">multiplier</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="n">component</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">multiplier</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">NonreducedFraction</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span></div></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">multiplier</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span></div></div>
 
 
 <div class="viewcode-block" id="Voice"><a class="viewcode-back" href="../../api/abjad/score.html#abjad.score.Voice">[docs]</a><span class="k">class</span> <span class="nc">Voice</span><span class="p">(</span><span class="n">Context</span><span class="p">):</span>

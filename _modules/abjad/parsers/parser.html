@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>abjad.parsers.parser &mdash; Abjad 3.15 documentation</title>
+  <title>abjad.parsers.parser &mdash; Abjad 3.16 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/abjad.css" type="text/css" />
@@ -34,11 +34,11 @@
   <div class="wy-grid-for-nav">
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search"  style="background: #9922bb" >
+        <div class="wy-side-nav-search"  style="background: #aa44ee" >
 
 
     <a href="../../../index.html" class="icon icon-home" alt="Documentation
-    Home"> Abjad 3.15
+    Home"> Abjad 3.16
 
 
 
@@ -111,7 +111,7 @@
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #9922bb" >
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #aa44ee" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../../index.html">Abjad</a>
       </nav>
@@ -661,40 +661,45 @@
             <span class="n">annotation</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;UnrelativableMusic&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}</span>
             <span class="n">_bind</span><span class="o">.</span><span class="n">attach</span><span class="p">(</span><span class="n">annotation</span><span class="p">,</span> <span class="n">music</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_to_relative_octave</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pitch</span><span class="p">,</span> <span class="n">reference</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">pitch</span><span class="o">.</span><span class="n">pitch_class</span><span class="o">.</span><span class="n">number</span> <span class="o">&gt;</span> <span class="n">reference</span><span class="o">.</span><span class="n">pitch_class</span><span class="o">.</span><span class="n">number</span><span class="p">:</span>
-            <span class="n">pair</span> <span class="o">=</span> <span class="p">(</span><span class="n">pitch</span><span class="o">.</span><span class="n">pitch_class</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">reference</span><span class="o">.</span><span class="n">octave</span><span class="o">.</span><span class="n">number</span><span class="p">)</span>
-            <span class="n">up_pitch</span> <span class="o">=</span> <span class="n">_pitch</span><span class="o">.</span><span class="n">NamedPitch</span><span class="p">(</span><span class="n">pair</span><span class="p">)</span>
-            <span class="n">pair</span> <span class="o">=</span> <span class="p">(</span><span class="n">pitch</span><span class="o">.</span><span class="n">pitch_class</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">reference</span><span class="o">.</span><span class="n">octave</span><span class="o">.</span><span class="n">number</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
-            <span class="n">down_pitch</span> <span class="o">=</span> <span class="n">_pitch</span><span class="o">.</span><span class="n">NamedPitch</span><span class="p">(</span><span class="n">pair</span><span class="p">)</span>
-            <span class="n">up_octave</span> <span class="o">=</span> <span class="n">up_pitch</span><span class="o">.</span><span class="n">octave</span><span class="o">.</span><span class="n">number</span>
-            <span class="n">down_octave</span> <span class="o">=</span> <span class="n">down_pitch</span><span class="o">.</span><span class="n">octave</span><span class="o">.</span><span class="n">number</span>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_get_default_absolute_pitch</span><span class="p">(</span><span class="n">pitch</span><span class="p">,</span> <span class="n">reference</span><span class="p">):</span>
+        <span class="n">pitch_name</span> <span class="o">=</span> <span class="n">pitch</span><span class="o">.</span><span class="n">pitch_class</span><span class="o">.</span><span class="n">name</span>
+        <span class="n">reference_octave</span> <span class="o">=</span> <span class="n">reference</span><span class="o">.</span><span class="n">octave</span><span class="o">.</span><span class="n">number</span>
+        <span class="n">absolute_pitch</span> <span class="o">=</span> <span class="n">_pitch</span><span class="o">.</span><span class="n">NamedPitch</span><span class="p">((</span><span class="n">pitch_name</span><span class="p">,</span> <span class="n">reference_octave</span><span class="p">))</span>
+        <span class="n">reference_pc_number</span> <span class="o">=</span> <span class="n">reference</span><span class="o">.</span><span class="n">_get_diatonic_pc_number</span><span class="p">()</span>
+        <span class="n">pitch_pc_number</span> <span class="o">=</span> <span class="n">pitch</span><span class="o">.</span><span class="n">_get_diatonic_pc_number</span><span class="p">()</span>
+        <span class="n">number_of_diatonic_pitches</span> <span class="o">=</span> <span class="mi">7</span>
+        <span class="n">diatonic_interval_up</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">pitch_pc_number</span> <span class="o">-</span> <span class="n">reference_pc_number</span>
+        <span class="p">)</span> <span class="o">%</span> <span class="n">number_of_diatonic_pitches</span>
+        <span class="n">diatonic_interval_down</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">number_of_diatonic_pitches</span> <span class="o">-</span> <span class="n">diatonic_interval_up</span>
+        <span class="p">)</span> <span class="o">%</span> <span class="n">number_of_diatonic_pitches</span>
+        <span class="n">expect_higher_than_reference</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">diatonic_interval_up</span> <span class="o">&lt;</span> <span class="n">diatonic_interval_down</span>
+            <span class="ow">or</span> <span class="n">diatonic_interval_up</span> <span class="o">==</span> <span class="n">diatonic_interval_down</span>
+            <span class="ow">and</span> <span class="n">pitch</span><span class="o">.</span><span class="n">accidental</span> <span class="o">&gt;</span> <span class="n">reference</span><span class="o">.</span><span class="n">accidental</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="n">expect_higher_than_reference</span> <span class="ow">and</span> <span class="n">absolute_pitch</span> <span class="o">&lt;</span> <span class="n">reference</span><span class="p">:</span>
+            <span class="n">octave_transposition</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">elif</span> <span class="ow">not</span> <span class="n">expect_higher_than_reference</span> <span class="ow">and</span> <span class="n">absolute_pitch</span> <span class="o">&gt;</span> <span class="n">reference</span><span class="p">:</span>
+            <span class="n">octave_transposition</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">pair</span> <span class="o">=</span> <span class="p">(</span><span class="n">pitch</span><span class="o">.</span><span class="n">pitch_class</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">reference</span><span class="o">.</span><span class="n">octave</span><span class="o">.</span><span class="n">number</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
-            <span class="n">up_pitch</span> <span class="o">=</span> <span class="n">_pitch</span><span class="o">.</span><span class="n">NamedPitch</span><span class="p">(</span><span class="n">pair</span><span class="p">)</span>
-            <span class="n">pair</span> <span class="o">=</span> <span class="p">(</span><span class="n">pitch</span><span class="o">.</span><span class="n">pitch_class</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">reference</span><span class="o">.</span><span class="n">octave</span><span class="o">.</span><span class="n">number</span><span class="p">)</span>
-            <span class="n">down_pitch</span> <span class="o">=</span> <span class="n">_pitch</span><span class="o">.</span><span class="n">NamedPitch</span><span class="p">(</span><span class="n">pair</span><span class="p">)</span>
-            <span class="n">up_octave</span> <span class="o">=</span> <span class="n">up_pitch</span><span class="o">.</span><span class="n">octave</span><span class="o">.</span><span class="n">number</span>
-            <span class="n">down_octave</span> <span class="o">=</span> <span class="n">down_pitch</span><span class="o">.</span><span class="n">octave</span><span class="o">.</span><span class="n">number</span>
-        <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span>
-            <span class="nb">float</span><span class="p">(</span><span class="n">up_pitch</span><span class="o">.</span><span class="n">_get_diatonic_pitch_number</span><span class="p">())</span>
-            <span class="o">-</span> <span class="nb">float</span><span class="p">(</span><span class="n">reference</span><span class="o">.</span><span class="n">_get_diatonic_pitch_number</span><span class="p">())</span>
-        <span class="p">)</span> <span class="o">&lt;</span> <span class="nb">abs</span><span class="p">(</span>
-            <span class="nb">float</span><span class="p">(</span><span class="n">down_pitch</span><span class="o">.</span><span class="n">_get_diatonic_pitch_number</span><span class="p">())</span>
-            <span class="o">-</span> <span class="nb">float</span><span class="p">(</span><span class="n">reference</span><span class="o">.</span><span class="n">_get_diatonic_pitch_number</span><span class="p">())</span>
-        <span class="p">):</span>
-            <span class="n">pair</span> <span class="o">=</span> <span class="p">(</span>
-                <span class="n">up_pitch</span><span class="o">.</span><span class="n">pitch_class</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
-                <span class="n">up_octave</span> <span class="o">+</span> <span class="n">pitch</span><span class="o">.</span><span class="n">octave</span><span class="o">.</span><span class="n">number</span> <span class="o">-</span> <span class="mi">3</span><span class="p">,</span>
-            <span class="p">)</span>
-            <span class="n">pitch</span> <span class="o">=</span> <span class="n">_pitch</span><span class="o">.</span><span class="n">NamedPitch</span><span class="p">(</span><span class="n">pair</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">pair</span> <span class="o">=</span> <span class="p">(</span>
-                <span class="n">down_pitch</span><span class="o">.</span><span class="n">pitch_class</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
-                <span class="n">down_octave</span> <span class="o">+</span> <span class="n">pitch</span><span class="o">.</span><span class="n">octave</span><span class="o">.</span><span class="n">number</span> <span class="o">-</span> <span class="mi">3</span><span class="p">,</span>
-            <span class="p">)</span>
-            <span class="n">pitch</span> <span class="o">=</span> <span class="n">_pitch</span><span class="o">.</span><span class="n">NamedPitch</span><span class="p">(</span><span class="n">pair</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">pitch</span></div>
+            <span class="n">octave_transposition</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">absolute_pitch</span><span class="o">.</span><span class="n">octave</span><span class="o">.</span><span class="n">number</span> <span class="o">+=</span> <span class="n">octave_transposition</span>
+        <span class="k">return</span> <span class="n">absolute_pitch</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_apply_octave_transposition</span><span class="p">(</span><span class="n">pitch</span><span class="p">,</span> <span class="n">absolute_pitch</span><span class="p">):</span>
+        <span class="n">base_octave</span> <span class="o">=</span> <span class="mi">3</span>
+        <span class="n">octave_transposition</span> <span class="o">=</span> <span class="n">pitch</span><span class="o">.</span><span class="n">octave</span><span class="o">.</span><span class="n">number</span> <span class="o">-</span> <span class="n">base_octave</span>
+        <span class="n">absolute_pitch</span><span class="o">.</span><span class="n">octave</span><span class="o">.</span><span class="n">number</span> <span class="o">+=</span> <span class="n">octave_transposition</span>
+        <span class="k">return</span> <span class="n">absolute_pitch</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">_to_relative_octave</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">pitch</span><span class="p">,</span> <span class="n">reference</span><span class="p">):</span>
+        <span class="n">default_absolute_pitch</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_get_default_absolute_pitch</span><span class="p">(</span><span class="n">pitch</span><span class="p">,</span> <span class="n">reference</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_apply_octave_transposition</span><span class="p">(</span><span class="n">pitch</span><span class="p">,</span> <span class="n">default_absolute_pitch</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="LilyPondEvent"><a class="viewcode-back" href="../../../api/abjad/parsers/parser.html#abjad.parsers.parser.LilyPondEvent">[docs]</a><span class="k">class</span> <span class="nc">LilyPondEvent</span><span class="p">:</span>
@@ -1100,7 +1105,6 @@
                     <span class="c1"># !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!</span>
 
                 <span class="k">else</span><span class="p">:</span>
-
                     <span class="c1"># --! TRACKING</span>
                     <span class="k">if</span> <span class="n">tracking</span><span class="p">:</span>
                         <span class="n">sym</span><span class="o">.</span><span class="n">lineno</span> <span class="o">=</span> <span class="n">lexer</span><span class="o">.</span><span class="n">lineno</span>
@@ -1148,7 +1152,6 @@
                 <span class="k">return</span> <span class="n">result</span>
 
         <span class="k">if</span> <span class="n">t</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-
             <span class="c1"># --! DEBUG</span>
             <span class="c1"># debug.error(&#39;Error  : %s&#39;,</span>
             <span class="c1">#             (&quot;%s . %s&quot; % (&quot; &quot;.join([xx.type for xx in symstack][1:]), str(self.lookahead))).lstrip())</span>
@@ -1442,7 +1445,6 @@
                     <span class="c1"># !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!</span>
 
                 <span class="k">else</span><span class="p">:</span>
-
                     <span class="c1"># --! TRACKING</span>
                     <span class="k">if</span> <span class="n">tracking</span><span class="p">:</span>
                         <span class="n">sym</span><span class="o">.</span><span class="n">lineno</span> <span class="o">=</span> <span class="n">lexer</span><span class="o">.</span><span class="n">lineno</span>
@@ -1490,7 +1492,6 @@
                 <span class="k">return</span> <span class="n">result</span>
 
         <span class="k">if</span> <span class="n">t</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-
             <span class="c1"># --! DEBUG</span>
             <span class="n">debug</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
                 <span class="s2">&quot;Error  : </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
@@ -2474,7 +2475,6 @@
         <span class="k">return</span> <span class="s2">&quot;SCM_IDENTIFIER&quot;</span></div>
 
 <div class="viewcode-block" id="LilyPondLexicalDefinition.push_signature"><a class="viewcode-back" href="../../../api/abjad/parsers/parser.html#abjad.parsers.parser.LilyPondLexicalDefinition.push_signature">[docs]</a>    <span class="k">def</span> <span class="nf">push_signature</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">signature</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
-
         <span class="n">token</span> <span class="o">=</span> <span class="n">lex</span><span class="o">.</span><span class="n">LexToken</span><span class="p">()</span>
         <span class="n">token</span><span class="o">.</span><span class="n">type</span> <span class="o">=</span> <span class="s2">&quot;EXPECT_NO_MORE_ARGS&quot;</span>
         <span class="n">token</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="kc">None</span>
@@ -2484,7 +2484,6 @@
 
         <span class="n">optional</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="k">for</span> <span class="n">predicate</span> <span class="ow">in</span> <span class="n">signature</span><span class="p">:</span>
-
             <span class="k">if</span> <span class="n">predicate</span> <span class="o">==</span> <span class="s2">&quot;optional?&quot;</span><span class="p">:</span>
                 <span class="n">optional</span> <span class="o">=</span> <span class="kc">True</span>
                 <span class="k">continue</span>
@@ -4774,7 +4773,7 @@
         <span class="n">chord</span> <span class="o">=</span> <span class="n">_score</span><span class="o">.</span><span class="n">Chord</span><span class="p">(</span><span class="n">pitches</span><span class="p">,</span> <span class="n">duration</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">_chord_pitch_orders</span><span class="p">[</span><span class="n">chord</span><span class="p">]</span> <span class="o">=</span> <span class="n">pitches</span>
         <span class="k">if</span> <span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">multiplier</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">multiplier</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Multiplier</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">multiplier</span><span class="p">)</span>
+            <span class="n">multiplier</span> <span class="o">=</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">multiplier</span><span class="p">)</span>
             <span class="n">chord</span><span class="o">.</span><span class="n">multiplier</span> <span class="o">=</span> <span class="n">multiplier</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">_process_post_events</span><span class="p">(</span><span class="n">chord</span><span class="p">,</span> <span class="n">p</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
         <span class="n">annotation</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;UnrelativableMusic&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}</span>
@@ -4790,8 +4789,8 @@
         <span class="s2">&quot;event_chord : MULTI_MEASURE_REST optional_notemode_duration post_events&quot;</span>
         <span class="n">rest</span> <span class="o">=</span> <span class="n">_score</span><span class="o">.</span><span class="n">MultimeasureRest</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">duration</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">multiplier</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">multiplier</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Multiplier</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">multiplier</span><span class="p">)</span>
-            <span class="n">rest</span><span class="o">.</span><span class="n">multiplier</span> <span class="o">=</span> <span class="n">multiplier</span>
+            <span class="n">multiplier</span> <span class="o">=</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">multiplier</span><span class="p">)</span>
+            <span class="n">rest</span><span class="o">.</span><span class="n">multiplier</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">pair</span><span class="p">(</span><span class="n">multiplier</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">_process_post_events</span><span class="p">(</span><span class="n">rest</span><span class="p">,</span> <span class="n">p</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
         <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">rest</span></div>
 
@@ -5917,8 +5916,8 @@
         <span class="n">post_events</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">_chord_pitch_orders</span><span class="p">[</span><span class="n">chord</span><span class="p">]</span> <span class="o">=</span> <span class="n">pitches</span>
         <span class="k">if</span> <span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">multiplier</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">multiplier</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Multiplier</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">multiplier</span><span class="p">)</span>
-            <span class="n">chord</span><span class="o">.</span><span class="n">multiplier</span> <span class="o">=</span> <span class="n">multiplier</span>
+            <span class="n">multiplier</span> <span class="o">=</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">multiplier</span><span class="p">)</span>
+            <span class="n">chord</span><span class="o">.</span><span class="n">multiplier</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">pair</span><span class="p">(</span><span class="n">multiplier</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">_process_post_events</span><span class="p">(</span><span class="n">chord</span><span class="p">,</span> <span class="n">post_events</span><span class="p">)</span>
         <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">chord</span></div>
 
@@ -6419,8 +6418,8 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="n">rest</span> <span class="o">=</span> <span class="n">_score</span><span class="o">.</span><span class="n">Skip</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">duration</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">multiplier</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">multiplier</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Multiplier</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">multiplier</span><span class="p">)</span>
-            <span class="n">rest</span><span class="o">.</span><span class="n">multiplier</span> <span class="o">=</span> <span class="n">multiplier</span>
+            <span class="n">multiplier</span> <span class="o">=</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">multiplier</span><span class="p">)</span>
+            <span class="n">rest</span><span class="o">.</span><span class="n">multiplier</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">pair</span><span class="p">(</span><span class="n">multiplier</span><span class="p">)</span>
         <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">rest</span></div>
 
 <div class="viewcode-block" id="LilyPondSyntacticalDefinition.p_simple_element__pitch__exclamations__questions__octave_check__optional_notemode_duration__optional_rest"><a class="viewcode-back" href="../../../api/abjad/parsers/parser.html#abjad.parsers.parser.LilyPondSyntacticalDefinition.p_simple_element__pitch__exclamations__questions__octave_check__optional_notemode_duration__optional_rest">[docs]</a>    <span class="k">def</span> <span class="nf">p_simple_element__pitch__exclamations__questions__octave_check__optional_notemode_duration__optional_rest</span><span class="p">(</span>
@@ -6434,8 +6433,8 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="n">leaf</span> <span class="o">=</span> <span class="n">_score</span><span class="o">.</span><span class="n">Rest</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span><span class="o">.</span><span class="n">duration</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">p</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span><span class="o">.</span><span class="n">multiplier</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">multiplier</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Multiplier</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span><span class="o">.</span><span class="n">multiplier</span><span class="p">)</span>
-            <span class="n">leaf</span><span class="o">.</span><span class="n">multiplier</span> <span class="o">=</span> <span class="n">multiplier</span>
+            <span class="n">multiplier</span> <span class="o">=</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span><span class="o">.</span><span class="n">multiplier</span><span class="p">)</span>
+            <span class="n">leaf</span><span class="o">.</span><span class="n">multiplier</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">pair</span><span class="p">(</span><span class="n">multiplier</span><span class="p">)</span>
         <span class="c1"># TODO: handle exclamations, questions, octave_check</span>
         <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">leaf</span></div>
 

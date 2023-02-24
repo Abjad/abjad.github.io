@@ -3,7 +3,7 @@
 \score
 {
     \tweak text #tuplet-number::calc-fraction-text
-    \times 10/12
+    \times 5/6
     {
         c'8
         d'8

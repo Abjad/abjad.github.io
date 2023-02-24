@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>abjad.sequence &mdash; Abjad 3.15 documentation</title>
+  <title>abjad.sequence &mdash; Abjad 3.16 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/abjad.css" type="text/css" />
@@ -34,11 +34,11 @@
   <div class="wy-grid-for-nav">
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search"  style="background: #9922bb" >
+        <div class="wy-side-nav-search"  style="background: #aa44ee" >
 
 
     <a href="../../index.html" class="icon icon-home" alt="Documentation
-    Home"> Abjad 3.15
+    Home"> Abjad 3.16
 
 
 
@@ -111,7 +111,7 @@
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #9922bb" >
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #aa44ee" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../index.html">Abjad</a>
       </nav>
@@ -139,7 +139,6 @@
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">cyclictuple</span> <span class="k">as</span> <span class="n">_cyclictuple</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">enums</span> <span class="k">as</span> <span class="n">_enums</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">math</span> <span class="k">as</span> <span class="n">_math</span>
-<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">ratio</span> <span class="k">as</span> <span class="n">_ratio</span>
 
 
 <span class="k">def</span> <span class="nf">_partition_sequence_cyclically_by_weights_at_least</span><span class="p">(</span>
@@ -269,6 +268,7 @@
 <div class="viewcode-block" id="partition_by_counts"><a class="viewcode-back" href="../../api/abjad/sequence.html#abjad.sequence.partition_by_counts">[docs]</a><span class="k">def</span> <span class="nf">partition_by_counts</span><span class="p">(</span>
     <span class="n">sequence</span><span class="p">,</span>
     <span class="n">counts</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
     <span class="n">cyclic</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
     <span class="n">enchain</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
     <span class="n">overhang</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
@@ -277,9 +277,9 @@
     <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Partitions sequence by ``counts``.</span>
 
-<span class="sd">    ..  container:: example</span>
+<span class="sd">    Partitions sequence once by counts without overhang:</span>
 
-<span class="sd">        Partitions sequence once by counts without overhang:</span>
+<span class="sd">    ..  container:: example</span>
 
 <span class="sd">        &gt;&gt;&gt; sequence = list(range(16))</span>
 <span class="sd">        &gt;&gt;&gt; sequence = abjad.sequence.partition_by_counts(</span>
@@ -764,16 +764,16 @@
     <span class="k">return</span> <span class="n">result</span></div>
 
 
-<div class="viewcode-block" id="partition_by_ratio_of_lengths"><a class="viewcode-back" href="../../api/abjad/sequence.html#abjad.sequence.partition_by_ratio_of_lengths">[docs]</a><span class="k">def</span> <span class="nf">partition_by_ratio_of_lengths</span><span class="p">(</span><span class="n">sequence</span><span class="p">,</span> <span class="n">ratio</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
+<div class="viewcode-block" id="partition_by_ratio_of_lengths"><a class="viewcode-back" href="../../api/abjad/sequence.html#abjad.sequence.partition_by_ratio_of_lengths">[docs]</a><span class="k">def</span> <span class="nf">partition_by_ratio_of_lengths</span><span class="p">(</span><span class="n">sequence</span><span class="p">,</span> <span class="n">ratio</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="o">...</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
     <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Partitions sequence by ``ratio`` of lengths.</span>
 
+<span class="sd">    Partitions sequence by ``1:1:1`` ratio:</span>
+
 <span class="sd">    ..  container:: example</span>
 
-<span class="sd">        Partitions sequence by ``1:1:1`` ratio:</span>
-
 <span class="sd">        &gt;&gt;&gt; numbers = list(range(10))</span>
-<span class="sd">        &gt;&gt;&gt; ratio = abjad.Ratio((1, 1, 1))</span>
+<span class="sd">        &gt;&gt;&gt; ratio = (1, 1, 1)</span>
 
 <span class="sd">        &gt;&gt;&gt; for part in abjad.sequence.partition_by_ratio_of_lengths(numbers, ratio):</span>
 <span class="sd">        ...     part</span>
@@ -786,7 +786,7 @@
 <span class="sd">        Partitions sequence by ``1:1:2`` ratio:</span>
 
 <span class="sd">        &gt;&gt;&gt; numbers = list(range(10))</span>
-<span class="sd">        &gt;&gt;&gt; ratio = abjad.Ratio((1, 1, 2))</span>
+<span class="sd">        &gt;&gt;&gt; ratio = (1, 1, 2)</span>
 
 <span class="sd">        &gt;&gt;&gt; for part in abjad.sequence.partition_by_ratio_of_lengths(numbers, ratio):</span>
 <span class="sd">        ...     part</span>
@@ -796,9 +796,9 @@
 
 <span class="sd">    Returns list of sequences.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">ratio</span> <span class="o">=</span> <span class="n">_ratio</span><span class="o">.</span><span class="n">Ratio</span><span class="p">(</span><span class="n">ratio</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ratio</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">ratio</span><span class="p">)</span>
     <span class="n">length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">sequence</span><span class="p">)</span>
-    <span class="n">counts</span> <span class="o">=</span> <span class="n">ratio</span><span class="o">.</span><span class="n">partition_integer</span><span class="p">(</span><span class="n">length</span><span class="p">)</span>
+    <span class="n">counts</span> <span class="o">=</span> <span class="n">_math</span><span class="o">.</span><span class="n">partition_integer_by_ratio</span><span class="p">(</span><span class="n">length</span><span class="p">,</span> <span class="n">ratio</span><span class="p">)</span>
     <span class="n">parts</span> <span class="o">=</span> <span class="n">partition_by_counts</span><span class="p">(</span><span class="n">sequence</span><span class="p">,</span> <span class="n">counts</span><span class="p">,</span> <span class="n">cyclic</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">overhang</span><span class="o">=</span><span class="n">_enums</span><span class="o">.</span><span class="n">EXACT</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">parts</span></div>
 
@@ -809,7 +809,7 @@
 
 <span class="sd">    ..  container:: example</span>
 
-<span class="sd">        &gt;&gt;&gt; ratio = abjad.Ratio([1, 1, 1])</span>
+<span class="sd">        &gt;&gt;&gt; ratio = (1, 1, 1)</span>
 <span class="sd">        &gt;&gt;&gt; sequence = list(10 * [1])</span>
 <span class="sd">        &gt;&gt;&gt; sequence = abjad.sequence.partition_by_ratio_of_weights(sequence, ratio)</span>
 <span class="sd">        &gt;&gt;&gt; for item in sequence:</span>
@@ -821,7 +821,7 @@
 
 <span class="sd">    ..  container:: example</span>
 
-<span class="sd">        &gt;&gt;&gt; ratio = abjad.Ratio([1, 1, 1, 1])</span>
+<span class="sd">        &gt;&gt;&gt; ratio = (1, 1, 1, 1)</span>
 <span class="sd">        &gt;&gt;&gt; sequence = list(10 * [1])</span>
 <span class="sd">        &gt;&gt;&gt; sequence = abjad.sequence.partition_by_ratio_of_weights(sequence, ratio)</span>
 <span class="sd">        &gt;&gt;&gt; for item in sequence:</span>
@@ -834,7 +834,7 @@
 
 <span class="sd">    ..  container:: example</span>
 
-<span class="sd">        &gt;&gt;&gt; ratio = abjad.Ratio([2, 2, 3])</span>
+<span class="sd">        &gt;&gt;&gt; ratio = (2, 2, 3)</span>
 <span class="sd">        &gt;&gt;&gt; sequence = list(10 * [1])</span>
 <span class="sd">        &gt;&gt;&gt; sequence = abjad.sequence.partition_by_ratio_of_weights(sequence, ratio)</span>
 <span class="sd">        &gt;&gt;&gt; for item in sequence:</span>
@@ -846,7 +846,7 @@
 
 <span class="sd">    ..  container:: example</span>
 
-<span class="sd">        &gt;&gt;&gt; ratio = abjad.Ratio([3, 2, 2])</span>
+<span class="sd">        &gt;&gt;&gt; ratio = (3, 2, 2)</span>
 <span class="sd">        &gt;&gt;&gt; sequence = list(10 * [1])</span>
 <span class="sd">        &gt;&gt;&gt; sequence = abjad.sequence.partition_by_ratio_of_weights(sequence, ratio)</span>
 <span class="sd">        &gt;&gt;&gt; for item in sequence:</span>
@@ -858,7 +858,7 @@
 
 <span class="sd">    ..  container:: example</span>
 
-<span class="sd">        &gt;&gt;&gt; ratio = abjad.Ratio([1, 1])</span>
+<span class="sd">        &gt;&gt;&gt; ratio = (1, 1)</span>
 <span class="sd">        &gt;&gt;&gt; items = [1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2]</span>
 <span class="sd">        &gt;&gt;&gt; sequence = list(items)</span>
 <span class="sd">        &gt;&gt;&gt; sequence = abjad.sequence.partition_by_ratio_of_weights(sequence, ratio)</span>
@@ -870,7 +870,7 @@
 
 <span class="sd">    ..  container:: example</span>
 
-<span class="sd">        &gt;&gt;&gt; ratio = abjad.Ratio([1, 1, 1])</span>
+<span class="sd">        &gt;&gt;&gt; ratio = (1, 1, 1)</span>
 <span class="sd">        &gt;&gt;&gt; items = [1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2]</span>
 <span class="sd">        &gt;&gt;&gt; sequence = list(items)</span>
 <span class="sd">        &gt;&gt;&gt; sequence = abjad.sequence.partition_by_ratio_of_weights(sequence, ratio)</span>
@@ -883,7 +883,7 @@
 
 <span class="sd">    ..  container:: example</span>
 
-<span class="sd">        &gt;&gt;&gt; ratio = abjad.Ratio([1, 1, 1])</span>
+<span class="sd">        &gt;&gt;&gt; ratio = (1, 1, 1)</span>
 <span class="sd">        &gt;&gt;&gt; sequence = list([5, 5])</span>
 <span class="sd">        &gt;&gt;&gt; sequence = abjad.sequence.partition_by_ratio_of_weights(sequence, ratio)</span>
 <span class="sd">        &gt;&gt;&gt; for item in sequence:</span>
@@ -895,7 +895,7 @@
 
 <span class="sd">    ..  container:: example</span>
 
-<span class="sd">        &gt;&gt;&gt; ratio = abjad.Ratio([1, 1, 1, 1])</span>
+<span class="sd">        &gt;&gt;&gt; ratio = (1, 1, 1, 1)</span>
 <span class="sd">        &gt;&gt;&gt; sequence = list([5, 5])</span>
 <span class="sd">        &gt;&gt;&gt; sequence = abjad.sequence.partition_by_ratio_of_weights(sequence, ratio)</span>
 <span class="sd">        &gt;&gt;&gt; for item in sequence:</span>
@@ -908,7 +908,7 @@
 
 <span class="sd">    ..  container:: example</span>
 
-<span class="sd">        &gt;&gt;&gt; ratio = abjad.Ratio([2, 2, 3])</span>
+<span class="sd">        &gt;&gt;&gt; ratio = (2, 2, 3)</span>
 <span class="sd">        &gt;&gt;&gt; sequence = list([5, 5])</span>
 <span class="sd">        &gt;&gt;&gt; sequence = abjad.sequence.partition_by_ratio_of_weights(sequence, ratio)</span>
 <span class="sd">        &gt;&gt;&gt; for item in sequence:</span>
@@ -920,7 +920,7 @@
 
 <span class="sd">    ..  container:: example</span>
 
-<span class="sd">        &gt;&gt;&gt; ratio = abjad.Ratio([3, 2, 2])</span>
+<span class="sd">        &gt;&gt;&gt; ratio = (3, 2, 2)</span>
 <span class="sd">        &gt;&gt;&gt; sequence = list([5, 5])</span>
 <span class="sd">        &gt;&gt;&gt; sequence = abjad.sequence.partition_by_ratio_of_weights(sequence, ratio)</span>
 <span class="sd">        &gt;&gt;&gt; for item in sequence:</span>
@@ -935,7 +935,7 @@
 <span class="sd">    Returns list of sequences.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">list_weight</span> <span class="o">=</span> <span class="n">_math</span><span class="o">.</span><span class="n">weight</span><span class="p">(</span><span class="n">sequence</span><span class="p">)</span>
-    <span class="n">weights_parts</span> <span class="o">=</span> <span class="n">_ratio</span><span class="o">.</span><span class="n">Ratio</span><span class="p">(</span><span class="n">weights</span><span class="p">)</span><span class="o">.</span><span class="n">partition_integer</span><span class="p">(</span><span class="n">list_weight</span><span class="p">)</span>
+    <span class="n">weights_parts</span> <span class="o">=</span> <span class="n">_math</span><span class="o">.</span><span class="n">partition_integer_by_ratio</span><span class="p">(</span><span class="n">list_weight</span><span class="p">,</span> <span class="n">weights</span><span class="p">)</span>
     <span class="n">cumulative_weights</span> <span class="o">=</span> <span class="n">_math</span><span class="o">.</span><span class="n">cumulative_sums</span><span class="p">(</span><span class="n">weights_parts</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
     <span class="n">items</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">sublist</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">typing</span><span class="o">.</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
@@ -1221,13 +1221,13 @@
     <span class="k">return</span> <span class="n">result</span></div>
 
 
-<div class="viewcode-block" id="split"><a class="viewcode-back" href="../../api/abjad/sequence.html#abjad.sequence.split">[docs]</a><span class="k">def</span> <span class="nf">split</span><span class="p">(</span><span class="n">sequence</span><span class="p">,</span> <span class="n">weights</span><span class="p">,</span> <span class="n">cyclic</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">overhang</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
+<div class="viewcode-block" id="split"><a class="viewcode-back" href="../../api/abjad/sequence.html#abjad.sequence.split">[docs]</a><span class="k">def</span> <span class="nf">split</span><span class="p">(</span><span class="n">sequence</span><span class="p">,</span> <span class="n">weights</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">cyclic</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">overhang</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
     <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Splits sequence by ``weights``.</span>
 
-<span class="sd">    ..  container:: example</span>
+<span class="sd">    Splits sequence cyclically by weights with overhang:</span>
 
-<span class="sd">        Splits sequence cyclically by weights with overhang:</span>
+<span class="sd">    ..  container:: example</span>
 
 <span class="sd">        &gt;&gt;&gt; sequence = list([10, -10, 10, -10])</span>
 
@@ -1281,14 +1281,14 @@
 
 <span class="sd">    ..  container:: example</span>
 
-<span class="sd">        REGRESSION. Splits sequence of nonreduced fractions cyclically by weights</span>
-<span class="sd">        with overhang:</span>
+<span class="sd">        REGRESSION. Splits sequence of durations cyclically by weights</span>
+<span class="sd">        with overhang; then expresses durations as pairs with denominator:</span>
 
 <span class="sd">        &gt;&gt;&gt; sequence = list([</span>
-<span class="sd">        ...     abjad.NonreducedFraction(20, 2),</span>
-<span class="sd">        ...     abjad.NonreducedFraction(-20, 2),</span>
-<span class="sd">        ...     abjad.NonreducedFraction(20, 2),</span>
-<span class="sd">        ...     abjad.NonreducedFraction(-20, 2),</span>
+<span class="sd">        ...     abjad.Duration(20, 2),</span>
+<span class="sd">        ...     abjad.Duration(-20, 2),</span>
+<span class="sd">        ...     abjad.Duration(20, 2),</span>
+<span class="sd">        ...     abjad.Duration(-20, 2),</span>
 <span class="sd">        ... ])</span>
 
 <span class="sd">        &gt;&gt;&gt; for part in abjad.sequence.split(</span>
@@ -1297,14 +1297,14 @@
 <span class="sd">        ...     cyclic=True,</span>
 <span class="sd">        ...     overhang=True,</span>
 <span class="sd">        ... ):</span>
-<span class="sd">        ...     part</span>
+<span class="sd">        ...     [abjad.duration.with_denominator(_, 2) for _ in part]</span>
 <span class="sd">        ...</span>
-<span class="sd">        [NonreducedFraction(6, 2)]</span>
-<span class="sd">        [NonreducedFraction(14, 2), NonreducedFraction(-16, 2)]</span>
-<span class="sd">        [NonreducedFraction(-4, 2), NonreducedFraction(2, 2)]</span>
-<span class="sd">        [NonreducedFraction(6, 2)]</span>
-<span class="sd">        [NonreducedFraction(12, 2), NonreducedFraction(-18, 2)]</span>
-<span class="sd">        [NonreducedFraction(-2, 2)]</span>
+<span class="sd">        [(6, 2)]</span>
+<span class="sd">        [(14, 2), (-16, 2)]</span>
+<span class="sd">        [(-4, 2), (2, 2)]</span>
+<span class="sd">        [(6, 2)]</span>
+<span class="sd">        [(12, 2), (-18, 2)]</span>
+<span class="sd">        [(-2, 2)]</span>
 
 <span class="sd">    Returns list of sequences.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -1396,7 +1396,7 @@
                 <span class="k">yield</span> <span class="n">item_</span>
 
 
-<div class="viewcode-block" id="flatten"><a class="viewcode-back" href="../../api/abjad/sequence.html#abjad.sequence.flatten">[docs]</a><span class="k">def</span> <span class="nf">flatten</span><span class="p">(</span><span class="n">sequence</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">depth</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+<div class="viewcode-block" id="flatten"><a class="viewcode-back" href="../../api/abjad/sequence.html#abjad.sequence.flatten">[docs]</a><span class="k">def</span> <span class="nf">flatten</span><span class="p">(</span><span class="n">sequence</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">depth</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
     <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Flattens ``sequence``.</span>
 
@@ -1507,13 +1507,13 @@
     <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">sequence</span><span class="p">))</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">sequence</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="is_decreasing"><a class="viewcode-back" href="../../api/abjad/sequence.html#abjad.sequence.is_decreasing">[docs]</a><span class="k">def</span> <span class="nf">is_decreasing</span><span class="p">(</span><span class="n">sequence</span><span class="p">,</span> <span class="n">strict</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<div class="viewcode-block" id="is_decreasing"><a class="viewcode-back" href="../../api/abjad/sequence.html#abjad.sequence.is_decreasing">[docs]</a><span class="k">def</span> <span class="nf">is_decreasing</span><span class="p">(</span><span class="n">sequence</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">strict</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Is true when sequence decreases.</span>
 
-<span class="sd">    ..  container:: example</span>
+<span class="sd">    Is true when sequence is strictly decreasing:</span>
 
-<span class="sd">        Is true when sequence is strictly decreasing:</span>
+<span class="sd">    ..  container:: example</span>
 
 <span class="sd">        &gt;&gt;&gt; abjad.sequence.is_decreasing([5, 4, 3, 2, 1, 0], strict=True)</span>
 <span class="sd">        True</span>
@@ -1568,13 +1568,13 @@
             <span class="k">return</span> <span class="kc">False</span></div>
 
 
-<div class="viewcode-block" id="is_increasing"><a class="viewcode-back" href="../../api/abjad/sequence.html#abjad.sequence.is_increasing">[docs]</a><span class="k">def</span> <span class="nf">is_increasing</span><span class="p">(</span><span class="n">sequence</span><span class="p">,</span> <span class="n">strict</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<div class="viewcode-block" id="is_increasing"><a class="viewcode-back" href="../../api/abjad/sequence.html#abjad.sequence.is_increasing">[docs]</a><span class="k">def</span> <span class="nf">is_increasing</span><span class="p">(</span><span class="n">sequence</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">strict</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Is true when sequence increases.</span>
 
-<span class="sd">    ..  container:: example</span>
+<span class="sd">    Is true when sequence is strictly increasing:</span>
 
-<span class="sd">        Is true when sequence is strictly increasing:</span>
+<span class="sd">    ..  container:: example</span>
 
 <span class="sd">        &gt;&gt;&gt; abjad.sequence.is_increasing([0, 1, 2, 3, 4, 5], strict=True)</span>
 <span class="sd">        True</span>
@@ -1629,13 +1629,13 @@
             <span class="k">return</span> <span class="kc">False</span></div>
 
 
-<div class="viewcode-block" id="is_permutation"><a class="viewcode-back" href="../../api/abjad/sequence.html#abjad.sequence.is_permutation">[docs]</a><span class="k">def</span> <span class="nf">is_permutation</span><span class="p">(</span><span class="n">sequence</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<div class="viewcode-block" id="is_permutation"><a class="viewcode-back" href="../../api/abjad/sequence.html#abjad.sequence.is_permutation">[docs]</a><span class="k">def</span> <span class="nf">is_permutation</span><span class="p">(</span><span class="n">sequence</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Is true when sequence is a permutation.</span>
 
-<span class="sd">    ..  container:: example</span>
+<span class="sd">    Is true when sequence is a permutation:</span>
 
-<span class="sd">        Is true when sequence is a permutation:</span>
+<span class="sd">    ..  container:: example</span>
 
 <span class="sd">        &gt;&gt;&gt; abjad.sequence.is_permutation([4, 5, 0, 3, 2, 1])</span>
 <span class="sd">        True</span>
@@ -1653,9 +1653,9 @@
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Is true when sequence is repetition-free.</span>
 
-<span class="sd">    ..  container:: example</span>
+<span class="sd">    Is true when sequence is repetition-free:</span>
 
-<span class="sd">        Is true when sequence is repetition-free:</span>
+<span class="sd">    ..  container:: example</span>
 
 <span class="sd">        &gt;&gt;&gt; abjad.sequence.is_repetition_free([0, 1, 2, 6, 7, 8])</span>
 <span class="sd">        True</span>
@@ -1704,47 +1704,13 @@
     <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="n">sequence</span><span class="p">)([</span><span class="n">item</span><span class="p">])</span></div>
 
 
-<span class="c1"># TODO: remove</span>
-<div class="viewcode-block" id="map"><a class="viewcode-back" href="../../api/abjad/sequence.html#abjad.sequence.map">[docs]</a><span class="k">def</span> <span class="nf">map</span><span class="p">(</span><span class="n">sequence</span><span class="p">,</span> <span class="n">operand</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Maps ``operand`` to sequence items.</span>
-
-<span class="sd">    ..  container:: example</span>
-
-<span class="sd">        Partitions sequence and sums parts:</span>
-
-<span class="sd">        &gt;&gt;&gt; sequence = list(range(1, 10+1))</span>
-<span class="sd">        &gt;&gt;&gt; sequence = abjad.sequence.partition_by_counts(sequence, [3], cyclic=True)</span>
-<span class="sd">        &gt;&gt;&gt; sequence = abjad.sequence.map(sequence, sum)</span>
-
-<span class="sd">        &gt;&gt;&gt; sequence</span>
-<span class="sd">        [6, 15, 24]</span>
-
-<span class="sd">        Maps identity:</span>
-
-<span class="sd">        &gt;&gt;&gt; sequence = list([1, 2, 3, 4, 5, 6])</span>
-<span class="sd">        &gt;&gt;&gt; abjad.sequence.map(sequence)</span>
-<span class="sd">        [1, 2, 3, 4, 5, 6]</span>
-
-<span class="sd">    Returns sequence type.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="n">operand</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">items</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">item_</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">sequence</span><span class="p">):</span>
-            <span class="n">item_</span> <span class="o">=</span> <span class="n">operand</span><span class="p">(</span><span class="n">item_</span><span class="p">)</span>
-            <span class="n">items</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item_</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">items</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">sequence</span><span class="p">[:])</span>
-    <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="n">sequence</span><span class="p">)(</span><span class="n">items</span><span class="p">)</span></div>
-
-
-<div class="viewcode-block" id="nwise"><a class="viewcode-back" href="../../api/abjad/sequence.html#abjad.sequence.nwise">[docs]</a><span class="k">def</span> <span class="nf">nwise</span><span class="p">(</span><span class="n">sequence</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">cyclic</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">wrapped</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Iterator</span><span class="p">:</span>
+<div class="viewcode-block" id="nwise"><a class="viewcode-back" href="../../api/abjad/sequence.html#abjad.sequence.nwise">[docs]</a><span class="k">def</span> <span class="nf">nwise</span><span class="p">(</span><span class="n">sequence</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">cyclic</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">wrapped</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Iterator</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Iterates ``sequence`` ``n`` at a time.</span>
 
-<span class="sd">    ..  container:: example</span>
+<span class="sd">    Iterates iterable by pairs:</span>
 
-<span class="sd">        Iterates iterable by pairs:</span>
+<span class="sd">    ..  container:: example</span>
 
 <span class="sd">        &gt;&gt;&gt; sequence = list(range(10))</span>
 <span class="sd">        &gt;&gt;&gt; for item in abjad.sequence.nwise(sequence):</span>
@@ -1960,8 +1926,7 @@
     <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="n">sequence</span><span class="p">)(</span><span class="n">result</span><span class="p">)</span></div>
 
 
-<span class="c1"># TODO: change input to pattern</span>
-<div class="viewcode-block" id="remove"><a class="viewcode-back" href="../../api/abjad/sequence.html#abjad.sequence.remove">[docs]</a><span class="k">def</span> <span class="nf">remove</span><span class="p">(</span><span class="n">sequence</span><span class="p">,</span> <span class="n">indices</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">period</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="remove"><a class="viewcode-back" href="../../api/abjad/sequence.html#abjad.sequence.remove">[docs]</a><span class="k">def</span> <span class="nf">remove</span><span class="p">(</span><span class="n">sequence</span><span class="p">,</span> <span class="n">pattern</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Removes items at ``indices``.</span>
 
@@ -1969,39 +1934,37 @@
 
 <span class="sd">        &gt;&gt;&gt; sequence = list(range(15))</span>
 
-<span class="sd">        &gt;&gt;&gt; abjad.sequence.remove(sequence)</span>
-<span class="sd">        []</span>
-
-<span class="sd">        &gt;&gt;&gt; abjad.sequence.remove(sequence, indices=[2, 3])</span>
+<span class="sd">        &gt;&gt;&gt; abjad.sequence.remove(sequence, abjad.index([2, 3]))</span>
 <span class="sd">        [0, 1, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]</span>
 
 <span class="sd">        Removes elements and indices -2 and -3:</span>
 
-<span class="sd">        &gt;&gt;&gt; abjad.sequence.remove(sequence, indices=[-2, -3])</span>
+<span class="sd">        &gt;&gt;&gt; abjad.sequence.remove(sequence, abjad.index([-2, -3]))</span>
 <span class="sd">        [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 14]</span>
 
-<span class="sd">        &gt;&gt;&gt; abjad.sequence.remove(sequence, indices=[2, 3], period=4)</span>
+<span class="sd">        &gt;&gt;&gt; abjad.sequence.remove(sequence, abjad.index([2, 3], 4))</span>
 <span class="sd">        [0, 1, 4, 5, 8, 9, 12, 13]</span>
 
-<span class="sd">        &gt;&gt;&gt; abjad.sequence.remove(sequence, indices=[-2, -3], period=4)</span>
+<span class="sd">        &gt;&gt;&gt; abjad.sequence.remove(sequence, abjad.index([-2, -3], 4))</span>
 <span class="sd">        [2, 3, 6, 7, 10, 11, 14]</span>
 
-<span class="sd">        &gt;&gt;&gt; abjad.sequence.remove(sequence, indices=[])</span>
+<span class="sd">        &gt;&gt;&gt; abjad.sequence.remove(sequence, abjad.index([]))</span>
 <span class="sd">        [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]</span>
 
-<span class="sd">        &gt;&gt;&gt; abjad.sequence.remove(sequence, indices=[97, 98, 99])</span>
+<span class="sd">        &gt;&gt;&gt; abjad.sequence.remove(sequence, abjad.index([97, 98, 99]))</span>
 <span class="sd">        [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]</span>
 
 <span class="sd">        Removes no elements:</span>
 
-<span class="sd">        &gt;&gt;&gt; abjad.sequence.remove(sequence, indices=[-97, -98, -99])</span>
+<span class="sd">        &gt;&gt;&gt; abjad.sequence.remove(sequence, abjad.index([-97, -98, -99]))</span>
 <span class="sd">        [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]</span>
 
 <span class="sd">    Returns sequence type.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">items</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">sequence</span><span class="p">)</span>
-    <span class="n">period</span> <span class="o">=</span> <span class="n">period</span> <span class="ow">or</span> <span class="n">length</span>
+    <span class="n">indices</span> <span class="o">=</span> <span class="n">pattern</span><span class="o">.</span><span class="n">indices</span>
+    <span class="n">period</span> <span class="o">=</span> <span class="n">pattern</span><span class="o">.</span><span class="n">period</span> <span class="ow">or</span> <span class="n">length</span>
     <span class="k">if</span> <span class="n">indices</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">indices</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="n">length</span><span class="p">)</span>
     <span class="n">new_indices</span> <span class="o">=</span> <span class="p">[]</span>
@@ -2063,7 +2026,7 @@
     <span class="k">return</span> <span class="n">sequences</span></div>
 
 
-<div class="viewcode-block" id="repeat_to_length"><a class="viewcode-back" href="../../api/abjad/sequence.html#abjad.sequence.repeat_to_length">[docs]</a><span class="k">def</span> <span class="nf">repeat_to_length</span><span class="p">(</span><span class="n">sequence</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+<div class="viewcode-block" id="repeat_to_length"><a class="viewcode-back" href="../../api/abjad/sequence.html#abjad.sequence.repeat_to_length">[docs]</a><span class="k">def</span> <span class="nf">repeat_to_length</span><span class="p">(</span><span class="n">sequence</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Repeats ``sequence`` to ``length``.</span>
 
@@ -2100,7 +2063,7 @@
     <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="n">sequence</span><span class="p">)(</span><span class="n">items</span><span class="p">[</span><span class="n">start</span><span class="p">:</span><span class="n">stop_index</span><span class="p">])</span></div>
 
 
-<div class="viewcode-block" id="repeat_to_weight"><a class="viewcode-back" href="../../api/abjad/sequence.html#abjad.sequence.repeat_to_weight">[docs]</a><span class="k">def</span> <span class="nf">repeat_to_weight</span><span class="p">(</span><span class="n">sequence</span><span class="p">,</span> <span class="n">weight</span><span class="p">,</span> <span class="n">allow_total</span><span class="o">=</span><span class="n">_enums</span><span class="o">.</span><span class="n">EXACT</span><span class="p">):</span>
+<div class="viewcode-block" id="repeat_to_weight"><a class="viewcode-back" href="../../api/abjad/sequence.html#abjad.sequence.repeat_to_weight">[docs]</a><span class="k">def</span> <span class="nf">repeat_to_weight</span><span class="p">(</span><span class="n">sequence</span><span class="p">,</span> <span class="n">weight</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">allow_total</span><span class="o">=</span><span class="n">_enums</span><span class="o">.</span><span class="n">EXACT</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Repeats sequence to ``weight``.</span>
 
@@ -2121,13 +2084,13 @@
 <span class="sd">        &gt;&gt;&gt; abjad.sequence.repeat_to_weight([5, -5, -5], 23, allow_total=abjad.LESS)</span>
 <span class="sd">        [5, -5, -5, 5]</span>
 
-<span class="sd">        &gt;&gt;&gt; sequence = [abjad.NonreducedFraction(3, 16)]</span>
-<span class="sd">        &gt;&gt;&gt; weight = abjad.NonreducedFraction(5, 4)</span>
+<span class="sd">        &gt;&gt;&gt; sequence = [abjad.Duration(3, 16)]</span>
+<span class="sd">        &gt;&gt;&gt; weight = abjad.Duration(5, 4)</span>
 <span class="sd">        &gt;&gt;&gt; sequence = abjad.sequence.repeat_to_weight(sequence, weight)</span>
 <span class="sd">        &gt;&gt;&gt; sum(sequence)</span>
-<span class="sd">        NonreducedFraction(20, 16)</span>
+<span class="sd">        Duration(5, 4)</span>
 
-<span class="sd">        &gt;&gt;&gt; [_.pair for _ in sequence]</span>
+<span class="sd">        &gt;&gt;&gt; [abjad.duration.with_denominator(_, 16) for _ in sequence]</span>
 <span class="sd">        [(3, 16), (3, 16), (3, 16), (3, 16), (3, 16), (3, 16), (2, 16)]</span>
 
 <span class="sd">    Returns sequence type.</span>
@@ -2281,62 +2244,6 @@
     <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="n">sequence</span><span class="p">)(</span><span class="n">items</span><span class="p">)</span></div>
 
 
-<span class="c1"># TODO: remove in favor of retain_pattern()</span>
-<div class="viewcode-block" id="retain"><a class="viewcode-back" href="../../api/abjad/sequence.html#abjad.sequence.retain">[docs]</a><span class="k">def</span> <span class="nf">retain</span><span class="p">(</span><span class="n">sequence</span><span class="p">,</span> <span class="n">indices</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">period</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Retains items at ``indices``.</span>
-
-<span class="sd">    ..  container:: example</span>
-
-<span class="sd">        &gt;&gt;&gt; sequence = list(range(10))</span>
-
-<span class="sd">        &gt;&gt;&gt; abjad.sequence.retain(sequence)</span>
-<span class="sd">        [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]</span>
-
-<span class="sd">        &gt;&gt;&gt; abjad.sequence.retain(sequence, indices=[2, 3])</span>
-<span class="sd">        [2, 3]</span>
-
-<span class="sd">        &gt;&gt;&gt; abjad.sequence.retain(sequence, indices=[-2, -3])</span>
-<span class="sd">        [7, 8]</span>
-
-<span class="sd">        &gt;&gt;&gt; abjad.sequence.retain(sequence, indices=[2, 3], period=4)</span>
-<span class="sd">        [2, 3, 6, 7]</span>
-
-<span class="sd">        &gt;&gt;&gt; abjad.sequence.retain(sequence, indices=[-2, -3], period=4)</span>
-<span class="sd">        [0, 3, 4, 7, 8]</span>
-
-<span class="sd">        &gt;&gt;&gt; abjad.sequence.retain(sequence, indices=[])</span>
-<span class="sd">        []</span>
-
-<span class="sd">        &gt;&gt;&gt; abjad.sequence.retain(sequence, indices=[97, 98, 99])</span>
-<span class="sd">        []</span>
-
-<span class="sd">        &gt;&gt;&gt; abjad.sequence.retain(sequence, indices=[-97, -98, -99])</span>
-<span class="sd">        []</span>
-
-<span class="sd">    Returns sequence type.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">sequence</span><span class="p">)</span>
-    <span class="n">period</span> <span class="o">=</span> <span class="n">period</span> <span class="ow">or</span> <span class="n">length</span>
-    <span class="k">if</span> <span class="n">indices</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">indices</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="n">length</span><span class="p">)</span>
-    <span class="n">new_indices</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">indices</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">length</span> <span class="o">&lt;</span> <span class="nb">abs</span><span class="p">(</span><span class="n">i</span><span class="p">):</span>
-            <span class="k">continue</span>
-        <span class="k">if</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="n">i</span> <span class="o">=</span> <span class="n">length</span> <span class="o">+</span> <span class="n">i</span>
-        <span class="n">i</span> <span class="o">=</span> <span class="n">i</span> <span class="o">%</span> <span class="n">period</span>
-        <span class="n">new_indices</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
-    <span class="n">indices</span> <span class="o">=</span> <span class="n">new_indices</span>
-    <span class="n">indices</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
-    <span class="n">items</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">item</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">sequence</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">i</span> <span class="o">%</span> <span class="n">period</span> <span class="ow">in</span> <span class="n">indices</span><span class="p">:</span>
-            <span class="n">items</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
-    <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="n">sequence</span><span class="p">)(</span><span class="n">items</span><span class="p">)</span></div>
-
-
 <div class="viewcode-block" id="retain_pattern"><a class="viewcode-back" href="../../api/abjad/sequence.html#abjad.sequence.retain_pattern">[docs]</a><span class="k">def</span> <span class="nf">retain_pattern</span><span class="p">(</span><span class="n">sequence</span><span class="p">,</span> <span class="n">pattern</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Retains items at indices matching ``pattern``.</span>
@@ -2376,7 +2283,7 @@
     <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="n">sequence</span><span class="p">)(</span><span class="n">items</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="reverse"><a class="viewcode-back" href="../../api/abjad/sequence.html#abjad.sequence.reverse">[docs]</a><span class="k">def</span> <span class="nf">reverse</span><span class="p">(</span><span class="n">sequence</span><span class="p">,</span> <span class="n">recurse</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<div class="viewcode-block" id="reverse"><a class="viewcode-back" href="../../api/abjad/sequence.html#abjad.sequence.reverse">[docs]</a><span class="k">def</span> <span class="nf">reverse</span><span class="p">(</span><span class="n">sequence</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">recurse</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Reverses sequence.</span>
 
@@ -2457,57 +2364,7 @@
     <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="n">sequence</span><span class="p">)(</span><span class="n">items</span><span class="p">)</span></div>
 
 
-<span class="c1"># TODO: remove</span>
-<div class="viewcode-block" id="sort"><a class="viewcode-back" href="../../api/abjad/sequence.html#abjad.sequence.sort">[docs]</a><span class="k">def</span> <span class="nf">sort</span><span class="p">(</span><span class="n">sequence</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Sorts sequence.</span>
-
-<span class="sd">    ..  container:: example</span>
-
-<span class="sd">        &gt;&gt;&gt; sequence = list([3, 2, 5, 4, 1, 6])</span>
-<span class="sd">        &gt;&gt;&gt; abjad.sequence.sort(sequence)</span>
-<span class="sd">        [1, 2, 3, 4, 5, 6]</span>
-
-<span class="sd">        &gt;&gt;&gt; sequence</span>
-<span class="sd">        [3, 2, 5, 4, 1, 6]</span>
-
-<span class="sd">    Returns sequence type.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">items</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">sequence</span><span class="p">)</span>
-    <span class="n">items</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="n">key</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="n">reverse</span><span class="p">)</span>
-    <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="n">sequence</span><span class="p">)(</span><span class="n">items</span><span class="p">)</span></div>
-
-
-<div class="viewcode-block" id="sum"><a class="viewcode-back" href="../../api/abjad/sequence.html#abjad.sequence.sum">[docs]</a><span class="k">def</span> <span class="nf">sum</span><span class="p">(</span><span class="n">sequence</span><span class="p">):</span>
-    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Sums sequence.</span>
-
-<span class="sd">    ..  container:: example</span>
-
-<span class="sd">        Sums sequence of positive numbers:</span>
-
-<span class="sd">        &gt;&gt;&gt; sequence = list([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])</span>
-
-<span class="sd">        &gt;&gt;&gt; abjad.sequence.sum(sequence)</span>
-<span class="sd">        55</span>
-
-<span class="sd">        Sum sequence of numbers with mixed signs:</span>
-
-<span class="sd">        &gt;&gt;&gt; sequence = list([-1, 2, -3, 4, -5, 6, -7, 8, -9, 10])</span>
-
-<span class="sd">        &gt;&gt;&gt; abjad.sequence.sum(sequence)</span>
-<span class="sd">        5</span>
-
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sequence</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="k">return</span> <span class="mi">0</span>
-    <span class="n">result</span> <span class="o">=</span> <span class="n">sequence</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-    <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">sequence</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
-        <span class="n">result</span> <span class="o">+=</span> <span class="n">item</span>
-    <span class="k">return</span> <span class="n">result</span></div>
-
-
-<div class="viewcode-block" id="sum_by_sign"><a class="viewcode-back" href="../../api/abjad/sequence.html#abjad.sequence.sum_by_sign">[docs]</a><span class="k">def</span> <span class="nf">sum_by_sign</span><span class="p">(</span><span class="n">sequence</span><span class="p">,</span> <span class="n">sign</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)):</span>
+<div class="viewcode-block" id="sum_by_sign"><a class="viewcode-back" href="../../api/abjad/sequence.html#abjad.sequence.sum_by_sign">[docs]</a><span class="k">def</span> <span class="nf">sum_by_sign</span><span class="p">(</span><span class="n">sequence</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">sign</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Sums consecutive sequence items by ``sign``.</span>
 
@@ -2557,7 +2414,7 @@
     <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="n">sequence</span><span class="p">)(</span><span class="n">items</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="truncate"><a class="viewcode-back" href="../../api/abjad/sequence.html#abjad.sequence.truncate">[docs]</a><span class="k">def</span> <span class="nf">truncate</span><span class="p">(</span><span class="n">sequence</span><span class="p">,</span> <span class="n">sum_</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="truncate"><a class="viewcode-back" href="../../api/abjad/sequence.html#abjad.sequence.truncate">[docs]</a><span class="k">def</span> <span class="nf">truncate</span><span class="p">(</span><span class="n">sequence</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">sum_</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Truncates sequence.</span>
 
@@ -2682,13 +2539,13 @@
     <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="n">weights</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="zip"><a class="viewcode-back" href="../../api/abjad/sequence.html#abjad.sequence.zip">[docs]</a><span class="k">def</span> <span class="nf">zip</span><span class="p">(</span><span class="n">sequences</span><span class="p">,</span> <span class="n">cyclic</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">truncate</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">]:</span>
+<div class="viewcode-block" id="zip"><a class="viewcode-back" href="../../api/abjad/sequence.html#abjad.sequence.zip">[docs]</a><span class="k">def</span> <span class="nf">zip</span><span class="p">(</span><span class="n">sequences</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">cyclic</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">truncate</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">]:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Zips sequences in sequence.</span>
 
-<span class="sd">    ..  container:: example</span>
+<span class="sd">    Zips cyclically:</span>
 
-<span class="sd">        Zips cyclically:</span>
+<span class="sd">    ..  container:: example</span>
 
 <span class="sd">        &gt;&gt;&gt; sequence = list([[1, 2, 3], [&#39;a&#39;, &#39;b&#39;]])</span>
 <span class="sd">        &gt;&gt;&gt; for item in abjad.sequence.zip(sequence, cyclic=True):</span>

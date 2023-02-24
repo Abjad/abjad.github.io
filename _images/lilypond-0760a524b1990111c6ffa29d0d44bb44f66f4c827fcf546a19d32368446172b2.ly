@@ -2,5 +2,5 @@
 \language "english"
 \score
 {
-    cs''4 * 1
+    cs''4 * 1/1
 }

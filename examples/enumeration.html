@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Enumeration, of rhythmic cells &mdash; Abjad 3.15 documentation</title>
+  <title>Enumeration, of rhythmic cells &mdash; Abjad 3.16 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/abjad.css" type="text/css" />
@@ -37,11 +37,11 @@
   <div class="wy-grid-for-nav">
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search"  style="background: #9922bb" >
+        <div class="wy-side-nav-search"  style="background: #aa44ee" >
 
 
     <a href="../index.html" class="icon icon-home" alt="Documentation
-    Home"> Abjad 3.15
+    Home"> Abjad 3.16
 
 
 
@@ -114,7 +114,7 @@
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #9922bb" >
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #aa44ee" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../index.html">Abjad</a>
       </nav>
@@ -151,10 +151,12 @@ Ferneyhough later enumerates the retrograde of these cells.</p>
 <span class="gp">... </span>    <span class="n">lone_note_duration</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">lone_note_denominator</span><span class="p">)</span>
 <span class="gp">... </span>    <span class="n">lone_note</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Note</span><span class="p">(</span><span class="s2">&quot;c&#39;&quot;</span><span class="p">,</span> <span class="n">lone_note_duration</span><span class="p">)</span>
 <span class="gp">... </span>    <span class="n">duration</span> <span class="o">=</span> <span class="p">(</span><span class="n">outer</span><span class="p">,</span> <span class="n">lone_note_denominator</span><span class="p">)</span>
-<span class="gp">... </span>    <span class="n">ratio</span> <span class="o">=</span> <span class="n">inner</span> <span class="o">*</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="gp">... </span>    <span class="n">ratio</span> <span class="o">=</span> <span class="n">inner</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span><span class="p">,)</span>
 <span class="gp">... </span>    <span class="n">maker</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">makers</span><span class="o">.</span><span class="n">tuplet_from_duration_and_ratio</span>
 <span class="gp">... </span>    <span class="n">inner_tuplet</span> <span class="o">=</span> <span class="n">maker</span><span class="p">(</span><span class="n">duration</span><span class="p">,</span> <span class="n">ratio</span><span class="p">)</span>
-<span class="gp">... </span>    <span class="n">inner_tuplet</span><span class="o">.</span><span class="n">multiplier</span> <span class="o">=</span> <span class="n">inner_tuplet</span><span class="o">.</span><span class="n">multiplier</span><span class="o">.</span><span class="n">with_denominator</span><span class="p">(</span><span class="n">inner</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="n">multiplier</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Fraction</span><span class="p">(</span><span class="o">*</span><span class="n">inner_tuplet</span><span class="o">.</span><span class="n">multiplier</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="n">pair</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">duration</span><span class="o">.</span><span class="n">with_denominator</span><span class="p">(</span><span class="n">multiplier</span><span class="p">,</span> <span class="n">inner</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="n">inner_tuplet</span><span class="o">.</span><span class="n">multiplier</span> <span class="o">=</span> <span class="n">pair</span>
 <span class="gp">... </span>    <span class="n">inner_tuplet</span><span class="o">.</span><span class="n">hide</span> <span class="o">=</span> <span class="n">inner_tuplet</span><span class="o">.</span><span class="n">trivial</span><span class="p">()</span>
 <span class="gp">... </span>    <span class="k">if</span> <span class="n">retrograde</span><span class="p">:</span>
 <span class="gp">... </span>        <span class="n">contents</span> <span class="o">=</span> <span class="p">[</span><span class="n">inner_tuplet</span><span class="p">,</span> <span class="n">lone_note</span><span class="p">]</span>
@@ -225,7 +227,7 @@ Ferneyhough later enumerates the retrograde of these cells.</p>
 </pre></div>
 </div>
 <div class="uqbar-book">
-    <a href="../_images/lilypond-a8eacc9b4ba0813e8518826110b80d9222139af39c62462c8bbc252476752674.ly"><img src="../_images/lilypond-a8eacc9b4ba0813e8518826110b80d9222139af39c62462c8bbc252476752674.cropped.svg"/></a>
+    <a href="../_images/lilypond-d1095afb01a4d66b12e2f6a4541a8bc7f16e0ddf56a05d768fb2416770dc1cf7.ly"><img src="../_images/lilypond-d1095afb01a4d66b12e2f6a4541a8bc7f16e0ddf56a05d768fb2416770dc1cf7.cropped.svg"/></a>
 </div><hr class="docutils" />
 <p>Here’s the rhythmic retrograde of the same:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">score</span> <span class="o">=</span> <span class="n">make_score</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="n">retrograde</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -234,7 +236,7 @@ Ferneyhough later enumerates the retrograde of these cells.</p>
 </pre></div>
 </div>
 <div class="uqbar-book">
-    <a href="../_images/lilypond-9150ef1b7b789a3e0238047500b941307d1186cb69601bf0271b9b65ccdd60de.ly"><img src="../_images/lilypond-9150ef1b7b789a3e0238047500b941307d1186cb69601bf0271b9b65ccdd60de.cropped.svg"/></a>
+    <a href="../_images/lilypond-3550de416f905d80b51e8b942c07c181ed7b90a4fcab2f32798bb1fa35cf6261.ly"><img src="../_images/lilypond-3550de416f905d80b51e8b942c07c181ed7b90a4fcab2f32798bb1fa35cf6261.cropped.svg"/></a>
 </div><p><span class="author">[Bača (1.1, 3.2)]</span></p>
 </section>
 

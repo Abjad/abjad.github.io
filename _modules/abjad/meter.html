@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>abjad.meter &mdash; Abjad 3.15 documentation</title>
+  <title>abjad.meter &mdash; Abjad 3.16 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/abjad.css" type="text/css" />
@@ -34,11 +34,11 @@
   <div class="wy-grid-for-nav">
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search"  style="background: #9922bb" >
+        <div class="wy-side-nav-search"  style="background: #aa44ee" >
 
 
     <a href="../../index.html" class="icon icon-home" alt="Documentation
-    Home"> Abjad 3.15
+    Home"> Abjad 3.16
 
 
 
@@ -111,7 +111,7 @@
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #9922bb" >
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #aa44ee" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../index.html">Abjad</a>
       </nav>
@@ -132,6 +132,7 @@
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">bisect</span>
 <span class="kn">import</span> <span class="nn">collections</span>
+<span class="kn">import</span> <span class="nn">fractions</span>
 
 <span class="kn">import</span> <span class="nn">uqbar.graphs</span>
 
@@ -387,24 +388,24 @@
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
-        <span class="n">argument</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">argument</span><span class="o">=</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span>
         <span class="n">increase_monotonic</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">preferred_boundary_depth</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="p">):</span>
-        <span class="n">argument</span> <span class="o">=</span> <span class="n">argument</span> <span class="ow">or</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
         <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">preferred_boundary_depth</span><span class="p">,</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">type</span><span class="p">(</span><span class="kc">None</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_preferred_boundary_depth</span> <span class="o">=</span> <span class="n">preferred_boundary_depth</span>
 
         <span class="k">def</span> <span class="nf">recurse</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">factors</span><span class="p">,</span> <span class="n">denominator</span><span class="p">,</span> <span class="n">increase_monotonic</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">factors</span><span class="p">:</span>
                 <span class="n">factor</span><span class="p">,</span> <span class="n">factors</span> <span class="o">=</span> <span class="n">factors</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">factors</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
-                <span class="n">preprolated_duration</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">preprolated_duration</span><span class="o">.</span><span class="n">__div__</span><span class="p">(</span><span class="n">factor</span><span class="p">)</span>
-                <span class="c1"># if factor in (2, 3, 4, 5):</span>
+                <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">factor</span><span class="p">,</span> <span class="nb">int</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">factor</span><span class="p">)</span>
+                <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">preprolated_duration</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)</span>
+                <span class="n">pair</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">divide_pair</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">preprolated_duration</span><span class="p">,</span> <span class="n">factor</span><span class="p">)</span>
                 <span class="k">if</span> <span class="n">factor</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">):</span>
                     <span class="k">if</span> <span class="n">factors</span><span class="p">:</span>
                         <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">factor</span><span class="p">):</span>
                             <span class="n">child</span> <span class="o">=</span> <span class="n">_rhythmtrees</span><span class="o">.</span><span class="n">RhythmTreeContainer</span><span class="p">(</span>
-                                <span class="n">preprolated_duration</span><span class="o">=</span><span class="n">preprolated_duration</span>
+                                <span class="n">preprolated_duration</span><span class="o">=</span><span class="n">pair</span>
                             <span class="p">)</span>
                             <span class="n">node</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">child</span><span class="p">)</span>
                             <span class="n">recurse</span><span class="p">(</span><span class="n">child</span><span class="p">,</span> <span class="n">factors</span><span class="p">,</span> <span class="n">denominator</span><span class="p">,</span> <span class="n">increase_monotonic</span><span class="p">)</span>
@@ -425,13 +426,14 @@
                             <span class="n">parts</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
                         <span class="n">total</span> <span class="o">+=</span> <span class="mi">2</span>
                     <span class="k">for</span> <span class="n">part</span> <span class="ow">in</span> <span class="n">parts</span><span class="p">:</span>
+                        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">part</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span>
                         <span class="n">grouping</span> <span class="o">=</span> <span class="n">_rhythmtrees</span><span class="o">.</span><span class="n">RhythmTreeContainer</span><span class="p">(</span>
-                            <span class="n">preprolated_duration</span><span class="o">=</span><span class="n">part</span> <span class="o">*</span> <span class="n">preprolated_duration</span>
+                            <span class="n">preprolated_duration</span><span class="o">=</span><span class="p">(</span><span class="n">part</span> <span class="o">*</span> <span class="n">pair</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">pair</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
                         <span class="p">)</span>
                         <span class="k">if</span> <span class="n">factors</span><span class="p">:</span>
                             <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">part</span><span class="p">):</span>
                                 <span class="n">child</span> <span class="o">=</span> <span class="n">_rhythmtrees</span><span class="o">.</span><span class="n">RhythmTreeContainer</span><span class="p">(</span>
-                                    <span class="n">preprolated_duration</span><span class="o">=</span><span class="n">preprolated_duration</span>
+                                    <span class="n">preprolated_duration</span><span class="o">=</span><span class="n">pair</span>
                                 <span class="p">)</span>
                                 <span class="n">grouping</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">child</span><span class="p">)</span>
                                 <span class="n">recurse</span><span class="p">(</span>
@@ -454,7 +456,7 @@
                         <span class="n">_rhythmtrees</span><span class="o">.</span><span class="n">RhythmTreeLeaf</span><span class="p">(</span>
                             <span class="n">preprolated_duration</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">denominator</span><span class="p">)</span>
                         <span class="p">)</span>
-                        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">preprolated_duration</span><span class="o">.</span><span class="n">numerator</span><span class="p">)</span>
+                        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">pair</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
                     <span class="p">]</span>
                 <span class="p">)</span>
 
@@ -478,26 +480,22 @@
                 <span class="n">root</span> <span class="o">=</span> <span class="n">argument</span>
             <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="p">[</span><span class="n">root</span><span class="p">]</span> <span class="o">+</span> <span class="nb">list</span><span class="p">(</span><span class="n">root</span><span class="o">.</span><span class="n">depth_first</span><span class="p">()):</span>
                 <span class="k">assert</span> <span class="n">node</span><span class="o">.</span><span class="n">prolation</span> <span class="o">==</span> <span class="mi">1</span>
-            <span class="n">numerator</span> <span class="o">=</span> <span class="n">root</span><span class="o">.</span><span class="n">preprolated_duration</span><span class="o">.</span><span class="n">numerator</span>
-            <span class="n">denominator</span> <span class="o">=</span> <span class="n">root</span><span class="o">.</span><span class="n">preprolated_duration</span><span class="o">.</span><span class="n">denominator</span>
+            <span class="n">numerator</span><span class="p">,</span> <span class="n">denominator</span> <span class="o">=</span> <span class="n">root</span><span class="o">.</span><span class="n">pair</span>
         <span class="k">elif</span> <span class="n">is_fraction_like</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">argument</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">argument</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
-                <span class="n">fraction</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">NonreducedFraction</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span>
+                <span class="n">numerator</span><span class="p">,</span> <span class="n">denominator</span> <span class="o">=</span> <span class="n">argument</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">fraction</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">NonreducedFraction</span><span class="p">(</span>
-                    <span class="n">argument</span><span class="o">.</span><span class="n">numerator</span><span class="p">,</span> <span class="n">argument</span><span class="o">.</span><span class="n">denominator</span>
-                <span class="p">)</span>
-            <span class="n">numerator</span><span class="p">,</span> <span class="n">denominator</span> <span class="o">=</span> <span class="n">fraction</span><span class="o">.</span><span class="n">numerator</span><span class="p">,</span> <span class="n">fraction</span><span class="o">.</span><span class="n">denominator</span>
+                <span class="n">numerator</span><span class="p">,</span> <span class="n">denominator</span> <span class="o">=</span> <span class="n">argument</span><span class="o">.</span><span class="n">pair</span>
+            <span class="n">pair</span> <span class="o">=</span> <span class="p">(</span><span class="n">numerator</span><span class="p">,</span> <span class="n">denominator</span><span class="p">)</span>
             <span class="n">factors</span> <span class="o">=</span> <span class="n">_math</span><span class="o">.</span><span class="n">factors</span><span class="p">(</span><span class="n">numerator</span><span class="p">)</span>
             <span class="c1"># group two nested levels of 2s into a 4</span>
             <span class="k">if</span> <span class="mi">1</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">factors</span><span class="p">)</span> <span class="ow">and</span> <span class="n">factors</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">factors</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
                 <span class="n">factors</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">4</span><span class="p">]</span>
-            <span class="n">root</span> <span class="o">=</span> <span class="n">_rhythmtrees</span><span class="o">.</span><span class="n">RhythmTreeContainer</span><span class="p">(</span><span class="n">preprolated_duration</span><span class="o">=</span><span class="n">fraction</span><span class="p">)</span>
+            <span class="n">root</span> <span class="o">=</span> <span class="n">_rhythmtrees</span><span class="o">.</span><span class="n">RhythmTreeContainer</span><span class="p">(</span><span class="n">preprolated_duration</span><span class="o">=</span><span class="n">pair</span><span class="p">)</span>
             <span class="n">recurse</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">factors</span><span class="p">,</span> <span class="n">denominator</span><span class="p">,</span> <span class="n">increase_monotonic</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">name</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;can not initialize </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">argument</span><span class="si">!r}</span><span class="s2">.&quot;</span><span class="p">)</span>
-
         <span class="bp">self</span><span class="o">.</span><span class="n">_root_node</span> <span class="o">=</span> <span class="n">root</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_numerator</span> <span class="o">=</span> <span class="n">numerator</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_denominator</span> <span class="o">=</span> <span class="n">denominator</span>
@@ -649,6 +647,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">def</span> <span class="nf">make_offset_node</span><span class="p">(</span><span class="n">offset</span><span class="p">,</span> <span class="n">leaf_one</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">leaf_two</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">is_last</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+            <span class="n">offset</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Offset</span><span class="p">(</span><span class="n">offset</span><span class="p">)</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">is_last</span><span class="p">:</span>
                 <span class="n">offset_node</span> <span class="o">=</span> <span class="n">uqbar</span><span class="o">.</span><span class="n">graphs</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span>
                     <span class="n">attributes</span><span class="o">=</span><span class="p">{</span>
@@ -696,7 +695,7 @@
         <span class="n">leaves</span> <span class="o">=</span> <span class="p">[</span><span class="n">_</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">nodes</span> <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="s2">&quot;children&quot;</span><span class="p">)]</span>
         <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">nodes</span><span class="p">:</span>
             <span class="n">graphviz_node</span> <span class="o">=</span> <span class="n">uqbar</span><span class="o">.</span><span class="n">graphs</span><span class="o">.</span><span class="n">Node</span><span class="p">()</span>
-            <span class="n">graphviz_node</span><span class="o">.</span><span class="n">attributes</span><span class="p">[</span><span class="s2">&quot;label&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">preprolated_duration</span><span class="p">)</span>
+            <span class="n">graphviz_node</span><span class="o">.</span><span class="n">attributes</span><span class="p">[</span><span class="s2">&quot;label&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">_get_fraction_string</span><span class="p">()</span>
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">_rhythmtrees</span><span class="o">.</span><span class="n">RhythmTreeContainer</span><span class="p">):</span>
                 <span class="n">graphviz_node</span><span class="o">.</span><span class="n">attributes</span><span class="p">[</span><span class="s2">&quot;shape&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;triangle&quot;</span>
             <span class="k">else</span><span class="p">:</span>
@@ -741,14 +740,14 @@
 <span class="sd">                &gt;&gt;&gt; for pair in meter:</span>
 <span class="sd">                ...    pair</span>
 <span class="sd">                ...</span>
-<span class="sd">                (NonreducedFraction(0, 4), NonreducedFraction(1, 4))</span>
-<span class="sd">                (NonreducedFraction(1, 4), NonreducedFraction(2, 4))</span>
-<span class="sd">                (NonreducedFraction(2, 4), NonreducedFraction(3, 4))</span>
-<span class="sd">                (NonreducedFraction(0, 4), NonreducedFraction(3, 4))</span>
-<span class="sd">                (NonreducedFraction(3, 4), NonreducedFraction(4, 4))</span>
-<span class="sd">                (NonreducedFraction(4, 4), NonreducedFraction(5, 4))</span>
-<span class="sd">                (NonreducedFraction(3, 4), NonreducedFraction(5, 4))</span>
-<span class="sd">                (NonreducedFraction(0, 4), NonreducedFraction(5, 4))</span>
+<span class="sd">                ((0, 4), (1, 4))</span>
+<span class="sd">                ((1, 4), (2, 4))</span>
+<span class="sd">                ((2, 4), (3, 4))</span>
+<span class="sd">                ((0, 4), (3, 4))</span>
+<span class="sd">                ((3, 4), (4, 4))</span>
+<span class="sd">                ((4, 4), (5, 4))</span>
+<span class="sd">                ((3, 4), (5, 4))</span>
+<span class="sd">                ((0, 4), (5, 4))</span>
 
 <span class="sd">        Yields pairs.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -765,10 +764,10 @@
 
         <span class="n">result</span> <span class="o">=</span> <span class="n">recurse</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root_node</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">result</span><span class="p">:</span>
-            <span class="n">start_offset</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">NonreducedFraction</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">start_offset</span><span class="p">)</span>
-            <span class="n">start_offset</span> <span class="o">=</span> <span class="n">start_offset</span><span class="o">.</span><span class="n">with_denominator</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">denominator</span><span class="p">)</span>
-            <span class="n">stop_offset</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">NonreducedFraction</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">stop_offset</span><span class="p">)</span>
-            <span class="n">stop_offset</span> <span class="o">=</span> <span class="n">stop_offset</span><span class="o">.</span><span class="n">with_denominator</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">denominator</span><span class="p">)</span>
+            <span class="n">pair</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">with_denominator</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">start_offset</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">denominator</span><span class="p">)</span>
+            <span class="n">start_offset</span> <span class="o">=</span> <span class="n">pair</span>
+            <span class="n">pair</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">with_denominator</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">stop_offset</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">denominator</span><span class="p">)</span>
+            <span class="n">stop_offset</span> <span class="o">=</span> <span class="n">pair</span>
             <span class="k">yield</span> <span class="n">start_offset</span><span class="p">,</span> <span class="n">stop_offset</span></div>
 
 <div class="viewcode-block" id="Meter.__repr__"><a class="viewcode-back" href="../../api/abjad/meter.html#abjad.meter.Meter.__repr__">[docs]</a>    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
@@ -836,11 +835,11 @@
         <span class="k">return</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">numerator</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">denominator</span><span class="p">)</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">fraction</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">fraction_string</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Gets nonreduced fraction.</span>
+<span class="sd">        Gets fraction string.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">_duration</span><span class="o">.</span><span class="n">NonreducedFraction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pair</span><span class="p">)</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">pair</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">pair</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">implied_time_signature</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -930,7 +929,7 @@
 <span class="sd">            &gt;&gt;&gt; for numerator in range(1, 13):</span>
 <span class="sd">            ...     meter = abjad.Meter((numerator, 4))</span>
 <span class="sd">            ...     string = True if meter.is_compound else &#39;&#39;</span>
-<span class="sd">            ...     print(str(meter.fraction), string)</span>
+<span class="sd">            ...     print(str(meter.fraction_string), string)</span>
 <span class="sd">            ...</span>
 <span class="sd">            1/4</span>
 <span class="sd">            2/4</span>
@@ -952,7 +951,7 @@
 <span class="sd">            &gt;&gt;&gt; for numerator in range(1, 13):</span>
 <span class="sd">            ...     meter = abjad.Meter((numerator, 8))</span>
 <span class="sd">            ...     string = True if meter.is_compound else &#39;&#39;</span>
-<span class="sd">            ...     print(str(meter.fraction), string)</span>
+<span class="sd">            ...     print(str(meter.fraction_string), string)</span>
 <span class="sd">            ...</span>
 <span class="sd">            1/8</span>
 <span class="sd">            2/8</span>
@@ -989,7 +988,7 @@
 <span class="sd">            &gt;&gt;&gt; for numerator in range(1, 13):</span>
 <span class="sd">            ...     meter = abjad.Meter((numerator, 4))</span>
 <span class="sd">            ...     string = True if meter.is_simple else &#39;&#39;</span>
-<span class="sd">            ...     print(str(meter.fraction), string)</span>
+<span class="sd">            ...     print(str(meter.fraction_string), string)</span>
 <span class="sd">            ...</span>
 <span class="sd">            1/4     True</span>
 <span class="sd">            2/4     True</span>
@@ -1011,7 +1010,7 @@
 <span class="sd">            &gt;&gt;&gt; for numerator in range(1, 13):</span>
 <span class="sd">            ...     meter = abjad.Meter((numerator, 8))</span>
 <span class="sd">            ...     string = True if meter.is_simple else &#39;&#39;</span>
-<span class="sd">            ...     print(str(meter.fraction), string)</span>
+<span class="sd">            ...     print(str(meter.fraction_string), string)</span>
 <span class="sd">            ...</span>
 <span class="sd">            1/8     True</span>
 <span class="sd">            2/8     True</span>
@@ -1266,7 +1265,7 @@
                 <span class="n">total</span> <span class="o">+=</span> <span class="mi">1</span>
         <span class="k">if</span> <span class="n">normalize</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">offset</span><span class="p">,</span> <span class="n">response</span> <span class="ow">in</span> <span class="n">kernel</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-                <span class="n">kernel</span><span class="p">[</span><span class="n">offset</span><span class="p">]</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Multiplier</span><span class="p">(</span><span class="n">response</span><span class="p">,</span> <span class="n">total</span><span class="p">)</span>
+                <span class="n">kernel</span><span class="p">[</span><span class="n">offset</span><span class="p">]</span> <span class="o">=</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">(</span><span class="n">response</span><span class="p">,</span> <span class="n">total</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">MetricAccentKernel</span><span class="p">(</span><span class="n">kernel</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Meter.rewrite_meter"><a class="viewcode-back" href="../../api/abjad/meter.html#abjad.meter.Meter.rewrite_meter">[docs]</a>    <span class="nd">@staticmethod</span>
@@ -2542,12 +2541,10 @@
                     <span class="p">[</span><span class="n">_</span><span class="o">.</span><span class="n">_get_preprolated_duration</span><span class="p">()</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">item</span><span class="p">]</span>
                 <span class="p">)</span>
                 <span class="k">if</span> <span class="n">preprolated_duration</span><span class="o">.</span><span class="n">numerator</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-                    <span class="n">preprolated_duration</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">NonreducedFraction</span><span class="p">(</span>
-                        <span class="n">preprolated_duration</span>
+                    <span class="n">pair</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">with_denominator</span><span class="p">(</span>
+                        <span class="n">preprolated_duration</span><span class="p">,</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">preprolated_duration</span><span class="o">.</span><span class="n">denominator</span>
                     <span class="p">)</span>
-                    <span class="n">preprolated_duration</span> <span class="o">=</span> <span class="n">preprolated_duration</span><span class="o">.</span><span class="n">with_denominator</span><span class="p">(</span>
-                        <span class="n">preprolated_duration</span><span class="o">.</span><span class="n">denominator</span> <span class="o">*</span> <span class="mi">4</span>
-                    <span class="p">)</span>
+                    <span class="n">preprolated_duration</span> <span class="o">=</span> <span class="n">pair</span>
                 <span class="n">sub_metrical_hierarchy</span> <span class="o">=</span> <span class="n">Meter</span><span class="p">(</span><span class="n">preprolated_duration</span><span class="p">)</span>
                 <span class="n">sub_boundary_depth</span> <span class="o">=</span> <span class="mi">1</span>
                 <span class="k">if</span> <span class="n">boundary_depth</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -2813,7 +2810,7 @@
 <span class="sd">        &gt;&gt;&gt; hierarchy = abjad.Meter((7, 8))</span>
 <span class="sd">        &gt;&gt;&gt; kernel = hierarchy.generate_offset_kernel_to_denominator(8)</span>
 <span class="sd">        &gt;&gt;&gt; kernel</span>
-<span class="sd">        MetricAccentKernel(kernel={Offset((0, 1)): Multiplier(3, 14), Offset((7, 8)): Multiplier(3, 14), Offset((3, 8)): Multiplier(1, 7), Offset((5, 8)): Multiplier(1, 7), Offset((1, 8)): Multiplier(1, 14), Offset((1, 4)): Multiplier(1, 14), Offset((1, 2)): Multiplier(1, 14), Offset((3, 4)): Multiplier(1, 14)})</span>
+<span class="sd">        MetricAccentKernel(kernel={Offset((0, 1)): Fraction(3, 14), Offset((7, 8)): Fraction(3, 14), Offset((3, 8)): Fraction(1, 7), Offset((5, 8)): Fraction(1, 7), Offset((1, 8)): Fraction(1, 14), Offset((1, 4)): Fraction(1, 14), Offset((1, 2)): Fraction(1, 14), Offset((3, 4)): Fraction(1, 14)})</span>
 
 <span class="sd">    Call the kernel against an expression from which offsets can be counted to receive an</span>
 <span class="sd">    impulse-response:</span>
@@ -2822,7 +2819,7 @@
 
 <span class="sd">        &gt;&gt;&gt; offsets = [(0, 8), (1, 8), (1, 8), (3, 8)]</span>
 <span class="sd">        &gt;&gt;&gt; kernel(offsets)</span>
-<span class="sd">        Multiplier(1, 2)</span>
+<span class="sd">        Fraction(1, 2)</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -2837,7 +2834,7 @@
         <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">kernel</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">kernel</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Offset</span><span class="p">)</span>
-            <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Multiplier</span><span class="p">)</span>
+            <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_kernel</span> <span class="o">=</span> <span class="n">kernel</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_offsets</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_kernel</span><span class="p">))</span>
 
@@ -2853,12 +2850,12 @@
 
 <span class="sd">        &gt;&gt;&gt; kernel = abjad.MetricAccentKernel.from_meter((4, 4))</span>
 <span class="sd">        &gt;&gt;&gt; kernel(score)</span>
-<span class="sd">        Multiplier(10, 33)</span>
+<span class="sd">        Fraction(10, 33)</span>
 
 <span class="sd">        Returns float.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">offset_count</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">count_offsets</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span>
-        <span class="n">response</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Multiplier</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">offset</span><span class="p">,</span> <span class="n">count</span> <span class="ow">in</span> <span class="n">offset_count</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="k">if</span> <span class="n">offset</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_kernel</span><span class="p">:</span>
                 <span class="n">weight</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_kernel</span><span class="p">[</span><span class="n">offset</span><span class="p">]</span>

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>abjad.parentage &mdash; Abjad 3.15 documentation</title>
+  <title>abjad.parentage &mdash; Abjad 3.16 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/abjad.css" type="text/css" />
@@ -34,11 +34,11 @@
   <div class="wy-grid-for-nav">
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search"  style="background: #9922bb" >
+        <div class="wy-side-nav-search"  style="background: #aa44ee" >
 
 
     <a href="../../index.html" class="icon icon-home" alt="Documentation
-    Home"> Abjad 3.15
+    Home"> Abjad 3.16
 
 
 
@@ -111,7 +111,7 @@
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #9922bb" >
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #aa44ee" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../index.html">Abjad</a>
       </nav>
@@ -128,8 +128,8 @@
     
   <h1>Source code for abjad.parentage</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">collections</span>
+<span class="kn">import</span> <span class="nn">fractions</span>
 
-<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">duration</span> <span class="k">as</span> <span class="n">_duration</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">math</span> <span class="k">as</span> <span class="n">_math</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">score</span> <span class="k">as</span> <span class="n">_score</span>
 
@@ -232,7 +232,7 @@
 
     <span class="k">def</span> <span class="nf">_prolations</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">prolations</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">default</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Multiplier</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">default</span> <span class="o">=</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">parent</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
             <span class="n">prolation</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;implied_prolation&quot;</span><span class="p">,</span> <span class="n">default</span><span class="p">)</span>
             <span class="n">prolations</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">prolation</span><span class="p">)</span>
@@ -686,7 +686,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">prolation</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Multiplier</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">prolation</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">:</span>
         <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets prolation.</span>
 
@@ -766,28 +766,28 @@
 <span class="sd">            &gt;&gt;&gt; for component in abjad.select.components(staff):</span>
 <span class="sd">            ...     parentage = abjad.get.parentage(component)</span>
 <span class="sd">            ...     print(f&quot;{repr(component):30} {repr(parentage.prolation)}&quot;)</span>
-<span class="sd">            Staff(&quot;{ { 2/3 c&#39;4 d&#39;4 e&#39;4 } { 2/3 { { &lt;f&#39; a&#39;&gt;8 b&#39;8 } { f&#39;4 } } g&#39;4 a&#39;4 } }&quot;) Multiplier(1, 1)</span>
-<span class="sd">            Voice(&quot;{ 2/3 c&#39;4 d&#39;4 e&#39;4 } { 2/3 { { &lt;f&#39; a&#39;&gt;8 b&#39;8 } { f&#39;4 } } g&#39;4 a&#39;4 }&quot;, name=&#39;MusicVoice&#39;) Multiplier(1, 1)</span>
-<span class="sd">            Tuplet(&#39;3:2&#39;, &quot;c&#39;4 d&#39;4 e&#39;4&quot;)   Multiplier(2, 3)</span>
-<span class="sd">            Note(&quot;c&#39;4&quot;)                    Multiplier(2, 3)</span>
-<span class="sd">            BeforeGraceContainer(&quot;cs&#39;16&quot;)  Multiplier(2, 3)</span>
-<span class="sd">            Note(&quot;cs&#39;16&quot;)                  Multiplier(2, 3)</span>
-<span class="sd">            Note(&quot;d&#39;4&quot;)                    Multiplier(2, 3)</span>
-<span class="sd">            Note(&quot;e&#39;4&quot;)                    Multiplier(2, 3)</span>
-<span class="sd">            Tuplet(&#39;3:2&#39;, &quot;{ { &lt;f&#39; a&#39;&gt;8 b&#39;8 } { f&#39;4 } } g&#39;4 a&#39;4&quot;) Multiplier(2, 3)</span>
-<span class="sd">            Container(&quot;{ &lt;f&#39; a&#39;&gt;8 b&#39;8 } { f&#39;4 }&quot;) Multiplier(2, 3)</span>
-<span class="sd">            OnBeatGraceContainer(&quot;&lt;f&#39; a&#39;&gt;8 b&#39;8&quot;) Multiplier(2, 3)</span>
-<span class="sd">            Chord(&quot;&lt;f&#39; a&#39;&gt;8&quot;)              Multiplier(2, 3)</span>
-<span class="sd">            Note(&quot;b&#39;8&quot;)                    Multiplier(2, 3)</span>
-<span class="sd">            Voice(&quot;f&#39;4&quot;, name=&#39;MusicVoice&#39;) Multiplier(2, 3)</span>
-<span class="sd">            Note(&quot;f&#39;4&quot;)                    Multiplier(2, 3)</span>
-<span class="sd">            Note(&quot;g&#39;4&quot;)                    Multiplier(2, 3)</span>
-<span class="sd">            Note(&quot;a&#39;4&quot;)                    Multiplier(2, 3)</span>
-<span class="sd">            AfterGraceContainer(&quot;fs&#39;16&quot;)   Multiplier(2, 3)</span>
-<span class="sd">            Note(&quot;fs&#39;16&quot;)                  Multiplier(2, 3)</span>
+<span class="sd">            Staff(&quot;{ { 2/3 c&#39;4 d&#39;4 e&#39;4 } { 2/3 { { &lt;f&#39; a&#39;&gt;8 b&#39;8 } { f&#39;4 } } g&#39;4 a&#39;4 } }&quot;) Fraction(1, 1)</span>
+<span class="sd">            Voice(&quot;{ 2/3 c&#39;4 d&#39;4 e&#39;4 } { 2/3 { { &lt;f&#39; a&#39;&gt;8 b&#39;8 } { f&#39;4 } } g&#39;4 a&#39;4 }&quot;, name=&#39;MusicVoice&#39;) Fraction(1, 1)</span>
+<span class="sd">            Tuplet(&#39;3:2&#39;, &quot;c&#39;4 d&#39;4 e&#39;4&quot;)   Fraction(2, 3)</span>
+<span class="sd">            Note(&quot;c&#39;4&quot;)                    Fraction(2, 3)</span>
+<span class="sd">            BeforeGraceContainer(&quot;cs&#39;16&quot;)  Fraction(2, 3)</span>
+<span class="sd">            Note(&quot;cs&#39;16&quot;)                  Fraction(2, 3)</span>
+<span class="sd">            Note(&quot;d&#39;4&quot;)                    Fraction(2, 3)</span>
+<span class="sd">            Note(&quot;e&#39;4&quot;)                    Fraction(2, 3)</span>
+<span class="sd">            Tuplet(&#39;3:2&#39;, &quot;{ { &lt;f&#39; a&#39;&gt;8 b&#39;8 } { f&#39;4 } } g&#39;4 a&#39;4&quot;) Fraction(2, 3)</span>
+<span class="sd">            Container(&quot;{ &lt;f&#39; a&#39;&gt;8 b&#39;8 } { f&#39;4 }&quot;) Fraction(2, 3)</span>
+<span class="sd">            OnBeatGraceContainer(&quot;&lt;f&#39; a&#39;&gt;8 b&#39;8&quot;) Fraction(2, 3)</span>
+<span class="sd">            Chord(&quot;&lt;f&#39; a&#39;&gt;8&quot;)              Fraction(2, 3)</span>
+<span class="sd">            Note(&quot;b&#39;8&quot;)                    Fraction(2, 3)</span>
+<span class="sd">            Voice(&quot;f&#39;4&quot;, name=&#39;MusicVoice&#39;) Fraction(2, 3)</span>
+<span class="sd">            Note(&quot;f&#39;4&quot;)                    Fraction(2, 3)</span>
+<span class="sd">            Note(&quot;g&#39;4&quot;)                    Fraction(2, 3)</span>
+<span class="sd">            Note(&quot;a&#39;4&quot;)                    Fraction(2, 3)</span>
+<span class="sd">            AfterGraceContainer(&quot;fs&#39;16&quot;)   Fraction(2, 3)</span>
+<span class="sd">            Note(&quot;fs&#39;16&quot;)                  Fraction(2, 3)</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">prolations</span> <span class="o">=</span> <span class="p">[</span><span class="n">_duration</span><span class="o">.</span><span class="n">Multiplier</span><span class="p">(</span><span class="mi">1</span><span class="p">)]</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_prolations</span><span class="p">()</span>
+        <span class="n">prolations</span> <span class="o">=</span> <span class="p">[</span><span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">(</span><span class="mi">1</span><span class="p">)]</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_prolations</span><span class="p">()</span>
         <span class="n">products</span> <span class="o">=</span> <span class="n">_math</span><span class="o">.</span><span class="n">cumulative_products</span><span class="p">(</span><span class="n">prolations</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">products</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
 
@@ -894,9 +894,9 @@
         <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets number of ``prototype`` in parentage.</span>
 
-<span class="sd">        ..  container:: example</span>
+<span class="sd">        Gets tuplet count:</span>
 
-<span class="sd">            Gets tuplet count:</span>
+<span class="sd">        ..  container:: example</span>
 
 <span class="sd">            &gt;&gt;&gt; staff = abjad.Staff(</span>
 <span class="sd">            ...     r&quot;\times 2/3 { c&#39;2 \times 2/3 { d&#39;8 e&#39; f&#39; } } \times 2/3 { c&#39;4 d&#39; e&#39; }&quot;</span>
@@ -1383,9 +1383,9 @@
         <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets logical voice.</span>
 
-<span class="sd">        ..  container:: example</span>
+<span class="sd">        Gets logical voice of note:</span>
 
-<span class="sd">            Gets logical voice of note:</span>
+<span class="sd">        ..  container:: example</span>
 
 <span class="sd">            &gt;&gt;&gt; voice = abjad.Voice(&quot;c&#39;4 d&#39;4 e&#39;4 f&#39;4&quot;, name=&quot;MusicVoice&quot;)</span>
 <span class="sd">            &gt;&gt;&gt; staff = abjad.Staff([voice], name=&quot;Music_Staff&quot;)</span>

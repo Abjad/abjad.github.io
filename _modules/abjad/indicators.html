@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>abjad.indicators &mdash; Abjad 3.15 documentation</title>
+  <title>abjad.indicators &mdash; Abjad 3.16 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/abjad.css" type="text/css" />
@@ -34,11 +34,11 @@
   <div class="wy-grid-for-nav">
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search"  style="background: #9922bb" >
+        <div class="wy-side-nav-search"  style="background: #aa44ee" >
 
 
     <a href="../../index.html" class="icon icon-home" alt="Documentation
-    Home"> Abjad 3.15
+    Home"> Abjad 3.16
 
 
 
@@ -111,7 +111,7 @@
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #9922bb" >
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #aa44ee" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../index.html">Abjad</a>
       </nav>
@@ -980,9 +980,9 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Changes ``staff_position`` to pitch.</span>
 
-<span class="sd">        ..  container:: example</span>
+<span class="sd">        Treble clef:</span>
 
-<span class="sd">            Treble clef:</span>
+<span class="sd">        ..  container:: example</span>
 
 <span class="sd">            &gt;&gt;&gt; clef = abjad.Clef(&quot;treble&quot;)</span>
 <span class="sd">            &gt;&gt;&gt; for n in range(-6, 6):</span>
@@ -1091,9 +1091,9 @@
         <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Changes ``pitch`` to staff position.</span>
 
-<span class="sd">        ..  container:: example</span>
+<span class="sd">        Changes C#5 to absolute staff position:</span>
 
-<span class="sd">            Changes C#5 to absolute staff position:</span>
+<span class="sd">        ..  container:: example</span>
 
 <span class="sd">            &gt;&gt;&gt; pitch = abjad.NamedPitch(&quot;C#5&quot;)</span>
 
@@ -2822,9 +2822,8 @@
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">decimal</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
             <span class="k">return</span> <span class="p">(</span><span class="n">duration_log</span><span class="p">,</span> <span class="n">dot_count</span><span class="p">,</span> <span class="n">stem_height</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">decimal</span><span class="p">)</span>
         <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">decimal</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">decimal</span><span class="p">)</span>
-        <span class="c1"># TODO: add abjad.NonreducedFraction.mixed_number property</span>
-        <span class="n">fraction</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">NonreducedFraction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">units_per_minute</span><span class="p">)</span>
-        <span class="n">n</span><span class="p">,</span> <span class="n">d</span> <span class="o">=</span> <span class="n">fraction</span><span class="o">.</span><span class="n">pair</span>
+        <span class="n">fraction</span> <span class="o">=</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">units_per_minute</span><span class="p">)</span>
+        <span class="n">n</span><span class="p">,</span> <span class="n">d</span> <span class="o">=</span> <span class="n">fraction</span><span class="o">.</span><span class="n">numerator</span><span class="p">,</span> <span class="n">fraction</span><span class="o">.</span><span class="n">denominator</span>
         <span class="n">base</span> <span class="o">=</span> <span class="n">n</span> <span class="o">//</span> <span class="n">d</span>
         <span class="n">n</span> <span class="o">=</span> <span class="n">n</span> <span class="o">%</span> <span class="n">d</span>
         <span class="k">return</span> <span class="p">(</span><span class="n">duration_log</span><span class="p">,</span> <span class="n">dot_count</span><span class="p">,</span> <span class="n">stem_height</span><span class="p">,</span> <span class="n">base</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">d</span><span class="p">)</span>
@@ -2902,9 +2901,9 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets millisecond value of ``duration`` under a given metronome mark.</span>
 
-<span class="sd">        ..  container:: example</span>
+<span class="sd">        Dotted sixteenth lasts 1500 msec at quarter equals 60:</span>
 
-<span class="sd">            Dotted sixteenth lasts 1500 msec at quarter equals 60:</span>
+<span class="sd">        ..  container:: example</span>
 
 <span class="sd">            &gt;&gt;&gt; mark = abjad.MetronomeMark((1, 4), 60)</span>
 <span class="sd">            &gt;&gt;&gt; mark.duration_to_milliseconds((3, 8))</span>
@@ -2914,9 +2913,9 @@
         <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">reference_duration</span><span class="p">,</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Duration</span><span class="p">)</span>
         <span class="n">denominator</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">reference_duration</span><span class="o">.</span><span class="n">denominator</span>
         <span class="n">numerator</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">reference_duration</span><span class="o">.</span><span class="n">numerator</span>
-        <span class="n">whole_note_duration</span> <span class="o">=</span> <span class="mi">1000</span>
-        <span class="n">whole_note_duration</span> <span class="o">*=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Multiplier</span><span class="p">(</span><span class="n">denominator</span><span class="p">,</span> <span class="n">numerator</span><span class="p">)</span>
-        <span class="n">whole_note_duration</span> <span class="o">*=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Multiplier</span><span class="p">(</span><span class="mi">60</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">units_per_minute</span><span class="p">)</span>
+        <span class="n">whole_note_duration</span> <span class="o">=</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>
+        <span class="n">whole_note_duration</span> <span class="o">*=</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">(</span><span class="n">denominator</span><span class="p">,</span> <span class="n">numerator</span><span class="p">)</span>
+        <span class="n">whole_note_duration</span> <span class="o">*=</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">(</span><span class="mi">60</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">units_per_minute</span><span class="p">)</span>
         <span class="n">duration</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="n">duration</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="n">duration</span> <span class="o">*</span> <span class="n">whole_note_duration</span><span class="p">)</span></div>
 
@@ -2927,9 +2926,9 @@
         <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Makes tempo equation markup.</span>
 
-<span class="sd">        ..  container:: example</span>
+<span class="sd">        Integer-valued metronome mark:</span>
 
-<span class="sd">            Integer-valued metronome mark:</span>
+<span class="sd">        ..  container:: example</span>
 
 <span class="sd">            &gt;&gt;&gt; markup = abjad.MetronomeMark.make_tempo_equation_markup((1, 4),  90)</span>
 <span class="sd">            &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile([r&#39;\include &quot;abjad.ily&quot;&#39;, markup])</span>
@@ -2993,10 +2992,10 @@
                     <span class="sa">f</span><span class="s1">&#39; #</span><span class="si">{</span><span class="n">log</span><span class="si">}</span><span class="s1"> #</span><span class="si">{</span><span class="n">dots</span><span class="si">}</span><span class="s1"> #</span><span class="si">{</span><span class="n">stem</span><span class="si">}</span><span class="s1"> #&quot;</span><span class="si">{</span><span class="n">decimal_</span><span class="si">}</span><span class="s1">&quot;&#39;</span>
                 <span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">nonreduced</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">NonreducedFraction</span><span class="p">(</span><span class="n">units_per_minute</span><span class="p">)</span>
+                <span class="n">nonreduced</span> <span class="o">=</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">(</span><span class="n">units_per_minute</span><span class="p">)</span>
                 <span class="n">base</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">nonreduced</span><span class="p">)</span>
                 <span class="n">remainder</span> <span class="o">=</span> <span class="n">nonreduced</span> <span class="o">-</span> <span class="n">base</span>
-                <span class="n">n</span><span class="p">,</span> <span class="n">d</span> <span class="o">=</span> <span class="n">remainder</span><span class="o">.</span><span class="n">pair</span>
+                <span class="n">n</span><span class="p">,</span> <span class="n">d</span> <span class="o">=</span> <span class="n">remainder</span><span class="o">.</span><span class="n">numerator</span><span class="p">,</span> <span class="n">remainder</span><span class="o">.</span><span class="n">denominator</span>
                 <span class="n">markup</span> <span class="o">=</span> <span class="n">Markup</span><span class="p">(</span>
                     <span class="sa">r</span><span class="s2">&quot;\markup \abjad-metronome-mark-mixed-number-markup&quot;</span>
                     <span class="sa">f</span><span class="s2">&quot; #</span><span class="si">{</span><span class="n">log</span><span class="si">}</span><span class="s2"> #</span><span class="si">{</span><span class="n">dots</span><span class="si">}</span><span class="s2"> #</span><span class="si">{</span><span class="n">stem</span><span class="si">}</span><span class="s2">&quot;</span>
@@ -6264,7 +6263,7 @@
         <span class="k">return</span> <span class="ow">not</span> <span class="n">_math</span><span class="o">.</span><span class="n">is_nonnegative_integer_power_of_two</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">denominator</span><span class="p">)</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">implied_prolation</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Multiplier</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">implied_prolation</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets implied prolation of time signature.</span>
 
@@ -6273,12 +6272,12 @@
 <span class="sd">            Implied prolation of dyadic time signature:</span>
 
 <span class="sd">            &gt;&gt;&gt; abjad.TimeSignature((3, 8)).implied_prolation</span>
-<span class="sd">            Multiplier(1, 1)</span>
+<span class="sd">            Fraction(1, 1)</span>
 
 <span class="sd">            Implied prolation of nondyadic time signature:</span>
 
 <span class="sd">            &gt;&gt;&gt; abjad.TimeSignature((7, 12)).implied_prolation</span>
-<span class="sd">            Multiplier(2, 3)</span>
+<span class="sd">            Fraction(2, 3)</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">denominator</span><span class="p">)</span><span class="o">.</span><span class="n">implied_prolation</span>
@@ -6360,10 +6359,10 @@
 <span class="sd">            TimeSignature(pair=(6, 14), hide=False, partial=None)</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">contents_multiplier</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Multiplier</span><span class="p">(</span><span class="n">contents_multiplier</span><span class="p">)</span>
-        <span class="n">contents_multiplier</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Multiplier</span><span class="p">(</span><span class="n">contents_multiplier</span><span class="p">)</span>
+        <span class="n">contents_multiplier</span> <span class="o">=</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">(</span><span class="n">contents_multiplier</span><span class="p">)</span>
+        <span class="n">contents_multiplier</span> <span class="o">=</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">(</span><span class="n">contents_multiplier</span><span class="p">)</span>
         <span class="n">non_power_of_two_denominator</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">denominator</span>
-        <span class="k">if</span> <span class="n">contents_multiplier</span> <span class="o">==</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Multiplier</span><span class="p">(</span><span class="mi">1</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">contents_multiplier</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
             <span class="n">power_of_two_denominator</span> <span class="o">=</span> <span class="n">_math</span><span class="o">.</span><span class="n">greatest_power_of_two_less_equal</span><span class="p">(</span>
                 <span class="n">non_power_of_two_denominator</span>
             <span class="p">)</span>
@@ -6371,12 +6370,8 @@
             <span class="n">power_of_two_denominator</span> <span class="o">=</span> <span class="n">_math</span><span class="o">.</span><span class="n">greatest_power_of_two_less_equal</span><span class="p">(</span>
                 <span class="n">non_power_of_two_denominator</span><span class="p">,</span> <span class="mi">1</span>
             <span class="p">)</span>
-        <span class="n">non_dyadic_rational_pair</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">NonreducedFraction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pair</span><span class="p">)</span>
-        <span class="n">dyadic_rational</span> <span class="o">=</span> <span class="n">non_dyadic_rational_pair</span><span class="o">.</span><span class="n">with_denominator</span><span class="p">(</span>
-            <span class="n">power_of_two_denominator</span>
-        <span class="p">)</span>
-        <span class="n">dyadic_rational_pair</span> <span class="o">=</span> <span class="n">dyadic_rational</span><span class="o">.</span><span class="n">pair</span>
-        <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span><span class="n">dyadic_rational_pair</span><span class="p">)</span></div></div>
+        <span class="n">pair</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">with_denominator</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pair</span><span class="p">,</span> <span class="n">power_of_two_denominator</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span><span class="n">pair</span><span class="p">)</span></div></div>
 </pre></div>
 
     </div>

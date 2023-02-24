@@ -28,77 +28,85 @@
     {
         \context Voice = "Row_1_Voice"
         {
-            \scaleDurations #'(1 . 1)
+            \tweak staff-padding 2
+            \times 2/2
             {
+                c'8
+                ^ \markup "1 : (1 | 1)"
                 \scaleDurations #'(1 . 1)
                 {
                     c'8
-                    ^ \markup "(1 | 1) : 1"
                 }
-                c'8
             }
-            \scaleDurations #'(1 . 1)
+            \tweak staff-padding 2
+            \times 2/2
             {
-                \scaleDurations #'(1 . 1)
+                c'8
+                ^ \markup "1 : (1 | 2)"
+                \tweak staff-padding 0
+                \times 2/2
                 {
                     c'16
-                    ^ \markup "(1 | 2) : 1"
                     c'16
                 }
-                c'8
             }
-            \scaleDurations #'(1 . 1)
+            \tweak staff-padding 2
+            \times 2/2
             {
+                c'8
+                ^ \markup "1 : (1 | 3)"
                 \tweak staff-padding 0
                 \times 2/3
                 {
                     c'16
-                    ^ \markup "(1 | 3) : 1"
                     c'16
                     c'16
                 }
-                c'8
             }
-            \scaleDurations #'(1 . 1)
+            \tweak staff-padding 2
+            \times 2/2
             {
-                \scaleDurations #'(1 . 1)
+                c'8
+                ^ \markup "1 : (1 | 4)"
+                \tweak staff-padding 0
+                \times 4/4
                 {
                     c'32
-                    ^ \markup "(1 | 4) : 1"
                     c'32
                     c'32
                     c'32
                 }
-                c'8
             }
-            \scaleDurations #'(1 . 1)
+            \tweak staff-padding 2
+            \times 2/2
             {
+                c'8
+                ^ \markup "1 : (1 | 5)"
                 \tweak staff-padding 0
                 \times 4/5
                 {
                     c'32
-                    ^ \markup "(1 | 5) : 1"
                     c'32
                     c'32
                     c'32
                     c'32
                 }
-                c'8
             }
-            \scaleDurations #'(1 . 1)
+            \tweak staff-padding 2
+            \times 2/2
             {
+                c'8
+                ^ \markup "1 : (1 | 6)"
                 \tweak staff-padding 0
                 \times 4/6
                 {
                     c'32
-                    ^ \markup "(1 | 6) : 1"
                     c'32
                     c'32
                     c'32
                     c'32
                     c'32
                 }
-                c'8
             }
         }
     }
@@ -109,80 +117,82 @@
             \tweak staff-padding 2
             \times 2/3
             {
+                c'8
+                ^ \markup "1 : (2 | 1)"
                 \scaleDurations #'(1 . 1)
                 {
                     c'4
-                    ^ \markup "(2 | 1) : 1"
                 }
-                c'8
             }
             \tweak staff-padding 2
             \times 2/3
             {
-                \scaleDurations #'(1 . 1)
+                c'8
+                ^ \markup "1 : (2 | 2)"
+                \tweak staff-padding 0
+                \times 2/2
                 {
                     c'8
-                    ^ \markup "(2 | 2) : 1"
                     c'8
                 }
-                c'8
             }
             \tweak staff-padding 2
             \times 2/3
             {
+                c'8
+                ^ \markup "1 : (2 | 3)"
                 \tweak staff-padding 0
                 \times 2/3
                 {
                     c'8
-                    ^ \markup "(2 | 3) : 1"
                     c'8
                     c'8
                 }
-                c'8
             }
             \tweak staff-padding 2
             \times 2/3
             {
-                \scaleDurations #'(1 . 1)
+                c'8
+                ^ \markup "1 : (2 | 4)"
+                \tweak staff-padding 0
+                \times 4/4
                 {
                     c'16
-                    ^ \markup "(2 | 4) : 1"
                     c'16
                     c'16
                     c'16
                 }
-                c'8
             }
             \tweak staff-padding 2
             \times 2/3
             {
+                c'8
+                ^ \markup "1 : (2 | 5)"
                 \tweak staff-padding 0
                 \times 4/5
                 {
                     c'16
-                    ^ \markup "(2 | 5) : 1"
                     c'16
                     c'16
                     c'16
                     c'16
                 }
-                c'8
             }
             \tweak staff-padding 2
             \times 2/3
             {
+                c'8
+                ^ \markup "1 : (2 | 6)"
                 \tweak staff-padding 0
                 \times 4/6
                 {
                     c'16
-                    ^ \markup "(2 | 6) : 1"
                     c'16
                     c'16
                     c'16
                     c'16
                     c'16
                 }
-                c'8
             }
         }
     }
@@ -190,75 +200,87 @@
     {
         \context Voice = "Row_3_Voice"
         {
-            \scaleDurations #'(1 . 1)
+            \tweak staff-padding 2
+            \times 4/4
             {
+                c'16
+                ^ \markup "1 : (3 | 1)"
                 \scaleDurations #'(1 . 1)
                 {
                     c'8.
-                    ^ \markup "(3 | 1) : 1"
                 }
-                c'16
             }
-            \scaleDurations #'(1 . 1)
+            \tweak staff-padding 2
+            \times 4/4
             {
-                \scaleDurations #'(1 . 1)
+                c'16
+                ^ \markup "1 : (3 | 2)"
+                \tweak staff-padding 0
+                \times 2/2
                 {
                     c'16.
-                    ^ \markup "(3 | 2) : 1"
                     c'16.
                 }
-                c'16
             }
-            \scaleDurations #'(1 . 1)
+            \tweak staff-padding 2
+            \times 4/4
             {
-                \scaleDurations #'(1 . 1)
+                c'16
+                ^ \markup "1 : (3 | 3)"
+                \tweak text #tuplet-number::calc-fraction-text
+                \tweak staff-padding 0
+                \times 3/3
                 {
                     c'16
-                    ^ \markup "(3 | 3) : 1"
                     c'16
                     c'16
                 }
-                c'16
             }
-            \scaleDurations #'(1 . 1)
+            \tweak staff-padding 2
+            \times 4/4
             {
-                \scaleDurations #'(1 . 1)
+                c'16
+                ^ \markup "1 : (3 | 4)"
+                \tweak staff-padding 0
+                \times 4/4
                 {
                     c'32.
-                    ^ \markup "(3 | 4) : 1"
                     c'32.
                     c'32.
                     c'32.
                 }
-                c'16
             }
-            \scaleDurations #'(1 . 1)
+            \tweak staff-padding 2
+            \times 4/4
             {
+                c'16
+                ^ \markup "1 : (3 | 5)"
                 \tweak staff-padding 0
                 \times 4/5
                 {
                     c'32.
-                    ^ \markup "(3 | 5) : 1"
                     c'32.
                     c'32.
                     c'32.
                     c'32.
                 }
-                c'16
             }
-            \scaleDurations #'(1 . 1)
+            \tweak staff-padding 2
+            \times 4/4
             {
-                \scaleDurations #'(1 . 1)
+                c'16
+                ^ \markup "1 : (3 | 6)"
+                \tweak text #tuplet-number::calc-fraction-text
+                \tweak staff-padding 0
+                \times 6/6
                 {
                     c'32
-                    ^ \markup "(3 | 6) : 1"
                     c'32
                     c'32
                     c'32
                     c'32
                     c'32
                 }
-                c'16
             }
         }
     }
@@ -269,80 +291,82 @@
             \tweak staff-padding 2
             \times 4/5
             {
+                c'16
+                ^ \markup "1 : (4 | 1)"
                 \scaleDurations #'(1 . 1)
                 {
                     c'4
-                    ^ \markup "(4 | 1) : 1"
                 }
-                c'16
             }
             \tweak staff-padding 2
             \times 4/5
             {
-                \scaleDurations #'(1 . 1)
+                c'16
+                ^ \markup "1 : (4 | 2)"
+                \tweak staff-padding 0
+                \times 2/2
                 {
                     c'8
-                    ^ \markup "(4 | 2) : 1"
                     c'8
                 }
-                c'16
             }
             \tweak staff-padding 2
             \times 4/5
             {
+                c'16
+                ^ \markup "1 : (4 | 3)"
                 \tweak staff-padding 0
                 \times 2/3
                 {
                     c'8
-                    ^ \markup "(4 | 3) : 1"
                     c'8
                     c'8
                 }
-                c'16
             }
             \tweak staff-padding 2
             \times 4/5
             {
-                \scaleDurations #'(1 . 1)
+                c'16
+                ^ \markup "1 : (4 | 4)"
+                \tweak staff-padding 0
+                \times 4/4
                 {
                     c'16
-                    ^ \markup "(4 | 4) : 1"
                     c'16
                     c'16
                     c'16
                 }
-                c'16
             }
             \tweak staff-padding 2
             \times 4/5
             {
+                c'16
+                ^ \markup "1 : (4 | 5)"
                 \tweak staff-padding 0
                 \times 4/5
                 {
                     c'16
-                    ^ \markup "(4 | 5) : 1"
                     c'16
                     c'16
                     c'16
                     c'16
                 }
-                c'16
             }
             \tweak staff-padding 2
             \times 4/5
             {
+                c'16
+                ^ \markup "1 : (4 | 6)"
                 \tweak staff-padding 0
                 \times 4/6
                 {
                     c'16
-                    ^ \markup "(4 | 6) : 1"
                     c'16
                     c'16
                     c'16
                     c'16
                     c'16
                 }
-                c'16
             }
         }
     }
@@ -353,87 +377,89 @@
             \tweak staff-padding 2
             \times 4/6
             {
+                c'16
+                ^ \markup "1 : (5 | 1)"
                 \tweak text #tuplet-number::calc-fraction-text
                 \tweak staff-padding 0
                 \times 5/6
                 {
                     c'4.
-                    ^ \markup "(5 | 1) : 1"
                 }
-                c'16
             }
             \tweak staff-padding 2
             \times 4/6
             {
+                c'16
+                ^ \markup "1 : (5 | 2)"
                 \tweak text #tuplet-number::calc-fraction-text
                 \tweak staff-padding 0
                 \times 5/6
                 {
                     c'8.
-                    ^ \markup "(5 | 2) : 1"
                     c'8.
                 }
-                c'16
             }
             \tweak staff-padding 2
             \times 4/6
             {
+                c'16
+                ^ \markup "1 : (5 | 3)"
                 \tweak text #tuplet-number::calc-fraction-text
                 \tweak staff-padding 0
                 \times 5/9
                 {
                     c'8.
-                    ^ \markup "(5 | 3) : 1"
                     c'8.
                     c'8.
                 }
-                c'16
             }
             \tweak staff-padding 2
             \times 4/6
             {
+                c'16
+                ^ \markup "1 : (5 | 4)"
                 \tweak text #tuplet-number::calc-fraction-text
                 \tweak staff-padding 0
                 \times 5/6
                 {
                     c'16.
-                    ^ \markup "(5 | 4) : 1"
                     c'16.
                     c'16.
                     c'16.
                 }
-                c'16
             }
             \tweak staff-padding 2
             \times 4/6
             {
-                \scaleDurations #'(1 . 1)
+                c'16
+                ^ \markup "1 : (5 | 5)"
+                \tweak text #tuplet-number::calc-fraction-text
+                \tweak staff-padding 0
+                \times 5/5
                 {
                     c'16
-                    ^ \markup "(5 | 5) : 1"
                     c'16
                     c'16
                     c'16
                     c'16
                 }
-                c'16
             }
             \tweak staff-padding 2
             \times 4/6
             {
+                c'16
+                ^ \markup "1 : (5 | 6)"
                 \tweak text #tuplet-number::calc-fraction-text
                 \tweak staff-padding 0
                 \times 5/9
                 {
                     c'16.
-                    ^ \markup "(5 | 6) : 1"
                     c'16.
                     c'16.
                     c'16.
                     c'16.
                     c'16.
                 }
-                c'16
             }
         }
     }
@@ -444,78 +470,84 @@
             \tweak staff-padding 2
             \times 4/7
             {
+                c'16
+                ^ \markup "1 : (6 | 1)"
                 \scaleDurations #'(1 . 1)
                 {
                     c'4.
-                    ^ \markup "(6 | 1) : 1"
                 }
-                c'16
             }
             \tweak staff-padding 2
             \times 4/7
             {
-                \scaleDurations #'(1 . 1)
+                c'16
+                ^ \markup "1 : (6 | 2)"
+                \tweak staff-padding 0
+                \times 2/2
                 {
                     c'8.
-                    ^ \markup "(6 | 2) : 1"
                     c'8.
                 }
-                c'16
             }
             \tweak staff-padding 2
             \times 4/7
             {
-                \scaleDurations #'(1 . 1)
+                c'16
+                ^ \markup "1 : (6 | 3)"
+                \tweak text #tuplet-number::calc-fraction-text
+                \tweak staff-padding 0
+                \times 3/3
                 {
                     c'8
-                    ^ \markup "(6 | 3) : 1"
                     c'8
                     c'8
                 }
-                c'16
             }
             \tweak staff-padding 2
             \times 4/7
             {
-                \scaleDurations #'(1 . 1)
+                c'16
+                ^ \markup "1 : (6 | 4)"
+                \tweak staff-padding 0
+                \times 4/4
                 {
                     c'16.
-                    ^ \markup "(6 | 4) : 1"
                     c'16.
                     c'16.
                     c'16.
                 }
-                c'16
             }
             \tweak staff-padding 2
             \times 4/7
             {
+                c'16
+                ^ \markup "1 : (6 | 5)"
                 \tweak staff-padding 0
                 \times 4/5
                 {
                     c'16.
-                    ^ \markup "(6 | 5) : 1"
                     c'16.
                     c'16.
                     c'16.
                     c'16.
                 }
-                c'16
             }
             \tweak staff-padding 2
             \times 4/7
             {
-                \scaleDurations #'(1 . 1)
+                c'16
+                ^ \markup "1 : (6 | 6)"
+                \tweak text #tuplet-number::calc-fraction-text
+                \tweak staff-padding 0
+                \times 6/6
                 {
                     c'16
-                    ^ \markup "(6 | 6) : 1"
                     c'16
                     c'16
                     c'16
                     c'16
                     c'16
                 }
-                c'16
             }
         }
     }
@@ -523,77 +555,85 @@
     {
         \context Voice = "Row_7_Voice"
         {
-            \scaleDurations #'(1 . 1)
+            \tweak staff-padding 2
+            \times 8/8
             {
+                c'32
+                ^ \markup "1 : (7 | 1)"
                 \scaleDurations #'(1 . 1)
                 {
                     c'8..
-                    ^ \markup "(7 | 1) : 1"
                 }
-                c'32
             }
-            \scaleDurations #'(1 . 1)
+            \tweak staff-padding 2
+            \times 8/8
             {
-                \scaleDurations #'(1 . 1)
+                c'32
+                ^ \markup "1 : (7 | 2)"
+                \tweak staff-padding 0
+                \times 2/2
                 {
                     c'16..
-                    ^ \markup "(7 | 2) : 1"
                     c'16..
                 }
-                c'32
             }
-            \scaleDurations #'(1 . 1)
+            \tweak staff-padding 2
+            \times 8/8
             {
+                c'32
+                ^ \markup "1 : (7 | 3)"
                 \tweak staff-padding 0
                 \times 2/3
                 {
                     c'16..
-                    ^ \markup "(7 | 3) : 1"
                     c'16..
                     c'16..
                 }
-                c'32
             }
-            \scaleDurations #'(1 . 1)
+            \tweak staff-padding 2
+            \times 8/8
             {
-                \scaleDurations #'(1 . 1)
+                c'32
+                ^ \markup "1 : (7 | 4)"
+                \tweak staff-padding 0
+                \times 4/4
                 {
                     c'32..
-                    ^ \markup "(7 | 4) : 1"
                     c'32..
                     c'32..
                     c'32..
                 }
-                c'32
             }
-            \scaleDurations #'(1 . 1)
+            \tweak staff-padding 2
+            \times 8/8
             {
+                c'32
+                ^ \markup "1 : (7 | 5)"
                 \tweak staff-padding 0
                 \times 4/5
                 {
                     c'32..
-                    ^ \markup "(7 | 5) : 1"
                     c'32..
                     c'32..
                     c'32..
                     c'32..
                 }
-                c'32
             }
-            \scaleDurations #'(1 . 1)
+            \tweak staff-padding 2
+            \times 8/8
             {
+                c'32
+                ^ \markup "1 : (7 | 6)"
                 \tweak staff-padding 0
                 \times 4/6
                 {
                     c'32..
-                    ^ \markup "(7 | 6) : 1"
                     c'32..
                     c'32..
                     c'32..
                     c'32..
                     c'32..
                 }
-                c'32
             }
         }
     }
@@ -604,80 +644,82 @@
             \tweak staff-padding 2
             \times 8/9
             {
+                c'32
+                ^ \markup "1 : (8 | 1)"
                 \scaleDurations #'(1 . 1)
                 {
                     c'4
-                    ^ \markup "(8 | 1) : 1"
                 }
-                c'32
             }
             \tweak staff-padding 2
             \times 8/9
             {
-                \scaleDurations #'(1 . 1)
+                c'32
+                ^ \markup "1 : (8 | 2)"
+                \tweak staff-padding 0
+                \times 2/2
                 {
                     c'8
-                    ^ \markup "(8 | 2) : 1"
                     c'8
                 }
-                c'32
             }
             \tweak staff-padding 2
             \times 8/9
             {
+                c'32
+                ^ \markup "1 : (8 | 3)"
                 \tweak staff-padding 0
                 \times 2/3
                 {
                     c'8
-                    ^ \markup "(8 | 3) : 1"
                     c'8
                     c'8
                 }
-                c'32
             }
             \tweak staff-padding 2
             \times 8/9
             {
-                \scaleDurations #'(1 . 1)
+                c'32
+                ^ \markup "1 : (8 | 4)"
+                \tweak staff-padding 0
+                \times 4/4
                 {
                     c'16
-                    ^ \markup "(8 | 4) : 1"
                     c'16
                     c'16
                     c'16
                 }
-                c'32
             }
             \tweak staff-padding 2
             \times 8/9
             {
+                c'32
+                ^ \markup "1 : (8 | 5)"
                 \tweak staff-padding 0
                 \times 4/5
                 {
                     c'16
-                    ^ \markup "(8 | 5) : 1"
                     c'16
                     c'16
                     c'16
                     c'16
                 }
-                c'32
             }
             \tweak staff-padding 2
             \times 8/9
             {
+                c'32
+                ^ \markup "1 : (8 | 6)"
                 \tweak staff-padding 0
                 \times 4/6
                 {
                     c'16
-                    ^ \markup "(8 | 6) : 1"
                     c'16
                     c'16
                     c'16
                     c'16
                     c'16
                 }
-                c'32
             }
         }
     }
@@ -688,85 +730,89 @@
             \tweak staff-padding 2
             \times 8/10
             {
+                c'32
+                ^ \markup "1 : (9 | 1)"
                 \tweak text #tuplet-number::calc-fraction-text
                 \tweak staff-padding 0
                 \times 3/4
                 {
                     c'4.
-                    ^ \markup "(9 | 1) : 1"
                 }
-                c'32
             }
             \tweak staff-padding 2
             \times 8/10
             {
+                c'32
+                ^ \markup "1 : (9 | 2)"
                 \tweak text #tuplet-number::calc-fraction-text
                 \tweak staff-padding 0
                 \times 3/4
                 {
                     c'8.
-                    ^ \markup "(9 | 2) : 1"
                     c'8.
                 }
-                c'32
             }
             \tweak staff-padding 2
             \times 8/10
             {
-                \scaleDurations #'(1 . 1)
+                c'32
+                ^ \markup "1 : (9 | 3)"
+                \tweak text #tuplet-number::calc-fraction-text
+                \tweak staff-padding 0
+                \times 3/3
                 {
                     c'16.
-                    ^ \markup "(9 | 3) : 1"
                     c'16.
                     c'16.
                 }
-                c'32
             }
             \tweak staff-padding 2
             \times 8/10
             {
+                c'32
+                ^ \markup "1 : (9 | 4)"
                 \tweak text #tuplet-number::calc-fraction-text
                 \tweak staff-padding 0
                 \times 3/4
                 {
                     c'16.
-                    ^ \markup "(9 | 4) : 1"
                     c'16.
                     c'16.
                     c'16.
                 }
-                c'32
             }
             \tweak staff-padding 2
             \times 8/10
             {
+                c'32
+                ^ \markup "1 : (9 | 5)"
                 \tweak text #tuplet-number::calc-fraction-text
                 \tweak staff-padding 0
                 \times 3/5
                 {
                     c'16.
-                    ^ \markup "(9 | 5) : 1"
                     c'16.
                     c'16.
                     c'16.
                     c'16.
                 }
-                c'32
             }
             \tweak staff-padding 2
             \times 8/10
             {
-                \scaleDurations #'(1 . 1)
+                c'32
+                ^ \markup "1 : (9 | 6)"
+                \tweak text #tuplet-number::calc-fraction-text
+                \tweak staff-padding 0
+                \times 6/6
                 {
                     c'32.
-                    ^ \markup "(9 | 6) : 1"
                     c'32.
                     c'32.
                     c'32.
                     c'32.
                     c'32.
                 }
-                c'32
             }
         }
     }
@@ -777,87 +823,89 @@
             \tweak staff-padding 2
             \times 8/11
             {
+                c'32
+                ^ \markup "1 : (10 | 1)"
                 \tweak text #tuplet-number::calc-fraction-text
                 \tweak staff-padding 0
                 \times 5/6
                 {
                     c'4.
-                    ^ \markup "(10 | 1) : 1"
                 }
-                c'32
             }
             \tweak staff-padding 2
             \times 8/11
             {
+                c'32
+                ^ \markup "1 : (10 | 2)"
                 \tweak text #tuplet-number::calc-fraction-text
                 \tweak staff-padding 0
                 \times 5/6
                 {
                     c'8.
-                    ^ \markup "(10 | 2) : 1"
                     c'8.
                 }
-                c'32
             }
             \tweak staff-padding 2
             \times 8/11
             {
+                c'32
+                ^ \markup "1 : (10 | 3)"
                 \tweak text #tuplet-number::calc-fraction-text
                 \tweak staff-padding 0
                 \times 5/9
                 {
                     c'8.
-                    ^ \markup "(10 | 3) : 1"
                     c'8.
                     c'8.
                 }
-                c'32
             }
             \tweak staff-padding 2
             \times 8/11
             {
+                c'32
+                ^ \markup "1 : (10 | 4)"
                 \tweak text #tuplet-number::calc-fraction-text
                 \tweak staff-padding 0
                 \times 5/6
                 {
                     c'16.
-                    ^ \markup "(10 | 4) : 1"
                     c'16.
                     c'16.
                     c'16.
                 }
-                c'32
             }
             \tweak staff-padding 2
             \times 8/11
             {
-                \scaleDurations #'(1 . 1)
+                c'32
+                ^ \markup "1 : (10 | 5)"
+                \tweak text #tuplet-number::calc-fraction-text
+                \tweak staff-padding 0
+                \times 5/5
                 {
                     c'16
-                    ^ \markup "(10 | 5) : 1"
                     c'16
                     c'16
                     c'16
                     c'16
                 }
-                c'32
             }
             \tweak staff-padding 2
             \times 8/11
             {
+                c'32
+                ^ \markup "1 : (10 | 6)"
                 \tweak text #tuplet-number::calc-fraction-text
                 \tweak staff-padding 0
                 \times 5/9
                 {
                     c'16.
-                    ^ \markup "(10 | 6) : 1"
                     c'16.
                     c'16.
                     c'16.
                     c'16.
                     c'16.
                 }
-                c'32
             }
         }
     }
@@ -868,89 +916,89 @@
             \tweak staff-padding 2
             \times 8/12
             {
+                c'32
+                ^ \markup "1 : (11 | 1)"
                 \tweak text #tuplet-number::calc-fraction-text
                 \tweak staff-padding 0
                 \times 11/12
                 {
                     c'4.
-                    ^ \markup "(11 | 1) : 1"
                 }
-                c'32
             }
             \tweak staff-padding 2
             \times 8/12
             {
+                c'32
+                ^ \markup "1 : (11 | 2)"
                 \tweak text #tuplet-number::calc-fraction-text
                 \tweak staff-padding 0
                 \times 11/12
                 {
                     c'8.
-                    ^ \markup "(11 | 2) : 1"
                     c'8.
                 }
-                c'32
             }
             \tweak staff-padding 2
             \times 8/12
             {
+                c'32
+                ^ \markup "1 : (11 | 3)"
                 \tweak text #tuplet-number::calc-fraction-text
                 \tweak staff-padding 0
                 \times 11/18
                 {
                     c'8.
-                    ^ \markup "(11 | 3) : 1"
                     c'8.
                     c'8.
                 }
-                c'32
             }
             \tweak staff-padding 2
             \times 8/12
             {
+                c'32
+                ^ \markup "1 : (11 | 4)"
                 \tweak text #tuplet-number::calc-fraction-text
                 \tweak staff-padding 0
                 \times 11/12
                 {
                     c'16.
-                    ^ \markup "(11 | 4) : 1"
                     c'16.
                     c'16.
                     c'16.
                 }
-                c'32
             }
             \tweak staff-padding 2
             \times 8/12
             {
+                c'32
+                ^ \markup "1 : (11 | 5)"
                 \tweak text #tuplet-number::calc-fraction-text
                 \tweak staff-padding 0
                 \times 11/15
                 {
                     c'16.
-                    ^ \markup "(11 | 5) : 1"
                     c'16.
                     c'16.
                     c'16.
                     c'16.
                 }
-                c'32
             }
             \tweak staff-padding 2
             \times 8/12
             {
+                c'32
+                ^ \markup "1 : (11 | 6)"
                 \tweak text #tuplet-number::calc-fraction-text
                 \tweak staff-padding 0
                 \times 11/18
                 {
                     c'16.
-                    ^ \markup "(11 | 6) : 1"
                     c'16.
                     c'16.
                     c'16.
                     c'16.
                     c'16.
                 }
-                c'32
             }
         }
     }
