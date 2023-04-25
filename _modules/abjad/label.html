@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>abjad.label &mdash; Abjad 3.16 documentation</title>
+  <title>abjad.label &mdash; Abjad 3.17 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/abjad.css" type="text/css" />
@@ -34,11 +34,11 @@
   <div class="wy-grid-for-nav">
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search"  style="background: #aa44ee" >
+        <div class="wy-side-nav-search"  style="background: #bb6611" >
 
 
     <a href="../../index.html" class="icon icon-home" alt="Documentation
-    Home"> Abjad 3.16
+    Home"> Abjad 3.17
 
 
 
@@ -111,7 +111,7 @@
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #aa44ee" >
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #bb6611" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../index.html">Abjad</a>
       </nav>
@@ -159,7 +159,7 @@
     <span class="k">else</span><span class="p">:</span>
         <span class="k">assert</span> <span class="n">color</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;#&quot;</span><span class="p">)</span>
         <span class="n">string</span> <span class="o">=</span> <span class="sa">rf</span><span class="s2">&quot;\abjad-color-music #&#39;</span><span class="si">{</span><span class="n">color</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span><span class="si">}</span><span class="s2">&quot;</span>
-        <span class="n">literal</span> <span class="o">=</span> <span class="n">_indicators</span><span class="o">.</span><span class="n">LilyPondLiteral</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
+        <span class="n">literal</span> <span class="o">=</span> <span class="n">_indicators</span><span class="o">.</span><span class="n">LilyPondLiteral</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">site</span><span class="o">=</span><span class="s2">&quot;before&quot;</span><span class="p">)</span>
         <span class="n">_attach</span><span class="p">(</span><span class="n">literal</span><span class="p">,</span> <span class="n">leaf</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">leaf</span>
 
@@ -208,6 +208,7 @@
 <span class="sd">    ..  container:: example</span>
 
 <span class="sd">        &gt;&gt;&gt; staff = abjad.Staff(&quot;c&#39;8 d&#39;8&quot;)</span>
+<span class="sd">        &gt;&gt;&gt; score = abjad.Score([staff], name=&quot;Score&quot;)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.attach(abjad.TimeSignature((2, 8)), staff[0])</span>
 <span class="sd">        &gt;&gt;&gt; abjad.label.color_container(staff, &quot;#red&quot;)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(staff) # doctest: +SKIP</span>
@@ -861,7 +862,7 @@
             <span class="n">pitch_class_set</span> <span class="o">=</span> <span class="n">_pcollections</span><span class="o">.</span><span class="n">PitchClassSet</span><span class="p">(</span><span class="n">generator</span><span class="p">)</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">pitch_class_set</span><span class="p">:</span>
                 <span class="k">continue</span>
-            <span class="n">set_class</span> <span class="o">=</span> <span class="n">_setclass</span><span class="o">.</span><span class="n">SetClass</span><span class="o">.</span><span class="n">from_pitch_class_set</span><span class="p">(</span>
+            <span class="n">set_class</span> <span class="o">=</span> <span class="n">_setclass</span><span class="o">.</span><span class="n">SetClass</span><span class="o">.</span><span class="n">from_pitches</span><span class="p">(</span>
                 <span class="n">pitch_class_set</span><span class="p">,</span>
                 <span class="n">lex_rank</span><span class="o">=</span><span class="n">prototype</span><span class="o">.</span><span class="n">lex_rank</span><span class="p">,</span>
                 <span class="n">transposition_only</span><span class="o">=</span><span class="n">prototype</span><span class="o">.</span><span class="n">transposition_only</span><span class="p">,</span>
@@ -1840,7 +1841,7 @@
         <span class="n">pitch_class_set</span> <span class="o">=</span> <span class="n">_pcollections</span><span class="o">.</span><span class="n">PitchClassSet</span><span class="p">(</span><span class="n">generator</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">pitch_class_set</span><span class="p">:</span>
             <span class="k">continue</span>
-        <span class="n">set_class</span> <span class="o">=</span> <span class="n">_setclass</span><span class="o">.</span><span class="n">SetClass</span><span class="o">.</span><span class="n">from_pitch_class_set</span><span class="p">(</span>
+        <span class="n">set_class</span> <span class="o">=</span> <span class="n">_setclass</span><span class="o">.</span><span class="n">SetClass</span><span class="o">.</span><span class="n">from_pitches</span><span class="p">(</span>
             <span class="n">pitch_class_set</span><span class="p">,</span>
             <span class="n">lex_rank</span><span class="o">=</span><span class="n">prototype</span><span class="o">.</span><span class="n">lex_rank</span><span class="p">,</span>
             <span class="n">transposition_only</span><span class="o">=</span><span class="n">prototype</span><span class="o">.</span><span class="n">transposition_only</span><span class="p">,</span>
@@ -1907,7 +1908,7 @@
 
 <span class="sd">        &gt;&gt;&gt; staff = abjad.Staff(r&quot;c&#39;2 d&#39; e&#39; f&#39;&quot;)</span>
 <span class="sd">        &gt;&gt;&gt; score = abjad.Score([staff])</span>
-<span class="sd">        &gt;&gt;&gt; mark = abjad.MetronomeMark((1, 4), 60)</span>
+<span class="sd">        &gt;&gt;&gt; mark = abjad.MetronomeMark(abjad.Duration(1, 4), 60)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.attach(mark, staff[0])</span>
 <span class="sd">        &gt;&gt;&gt; abjad.label.with_start_offsets(staff, clock_time=True)</span>
 <span class="sd">        Duration(8, 1)</span>
@@ -1948,7 +1949,7 @@
 
 <span class="sd">        &gt;&gt;&gt; staff = abjad.Staff(r&quot;c&#39;2 d&#39; e&#39; f&#39;&quot;)</span>
 <span class="sd">        &gt;&gt;&gt; score = abjad.Score([staff])</span>
-<span class="sd">        &gt;&gt;&gt; mark = abjad.MetronomeMark((1, 4), 60)</span>
+<span class="sd">        &gt;&gt;&gt; mark = abjad.MetronomeMark(abjad.Duration(1, 4), 60)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.attach(mark, staff[0])</span>
 <span class="sd">        &gt;&gt;&gt; abjad.label.with_start_offsets(</span>
 <span class="sd">        ...     staff,</span>

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>abjad.bind &mdash; Abjad 3.16 documentation</title>
+  <title>abjad.bind &mdash; Abjad 3.17 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/abjad.css" type="text/css" />
@@ -34,11 +34,11 @@
   <div class="wy-grid-for-nav">
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search"  style="background: #aa44ee" >
+        <div class="wy-side-nav-search"  style="background: #bb6611" >
 
 
     <a href="../../index.html" class="icon icon-home" alt="Documentation
-    Home"> Abjad 3.16
+    Home"> Abjad 3.17
 
 
 
@@ -111,7 +111,7 @@
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #aa44ee" >
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #bb6611" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../index.html">Abjad</a>
       </nav>
@@ -141,6 +141,61 @@
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">tweaks</span> <span class="k">as</span> <span class="n">_tweaks</span>
 
 
+<span class="k">def</span> <span class="nf">_before_attach</span><span class="p">(</span><span class="n">indicator</span><span class="p">,</span> <span class="n">deactivate</span><span class="p">,</span> <span class="n">component</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">indicator</span><span class="p">,</span> <span class="s2">&quot;temporarily_do_not_check&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="k">return</span>
+    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">indicator</span><span class="p">,</span> <span class="s2">&quot;allowable_sites&quot;</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">indicator</span><span class="o">.</span><span class="n">site</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">component</span><span class="o">.</span><span class="n">_allowable_sites</span><span class="p">:</span>
+            <span class="n">message</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">  </span><span class="si">{</span><span class="n">indicator</span><span class="si">!r}</span><span class="s2">&quot;</span>
+            <span class="n">message</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">  Can not attach to </span><span class="si">{</span><span class="n">component</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">.&quot;</span>
+            <span class="n">message</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">  </span><span class="si">{</span><span class="n">component</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2"> allows only &quot;</span>
+            <span class="n">message</span> <span class="o">+=</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">component</span><span class="o">.</span><span class="n">_allowable_sites</span><span class="p">)</span>
+            <span class="n">message</span> <span class="o">+=</span> <span class="s2">&quot; sites.&quot;</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">indicator</span><span class="p">,</span> <span class="s2">&quot;context&quot;</span><span class="p">):</span>
+        <span class="k">return</span>
+    <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">indicator</span><span class="p">,</span> <span class="s2">&quot;find_context_on_attach&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">indicator</span><span class="p">,</span> <span class="s2">&quot;context&quot;</span><span class="p">):</span>
+            <span class="n">context</span> <span class="o">=</span> <span class="n">Wrapper</span><span class="o">.</span><span class="n">_find_correct_effective_context</span><span class="p">(</span>
+                <span class="n">component</span><span class="p">,</span> <span class="n">indicator</span><span class="o">.</span><span class="n">context</span>
+            <span class="p">)</span>
+            <span class="k">if</span> <span class="n">context</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">message</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">    </span><span class="si">{</span><span class="n">indicator</span><span class="si">}</span><span class="s2"> requires </span><span class="si">{</span><span class="n">indicator</span><span class="o">.</span><span class="n">context</span><span class="si">}</span><span class="s2"> context;&quot;</span>
+                <span class="n">message</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">    can not find </span><span class="si">{</span><span class="n">indicator</span><span class="o">.</span><span class="n">context</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="n">message</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot; in parentage of </span><span class="si">{</span><span class="n">component</span><span class="si">!r}</span><span class="s2">.&quot;</span>
+                <span class="k">raise</span> <span class="n">_exceptions</span><span class="o">.</span><span class="n">MissingContextError</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">indicator</span><span class="p">,</span> <span class="s2">&quot;nestable_spanner&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="k">return</span>
+    <span class="k">if</span> <span class="n">deactivate</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="k">return</span>
+    <span class="k">for</span> <span class="n">wrapper</span> <span class="ow">in</span> <span class="n">component</span><span class="o">.</span><span class="n">_get_indicators</span><span class="p">(</span><span class="n">unwrap</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">wrapper</span><span class="o">.</span><span class="n">indicator</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">indicator</span><span class="p">)):</span>
+            <span class="k">continue</span>
+        <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">indicator</span><span class="p">,</span> <span class="s2">&quot;leak&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">wrapper</span><span class="o">.</span><span class="n">indicator</span><span class="p">,</span> <span class="s2">&quot;leak&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">):</span>
+            <span class="k">continue</span>
+        <span class="k">if</span> <span class="n">indicator</span> <span class="o">!=</span> <span class="n">wrapper</span><span class="o">.</span><span class="n">indicator</span><span class="p">:</span>
+            <span class="k">if</span> <span class="p">(</span>
+                <span class="nb">getattr</span><span class="p">(</span><span class="n">indicator</span><span class="p">,</span> <span class="s2">&quot;allow_multiple_with_different_values&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+                <span class="ow">is</span> <span class="kc">True</span>
+            <span class="p">):</span>
+                <span class="k">continue</span>
+            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">indicator</span><span class="p">,</span> <span class="s2">&quot;hide&quot;</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">indicator</span><span class="o">.</span><span class="n">hide</span> <span class="o">!=</span> <span class="n">wrapper</span><span class="o">.</span><span class="n">indicator</span><span class="o">.</span><span class="n">hide</span><span class="p">:</span>
+                    <span class="k">continue</span>
+            <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">indicator</span><span class="p">,</span> <span class="s2">&quot;site&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">getattr</span><span class="p">(</span>
+                <span class="n">wrapper</span><span class="o">.</span><span class="n">indicator</span><span class="p">,</span> <span class="s2">&quot;site&quot;</span><span class="p">,</span> <span class="kc">None</span>
+            <span class="p">):</span>
+                <span class="k">continue</span>
+        <span class="n">classname</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="n">component</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;attempting to attach conflicting indicator to </span><span class="si">{</span><span class="n">classname</span><span class="si">}</span><span class="s2">:&quot;</span>
+        <span class="n">message</span> <span class="o">+=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">  Already attached:&quot;</span>
+        <span class="n">message</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">    </span><span class="si">{</span><span class="n">wrapper</span><span class="o">.</span><span class="n">indicator</span><span class="si">!r}</span><span class="s2">&quot;</span>
+        <span class="c1"># message += f&quot;\n    {wrapper!r}&quot;</span>
+        <span class="n">message</span> <span class="o">+=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">  Attempting to attach:&quot;</span>
+        <span class="n">message</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">    </span><span class="si">{</span><span class="n">indicator</span><span class="si">!r}</span><span class="s2">&quot;</span>
+        <span class="k">raise</span> <span class="n">_exceptions</span><span class="o">.</span><span class="n">PersistentIndicatorError</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+
+
 <div class="viewcode-block" id="Wrapper"><a class="viewcode-back" href="../../api/abjad/bind.html#abjad.bind.Wrapper">[docs]</a><span class="k">class</span> <span class="nc">Wrapper</span><span class="p">:</span>
     <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Wrapper.</span>
@@ -159,8 +214,8 @@
 
 <span class="sd">        &gt;&gt;&gt; voice_1 = abjad.Voice(&quot;c&#39;&#39;4 d&#39;&#39; e&#39;&#39; f&#39;&#39;&quot;, name=&quot;VoiceI&quot;)</span>
 <span class="sd">        &gt;&gt;&gt; voice_2 = abjad.Voice(&quot;c&#39;4 d&#39; e&#39; f&#39;&quot;, name=&quot;VoiceII&quot;)</span>
-<span class="sd">        &gt;&gt;&gt; abjad.attach(abjad.Clef(&quot;alto&quot;), voice_2[0])</span>
 <span class="sd">        &gt;&gt;&gt; staff = abjad.Staff([voice_1, voice_2], simultaneous=True)</span>
+<span class="sd">        &gt;&gt;&gt; abjad.attach(abjad.Clef(&quot;alto&quot;), voice_2[0])</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(staff) # doctest: +SKIP</span>
 
 <span class="sd">        ..  docs::</span>
@@ -215,13 +270,14 @@
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">annotation</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">enum</span><span class="o">.</span><span class="n">Enum</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">check_duplicate_indicator</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-        <span class="n">component</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="c1"># TODO: maybe remove check_duplicate_indicator and check automatically?</span>
+        <span class="n">check_duplicate_indicator</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">component</span><span class="p">:</span> <span class="n">_score</span><span class="o">.</span><span class="n">Component</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">context</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">deactivate</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
         <span class="n">direction</span><span class="p">:</span> <span class="n">_enums</span><span class="o">.</span><span class="n">Vertical</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">indicator</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Any</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">synthetic_offset</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">synthetic_offset</span><span class="p">:</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Offset</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">tag</span><span class="p">:</span> <span class="n">_tag</span><span class="o">.</span><span class="n">Tag</span> <span class="o">=</span> <span class="n">_tag</span><span class="o">.</span><span class="n">Tag</span><span class="p">(),</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">assert</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">indicator</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">indicator</span><span class="p">)</span>
@@ -243,6 +299,9 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_indicator</span> <span class="o">=</span> <span class="n">indicator</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_synthetic_offset</span><span class="p">:</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Offset</span> <span class="o">|</span> <span class="kc">None</span>
         <span class="k">if</span> <span class="n">synthetic_offset</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">synthetic_offset</span><span class="p">,</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Offset</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span>
+                <span class="n">synthetic_offset</span>
+            <span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_synthetic_offset</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Offset</span><span class="p">(</span><span class="n">synthetic_offset</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_synthetic_offset</span> <span class="o">=</span> <span class="n">synthetic_offset</span>
@@ -445,15 +504,13 @@
             <span class="n">indicator</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">indicator</span><span class="o">.</span><span class="n">indicator</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">indicator</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">indicator</span>
-        <span class="c1"># if getattr(self.indicator, &quot;context&quot;, None) is not None:</span>
         <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">indicator</span><span class="p">,</span> <span class="s2">&quot;context&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">check_duplicate_indicator</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_warn_duplicate_indicator</span><span class="p">(</span><span class="n">component</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_unbind_component</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_component</span> <span class="o">=</span> <span class="n">component</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_update_effective_context</span><span class="p">()</span>
-            <span class="c1"># if getattr(self.indicator, &quot;_mutates_offsets_in_seconds&quot;, False):</span>
-            <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">indicator</span><span class="p">,</span> <span class="s2">&quot;_mutates_offsets_in_seconds&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span>
+            <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">indicator</span><span class="p">,</span> <span class="s2">&quot;mutates_offsets_in_seconds&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_component</span><span class="o">.</span><span class="n">_update_later</span><span class="p">(</span><span class="n">offsets_in_seconds</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="n">component</span><span class="o">.</span><span class="n">_wrappers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 
@@ -467,22 +524,23 @@
             <span class="n">indicator</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">indicator</span><span class="o">.</span><span class="n">indicator</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">indicator</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">indicator</span>
-        <span class="c1"># if getattr(self.indicator, &quot;_mutates_offsets_in_seconds&quot;, False):</span>
-        <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">indicator</span><span class="p">,</span> <span class="s2">&quot;_mutates_offsets_in_seconds&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span>
-            <span class="n">correct_effective_context</span><span class="o">.</span><span class="n">_update_later</span><span class="p">(</span><span class="n">offsets_in_seconds</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">correct_effective_context</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">indicator</span><span class="p">,</span> <span class="s2">&quot;mutates_offsets_in_seconds&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span>
+                <span class="n">correct_effective_context</span><span class="o">.</span><span class="n">_update_later</span><span class="p">(</span><span class="n">offsets_in_seconds</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_detach</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_unbind_component</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_unbind_effective_context</span><span class="p">()</span>
         <span class="k">return</span> <span class="bp">self</span>
 
-    <span class="k">def</span> <span class="nf">_find_correct_effective_context</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">abjad</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="s2">&quot;abjad&quot;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">context</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_find_correct_effective_context</span><span class="p">(</span><span class="n">component</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">context</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">None</span>
-        <span class="n">context</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">abjad</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="p">)</span>
+        <span class="n">abjad</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="s2">&quot;abjad&quot;</span><span class="p">)</span>
+        <span class="n">context</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">abjad</span><span class="p">,</span> <span class="n">context</span><span class="p">,</span> <span class="n">context</span><span class="p">)</span>
         <span class="n">candidate</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="n">parentage</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">component</span><span class="o">.</span><span class="n">_get_parentage</span><span class="p">()</span>
+        <span class="n">parentage</span> <span class="o">=</span> <span class="n">component</span><span class="o">.</span><span class="n">_get_parentage</span><span class="p">()</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="nb">type</span><span class="p">):</span>
             <span class="k">for</span> <span class="n">component</span> <span class="ow">in</span> <span class="n">parentage</span><span class="p">:</span>
                 <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">component</span><span class="p">,</span> <span class="s2">&quot;_lilypond_type&quot;</span><span class="p">):</span>
@@ -514,7 +572,9 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_effective_context</span>
 
     <span class="k">def</span> <span class="nf">_unbind_component</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_component</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="bp">self</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_component</span><span class="o">.</span><span class="n">_wrappers</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_component</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">id</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="ow">in</span> <span class="p">[</span>
+            <span class="nb">id</span><span class="p">(</span><span class="n">_</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_component</span><span class="o">.</span><span class="n">_wrappers</span>
+        <span class="p">]:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_component</span><span class="o">.</span><span class="n">_wrappers</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_component</span> <span class="o">=</span> <span class="kc">None</span>
 
@@ -527,9 +587,14 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_effective_context</span> <span class="o">=</span> <span class="kc">None</span>
 
     <span class="k">def</span> <span class="nf">_update_effective_context</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">correct_effective_context</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_find_correct_effective_context</span><span class="p">()</span>
+        <span class="n">correct_effective_context</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_find_correct_effective_context</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">component</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">context</span>
+        <span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_effective_context</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">correct_effective_context</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_bind_effective_context</span><span class="p">(</span><span class="n">correct_effective_context</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">correct_effective_context</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">correct_effective_context</span><span class="o">.</span><span class="n">_dependent_wrappers</span><span class="p">:</span>
+                <span class="n">correct_effective_context</span><span class="o">.</span><span class="n">_dependent_wrappers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_warn_duplicate_indicator</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">component</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">deactivate</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
@@ -695,7 +760,6 @@
 <span class="sd">            &gt;&gt;&gt; wrapper.start_offset, wrapper.leaked_start_offset</span>
 <span class="sd">            (Offset((0, 1)), Offset((1, 2)))</span>
 
-<span class="sd">        Returns offset.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_synthetic_offset</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_synthetic_offset</span>
@@ -703,10 +767,45 @@
             <span class="n">indicator</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">indicator</span><span class="o">.</span><span class="n">indicator</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">indicator</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">indicator</span>
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">component</span><span class="p">,</span> <span class="n">_score</span><span class="o">.</span><span class="n">Component</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">indicator</span><span class="p">,</span> <span class="s2">&quot;leak&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_component</span><span class="o">.</span><span class="n">_get_timespan</span><span class="p">()</span><span class="o">.</span><span class="n">start_offset</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">component</span><span class="o">.</span><span class="n">_get_timespan</span><span class="p">()</span><span class="o">.</span><span class="n">start_offset</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_component</span><span class="o">.</span><span class="n">_get_timespan</span><span class="p">()</span><span class="o">.</span><span class="n">stop_offset</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">component</span><span class="o">.</span><span class="n">_get_timespan</span><span class="p">()</span><span class="o">.</span><span class="n">stop_offset</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">site_adjusted_start_offset</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Offset</span><span class="p">:</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets site-adjusted start offset.</span>
+
+<span class="sd">        ..  container:: example</span>
+
+<span class="sd">            &gt;&gt;&gt; staff = abjad.Staff(&quot;c&#39;4&quot;)</span>
+<span class="sd">            &gt;&gt;&gt; abjad.attach(abjad.Ottava(-1, site=&quot;before&quot;), staff[0])</span>
+<span class="sd">            &gt;&gt;&gt; abjad.attach(abjad.Ottava(0, site=&quot;after&quot;), staff[0])</span>
+<span class="sd">            &gt;&gt;&gt; for wrapper in abjad.get.wrappers(staff[0], abjad.Ottava):</span>
+<span class="sd">            ...     wrapper.indicator, wrapper.site_adjusted_start_offset</span>
+<span class="sd">            (Ottava(n=-1, site=&#39;before&#39;), Offset((0, 1)))</span>
+<span class="sd">            (Ottava(n=0, site=&#39;after&#39;), Offset((1, 4)))</span>
+
+<span class="sd">        Indicators with site equal to ``absolute_after``, ``after`` or ``closing``</span>
+<span class="sd">        give a site-adjusted start offset equal to the stop offset of the wrapper&#39;s</span>
+<span class="sd">        component.</span>
+
+<span class="sd">        Indicators with any other site give a site-adjusted start offset equal to the</span>
+<span class="sd">        start offset of the wrapper&#39;s component. This is the usual case, and means</span>
+<span class="sd">        that site-adjusted start offset equals vanilla start offset.</span>
+
+<span class="sd">        But if ``synthetic_offset`` is set then ``synthetic_offset`` is returned</span>
+<span class="sd">        directly without examining the format site at all.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">synthetic_offset</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">synthetic_offset</span>
+        <span class="n">site</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">unbundle_indicator</span><span class="p">(),</span> <span class="s2">&quot;site&quot;</span><span class="p">,</span> <span class="s2">&quot;before&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">site</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;absolute_after&quot;</span><span class="p">,</span> <span class="s2">&quot;after&quot;</span><span class="p">,</span> <span class="s2">&quot;closing&quot;</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">component</span><span class="o">.</span><span class="n">_get_timespan</span><span class="p">()</span><span class="o">.</span><span class="n">stop_offset</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">component</span><span class="o">.</span><span class="n">_get_timespan</span><span class="p">()</span><span class="o">.</span><span class="n">start_offset</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">start_offset</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Offset</span><span class="p">:</span>
@@ -716,16 +815,15 @@
 <span class="sd">        This is either the wrapper&#39;s synthetic offset or the start offset of the</span>
 <span class="sd">        wrapper&#39;s component.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_synthetic_offset</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_synthetic_offset</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_component</span><span class="o">.</span><span class="n">_get_timespan</span><span class="p">()</span><span class="o">.</span><span class="n">start_offset</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">synthetic_offset</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">synthetic_offset</span>
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">component</span><span class="p">,</span> <span class="n">_score</span><span class="o">.</span><span class="n">Component</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">component</span><span class="o">.</span><span class="n">_get_timespan</span><span class="p">()</span><span class="o">.</span><span class="n">start_offset</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">synthetic_offset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">synthetic_offset</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Offset</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets synthetic offset.</span>
-
-<span class="sd">        Returns offset or none.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_synthetic_offset</span>
 
@@ -762,6 +860,111 @@
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">indicator</span><span class="p">,</span> <span class="n">_tweaks</span><span class="o">.</span><span class="n">Bundle</span><span class="p">):</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">indicator</span><span class="o">.</span><span class="n">indicator</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">indicator</span></div></div>
+
+
+<span class="k">def</span> <span class="nf">_unsafe_attach</span><span class="p">(</span>
+    <span class="n">attachable</span><span class="p">,</span>
+    <span class="n">target</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">check_duplicate_indicator</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">context</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">deactivate</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">direction</span><span class="p">:</span> <span class="n">_enums</span><span class="o">.</span><span class="n">Vertical</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">do_not_test</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">synthetic_offset</span><span class="p">:</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Offset</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">tag</span><span class="p">:</span> <span class="n">_tag</span><span class="o">.</span><span class="n">Tag</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">wrapper</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Wrapper</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">attachable</span><span class="p">,</span> <span class="n">_tweaks</span><span class="o">.</span><span class="n">Bundle</span><span class="p">):</span>
+        <span class="n">nonbundle_attachable</span> <span class="o">=</span> <span class="n">attachable</span><span class="o">.</span><span class="n">indicator</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">nonbundle_attachable</span> <span class="o">=</span> <span class="n">attachable</span>
+    <span class="k">assert</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">nonbundle_attachable</span><span class="p">,</span> <span class="n">_tweaks</span><span class="o">.</span><span class="n">Bundle</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">nonbundle_attachable</span><span class="p">,</span> <span class="n">_tag</span><span class="o">.</span><span class="n">Tag</span><span class="p">):</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="s2">&quot;use the tag=None keyword instead of attach():</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="n">message</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;   </span><span class="si">{</span><span class="nb">repr</span><span class="p">(</span><span class="n">attachable</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">tag</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="n">_tag</span><span class="o">.</span><span class="n">Tag</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;must be be tag: </span><span class="si">{</span><span class="nb">repr</span><span class="p">(</span><span class="n">tag</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="k">assert</span> <span class="n">nonbundle_attachable</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">nonbundle_attachable</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">_score</span><span class="o">.</span><span class="n">Component</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">target</span><span class="p">)</span>
+
+    <span class="n">grace_prototype</span> <span class="o">=</span> <span class="p">(</span><span class="n">_score</span><span class="o">.</span><span class="n">AfterGraceContainer</span><span class="p">,</span> <span class="n">_score</span><span class="o">.</span><span class="n">BeforeGraceContainer</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">context</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">nonbundle_attachable</span><span class="p">,</span> <span class="n">grace_prototype</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;set context only for indicators, not </span><span class="si">{</span><span class="n">attachable</span><span class="si">!r}</span><span class="s2">.&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">deactivate</span> <span class="ow">is</span> <span class="kc">True</span> <span class="ow">and</span> <span class="n">tag</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;tag must exist when deactivate is true.&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">nonbundle_attachable</span><span class="p">,</span> <span class="s2">&quot;_attachment_test_all&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">do_not_test</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">nonbundle_attachable</span><span class="o">.</span><span class="n">_attachment_test_all</span><span class="p">(</span><span class="n">target</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">result</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="nb">list</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;  &quot;</span> <span class="o">+</span> <span class="n">_</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">result</span><span class="p">]</span>
+            <span class="n">message</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">nonbundle_attachable</span><span class="si">!r}</span><span class="s2">._attachment_test_all():&quot;</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">message</span><span class="p">)</span>
+            <span class="n">message</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">nonbundle_attachable</span><span class="p">,</span> <span class="n">grace_prototype</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">_score</span><span class="o">.</span><span class="n">Leaf</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;grace containers attach to single leaf only.&quot;</span><span class="p">)</span>
+        <span class="n">nonbundle_attachable</span><span class="o">.</span><span class="n">_attach</span><span class="p">(</span><span class="n">target</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">_score</span><span class="o">.</span><span class="n">Container</span><span class="p">):</span>
+        <span class="n">acceptable</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span>
+            <span class="n">nonbundle_attachable</span><span class="p">,</span> <span class="nb">dict</span> <span class="o">|</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">enum</span><span class="o">.</span><span class="n">Enum</span> <span class="o">|</span> <span class="n">_tag</span><span class="o">.</span><span class="n">Tag</span> <span class="o">|</span> <span class="n">Wrapper</span>
+        <span class="p">):</span>
+            <span class="n">acceptable</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">nonbundle_attachable</span><span class="p">,</span> <span class="s2">&quot;can_attach_to_containers&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span>
+            <span class="n">acceptable</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">acceptable</span><span class="p">:</span>
+            <span class="n">message</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;can not attach </span><span class="si">{</span><span class="n">attachable</span><span class="si">!r}</span><span class="s2"> to containers: </span><span class="si">{</span><span class="n">target</span><span class="si">!r}</span><span class="s2">&quot;</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">_score</span><span class="o">.</span><span class="n">Leaf</span><span class="p">):</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;indicator </span><span class="si">{</span><span class="n">attachable</span><span class="si">!r}</span><span class="s2"> must attach to leaf, not </span><span class="si">{</span><span class="n">target</span><span class="si">!r}</span><span class="s2">.&quot;</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+
+    <span class="n">component</span> <span class="o">=</span> <span class="n">target</span>
+    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">component</span><span class="p">,</span> <span class="n">_score</span><span class="o">.</span><span class="n">Component</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">component</span><span class="p">)</span>
+
+    <span class="n">annotation</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">attachable</span><span class="p">,</span> <span class="n">Wrapper</span><span class="p">):</span>
+        <span class="n">annotation</span> <span class="o">=</span> <span class="n">attachable</span><span class="o">.</span><span class="n">annotation</span>
+        <span class="n">context</span> <span class="o">=</span> <span class="n">context</span> <span class="ow">or</span> <span class="n">attachable</span><span class="o">.</span><span class="n">context</span>
+        <span class="n">deactivate</span> <span class="o">=</span> <span class="n">deactivate</span> <span class="ow">or</span> <span class="n">attachable</span><span class="o">.</span><span class="n">deactivate</span>
+        <span class="n">synthetic_offset</span> <span class="o">=</span> <span class="n">synthetic_offset</span> <span class="ow">or</span> <span class="n">attachable</span><span class="o">.</span><span class="n">synthetic_offset</span>
+        <span class="n">tag</span> <span class="o">=</span> <span class="n">tag</span> <span class="ow">or</span> <span class="n">attachable</span><span class="o">.</span><span class="n">tag</span>
+        <span class="n">attachable</span><span class="o">.</span><span class="n">_detach</span><span class="p">()</span>
+        <span class="n">attachable</span> <span class="o">=</span> <span class="n">attachable</span><span class="o">.</span><span class="n">indicator</span>
+
+    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">nonbundle_attachable</span><span class="p">,</span> <span class="s2">&quot;context&quot;</span><span class="p">):</span>
+        <span class="n">context</span> <span class="o">=</span> <span class="n">context</span> <span class="ow">or</span> <span class="n">nonbundle_attachable</span><span class="o">.</span><span class="n">context</span>
+
+    <span class="k">if</span> <span class="n">tag</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">tag</span> <span class="o">=</span> <span class="n">_tag</span><span class="o">.</span><span class="n">Tag</span><span class="p">()</span>
+
+    <span class="n">wrapper_</span> <span class="o">=</span> <span class="n">Wrapper</span><span class="p">(</span>
+        <span class="n">annotation</span><span class="o">=</span><span class="n">annotation</span><span class="p">,</span>
+        <span class="n">check_duplicate_indicator</span><span class="o">=</span><span class="n">check_duplicate_indicator</span><span class="p">,</span>
+        <span class="n">component</span><span class="o">=</span><span class="n">component</span><span class="p">,</span>
+        <span class="n">context</span><span class="o">=</span><span class="n">context</span><span class="p">,</span>
+        <span class="n">deactivate</span><span class="o">=</span><span class="n">deactivate</span><span class="p">,</span>
+        <span class="n">direction</span><span class="o">=</span><span class="n">direction</span><span class="p">,</span>
+        <span class="n">indicator</span><span class="o">=</span><span class="n">attachable</span><span class="p">,</span>
+        <span class="n">synthetic_offset</span><span class="o">=</span><span class="n">synthetic_offset</span><span class="p">,</span>
+        <span class="n">tag</span><span class="o">=</span><span class="n">tag</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">wrapper</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">wrapper_</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
 
 
 <div class="viewcode-block" id="annotate"><a class="viewcode-back" href="../../api/abjad/bind.html#abjad.bind.annotate">[docs]</a><span class="k">def</span> <span class="nf">annotate</span><span class="p">(</span><span class="n">component</span><span class="p">,</span> <span class="n">annotation</span><span class="p">,</span> <span class="n">indicator</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
@@ -806,30 +1009,72 @@
     <span class="n">Wrapper</span><span class="p">(</span><span class="n">annotation</span><span class="o">=</span><span class="n">annotation</span><span class="p">,</span> <span class="n">component</span><span class="o">=</span><span class="n">component</span><span class="p">,</span> <span class="n">indicator</span><span class="o">=</span><span class="n">indicator</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="attach"><a class="viewcode-back" href="../../api/abjad/bind.html#abjad.bind.attach">[docs]</a><span class="k">def</span> <span class="nf">attach</span><span class="p">(</span>  <span class="c1"># noqa: 302</span>
+<span class="nd">@typing</span><span class="o">.</span><span class="n">overload</span>
+<span class="k">def</span> <span class="nf">attach</span><span class="p">(</span>
     <span class="n">attachable</span><span class="p">,</span>
     <span class="n">target</span><span class="p">,</span>
-    <span class="n">check_duplicate_indicator</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-    <span class="n">context</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-    <span class="n">deactivate</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">check_duplicate_indicator</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">context</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">deactivate</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="n">direction</span><span class="p">:</span> <span class="n">_enums</span><span class="o">.</span><span class="n">Vertical</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">do_not_test</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-    <span class="n">synthetic_offset</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-    <span class="n">tag</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-    <span class="n">wrapper</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-<span class="p">):</span>
+    <span class="n">do_not_test</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">synthetic_offset</span><span class="p">:</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Offset</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">tag</span><span class="p">:</span> <span class="n">_tag</span><span class="o">.</span><span class="n">Tag</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">wrapper</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span><span class="kc">True</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Wrapper</span><span class="p">:</span>
+    <span class="o">...</span>
+
+
+<span class="nd">@typing</span><span class="o">.</span><span class="n">overload</span>
+<span class="k">def</span> <span class="nf">attach</span><span class="p">(</span>
+    <span class="n">attachable</span><span class="p">,</span>
+    <span class="n">target</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">check_duplicate_indicator</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">context</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">deactivate</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">direction</span><span class="p">:</span> <span class="n">_enums</span><span class="o">.</span><span class="n">Vertical</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">do_not_test</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">synthetic_offset</span><span class="p">:</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Offset</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">tag</span><span class="p">:</span> <span class="n">_tag</span><span class="o">.</span><span class="n">Tag</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">wrapper</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span><span class="kc">False</span><span class="p">],</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="o">...</span>
+
+
+<div class="viewcode-block" id="attach"><a class="viewcode-back" href="../../api/abjad/bind.html#abjad.bind.attach">[docs]</a><span class="k">def</span> <span class="nf">attach</span><span class="p">(</span>
+    <span class="n">attachable</span><span class="p">,</span>
+    <span class="n">target</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">check_duplicate_indicator</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">context</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">deactivate</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">direction</span><span class="p">:</span> <span class="n">_enums</span><span class="o">.</span><span class="n">Vertical</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">do_not_test</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">synthetic_offset</span><span class="p">:</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Offset</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">tag</span><span class="p">:</span> <span class="n">_tag</span><span class="o">.</span><span class="n">Tag</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">wrapper</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Wrapper</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
     <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Attaches ``attachable`` to ``target``.</span>
+<span class="sd">    Attaches ``attachable`` to (leaf or container) ``target``.</span>
 
-<span class="sd">    First form attaches indicator ``attachable`` to single leaf ``target``.</span>
+<span class="sd">    Acceptable types of ``attachable``:</span>
 
-<span class="sd">    Second for attaches grace container ``attachable`` to leaf ``target``.</span>
+<span class="sd">    ::</span>
 
-<span class="sd">    Third form attaches wrapper ``attachable`` to unknown (?) ``target``.</span>
+<span class="sd">        * indicator</span>
+<span class="sd">        * abjad.Wrapper</span>
+<span class="sd">        * abjad.BeforeGraceContainer</span>
+<span class="sd">        * abjad.AfterGraceContainer</span>
+
+<span class="sd">    The class of ``target`` is almost always ``abjad.Leaf``. A small number</span>
+<span class="sd">    of indicators (like ``abjad.LilyPondLiteral``) can attach to both ``abjad.Leaf``</span>
+<span class="sd">    and ``abjad.Container`` objects.</span>
+
+<span class="sd">    Attaches clef to first note in staff:</span>
 
 <span class="sd">    ..  container:: example</span>
-
-<span class="sd">        Attaches clef to first note in staff:</span>
 
 <span class="sd">        &gt;&gt;&gt; staff = abjad.Staff(&quot;c&#39;4 d&#39; e&#39; f&#39;&quot;)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.attach(abjad.Clef(&quot;alto&quot;), staff[0])</span>
@@ -902,22 +1147,14 @@
 <span class="sd">        (Note(&quot;e&#39;4&quot;), Clef(name=&#39;alto&#39;, hide=False))</span>
 <span class="sd">        (Note(&quot;f&#39;4&quot;), Clef(name=&#39;alto&#39;, hide=False))</span>
 
-<span class="sd">        Derives context from default ``attachable`` context when ``context`` is none.</span>
+<span class="sd">        Derives context from ``attachable.context`` context when ``context=None``.</span>
 
 <span class="sd">    ..  container:: example</span>
 
-<span class="sd">        Two contexted indicators can not be attached at the same offset if both</span>
-<span class="sd">        indicators are active:</span>
-
-<span class="sd">        &gt;&gt;&gt; staff = abjad.Staff(&quot;c&#39;4 d&#39; e&#39; f&#39;&quot;)</span>
-<span class="sd">        &gt;&gt;&gt; abjad.attach(abjad.Clef(&quot;treble&quot;), staff[0])</span>
-<span class="sd">        &gt;&gt;&gt; abjad.attach(abjad.Clef(&quot;alto&quot;), staff[0], check_duplicate_indicator=True)</span>
-<span class="sd">        Traceback (most recent call last):</span>
-<span class="sd">            ...</span>
-<span class="sd">        abjad...PersistentIndicatorError: Can not attach ...</span>
-
-<span class="sd">        But simultaneous contexted indicators are allowed if only one is active (and all</span>
-<span class="sd">        others are inactive):</span>
+<span class="sd">        If multiple contexted indicators are attached at the same offset then</span>
+<span class="sd">        ``abjad.attach()`` raises ``abjad.PersistentIndicatorError`` if all</span>
+<span class="sd">        indicators are active. But simultaneous contexted indicators are</span>
+<span class="sd">        allowed if only one is active (and all others are inactive):</span>
 
 <span class="sd">        &gt;&gt;&gt; staff = abjad.Staff(&quot;c&#39;4 d&#39; e&#39; f&#39;&quot;)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.attach(abjad.Clef(&quot;treble&quot;), staff[0])</span>
@@ -998,119 +1235,35 @@
 <span class="sd">        (Note(&quot;e&#39;4&quot;), Clef(name=&#39;alto&#39;, hide=False))</span>
 <span class="sd">        (Note(&quot;f&#39;4&quot;), Clef(name=&#39;alto&#39;, hide=False))</span>
 
-<span class="sd">    ..  container:: example</span>
+<span class="sd">        Note that ``tag`` must be an ``abjad.Tag`` when ``deactivate=True``.</span>
 
-<span class="sd">        Tag must exist when ``deactivate`` is true:</span>
+<span class="sd">    Return type depends on value of ``wrapper``:</span>
 
-<span class="sd">        &gt;&gt;&gt; staff = abjad.Staff(&quot;c&#39;4 d&#39; e&#39; f&#39;&quot;)</span>
-<span class="sd">        &gt;&gt;&gt; abjad.attach(abjad.Clef(&#39;alto&#39;), staff[0], deactivate=True)</span>
-<span class="sd">        Traceback (most recent call last):</span>
-<span class="sd">            ...</span>
-<span class="sd">        Exception: tag must exist when deactivate is true.</span>
+<span class="sd">        * returns ``abjad.Wrapper`` when ``wrapper`` is true</span>
+<span class="sd">        * returns none when ``wrapper`` is not true</span>
 
-<span class="sd">    ..  container:: example</span>
-
-<span class="sd">        Returns wrapper when ``wrapper`` is true:</span>
-
-<span class="sd">        &gt;&gt;&gt; staff = abjad.Staff(&quot;c&#39;4 d&#39; e&#39; f&#39;&quot;)</span>
-<span class="sd">        &gt;&gt;&gt; abjad.attach(abjad.Clef(&#39;alto&#39;), staff[0], wrapper=True)</span>
-<span class="sd">        Wrapper(annotation=None, context=&#39;Staff&#39;, deactivate=False, direction=None, indicator=Clef(name=&#39;alto&#39;, hide=False), synthetic_offset=None, tag=Tag(string=&#39;&#39;))</span>
-
-<span class="sd">    Otherwise returns none.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">attachable</span><span class="p">,</span> <span class="n">_tweaks</span><span class="o">.</span><span class="n">Bundle</span><span class="p">):</span>
         <span class="n">nonbundle_attachable</span> <span class="o">=</span> <span class="n">attachable</span><span class="o">.</span><span class="n">indicator</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">nonbundle_attachable</span> <span class="o">=</span> <span class="n">attachable</span>
     <span class="k">assert</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">nonbundle_attachable</span><span class="p">,</span> <span class="n">_tweaks</span><span class="o">.</span><span class="n">Bundle</span><span class="p">)</span>
-
-    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">nonbundle_attachable</span><span class="p">,</span> <span class="n">_tag</span><span class="o">.</span><span class="n">Tag</span><span class="p">):</span>
-        <span class="n">message</span> <span class="o">=</span> <span class="s2">&quot;use the tag=None keyword instead of attach():</span><span class="se">\n</span><span class="s2">&quot;</span>
-        <span class="n">message</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;   </span><span class="si">{</span><span class="nb">repr</span><span class="p">(</span><span class="n">attachable</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
-        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
-
-    <span class="k">if</span> <span class="n">tag</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="n">_tag</span><span class="o">.</span><span class="n">Tag</span><span class="p">):</span>
-        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;must be be tag: </span><span class="si">{</span><span class="nb">repr</span><span class="p">(</span><span class="n">tag</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-
     <span class="k">assert</span> <span class="n">nonbundle_attachable</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">nonbundle_attachable</span><span class="p">)</span>
-    <span class="k">assert</span> <span class="n">target</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">target</span><span class="p">)</span>
-
-    <span class="k">if</span> <span class="n">context</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">nonbundle_attachable</span><span class="p">,</span> <span class="s2">&quot;_main_leaf&quot;</span><span class="p">):</span>
-        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;set context only for indicators, not </span><span class="si">{</span><span class="n">attachable</span><span class="si">!r}</span><span class="s2">.&quot;</span><span class="p">)</span>
-
-    <span class="k">if</span> <span class="n">deactivate</span> <span class="ow">is</span> <span class="kc">True</span> <span class="ow">and</span> <span class="n">tag</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;tag must exist when deactivate is true.&quot;</span><span class="p">)</span>
-
-    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">nonbundle_attachable</span><span class="p">,</span> <span class="s2">&quot;_before_attach&quot;</span><span class="p">):</span>
-        <span class="n">nonbundle_attachable</span><span class="o">.</span><span class="n">_before_attach</span><span class="p">(</span><span class="n">target</span><span class="p">)</span>
-
-    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">nonbundle_attachable</span><span class="p">,</span> <span class="s2">&quot;_attachment_test_all&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">do_not_test</span><span class="p">:</span>
-        <span class="n">result</span> <span class="o">=</span> <span class="n">nonbundle_attachable</span><span class="o">.</span><span class="n">_attachment_test_all</span><span class="p">(</span><span class="n">target</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">result</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">True</span><span class="p">:</span>
-            <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="nb">list</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
-            <span class="n">result</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;  &quot;</span> <span class="o">+</span> <span class="n">_</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">result</span><span class="p">]</span>
-            <span class="n">message</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">nonbundle_attachable</span><span class="si">!r}</span><span class="s2">._attachment_test_all():&quot;</span>
-            <span class="n">result</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">message</span><span class="p">)</span>
-            <span class="n">message</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
-            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
-
-    <span class="n">prototype</span> <span class="o">=</span> <span class="p">(</span><span class="n">_score</span><span class="o">.</span><span class="n">AfterGraceContainer</span><span class="p">,</span> <span class="n">_score</span><span class="o">.</span><span class="n">BeforeGraceContainer</span><span class="p">)</span>
-    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">nonbundle_attachable</span><span class="p">,</span> <span class="n">prototype</span><span class="p">):</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="s2">&quot;written_duration&quot;</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;grace containers attach to single leaf only.&quot;</span><span class="p">)</span>
-        <span class="n">nonbundle_attachable</span><span class="o">.</span><span class="n">_attach</span><span class="p">(</span><span class="n">target</span><span class="p">)</span>
-        <span class="k">return</span>
-
     <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">_score</span><span class="o">.</span><span class="n">Component</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">target</span><span class="p">)</span>
-
-    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">_score</span><span class="o">.</span><span class="n">Container</span><span class="p">):</span>
-        <span class="n">acceptable</span> <span class="o">=</span> <span class="kc">False</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span>
-            <span class="n">nonbundle_attachable</span><span class="p">,</span> <span class="nb">dict</span> <span class="o">|</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">enum</span><span class="o">.</span><span class="n">Enum</span> <span class="o">|</span> <span class="n">_tag</span><span class="o">.</span><span class="n">Tag</span> <span class="o">|</span> <span class="n">Wrapper</span>
-        <span class="p">):</span>
-            <span class="n">acceptable</span> <span class="o">=</span> <span class="kc">True</span>
-        <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">nonbundle_attachable</span><span class="p">,</span> <span class="s2">&quot;_can_attach_to_containers&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span>
-            <span class="n">acceptable</span> <span class="o">=</span> <span class="kc">True</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">acceptable</span><span class="p">:</span>
-            <span class="n">message</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;can not attach </span><span class="si">{</span><span class="n">attachable</span><span class="si">!r}</span><span class="s2"> to containers: </span><span class="si">{</span><span class="n">target</span><span class="si">!r}</span><span class="s2">&quot;</span>
-            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">_score</span><span class="o">.</span><span class="n">Leaf</span><span class="p">):</span>
-        <span class="n">message</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;indicator </span><span class="si">{</span><span class="n">attachable</span><span class="si">!r}</span><span class="s2"> must attach to leaf, not </span><span class="si">{</span><span class="n">target</span><span class="si">!r}</span><span class="s2">.&quot;</span>
-        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
-
-    <span class="n">component</span> <span class="o">=</span> <span class="n">target</span>
-    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">component</span><span class="p">,</span> <span class="n">_score</span><span class="o">.</span><span class="n">Component</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">component</span><span class="p">)</span>
-
-    <span class="n">annotation</span> <span class="o">=</span> <span class="kc">None</span>
-    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">attachable</span><span class="p">,</span> <span class="n">Wrapper</span><span class="p">):</span>
-        <span class="n">annotation</span> <span class="o">=</span> <span class="n">attachable</span><span class="o">.</span><span class="n">annotation</span>
-        <span class="n">context</span> <span class="o">=</span> <span class="n">context</span> <span class="ow">or</span> <span class="n">attachable</span><span class="o">.</span><span class="n">context</span>
-        <span class="n">deactivate</span> <span class="o">=</span> <span class="n">deactivate</span> <span class="ow">or</span> <span class="n">attachable</span><span class="o">.</span><span class="n">deactivate</span>
-        <span class="n">synthetic_offset</span> <span class="o">=</span> <span class="n">synthetic_offset</span> <span class="ow">or</span> <span class="n">attachable</span><span class="o">.</span><span class="n">synthetic_offset</span>
-        <span class="n">tag</span> <span class="o">=</span> <span class="n">tag</span> <span class="ow">or</span> <span class="n">attachable</span><span class="o">.</span><span class="n">tag</span>
-        <span class="n">attachable</span><span class="o">.</span><span class="n">_detach</span><span class="p">()</span>
-        <span class="n">attachable</span> <span class="o">=</span> <span class="n">attachable</span><span class="o">.</span><span class="n">indicator</span>
-
-    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">nonbundle_attachable</span><span class="p">,</span> <span class="s2">&quot;context&quot;</span><span class="p">):</span>
-        <span class="n">context</span> <span class="o">=</span> <span class="n">context</span> <span class="ow">or</span> <span class="n">nonbundle_attachable</span><span class="o">.</span><span class="n">context</span>
-
-    <span class="k">if</span> <span class="n">tag</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">tag</span> <span class="o">=</span> <span class="n">_tag</span><span class="o">.</span><span class="n">Tag</span><span class="p">()</span>
-
-    <span class="n">wrapper_</span> <span class="o">=</span> <span class="n">Wrapper</span><span class="p">(</span>
-        <span class="n">annotation</span><span class="o">=</span><span class="n">annotation</span><span class="p">,</span>
+    <span class="n">_before_attach</span><span class="p">(</span><span class="n">nonbundle_attachable</span><span class="p">,</span> <span class="n">deactivate</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">_unsafe_attach</span><span class="p">(</span>
+        <span class="n">attachable</span><span class="p">,</span>
+        <span class="n">target</span><span class="p">,</span>
         <span class="n">check_duplicate_indicator</span><span class="o">=</span><span class="n">check_duplicate_indicator</span><span class="p">,</span>
-        <span class="n">component</span><span class="o">=</span><span class="n">component</span><span class="p">,</span>
         <span class="n">context</span><span class="o">=</span><span class="n">context</span><span class="p">,</span>
         <span class="n">deactivate</span><span class="o">=</span><span class="n">deactivate</span><span class="p">,</span>
         <span class="n">direction</span><span class="o">=</span><span class="n">direction</span><span class="p">,</span>
-        <span class="n">indicator</span><span class="o">=</span><span class="n">attachable</span><span class="p">,</span>
+        <span class="n">do_not_test</span><span class="o">=</span><span class="n">do_not_test</span><span class="p">,</span>
         <span class="n">synthetic_offset</span><span class="o">=</span><span class="n">synthetic_offset</span><span class="p">,</span>
         <span class="n">tag</span><span class="o">=</span><span class="n">tag</span><span class="p">,</span>
+        <span class="n">wrapper</span><span class="o">=</span><span class="n">wrapper</span><span class="p">,</span>
     <span class="p">)</span>
-
-    <span class="k">if</span> <span class="n">wrapper</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">wrapper_</span></div>
+    <span class="k">return</span> <span class="n">result</span></div>
 
 
 <div class="viewcode-block" id="detach"><a class="viewcode-back" href="../../api/abjad/bind.html#abjad.bind.detach">[docs]</a><span class="k">def</span> <span class="nf">detach</span><span class="p">(</span><span class="n">argument</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">by_id</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
@@ -1367,10 +1520,8 @@
                 <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">wrapper</span><span class="p">,</span> <span class="n">argument</span><span class="p">):</span>
                     <span class="n">target</span><span class="o">.</span><span class="n">_wrappers</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">wrapper</span><span class="p">)</span>
                     <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">wrapper</span><span class="p">)</span>
-                <span class="c1"># elif isinstance(wrapper.indicator, argument):</span>
                 <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">wrapper</span><span class="o">.</span><span class="n">unbundle_indicator</span><span class="p">(),</span> <span class="n">argument</span><span class="p">):</span>
                     <span class="n">wrapper</span><span class="o">.</span><span class="n">_detach</span><span class="p">()</span>
-                    <span class="c1"># result.append(wrapper.indicator)</span>
                     <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">wrapper</span><span class="o">.</span><span class="n">get_item</span><span class="p">())</span>
             <span class="n">result</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">result</span>
@@ -1386,16 +1537,13 @@
                 <span class="k">if</span> <span class="n">wrapper</span> <span class="ow">is</span> <span class="n">argument</span><span class="p">:</span>
                     <span class="n">wrapper</span><span class="o">.</span><span class="n">_detach</span><span class="p">()</span>
                     <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">wrapper</span><span class="p">)</span>
-                <span class="c1"># elif wrapper.indicator == argument:</span>
                 <span class="k">elif</span> <span class="n">wrapper</span><span class="o">.</span><span class="n">unbundle_indicator</span><span class="p">()</span> <span class="o">==</span> <span class="n">argument</span><span class="p">:</span>
-                    <span class="c1"># if by_id is True and id(argument) != id(wrapper.indicator):</span>
                     <span class="k">if</span> <span class="n">by_id</span> <span class="ow">is</span> <span class="kc">True</span> <span class="ow">and</span> <span class="nb">id</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">id</span><span class="p">(</span>
                         <span class="n">wrapper</span><span class="o">.</span><span class="n">unbundle_indicator</span><span class="p">()</span>
                     <span class="p">):</span>
                         <span class="k">pass</span>
                     <span class="k">else</span><span class="p">:</span>
                         <span class="n">wrapper</span><span class="o">.</span><span class="n">_detach</span><span class="p">()</span>
-                        <span class="c1"># result.append(wrapper.indicator)</span>
                         <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">wrapper</span><span class="o">.</span><span class="n">get_item</span><span class="p">())</span>
             <span class="n">result</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">result</span>

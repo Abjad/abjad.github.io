@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>abjadext.nauert.qschemas &mdash; Abjad 3.16 documentation</title>
+  <title>abjadext.nauert.qschemas &mdash; Abjad 3.17 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/abjad.css" type="text/css" />
@@ -34,11 +34,11 @@
   <div class="wy-grid-for-nav">
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search"  style="background: #aa44ee" >
+        <div class="wy-side-nav-search"  style="background: #bb6611" >
 
 
     <a href="../../../index.html" class="icon icon-home" alt="Documentation
-    Home"> Abjad 3.16
+    Home"> Abjad 3.17
 
 
 
@@ -111,7 +111,7 @@
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #aa44ee" >
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #bb6611" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../../index.html">Abjad</a>
       </nav>
@@ -325,7 +325,7 @@
 
 <span class="sd">        &gt;&gt;&gt; beatspan = abjad.Duration(5, 16)</span>
 <span class="sd">        &gt;&gt;&gt; search_tree = nauert.UnweightedSearchTree({7: None})</span>
-<span class="sd">        &gt;&gt;&gt; tempo = abjad.MetronomeMark((1, 4), 54)</span>
+<span class="sd">        &gt;&gt;&gt; tempo = abjad.MetronomeMark(abjad.Duration(1, 4), 54)</span>
 <span class="sd">        &gt;&gt;&gt; q_schema = nauert.BeatwiseQSchema(</span>
 <span class="sd">        ...     beatspan=beatspan,</span>
 <span class="sd">        ...     search_tree=search_tree,</span>
@@ -439,7 +439,7 @@
         <span class="n">search_tree</span> <span class="o">=</span> <span class="n">keywords</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;search_tree&quot;</span><span class="p">,</span> <span class="n">UnweightedSearchTree</span><span class="p">())</span>
         <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">search_tree</span><span class="p">,</span> <span class="n">SearchTree</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_search_tree</span> <span class="o">=</span> <span class="n">search_tree</span>
-        <span class="n">tempo</span> <span class="o">=</span> <span class="n">keywords</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;tempo&quot;</span><span class="p">,</span> <span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="mi">60</span><span class="p">))</span>
+        <span class="n">tempo</span> <span class="o">=</span> <span class="n">keywords</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;tempo&quot;</span><span class="p">,</span> <span class="p">(</span><span class="n">abjad</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="mi">60</span><span class="p">))</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">tempo</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
             <span class="n">tempo</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">MetronomeMark</span><span class="p">(</span><span class="o">*</span><span class="n">tempo</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_tempo</span> <span class="o">=</span> <span class="n">tempo</span>
@@ -511,7 +511,7 @@
 
 <span class="sd">        &gt;&gt;&gt; search_tree = nauert.UnweightedSearchTree({7: None})</span>
 <span class="sd">        &gt;&gt;&gt; time_signature = abjad.TimeSignature((3, 4))</span>
-<span class="sd">        &gt;&gt;&gt; tempo = abjad.MetronomeMark((1, 4), 54)</span>
+<span class="sd">        &gt;&gt;&gt; tempo = abjad.MetronomeMark(abjad.Duration(1, 4), 54)</span>
 <span class="sd">        &gt;&gt;&gt; use_full_measure = True</span>
 <span class="sd">        &gt;&gt;&gt; q_schema = nauert.MeasurewiseQSchema(</span>
 <span class="sd">        ...     search_tree=search_tree,</span>
@@ -661,13 +661,17 @@
         <span class="n">search_tree</span> <span class="o">=</span> <span class="n">keywords</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;search_tree&quot;</span><span class="p">,</span> <span class="n">UnweightedSearchTree</span><span class="p">())</span>
         <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">search_tree</span><span class="p">,</span> <span class="n">SearchTree</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_search_tree</span> <span class="o">=</span> <span class="n">search_tree</span>
-        <span class="n">tempo</span> <span class="o">=</span> <span class="n">keywords</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;tempo&quot;</span><span class="p">,</span> <span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="mi">60</span><span class="p">))</span>
+        <span class="n">tempo</span> <span class="o">=</span> <span class="n">keywords</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;tempo&quot;</span><span class="p">,</span> <span class="p">(</span><span class="n">abjad</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="mi">60</span><span class="p">))</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">tempo</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
             <span class="n">tempo</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">MetronomeMark</span><span class="p">(</span><span class="o">*</span><span class="n">tempo</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_tempo</span> <span class="o">=</span> <span class="n">tempo</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_time_signature</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">TimeSignature</span><span class="p">(</span>
-            <span class="n">keywords</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;time_signature&quot;</span><span class="p">,</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
-        <span class="p">)</span>
+        <span class="n">time_signature</span> <span class="o">=</span> <span class="n">keywords</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;time_signature&quot;</span><span class="p">,</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">time_signature</span><span class="p">,</span> <span class="n">abjad</span><span class="o">.</span><span class="n">TimeSignature</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_time_signature</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">TimeSignature</span><span class="p">(</span><span class="n">time_signature</span><span class="o">.</span><span class="n">pair</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">time_signature</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_time_signature</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">TimeSignature</span><span class="p">(</span><span class="n">time_signature</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="n">time_signature</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_use_full_measure</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">keywords</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;use_full_measure&quot;</span><span class="p">))</span>
         <span class="n">QSchema</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">arguments</span><span class="p">,</span> <span class="o">**</span><span class="n">keywords</span><span class="p">)</span>
 

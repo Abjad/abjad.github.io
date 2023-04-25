@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>abjad.metricmodulation &mdash; Abjad 3.16 documentation</title>
+  <title>abjad.metricmodulation &mdash; Abjad 3.17 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/abjad.css" type="text/css" />
@@ -34,11 +34,11 @@
   <div class="wy-grid-for-nav">
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search"  style="background: #aa44ee" >
+        <div class="wy-side-nav-search"  style="background: #bb6611" >
 
 
     <a href="../../index.html" class="icon icon-home" alt="Documentation
-    Home"> Abjad 3.16
+    Home"> Abjad 3.17
 
 
 
@@ -111,7 +111,7 @@
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #aa44ee" >
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #bb6611" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../index.html">Abjad</a>
       </nav>
@@ -127,7 +127,8 @@
     <div itemprop="articleBody">
     
   <h1>Source code for abjad.metricmodulation</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">typing</span>
+<span></span><span class="kn">import</span> <span class="nn">dataclasses</span>
+<span class="kn">import</span> <span class="nn">typing</span>
 
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">_getlib</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">contributions</span> <span class="k">as</span> <span class="n">_contributions</span>
@@ -137,7 +138,8 @@
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">score</span> <span class="k">as</span> <span class="n">_score</span>
 
 
-<div class="viewcode-block" id="MetricModulation"><a class="viewcode-back" href="../../api/abjad/metricmodulation.html#abjad.metricmodulation.MetricModulation">[docs]</a><span class="k">class</span> <span class="nc">MetricModulation</span><span class="p">:</span>
+<div class="viewcode-block" id="MetricModulation"><a class="viewcode-back" href="../../api/abjad/metricmodulation.html#abjad.metricmodulation.MetricModulation">[docs]</a><span class="nd">@dataclasses</span><span class="o">.</span><span class="n">dataclass</span><span class="p">(</span><span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">slots</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">unsafe_hash</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">MetricModulation</span><span class="p">:</span>
     <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Metric modulation.</span>
 
@@ -420,16 +422,14 @@
 <span class="sd">        Attach metric modulations to generate score output:</span>
 
 <span class="sd">        &gt;&gt;&gt; staff = abjad.Staff(&quot;c&#39;4 d&#39;4 e&#39;4 f&#39;4 e&#39;4 d&#39;4&quot;)</span>
+<span class="sd">        &gt;&gt;&gt; score = abjad.Score([staff], name=&quot;Score&quot;)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.attach(abjad.TimeSignature((3, 4)), staff[0])</span>
-<span class="sd">        &gt;&gt;&gt; score = abjad.Score([staff])</span>
-
 <span class="sd">        &gt;&gt;&gt; metric_modulation = abjad.MetricModulation(</span>
 <span class="sd">        ...     left_rhythm=abjad.Note(&quot;c4&quot;),</span>
 <span class="sd">        ...     right_rhythm=abjad.Note(&quot;c8.&quot;),</span>
 <span class="sd">        ... )</span>
 <span class="sd">        &gt;&gt;&gt; abjad.attach(metric_modulation, staff[3], direction=abjad.UP)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.override(staff).TextScript.staff_padding = 2.5</span>
-
 <span class="sd">        &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile([r&#39;\include &quot;abjad.ily&quot;&#39;, score])</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(lilypond_file) # doctest: +SKIP</span>
 
@@ -437,7 +437,7 @@
 
 <span class="sd">            &gt;&gt;&gt; string = abjad.lilypond(score)</span>
 <span class="sd">            &gt;&gt;&gt; print(string)</span>
-<span class="sd">            \new Score</span>
+<span class="sd">            \context Score = &quot;Score&quot;</span>
 <span class="sd">            &lt;&lt;</span>
 <span class="sd">                \new Staff</span>
 <span class="sd">                \with</span>
@@ -458,41 +458,26 @@
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="vm">__slots__</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="s2">&quot;_hide&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;_left_markup&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;_left_rhythm&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;_right_markup&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;_right_rhythm&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;_scale&quot;</span><span class="p">,</span>
-    <span class="p">)</span>
+    <span class="n">left_rhythm</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Any</span>
+    <span class="n">right_rhythm</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Any</span>
+    <span class="n">hide</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">left_markup</span><span class="p">:</span> <span class="n">_indicators</span><span class="o">.</span><span class="n">Markup</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">right_markup</span><span class="p">:</span> <span class="n">_indicators</span><span class="o">.</span><span class="n">Markup</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">scale</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span> <span class="o">|</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
 
     <span class="n">directed</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">ClassVar</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span>
-        <span class="n">left_rhythm</span><span class="p">,</span>
-        <span class="n">right_rhythm</span><span class="p">,</span>
-        <span class="o">*</span><span class="p">,</span>
-        <span class="n">hide</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-        <span class="n">left_markup</span><span class="p">:</span> <span class="n">_indicators</span><span class="o">.</span><span class="n">Markup</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">right_markup</span><span class="p">:</span> <span class="n">_indicators</span><span class="o">.</span><span class="n">Markup</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">scale</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span> <span class="o">|</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_hide</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">hide</span><span class="p">)</span>
-        <span class="n">left_rhythm</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_initialize_rhythm</span><span class="p">(</span><span class="n">left_rhythm</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_left_rhythm</span> <span class="o">=</span> <span class="n">left_rhythm</span>
-        <span class="n">right_rhythm</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_initialize_rhythm</span><span class="p">(</span><span class="n">right_rhythm</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_right_rhythm</span> <span class="o">=</span> <span class="n">right_rhythm</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_right_rhythm</span> <span class="o">=</span> <span class="n">right_rhythm</span>
-        <span class="k">if</span> <span class="n">left_markup</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">left_markup</span><span class="p">,</span> <span class="n">_indicators</span><span class="o">.</span><span class="n">Markup</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_left_markup</span> <span class="o">=</span> <span class="n">left_markup</span>
-        <span class="k">if</span> <span class="n">right_markup</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">right_markup</span><span class="p">,</span> <span class="n">_indicators</span><span class="o">.</span><span class="n">Markup</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_right_markup</span> <span class="o">=</span> <span class="n">right_markup</span>
-        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">scale</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">scale</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_scale</span> <span class="o">=</span> <span class="n">scale</span>
+<div class="viewcode-block" id="MetricModulation.__post_init__"><a class="viewcode-back" href="../../api/abjad/metricmodulation.html#abjad.metricmodulation.MetricModulation.__post_init__">[docs]</a>    <span class="k">def</span> <span class="nf">__post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hide</span><span class="p">,</span> <span class="nb">bool</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hide</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">left_markup</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">left_markup</span><span class="p">,</span> <span class="n">_indicators</span><span class="o">.</span><span class="n">Markup</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">left_markup</span>
+            <span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">right_markup</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">right_markup</span><span class="p">,</span> <span class="n">_indicators</span><span class="o">.</span><span class="n">Markup</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">right_markup</span>
+            <span class="p">)</span>
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">scale</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">scale</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="MetricModulation.__eq__"><a class="viewcode-back" href="../../api/abjad/metricmodulation.html#abjad.metricmodulation.MetricModulation.__eq__">[docs]</a>    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -550,18 +535,6 @@
                 <span class="k">return</span> <span class="kc">True</span>
         <span class="k">return</span> <span class="kc">False</span></div>
 
-<div class="viewcode-block" id="MetricModulation.__hash__"><a class="viewcode-back" href="../../api/abjad/metricmodulation.html#abjad.metricmodulation.MetricModulation.__hash__">[docs]</a>    <span class="k">def</span> <span class="fm">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Hashes metric modulation.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="nb">hash</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span></div>
-
-<div class="viewcode-block" id="MetricModulation.__repr__"><a class="viewcode-back" href="../../api/abjad/metricmodulation.html#abjad.metricmodulation.MetricModulation.__repr__">[docs]</a>    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Gets repr.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">(left_rhythm=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">left_rhythm</span><span class="si">!r}</span><span class="s2">, right_rhythm=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">right_rhythm</span><span class="si">!r}</span><span class="s2">)&quot;</span></div>
-
     <span class="c1">### PRIVATE METHODS ###</span>
 
     <span class="k">def</span> <span class="nf">_get_lilypond_command_string</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -606,35 +579,40 @@
         <span class="k">return</span> <span class="n">contributions</span>
 
     <span class="k">def</span> <span class="nf">_get_markup</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">left_rhythm</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_initialize_rhythm</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">left_rhythm</span><span class="p">)</span>
+        <span class="n">right_rhythm</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_initialize_rhythm</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">right_rhythm</span><span class="p">)</span>
         <span class="n">string</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_lilypond_command_string</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">string</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">markup</span> <span class="o">=</span> <span class="n">_indicators</span><span class="o">.</span><span class="n">Markup</span><span class="p">(</span><span class="sa">rf</span><span class="s2">&quot;\markup </span><span class="si">{</span><span class="n">string</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">markup</span>
         <span class="n">strings</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">string</span> <span class="o">=</span> <span class="n">_illustrators</span><span class="o">.</span><span class="n">selection_to_score_markup_string</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">left_rhythm</span><span class="p">)</span>
+        <span class="n">string</span> <span class="o">=</span> <span class="n">_illustrators</span><span class="o">.</span><span class="n">components_to_score_markup_string</span><span class="p">(</span><span class="n">left_rhythm</span><span class="p">)</span>
         <span class="n">strings</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">string</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">))</span>
         <span class="n">strings</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;=&quot;</span><span class="p">)</span>
         <span class="n">strings</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\hspace #-0.5&quot;</span><span class="p">)</span>
-        <span class="n">string</span> <span class="o">=</span> <span class="n">_illustrators</span><span class="o">.</span><span class="n">selection_to_score_markup_string</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">right_rhythm</span><span class="p">)</span>
+        <span class="n">string</span> <span class="o">=</span> <span class="n">_illustrators</span><span class="o">.</span><span class="n">components_to_score_markup_string</span><span class="p">(</span><span class="n">right_rhythm</span><span class="p">)</span>
         <span class="n">strings</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">string</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">))</span>
         <span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">strings</span><span class="p">)</span>
         <span class="n">string</span> <span class="o">=</span> <span class="sa">rf</span><span class="s2">&quot;\markup </span><span class="se">{{</span><span class="s2"> </span><span class="si">{</span><span class="n">string</span><span class="si">}</span><span class="s2"> </span><span class="se">}}</span><span class="s2">&quot;</span>
         <span class="n">markup</span> <span class="o">=</span> <span class="n">_indicators</span><span class="o">.</span><span class="n">Markup</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">markup</span>
 
+    <span class="c1"># TODO: return namespace</span>
     <span class="k">def</span> <span class="nf">_get_markup_arguments</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">left_rhythm</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_initialize_rhythm</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">left_rhythm</span><span class="p">)</span>
+        <span class="n">right_rhythm</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_initialize_rhythm</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">right_rhythm</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_note_to_note</span><span class="p">():</span>
-            <span class="n">left_exponent</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">left_rhythm</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">written_duration</span><span class="o">.</span><span class="n">exponent</span>
-            <span class="n">left_dots</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">left_rhythm</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">written_duration</span><span class="o">.</span><span class="n">dot_count</span>
-            <span class="n">right_exponent</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">right_rhythm</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">written_duration</span><span class="o">.</span><span class="n">exponent</span>
-            <span class="n">right_dots</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">right_rhythm</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">written_duration</span><span class="o">.</span><span class="n">dot_count</span>
+            <span class="n">left_exponent</span> <span class="o">=</span> <span class="n">left_rhythm</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">written_duration</span><span class="o">.</span><span class="n">exponent</span>
+            <span class="n">left_dots</span> <span class="o">=</span> <span class="n">left_rhythm</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">written_duration</span><span class="o">.</span><span class="n">dot_count</span>
+            <span class="n">right_exponent</span> <span class="o">=</span> <span class="n">right_rhythm</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">written_duration</span><span class="o">.</span><span class="n">exponent</span>
+            <span class="n">right_dots</span> <span class="o">=</span> <span class="n">right_rhythm</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">written_duration</span><span class="o">.</span><span class="n">dot_count</span>
             <span class="k">return</span> <span class="p">(</span><span class="n">left_exponent</span><span class="p">,</span> <span class="n">left_dots</span><span class="p">,</span> <span class="n">right_exponent</span><span class="p">,</span> <span class="n">right_dots</span><span class="p">)</span>
         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">_lhs_tuplet</span><span class="p">():</span>
-            <span class="n">tuplet_exponent</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">left_rhythm</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">written_duration</span><span class="o">.</span><span class="n">exponent</span>
-            <span class="n">tuplet_dots</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">left_rhythm</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">written_duration</span><span class="o">.</span><span class="n">dot_count</span>
-            <span class="n">tuplet_n</span><span class="p">,</span> <span class="n">tuplet_d</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">left_rhythm</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">multiplier</span>
-            <span class="n">note_exponent</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">right_rhythm</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">written_duration</span><span class="o">.</span><span class="n">exponent</span>
-            <span class="n">note_dots</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">right_rhythm</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">written_duration</span><span class="o">.</span><span class="n">dot_count</span>
+            <span class="n">tuplet_exponent</span> <span class="o">=</span> <span class="n">left_rhythm</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">written_duration</span><span class="o">.</span><span class="n">exponent</span>
+            <span class="n">tuplet_dots</span> <span class="o">=</span> <span class="n">left_rhythm</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">written_duration</span><span class="o">.</span><span class="n">dot_count</span>
+            <span class="n">tuplet_n</span><span class="p">,</span> <span class="n">tuplet_d</span> <span class="o">=</span> <span class="n">left_rhythm</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">multiplier</span>
+            <span class="n">note_exponent</span> <span class="o">=</span> <span class="n">right_rhythm</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">written_duration</span><span class="o">.</span><span class="n">exponent</span>
+            <span class="n">note_dots</span> <span class="o">=</span> <span class="n">right_rhythm</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">written_duration</span><span class="o">.</span><span class="n">dot_count</span>
             <span class="k">return</span> <span class="p">(</span>
                 <span class="n">tuplet_exponent</span><span class="p">,</span>
                 <span class="n">tuplet_dots</span><span class="p">,</span>
@@ -644,11 +622,11 @@
                 <span class="n">note_dots</span><span class="p">,</span>
             <span class="p">)</span>
         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rhs_tuplet</span><span class="p">():</span>
-            <span class="n">note_exponent</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">left_rhythm</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">written_duration</span><span class="o">.</span><span class="n">exponent</span>
-            <span class="n">note_dots</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">left_rhythm</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">written_duration</span><span class="o">.</span><span class="n">dot_count</span>
-            <span class="n">tuplet_exponent</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">right_rhythm</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">written_duration</span><span class="o">.</span><span class="n">exponent</span>
-            <span class="n">tuplet_dots</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">right_rhythm</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">written_duration</span><span class="o">.</span><span class="n">dot_count</span>
-            <span class="n">tuplet_n</span><span class="p">,</span> <span class="n">tuplet_d</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">right_rhythm</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">multiplier</span>
+            <span class="n">note_exponent</span> <span class="o">=</span> <span class="n">left_rhythm</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">written_duration</span><span class="o">.</span><span class="n">exponent</span>
+            <span class="n">note_dots</span> <span class="o">=</span> <span class="n">left_rhythm</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">written_duration</span><span class="o">.</span><span class="n">dot_count</span>
+            <span class="n">tuplet_exponent</span> <span class="o">=</span> <span class="n">right_rhythm</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">written_duration</span><span class="o">.</span><span class="n">exponent</span>
+            <span class="n">tuplet_dots</span> <span class="o">=</span> <span class="n">right_rhythm</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">written_duration</span><span class="o">.</span><span class="n">dot_count</span>
+            <span class="n">tuplet_n</span><span class="p">,</span> <span class="n">tuplet_d</span> <span class="o">=</span> <span class="n">right_rhythm</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">multiplier</span>
             <span class="k">return</span> <span class="p">(</span>
                 <span class="n">note_exponent</span><span class="p">,</span>
                 <span class="n">note_dots</span><span class="p">,</span>
@@ -668,77 +646,40 @@
         <span class="k">return</span> <span class="n">selection</span>
 
     <span class="k">def</span> <span class="nf">_lhs_tuplet</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">left_rhythm</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_initialize_rhythm</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">left_rhythm</span><span class="p">)</span>
+        <span class="n">right_rhythm</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_initialize_rhythm</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">right_rhythm</span><span class="p">)</span>
         <span class="k">if</span> <span class="p">(</span>
-            <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">left_rhythm</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">_score</span><span class="o">.</span><span class="n">Tuplet</span><span class="p">)</span>
-            <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">left_rhythm</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">==</span> <span class="mi">1</span>
-            <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">right_rhythm</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">_score</span><span class="o">.</span><span class="n">Note</span><span class="p">)</span>
-            <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">right_rhythm</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span>
+            <span class="nb">isinstance</span><span class="p">(</span><span class="n">left_rhythm</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">_score</span><span class="o">.</span><span class="n">Tuplet</span><span class="p">)</span>
+            <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">left_rhythm</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">==</span> <span class="mi">1</span>
+            <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">right_rhythm</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">_score</span><span class="o">.</span><span class="n">Note</span><span class="p">)</span>
+            <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">right_rhythm</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span>
         <span class="p">):</span>
             <span class="k">return</span> <span class="kc">True</span>
         <span class="k">return</span> <span class="kc">False</span>
 
     <span class="k">def</span> <span class="nf">_note_to_note</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">left_rhythm</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_initialize_rhythm</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">left_rhythm</span><span class="p">)</span>
+        <span class="n">right_rhythm</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_initialize_rhythm</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">right_rhythm</span><span class="p">)</span>
         <span class="k">if</span> <span class="p">(</span>
-            <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">left_rhythm</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">_score</span><span class="o">.</span><span class="n">Note</span><span class="p">)</span>
-            <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">left_rhythm</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span>
-            <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">right_rhythm</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">_score</span><span class="o">.</span><span class="n">Note</span><span class="p">)</span>
-            <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">right_rhythm</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span>
+            <span class="nb">isinstance</span><span class="p">(</span><span class="n">left_rhythm</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">_score</span><span class="o">.</span><span class="n">Note</span><span class="p">)</span>
+            <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">left_rhythm</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span>
+            <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">right_rhythm</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">_score</span><span class="o">.</span><span class="n">Note</span><span class="p">)</span>
+            <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">right_rhythm</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span>
         <span class="p">):</span>
             <span class="k">return</span> <span class="kc">True</span>
         <span class="k">return</span> <span class="kc">False</span>
 
     <span class="k">def</span> <span class="nf">_rhs_tuplet</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">left_rhythm</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_initialize_rhythm</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">left_rhythm</span><span class="p">)</span>
+        <span class="n">right_rhythm</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_initialize_rhythm</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">right_rhythm</span><span class="p">)</span>
         <span class="k">if</span> <span class="p">(</span>
-            <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">left_rhythm</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">_score</span><span class="o">.</span><span class="n">Note</span><span class="p">)</span>
-            <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">left_rhythm</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span>
-            <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">right_rhythm</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">_score</span><span class="o">.</span><span class="n">Tuplet</span><span class="p">)</span>
-            <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">right_rhythm</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">==</span> <span class="mi">1</span>
+            <span class="nb">isinstance</span><span class="p">(</span><span class="n">left_rhythm</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">_score</span><span class="o">.</span><span class="n">Note</span><span class="p">)</span>
+            <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">left_rhythm</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span>
+            <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">right_rhythm</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">_score</span><span class="o">.</span><span class="n">Tuplet</span><span class="p">)</span>
+            <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">right_rhythm</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">==</span> <span class="mi">1</span>
         <span class="p">):</span>
             <span class="k">return</span> <span class="kc">True</span>
         <span class="k">return</span> <span class="kc">False</span>
-
-    <span class="c1">### PUBLIC PROPERTIES ###</span>
-
-    <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">hide</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Is true when metric modulation generates no LilyPond output.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_hide</span>
-
-    <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">left_markup</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">_indicators</span><span class="o">.</span><span class="n">Markup</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Gets left markup of metric modulation.</span>
-
-<span class="sd">        ..  container:: example</span>
-
-<span class="sd">            &gt;&gt;&gt; metric_modulation = abjad.MetricModulation(</span>
-<span class="sd">            ...     left_rhythm=abjad.Note(&quot;c&#39;4&quot;),</span>
-<span class="sd">            ...     right_rhythm=abjad.Note(&quot;c&#39;4.&quot;),</span>
-<span class="sd">            ... )</span>
-<span class="sd">            &gt;&gt;&gt; metric_modulation.left_markup</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_left_markup</span>
-
-    <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">left_rhythm</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Gets left rhythm of metric modulation.</span>
-
-<span class="sd">        ..  container:: example</span>
-
-<span class="sd">            &gt;&gt;&gt; metric_modulation = abjad.MetricModulation(</span>
-<span class="sd">            ...     left_rhythm=abjad.Note(&quot;c&#39;4&quot;),</span>
-<span class="sd">            ...     right_rhythm=abjad.Note(&quot;c&#39;4.&quot;),</span>
-<span class="sd">            ... )</span>
-<span class="sd">            &gt;&gt;&gt; metric_modulation.left_rhythm</span>
-<span class="sd">            [Note(&quot;c&#39;4&quot;)]</span>
-
-<span class="sd">        Returns list.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_left_rhythm</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">ratio</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
@@ -759,94 +700,7 @@
         <span class="n">right_duration</span> <span class="o">=</span> <span class="n">_getlib</span><span class="o">.</span><span class="n">_get_duration</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">right_rhythm</span><span class="p">)</span>
         <span class="n">duration</span> <span class="o">=</span> <span class="n">left_duration</span> <span class="o">/</span> <span class="n">right_duration</span>
         <span class="n">pair</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">pair</span><span class="p">(</span><span class="n">duration</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">pair</span>
-
-    <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">right_markup</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">_indicators</span><span class="o">.</span><span class="n">Markup</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Gets right markup of metric modulation.</span>
-
-<span class="sd">        ..  container:: example</span>
-
-<span class="sd">            &gt;&gt;&gt; metric_modulation = abjad.MetricModulation(</span>
-<span class="sd">            ...     left_rhythm=abjad.Note(&quot;c&#39;4&quot;),</span>
-<span class="sd">            ...     right_rhythm=abjad.Note(&quot;c&#39;4.&quot;),</span>
-<span class="sd">            ... )</span>
-<span class="sd">            &gt;&gt;&gt; metric_modulation.right_markup</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_right_markup</span>
-
-    <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">right_rhythm</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Gets right tempo of metric modulation.</span>
-
-<span class="sd">        ..  container:: example</span>
-
-<span class="sd">            &gt;&gt;&gt; metric_modulation = abjad.MetricModulation(</span>
-<span class="sd">            ...     left_rhythm=abjad.Note(&quot;c&#39;4&quot;),</span>
-<span class="sd">            ...     right_rhythm=abjad.Note(&quot;c&#39;4.&quot;),</span>
-<span class="sd">            ... )</span>
-<span class="sd">            &gt;&gt;&gt; metric_modulation.right_rhythm</span>
-<span class="sd">            [Note(&quot;c&#39;4.&quot;)]</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_right_rhythm</span>
-
-    <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">scale</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span> <span class="o">|</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">float</span><span class="p">]:</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Gets scale of output markup.</span>
-
-<span class="sd">        ..  container:: example</span>
-
-<span class="sd">            &gt;&gt;&gt; staff = abjad.Staff(&quot;c&#39;4 d&#39;4 e&#39;4 f&#39;4 e&#39;4 d&#39;4&quot;)</span>
-<span class="sd">            &gt;&gt;&gt; abjad.attach(abjad.TimeSignature((3, 4)), staff[0])</span>
-<span class="sd">            &gt;&gt;&gt; score = abjad.Score([staff])</span>
-
-<span class="sd">            &gt;&gt;&gt; metric_modulation = abjad.MetricModulation(</span>
-<span class="sd">            ...     left_rhythm=abjad.Note(&quot;c4&quot;),</span>
-<span class="sd">            ...     right_rhythm=abjad.Note(&quot;c8.&quot;),</span>
-<span class="sd">            ...     scale=(0.5, 0.5),</span>
-<span class="sd">            ... )</span>
-<span class="sd">            &gt;&gt;&gt; abjad.attach(metric_modulation, staff[3], direction=abjad.UP)</span>
-<span class="sd">            &gt;&gt;&gt; abjad.override(staff).TextScript.staff_padding = 2.5</span>
-
-<span class="sd">            &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile([r&#39;\include &quot;abjad.ily&quot;&#39;, score])</span>
-<span class="sd">            &gt;&gt;&gt; abjad.show(lilypond_file) # doctest: +SKIP</span>
-
-<span class="sd">            ..  docs::</span>
-
-<span class="sd">                &gt;&gt;&gt; string = abjad.lilypond(score)</span>
-<span class="sd">                &gt;&gt;&gt; print(string)</span>
-<span class="sd">                \new Score</span>
-<span class="sd">                &lt;&lt;</span>
-<span class="sd">                    \new Staff</span>
-<span class="sd">                    \with</span>
-<span class="sd">                    {</span>
-<span class="sd">                        \override TextScript.staff-padding = 2.5</span>
-<span class="sd">                    }</span>
-<span class="sd">                    {</span>
-<span class="sd">                        \time 3/4</span>
-<span class="sd">                        c&#39;4</span>
-<span class="sd">                        d&#39;4</span>
-<span class="sd">                        e&#39;4</span>
-<span class="sd">                        f&#39;4</span>
-<span class="sd">                        ^ \markup \abjad-metric-modulation #2 #0 #3 #1 #&#39;(0.5 . 0.5)</span>
-<span class="sd">                        e&#39;4</span>
-<span class="sd">                        d&#39;4</span>
-<span class="sd">                    }</span>
-<span class="sd">                &gt;&gt;</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_scale</span>
-
-    <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">tweaks</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Are not implemented on metric modulation.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">pass</span></div>
+        <span class="k">return</span> <span class="n">pair</span></div>
 </pre></div>
 
     </div>

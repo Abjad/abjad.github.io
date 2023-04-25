@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>abjad.score &mdash; Abjad 3.16 documentation</title>
+  <title>abjad.score &mdash; Abjad 3.17 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/abjad.css" type="text/css" />
@@ -34,11 +34,11 @@
   <div class="wy-grid-for-nav">
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search"  style="background: #aa44ee" >
+        <div class="wy-side-nav-search"  style="background: #bb6611" >
 
 
     <a href="../../index.html" class="icon icon-home" alt="Documentation
-    Home"> Abjad 3.16
+    Home"> Abjad 3.17
 
 
 
@@ -111,7 +111,7 @@
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #aa44ee" >
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #bb6611" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../index.html">Abjad</a>
       </nav>
@@ -199,7 +199,7 @@
 
         <span class="k">return</span> <span class="n">parse</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">language</span><span class="o">=</span><span class="n">language</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">tag</span><span class="p">:</span> <span class="n">_tag</span><span class="o">.</span><span class="n">Tag</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">tag</span><span class="p">:</span> <span class="n">_tag</span><span class="o">.</span><span class="n">Tag</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_indicators_are_current</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_is_forbidden_to_update</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_measure_number</span> <span class="o">=</span> <span class="kc">None</span>
@@ -232,7 +232,15 @@
 
 <span class="sd">        Returns new component.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">component</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">__getnewargs__</span><span class="p">())</span>
+        <span class="n">component</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">__getnewargs__</span><span class="p">(),</span> <span class="n">tag</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">tag</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;identifier&quot;</span><span class="p">):</span>
+            <span class="n">component</span><span class="o">.</span><span class="n">identifier</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">identifier</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;lilypond_type&quot;</span><span class="p">):</span>
+            <span class="n">component</span><span class="o">.</span><span class="n">lilypond_type</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lilypond_type</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">):</span>
+            <span class="n">component</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;simultaneous&quot;</span><span class="p">):</span>
+            <span class="n">component</span><span class="o">.</span><span class="n">simultaneous</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">simultaneous</span>
         <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;_overrides&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">component</span><span class="o">.</span><span class="n">_overrides</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">_overrides</span><span class="o">.</span><span class="n">override</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
         <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;_lilypond_setting_name_manager&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -827,34 +835,8 @@
 <span class="sd">        ...     abjad.Note(&quot;d&#39;4&quot;),</span>
 <span class="sd">        ...     abjad.Note(&quot;e&#39;8&quot;),</span>
 <span class="sd">        ...     abjad.Note(&quot;f&#39;8&quot;),</span>
-<span class="sd">        ...     ]</span>
+<span class="sd">        ... ]</span>
 <span class="sd">        &gt;&gt;&gt; container = abjad.Container(notes)</span>
-<span class="sd">        &gt;&gt;&gt; abjad.show(container) # doctest: +SKIP</span>
-
-<span class="sd">        ..  docs::</span>
-
-<span class="sd">            &gt;&gt;&gt; string = abjad.lilypond(container)</span>
-<span class="sd">            &gt;&gt;&gt; print(string)</span>
-<span class="sd">            {</span>
-<span class="sd">                c&#39;4</span>
-<span class="sd">                e&#39;4</span>
-<span class="sd">                d&#39;4</span>
-<span class="sd">                e&#39;8</span>
-<span class="sd">                f&#39;8</span>
-<span class="sd">            }</span>
-
-<span class="sd">    ..  container:: example</span>
-
-<span class="sd">        Intializes from mixed components and lists:</span>
-
-<span class="sd">        &gt;&gt;&gt; items = [</span>
-<span class="sd">        ...     abjad.Note(&quot;c&#39;4&quot;),</span>
-<span class="sd">        ...     [abjad.Note(&quot;e&#39;4&quot;)],</span>
-<span class="sd">        ...     [abjad.Note(&quot;d&#39;4&quot;)],</span>
-<span class="sd">        ...     abjad.Note(&quot;e&#39;8&quot;),</span>
-<span class="sd">        ...     abjad.Note(&quot;f&#39;8&quot;),</span>
-<span class="sd">        ...     ]</span>
-<span class="sd">        &gt;&gt;&gt; container = abjad.Container(items)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(container) # doctest: +SKIP</span>
 
 <span class="sd">        ..  docs::</span>
@@ -936,18 +918,20 @@
 
     <span class="c1">### INITIALIZER ###</span>
 
-    <span class="c1"># TODO: make all keywords (after components) mandatory keywords</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">components</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">identifier</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">simultaneous</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-        <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">tag</span><span class="p">:</span> <span class="n">_tag</span><span class="o">.</span><span class="n">Tag</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="o">*</span><span class="p">,</span>
+        <span class="n">identifier</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">language</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;english&quot;</span><span class="p">,</span>
+        <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">simultaneous</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">tag</span><span class="p">:</span> <span class="n">_tag</span><span class="o">.</span><span class="n">Tag</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">components</span> <span class="o">=</span> <span class="n">components</span> <span class="ow">or</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">components</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="n">prototype</span> <span class="o">=</span> <span class="p">(</span><span class="n">Component</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span>
+            <span class="k">assert</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="n">prototype</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">components</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">components</span><span class="p">)</span>
         <span class="n">Component</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="n">tag</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_named_children</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_is_simultaneous</span> <span class="o">=</span> <span class="kc">None</span>
@@ -1102,7 +1086,7 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets new container arguments.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="p">[],</span> <span class="bp">self</span><span class="o">.</span><span class="n">identifier</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">simultaneous</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tag</span>
+        <span class="k">return</span> <span class="p">([],)</span>
 
 <div class="viewcode-block" id="Container.__iter__"><a class="viewcode-back" href="../../api/abjad/score.html#abjad.score.Container.__iter__">[docs]</a>    <span class="k">def</span> <span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -1404,16 +1388,11 @@
                 <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
                     <span class="n">parsed</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parse_string</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">language</span><span class="o">=</span><span class="n">language</span><span class="p">)</span>
                     <span class="n">components_</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">parsed</span><span class="p">)</span>
-                <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">collections</span><span class="o">.</span><span class="n">abc</span><span class="o">.</span><span class="n">Iterable</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span>
-                    <span class="n">item</span><span class="p">,</span> <span class="n">Container</span>
-                <span class="p">):</span>
-                    <span class="n">components_</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
                 <span class="k">else</span><span class="p">:</span>
+                    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">Component</span><span class="p">)</span>
                     <span class="n">components_</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
             <span class="n">components</span> <span class="o">=</span> <span class="n">components_</span>
-            <span class="k">for</span> <span class="n">component</span> <span class="ow">in</span> <span class="n">components</span><span class="p">:</span>
-                <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">component</span><span class="p">,</span> <span class="n">Component</span><span class="p">):</span>
-                    <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;must be component: </span><span class="si">{</span><span class="n">component</span><span class="si">!r}</span><span class="s2">.&quot;</span><span class="p">)</span>
+            <span class="k">assert</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="n">Component</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">components</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">components</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">components</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
             <span class="n">parsed</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parse_string</span><span class="p">(</span><span class="n">components</span><span class="p">,</span> <span class="n">language</span><span class="o">=</span><span class="n">language</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_components</span> <span class="o">=</span> <span class="p">[]</span>
@@ -1961,7 +1940,7 @@
 
 <span class="sd">        &gt;&gt;&gt; voice = abjad.Voice(&quot;c&#39;4 d&#39;4 e&#39;4 f&#39;4&quot;)</span>
 <span class="sd">        &gt;&gt;&gt; string = &#39;#(define afterGraceFraction (cons 15 16))&#39;</span>
-<span class="sd">        &gt;&gt;&gt; literal = abjad.LilyPondLiteral(string)</span>
+<span class="sd">        &gt;&gt;&gt; literal = abjad.LilyPondLiteral(string, site=&quot;before&quot;)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.attach(literal, voice[0])</span>
 <span class="sd">        &gt;&gt;&gt; notes = [abjad.Note(&quot;c&#39;16&quot;), abjad.Note(&quot;d&#39;16&quot;)]</span>
 <span class="sd">        &gt;&gt;&gt; after_grace_container = abjad.AfterGraceContainer(notes)</span>
@@ -2009,7 +1988,7 @@
 
 <span class="sd">        &gt;&gt;&gt; voice = abjad.Voice(&quot;c&#39;4 d&#39;4 e&#39;4 f&#39;4&quot;)</span>
 <span class="sd">        &gt;&gt;&gt; string = &#39;#(define afterGraceFraction (cons 15 16))&#39;</span>
-<span class="sd">        &gt;&gt;&gt; literal = abjad.LilyPondLiteral(string)</span>
+<span class="sd">        &gt;&gt;&gt; literal = abjad.LilyPondLiteral(string, site=&quot;before&quot;)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.attach(literal, voice[0])</span>
 <span class="sd">        &gt;&gt;&gt; after_grace_container = abjad.AfterGraceContainer(&quot;c&#39;16 d&#39;16&quot;)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.attach(after_grace_container, voice[1])</span>
@@ -2047,7 +2026,7 @@
 
 <span class="sd">        &gt;&gt;&gt; voice = abjad.Voice(&quot;c&#39;4 &lt;d&#39; f&#39;&gt;4 e&#39;4 f&#39;4&quot;)</span>
 <span class="sd">        &gt;&gt;&gt; string = &#39;#(define afterGraceFraction (cons 15 16))&#39;</span>
-<span class="sd">        &gt;&gt;&gt; literal = abjad.LilyPondLiteral(string)</span>
+<span class="sd">        &gt;&gt;&gt; literal = abjad.LilyPondLiteral(string, site=&quot;before&quot;)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.attach(literal, voice[0])</span>
 <span class="sd">        &gt;&gt;&gt; after_grace_container = abjad.AfterGraceContainer(&quot;c&#39;16 d&#39;16&quot;)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.attach(after_grace_container, voice[1])</span>
@@ -3075,16 +3054,15 @@
 
     <span class="c1">### INITIALIZER ###</span>
 
-    <span class="c1"># TODO: make keywords mandatory</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">components</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">lilypond_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Context&quot;</span><span class="p">,</span>
-        <span class="n">simultaneous</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-        <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">tag</span><span class="p">:</span> <span class="n">_tag</span><span class="o">.</span><span class="n">Tag</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="o">*</span><span class="p">,</span>
         <span class="n">language</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;english&quot;</span><span class="p">,</span>
+        <span class="n">lilypond_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Context&quot;</span><span class="p">,</span>
+        <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">simultaneous</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">tag</span><span class="p">:</span> <span class="n">_tag</span><span class="o">.</span><span class="n">Tag</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_consists_commands</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_dependent_wrappers</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="p">[]</span>
@@ -3118,11 +3096,11 @@
 
     <span class="k">def</span> <span class="nf">__getnewargs__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Gets new container arguments.</span>
+<span class="sd">        Gets new context arguments.</span>
 
 <span class="sd">        Returns tuple.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="p">[],</span> <span class="bp">self</span><span class="o">.</span><span class="n">lilypond_type</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">simultaneous</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
+        <span class="k">return</span> <span class="p">([],)</span>
 
 <div class="viewcode-block" id="Context.__repr__"><a class="viewcode-back" href="../../api/abjad/score.html#abjad.score.Context.__repr__">[docs]</a>    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -3386,6 +3364,7 @@
 <span class="sd">        REGRESSION #1049. Parser reads multimeasure rest multipliers:</span>
 
 <span class="sd">        &gt;&gt;&gt; staff = abjad.Staff(r&quot;\time 3/8 R1 * 3/8&quot;)</span>
+<span class="sd">        &gt;&gt;&gt; score = abjad.Score([staff], name=&quot;Score&quot;)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(staff) # doctest: +SKIP</span>
 
 <span class="sd">        ..  docs::</span>
@@ -3523,6 +3502,7 @@
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">written_pitch</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="o">*</span><span class="p">,</span>
         <span class="n">is_cautionary</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">is_forced</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">is_parenthesized</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
@@ -3560,14 +3540,12 @@
 <span class="sd">            NoteHead(&quot;cs&#39;&#39;&quot;)</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">arguments</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">written_pitch</span><span class="p">,</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">is_cautionary</span><span class="p">,</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">is_forced</span><span class="p">,</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">is_parenthesized</span><span class="p">,</span>
-            <span class="c1"># self.tweaks,</span>
+            <span class="n">is_cautionary</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">is_cautionary</span><span class="p">,</span>
+            <span class="n">is_forced</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">is_forced</span><span class="p">,</span>
+            <span class="n">is_parenthesized</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">is_parenthesized</span><span class="p">,</span>
         <span class="p">)</span>
-        <span class="n">result</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span><span class="o">*</span><span class="n">arguments</span><span class="p">)</span>
         <span class="n">tweaks</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tweaks</span><span class="p">)</span>
         <span class="n">result</span><span class="o">.</span><span class="n">tweaks</span> <span class="o">=</span> <span class="n">tweaks</span>
         <span class="k">return</span> <span class="n">result</span></div>
@@ -3950,6 +3928,7 @@
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">written_pitch</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;snare&quot;</span><span class="p">,</span>
+        <span class="o">*</span><span class="p">,</span>
         <span class="n">is_cautionary</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
         <span class="n">is_forced</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
         <span class="n">is_parenthesized</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
@@ -4279,7 +4258,7 @@
             <span class="n">written_pitch</span> <span class="o">=</span> <span class="n">_pitch</span><span class="o">.</span><span class="n">NamedPitch</span><span class="p">(</span><span class="s2">&quot;C4&quot;</span><span class="p">)</span>
             <span class="n">written_duration</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;can not initialize note from </span><span class="si">{arguments!r}</span><span class="s2">.&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;can not initialize note from </span><span class="si">{</span><span class="n">arguments</span><span class="si">!r}</span><span class="s2">.&quot;</span><span class="p">)</span>
         <span class="n">Leaf</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">written_duration</span><span class="p">,</span> <span class="n">multiplier</span><span class="o">=</span><span class="n">multiplier</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="n">tag</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">written_pitch</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">written_pitch</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">_lyconst</span><span class="o">.</span><span class="n">drums</span><span class="p">:</span>
@@ -4497,8 +4476,9 @@
 <span class="sd">    ..  container:: example</span>
 
 <span class="sd">        &gt;&gt;&gt; rest = abjad.Rest(&quot;r8.&quot;)</span>
-<span class="sd">        &gt;&gt;&gt; abjad.attach(abjad.TimeSignature((3, 16)), rest)</span>
 <span class="sd">        &gt;&gt;&gt; staff = abjad.Staff([rest])</span>
+<span class="sd">        &gt;&gt;&gt; score = abjad.Score([staff], name=&quot;Score&quot;)</span>
+<span class="sd">        &gt;&gt;&gt; abjad.attach(abjad.TimeSignature((3, 16)), rest)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(staff) # doctest: +SKIP</span>
 
 <span class="sd">        ..  docs::</span>
@@ -4595,16 +4575,15 @@
 
     <span class="c1">### INITIALIZER ###</span>
 
-    <span class="c1"># TODO: make keywords mandatory</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">components</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">lilypond_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Score&quot;</span><span class="p">,</span>
-        <span class="n">simultaneous</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
-        <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">tag</span><span class="p">:</span> <span class="n">_tag</span><span class="o">.</span><span class="n">Tag</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="o">*</span><span class="p">,</span>
         <span class="n">language</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;english&quot;</span><span class="p">,</span>
+        <span class="n">lilypond_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Score&quot;</span><span class="p">,</span>
+        <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">simultaneous</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="n">tag</span><span class="p">:</span> <span class="n">_tag</span><span class="o">.</span><span class="n">Tag</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">Context</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
             <span class="bp">self</span><span class="p">,</span>
@@ -4832,16 +4811,15 @@
 
     <span class="n">_default_lilypond_type</span> <span class="o">=</span> <span class="s2">&quot;Staff&quot;</span>
 
-    <span class="c1"># TODO: make keywords mandatory</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">components</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">lilypond_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Staff&quot;</span><span class="p">,</span>
-        <span class="n">simultaneous</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-        <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">tag</span><span class="p">:</span> <span class="n">_tag</span><span class="o">.</span><span class="n">Tag</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="o">*</span><span class="p">,</span>
         <span class="n">language</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;english&quot;</span><span class="p">,</span>
+        <span class="n">lilypond_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Staff&quot;</span><span class="p">,</span>
+        <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">simultaneous</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">tag</span><span class="p">:</span> <span class="n">_tag</span><span class="o">.</span><span class="n">Tag</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">Context</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
             <span class="bp">self</span><span class="p">,</span>
@@ -4895,16 +4873,15 @@
 
     <span class="n">_default_lilypond_type</span> <span class="o">=</span> <span class="s2">&quot;StaffGroup&quot;</span>
 
-    <span class="c1"># TODO: make keywords mandatory</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">components</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">lilypond_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;StaffGroup&quot;</span><span class="p">,</span>
-        <span class="n">simultaneous</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
-        <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">tag</span><span class="p">:</span> <span class="n">_tag</span><span class="o">.</span><span class="n">Tag</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="o">*</span><span class="p">,</span>
         <span class="n">language</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;english&quot;</span><span class="p">,</span>
+        <span class="n">lilypond_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;StaffGroup&quot;</span><span class="p">,</span>
+        <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">simultaneous</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="n">tag</span><span class="p">:</span> <span class="n">_tag</span><span class="o">.</span><span class="n">Tag</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">Context</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
             <span class="bp">self</span><span class="p">,</span>
@@ -5176,9 +5153,12 @@
 <span class="sd">        &gt;&gt;&gt; abjad.tweak(tuplet_3, r&quot;\tweak staff-padding 4&quot;)</span>
 
 <span class="sd">        &gt;&gt;&gt; staff = abjad.Staff([tuplet_3])</span>
+<span class="sd">        &gt;&gt;&gt; score = abjad.Score([staff], name=&quot;Score&quot;)</span>
 <span class="sd">        &gt;&gt;&gt; leaves = abjad.select.leaves(staff)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.attach(abjad.TimeSignature((5, 4)), leaves[0])</span>
-<span class="sd">        &gt;&gt;&gt; literal = abjad.LilyPondLiteral(r&#39;\set tupletFullLength = ##t&#39;)</span>
+<span class="sd">        &gt;&gt;&gt; literal = abjad.LilyPondLiteral(</span>
+<span class="sd">        ...     r&quot;\set tupletFullLength = ##t&quot;, site=&quot;opening&quot;</span>
+<span class="sd">        ... )</span>
 <span class="sd">        &gt;&gt;&gt; abjad.attach(literal, staff)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(staff) # doctest: +SKIP</span>
 
@@ -5632,7 +5612,7 @@
 <span class="sd">            &gt;&gt;&gt; tuplet = abjad.Tuplet((2, 3), &quot;c&#39;8 d&#39;8 e&#39;8&quot;)</span>
 <span class="sd">            &gt;&gt;&gt; duration = abjad.get.duration(tuplet)</span>
 <span class="sd">            &gt;&gt;&gt; note = abjad.Note.from_pitch_and_duration(0, duration)</span>
-<span class="sd">            &gt;&gt;&gt; string = abjad.illustrators.selection_to_score_markup_string([note])</span>
+<span class="sd">            &gt;&gt;&gt; string = abjad.illustrators.components_to_score_markup_string([note])</span>
 <span class="sd">            &gt;&gt;&gt; string = rf&quot;\markup {{ {string} }}&quot;</span>
 <span class="sd">            &gt;&gt;&gt; abjad.override(tuplet).TupletNumber.text = string</span>
 <span class="sd">            &gt;&gt;&gt; staff = abjad.Staff([tuplet])</span>
@@ -6769,8 +6749,9 @@
 <span class="sd">        ..  container:: example</span>
 
 <span class="sd">            &gt;&gt;&gt; tuplet = abjad.Tuplet((3, 4), &quot;c&#39;4 c&#39;4&quot;)</span>
-<span class="sd">            &gt;&gt;&gt; abjad.attach(abjad.TimeSignature((3, 8)), tuplet[0])</span>
 <span class="sd">            &gt;&gt;&gt; staff = abjad.Staff([tuplet])</span>
+<span class="sd">            &gt;&gt;&gt; score = abjad.Score([staff], name=&quot;Score&quot;)</span>
+<span class="sd">            &gt;&gt;&gt; abjad.attach(abjad.TimeSignature((3, 8)), tuplet[0])</span>
 <span class="sd">            &gt;&gt;&gt; abjad.show(staff) # doctest: +SKIP</span>
 
 <span class="sd">            ..  docs::</span>
@@ -6791,6 +6772,7 @@
 <span class="sd">            Can be rewritten without a tuplet bracket:</span>
 
 <span class="sd">            &gt;&gt;&gt; staff = abjad.Staff(&quot;c&#39;8. c&#39;8.&quot;)</span>
+<span class="sd">            &gt;&gt;&gt; score = abjad.Score([staff], name=&quot;Score&quot;)</span>
 <span class="sd">            &gt;&gt;&gt; abjad.attach(abjad.TimeSignature((3, 8)), staff[0])</span>
 <span class="sd">            &gt;&gt;&gt; abjad.show(staff) # doctest: +SKIP</span>
 
@@ -6810,8 +6792,9 @@
 <span class="sd">            Nontrivializable tuplet:</span>
 
 <span class="sd">            &gt;&gt;&gt; tuplet = abjad.Tuplet((3, 5), &quot;c&#39;4 c&#39;4 c&#39;4 c&#39;4 c&#39;4&quot;)</span>
-<span class="sd">            &gt;&gt;&gt; abjad.attach(abjad.TimeSignature((3, 4)), tuplet[0])</span>
 <span class="sd">            &gt;&gt;&gt; staff = abjad.Staff([tuplet])</span>
+<span class="sd">            &gt;&gt;&gt; score = abjad.Score([staff], name=&quot;Score&quot;)</span>
+<span class="sd">            &gt;&gt;&gt; abjad.attach(abjad.TimeSignature((3, 4)), tuplet[0])</span>
 <span class="sd">            &gt;&gt;&gt; abjad.show(staff) # doctest: +SKIP</span>
 
 <span class="sd">            ..  docs::</span>
@@ -6842,8 +6825,9 @@
 <span class="sd">            REGRESSION. Nontrivializable tuplet:</span>
 
 <span class="sd">            &gt;&gt;&gt; tuplet = abjad.Tuplet((3, 4), &quot;c&#39;2. c4&quot;)</span>
-<span class="sd">            &gt;&gt;&gt; abjad.attach(abjad.TimeSignature((3, 4)), tuplet[0])</span>
 <span class="sd">            &gt;&gt;&gt; staff = abjad.Staff([tuplet])</span>
+<span class="sd">            &gt;&gt;&gt; score = abjad.Score([staff], name=&quot;Score&quot;)</span>
+<span class="sd">            &gt;&gt;&gt; abjad.attach(abjad.TimeSignature((3, 4)), tuplet[0])</span>
 <span class="sd">            &gt;&gt;&gt; abjad.show(staff) # doctest: +SKIP</span>
 
 <span class="sd">            ..  docs::</span>
@@ -6963,11 +6947,11 @@
 <span class="sd">        &gt;&gt;&gt; outer_red_voice.append(container)</span>
 <span class="sd">        &gt;&gt;&gt; outer_red_voice.extend(&quot;d&#39;&#39;8&quot;)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.override(outer_red_voice).NoteHead.color = &quot;#red&quot;</span>
-<span class="sd">        &gt;&gt;&gt; literal = abjad.LilyPondLiteral(r&#39;\voiceOne&#39;)</span>
-<span class="sd">        &gt;&gt;&gt; abjad.attach(literal, outer_red_voice[0])</span>
+<span class="sd">        &gt;&gt;&gt; command = abjad.VoiceNumber(1)</span>
+<span class="sd">        &gt;&gt;&gt; abjad.attach(command, outer_red_voice[0])</span>
 <span class="sd">        &gt;&gt;&gt; abjad.override(inner_blue_voice).NoteHead.color = &quot;#blue&quot;</span>
-<span class="sd">        &gt;&gt;&gt; literal = abjad.LilyPondLiteral(r&#39;\voiceTwo&#39;)</span>
-<span class="sd">        &gt;&gt;&gt; abjad.attach(literal, inner_blue_voice[0])</span>
+<span class="sd">        &gt;&gt;&gt; command = abjad.VoiceNumber(2)</span>
+<span class="sd">        &gt;&gt;&gt; abjad.attach(command, inner_blue_voice[0])</span>
 <span class="sd">        &gt;&gt;&gt; dynamic = abjad.Dynamic(&#39;f&#39;)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.attach(dynamic, outer_red_voice[0])</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(outer_red_voice) # doctest: +SKIP</span>
@@ -7036,11 +7020,11 @@
 <span class="sd">        &gt;&gt;&gt; outer_red_voice.append(container)</span>
 <span class="sd">        &gt;&gt;&gt; outer_red_voice.extend(&quot;d&#39;&#39;8&quot;)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.override(outer_red_voice).NoteHead.color = &quot;#red&quot;</span>
-<span class="sd">        &gt;&gt;&gt; literal = abjad.LilyPondLiteral(r&#39;\voiceOne&#39;)</span>
-<span class="sd">        &gt;&gt;&gt; abjad.attach(literal, outer_red_voice[0])</span>
+<span class="sd">        &gt;&gt;&gt; command = abjad.VoiceNumber(1)</span>
+<span class="sd">        &gt;&gt;&gt; abjad.attach(command, outer_red_voice[0])</span>
 <span class="sd">        &gt;&gt;&gt; abjad.override(inner_blue_voice).NoteHead.color = &quot;#blue&quot;</span>
-<span class="sd">        &gt;&gt;&gt; literal = abjad.LilyPondLiteral(r&#39;\voiceTwo&#39;)</span>
-<span class="sd">        &gt;&gt;&gt; abjad.attach(literal, inner_blue_voice[0])</span>
+<span class="sd">        &gt;&gt;&gt; command = abjad.VoiceNumber(2)</span>
+<span class="sd">        &gt;&gt;&gt; abjad.attach(command, inner_blue_voice[0])</span>
 <span class="sd">        &gt;&gt;&gt; dynamic = abjad.Dynamic(&#39;p&#39;)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.attach(dynamic, inner_blue_voice[0])</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(outer_red_voice) # doctest: +SKIP</span>
@@ -7109,11 +7093,11 @@
 <span class="sd">        &gt;&gt;&gt; outer_red_voice.append(container)</span>
 <span class="sd">        &gt;&gt;&gt; outer_red_voice.extend(&quot;d&#39;&#39;8&quot;)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.override(outer_red_voice).NoteHead.color = &quot;#red&quot;</span>
-<span class="sd">        &gt;&gt;&gt; literal = abjad.LilyPondLiteral(r&#39;\voiceOne&#39;)</span>
-<span class="sd">        &gt;&gt;&gt; abjad.attach(literal, outer_red_voice[0])</span>
+<span class="sd">        &gt;&gt;&gt; command = abjad.VoiceNumber(1)</span>
+<span class="sd">        &gt;&gt;&gt; abjad.attach(command, outer_red_voice[0])</span>
 <span class="sd">        &gt;&gt;&gt; abjad.override(inner_blue_voice).NoteHead.color = &quot;#blue&quot;</span>
-<span class="sd">        &gt;&gt;&gt; literal = abjad.LilyPondLiteral(r&#39;\voiceTwo&#39;)</span>
-<span class="sd">        &gt;&gt;&gt; abjad.attach(literal, inner_blue_voice[0])</span>
+<span class="sd">        &gt;&gt;&gt; command = abjad.VoiceNumber(2)</span>
+<span class="sd">        &gt;&gt;&gt; abjad.attach(command, inner_blue_voice[0])</span>
 <span class="sd">        &gt;&gt;&gt; dynamic = abjad.Dynamic(&#39;mf&#39;)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.attach(dynamic, inner_red_voice[0])</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(outer_red_voice) # doctest: +SKIP</span>
@@ -7182,11 +7166,11 @@
 <span class="sd">        &gt;&gt;&gt; outer_red_voice.append(container)</span>
 <span class="sd">        &gt;&gt;&gt; outer_red_voice.extend(&quot;d&#39;&#39;8&quot;)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.override(outer_red_voice).NoteHead.color = &quot;#red&quot;</span>
-<span class="sd">        &gt;&gt;&gt; literal = abjad.LilyPondLiteral(r&#39;\voiceOne&#39;)</span>
-<span class="sd">        &gt;&gt;&gt; abjad.attach(literal, outer_red_voice[0])</span>
+<span class="sd">        &gt;&gt;&gt; command = abjad.VoiceNumber(1)</span>
+<span class="sd">        &gt;&gt;&gt; abjad.attach(command, outer_red_voice[0])</span>
 <span class="sd">        &gt;&gt;&gt; abjad.override(inner_blue_voice).NoteHead.color = &quot;#blue&quot;</span>
-<span class="sd">        &gt;&gt;&gt; literal = abjad.LilyPondLiteral(r&#39;\voiceTwo&#39;)</span>
-<span class="sd">        &gt;&gt;&gt; abjad.attach(literal, inner_blue_voice[0])</span>
+<span class="sd">        &gt;&gt;&gt; command = abjad.VoiceNumber(2)</span>
+<span class="sd">        &gt;&gt;&gt; abjad.attach(command, inner_blue_voice[0])</span>
 <span class="sd">        &gt;&gt;&gt; dynamic = abjad.Dynamic(&#39;mf&#39;)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.attach(dynamic, inner_red_voice[0])</span>
 <span class="sd">        &gt;&gt;&gt; dynamic = abjad.Dynamic(&#39;p&#39;)</span>
@@ -7263,16 +7247,15 @@
 
     <span class="c1">### INITIALIZER ###</span>
 
-    <span class="c1"># TODO: make keywords mandatory</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">components</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">lilypond_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Voice&quot;</span><span class="p">,</span>
-        <span class="n">simultaneous</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-        <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">tag</span><span class="p">:</span> <span class="n">_tag</span><span class="o">.</span><span class="n">Tag</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="o">*</span><span class="p">,</span>
         <span class="n">language</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;english&quot;</span><span class="p">,</span>
+        <span class="n">lilypond_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;Voice&quot;</span><span class="p">,</span>
+        <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">simultaneous</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="n">tag</span><span class="p">:</span> <span class="n">_tag</span><span class="o">.</span><span class="n">Tag</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">Context</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
             <span class="bp">self</span><span class="p">,</span>

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>abjad.parsers.parse &mdash; Abjad 3.16 documentation</title>
+  <title>abjad.parsers.parse &mdash; Abjad 3.17 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/abjad.css" type="text/css" />
@@ -34,11 +34,11 @@
   <div class="wy-grid-for-nav">
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search"  style="background: #aa44ee" >
+        <div class="wy-side-nav-search"  style="background: #bb6611" >
 
 
     <a href="../../../index.html" class="icon icon-home" alt="Documentation
-    Home"> Abjad 3.16
+    Home"> Abjad 3.17
 
 
 
@@ -111,7 +111,7 @@
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #aa44ee" >
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #bb6611" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../../index.html">Abjad</a>
       </nav>
@@ -133,7 +133,7 @@
 <span class="n">_lilypond_parsers_by_language</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="p">{}</span>
 
 
-<div class="viewcode-block" id="parse"><a class="viewcode-back" href="../../../api/abjad/parsers/parse.html#abjad.parsers.parse.parse">[docs]</a><span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">language</span><span class="o">=</span><span class="s2">&quot;english&quot;</span><span class="p">):</span>
+<div class="viewcode-block" id="parse"><a class="viewcode-back" href="../../../api/abjad/parsers/parse.html#abjad.parsers.parse.parse">[docs]</a><span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="n">string</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">language</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;english&quot;</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Parses LilyPond ``string``.</span>
 
@@ -144,15 +144,28 @@
 <span class="sd">        &gt;&gt;&gt; container = abjad.parse(&quot;{c&#39;4 d&#39;4 e&#39;4 f&#39;4}&quot;)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(container) # doctest: +SKIP</span>
 
-<span class="sd">    ..  container:: example</span>
-
 <span class="sd">        Parses LilyPond string with Dutch note names:</span>
 
-<span class="sd">        &gt;&gt;&gt; container = abjad.parse(</span>
-<span class="sd">        ...     &quot;{c&#39;8 des&#39; e&#39; fis&#39;}&quot;,</span>
-<span class="sd">        ...     language=&#39;nederlands&#39;,</span>
-<span class="sd">        ...     )</span>
+<span class="sd">        &gt;&gt;&gt; container = abjad.parse(&quot;{c&#39;8 des&#39; e&#39; fis&#39;}&quot;, language=&#39;nederlands&#39;)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(container) # doctest: +SKIP</span>
+
+<span class="sd">        Tags output:</span>
+
+<span class="sd">        &gt;&gt;&gt; container = abjad.parse(&quot;{c&#39;4 d&#39;4 e&#39;4 f&#39;4}&quot;, tag=abjad.Tag(&quot;FOO&quot;))</span>
+<span class="sd">        &gt;&gt;&gt; string = abjad.lilypond(container, tags=True)</span>
+<span class="sd">        &gt;&gt;&gt; print(string)</span>
+<span class="sd">          %! FOO</span>
+<span class="sd">        {</span>
+<span class="sd">              %! FOO</span>
+<span class="sd">            c&#39;4</span>
+<span class="sd">              %! FOO</span>
+<span class="sd">            d&#39;4</span>
+<span class="sd">              %! FOO</span>
+<span class="sd">            e&#39;4</span>
+<span class="sd">              %! FOO</span>
+<span class="sd">            f&#39;4</span>
+<span class="sd">          %! FOO</span>
+<span class="sd">        }</span>
 
 <span class="sd">    Returns Abjad component.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -161,7 +174,16 @@
     <span class="k">if</span> <span class="n">language</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">_lilypond_parsers_by_language</span><span class="p">:</span>
         <span class="n">parser</span> <span class="o">=</span> <span class="n">LilyPondParser</span><span class="p">(</span><span class="n">default_language</span><span class="o">=</span><span class="n">language</span><span class="p">)</span>
         <span class="n">_lilypond_parsers_by_language</span><span class="p">[</span><span class="n">language</span><span class="p">]</span> <span class="o">=</span> <span class="n">parser</span>
-    <span class="k">return</span> <span class="n">_lilypond_parsers_by_language</span><span class="p">[</span><span class="n">language</span><span class="p">](</span><span class="n">string</span><span class="p">)</span></div>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">_lilypond_parsers_by_language</span><span class="p">[</span><span class="n">language</span><span class="p">]</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">tag</span> <span class="o">=</span> <span class="n">tag</span>
+    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">parser</span><span class="p">,</span> <span class="s2">&quot;_guile&quot;</span><span class="p">):</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">_guile</span><span class="o">.</span><span class="n">tag</span> <span class="o">=</span> <span class="n">tag</span>
+    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">parser</span><span class="p">,</span> <span class="s2">&quot;_lexdef&quot;</span><span class="p">):</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">_lexdef</span><span class="o">.</span><span class="n">tag</span> <span class="o">=</span> <span class="n">tag</span>
+    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">parser</span><span class="p">,</span> <span class="s2">&quot;_syndef&quot;</span><span class="p">):</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">_syndef</span><span class="o">.</span><span class="n">tag</span> <span class="o">=</span> <span class="n">tag</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">parser</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">result</span></div>
 </pre></div>
 
     </div>

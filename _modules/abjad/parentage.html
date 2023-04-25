@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>abjad.parentage &mdash; Abjad 3.16 documentation</title>
+  <title>abjad.parentage &mdash; Abjad 3.17 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/abjad.css" type="text/css" />
@@ -34,11 +34,11 @@
   <div class="wy-grid-for-nav">
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search"  style="background: #aa44ee" >
+        <div class="wy-side-nav-search"  style="background: #bb6611" >
 
 
     <a href="../../index.html" class="icon icon-home" alt="Documentation
-    Home"> Abjad 3.16
+    Home"> Abjad 3.17
 
 
 
@@ -111,7 +111,7 @@
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #aa44ee" >
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #bb6611" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../index.html">Abjad</a>
       </nav>
@@ -201,6 +201,19 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_components</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">components</span><span class="p">)</span>
 
     <span class="c1">### SPECIAL METHODS ###</span>
+
+<div class="viewcode-block" id="Parentage.__eq__"><a class="viewcode-back" href="../../api/abjad/parentage.html#abjad.parentage.Parentage.__eq__">[docs]</a>    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Is true when ``argument`` is a parent with the same components as this parentage.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">argument</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">argument</span><span class="p">):</span>
+                <span class="k">for</span> <span class="n">c</span><span class="p">,</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">):</span>
+                    <span class="k">if</span> <span class="n">c</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">d</span><span class="p">:</span>
+                        <span class="k">return</span> <span class="kc">False</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">return</span> <span class="kc">False</span></div>
 
 <div class="viewcode-block" id="Parentage.__getitem__"><a class="viewcode-back" href="../../api/abjad/parentage.html#abjad.parentage.Parentage.__getitem__">[docs]</a>    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -954,11 +967,11 @@
 <span class="sd">            &gt;&gt;&gt; outer_red_voice.append(container)</span>
 <span class="sd">            &gt;&gt;&gt; outer_red_voice.extend(&quot;d&#39;&#39;8&quot;)</span>
 <span class="sd">            &gt;&gt;&gt; abjad.override(outer_red_voice).NoteHead.color = &quot;#red&quot;</span>
-<span class="sd">            &gt;&gt;&gt; literal = abjad.LilyPondLiteral(r&quot;\voiceOne&quot;)</span>
-<span class="sd">            &gt;&gt;&gt; abjad.attach(literal, outer_red_voice[0])</span>
+<span class="sd">            &gt;&gt;&gt; command = abjad.VoiceNumber(1)</span>
+<span class="sd">            &gt;&gt;&gt; abjad.attach(command, outer_red_voice[0])</span>
 <span class="sd">            &gt;&gt;&gt; abjad.override(inner_blue_voice).NoteHead.color = &quot;#blue&quot;</span>
-<span class="sd">            &gt;&gt;&gt; literal = abjad.LilyPondLiteral(r&quot;\voiceTwo&quot;)</span>
-<span class="sd">            &gt;&gt;&gt; abjad.attach(literal, inner_blue_voice[0])</span>
+<span class="sd">            &gt;&gt;&gt; command = abjad.VoiceNumber(2)</span>
+<span class="sd">            &gt;&gt;&gt; abjad.attach(command, inner_blue_voice[0])</span>
 <span class="sd">            &gt;&gt;&gt; dynamic = abjad.Dynamic(&quot;f&quot;)</span>
 <span class="sd">            &gt;&gt;&gt; abjad.attach(dynamic, outer_red_voice[0])</span>
 <span class="sd">            &gt;&gt;&gt; abjad.show(outer_red_voice) # doctest: +SKIP</span>
@@ -1126,11 +1139,11 @@
 <span class="sd">            &gt;&gt;&gt; outer_red_voice.append(container)</span>
 <span class="sd">            &gt;&gt;&gt; outer_red_voice.extend(&quot;d&#39;&#39;8&quot;)</span>
 <span class="sd">            &gt;&gt;&gt; abjad.override(outer_red_voice).NoteHead.color = &quot;#red&quot;</span>
-<span class="sd">            &gt;&gt;&gt; literal = abjad.LilyPondLiteral(r&quot;\voiceOne&quot;)</span>
-<span class="sd">            &gt;&gt;&gt; abjad.attach(literal, outer_red_voice[0])</span>
+<span class="sd">            &gt;&gt;&gt; command = abjad.VoiceNumber(1)</span>
+<span class="sd">            &gt;&gt;&gt; abjad.attach(command, outer_red_voice[0])</span>
 <span class="sd">            &gt;&gt;&gt; abjad.override(inner_blue_voice).NoteHead.color = &quot;#blue&quot;</span>
-<span class="sd">            &gt;&gt;&gt; literal = abjad.LilyPondLiteral(r&quot;\voiceTwo&quot;)</span>
-<span class="sd">            &gt;&gt;&gt; abjad.attach(literal, inner_blue_voice[0])</span>
+<span class="sd">            &gt;&gt;&gt; command = abjad.VoiceNumber(2)</span>
+<span class="sd">            &gt;&gt;&gt; abjad.attach(command, inner_blue_voice[0])</span>
 <span class="sd">            &gt;&gt;&gt; dynamic = abjad.Dynamic(&quot;f&quot;)</span>
 <span class="sd">            &gt;&gt;&gt; abjad.attach(dynamic, outer_red_voice[0])</span>
 <span class="sd">            &gt;&gt;&gt; abjad.show(outer_red_voice) # doctest: +SKIP</span>

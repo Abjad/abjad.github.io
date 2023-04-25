@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>abjad.meter &mdash; Abjad 3.16 documentation</title>
+  <title>abjad.meter &mdash; Abjad 3.17 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/abjad.css" type="text/css" />
@@ -34,11 +34,11 @@
   <div class="wy-grid-for-nav">
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search"  style="background: #aa44ee" >
+        <div class="wy-side-nav-search"  style="background: #bb6611" >
 
 
     <a href="../../index.html" class="icon icon-home" alt="Documentation
-    Home"> Abjad 3.16
+    Home"> Abjad 3.17
 
 
 
@@ -111,7 +111,7 @@
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #aa44ee" >
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #bb6611" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../index.html">Abjad</a>
       </nav>
@@ -853,7 +853,12 @@
 
 <span class="sd">        Returns time signature.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">_indicators</span><span class="o">.</span><span class="n">TimeSignature</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root_node</span><span class="o">.</span><span class="n">preprolated_duration</span><span class="p">)</span>
+        <span class="n">duration</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">root_node</span><span class="o">.</span><span class="n">preprolated_duration</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">duration</span><span class="p">,</span> <span class="s2">&quot;pair&quot;</span><span class="p">):</span>
+            <span class="n">pair</span> <span class="o">=</span> <span class="n">duration</span><span class="o">.</span><span class="n">pair</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">pair</span> <span class="o">=</span> <span class="n">duration</span>
+        <span class="k">return</span> <span class="n">_indicators</span><span class="o">.</span><span class="n">TimeSignature</span><span class="p">(</span><span class="n">pair</span><span class="p">)</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">increase_monotonic</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
@@ -1291,6 +1296,7 @@
 <span class="sd">            &gt;&gt;&gt; container = abjad.parsers.reduced.parse_reduced_ly_syntax(lily_string)</span>
 <span class="sd">            &gt;&gt;&gt; staff = abjad.Staff()</span>
 <span class="sd">            &gt;&gt;&gt; staff[:] = container</span>
+<span class="sd">            &gt;&gt;&gt; score = abjad.Score([staff], name=&quot;Score&quot;)</span>
 <span class="sd">            &gt;&gt;&gt; abjad.show(staff) # doctest: +SKIP</span>
 
 <span class="sd">            ..  docs::</span>
@@ -1365,6 +1371,7 @@
 <span class="sd">            &gt;&gt;&gt; container = abjad.parsers.reduced.parse_reduced_ly_syntax(lily_string)</span>
 <span class="sd">            &gt;&gt;&gt; staff = abjad.Staff()</span>
 <span class="sd">            &gt;&gt;&gt; staff[:] = container</span>
+<span class="sd">            &gt;&gt;&gt; score = abjad.Score([staff], name=&quot;Score&quot;)</span>
 <span class="sd">            &gt;&gt;&gt; abjad.show(staff) # doctest: +SKIP</span>
 
 <span class="sd">            ..  docs::</span>
@@ -1441,6 +1448,7 @@
 <span class="sd">            &gt;&gt;&gt; container = abjad.parsers.reduced.parse_reduced_ly_syntax(lily_string)</span>
 <span class="sd">            &gt;&gt;&gt; staff = abjad.Staff()</span>
 <span class="sd">            &gt;&gt;&gt; staff.append(container)</span>
+<span class="sd">            &gt;&gt;&gt; score = abjad.Score([staff], name=&quot;Score&quot;)</span>
 <span class="sd">            &gt;&gt;&gt; abjad.show(staff) # doctest: +SKIP</span>
 
 <span class="sd">            ..  docs::</span>
@@ -1493,6 +1501,7 @@
 <span class="sd">            &gt;&gt;&gt; container = abjad.parsers.reduced.parse_reduced_ly_syntax(lily_string)</span>
 <span class="sd">            &gt;&gt;&gt; staff = abjad.Staff()</span>
 <span class="sd">            &gt;&gt;&gt; staff.append(container)</span>
+<span class="sd">            &gt;&gt;&gt; score = abjad.Score([staff], name=&quot;Score&quot;)</span>
 <span class="sd">            &gt;&gt;&gt; measure = staff[0]</span>
 <span class="sd">            &gt;&gt;&gt; time_signature = abjad.get.indicator(</span>
 <span class="sd">            ...     measure[0],</span>
@@ -1532,6 +1541,7 @@
 <span class="sd">            &gt;&gt;&gt; container = abjad.parsers.reduced.parse_reduced_ly_syntax(lily_string)</span>
 <span class="sd">            &gt;&gt;&gt; staff = abjad.Staff()</span>
 <span class="sd">            &gt;&gt;&gt; staff.append(container)</span>
+<span class="sd">            &gt;&gt;&gt; score = abjad.Score([staff], name=&quot;Score&quot;)</span>
 <span class="sd">            &gt;&gt;&gt; measure = staff[0]</span>
 <span class="sd">            &gt;&gt;&gt; time_signature = abjad.get.indicator(</span>
 <span class="sd">            ...     measure[0],</span>
@@ -1573,6 +1583,7 @@
 <span class="sd">            &gt;&gt;&gt; container = abjad.parsers.reduced.parse_reduced_ly_syntax(lily_string)</span>
 <span class="sd">            &gt;&gt;&gt; staff = abjad.Staff()</span>
 <span class="sd">            &gt;&gt;&gt; staff.append(container)</span>
+<span class="sd">            &gt;&gt;&gt; score = abjad.Score([staff], name=&quot;Score&quot;)</span>
 <span class="sd">            &gt;&gt;&gt; measure = staff[0]</span>
 <span class="sd">            &gt;&gt;&gt; time_signature = abjad.get.indicator(</span>
 <span class="sd">            ...     measure[0],</span>
@@ -1644,6 +1655,7 @@
 <span class="sd">            &gt;&gt;&gt; container = abjad.parsers.reduced.parse_reduced_ly_syntax(lily_string)</span>
 <span class="sd">            &gt;&gt;&gt; staff = abjad.Staff()</span>
 <span class="sd">            &gt;&gt;&gt; staff.append(container)</span>
+<span class="sd">            &gt;&gt;&gt; score = abjad.Score([staff], name=&quot;Score&quot;)</span>
 <span class="sd">            &gt;&gt;&gt; abjad.show(staff) # doctest: +SKIP</span>
 
 <span class="sd">            ..  docs::</span>
@@ -1693,16 +1705,17 @@
 <span class="sd">            &gt;&gt;&gt; container = abjad.parsers.reduced.parse_reduced_ly_syntax(lily_string)</span>
 <span class="sd">            &gt;&gt;&gt; staff = abjad.Staff()</span>
 <span class="sd">            &gt;&gt;&gt; staff.append(container)</span>
+<span class="sd">            &gt;&gt;&gt; score = abjad.Score([staff], name=&quot;Score&quot;)</span>
 <span class="sd">            &gt;&gt;&gt; measure = staff[0]</span>
 <span class="sd">            &gt;&gt;&gt; time_signature = abjad.get.indicator(</span>
 <span class="sd">            ...     measure[0],</span>
 <span class="sd">            ...     abjad.TimeSignature</span>
-<span class="sd">            ...     )</span>
+<span class="sd">            ... )</span>
 <span class="sd">            &gt;&gt;&gt; abjad.Meter.rewrite_meter(</span>
 <span class="sd">            ...     measure[:],</span>
 <span class="sd">            ...     time_signature,</span>
 <span class="sd">            ...     boundary_depth=1,</span>
-<span class="sd">            ...     )</span>
+<span class="sd">            ... )</span>
 <span class="sd">            &gt;&gt;&gt; abjad.show(staff) # doctest: +SKIP</span>
 
 <span class="sd">            ..  docs::</span>
@@ -1731,6 +1744,7 @@
 <span class="sd">            &gt;&gt;&gt; container = abjad.parsers.reduced.parse_reduced_ly_syntax(lily_string)</span>
 <span class="sd">            &gt;&gt;&gt; staff = abjad.Staff()</span>
 <span class="sd">            &gt;&gt;&gt; staff.append(container)</span>
+<span class="sd">            &gt;&gt;&gt; score = abjad.Score([staff], name=&quot;Score&quot;)</span>
 <span class="sd">            &gt;&gt;&gt; measure = staff[0]</span>
 <span class="sd">            &gt;&gt;&gt; time_signature = abjad.get.indicator(</span>
 <span class="sd">            ...     measure[0],</span>
@@ -2108,6 +2122,7 @@
 <span class="sd">            &gt;&gt;&gt; container = abjad.parsers.reduced.parse_reduced_ly_syntax(lily_string)</span>
 <span class="sd">            &gt;&gt;&gt; staff = abjad.Staff()</span>
 <span class="sd">            &gt;&gt;&gt; staff.append(container)</span>
+<span class="sd">            &gt;&gt;&gt; score = abjad.Score([staff], name=&quot;Score&quot;)</span>
 <span class="sd">            &gt;&gt;&gt; abjad.show(staff) # doctest: +SKIP</span>
 
 <span class="sd">            ..  docs::</span>
@@ -2194,6 +2209,7 @@
 <span class="sd">            beat in meter:</span>
 
 <span class="sd">            &gt;&gt;&gt; staff = abjad.Staff(&quot;c&#39;4.. c&#39;16 ~ c&#39;4&quot;)</span>
+<span class="sd">            &gt;&gt;&gt; score = abjad.Score([staff], name=&quot;Score&quot;)</span>
 <span class="sd">            &gt;&gt;&gt; abjad.attach(abjad.TimeSignature((6, 8)), staff[0])</span>
 <span class="sd">            &gt;&gt;&gt; meter = abjad.Meter((6, 8))</span>
 <span class="sd">            &gt;&gt;&gt; abjad.Meter.rewrite_meter(staff[:], meter)</span>
@@ -2215,6 +2231,7 @@
 <span class="sd">            Setting boundary depth to 1 subdivides the first note in this measure:</span>
 
 <span class="sd">            &gt;&gt;&gt; staff = abjad.Staff(&quot;c&#39;4.. c&#39;16 ~ c&#39;4&quot;)</span>
+<span class="sd">            &gt;&gt;&gt; score = abjad.Score([staff], name=&quot;Score&quot;)</span>
 <span class="sd">            &gt;&gt;&gt; abjad.attach(abjad.TimeSignature((6, 8)), staff[0])</span>
 <span class="sd">            &gt;&gt;&gt; meter = abjad.Meter((6, 8))</span>
 <span class="sd">            &gt;&gt;&gt; abjad.Meter.rewrite_meter(staff[:], meter, boundary_depth=1)</span>
@@ -2239,11 +2256,9 @@
 <span class="sd">            itself:</span>
 
 <span class="sd">            &gt;&gt;&gt; staff = abjad.Staff(&quot;c&#39;4.. c&#39;16 ~ c&#39;4&quot;)</span>
+<span class="sd">            &gt;&gt;&gt; score = abjad.Score([staff], name=&quot;Score&quot;)</span>
 <span class="sd">            &gt;&gt;&gt; abjad.attach(abjad.TimeSignature((6, 8)), staff[0])</span>
-<span class="sd">            &gt;&gt;&gt; meter = abjad.Meter(</span>
-<span class="sd">            ...     (6, 8),</span>
-<span class="sd">            ...     preferred_boundary_depth=1,</span>
-<span class="sd">            ...     )</span>
+<span class="sd">            &gt;&gt;&gt; meter = abjad.Meter((6, 8), preferred_boundary_depth=1)</span>
 <span class="sd">            &gt;&gt;&gt; abjad.Meter.rewrite_meter(staff[:], meter)</span>
 <span class="sd">            &gt;&gt;&gt; abjad.show(staff) # doctest: +SKIP</span>
 
@@ -2271,6 +2286,7 @@
 <span class="sd">            &gt;&gt;&gt; lily_string = r&quot;c&#39;8 ~ c&#39;8 ~ c&#39;8 \times 6/7 { c&#39;4. r16 }&quot;</span>
 <span class="sd">            &gt;&gt;&gt; lily_string += r&quot; \times 6/7 { r16 c&#39;4. } c&#39;8 ~ c&#39;8 ~ c&#39;8&quot;</span>
 <span class="sd">            &gt;&gt;&gt; staff = abjad.Staff(lily_string)</span>
+<span class="sd">            &gt;&gt;&gt; score = abjad.Score([staff], name=&quot;Score&quot;)</span>
 <span class="sd">            &gt;&gt;&gt; abjad.attach(abjad.TimeSignature((6, 4)), staff[0])</span>
 <span class="sd">            &gt;&gt;&gt; abjad.show(staff) # doctest: +SKIP</span>
 
@@ -2346,6 +2362,7 @@
 <span class="sd">            &gt;&gt;&gt; lily_string = r&quot;c&#39;8 ~ c&#39;8 ~ c&#39;8 \times 6/7 { c&#39;4. r16 }&quot;</span>
 <span class="sd">            &gt;&gt;&gt; lily_string += r&quot; \times 6/7 { r16 c&#39;4. } c&#39;8 ~ c&#39;8 ~ c&#39;8&quot;</span>
 <span class="sd">            &gt;&gt;&gt; staff = abjad.Staff(lily_string)</span>
+<span class="sd">            &gt;&gt;&gt; score = abjad.Score([staff], name=&quot;Score&quot;)</span>
 <span class="sd">            &gt;&gt;&gt; abjad.attach(abjad.TimeSignature((6, 4)), staff[0])</span>
 <span class="sd">            &gt;&gt;&gt; abjad.show(staff) # doctest: +SKIP</span>
 
@@ -2870,7 +2887,11 @@
 
 <span class="sd">        Returns true or false.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__eq__</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span></div>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">argument</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">kernel</span> <span class="o">==</span> <span class="n">argument</span><span class="o">.</span><span class="n">kernel</span><span class="p">:</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">duration</span> <span class="o">==</span> <span class="n">argument</span><span class="o">.</span><span class="n">duration</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">return</span> <span class="kc">False</span></div>
 
 <div class="viewcode-block" id="MetricAccentKernel.__hash__"><a class="viewcode-back" href="../../api/abjad/meter.html#abjad.meter.MetricAccentKernel.__hash__">[docs]</a>    <span class="k">def</span> <span class="fm">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -2893,7 +2914,10 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets duration.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_offsets</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_offsets</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_offsets</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">kernel</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -3290,6 +3314,7 @@
 <span class="sd">        &gt;&gt;&gt; string = string.replace(&#39;!&#39;, &#39;|&#39;)</span>
 <span class="sd">        &gt;&gt;&gt; container = abjad.parsers.reduced.parse_reduced_ly_syntax(string)</span>
 <span class="sd">        &gt;&gt;&gt; staff = abjad.Staff()</span>
+<span class="sd">        &gt;&gt;&gt; score = abjad.Score([staff], name=&quot;Score&quot;)</span>
 <span class="sd">        &gt;&gt;&gt; staff[:] = container</span>
 
 <span class="sd">        ..  docs::</span>

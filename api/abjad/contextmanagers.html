@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>contextmanagers &mdash; Abjad 3.16 documentation</title>
+  <title>contextmanagers &mdash; Abjad 3.17 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/abjad.css" type="text/css" />
@@ -37,11 +37,11 @@
   <div class="wy-grid-for-nav">
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search"  style="background: #aa44ee" >
+        <div class="wy-side-nav-search"  style="background: #bb6611" >
 
 
     <a href="../../index.html" class="icon icon-home" alt="Documentation
-    Home"> Abjad 3.16
+    Home"> Abjad 3.17
 
 
 
@@ -114,7 +114,7 @@
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #aa44ee" >
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #bb6611" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../index.html">Abjad</a>
       </nav>
@@ -132,7 +132,7 @@
   <section id="module-abjad.contextmanagers">
 <span id="contextmanagers"></span><span id="abjad-contextmanagers"></span><h1>contextmanagers<a class="headerlink" href="#module-abjad.contextmanagers" title="Permalink to this heading">¶</a></h1>
 <div class="svg-container docutils container">
-<div class="graphviz"><object data="../../_images/inheritance-475d2a09778716523f1f8273672ed0626b3d71e3.svg" type="image/svg+xml" class="inheritance graphviz">
+<div class="graphviz"><object data="../../_images/inheritance-0c6fb6b81b36fd5f8d721ac87985ba495699a5dd.svg" type="image/svg+xml" class="inheritance graphviz">
 <p class="warning">digraph InheritanceGraph {
 	graph [bgcolor=transparent,
 		color=lightsteelblue2,
@@ -158,13 +158,6 @@
 	edge [color=lightslategrey,
 		penwidth=1
 	];
-	subgraph cluster_builtins {
-		graph [label=builtins];
-		node [color=2];
-		&quot;builtins.object&quot;	[URL=&quot;https://docs.python.org/3.10/library/functions.html#object&quot;,
-			label=object,
-			target=_top];
-	}
 	subgraph &quot;cluster_abjad.contextmanagers&quot; {
 		graph [label=&quot;abjad.contextmanagers&quot;];
 		node [color=1];
@@ -221,6 +214,13 @@
 			label=Timer,
 			target=_top];
 		&quot;abjad.contextmanagers.ContextManager&quot; -&gt; &quot;abjad.contextmanagers.Timer&quot;	[minlen=2];
+	}
+	subgraph cluster_builtins {
+		graph [label=builtins];
+		node [color=2];
+		&quot;builtins.object&quot;	[URL=&quot;https://docs.python.org/3.10/library/functions.html#object&quot;,
+			label=object,
+			target=_top];
 	}
 	&quot;builtins.object&quot; -&gt; &quot;abjad.contextmanagers.ContextManager&quot;	[minlen=1];
 }</p></object></div>
@@ -416,6 +416,25 @@ also removes paths in remove list.</p>
 <dt class="sig sig-object py" id="abjad.contextmanagers.ForbidUpdate.__enter__">
 <span class="sig-name descname"><span class="pre">__enter__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/abjad/contextmanagers.html#ForbidUpdate.__enter__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#abjad.contextmanagers.ForbidUpdate.__enter__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Enters context manager.</p>
+<div class="example docutils container">
+<p>REGRESSION. Indicators need to be updated after swap; context
+manager updates indicators before forbidding further updates:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">staff</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Staff</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\times 1/1 { c&#39;4 d&#39; }&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">abjad</span><span class="o">.</span><span class="n">attach</span><span class="p">(</span><span class="n">abjad</span><span class="o">.</span><span class="n">Clef</span><span class="p">(</span><span class="s2">&quot;alto&quot;</span><span class="p">),</span> <span class="n">staff</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">container</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Container</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">abjad</span><span class="o">.</span><span class="n">mutate</span><span class="o">.</span><span class="n">swap</span><span class="p">(</span><span class="n">staff</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">container</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">abjad</span><span class="o">.</span><span class="n">ForbidUpdate</span><span class="p">(</span><span class="n">staff</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">for</span> <span class="n">note</span> <span class="ow">in</span> <span class="n">staff</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+<span class="gp">... </span>        <span class="nb">print</span><span class="p">(</span><span class="n">note</span><span class="p">)</span>
+<span class="gp">... </span>        <span class="nb">print</span><span class="p">(</span><span class="n">abjad</span><span class="o">.</span><span class="n">get</span><span class="o">.</span><span class="n">effective</span><span class="p">(</span><span class="n">note</span><span class="p">,</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Clef</span><span class="p">))</span>
+<span class="gp">... </span>
+<span class="go">Note(&quot;c&#39;4&quot;)</span>
+<span class="go">Clef(name=&#39;alto&#39;, hide=False)</span>
+<span class="go">Note(&quot;d&#39;4&quot;)</span>
+<span class="go">Clef(name=&#39;alto&#39;, hide=False)</span>
+</pre></div>
+</div>
+</div>
 <p>Returns context manager.</p>
 </dd></dl>
 
@@ -867,7 +886,7 @@ exit.</p>
 <span class="gp">... </span>        <span class="n">x</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="mi">1</span>
 <span class="gp">... </span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">timer</span><span class="o">.</span><span class="n">elapsed_time</span>  
-<span class="go">0.028837919235229492</span>
+<span class="go">0.026852130889892578</span>
 </pre></div>
 </div>
 <p>The timer can also be accessed from within the <code class="docutils literal notranslate"><span class="pre">with</span></code> block:</p>
@@ -877,11 +896,11 @@ exit.</p>
 <span class="gp">... </span>            <span class="n">x</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="mi">1</span>
 <span class="gp">... </span>        <span class="nb">print</span><span class="p">(</span><span class="n">timer</span><span class="o">.</span><span class="n">elapsed_time</span><span class="p">)</span>
 <span class="gp">... </span>
-<span class="go">0.03054499626159668</span>
-<span class="go">0.05867290496826172</span>
-<span class="go">0.08656072616577148</span>
-<span class="go">0.11458492279052734</span>
-<span class="go">0.14224505424499512</span>
+<span class="go">0.02675008773803711</span>
+<span class="go">0.0534970760345459</span>
+<span class="go">0.08020782470703125</span>
+<span class="go">0.10695695877075195</span>
+<span class="go">0.1336660385131836</span>
 </pre></div>
 </div>
 </div>

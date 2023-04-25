@@ -306,6 +306,7 @@ Custom exceptions.
    ~abjad.exceptions.AssignabilityError
    ~abjad.exceptions.ImpreciseMetronomeMarkError
    ~abjad.exceptions.LilyPondParserError
+   ~abjad.exceptions.MissingContextError
    ~abjad.exceptions.MissingMetronomeMarkError
    ~abjad.exceptions.ParentageError
    ~abjad.exceptions.PersistentIndicatorError
@@ -458,11 +459,11 @@ Custom exceptions.
    :nosignatures:
 
    ~abjad.illustrators.attach_markup_struts
+   ~abjad.illustrators.components
+   ~abjad.illustrators.components_to_score_markup_string
    ~abjad.illustrators.illustrate
    ~abjad.illustrators.lilypond
    ~abjad.illustrators.make_piano_score
-   ~abjad.illustrators.selection
-   ~abjad.illustrators.selection_to_score_markup_string
 
 .. raw:: html
 
@@ -471,7 +472,7 @@ Custom exceptions.
 .. rubric:: :ref:`abjad.indicators <abjad--indicators>`
    :class: section-header
 
-Indicators
+Indicators.
 
 .. raw:: html
 
@@ -526,6 +527,7 @@ Indicators
    ~abjad.indicators.StopTrillSpan
    ~abjad.indicators.Tie
    ~abjad.indicators.TimeSignature
+   ~abjad.indicators.VoiceNumber
 
 .. raw:: html
 
@@ -1738,12 +1740,14 @@ Tools for modeling and manipulating timespans.
 .. autosummary::
    :nosignatures:
 
+   ~abjad.wf.check_beamed_lone_notes
    ~abjad.wf.check_beamed_long_notes
    ~abjad.wf.check_duplicate_ids
    ~abjad.wf.check_empty_containers
    ~abjad.wf.check_missing_parents
    ~abjad.wf.check_notes_on_wrong_clef
    ~abjad.wf.check_out_of_range_pitches
+   ~abjad.wf.check_overlapping_beams
    ~abjad.wf.check_overlapping_text_spanners
    ~abjad.wf.check_unmatched_stop_text_spans
    ~abjad.wf.check_unterminated_hairpins
@@ -2200,60 +2204,10 @@ Rhythm-makers.
 
    <hr/>
 
-.. rubric:: :ref:`abjadext.rmakers.rmakers <abjadext--rmakers--rmakers>`
+.. rubric:: :ref:`abjadext.rmakers.classes <abjadext--rmakers--classes>`
    :class: section-header
 
-.. raw:: html
-
-   <hr/>
-
-.. rubric:: Functions
-   :class: subsection-header
-
-.. autosummary::
-   :nosignatures:
-
-   ~abjadext.rmakers.rmakers.accelerando
-   ~abjadext.rmakers.rmakers.after_grace_container
-   ~abjadext.rmakers.rmakers.beam
-   ~abjadext.rmakers.rmakers.beam_groups
-   ~abjadext.rmakers.rmakers.before_grace_container
-   ~abjadext.rmakers.rmakers.denominator
-   ~abjadext.rmakers.rmakers.duration_bracket
-   ~abjadext.rmakers.rmakers.even_division
-   ~abjadext.rmakers.rmakers.example
-   ~abjadext.rmakers.rmakers.extract_trivial
-   ~abjadext.rmakers.rmakers.feather_beam
-   ~abjadext.rmakers.rmakers.force_augmentation
-   ~abjadext.rmakers.rmakers.force_diminution
-   ~abjadext.rmakers.rmakers.force_fraction
-   ~abjadext.rmakers.rmakers.force_note
-   ~abjadext.rmakers.rmakers.force_repeat_tie
-   ~abjadext.rmakers.rmakers.force_rest
-   ~abjadext.rmakers.rmakers.incised
-   ~abjadext.rmakers.rmakers.interpolate
-   ~abjadext.rmakers.rmakers.invisible_music
-   ~abjadext.rmakers.rmakers.multiplied_duration
-   ~abjadext.rmakers.rmakers.nongrace_leaves_in_each_tuplet
-   ~abjadext.rmakers.rmakers.note
-   ~abjadext.rmakers.rmakers.on_beat_grace_container
-   ~abjadext.rmakers.rmakers.reduce_multiplier
-   ~abjadext.rmakers.rmakers.repeat_tie
-   ~abjadext.rmakers.rmakers.rewrite_dots
-   ~abjadext.rmakers.rmakers.rewrite_meter
-   ~abjadext.rmakers.rmakers.rewrite_rest_filled
-   ~abjadext.rmakers.rmakers.rewrite_sustained
-   ~abjadext.rmakers.rmakers.split_measures
-   ~abjadext.rmakers.rmakers.talea
-   ~abjadext.rmakers.rmakers.tie
-   ~abjadext.rmakers.rmakers.time_signatures
-   ~abjadext.rmakers.rmakers.tremolo_container
-   ~abjadext.rmakers.rmakers.trivialize
-   ~abjadext.rmakers.rmakers.tuplet
-   ~abjadext.rmakers.rmakers.unbeam
-   ~abjadext.rmakers.rmakers.untie
-   ~abjadext.rmakers.rmakers.wrap_in_time_signature_staff
-   ~abjadext.rmakers.rmakers.written_duration
+The rmakers classes.
 
 .. raw:: html
 
@@ -2265,7 +2219,115 @@ Rhythm-makers.
 .. autosummary::
    :nosignatures:
 
-   ~abjadext.rmakers.rmakers.Incise
-   ~abjadext.rmakers.rmakers.Interpolation
-   ~abjadext.rmakers.rmakers.Spelling
-   ~abjadext.rmakers.rmakers.Talea
+   ~abjadext.rmakers.classes.Incise
+   ~abjadext.rmakers.classes.Interpolation
+   ~abjadext.rmakers.classes.Spelling
+   ~abjadext.rmakers.classes.Talea
+
+.. raw:: html
+
+   <hr/>
+
+.. rubric:: :ref:`abjadext.rmakers.functions <abjadext--rmakers--functions>`
+   :class: section-header
+
+The rmakers functions.
+
+.. raw:: html
+
+   <hr/>
+
+.. rubric:: Functions
+   :class: subsection-header
+
+.. autosummary::
+   :nosignatures:
+
+   ~abjadext.rmakers.functions.after_grace_container
+   ~abjadext.rmakers.functions.beam
+   ~abjadext.rmakers.functions.beam_groups
+   ~abjadext.rmakers.functions.before_grace_container
+   ~abjadext.rmakers.functions.denominator
+   ~abjadext.rmakers.functions.duration_bracket
+   ~abjadext.rmakers.functions.example
+   ~abjadext.rmakers.functions.extract_rest_filled
+   ~abjadext.rmakers.functions.extract_trivial
+   ~abjadext.rmakers.functions.feather_beam
+   ~abjadext.rmakers.functions.force_augmentation
+   ~abjadext.rmakers.functions.force_diminution
+   ~abjadext.rmakers.functions.force_fraction
+   ~abjadext.rmakers.functions.force_note
+   ~abjadext.rmakers.functions.force_repeat_tie
+   ~abjadext.rmakers.functions.force_rest
+   ~abjadext.rmakers.functions.hide_skip_filled
+   ~abjadext.rmakers.functions.hide_trivial
+   ~abjadext.rmakers.functions.interpolate
+   ~abjadext.rmakers.functions.invisible_music
+   ~abjadext.rmakers.functions.nongrace_leaves_in_each_tuplet
+   ~abjadext.rmakers.functions.on_beat_grace_container
+   ~abjadext.rmakers.functions.reduce_multiplier
+   ~abjadext.rmakers.functions.repeat_tie
+   ~abjadext.rmakers.functions.rewrite_dots
+   ~abjadext.rmakers.functions.rewrite_meter
+   ~abjadext.rmakers.functions.rewrite_rest_filled
+   ~abjadext.rmakers.functions.rewrite_sustained
+   ~abjadext.rmakers.functions.split_measures
+   ~abjadext.rmakers.functions.swap_length_1
+   ~abjadext.rmakers.functions.swap_skip_filled
+   ~abjadext.rmakers.functions.swap_trivial
+   ~abjadext.rmakers.functions.tie
+   ~abjadext.rmakers.functions.time_signatures
+   ~abjadext.rmakers.functions.tremolo_container
+   ~abjadext.rmakers.functions.trivialize
+   ~abjadext.rmakers.functions.unbeam
+   ~abjadext.rmakers.functions.untie
+   ~abjadext.rmakers.functions.wrap_in_time_signature_staff
+   ~abjadext.rmakers.functions.written_duration
+
+.. raw:: html
+
+   <hr/>
+
+.. rubric:: :ref:`abjadext.rmakers.makers <abjadext--rmakers--makers>`
+   :class: section-header
+
+Makers.
+
+.. raw:: html
+
+   <hr/>
+
+.. rubric:: Functions
+   :class: subsection-header
+
+.. autosummary::
+   :nosignatures:
+
+   ~abjadext.rmakers.makers.accelerando
+   ~abjadext.rmakers.makers.even_division
+   ~abjadext.rmakers.makers.incised
+   ~abjadext.rmakers.makers.multiplied_duration
+   ~abjadext.rmakers.makers.note
+   ~abjadext.rmakers.makers.talea
+   ~abjadext.rmakers.makers.tuplet
+
+.. raw:: html
+
+   <hr/>
+
+.. rubric:: :ref:`abjadext.rmakers.state <abjadext--rmakers--state>`
+   :class: section-header
+
+Examples that show how to work with rmakers in a statal way.
+
+.. raw:: html
+
+   <hr/>
+
+.. rubric:: Functions
+   :class: subsection-header
+
+.. autosummary::
+   :nosignatures:
+
+   ~abjadext.rmakers.state.sphinx

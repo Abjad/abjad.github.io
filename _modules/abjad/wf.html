@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>abjad.wf &mdash; Abjad 3.16 documentation</title>
+  <title>abjad.wf &mdash; Abjad 3.17 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/abjad.css" type="text/css" />
@@ -34,11 +34,11 @@
   <div class="wy-grid-for-nav">
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search"  style="background: #aa44ee" >
+        <div class="wy-side-nav-search"  style="background: #bb6611" >
 
 
     <a href="../../index.html" class="icon icon-home" alt="Documentation
-    Home"> Abjad 3.16
+    Home"> Abjad 3.17
 
 
 
@@ -111,7 +111,7 @@
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #aa44ee" >
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #bb6611" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../index.html">Abjad</a>
       </nav>
@@ -130,8 +130,8 @@
 <span></span><span class="kn">import</span> <span class="nn">enum</span>
 <span class="kn">import</span> <span class="nn">typing</span>
 
-<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">_getlib</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">duration</span> <span class="k">as</span> <span class="n">_duration</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">get</span> <span class="k">as</span> <span class="n">_get</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">indicators</span> <span class="k">as</span> <span class="n">_indicators</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">instruments</span> <span class="k">as</span> <span class="n">_instruments</span>
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">iterate</span> <span class="k">as</span> <span class="n">_iterate</span>
@@ -148,13 +148,55 @@
 <span class="sd">    This currently happens with OnBeatGraceContainer.</span>
 <span class="sd">    This method aggregates all Special_Voice wrappers for checks.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">name_to_wrappers</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">context_name_to_wrappers</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="k">for</span> <span class="n">context</span> <span class="ow">in</span> <span class="n">_iterate</span><span class="o">.</span><span class="n">components</span><span class="p">(</span><span class="n">argument</span><span class="p">,</span> <span class="n">_score</span><span class="o">.</span><span class="n">Context</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">context</span><span class="o">.</span><span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">name_to_wrappers</span><span class="p">:</span>
-            <span class="n">name_to_wrappers</span><span class="p">[</span><span class="n">context</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="n">context</span><span class="o">.</span><span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">context_name_to_wrappers</span><span class="p">:</span>
+            <span class="n">context_name_to_wrappers</span><span class="p">[</span><span class="n">context</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">wrappers</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="n">_dependent_wrappers</span><span class="p">[:]</span>
-        <span class="n">name_to_wrappers</span><span class="p">[</span><span class="n">context</span><span class="o">.</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">wrappers</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">name_to_wrappers</span>
+        <span class="n">context_name_to_wrappers</span><span class="p">[</span><span class="n">context</span><span class="o">.</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">wrappers</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">context_name_to_wrappers</span>
+
+
+<div class="viewcode-block" id="check_beamed_lone_notes"><a class="viewcode-back" href="../../api/abjad/wf.html#abjad.wf.check_beamed_lone_notes">[docs]</a><span class="k">def</span> <span class="nf">check_beamed_lone_notes</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">list</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Checks beamed lone notes.</span>
+
+<span class="sd">    Beamed single notes are not wellformed:</span>
+
+<span class="sd">    ..  container:: example</span>
+
+<span class="sd">        &gt;&gt;&gt; voice = abjad.Voice(&quot;c&#39;8 d&#39; e&#39; f&#39;&quot;)</span>
+<span class="sd">        &gt;&gt;&gt; abjad.attach(abjad.StartBeam(), voice[0])</span>
+<span class="sd">        &gt;&gt;&gt; abjad.attach(abjad.StopBeam(), voice[0])</span>
+<span class="sd">        &gt;&gt;&gt; abjad.show(voice) # doctest: +SKIP</span>
+
+<span class="sd">        ..  docs::</span>
+
+<span class="sd">            &gt;&gt;&gt; string = abjad.lilypond(voice)</span>
+<span class="sd">            &gt;&gt;&gt; print(string)</span>
+<span class="sd">            \new Voice</span>
+<span class="sd">            {</span>
+<span class="sd">                c&#39;8</span>
+<span class="sd">                [</span>
+<span class="sd">                ]</span>
+<span class="sd">                d&#39;8</span>
+<span class="sd">                e&#39;8</span>
+<span class="sd">                f&#39;8</span>
+<span class="sd">            }</span>
+
+<span class="sd">        &gt;&gt;&gt; abjad.wf.check_beamed_lone_notes(voice)</span>
+<span class="sd">        ([Note(&quot;c&#39;8&quot;)], 4)</span>
+
+<span class="sd">    The examples above feature Abjad voice containers because beams are</span>
+<span class="sd">    voice-persistent.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">violators</span><span class="p">,</span> <span class="n">total</span> <span class="o">=</span> <span class="p">[],</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">leaf</span> <span class="ow">in</span> <span class="n">_iterate</span><span class="o">.</span><span class="n">leaves</span><span class="p">(</span><span class="n">argument</span><span class="p">):</span>
+        <span class="n">total</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="n">_get</span><span class="o">.</span><span class="n">has_indicator</span><span class="p">(</span><span class="n">leaf</span><span class="p">,</span> <span class="n">_indicators</span><span class="o">.</span><span class="n">StartBeam</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">_get</span><span class="o">.</span><span class="n">has_indicator</span><span class="p">(</span><span class="n">leaf</span><span class="p">,</span> <span class="n">_indicators</span><span class="o">.</span><span class="n">StopBeam</span><span class="p">):</span>
+                <span class="n">violators</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">leaf</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">violators</span><span class="p">,</span> <span class="n">total</span></div>
 
 
 <div class="viewcode-block" id="check_beamed_long_notes"><a class="viewcode-back" href="../../api/abjad/wf.html#abjad.wf.check_beamed_long_notes">[docs]</a><span class="k">def</span> <span class="nf">check_beamed_long_notes</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">list</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
@@ -184,18 +226,8 @@
 <span class="sd">                f&#39;4</span>
 <span class="sd">            }</span>
 
-<span class="sd">        &gt;&gt;&gt; count, string = abjad.wf.tabulate_wellformedness(voice)</span>
-<span class="sd">        &gt;&gt;&gt; print(string)</span>
-<span class="sd">        2 /    4 beamed long notes</span>
-<span class="sd">        0 /    5 duplicate ids</span>
-<span class="sd">        0 /    1 empty containers</span>
-<span class="sd">        0 /    5 missing parents</span>
-<span class="sd">        0 /    4 notes on wrong clef</span>
-<span class="sd">        0 /    4 out of range pitches</span>
-<span class="sd">        0 /    0 overlapping text spanners</span>
-<span class="sd">        0 /    0 unmatched stop text spans</span>
-<span class="sd">        0 /    0 unterminated hairpins</span>
-<span class="sd">        0 /    0 unterminated text spanners</span>
+<span class="sd">        &gt;&gt;&gt; abjad.wf.check_beamed_long_notes(voice)</span>
+<span class="sd">        ([Note(&quot;c&#39;4&quot;), Note(&quot;d&#39;4&quot;)], 4)</span>
 
 <span class="sd">        Beamed eighth notes are wellformed:</span>
 
@@ -218,55 +250,8 @@
 <span class="sd">                f&#39;8</span>
 <span class="sd">            }</span>
 
-<span class="sd">        &gt;&gt;&gt; count, string = abjad.wf.tabulate_wellformedness(voice)</span>
-<span class="sd">        &gt;&gt;&gt; print(string)</span>
-<span class="sd">        0 /    4 beamed long notes</span>
-<span class="sd">        0 /    5 duplicate ids</span>
-<span class="sd">        0 /    1 empty containers</span>
-<span class="sd">        0 /    5 missing parents</span>
-<span class="sd">        0 /    4 notes on wrong clef</span>
-<span class="sd">        0 /    4 out of range pitches</span>
-<span class="sd">        0 /    0 overlapping text spanners</span>
-<span class="sd">        0 /    0 unmatched stop text spans</span>
-<span class="sd">        0 /    0 unterminated hairpins</span>
-<span class="sd">        0 /    0 unterminated text spanners</span>
-
-<span class="sd">    ..  container:: example</span>
-
-<span class="sd">        REGRESSION. Matching start- and stop-beam indicators work</span>
-<span class="sd">        correctly:</span>
-
-<span class="sd">        &gt;&gt;&gt; voice = abjad.Voice(&quot;c&#39;8 d&#39;8 e&#39;4 f&#39;2&quot;)</span>
-<span class="sd">        &gt;&gt;&gt; abjad.attach(abjad.StartBeam(), voice[0])</span>
-<span class="sd">        &gt;&gt;&gt; abjad.attach(abjad.StopBeam(), voice[1])</span>
-<span class="sd">        &gt;&gt;&gt; abjad.show(voice) # doctest: +SKIP</span>
-
-<span class="sd">        ..  docs::</span>
-
-<span class="sd">            &gt;&gt;&gt; string = abjad.lilypond(voice)</span>
-<span class="sd">            &gt;&gt;&gt; print(string)</span>
-<span class="sd">            \new Voice</span>
-<span class="sd">            {</span>
-<span class="sd">                c&#39;8</span>
-<span class="sd">                [</span>
-<span class="sd">                d&#39;8</span>
-<span class="sd">                ]</span>
-<span class="sd">                e&#39;4</span>
-<span class="sd">                f&#39;2</span>
-<span class="sd">            }</span>
-
-<span class="sd">        &gt;&gt;&gt; count, string = abjad.wf.tabulate_wellformedness(voice)</span>
-<span class="sd">        &gt;&gt;&gt; print(string)</span>
-<span class="sd">        0 /    4 beamed long notes</span>
-<span class="sd">        0 /    5 duplicate ids</span>
-<span class="sd">        0 /    1 empty containers</span>
-<span class="sd">        0 /    5 missing parents</span>
-<span class="sd">        0 /    4 notes on wrong clef</span>
-<span class="sd">        0 /    4 out of range pitches</span>
-<span class="sd">        0 /    0 overlapping text spanners</span>
-<span class="sd">        0 /    0 unmatched stop text spans</span>
-<span class="sd">        0 /    0 unterminated hairpins</span>
-<span class="sd">        0 /    0 unterminated text spanners</span>
+<span class="sd">        &gt;&gt;&gt; abjad.wf.check_beamed_long_notes(voice)</span>
+<span class="sd">        ([], 4)</span>
 
 <span class="sd">    The examples above feature Abjad voice containers because beams are</span>
 <span class="sd">    voice-persistent.</span>
@@ -276,12 +261,10 @@
         <span class="n">total</span> <span class="o">+=</span> <span class="mi">1</span>
         <span class="k">if</span> <span class="n">leaf</span><span class="o">.</span><span class="n">written_duration</span> <span class="o">&lt;</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Duration</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">)):</span>
             <span class="k">continue</span>
-        <span class="n">start_wrapper</span> <span class="o">=</span> <span class="n">_getlib</span><span class="o">.</span><span class="n">_get_effective</span><span class="p">(</span>
-            <span class="n">leaf</span><span class="p">,</span> <span class="n">_indicators</span><span class="o">.</span><span class="n">StartBeam</span><span class="p">,</span> <span class="n">unwrap</span><span class="o">=</span><span class="kc">False</span>
-        <span class="p">)</span>
+        <span class="n">start_wrapper</span> <span class="o">=</span> <span class="n">_get</span><span class="o">.</span><span class="n">effective</span><span class="p">(</span><span class="n">leaf</span><span class="p">,</span> <span class="n">_indicators</span><span class="o">.</span><span class="n">StartBeam</span><span class="p">,</span> <span class="n">unwrap</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">start_wrapper</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">continue</span>
-        <span class="n">stop_wrapper</span> <span class="o">=</span> <span class="n">_getlib</span><span class="o">.</span><span class="n">_get_effective</span><span class="p">(</span><span class="n">leaf</span><span class="p">,</span> <span class="n">_indicators</span><span class="o">.</span><span class="n">StopBeam</span><span class="p">,</span> <span class="n">unwrap</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="n">stop_wrapper</span> <span class="o">=</span> <span class="n">_get</span><span class="o">.</span><span class="n">effective</span><span class="p">(</span><span class="n">leaf</span><span class="p">,</span> <span class="n">_indicators</span><span class="o">.</span><span class="n">StopBeam</span><span class="p">,</span> <span class="n">unwrap</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">stop_wrapper</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">violators</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">leaf</span><span class="p">)</span>
             <span class="k">continue</span>
@@ -352,7 +335,9 @@
     <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">component</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">components</span><span class="p">):</span>
         <span class="n">total</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">component</span><span class="p">)</span>
         <span class="k">if</span> <span class="mi">0</span> <span class="o">&lt;</span> <span class="n">i</span><span class="p">:</span>
-            <span class="c1"># TODO: figure out why &quot;if component._parent is None&quot; doesn&#39;t work</span>
+            <span class="c1"># BeforeGraceContainer._parent is always none;</span>
+            <span class="c1"># so must use Parentage.parent,</span>
+            <span class="c1"># which calls BeforeGraceContainer._get_parentage()</span>
             <span class="k">if</span> <span class="n">_parentage</span><span class="o">.</span><span class="n">Parentage</span><span class="p">(</span><span class="n">component</span><span class="p">)</span><span class="o">.</span><span class="n">parent</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="n">violators</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">component</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">violators</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">total</span><span class="p">)</span></div>
@@ -384,22 +369,12 @@
 <span class="sd">                f&#39;8</span>
 <span class="sd">            }</span>
 
-<span class="sd">        &gt;&gt;&gt; count, string = abjad.wf.tabulate_wellformedness(staff)</span>
-<span class="sd">        &gt;&gt;&gt; print(string)</span>
-<span class="sd">        0 /    4 beamed long notes</span>
-<span class="sd">        0 /    5 duplicate ids</span>
-<span class="sd">        0 /    1 empty containers</span>
-<span class="sd">        0 /    5 missing parents</span>
-<span class="sd">        4 /    4 notes on wrong clef</span>
-<span class="sd">        0 /    4 out of range pitches</span>
-<span class="sd">        0 /    0 overlapping text spanners</span>
-<span class="sd">        0 /    0 unmatched stop text spans</span>
-<span class="sd">        0 /    0 unterminated hairpins</span>
-<span class="sd">        0 /    0 unterminated text spanners</span>
+<span class="sd">        &gt;&gt;&gt; abjad.wf.check_notes_on_wrong_clef(staff)</span>
+<span class="sd">        ([Note(&quot;c&#39;8&quot;), Note(&quot;d&#39;8&quot;), Note(&quot;e&#39;8&quot;), Note(&quot;f&#39;8&quot;)], 4)</span>
 
 <span class="sd">    ..  container:: example</span>
 
-<span class="sd">        Always allows percussion clef:</span>
+<span class="sd">        All instruments allow percussion clef:</span>
 
 <span class="sd">        &gt;&gt;&gt; staff = abjad.Staff(&quot;c&#39;8 d&#39;8 e&#39;8 f&#39;8&quot;)</span>
 <span class="sd">        &gt;&gt;&gt; clef = abjad.Clef(&#39;percussion&#39;)</span>
@@ -421,27 +396,17 @@
 <span class="sd">                f&#39;8</span>
 <span class="sd">            }</span>
 
-<span class="sd">        &gt;&gt;&gt; count, string = abjad.wf.tabulate_wellformedness(staff)</span>
-<span class="sd">        &gt;&gt;&gt; print(string)</span>
-<span class="sd">        0 /    4 beamed long notes</span>
-<span class="sd">        0 /    5 duplicate ids</span>
-<span class="sd">        0 /    1 empty containers</span>
-<span class="sd">        0 /    5 missing parents</span>
-<span class="sd">        0 /    4 notes on wrong clef</span>
-<span class="sd">        0 /    4 out of range pitches</span>
-<span class="sd">        0 /    0 overlapping text spanners</span>
-<span class="sd">        0 /    0 unmatched stop text spans</span>
-<span class="sd">        0 /    0 unterminated hairpins</span>
-<span class="sd">        0 /    0 unterminated text spanners</span>
+<span class="sd">        &gt;&gt;&gt; abjad.wf.check_notes_on_wrong_clef(staff)</span>
+<span class="sd">        ([], 4)</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">violators</span><span class="p">,</span> <span class="n">total</span> <span class="o">=</span> <span class="p">[],</span> <span class="nb">set</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">leaf</span> <span class="ow">in</span> <span class="n">_iterate</span><span class="o">.</span><span class="n">leaves</span><span class="p">(</span><span class="n">argument</span><span class="p">):</span>
         <span class="n">total</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">leaf</span><span class="p">)</span>
-        <span class="n">instrument</span> <span class="o">=</span> <span class="n">_getlib</span><span class="o">.</span><span class="n">_get_effective</span><span class="p">(</span><span class="n">leaf</span><span class="p">,</span> <span class="n">_instruments</span><span class="o">.</span><span class="n">Instrument</span><span class="p">)</span>
+        <span class="n">instrument</span> <span class="o">=</span> <span class="n">_get</span><span class="o">.</span><span class="n">effective</span><span class="p">(</span><span class="n">leaf</span><span class="p">,</span> <span class="n">_instruments</span><span class="o">.</span><span class="n">Instrument</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">instrument</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">continue</span>
-        <span class="n">effective_clef</span> <span class="o">=</span> <span class="n">_getlib</span><span class="o">.</span><span class="n">_get_effective</span><span class="p">(</span><span class="n">leaf</span><span class="p">,</span> <span class="n">_indicators</span><span class="o">.</span><span class="n">Clef</span><span class="p">)</span>
+        <span class="n">effective_clef</span> <span class="o">=</span> <span class="n">_get</span><span class="o">.</span><span class="n">effective</span><span class="p">(</span><span class="n">leaf</span><span class="p">,</span> <span class="n">_indicators</span><span class="o">.</span><span class="n">Clef</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">effective_clef</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">continue</span>
         <span class="n">clefs</span> <span class="o">=</span> <span class="p">[]</span>
@@ -483,18 +448,8 @@
 <span class="sd">                r8</span>
 <span class="sd">            }</span>
 
-<span class="sd">        &gt;&gt;&gt; count, string = abjad.wf.tabulate_wellformedness(staff)</span>
-<span class="sd">        &gt;&gt;&gt; print(string)</span>
-<span class="sd">        0 /    4 beamed long notes</span>
-<span class="sd">        0 /    5 duplicate ids</span>
-<span class="sd">        0 /    1 empty containers</span>
-<span class="sd">        0 /    5 missing parents</span>
-<span class="sd">        0 /    4 notes on wrong clef</span>
-<span class="sd">        1 /    2 out of range pitches</span>
-<span class="sd">        0 /    0 overlapping text spanners</span>
-<span class="sd">        0 /    0 unmatched stop text spans</span>
-<span class="sd">        0 /    0 unterminated hairpins</span>
-<span class="sd">        0 /    0 unterminated text spanners</span>
+<span class="sd">        &gt;&gt;&gt; abjad.wf.check_out_of_range_pitches(staff)</span>
+<span class="sd">        ([Chord(&#39;&lt;d fs&gt;8&#39;)], 2)</span>
 
 <span class="sd">    ..  container:: example</span>
 
@@ -544,12 +499,88 @@
             <span class="k">continue</span>
         <span class="k">if</span> <span class="s2">&quot;unpitched&quot;</span> <span class="ow">in</span> <span class="n">argument</span><span class="o">.</span><span class="n">_get_indicators</span><span class="p">(</span><span class="nb">str</span><span class="p">):</span>
             <span class="k">continue</span>
-        <span class="n">instrument</span> <span class="o">=</span> <span class="n">_getlib</span><span class="o">.</span><span class="n">_get_effective</span><span class="p">(</span><span class="n">leaf</span><span class="p">,</span> <span class="n">_instruments</span><span class="o">.</span><span class="n">Instrument</span><span class="p">)</span>
+        <span class="n">instrument</span> <span class="o">=</span> <span class="n">_get</span><span class="o">.</span><span class="n">effective</span><span class="p">(</span><span class="n">leaf</span><span class="p">,</span> <span class="n">_instruments</span><span class="o">.</span><span class="n">Instrument</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">instrument</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">continue</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">_iterpitches</span><span class="o">.</span><span class="n">sounding_pitches_are_in_range</span><span class="p">(</span><span class="n">leaf</span><span class="p">,</span> <span class="n">instrument</span><span class="o">.</span><span class="n">pitch_range</span><span class="p">):</span>
             <span class="n">violators</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">leaf</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">violators</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">total</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="check_overlapping_beams"><a class="viewcode-back" href="../../api/abjad/wf.html#abjad.wf.check_overlapping_beams">[docs]</a><span class="k">def</span> <span class="nf">check_overlapping_beams</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">list</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Checks overlapping beams.</span>
+
+<span class="sd">    ..  container:: example</span>
+
+<span class="sd">        &gt;&gt;&gt; voice = abjad.Voice(&quot;c&#39;8 [ d&#39; [ e&#39; f&#39; ]&quot;)</span>
+<span class="sd">        &gt;&gt;&gt; string = abjad.lilypond(voice)</span>
+<span class="sd">        &gt;&gt;&gt; print(string)</span>
+<span class="sd">        \new Voice</span>
+<span class="sd">        {</span>
+<span class="sd">            c&#39;8</span>
+<span class="sd">            [</span>
+<span class="sd">            d&#39;8</span>
+<span class="sd">            [</span>
+<span class="sd">            e&#39;8</span>
+<span class="sd">            f&#39;8</span>
+<span class="sd">            ]</span>
+<span class="sd">        }</span>
+
+<span class="sd">        &gt;&gt;&gt; abjad.wf.check_overlapping_beams(voice)</span>
+<span class="sd">        ([Note(&quot;d&#39;8&quot;)], 3)</span>
+
+<span class="sd">        &gt;&gt;&gt; voice = abjad.Voice(&quot;c&#39;8 [ d&#39; [ e&#39; ] f&#39; ]&quot;)</span>
+<span class="sd">        &gt;&gt;&gt; string = abjad.lilypond(voice)</span>
+<span class="sd">        &gt;&gt;&gt; print(string)</span>
+<span class="sd">        \new Voice</span>
+<span class="sd">        {</span>
+<span class="sd">            c&#39;8</span>
+<span class="sd">            [</span>
+<span class="sd">            d&#39;8</span>
+<span class="sd">            [</span>
+<span class="sd">            e&#39;8</span>
+<span class="sd">            ]</span>
+<span class="sd">            f&#39;8</span>
+<span class="sd">            ]</span>
+<span class="sd">        }</span>
+
+<span class="sd">        &gt;&gt;&gt; abjad.wf.check_overlapping_beams(voice)</span>
+<span class="sd">        ([Note(&quot;d&#39;8&quot;)], 4)</span>
+
+<span class="sd">        &gt;&gt;&gt; voice = abjad.Voice(&quot;c&#39;8 [ d&#39; e&#39; f&#39; ]&quot;)</span>
+<span class="sd">        &gt;&gt;&gt; string = abjad.lilypond(voice)</span>
+<span class="sd">        &gt;&gt;&gt; print(string)</span>
+<span class="sd">        \new Voice</span>
+<span class="sd">        {</span>
+<span class="sd">            c&#39;8</span>
+<span class="sd">            [</span>
+<span class="sd">            d&#39;8</span>
+<span class="sd">            e&#39;8</span>
+<span class="sd">            f&#39;8</span>
+<span class="sd">            ]</span>
+<span class="sd">        }</span>
+
+<span class="sd">        &gt;&gt;&gt; abjad.wf.check_overlapping_beams(voice)</span>
+<span class="sd">        ([], 2)</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">violators</span><span class="p">,</span> <span class="n">total</span> <span class="o">=</span> <span class="p">[],</span> <span class="mi">0</span>
+    <span class="n">context_name_to_wrappers</span> <span class="o">=</span> <span class="n">_aggregate_context_wrappers</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">wrappers</span> <span class="ow">in</span> <span class="n">context_name_to_wrappers</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">wrappers</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">_</span><span class="p">:</span> <span class="n">_get</span><span class="o">.</span><span class="n">timespan</span><span class="p">(</span><span class="n">_</span><span class="o">.</span><span class="n">component</span><span class="p">)</span><span class="o">.</span><span class="n">start_offset</span><span class="p">)</span>
+        <span class="n">open_beam_count</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">wrapper</span> <span class="ow">in</span> <span class="n">wrappers</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">_get</span><span class="o">.</span><span class="n">grace</span><span class="p">(</span><span class="n">wrapper</span><span class="o">.</span><span class="n">component</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="n">total</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">wrapper</span><span class="o">.</span><span class="n">unbundle_indicator</span><span class="p">(),</span> <span class="n">_indicators</span><span class="o">.</span><span class="n">StartBeam</span><span class="p">):</span>
+                <span class="n">open_beam_count</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">wrapper</span><span class="o">.</span><span class="n">unbundle_indicator</span><span class="p">(),</span> <span class="n">_indicators</span><span class="o">.</span><span class="n">StopBeam</span><span class="p">):</span>
+                <span class="n">open_beam_count</span> <span class="o">-=</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="n">open_beam_count</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="mi">1</span> <span class="o">&lt;</span> <span class="n">open_beam_count</span><span class="p">:</span>
+                <span class="n">violators</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">wrapper</span><span class="o">.</span><span class="n">component</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">violators</span><span class="p">,</span> <span class="n">total</span></div>
 
 
 <div class="viewcode-block" id="check_overlapping_text_spanners"><a class="viewcode-back" href="../../api/abjad/wf.html#abjad.wf.check_overlapping_text_spanners">[docs]</a><span class="k">def</span> <span class="nf">check_overlapping_text_spanners</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">list</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
@@ -560,7 +591,7 @@
 
 <span class="sd">    ..  container:: example</span>
 
-<span class="sd">        &gt;&gt;&gt; voice = abjad.Voice(&quot;c&#39;4 c&#39;4 c&#39;4 c&#39;4&quot;)</span>
+<span class="sd">        &gt;&gt;&gt; voice = abjad.Voice(&quot;c&#39;4 d&#39; e&#39; f&#39;&quot;)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.text_spanner(voice)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.text_spanner(voice[1:3])</span>
 <span class="sd">        &gt;&gt;&gt; string = abjad.lilypond(voice)</span>
@@ -569,32 +600,22 @@
 <span class="sd">        {</span>
 <span class="sd">            c&#39;4</span>
 <span class="sd">            \startTextSpan</span>
-<span class="sd">            c&#39;4</span>
+<span class="sd">            d&#39;4</span>
 <span class="sd">            \startTextSpan</span>
-<span class="sd">            c&#39;4</span>
+<span class="sd">            e&#39;4</span>
 <span class="sd">            \stopTextSpan</span>
-<span class="sd">            c&#39;4</span>
+<span class="sd">            f&#39;4</span>
 <span class="sd">            \stopTextSpan</span>
 <span class="sd">        }</span>
 
-<span class="sd">        &gt;&gt;&gt; count, string = abjad.wf.tabulate_wellformedness(voice)</span>
-<span class="sd">        &gt;&gt;&gt; print(string)</span>
-<span class="sd">        0 /    4 beamed long notes</span>
-<span class="sd">        0 /    5 duplicate ids</span>
-<span class="sd">        0 /    1 empty containers</span>
-<span class="sd">        0 /    5 missing parents</span>
-<span class="sd">        0 /    4 notes on wrong clef</span>
-<span class="sd">        0 /    4 out of range pitches</span>
-<span class="sd">        1 /    2 overlapping text spanners</span>
-<span class="sd">        0 /    2 unmatched stop text spans</span>
-<span class="sd">        0 /    0 unterminated hairpins</span>
-<span class="sd">        0 /    2 unterminated text spanners</span>
+<span class="sd">        &gt;&gt;&gt; abjad.wf.check_overlapping_text_spanners(voice)</span>
+<span class="sd">        ([Note(&quot;d&#39;4&quot;)], 2)</span>
 
 <span class="sd">    ..  container:: example</span>
 
 <span class="sd">        Overlapping text spanners with different IDs are wellformed:</span>
 
-<span class="sd">        &gt;&gt;&gt; voice = abjad.Voice(&quot;c&#39;4 c&#39;4 c&#39;4 c&#39;4&quot;)</span>
+<span class="sd">        &gt;&gt;&gt; voice = abjad.Voice(&quot;c&#39;4 d&#39; e&#39; f&#39;&quot;)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.text_spanner(voice)</span>
 <span class="sd">        &gt;&gt;&gt; command = r&#39;\startTextSpanOne&#39;</span>
 <span class="sd">        &gt;&gt;&gt; start_text_span = abjad.StartTextSpan(command=command)</span>
@@ -608,32 +629,22 @@
 <span class="sd">        {</span>
 <span class="sd">            c&#39;4</span>
 <span class="sd">            \startTextSpan</span>
-<span class="sd">            c&#39;4</span>
+<span class="sd">            d&#39;4</span>
 <span class="sd">            \startTextSpanOne</span>
-<span class="sd">            c&#39;4</span>
+<span class="sd">            e&#39;4</span>
 <span class="sd">            \stopTextSpanOne</span>
-<span class="sd">            c&#39;4</span>
+<span class="sd">            f&#39;4</span>
 <span class="sd">            \stopTextSpan</span>
 <span class="sd">        }</span>
 
-<span class="sd">        &gt;&gt;&gt; count, string = abjad.wf.tabulate_wellformedness(voice)</span>
-<span class="sd">        &gt;&gt;&gt; print(string)</span>
-<span class="sd">        0 /    4 beamed long notes</span>
-<span class="sd">        0 /    5 duplicate ids</span>
-<span class="sd">        0 /    1 empty containers</span>
-<span class="sd">        0 /    5 missing parents</span>
-<span class="sd">        0 /    4 notes on wrong clef</span>
-<span class="sd">        0 /    4 out of range pitches</span>
-<span class="sd">        0 /    2 overlapping text spanners</span>
-<span class="sd">        0 /    2 unmatched stop text spans</span>
-<span class="sd">        0 /    0 unterminated hairpins</span>
-<span class="sd">        0 /    2 unterminated text spanners</span>
+<span class="sd">        &gt;&gt;&gt; abjad.wf.check_overlapping_text_spanners(voice)</span>
+<span class="sd">        ([], 2)</span>
 
 <span class="sd">    ..  container:: example</span>
 
 <span class="sd">        Enchained text spanners do not overlap (and are wellformed):</span>
 
-<span class="sd">        &gt;&gt;&gt; voice = abjad.Voice(&quot;c&#39;4 c&#39;4 c&#39;4 c&#39;4&quot;)</span>
+<span class="sd">        &gt;&gt;&gt; voice = abjad.Voice(&quot;c&#39;4 d&#39; e&#39; f&#39;&quot;)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.text_spanner(voice[:3])</span>
 <span class="sd">        &gt;&gt;&gt; abjad.text_spanner(voice[-2:])</span>
 <span class="sd">        &gt;&gt;&gt; string = abjad.lilypond(voice)</span>
@@ -642,26 +653,16 @@
 <span class="sd">        {</span>
 <span class="sd">            c&#39;4</span>
 <span class="sd">            \startTextSpan</span>
-<span class="sd">            c&#39;4</span>
-<span class="sd">            c&#39;4</span>
+<span class="sd">            d&#39;4</span>
+<span class="sd">            e&#39;4</span>
 <span class="sd">            \stopTextSpan</span>
 <span class="sd">            \startTextSpan</span>
-<span class="sd">            c&#39;4</span>
+<span class="sd">            f&#39;4</span>
 <span class="sd">            \stopTextSpan</span>
 <span class="sd">        }</span>
 
-<span class="sd">        &gt;&gt;&gt; count, string = abjad.wf.tabulate_wellformedness(voice)</span>
-<span class="sd">        &gt;&gt;&gt; print(string)</span>
-<span class="sd">        0 /    4 beamed long notes</span>
-<span class="sd">        0 /    5 duplicate ids</span>
-<span class="sd">        0 /    1 empty containers</span>
-<span class="sd">        0 /    5 missing parents</span>
-<span class="sd">        0 /    4 notes on wrong clef</span>
-<span class="sd">        0 /    4 out of range pitches</span>
-<span class="sd">        0 /    2 overlapping text spanners</span>
-<span class="sd">        0 /    2 unmatched stop text spans</span>
-<span class="sd">        0 /    0 unterminated hairpins</span>
-<span class="sd">        0 /    2 unterminated text spanners</span>
+<span class="sd">        &gt;&gt;&gt; abjad.wf.check_overlapping_text_spanners(voice)</span>
+<span class="sd">        ([], 2)</span>
 
 <span class="sd">    ..  container:: example</span>
 
@@ -692,18 +693,8 @@
 <span class="sd">            \stopTextSpan</span>
 <span class="sd">        }</span>
 
-<span class="sd">        &gt;&gt;&gt; count, string = abjad.wf.tabulate_wellformedness(voice)</span>
-<span class="sd">        &gt;&gt;&gt; print(string)</span>
-<span class="sd">        0 /    4 beamed long notes</span>
-<span class="sd">        0 /    5 duplicate ids</span>
-<span class="sd">        0 /    1 empty containers</span>
-<span class="sd">        0 /    5 missing parents</span>
-<span class="sd">        0 /    4 notes on wrong clef</span>
-<span class="sd">        0 /    4 out of range pitches</span>
-<span class="sd">        0 /    2 overlapping text spanners</span>
-<span class="sd">        0 /    2 unmatched stop text spans</span>
-<span class="sd">        0 /    0 unterminated hairpins</span>
-<span class="sd">        0 /    2 unterminated text spanners</span>
+<span class="sd">        &gt;&gt;&gt; abjad.wf.check_overlapping_text_spanners(voice)</span>
+<span class="sd">        ([], 2)</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">violators</span><span class="p">,</span> <span class="n">total</span> <span class="o">=</span> <span class="p">[],</span> <span class="mi">0</span>
@@ -715,8 +706,8 @@
             <span class="n">priority</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="k">return</span> <span class="p">(</span><span class="n">wrapper</span><span class="o">.</span><span class="n">leaked_start_offset</span><span class="p">,</span> <span class="n">priority</span><span class="p">)</span>
 
-    <span class="n">name_to_wrappers</span> <span class="o">=</span> <span class="n">_aggregate_context_wrappers</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">wrappers</span> <span class="ow">in</span> <span class="n">name_to_wrappers</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="n">context_name_to_wrappers</span> <span class="o">=</span> <span class="n">_aggregate_context_wrappers</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">wrappers</span> <span class="ow">in</span> <span class="n">context_name_to_wrappers</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
         <span class="n">wrappers</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="n">key</span><span class="p">)</span>
         <span class="n">open_spanners</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="k">for</span> <span class="n">wrapper</span> <span class="ow">in</span> <span class="n">wrappers</span><span class="p">:</span>
@@ -761,18 +752,8 @@
 <span class="sd">            \stopTextSpan</span>
 <span class="sd">        }</span>
 
-<span class="sd">        &gt;&gt;&gt; count, string = abjad.wf.tabulate_wellformedness(voice)</span>
-<span class="sd">        &gt;&gt;&gt; print(string)</span>
-<span class="sd">        0 /    4 beamed long notes</span>
-<span class="sd">        0 /    5 duplicate ids</span>
-<span class="sd">        0 /    1 empty containers</span>
-<span class="sd">        0 /    5 missing parents</span>
-<span class="sd">        0 /    4 notes on wrong clef</span>
-<span class="sd">        0 /    4 out of range pitches</span>
-<span class="sd">        0 /    0 overlapping text spanners</span>
-<span class="sd">        1 /    0 unmatched stop text spans</span>
-<span class="sd">        0 /    0 unterminated hairpins</span>
-<span class="sd">        0 /    0 unterminated text spanners</span>
+<span class="sd">        &gt;&gt;&gt; abjad.wf.check_unmatched_stop_text_spans(voice)</span>
+<span class="sd">        ([Note(&quot;c&#39;4&quot;)], 0)</span>
 
 <span class="sd">        Matched stop text span is wellformed:</span>
 
@@ -802,8 +783,8 @@
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">violators</span><span class="p">,</span> <span class="n">total</span> <span class="o">=</span> <span class="p">[],</span> <span class="mi">0</span>
-    <span class="n">name_to_wrappers</span> <span class="o">=</span> <span class="n">_aggregate_context_wrappers</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">wrappers</span> <span class="ow">in</span> <span class="n">name_to_wrappers</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="n">context_name_to_wrappers</span> <span class="o">=</span> <span class="n">_aggregate_context_wrappers</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">wrappers</span> <span class="ow">in</span> <span class="n">context_name_to_wrappers</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
         <span class="n">wrappers</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">_</span><span class="p">:</span> <span class="n">_</span><span class="o">.</span><span class="n">leaked_start_offset</span><span class="p">)</span>
         <span class="n">open_spanners</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="k">for</span> <span class="n">wrapper</span> <span class="ow">in</span> <span class="n">wrappers</span><span class="p">:</span>
@@ -848,18 +829,8 @@
 <span class="sd">            c&#39;4</span>
 <span class="sd">        }</span>
 
-<span class="sd">        &gt;&gt;&gt; count, string = abjad.wf.tabulate_wellformedness(voice)</span>
-<span class="sd">        &gt;&gt;&gt; print(string)</span>
-<span class="sd">        0 /    4 beamed long notes</span>
-<span class="sd">        0 /    5 duplicate ids</span>
-<span class="sd">        0 /    1 empty containers</span>
-<span class="sd">        0 /    5 missing parents</span>
-<span class="sd">        0 /    4 notes on wrong clef</span>
-<span class="sd">        0 /    4 out of range pitches</span>
-<span class="sd">        0 /    0 overlapping text spanners</span>
-<span class="sd">        0 /    0 unmatched stop text spans</span>
-<span class="sd">        1 /    1 unterminated hairpins</span>
-<span class="sd">        0 /    0 unterminated text spanners</span>
+<span class="sd">        &gt;&gt;&gt; abjad.wf.check_unterminated_hairpins(voice)</span>
+<span class="sd">        ([Note(&quot;c&#39;4&quot;)], 1)</span>
 
 <span class="sd">        Even with start dynamic:</span>
 
@@ -880,18 +851,8 @@
 <span class="sd">            c&#39;4</span>
 <span class="sd">        }</span>
 
-<span class="sd">        &gt;&gt;&gt; count, string = abjad.wf.tabulate_wellformedness(voice)</span>
-<span class="sd">        &gt;&gt;&gt; print(string)</span>
-<span class="sd">        0 /    4 beamed long notes</span>
-<span class="sd">        0 /    5 duplicate ids</span>
-<span class="sd">        0 /    1 empty containers</span>
-<span class="sd">        0 /    5 missing parents</span>
-<span class="sd">        0 /    4 notes on wrong clef</span>
-<span class="sd">        0 /    4 out of range pitches</span>
-<span class="sd">        0 /    0 overlapping text spanners</span>
-<span class="sd">        0 /    0 unmatched stop text spans</span>
-<span class="sd">        1 /    1 unterminated hairpins</span>
-<span class="sd">        0 /    0 unterminated text spanners</span>
+<span class="sd">        &gt;&gt;&gt; abjad.wf.check_unterminated_hairpins(voice)</span>
+<span class="sd">        ([Note(&quot;c&#39;4&quot;)], 1)</span>
 
 <span class="sd">        Terminated crescendo is wellformed:</span>
 
@@ -949,8 +910,8 @@
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">violators</span><span class="p">,</span> <span class="n">total</span> <span class="o">=</span> <span class="p">[],</span> <span class="mi">0</span>
-    <span class="n">name_to_wrappers</span> <span class="o">=</span> <span class="n">_aggregate_context_wrappers</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">wrappers</span> <span class="ow">in</span> <span class="n">name_to_wrappers</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="n">context_name_to_wrappers</span> <span class="o">=</span> <span class="n">_aggregate_context_wrappers</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">wrappers</span> <span class="ow">in</span> <span class="n">context_name_to_wrappers</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
         <span class="n">last_dynamic</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="n">last_tag</span> <span class="o">=</span> <span class="n">_tag</span><span class="o">.</span><span class="n">Tag</span><span class="p">()</span>
         <span class="n">wrappers</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">_</span><span class="p">:</span> <span class="n">_</span><span class="o">.</span><span class="n">leaked_start_offset</span><span class="p">)</span>
@@ -993,18 +954,8 @@
 <span class="sd">            c&#39;4</span>
 <span class="sd">        }</span>
 
-<span class="sd">        &gt;&gt;&gt; count, string = abjad.wf.tabulate_wellformedness(voice)</span>
-<span class="sd">        &gt;&gt;&gt; print(string)</span>
-<span class="sd">        0 /    4 beamed long notes</span>
-<span class="sd">        0 /    5 duplicate ids</span>
-<span class="sd">        0 /    1 empty containers</span>
-<span class="sd">        0 /    5 missing parents</span>
-<span class="sd">        0 /    4 notes on wrong clef</span>
-<span class="sd">        0 /    4 out of range pitches</span>
-<span class="sd">        0 /    1 overlapping text spanners</span>
-<span class="sd">        0 /    1 unmatched stop text spans</span>
-<span class="sd">        0 /    0 unterminated hairpins</span>
-<span class="sd">        1 /    1 unterminated text spanners</span>
+<span class="sd">        &gt;&gt;&gt; abjad.wf.check_unterminated_text_spanners(voice)</span>
+<span class="sd">        ([Note(&quot;c&#39;4&quot;)], 1)</span>
 
 <span class="sd">        Terminated text span is wellformed:</span>
 
@@ -1034,8 +985,8 @@
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">violators</span><span class="p">,</span> <span class="n">total</span> <span class="o">=</span> <span class="p">[],</span> <span class="mi">0</span>
-    <span class="n">name_to_wrappers</span> <span class="o">=</span> <span class="n">_aggregate_context_wrappers</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">wrappers</span> <span class="ow">in</span> <span class="n">name_to_wrappers</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="n">context_name_to_wrappers</span> <span class="o">=</span> <span class="n">_aggregate_context_wrappers</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">wrappers</span> <span class="ow">in</span> <span class="n">context_name_to_wrappers</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
         <span class="n">wrappers</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">_</span><span class="p">:</span> <span class="n">_</span><span class="o">.</span><span class="n">leaked_start_offset</span><span class="p">)</span>
         <span class="n">open_spanners</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="k">for</span> <span class="n">wrapper</span> <span class="ow">in</span> <span class="n">wrappers</span><span class="p">:</span>
@@ -1067,18 +1018,24 @@
 
 <span class="k">def</span> <span class="nf">_call_functions</span><span class="p">(</span>
     <span class="n">component</span><span class="p">,</span>
+    <span class="n">check_beamed_lone_notes</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="n">check_beamed_long_notes</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="n">check_duplicate_ids</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="n">check_empty_containers</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="n">check_missing_parents</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="n">check_notes_on_wrong_clef</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="n">check_out_of_range_pitches</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="n">check_overlapping_beams</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="n">check_overlapping_text_spanners</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="n">check_unmatched_stop_text_spans</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="n">check_unterminated_hairpins</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="n">check_unterminated_text_spanners</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
 <span class="p">):</span>
     <span class="n">triples</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">if</span> <span class="n">check_beamed_lone_notes</span><span class="p">:</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;check_beamed_lone_notes&quot;</span>
+        <span class="n">violators</span><span class="p">,</span> <span class="n">count</span> <span class="o">=</span> <span class="n">_globals</span><span class="p">[</span><span class="n">name</span><span class="p">](</span><span class="n">component</span><span class="p">)</span>
+        <span class="n">triples</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">violators</span><span class="p">,</span> <span class="n">count</span><span class="p">,</span> <span class="n">name</span><span class="p">))</span>
     <span class="k">if</span> <span class="n">check_beamed_long_notes</span><span class="p">:</span>
         <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;check_beamed_long_notes&quot;</span>
         <span class="n">violators</span><span class="p">,</span> <span class="n">count</span> <span class="o">=</span> <span class="n">_globals</span><span class="p">[</span><span class="n">name</span><span class="p">](</span><span class="n">component</span><span class="p">)</span>
@@ -1103,6 +1060,10 @@
         <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;check_out_of_range_pitches&quot;</span>
         <span class="n">violators</span><span class="p">,</span> <span class="n">count</span> <span class="o">=</span> <span class="n">_globals</span><span class="p">[</span><span class="n">name</span><span class="p">](</span><span class="n">component</span><span class="p">)</span>
         <span class="n">triples</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">violators</span><span class="p">,</span> <span class="n">count</span><span class="p">,</span> <span class="n">name</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">check_overlapping_beams</span><span class="p">:</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;check_overlapping_beams&quot;</span>
+        <span class="n">violators</span><span class="p">,</span> <span class="n">count</span> <span class="o">=</span> <span class="n">_globals</span><span class="p">[</span><span class="n">name</span><span class="p">](</span><span class="n">component</span><span class="p">)</span>
+        <span class="n">triples</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">violators</span><span class="p">,</span> <span class="n">count</span><span class="p">,</span> <span class="n">name</span><span class="p">))</span>
     <span class="k">if</span> <span class="n">check_overlapping_text_spanners</span><span class="p">:</span>
         <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;check_overlapping_text_spanners&quot;</span>
         <span class="n">violators</span><span class="p">,</span> <span class="n">count</span> <span class="o">=</span> <span class="n">_globals</span><span class="p">[</span><span class="n">name</span><span class="p">](</span><span class="n">component</span><span class="p">)</span>
@@ -1124,12 +1085,14 @@
 
 <div class="viewcode-block" id="tabulate_wellformedness"><a class="viewcode-back" href="../../api/abjad/wf.html#abjad.wf.tabulate_wellformedness">[docs]</a><span class="k">def</span> <span class="nf">tabulate_wellformedness</span><span class="p">(</span>
     <span class="n">component</span><span class="p">,</span>
+    <span class="n">check_beamed_lone_notes</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="n">check_beamed_long_notes</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="n">check_duplicate_ids</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="n">check_empty_containers</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="n">check_missing_parents</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="n">check_notes_on_wrong_clef</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="n">check_out_of_range_pitches</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="n">check_overlapping_beams</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="n">check_overlapping_text_spanners</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="n">check_unmatched_stop_text_spans</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="n">check_unterminated_hairpins</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
@@ -1140,12 +1103,14 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">triples</span> <span class="o">=</span> <span class="n">_call_functions</span><span class="p">(</span>
         <span class="n">component</span><span class="p">,</span>
+        <span class="n">check_beamed_lone_notes</span><span class="o">=</span><span class="n">check_beamed_lone_notes</span><span class="p">,</span>
         <span class="n">check_beamed_long_notes</span><span class="o">=</span><span class="n">check_beamed_long_notes</span><span class="p">,</span>
         <span class="n">check_duplicate_ids</span><span class="o">=</span><span class="n">check_duplicate_ids</span><span class="p">,</span>
         <span class="n">check_empty_containers</span><span class="o">=</span><span class="n">check_empty_containers</span><span class="p">,</span>
         <span class="n">check_missing_parents</span><span class="o">=</span><span class="n">check_missing_parents</span><span class="p">,</span>
         <span class="n">check_notes_on_wrong_clef</span><span class="o">=</span><span class="n">check_notes_on_wrong_clef</span><span class="p">,</span>
         <span class="n">check_out_of_range_pitches</span><span class="o">=</span><span class="n">check_out_of_range_pitches</span><span class="p">,</span>
+        <span class="n">check_overlapping_beams</span><span class="o">=</span><span class="n">check_overlapping_beams</span><span class="p">,</span>
         <span class="n">check_overlapping_text_spanners</span><span class="o">=</span><span class="n">check_overlapping_text_spanners</span><span class="p">,</span>
         <span class="n">check_unmatched_stop_text_spans</span><span class="o">=</span><span class="n">check_unmatched_stop_text_spans</span><span class="p">,</span>
         <span class="n">check_unterminated_hairpins</span><span class="o">=</span><span class="n">check_unterminated_hairpins</span><span class="p">,</span>
@@ -1165,12 +1130,14 @@
 
 <div class="viewcode-block" id="wellformed"><a class="viewcode-back" href="../../api/abjad/wf.html#abjad.wf.wellformed">[docs]</a><span class="k">def</span> <span class="nf">wellformed</span><span class="p">(</span>
     <span class="n">component</span><span class="p">,</span>
+    <span class="n">check_beamed_lone_notes</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="n">check_beamed_long_notes</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="n">check_duplicate_ids</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="n">check_empty_containers</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="n">check_missing_parents</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="n">check_notes_on_wrong_clef</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="n">check_out_of_range_pitches</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="n">check_overlapping_beams</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="n">check_overlapping_text_spanners</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="n">check_unmatched_stop_text_spans</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="n">check_unterminated_hairpins</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
@@ -1181,12 +1148,14 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">triples</span> <span class="o">=</span> <span class="n">_call_functions</span><span class="p">(</span>
         <span class="n">component</span><span class="p">,</span>
+        <span class="n">check_beamed_lone_notes</span><span class="o">=</span><span class="n">check_beamed_lone_notes</span><span class="p">,</span>
         <span class="n">check_beamed_long_notes</span><span class="o">=</span><span class="n">check_beamed_long_notes</span><span class="p">,</span>
         <span class="n">check_duplicate_ids</span><span class="o">=</span><span class="n">check_duplicate_ids</span><span class="p">,</span>
         <span class="n">check_empty_containers</span><span class="o">=</span><span class="n">check_empty_containers</span><span class="p">,</span>
         <span class="n">check_missing_parents</span><span class="o">=</span><span class="n">check_missing_parents</span><span class="p">,</span>
         <span class="n">check_notes_on_wrong_clef</span><span class="o">=</span><span class="n">check_notes_on_wrong_clef</span><span class="p">,</span>
         <span class="n">check_out_of_range_pitches</span><span class="o">=</span><span class="n">check_out_of_range_pitches</span><span class="p">,</span>
+        <span class="n">check_overlapping_beams</span><span class="o">=</span><span class="n">check_overlapping_beams</span><span class="p">,</span>
         <span class="n">check_overlapping_text_spanners</span><span class="o">=</span><span class="n">check_overlapping_text_spanners</span><span class="p">,</span>
         <span class="n">check_unmatched_stop_text_spans</span><span class="o">=</span><span class="n">check_unmatched_stop_text_spans</span><span class="p">,</span>
         <span class="n">check_unterminated_hairpins</span><span class="o">=</span><span class="n">check_unterminated_hairpins</span><span class="p">,</span>

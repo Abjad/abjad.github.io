@@ -65,6 +65,7 @@ indicators
    ~StopTrillSpan
    ~Tie
    ~TimeSignature
+   ~VoiceNumber
 
 .. autoclass:: Arpeggio
 
@@ -140,6 +141,7 @@ indicators
       __repr__
       __setattr__
       post_event
+      shortcut_to_word
 
    .. raw:: html
 
@@ -187,9 +189,11 @@ indicators
       __hash__
       __le__
       __lt__
+      __post_init__
       __repr__
       __setattr__
       context
+      known_abbreviations
 
    .. raw:: html
 
@@ -212,18 +216,11 @@ indicators
 
    .. automethod:: BarLine.__lt__
 
+   .. automethod:: BarLine.__post_init__
+
    .. automethod:: BarLine.__repr__
 
    .. automethod:: BarLine.__setattr__
-
-   .. raw:: html
-
-      <hr/>
-
-   .. rubric:: Read-only properties
-      :class: class-header
-
-   .. autoattribute:: BarLine.context
 
 .. autoclass:: BeamCount
 
@@ -294,6 +291,8 @@ indicators
       __repr__
       __setattr__
       post_event
+      site
+      time_orientation
 
    .. raw:: html
 
@@ -341,6 +340,8 @@ indicators
       __lt__
       __repr__
       __setattr__
+      site
+      time_orientation
 
    .. raw:: html
 
@@ -389,11 +390,13 @@ indicators
       __post_init__
       __repr__
       __setattr__
+      clef_name_to_middle_c_position
       context
       from_pitches
       middle_c_position
       persistent
       redraw
+      site
       to_pitch
       to_staff_position
 
@@ -465,11 +468,13 @@ indicators
       __hash__
       __le__
       __lt__
+      __post_init__
       __repr__
       __setattr__
       directed
       markup
       post_event
+      site
 
    .. raw:: html
 
@@ -491,6 +496,8 @@ indicators
    .. automethod:: ColorFingering.__le__
 
    .. automethod:: ColorFingering.__lt__
+
+   .. automethod:: ColorFingering.__post_init__
 
    .. automethod:: ColorFingering.__repr__
 
@@ -524,10 +531,13 @@ indicators
       __hash__
       __le__
       __lt__
+      __post_init__
       __repr__
       __setattr__
+      allowable_commands
       context
       post_event
+      site
 
    .. raw:: html
 
@@ -549,6 +559,8 @@ indicators
    .. automethod:: Fermata.__le__
 
    .. automethod:: Fermata.__lt__
+
+   .. automethod:: Fermata.__post_init__
 
    .. automethod:: Fermata.__repr__
 
@@ -573,6 +585,7 @@ indicators
       __hash__
       __le__
       __lt__
+      __post_init__
       __repr__
       __setattr__
       context
@@ -600,6 +613,8 @@ indicators
 
    .. automethod:: Glissando.__lt__
 
+   .. automethod:: Glissando.__post_init__
+
    .. automethod:: Glissando.__repr__
 
    .. automethod:: Glissando.__setattr__
@@ -623,8 +638,10 @@ indicators
       __hash__
       __le__
       __lt__
+      __post_init__
       __repr__
       __setattr__
+      site
 
    .. raw:: html
 
@@ -646,6 +663,8 @@ indicators
    .. automethod:: InstrumentName.__le__
 
    .. automethod:: InstrumentName.__lt__
+
+   .. automethod:: InstrumentName.__post_init__
 
    .. automethod:: InstrumentName.__repr__
 
@@ -670,6 +689,7 @@ indicators
       __hash__
       __le__
       __lt__
+      __post_init__
       __repr__
       __setattr__
       directed
@@ -694,6 +714,8 @@ indicators
    .. automethod:: KeyCluster.__le__
 
    .. automethod:: KeyCluster.__lt__
+
+   .. automethod:: KeyCluster.__post_init__
 
    .. automethod:: KeyCluster.__repr__
 
@@ -784,6 +806,8 @@ indicators
       __repr__
       __setattr__
       post_event
+      site
+      time_orientation
 
    .. raw:: html
 
@@ -832,6 +856,9 @@ indicators
       __post_init__
       __repr__
       __setattr__
+      allowable_sites
+      can_attach_to_containers
+      format_leaf_children
       post_event
 
    .. raw:: html
@@ -934,6 +961,7 @@ indicators
    .. autosummary::
       :nosignatures:
 
+      __delattr__
       __eq__
       __ge__
       __gt__
@@ -942,13 +970,16 @@ indicators
       __lt__
       __post_init__
       __repr__
+      __setattr__
       context
       duration_to_milliseconds
       is_imprecise
       make_tempo_equation_markup
+      mutates_offsets_in_seconds
       parameter
       persistent
       quarters_per_minute
+      site
 
    .. raw:: html
 
@@ -956,6 +987,8 @@ indicators
 
    .. rubric:: Special methods
       :class: class-header
+
+   .. automethod:: MetronomeMark.__delattr__
 
    .. automethod:: MetronomeMark.__eq__
 
@@ -972,6 +1005,8 @@ indicators
    .. automethod:: MetronomeMark.__post_init__
 
    .. automethod:: MetronomeMark.__repr__
+
+   .. automethod:: MetronomeMark.__setattr__
 
    .. raw:: html
 
@@ -1021,6 +1056,7 @@ indicators
       __hash__
       __le__
       __lt__
+      __post_init__
       __repr__
       __setattr__
       intervals
@@ -1045,6 +1081,8 @@ indicators
    .. automethod:: Mode.__le__
 
    .. automethod:: Mode.__lt__
+
+   .. automethod:: Mode.__post_init__
 
    .. automethod:: Mode.__repr__
 
@@ -1078,8 +1116,10 @@ indicators
       __hash__
       __le__
       __lt__
+      __post_init__
       __repr__
       __setattr__
+      context
       persistent
 
    .. raw:: html
@@ -1102,6 +1142,8 @@ indicators
    .. automethod:: Ottava.__le__
 
    .. automethod:: Ottava.__lt__
+
+   .. automethod:: Ottava.__post_init__
 
    .. automethod:: Ottava.__repr__
 
@@ -1126,6 +1168,7 @@ indicators
       __hash__
       __le__
       __lt__
+      __post_init__
       __repr__
       __setattr__
       context
@@ -1151,6 +1194,8 @@ indicators
    .. automethod:: RehearsalMark.__le__
 
    .. automethod:: RehearsalMark.__lt__
+
+   .. automethod:: RehearsalMark.__post_init__
 
    .. automethod:: RehearsalMark.__repr__
 
@@ -1184,9 +1229,13 @@ indicators
       __hash__
       __le__
       __lt__
+      __post_init__
       __repr__
       __setattr__
+      can_attach_to_containers
       context
+      format_leaf_children
+      site
 
    .. raw:: html
 
@@ -1208,6 +1257,8 @@ indicators
    .. automethod:: Repeat.__le__
 
    .. automethod:: Repeat.__lt__
+
+   .. automethod:: Repeat.__post_init__
 
    .. automethod:: Repeat.__repr__
 
@@ -1236,7 +1287,6 @@ indicators
       __setattr__
       context
       directed
-      persistent
       post_event
 
    .. raw:: html
@@ -1283,6 +1333,7 @@ indicators
       __hash__
       __le__
       __lt__
+      __post_init__
       __repr__
       __setattr__
       latent
@@ -1310,6 +1361,8 @@ indicators
 
    .. automethod:: ShortInstrumentName.__lt__
 
+   .. automethod:: ShortInstrumentName.__post_init__
+
    .. automethod:: ShortInstrumentName.__repr__
 
    .. automethod:: ShortInstrumentName.__setattr__
@@ -1333,9 +1386,13 @@ indicators
       __hash__
       __le__
       __lt__
+      __post_init__
       __repr__
       __setattr__
       context
+      format_leaf_children
+      site
+      time_orientation
 
    .. raw:: html
 
@@ -1357,6 +1414,8 @@ indicators
    .. automethod:: StaffChange.__le__
 
    .. automethod:: StaffChange.__lt__
+
+   .. automethod:: StaffChange.__post_init__
 
    .. automethod:: StaffChange.__repr__
 
@@ -1436,6 +1495,8 @@ indicators
       __lt__
       __repr__
       __setattr__
+      context
+      nestable_spanner
       persistent
       post_event
       spanner_start
@@ -1484,14 +1545,18 @@ indicators
       __hash__
       __le__
       __lt__
+      __post_init__
       __repr__
       __setattr__
       context
+      crescendo_start
+      decrescendo_start
       directed
       known_shapes
       parameter
       persistent
       post_event
+      site
       spanner_start
       trend
 
@@ -1516,18 +1581,11 @@ indicators
 
    .. automethod:: StartHairpin.__lt__
 
+   .. automethod:: StartHairpin.__post_init__
+
    .. automethod:: StartHairpin.__repr__
 
    .. automethod:: StartHairpin.__setattr__
-
-   .. raw:: html
-
-      <hr/>
-
-   .. rubric:: Read-only properties
-      :class: class-header
-
-   .. autoattribute:: StartHairpin.known_shapes
 
 .. autoclass:: StartPhrasingSlur
 
@@ -1709,8 +1767,10 @@ indicators
       __hash__
       __le__
       __lt__
+      __post_init__
       __repr__
       __setattr__
+      allow_multiple_with_different_values
       context
       directed
       parameter
@@ -1738,6 +1798,8 @@ indicators
    .. automethod:: StartTextSpan.__le__
 
    .. automethod:: StartTextSpan.__lt__
+
+   .. automethod:: StartTextSpan.__post_init__
 
    .. automethod:: StartTextSpan.__repr__
 
@@ -1820,6 +1882,8 @@ indicators
       __post_init__
       __repr__
       __setattr__
+      site
+      time_orientation
 
    .. raw:: html
 
@@ -1873,6 +1937,7 @@ indicators
       parameter
       persistent
       spanner_stop
+      time_orientation
 
    .. raw:: html
 
@@ -1920,8 +1985,11 @@ indicators
       __lt__
       __repr__
       __setattr__
+      context
+      nestable_spanner
       persistent
       spanner_stop
+      time_orientation
 
    .. raw:: html
 
@@ -2075,6 +2143,7 @@ indicators
       persistent
       post_event
       spanner_stop
+      time_orientation
 
    .. raw:: html
 
@@ -2129,6 +2198,7 @@ indicators
       parameter
       persistent
       spanner_stop
+      time_orientation
 
    .. raw:: html
 
@@ -2181,6 +2251,7 @@ indicators
       __setattr__
       context
       enchained
+      nestable_spanner
       parameter
       persistent
       spanner_stop
@@ -2238,6 +2309,7 @@ indicators
       parameter
       persistent
       spanner_stop
+      time_orientation
 
    .. raw:: html
 
@@ -2289,7 +2361,6 @@ indicators
       __setattr__
       context
       directed
-      persistent
       post_event
 
    .. raw:: html
@@ -2329,7 +2400,7 @@ indicators
    .. autosummary::
       :nosignatures:
 
-      __copy__
+      __delattr__
       __eq__
       __ge__
       __gt__
@@ -2338,16 +2409,18 @@ indicators
       __lt__
       __post_init__
       __repr__
+      __setattr__
       check_effective_context
       context
       denominator
       duration
       from_string
       implied_prolation
-      is_dyadic_rational
       is_non_dyadic_rational
       numerator
       persistent
+      site
+      to_dyadic_rational
 
    .. raw:: html
 
@@ -2356,7 +2429,7 @@ indicators
    .. rubric:: Special methods
       :class: class-header
 
-   .. automethod:: TimeSignature.__copy__
+   .. automethod:: TimeSignature.__delattr__
 
    .. automethod:: TimeSignature.__eq__
 
@@ -2374,6 +2447,8 @@ indicators
 
    .. automethod:: TimeSignature.__repr__
 
+   .. automethod:: TimeSignature.__setattr__
+
    .. raw:: html
 
       <hr/>
@@ -2381,7 +2456,7 @@ indicators
    .. rubric:: Methods
       :class: class-header
 
-   .. automethod:: TimeSignature.is_dyadic_rational
+   .. automethod:: TimeSignature.to_dyadic_rational
 
    .. raw:: html
 
@@ -2408,3 +2483,58 @@ indicators
    .. autoattribute:: TimeSignature.is_non_dyadic_rational
 
    .. autoattribute:: TimeSignature.numerator
+
+.. autoclass:: VoiceNumber
+
+   .. raw:: html
+
+      <hr/>
+
+   .. rubric:: Attributes Summary
+      :class: class-header
+
+   .. autosummary::
+      :nosignatures:
+
+      __delattr__
+      __eq__
+      __ge__
+      __gt__
+      __hash__
+      __le__
+      __lt__
+      __post_init__
+      __repr__
+      __setattr__
+      check_effective_context
+      context
+      parameter
+      persistent
+      temporarily_do_not_check
+
+   .. raw:: html
+
+      <hr/>
+
+   .. rubric:: Special methods
+      :class: class-header
+
+   .. automethod:: VoiceNumber.__delattr__
+
+   .. automethod:: VoiceNumber.__eq__
+
+   .. automethod:: VoiceNumber.__ge__
+
+   .. automethod:: VoiceNumber.__gt__
+
+   .. automethod:: VoiceNumber.__hash__
+
+   .. automethod:: VoiceNumber.__le__
+
+   .. automethod:: VoiceNumber.__lt__
+
+   .. automethod:: VoiceNumber.__post_init__
+
+   .. automethod:: VoiceNumber.__repr__
+
+   .. automethod:: VoiceNumber.__setattr__

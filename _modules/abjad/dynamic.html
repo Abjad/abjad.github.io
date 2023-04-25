@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>abjad.dynamic &mdash; Abjad 3.16 documentation</title>
+  <title>abjad.dynamic &mdash; Abjad 3.17 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/abjad.css" type="text/css" />
@@ -34,11 +34,11 @@
   <div class="wy-grid-for-nav">
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search"  style="background: #aa44ee" >
+        <div class="wy-side-nav-search"  style="background: #bb6611" >
 
 
     <a href="../../index.html" class="icon icon-home" alt="Documentation
-    Home"> Abjad 3.16
+    Home"> Abjad 3.17
 
 
 
@@ -111,7 +111,7 @@
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #aa44ee" >
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #bb6611" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../index.html">Abjad</a>
       </nav>
@@ -194,12 +194,12 @@
 
 <span class="sd">        &gt;&gt;&gt; voice_1 = abjad.Voice(&quot;e&#39;8 g&#39;8 f&#39;8 a&#39;8&quot;)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.attach(abjad.Dynamic(&#39;f&#39;), voice_1[0], context=&#39;Voice&#39;)</span>
-<span class="sd">        &gt;&gt;&gt; literal = abjad.LilyPondLiteral(r&quot;\voiceOne&quot;, &quot;opening&quot;)</span>
-<span class="sd">        &gt;&gt;&gt; abjad.attach(literal, voice_1)</span>
+<span class="sd">        &gt;&gt;&gt; command = abjad.VoiceNumber(1)</span>
+<span class="sd">        &gt;&gt;&gt; abjad.attach(command, voice_1[0])</span>
 <span class="sd">        &gt;&gt;&gt; abjad.override(voice_1).DynamicLineSpanner.direction = abjad.UP</span>
 <span class="sd">        &gt;&gt;&gt; voice_2 = abjad.Voice(&quot;c&#39;2&quot;)</span>
-<span class="sd">        &gt;&gt;&gt; literal = abjad.LilyPondLiteral(r&quot;\voiceTwo&quot;, &quot;opening&quot;)</span>
-<span class="sd">        &gt;&gt;&gt; abjad.attach(literal, voice_2)</span>
+<span class="sd">        &gt;&gt;&gt; command = abjad.VoiceNumber(2)</span>
+<span class="sd">        &gt;&gt;&gt; abjad.attach(command, voice_2[0])</span>
 <span class="sd">        &gt;&gt;&gt; abjad.attach(abjad.Dynamic(&quot;mf&quot;), voice_2[0], context=&quot;Voice&quot;)</span>
 <span class="sd">        &gt;&gt;&gt; staff = abjad.Staff([voice_1, voice_2], simultaneous=True)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(staff) # doctest: +SKIP</span>
@@ -254,29 +254,6 @@
 <span class="sd">        Traceback (most recent call last):</span>
 <span class="sd">            ...</span>
 <span class="sd">        Exception: letter &#39;t&#39; (in &#39;text&#39;) is not a dynamic.</span>
-
-<span class="sd">    ..  container:: example</span>
-
-<span class="sd">        REGRESSION. Duplicate dynamics raise exception on attach:</span>
-
-<span class="sd">        &gt;&gt;&gt; staff = abjad.Staff(&quot;c&#39;4 d&#39; e&#39; f&#39;&quot;)</span>
-<span class="sd">        &gt;&gt;&gt; dynamic = abjad.Dynamic(&quot;p&quot;)</span>
-<span class="sd">        &gt;&gt;&gt; abjad.attach(dynamic, staff[0])</span>
-<span class="sd">        &gt;&gt;&gt; dynamic = abjad.Dynamic(&quot;p&quot;)</span>
-<span class="sd">        &gt;&gt;&gt; abjad.attach(dynamic, staff[0], check_duplicate_indicator=True)</span>
-<span class="sd">        Traceback (most recent call last):</span>
-<span class="sd">            ...</span>
-<span class="sd">        abjad.exceptions.PersistentIndicatorError:</span>
-<span class="sd">        &lt;BLANKLINE&gt;</span>
-<span class="sd">        Can not attach ...</span>
-<span class="sd">        &lt;BLANKLINE&gt;</span>
-<span class="sd">        Wrapper(...)</span>
-<span class="sd">        &lt;BLANKLINE&gt;</span>
-<span class="sd">            ... to Note(&quot;c&#39;4&quot;) in None because ...</span>
-<span class="sd">        &lt;BLANKLINE&gt;</span>
-<span class="sd">        Wrapper(...)</span>
-<span class="sd">        &lt;BLANKLINE&gt;</span>
-<span class="sd">            ... is already attached to the same leaf.</span>
 
 <span class="sd">    ..  container:: example</span>
 
@@ -805,8 +782,8 @@
     <span class="n">name</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="s2">&quot;Dynamic&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;f&quot;</span>
     <span class="n">command</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">format_hairpin_stop</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
-    <span class="n">hide</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
-    <span class="n">leak</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">dataclasses</span><span class="o">.</span><span class="n">field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">compare</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">hide</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">dataclasses</span><span class="o">.</span><span class="n">field</span><span class="p">(</span><span class="n">compare</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">leak</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">dataclasses</span><span class="o">.</span><span class="n">field</span><span class="p">(</span><span class="n">compare</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
     <span class="n">name_is_textual</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
     <span class="n">ordinal</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="n">_math</span><span class="o">.</span><span class="n">Infinity</span> <span class="o">|</span> <span class="n">_math</span><span class="o">.</span><span class="n">NegativeInfinity</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
 
@@ -943,8 +920,6 @@
         <span class="mi">6</span><span class="p">:</span> <span class="s2">&quot;fffff&quot;</span><span class="p">,</span>
     <span class="p">}</span>
 
-    <span class="n">_site</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">ClassVar</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;after&quot;</span>
-
     <span class="n">_lilypond_dynamic_commands</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">ClassVar</span> <span class="o">=</span> <span class="p">[</span>
         <span class="n">_</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">_dynamic_names</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">_</span> <span class="o">==</span> <span class="s2">&quot;niente&quot;</span>
     <span class="p">]</span>
@@ -958,6 +933,8 @@
         <span class="s1">&#39;&quot;p&quot;&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
         <span class="s2">&quot;sfz&quot;</span><span class="p">:</span> <span class="mf">2.5</span><span class="p">,</span>
     <span class="p">}</span>
+
+    <span class="n">site</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">ClassVar</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;after&quot;</span>
 
 <div class="viewcode-block" id="Dynamic.__eq__"><a class="viewcode-back" href="../../api/abjad/dynamic.html#abjad.dynamic.Dynamic.__eq__">[docs]</a>    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
