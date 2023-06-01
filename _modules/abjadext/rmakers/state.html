@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>abjadext.rmakers.state &mdash; Abjad 3.17 documentation</title>
+  <title>abjadext.rmakers.state &mdash; Abjad 3.18 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/abjad.css" type="text/css" />
@@ -34,11 +34,11 @@
   <div class="wy-grid-for-nav">
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search"  style="background: #bb6611" >
+        <div class="wy-side-nav-search"  style="background: #cc8844" >
 
 
     <a href="../../../index.html" class="icon icon-home" alt="Documentation
-    Home"> Abjad 3.17
+    Home"> Abjad 3.18
 
 
 
@@ -111,7 +111,7 @@
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #bb6611" >
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #cc8844" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../../index.html">Abjad</a>
       </nav>
@@ -150,11 +150,10 @@
 <span class="sd">        ...         previous_state=previous_state,</span>
 <span class="sd">        ...         state=state,</span>
 <span class="sd">        ...     )</span>
-<span class="sd">        ...     container = abjad.Container(tuplets)</span>
-<span class="sd">        ...     rmakers.duration_bracket(container)</span>
-<span class="sd">        ...     rmakers.feather_beam(container)</span>
-<span class="sd">        ...     components = abjad.mutate.eject_contents(container)</span>
-<span class="sd">        ...     lilypond_file_ = rmakers.example(components, time_signatures)</span>
+<span class="sd">        ...     lilypond_file_ = rmakers.example(tuplets, time_signatures)</span>
+<span class="sd">        ...     voice = lilypond_file_[&quot;Voice&quot;]</span>
+<span class="sd">        ...     rmakers.duration_bracket(voice)</span>
+<span class="sd">        ...     rmakers.feather_beam(voice)</span>
 <span class="sd">        ...     return lilypond_file_, state</span>
 
 <span class="sd">        &gt;&gt;&gt; pairs = [(3, 8), (4, 8), (3, 8)]</span>
@@ -167,7 +166,7 @@
 <span class="sd">            &gt;&gt;&gt; string = abjad.lilypond(score)</span>
 <span class="sd">            &gt;&gt;&gt; print(string)</span>
 <span class="sd">            \context Score = &quot;Score&quot;</span>
-<span class="sd">            &lt;&lt;</span>
+<span class="sd">            {</span>
 <span class="sd">                \context RhythmicStaff = &quot;Staff&quot;</span>
 <span class="sd">                \with</span>
 <span class="sd">                {</span>
@@ -222,7 +221,7 @@
 <span class="sd">                        \revert TupletNumber.text</span>
 <span class="sd">                    }</span>
 <span class="sd">                }</span>
-<span class="sd">            &gt;&gt;</span>
+<span class="sd">            }</span>
 
 <span class="sd">        &gt;&gt;&gt; state</span>
 <span class="sd">        {&#39;durations_consumed&#39;: 3, &#39;logical_ties_produced&#39;: 17}</span>
@@ -239,7 +238,7 @@
 <span class="sd">            &gt;&gt;&gt; string = abjad.lilypond(score)</span>
 <span class="sd">            &gt;&gt;&gt; print(string)</span>
 <span class="sd">            \context Score = &quot;Score&quot;</span>
-<span class="sd">            &lt;&lt;</span>
+<span class="sd">            {</span>
 <span class="sd">                \context RhythmicStaff = &quot;Staff&quot;</span>
 <span class="sd">                \with</span>
 <span class="sd">                {</span>
@@ -296,7 +295,7 @@
 <span class="sd">                        \revert TupletNumber.text</span>
 <span class="sd">                    }</span>
 <span class="sd">                }</span>
-<span class="sd">            &gt;&gt;</span>
+<span class="sd">            }</span>
 
 <span class="sd">        &gt;&gt;&gt; state</span>
 <span class="sd">        {&#39;durations_consumed&#39;: 6, &#39;logical_ties_produced&#39;: 36}</span>
@@ -313,7 +312,7 @@
 <span class="sd">            &gt;&gt;&gt; string = abjad.lilypond(score)</span>
 <span class="sd">            &gt;&gt;&gt; print(string)</span>
 <span class="sd">            \context Score = &quot;Score&quot;</span>
-<span class="sd">            &lt;&lt;</span>
+<span class="sd">            {</span>
 <span class="sd">                \context RhythmicStaff = &quot;Staff&quot;</span>
 <span class="sd">                \with</span>
 <span class="sd">                {</span>
@@ -368,7 +367,7 @@
 <span class="sd">                        \revert TupletNumber.text</span>
 <span class="sd">                    }</span>
 <span class="sd">                }</span>
-<span class="sd">            &gt;&gt;</span>
+<span class="sd">            }</span>
 
 <span class="sd">        &gt;&gt;&gt; state</span>
 <span class="sd">        {&#39;durations_consumed&#39;: 9, &#39;logical_ties_produced&#39;: 53}</span>
@@ -387,11 +386,10 @@
 <span class="sd">    ...         durations, [16, 8, 4], extra_counts=[0, 1],</span>
 <span class="sd">    ...         previous_state=previous_state, state=state</span>
 <span class="sd">    ...     )</span>
-<span class="sd">    ...     container = abjad.Container(tuplets)</span>
-<span class="sd">    ...     rmakers.beam(container)</span>
-<span class="sd">    ...     rmakers.extract_trivial(container)</span>
-<span class="sd">    ...     components = abjad.mutate.eject_contents(container)</span>
-<span class="sd">    ...     lilypond_file_ = rmakers.example(components, time_signatures)</span>
+<span class="sd">    ...     lilypond_file_ = rmakers.example(tuplets, time_signatures)</span>
+<span class="sd">    ...     voice = lilypond_file_[&quot;Voice&quot;]</span>
+<span class="sd">    ...     rmakers.beam(voice)</span>
+<span class="sd">    ...     rmakers.extract_trivial(voice)</span>
 <span class="sd">    ...     return lilypond_file_, state</span>
 
 <span class="sd">    &gt;&gt;&gt; pairs = [(2, 8), (2, 8), (2, 8), (2, 8), (2, 8)]</span>
@@ -404,7 +402,7 @@
 <span class="sd">        &gt;&gt;&gt; string = abjad.lilypond(score)</span>
 <span class="sd">        &gt;&gt;&gt; print(string)</span>
 <span class="sd">        \context Score = &quot;Score&quot;</span>
-<span class="sd">        &lt;&lt;</span>
+<span class="sd">        {</span>
 <span class="sd">            \context RhythmicStaff = &quot;Staff&quot;</span>
 <span class="sd">            \with</span>
 <span class="sd">            {</span>
@@ -445,7 +443,7 @@
 <span class="sd">                    ]</span>
 <span class="sd">                }</span>
 <span class="sd">            }</span>
-<span class="sd">        &gt;&gt;</span>
+<span class="sd">        }</span>
 
 <span class="sd">    &gt;&gt;&gt; state</span>
 <span class="sd">    {&#39;durations_consumed&#39;: 5, &#39;logical_ties_produced&#39;: 15}</span>
@@ -462,7 +460,7 @@
 <span class="sd">        &gt;&gt;&gt; string = abjad.lilypond(score)</span>
 <span class="sd">        &gt;&gt;&gt; print(string)</span>
 <span class="sd">        \context Score = &quot;Score&quot;</span>
-<span class="sd">        &lt;&lt;</span>
+<span class="sd">        {</span>
 <span class="sd">            \context RhythmicStaff = &quot;Staff&quot;</span>
 <span class="sd">            \with</span>
 <span class="sd">            {</span>
@@ -500,7 +498,7 @@
 <span class="sd">                    }</span>
 <span class="sd">                }</span>
 <span class="sd">            }</span>
-<span class="sd">        &gt;&gt;</span>
+<span class="sd">        }</span>
 
 <span class="sd">    &gt;&gt;&gt; state</span>
 <span class="sd">    {&#39;durations_consumed&#39;: 10, &#39;logical_ties_produced&#39;: 29}</span>
@@ -540,7 +538,7 @@
 <span class="sd">            &gt;&gt;&gt; string = abjad.lilypond(score)</span>
 <span class="sd">            &gt;&gt;&gt; print(string)</span>
 <span class="sd">            \context Score = &quot;Score&quot;</span>
-<span class="sd">            &lt;&lt;</span>
+<span class="sd">            {</span>
 <span class="sd">                \context RhythmicStaff = &quot;Staff&quot;</span>
 <span class="sd">                \with</span>
 <span class="sd">                {</span>
@@ -576,7 +574,7 @@
 <span class="sd">                        c&#39;8.</span>
 <span class="sd">                    }</span>
 <span class="sd">                }</span>
-<span class="sd">            &gt;&gt;</span>
+<span class="sd">            }</span>
 
 <span class="sd">        &gt;&gt;&gt; for item in state.items():</span>
 <span class="sd">        ...     item</span>
@@ -602,7 +600,7 @@
 <span class="sd">            &gt;&gt;&gt; string = abjad.lilypond(score)</span>
 <span class="sd">            &gt;&gt;&gt; print(string)</span>
 <span class="sd">            \context Score = &quot;Score&quot;</span>
-<span class="sd">            &lt;&lt;</span>
+<span class="sd">            {</span>
 <span class="sd">                \context RhythmicStaff = &quot;Staff&quot;</span>
 <span class="sd">                \with</span>
 <span class="sd">                {</span>
@@ -640,7 +638,7 @@
 <span class="sd">                        }</span>
 <span class="sd">                    }</span>
 <span class="sd">                }</span>
-<span class="sd">            &gt;&gt;</span>
+<span class="sd">            }</span>
 
 <span class="sd">        &gt;&gt;&gt; for item in state.items():</span>
 <span class="sd">        ...     item</span>
@@ -666,7 +664,7 @@
 <span class="sd">            &gt;&gt;&gt; string = abjad.lilypond(score)</span>
 <span class="sd">            &gt;&gt;&gt; print(string)</span>
 <span class="sd">            \context Score = &quot;Score&quot;</span>
-<span class="sd">            &lt;&lt;</span>
+<span class="sd">            {</span>
 <span class="sd">                \context RhythmicStaff = &quot;Staff&quot;</span>
 <span class="sd">                \with</span>
 <span class="sd">                {</span>
@@ -707,7 +705,7 @@
 <span class="sd">                        }</span>
 <span class="sd">                    }</span>
 <span class="sd">                }</span>
-<span class="sd">            &gt;&gt;</span>
+<span class="sd">            }</span>
 
 <span class="sd">        &gt;&gt;&gt; for item in state.items():</span>
 <span class="sd">        ...     item</span>

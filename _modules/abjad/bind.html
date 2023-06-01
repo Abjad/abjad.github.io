@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>abjad.bind &mdash; Abjad 3.17 documentation</title>
+  <title>abjad.bind &mdash; Abjad 3.18 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/abjad.css" type="text/css" />
@@ -34,11 +34,11 @@
   <div class="wy-grid-for-nav">
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search"  style="background: #bb6611" >
+        <div class="wy-side-nav-search"  style="background: #cc8844" >
 
 
     <a href="../../index.html" class="icon icon-home" alt="Documentation
-    Home"> Abjad 3.17
+    Home"> Abjad 3.18
 
 
 
@@ -111,7 +111,7 @@
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #bb6611" >
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #cc8844" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../index.html">Abjad</a>
       </nav>
@@ -141,7 +141,7 @@
 <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">tweaks</span> <span class="k">as</span> <span class="n">_tweaks</span>
 
 
-<span class="k">def</span> <span class="nf">_before_attach</span><span class="p">(</span><span class="n">indicator</span><span class="p">,</span> <span class="n">deactivate</span><span class="p">,</span> <span class="n">component</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">_before_attach</span><span class="p">(</span><span class="n">indicator</span><span class="p">,</span> <span class="n">context</span><span class="p">,</span> <span class="n">deactivate</span><span class="p">,</span> <span class="n">component</span><span class="p">):</span>
     <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">indicator</span><span class="p">,</span> <span class="s2">&quot;temporarily_do_not_check&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
         <span class="k">return</span>
     <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">indicator</span><span class="p">,</span> <span class="s2">&quot;allowable_sites&quot;</span><span class="p">):</span>
@@ -155,13 +155,12 @@
     <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">indicator</span><span class="p">,</span> <span class="s2">&quot;context&quot;</span><span class="p">):</span>
         <span class="k">return</span>
     <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">indicator</span><span class="p">,</span> <span class="s2">&quot;find_context_on_attach&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
-        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">indicator</span><span class="p">,</span> <span class="s2">&quot;context&quot;</span><span class="p">):</span>
-            <span class="n">context</span> <span class="o">=</span> <span class="n">Wrapper</span><span class="o">.</span><span class="n">_find_correct_effective_context</span><span class="p">(</span>
-                <span class="n">component</span><span class="p">,</span> <span class="n">indicator</span><span class="o">.</span><span class="n">context</span>
-            <span class="p">)</span>
-            <span class="k">if</span> <span class="n">context</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="n">message</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">    </span><span class="si">{</span><span class="n">indicator</span><span class="si">}</span><span class="s2"> requires </span><span class="si">{</span><span class="n">indicator</span><span class="o">.</span><span class="n">context</span><span class="si">}</span><span class="s2"> context;&quot;</span>
-                <span class="n">message</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">    can not find </span><span class="si">{</span><span class="n">indicator</span><span class="o">.</span><span class="n">context</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="n">the_context</span> <span class="o">=</span> <span class="n">context</span> <span class="ow">or</span> <span class="n">indicator</span><span class="o">.</span><span class="n">context</span>
+        <span class="k">if</span> <span class="n">the_context</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">context_</span> <span class="o">=</span> <span class="n">Wrapper</span><span class="o">.</span><span class="n">_find_correct_effective_context</span><span class="p">(</span><span class="n">component</span><span class="p">,</span> <span class="n">the_context</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">context_</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">message</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">    </span><span class="si">{</span><span class="n">indicator</span><span class="si">}</span><span class="s2"> requires </span><span class="si">{</span><span class="n">the_context</span><span class="si">}</span><span class="s2"> context;&quot;</span>
+                <span class="n">message</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">    can not find </span><span class="si">{</span><span class="n">the_context</span><span class="si">}</span><span class="s2">&quot;</span>
                 <span class="n">message</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot; in parentage of </span><span class="si">{</span><span class="n">component</span><span class="si">!r}</span><span class="s2">.&quot;</span>
                 <span class="k">raise</span> <span class="n">_exceptions</span><span class="o">.</span><span class="n">MissingContextError</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
     <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">indicator</span><span class="p">,</span> <span class="s2">&quot;nestable_spanner&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
@@ -1250,7 +1249,7 @@
     <span class="k">assert</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">nonbundle_attachable</span><span class="p">,</span> <span class="n">_tweaks</span><span class="o">.</span><span class="n">Bundle</span><span class="p">)</span>
     <span class="k">assert</span> <span class="n">nonbundle_attachable</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">nonbundle_attachable</span><span class="p">)</span>
     <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">_score</span><span class="o">.</span><span class="n">Component</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">target</span><span class="p">)</span>
-    <span class="n">_before_attach</span><span class="p">(</span><span class="n">nonbundle_attachable</span><span class="p">,</span> <span class="n">deactivate</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
+    <span class="n">_before_attach</span><span class="p">(</span><span class="n">nonbundle_attachable</span><span class="p">,</span> <span class="n">context</span><span class="p">,</span> <span class="n">deactivate</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
     <span class="n">result</span> <span class="o">=</span> <span class="n">_unsafe_attach</span><span class="p">(</span>
         <span class="n">attachable</span><span class="p">,</span>
         <span class="n">target</span><span class="p">,</span>

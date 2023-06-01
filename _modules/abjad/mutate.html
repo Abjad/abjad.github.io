@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>abjad.mutate &mdash; Abjad 3.17 documentation</title>
+  <title>abjad.mutate &mdash; Abjad 3.18 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/abjad.css" type="text/css" />
@@ -34,11 +34,11 @@
   <div class="wy-grid-for-nav">
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search"  style="background: #bb6611" >
+        <div class="wy-side-nav-search"  style="background: #cc8844" >
 
 
     <a href="../../index.html" class="icon icon-home" alt="Documentation
-    Home"> Abjad 3.17
+    Home"> Abjad 3.18
 
 
 
@@ -111,7 +111,7 @@
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #bb6611" >
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #cc8844" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../index.html">Abjad</a>
       </nav>
@@ -452,6 +452,7 @@
     <span class="k">return</span> <span class="n">result</span>
 
 
+<span class="c1"># TODO: remove because unused?</span>
 <span class="k">def</span> <span class="nf">_fuse_leaves_by_immediate_parent</span><span class="p">(</span><span class="n">leaves</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">parts</span> <span class="o">=</span> <span class="n">_get_leaves_grouped_by_immediate_parents</span><span class="p">(</span><span class="n">leaves</span><span class="p">)</span>
@@ -548,12 +549,6 @@
             <span class="n">successors</span> <span class="o">=</span> <span class="n">descendants</span>
             <span class="k">break</span>
     <span class="k">return</span> <span class="n">component_2</span> <span class="ow">in</span> <span class="n">successors</span>
-
-
-<span class="k">def</span> <span class="nf">_move_indicators</span><span class="p">(</span><span class="n">donor_component</span><span class="p">,</span> <span class="n">recipient_component</span><span class="p">):</span>
-    <span class="k">for</span> <span class="n">wrapper</span> <span class="ow">in</span> <span class="n">_get</span><span class="o">.</span><span class="n">wrappers</span><span class="p">(</span><span class="n">donor_component</span><span class="p">):</span>
-        <span class="n">_bind</span><span class="o">.</span><span class="n">detach</span><span class="p">(</span><span class="n">wrapper</span><span class="p">,</span> <span class="n">donor_component</span><span class="p">)</span>
-        <span class="n">_bind</span><span class="o">.</span><span class="n">attach</span><span class="p">(</span><span class="n">wrapper</span><span class="p">,</span> <span class="n">recipient_component</span><span class="p">)</span>
 
 
 <span class="k">def</span> <span class="nf">_set_leaf_duration</span><span class="p">(</span><span class="n">leaf</span><span class="p">,</span> <span class="n">new_duration</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
@@ -1066,10 +1061,11 @@
 
 <span class="sd">        Extract tuplets:</span>
 
-<span class="sd">        &gt;&gt;&gt; staff = abjad.Staff()</span>
-<span class="sd">        &gt;&gt;&gt; staff.append(abjad.Tuplet((3, 2), &quot;c&#39;4 e&#39;4&quot;))</span>
-<span class="sd">        &gt;&gt;&gt; staff.append(abjad.Tuplet((3, 2), &quot;d&#39;4 f&#39;4&quot;))</span>
-<span class="sd">        &gt;&gt;&gt; leaves = abjad.select.leaves(staff)</span>
+<span class="sd">        &gt;&gt;&gt; voice = abjad.Voice()</span>
+<span class="sd">        &gt;&gt;&gt; voice.append(abjad.Tuplet((3, 2), &quot;c&#39;4 e&#39;4&quot;))</span>
+<span class="sd">        &gt;&gt;&gt; voice.append(abjad.Tuplet((3, 2), &quot;d&#39;4 f&#39;4&quot;))</span>
+<span class="sd">        &gt;&gt;&gt; leaves = abjad.select.leaves(voice)</span>
+<span class="sd">        &gt;&gt;&gt; staff = abjad.Staff([voice])</span>
 <span class="sd">        &gt;&gt;&gt; score = abjad.Score([staff], name=&quot;Score&quot;)</span>
 <span class="sd">        &gt;&gt;&gt; time_signature = abjad.TimeSignature((3, 4))</span>
 <span class="sd">        &gt;&gt;&gt; abjad.attach(time_signature, leaves[0])</span>
@@ -1082,26 +1078,29 @@
 <span class="sd">            &gt;&gt;&gt; print(string)</span>
 <span class="sd">            \new Staff</span>
 <span class="sd">            {</span>
-<span class="sd">                \tweak text #tuplet-number::calc-fraction-text</span>
-<span class="sd">                \times 3/2</span>
+<span class="sd">                \new Voice</span>
 <span class="sd">                {</span>
-<span class="sd">                    \time 3/4</span>
-<span class="sd">                    c&#39;4</span>
-<span class="sd">                    \p</span>
-<span class="sd">                    \&lt;</span>
-<span class="sd">                    e&#39;4</span>
-<span class="sd">                }</span>
-<span class="sd">                \tweak text #tuplet-number::calc-fraction-text</span>
-<span class="sd">                \times 3/2</span>
-<span class="sd">                {</span>
-<span class="sd">                    d&#39;4</span>
-<span class="sd">                    f&#39;4</span>
-<span class="sd">                    \f</span>
+<span class="sd">                    \tweak text #tuplet-number::calc-fraction-text</span>
+<span class="sd">                    \times 3/2</span>
+<span class="sd">                    {</span>
+<span class="sd">                        \time 3/4</span>
+<span class="sd">                        c&#39;4</span>
+<span class="sd">                        \p</span>
+<span class="sd">                        \&lt;</span>
+<span class="sd">                        e&#39;4</span>
+<span class="sd">                    }</span>
+<span class="sd">                    \tweak text #tuplet-number::calc-fraction-text</span>
+<span class="sd">                    \times 3/2</span>
+<span class="sd">                    {</span>
+<span class="sd">                        d&#39;4</span>
+<span class="sd">                        f&#39;4</span>
+<span class="sd">                        \f</span>
+<span class="sd">                    }</span>
 <span class="sd">                }</span>
 <span class="sd">            }</span>
 
-<span class="sd">        &gt;&gt;&gt; empty_tuplet = abjad.mutate.extract(staff[-1])</span>
-<span class="sd">        &gt;&gt;&gt; empty_tuplet = abjad.mutate.extract(staff[0])</span>
+<span class="sd">        &gt;&gt;&gt; empty_tuplet = abjad.mutate.extract(voice[-1])</span>
+<span class="sd">        &gt;&gt;&gt; empty_tuplet = abjad.mutate.extract(voice[0])</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(staff) # doctest: +SKIP</span>
 
 <span class="sd">        ..  docs::</span>
@@ -1110,23 +1109,27 @@
 <span class="sd">            &gt;&gt;&gt; print(string)</span>
 <span class="sd">            \new Staff</span>
 <span class="sd">            {</span>
-<span class="sd">                \time 3/4</span>
-<span class="sd">                c&#39;4</span>
-<span class="sd">                \p</span>
-<span class="sd">                \&lt;</span>
-<span class="sd">                e&#39;4</span>
-<span class="sd">                d&#39;4</span>
-<span class="sd">                f&#39;4</span>
-<span class="sd">                \f</span>
+<span class="sd">                \new Voice</span>
+<span class="sd">                {</span>
+<span class="sd">                    \time 3/4</span>
+<span class="sd">                    c&#39;4</span>
+<span class="sd">                    \p</span>
+<span class="sd">                    \&lt;</span>
+<span class="sd">                    e&#39;4</span>
+<span class="sd">                    d&#39;4</span>
+<span class="sd">                    f&#39;4</span>
+<span class="sd">                    \f</span>
+<span class="sd">                }</span>
 <span class="sd">            }</span>
 
 <span class="sd">    ..  container:: example</span>
 
 <span class="sd">        Scales tuplet contents and then extracts tuplet:</span>
 
-<span class="sd">        &gt;&gt;&gt; staff = abjad.Staff()</span>
-<span class="sd">        &gt;&gt;&gt; staff.append(abjad.Tuplet((3, 2), &quot;c&#39;4 e&#39;4&quot;))</span>
-<span class="sd">        &gt;&gt;&gt; staff.append(abjad.Tuplet((3, 2), &quot;d&#39;4 f&#39;4&quot;))</span>
+<span class="sd">        &gt;&gt;&gt; voice = abjad.Voice()</span>
+<span class="sd">        &gt;&gt;&gt; staff = abjad.Staff([voice])</span>
+<span class="sd">        &gt;&gt;&gt; voice.append(abjad.Tuplet((3, 2), &quot;c&#39;4 e&#39;4&quot;))</span>
+<span class="sd">        &gt;&gt;&gt; voice.append(abjad.Tuplet((3, 2), &quot;d&#39;4 f&#39;4&quot;))</span>
 <span class="sd">        &gt;&gt;&gt; score = abjad.Score([staff], name=&quot;Score&quot;)</span>
 <span class="sd">        &gt;&gt;&gt; leaves = abjad.select.leaves(staff)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.hairpin(&#39;p &lt; f&#39;, leaves)</span>
@@ -1140,29 +1143,32 @@
 <span class="sd">            &gt;&gt;&gt; print(string)</span>
 <span class="sd">            \new Staff</span>
 <span class="sd">            {</span>
-<span class="sd">                \tweak text #tuplet-number::calc-fraction-text</span>
-<span class="sd">                \times 3/2</span>
+<span class="sd">                \new Voice</span>
 <span class="sd">                {</span>
-<span class="sd">                    \time 3/4</span>
-<span class="sd">                    c&#39;4</span>
-<span class="sd">                    \p</span>
-<span class="sd">                    \&lt;</span>
-<span class="sd">                    e&#39;4</span>
-<span class="sd">                }</span>
-<span class="sd">                \tweak text #tuplet-number::calc-fraction-text</span>
-<span class="sd">                \times 3/2</span>
-<span class="sd">                {</span>
-<span class="sd">                    d&#39;4</span>
-<span class="sd">                    f&#39;4</span>
-<span class="sd">                    \f</span>
+<span class="sd">                    \tweak text #tuplet-number::calc-fraction-text</span>
+<span class="sd">                    \times 3/2</span>
+<span class="sd">                    {</span>
+<span class="sd">                        \time 3/4</span>
+<span class="sd">                        c&#39;4</span>
+<span class="sd">                        \p</span>
+<span class="sd">                        \&lt;</span>
+<span class="sd">                        e&#39;4</span>
+<span class="sd">                    }</span>
+<span class="sd">                    \tweak text #tuplet-number::calc-fraction-text</span>
+<span class="sd">                    \times 3/2</span>
+<span class="sd">                    {</span>
+<span class="sd">                        d&#39;4</span>
+<span class="sd">                        f&#39;4</span>
+<span class="sd">                        \f</span>
+<span class="sd">                    }</span>
 <span class="sd">                }</span>
 <span class="sd">            }</span>
 
-<span class="sd">        &gt;&gt;&gt; abjad.mutate.scale(staff[-1], abjad.Fraction(3, 2))</span>
-<span class="sd">        &gt;&gt;&gt; empty_tuplet = abjad.mutate.extract(staff[-1])</span>
-<span class="sd">        &gt;&gt;&gt; abjad.mutate.scale(staff[0], abjad.Fraction(3, 2))</span>
-<span class="sd">        &gt;&gt;&gt; empty_tuplet = abjad.mutate.extract(staff[0])</span>
-<span class="sd">        &gt;&gt;&gt; abjad.show(staff) # doctest: +SKIP</span>
+<span class="sd">        &gt;&gt;&gt; abjad.mutate.scale(voice[-1], abjad.Fraction(3, 2))</span>
+<span class="sd">        &gt;&gt;&gt; empty_tuplet = abjad.mutate.extract(voice[-1])</span>
+<span class="sd">        &gt;&gt;&gt; abjad.mutate.scale(voice[0], abjad.Fraction(3, 2))</span>
+<span class="sd">        &gt;&gt;&gt; empty_tuplet = abjad.mutate.extract(voice[0])</span>
+<span class="sd">        &gt;&gt;&gt; abjad.show(voice) # doctest: +SKIP</span>
 
 <span class="sd">        ..  docs::</span>
 
@@ -1170,14 +1176,17 @@
 <span class="sd">            &gt;&gt;&gt; print(string)</span>
 <span class="sd">            \new Staff</span>
 <span class="sd">            {</span>
-<span class="sd">                \time 3/4</span>
-<span class="sd">                c&#39;4.</span>
-<span class="sd">                \p</span>
-<span class="sd">                \&lt;</span>
-<span class="sd">                e&#39;4.</span>
-<span class="sd">                d&#39;4.</span>
-<span class="sd">                f&#39;4.</span>
-<span class="sd">                \f</span>
+<span class="sd">                \new Voice</span>
+<span class="sd">                {</span>
+<span class="sd">                    \time 3/4</span>
+<span class="sd">                    c&#39;4.</span>
+<span class="sd">                    \p</span>
+<span class="sd">                    \&lt;</span>
+<span class="sd">                    e&#39;4.</span>
+<span class="sd">                    d&#39;4.</span>
+<span class="sd">                    f&#39;4.</span>
+<span class="sd">                    \f</span>
+<span class="sd">                }</span>
 <span class="sd">            }</span>
 
 <span class="sd">    ..  container:: example</span>
@@ -1251,10 +1260,11 @@
 <span class="sd">        Fuses parent-contiguous tuplets in selection:</span>
 
 <span class="sd">        &gt;&gt;&gt; tuplet_1 = abjad.Tuplet((2, 3), &quot;c&#39;8 d&#39; e&#39;&quot;)</span>
-<span class="sd">        &gt;&gt;&gt; abjad.beam(tuplet_1[:])</span>
 <span class="sd">        &gt;&gt;&gt; tuplet_2 = abjad.Tuplet((2, 3), &quot;c&#39;16 d&#39; e&#39;&quot;)</span>
+<span class="sd">        &gt;&gt;&gt; voice = abjad.Voice([tuplet_1, tuplet_2])</span>
+<span class="sd">        &gt;&gt;&gt; staff = abjad.Staff([voice])</span>
+<span class="sd">        &gt;&gt;&gt; abjad.beam(tuplet_1[:])</span>
 <span class="sd">        &gt;&gt;&gt; abjad.slur(tuplet_2[:])</span>
-<span class="sd">        &gt;&gt;&gt; staff = abjad.Staff([tuplet_1, tuplet_2])</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(staff) # doctest: +SKIP</span>
 
 <span class="sd">        ..  docs::</span>
@@ -1263,25 +1273,28 @@
 <span class="sd">            &gt;&gt;&gt; print(string)</span>
 <span class="sd">            \new Staff</span>
 <span class="sd">            {</span>
-<span class="sd">                \times 2/3</span>
+<span class="sd">                \new Voice</span>
 <span class="sd">                {</span>
-<span class="sd">                    c&#39;8</span>
-<span class="sd">                    [</span>
-<span class="sd">                    d&#39;8</span>
-<span class="sd">                    e&#39;8</span>
-<span class="sd">                    ]</span>
-<span class="sd">                }</span>
-<span class="sd">                \times 2/3</span>
-<span class="sd">                {</span>
-<span class="sd">                    c&#39;16</span>
-<span class="sd">                    (</span>
-<span class="sd">                    d&#39;16</span>
-<span class="sd">                    e&#39;16</span>
-<span class="sd">                    )</span>
+<span class="sd">                    \times 2/3</span>
+<span class="sd">                    {</span>
+<span class="sd">                        c&#39;8</span>
+<span class="sd">                        [</span>
+<span class="sd">                        d&#39;8</span>
+<span class="sd">                        e&#39;8</span>
+<span class="sd">                        ]</span>
+<span class="sd">                    }</span>
+<span class="sd">                    \times 2/3</span>
+<span class="sd">                    {</span>
+<span class="sd">                        c&#39;16</span>
+<span class="sd">                        (</span>
+<span class="sd">                        d&#39;16</span>
+<span class="sd">                        e&#39;16</span>
+<span class="sd">                        )</span>
+<span class="sd">                    }</span>
 <span class="sd">                }</span>
 <span class="sd">            }</span>
 
-<span class="sd">        &gt;&gt;&gt; tuplets = staff[:]</span>
+<span class="sd">        &gt;&gt;&gt; tuplets = voice[:]</span>
 <span class="sd">        &gt;&gt;&gt; abjad.mutate.fuse(tuplets)</span>
 <span class="sd">        Tuplet(&#39;3:2&#39;, &quot;c&#39;8 d&#39;8 e&#39;8 c&#39;16 d&#39;16 e&#39;16&quot;)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(staff) #doctest: +SKIP</span>
@@ -1292,18 +1305,21 @@
 <span class="sd">            &gt;&gt;&gt; print(string)</span>
 <span class="sd">            \new Staff</span>
 <span class="sd">            {</span>
-<span class="sd">                \times 2/3</span>
+<span class="sd">                \new Voice</span>
 <span class="sd">                {</span>
-<span class="sd">                    c&#39;8</span>
-<span class="sd">                    [</span>
-<span class="sd">                    d&#39;8</span>
-<span class="sd">                    e&#39;8</span>
-<span class="sd">                    ]</span>
-<span class="sd">                    c&#39;16</span>
-<span class="sd">                    (</span>
-<span class="sd">                    d&#39;16</span>
-<span class="sd">                    e&#39;16</span>
-<span class="sd">                    )</span>
+<span class="sd">                    \times 2/3</span>
+<span class="sd">                    {</span>
+<span class="sd">                        c&#39;8</span>
+<span class="sd">                        [</span>
+<span class="sd">                        d&#39;8</span>
+<span class="sd">                        e&#39;8</span>
+<span class="sd">                        ]</span>
+<span class="sd">                        c&#39;16</span>
+<span class="sd">                        (</span>
+<span class="sd">                        d&#39;16</span>
+<span class="sd">                        e&#39;16</span>
+<span class="sd">                        )</span>
+<span class="sd">                    }</span>
 <span class="sd">                }</span>
 <span class="sd">            }</span>
 
@@ -1377,14 +1393,15 @@
 
 <span class="sd">    ..  container:: example</span>
 
-<span class="sd">        &gt;&gt;&gt; staff = abjad.Staff(r&quot;df&#39;8 c&#39;8 ~ c&#39;16 cqs&#39;&#39;4&quot;)</span>
+<span class="sd">        &gt;&gt;&gt; voice = abjad.Voice(r&quot;df&#39;8 c&#39;8 ~ c&#39;16 cqs&#39;&#39;4&quot;)</span>
+<span class="sd">        &gt;&gt;&gt; staff = abjad.Staff([voice])</span>
 <span class="sd">        &gt;&gt;&gt; score = abjad.Score([staff], name=&quot;Score&quot;)</span>
-<span class="sd">        &gt;&gt;&gt; abjad.attach(abjad.Dynamic(&#39;p&#39;), staff[0])</span>
-<span class="sd">        &gt;&gt;&gt; abjad.attach(abjad.StartHairpin(&#39;&lt;&#39;), staff[0])</span>
-<span class="sd">        &gt;&gt;&gt; abjad.attach(abjad.Dynamic(&#39;f&#39;), staff[-1])</span>
+<span class="sd">        &gt;&gt;&gt; abjad.attach(abjad.Dynamic(&#39;p&#39;), voice[0])</span>
+<span class="sd">        &gt;&gt;&gt; abjad.attach(abjad.StartHairpin(&#39;&lt;&#39;), voice[0])</span>
+<span class="sd">        &gt;&gt;&gt; abjad.attach(abjad.Dynamic(&#39;f&#39;), voice[-1])</span>
 <span class="sd">        &gt;&gt;&gt; abjad.override(staff).DynamicLineSpanner.staff_padding = 3</span>
 <span class="sd">        &gt;&gt;&gt; time_signature = abjad.TimeSignature((9, 16))</span>
-<span class="sd">        &gt;&gt;&gt; abjad.attach(time_signature, staff[0])</span>
+<span class="sd">        &gt;&gt;&gt; abjad.attach(time_signature, voice[0])</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(staff) # doctest: +SKIP</span>
 
 <span class="sd">        ..  docs::</span>
@@ -1397,18 +1414,21 @@
 <span class="sd">                \override DynamicLineSpanner.staff-padding = 3</span>
 <span class="sd">            }</span>
 <span class="sd">            {</span>
-<span class="sd">                \time 9/16</span>
-<span class="sd">                df&#39;8</span>
-<span class="sd">                \p</span>
-<span class="sd">                \&lt;</span>
-<span class="sd">                c&#39;8</span>
-<span class="sd">                ~</span>
-<span class="sd">                c&#39;16</span>
-<span class="sd">                cqs&#39;&#39;4</span>
-<span class="sd">                \f</span>
+<span class="sd">                \new Voice</span>
+<span class="sd">                {</span>
+<span class="sd">                    \time 9/16</span>
+<span class="sd">                    df&#39;8</span>
+<span class="sd">                    \p</span>
+<span class="sd">                    \&lt;</span>
+<span class="sd">                    c&#39;8</span>
+<span class="sd">                    ~</span>
+<span class="sd">                    c&#39;16</span>
+<span class="sd">                    cqs&#39;&#39;4</span>
+<span class="sd">                    \f</span>
+<span class="sd">                }</span>
 <span class="sd">            }</span>
 
-<span class="sd">        &gt;&gt;&gt; logical_tie = abjad.select.logical_tie(staff[1])</span>
+<span class="sd">        &gt;&gt;&gt; logical_tie = abjad.select.logical_tie(voice[1])</span>
 <span class="sd">        &gt;&gt;&gt; abjad.mutate.logical_tie_to_tuplet(logical_tie, [2, 1, 1, 1])</span>
 <span class="sd">        Tuplet(&#39;5:3&#39;, &quot;c&#39;8 c&#39;16 c&#39;16 c&#39;16&quot;)</span>
 
@@ -1422,32 +1442,36 @@
 <span class="sd">                \override DynamicLineSpanner.staff-padding = 3</span>
 <span class="sd">            }</span>
 <span class="sd">            {</span>
-<span class="sd">                \time 9/16</span>
-<span class="sd">                df&#39;8</span>
-<span class="sd">                \p</span>
-<span class="sd">                \&lt;</span>
-<span class="sd">                \tweak text #tuplet-number::calc-fraction-text</span>
-<span class="sd">                \times 3/5</span>
+<span class="sd">                \new Voice</span>
 <span class="sd">                {</span>
-<span class="sd">                    c&#39;8</span>
-<span class="sd">                    c&#39;16</span>
-<span class="sd">                    c&#39;16</span>
-<span class="sd">                    c&#39;16</span>
+<span class="sd">                    \time 9/16</span>
+<span class="sd">                    df&#39;8</span>
+<span class="sd">                    \p</span>
+<span class="sd">                    \&lt;</span>
+<span class="sd">                    \tweak text #tuplet-number::calc-fraction-text</span>
+<span class="sd">                    \times 3/5</span>
+<span class="sd">                    {</span>
+<span class="sd">                        c&#39;8</span>
+<span class="sd">                        c&#39;16</span>
+<span class="sd">                        c&#39;16</span>
+<span class="sd">                        c&#39;16</span>
+<span class="sd">                    }</span>
+<span class="sd">                    cqs&#39;&#39;4</span>
+<span class="sd">                    \f</span>
 <span class="sd">                }</span>
-<span class="sd">                cqs&#39;&#39;4</span>
-<span class="sd">                \f</span>
 <span class="sd">            }</span>
 
 <span class="sd">        &gt;&gt;&gt; abjad.show(staff) # doctest: +SKIP</span>
 
 <span class="sd">    ..  container:: example</span>
 
-<span class="sd">        &gt;&gt;&gt; staff = abjad.Staff(r&quot;c&#39;8 ~ c&#39;16 cqs&#39;&#39;4&quot;)</span>
+<span class="sd">        &gt;&gt;&gt; voice = abjad.Voice(r&quot;c&#39;8 ~ c&#39;16 cqs&#39;&#39;4&quot;)</span>
+<span class="sd">        &gt;&gt;&gt; staff = abjad.Staff([voice])</span>
 <span class="sd">        &gt;&gt;&gt; score = abjad.Score([staff], name=&quot;Score&quot;)</span>
-<span class="sd">        &gt;&gt;&gt; abjad.hairpin(&#39;p &lt; f&#39;, staff[:])</span>
+<span class="sd">        &gt;&gt;&gt; abjad.hairpin(&#39;p &lt; f&#39;, voice[:])</span>
 <span class="sd">        &gt;&gt;&gt; abjad.override(staff).DynamicLineSpanner.staff_padding = 3</span>
 <span class="sd">        &gt;&gt;&gt; time_signature = abjad.TimeSignature((7, 16))</span>
-<span class="sd">        &gt;&gt;&gt; abjad.attach(time_signature, staff[0])</span>
+<span class="sd">        &gt;&gt;&gt; abjad.attach(time_signature, voice[0])</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(staff) # doctest: +SKIP</span>
 
 <span class="sd">        ..  docs::</span>
@@ -1460,14 +1484,17 @@
 <span class="sd">                \override DynamicLineSpanner.staff-padding = 3</span>
 <span class="sd">            }</span>
 <span class="sd">            {</span>
-<span class="sd">                \time 7/16</span>
-<span class="sd">                c&#39;8</span>
-<span class="sd">                \p</span>
-<span class="sd">                \&lt;</span>
-<span class="sd">                ~</span>
-<span class="sd">                c&#39;16</span>
-<span class="sd">                cqs&#39;&#39;4</span>
-<span class="sd">                \f</span>
+<span class="sd">                \new Voice</span>
+<span class="sd">                {</span>
+<span class="sd">                    \time 7/16</span>
+<span class="sd">                    c&#39;8</span>
+<span class="sd">                    \p</span>
+<span class="sd">                    \&lt;</span>
+<span class="sd">                    ~</span>
+<span class="sd">                    c&#39;16</span>
+<span class="sd">                    cqs&#39;&#39;4</span>
+<span class="sd">                    \f</span>
+<span class="sd">                }</span>
 <span class="sd">            }</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -1503,17 +1530,17 @@
 
 <span class="sd">        &gt;&gt;&gt; tuplet_1 = abjad.Tuplet((2, 3), &quot;c&#39;4 d&#39;4 e&#39;4&quot;)</span>
 <span class="sd">        &gt;&gt;&gt; tuplet_2 = abjad.Tuplet((2, 3), &quot;d&#39;4 e&#39;4 f&#39;4&quot;)</span>
-<span class="sd">        &gt;&gt;&gt; staff = abjad.Staff([tuplet_1, tuplet_2])</span>
-<span class="sd">        &gt;&gt;&gt; leaves = abjad.select.leaves(staff)</span>
+<span class="sd">        &gt;&gt;&gt; voice = abjad.Voice([tuplet_1, tuplet_2])</span>
+<span class="sd">        &gt;&gt;&gt; leaves = abjad.select.leaves(voice)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.hairpin(&#39;p &lt; f&#39;, leaves)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.slur(leaves)</span>
-<span class="sd">        &gt;&gt;&gt; abjad.show(staff) # doctest: +SKIP</span>
+<span class="sd">        &gt;&gt;&gt; abjad.show(voice) # doctest: +SKIP</span>
 
 <span class="sd">        ..  docs::</span>
 
-<span class="sd">            &gt;&gt;&gt; string = abjad.lilypond(staff)</span>
+<span class="sd">            &gt;&gt;&gt; string = abjad.lilypond(voice)</span>
 <span class="sd">            &gt;&gt;&gt; print(string)</span>
-<span class="sd">            \new Staff</span>
+<span class="sd">            \new Voice</span>
 <span class="sd">            {</span>
 <span class="sd">                \times 2/3</span>
 <span class="sd">                {</span>
@@ -1536,15 +1563,15 @@
 
 <span class="sd">        &gt;&gt;&gt; notes = abjad.makers.make_notes(&quot;c&#39; d&#39; e&#39; f&#39; c&#39; d&#39; e&#39; f&#39;&quot;, (1, 16))</span>
 <span class="sd">        &gt;&gt;&gt; abjad.mutate.replace([tuplet_1], notes)</span>
-<span class="sd">        &gt;&gt;&gt; abjad.attach(abjad.Dynamic(&#39;p&#39;), staff[0])</span>
-<span class="sd">        &gt;&gt;&gt; abjad.attach(abjad.StartHairpin(&#39;&lt;&#39;), staff[0])</span>
-<span class="sd">        &gt;&gt;&gt; abjad.show(staff) # doctest: +SKIP</span>
+<span class="sd">        &gt;&gt;&gt; abjad.attach(abjad.Dynamic(&#39;p&#39;), voice[0])</span>
+<span class="sd">        &gt;&gt;&gt; abjad.attach(abjad.StartHairpin(&#39;&lt;&#39;), voice[0])</span>
+<span class="sd">        &gt;&gt;&gt; abjad.show(voice) # doctest: +SKIP</span>
 
 <span class="sd">        ..  docs::</span>
 
-<span class="sd">            &gt;&gt;&gt; string = abjad.lilypond(staff)</span>
+<span class="sd">            &gt;&gt;&gt; string = abjad.lilypond(voice)</span>
 <span class="sd">            &gt;&gt;&gt; print(string)</span>
-<span class="sd">            \new Staff</span>
+<span class="sd">            \new Voice</span>
 <span class="sd">            {</span>
 <span class="sd">                c&#39;16</span>
 <span class="sd">                \p</span>
@@ -1937,16 +1964,16 @@
 
 <span class="sd">        Splits leaves cyclically and ties split notes:</span>
 
-<span class="sd">        &gt;&gt;&gt; staff = abjad.Staff(&quot;c&#39;1 d&#39;1&quot;)</span>
-<span class="sd">        &gt;&gt;&gt; abjad.hairpin(&#39;p &lt; f&#39;, staff[:])</span>
-<span class="sd">        &gt;&gt;&gt; abjad.override(staff).DynamicLineSpanner.staff_padding = 3</span>
-<span class="sd">        &gt;&gt;&gt; abjad.show(staff) # doctest: +SKIP</span>
+<span class="sd">        &gt;&gt;&gt; voice = abjad.Voice(&quot;c&#39;1 d&#39;1&quot;)</span>
+<span class="sd">        &gt;&gt;&gt; abjad.hairpin(&#39;p &lt; f&#39;, voice[:])</span>
+<span class="sd">        &gt;&gt;&gt; abjad.override(voice).DynamicLineSpanner.staff_padding = 3</span>
+<span class="sd">        &gt;&gt;&gt; abjad.show(voice) # doctest: +SKIP</span>
 
 <span class="sd">        ..  docs::</span>
 
-<span class="sd">            &gt;&gt;&gt; string = abjad.lilypond(staff)</span>
+<span class="sd">            &gt;&gt;&gt; string = abjad.lilypond(voice)</span>
 <span class="sd">            &gt;&gt;&gt; print(string)</span>
-<span class="sd">            \new Staff</span>
+<span class="sd">            \new Voice</span>
 <span class="sd">            \with</span>
 <span class="sd">            {</span>
 <span class="sd">                \override DynamicLineSpanner.staff-padding = 3</span>
@@ -1961,17 +1988,17 @@
 
 <span class="sd">        &gt;&gt;&gt; durations = [(3, 4)]</span>
 <span class="sd">        &gt;&gt;&gt; result = abjad.mutate.split(</span>
-<span class="sd">        ...     staff[:],</span>
+<span class="sd">        ...     voice[:],</span>
 <span class="sd">        ...     durations,</span>
 <span class="sd">        ...     cyclic=True,</span>
 <span class="sd">        ...     )</span>
-<span class="sd">        &gt;&gt;&gt; abjad.show(staff) # doctest: +SKIP</span>
+<span class="sd">        &gt;&gt;&gt; abjad.show(voice) # doctest: +SKIP</span>
 
 <span class="sd">        ..  docs::</span>
 
-<span class="sd">            &gt;&gt;&gt; string = abjad.lilypond(staff)</span>
+<span class="sd">            &gt;&gt;&gt; string = abjad.lilypond(voice)</span>
 <span class="sd">            &gt;&gt;&gt; print(string)</span>
-<span class="sd">            \new Staff</span>
+<span class="sd">            \new Voice</span>
 <span class="sd">            \with</span>
 <span class="sd">            {</span>
 <span class="sd">                \override DynamicLineSpanner.staff-padding = 3</span>
@@ -2440,22 +2467,23 @@
 
 <span class="sd">        Swaps containers for tuplet:</span>
 
-<span class="sd">        &gt;&gt;&gt; staff = abjad.Staff()</span>
+<span class="sd">        &gt;&gt;&gt; voice = abjad.Voice()</span>
+<span class="sd">        &gt;&gt;&gt; staff = abjad.Staff([voice])</span>
 <span class="sd">        &gt;&gt;&gt; score = abjad.Score([staff], name=&quot;Score&quot;)</span>
-<span class="sd">        &gt;&gt;&gt; staff.append(abjad.Container(&quot;c&#39;4 d&#39;4 e&#39;4&quot;))</span>
-<span class="sd">        &gt;&gt;&gt; staff.append(abjad.Container(&quot;d&#39;4 e&#39;4 f&#39;4&quot;))</span>
-<span class="sd">        &gt;&gt;&gt; abjad.attach(abjad.TimeSignature((3, 4)), staff[0][0])</span>
-<span class="sd">        &gt;&gt;&gt; leaves = abjad.select.leaves(staff)</span>
+<span class="sd">        &gt;&gt;&gt; voice.append(abjad.Container(&quot;c&#39;4 d&#39;4 e&#39;4&quot;))</span>
+<span class="sd">        &gt;&gt;&gt; voice.append(abjad.Container(&quot;d&#39;4 e&#39;4 f&#39;4&quot;))</span>
+<span class="sd">        &gt;&gt;&gt; abjad.attach(abjad.TimeSignature((3, 4)), voice[0][0])</span>
+<span class="sd">        &gt;&gt;&gt; leaves = abjad.select.leaves(voice)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.hairpin(&#39;p &lt; f&#39;, leaves)</span>
-<span class="sd">        &gt;&gt;&gt; measures = staff[:]</span>
+<span class="sd">        &gt;&gt;&gt; measures = voice[:]</span>
 <span class="sd">        &gt;&gt;&gt; abjad.slur(leaves)</span>
-<span class="sd">        &gt;&gt;&gt; abjad.show(staff) # doctest: +SKIP</span>
+<span class="sd">        &gt;&gt;&gt; abjad.show(voice) # doctest: +SKIP</span>
 
 <span class="sd">        ..  docs::</span>
 
-<span class="sd">            &gt;&gt;&gt; string = abjad.lilypond(staff)</span>
+<span class="sd">            &gt;&gt;&gt; string = abjad.lilypond(voice)</span>
 <span class="sd">            &gt;&gt;&gt; print(string)</span>
-<span class="sd">            \new Staff</span>
+<span class="sd">            \new Voice</span>
 <span class="sd">            {</span>
 <span class="sd">                {</span>
 <span class="sd">                    \time 3/4</span>
@@ -2475,17 +2503,17 @@
 <span class="sd">                }</span>
 <span class="sd">            }</span>
 
-<span class="sd">        &gt;&gt;&gt; containers = staff[:]</span>
+<span class="sd">        &gt;&gt;&gt; containers = voice[:]</span>
 <span class="sd">        &gt;&gt;&gt; tuplet = abjad.Tuplet((2, 3), [])</span>
 <span class="sd">        &gt;&gt;&gt; tuplet.denominator = 4</span>
 <span class="sd">        &gt;&gt;&gt; abjad.mutate.swap(containers, tuplet)</span>
-<span class="sd">        &gt;&gt;&gt; abjad.show(staff) # doctest: +SKIP</span>
+<span class="sd">        &gt;&gt;&gt; abjad.show(voice) # doctest: +SKIP</span>
 
 <span class="sd">        ..  docs::</span>
 
-<span class="sd">            &gt;&gt;&gt; string = abjad.lilypond(staff)</span>
+<span class="sd">            &gt;&gt;&gt; string = abjad.lilypond(voice)</span>
 <span class="sd">            &gt;&gt;&gt; print(string)</span>
-<span class="sd">            \new Staff</span>
+<span class="sd">            \new Voice</span>
 <span class="sd">            {</span>
 <span class="sd">                \times 4/6</span>
 <span class="sd">                {</span>
@@ -2507,11 +2535,11 @@
 <span class="sd">        REGRESSION: context indicators survive swap:</span>
 
 <span class="sd">        &gt;&gt;&gt; prototype = abjad.TimeSignature</span>
-<span class="sd">        &gt;&gt;&gt; for component in abjad.iterate.components(staff):</span>
+<span class="sd">        &gt;&gt;&gt; for component in abjad.iterate.components(voice):</span>
 <span class="sd">        ...     time_signature = abjad.get.effective(component, prototype)</span>
 <span class="sd">        ...     print(component, time_signature)</span>
 <span class="sd">        ...</span>
-<span class="sd">        Staff(&quot;{ 2/3 c&#39;4 d&#39;4 e&#39;4 d&#39;4 e&#39;4 f&#39;4 }&quot;) TimeSignature(pair=(3, 4), hide=False, partial=None)</span>
+<span class="sd">        Voice(&quot;{ 2/3 c&#39;4 d&#39;4 e&#39;4 d&#39;4 e&#39;4 f&#39;4 }&quot;) TimeSignature(pair=(3, 4), hide=False, partial=None)</span>
 <span class="sd">        Tuplet(&#39;3:2&#39;, &quot;c&#39;4 d&#39;4 e&#39;4 d&#39;4 e&#39;4 f&#39;4&quot;) TimeSignature(pair=(3, 4), hide=False, partial=None)</span>
 <span class="sd">        Note(&quot;c&#39;4&quot;) TimeSignature(pair=(3, 4), hide=False, partial=None)</span>
 <span class="sd">        Note(&quot;d&#39;4&quot;) TimeSignature(pair=(3, 4), hide=False, partial=None)</span>

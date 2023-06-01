@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>abjadext.nauert.qtargets &mdash; Abjad 3.17 documentation</title>
+  <title>abjadext.nauert.qtargets &mdash; Abjad 3.18 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/abjad.css" type="text/css" />
@@ -34,11 +34,11 @@
   <div class="wy-grid-for-nav">
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search"  style="background: #bb6611" >
+        <div class="wy-side-nav-search"  style="background: #cc8844" >
 
 
     <a href="../../../index.html" class="icon icon-home" alt="Documentation
-    Home"> Abjad 3.17
+    Home"> Abjad 3.18
 
 
 
@@ -111,7 +111,7 @@
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #bb6611" >
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #cc8844" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../../index.html">Abjad</a>
       </nav>
@@ -434,10 +434,14 @@
         <span class="n">attach_tempos</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Voice</span><span class="p">:</span>
         <span class="n">voice</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Voice</span><span class="p">()</span>
+        <span class="n">temporary_score</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Score</span><span class="p">(</span>
+            <span class="p">[</span><span class="n">voice</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;TemporaryScore&quot;</span><span class="p">,</span> <span class="n">simultaneous</span><span class="o">=</span><span class="kc">False</span>
+        <span class="p">)</span>
         <span class="c1"># generate the first</span>
         <span class="n">beat</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_items</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
         <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">beat</span><span class="p">,</span> <span class="n">QTargetBeat</span><span class="p">)</span> <span class="ow">and</span> <span class="n">beat</span><span class="o">.</span><span class="n">q_grid</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
         <span class="n">components</span> <span class="o">=</span> <span class="n">beat</span><span class="o">.</span><span class="n">q_grid</span><span class="p">(</span><span class="n">beat</span><span class="o">.</span><span class="n">beatspan</span><span class="p">)</span>
+        <span class="n">voice</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">components</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">attach_tempos</span><span class="p">:</span>
             <span class="n">attachment_target</span><span class="p">:</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Component</span> <span class="o">=</span> <span class="n">components</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
             <span class="n">leaves</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">select</span><span class="o">.</span><span class="n">leaves</span><span class="p">(</span><span class="n">attachment_target</span><span class="p">)</span>
@@ -445,11 +449,10 @@
                 <span class="n">attachment_target</span> <span class="o">=</span> <span class="n">leaves</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
             <span class="n">tempo</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">beat</span><span class="o">.</span><span class="n">tempo</span><span class="p">)</span>
             <span class="n">abjad</span><span class="o">.</span><span class="n">attach</span><span class="p">(</span><span class="n">tempo</span><span class="p">,</span> <span class="n">attachment_target</span><span class="p">)</span>
-        <span class="n">voice</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">components</span><span class="p">)</span>
-
         <span class="c1"># generate the rest pairwise, comparing tempi</span>
         <span class="k">for</span> <span class="n">beat_one</span><span class="p">,</span> <span class="n">beat_two</span> <span class="ow">in</span> <span class="n">abjad</span><span class="o">.</span><span class="n">sequence</span><span class="o">.</span><span class="n">nwise</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">):</span>
             <span class="n">components</span> <span class="o">=</span> <span class="n">beat_two</span><span class="o">.</span><span class="n">q_grid</span><span class="p">(</span><span class="n">beat_two</span><span class="o">.</span><span class="n">beatspan</span><span class="p">)</span>
+            <span class="n">voice</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">components</span><span class="p">)</span>
             <span class="k">if</span> <span class="p">(</span><span class="n">beat_two</span><span class="o">.</span><span class="n">tempo</span> <span class="o">!=</span> <span class="n">beat_one</span><span class="o">.</span><span class="n">tempo</span><span class="p">)</span> <span class="ow">and</span> <span class="n">attach_tempos</span><span class="p">:</span>
                 <span class="n">attachment_target</span> <span class="o">=</span> <span class="n">components</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
                 <span class="n">leaves</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">select</span><span class="o">.</span><span class="n">leaves</span><span class="p">(</span><span class="n">attachment_target</span><span class="p">)</span>
@@ -457,19 +460,15 @@
                     <span class="n">attachment_target</span> <span class="o">=</span> <span class="n">leaves</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
                 <span class="n">tempo</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">beat_two</span><span class="o">.</span><span class="n">tempo</span><span class="p">)</span>
                 <span class="n">abjad</span><span class="o">.</span><span class="n">attach</span><span class="p">(</span><span class="n">tempo</span><span class="p">,</span> <span class="n">attachment_target</span><span class="p">)</span>
-            <span class="n">voice</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">components</span><span class="p">)</span>
-
         <span class="c1"># apply logical ties, pitches, grace containers</span>
         <span class="n">q_events_attachments</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_notate_leaves</span><span class="p">(</span>
             <span class="n">grace_handler</span><span class="o">=</span><span class="n">grace_handler</span><span class="p">,</span> <span class="n">voice</span><span class="o">=</span><span class="n">voice</span>
         <span class="p">)</span>
-
         <span class="c1"># partition logical ties in voice</span>
         <span class="n">attack_point_optimizer</span><span class="p">(</span><span class="n">voice</span><span class="p">)</span>
-
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">grace_handler</span><span class="p">,</span> <span class="n">ConcatenatingGraceHandler</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_attach_attachments_to_logical_ties</span><span class="p">(</span><span class="n">voice</span><span class="p">,</span> <span class="n">q_events_attachments</span><span class="p">)</span>
-
+        <span class="n">temporary_score</span><span class="p">[:]</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">return</span> <span class="n">voice</span>
 
     <span class="c1">### PUBLIC PROPERTIES ###</span>
@@ -516,6 +515,9 @@
         <span class="n">attach_tempos</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Voice</span><span class="p">:</span>
         <span class="n">voice</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Voice</span><span class="p">()</span>
+        <span class="n">temporary_score</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Score</span><span class="p">(</span>
+            <span class="p">[</span><span class="n">voice</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;TemporaryScore&quot;</span><span class="p">,</span> <span class="n">simultaneous</span><span class="o">=</span><span class="kc">False</span>
+        <span class="p">)</span>
         <span class="c1"># generate the first</span>
         <span class="n">q_target_measure</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_items</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
         <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">q_target_measure</span><span class="p">,</span> <span class="n">QTargetMeasure</span><span class="p">)</span>
@@ -523,19 +525,18 @@
         <span class="n">measure</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Container</span><span class="p">()</span>
         <span class="k">for</span> <span class="n">beat</span> <span class="ow">in</span> <span class="n">q_target_measure</span><span class="o">.</span><span class="n">beats</span><span class="p">:</span>
             <span class="n">measure</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">beat</span><span class="o">.</span><span class="n">q_grid</span><span class="p">(</span><span class="n">beat</span><span class="o">.</span><span class="n">beatspan</span><span class="p">))</span>
-        <span class="n">score</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Score</span><span class="p">([</span><span class="n">measure</span><span class="p">],</span> <span class="n">simultaneous</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="n">voice</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">measure</span><span class="p">)</span>
         <span class="n">leaf</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">get</span><span class="o">.</span><span class="n">leaf</span><span class="p">(</span><span class="n">measure</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
         <span class="n">abjad</span><span class="o">.</span><span class="n">attach</span><span class="p">(</span><span class="n">time_signature</span><span class="p">,</span> <span class="n">leaf</span><span class="p">)</span>
-        <span class="n">score</span><span class="p">[:]</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">if</span> <span class="n">attach_tempos</span><span class="p">:</span>
             <span class="n">tempo</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">q_target_measure</span><span class="o">.</span><span class="n">tempo</span><span class="p">)</span>
             <span class="n">leaf</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">get</span><span class="o">.</span><span class="n">leaf</span><span class="p">(</span><span class="n">measure</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
             <span class="n">abjad</span><span class="o">.</span><span class="n">attach</span><span class="p">(</span><span class="n">tempo</span><span class="p">,</span> <span class="n">leaf</span><span class="p">)</span>
-        <span class="n">voice</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">measure</span><span class="p">)</span>
         <span class="c1"># generate the rest pairwise, comparing tempi</span>
         <span class="n">pairs</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">sequence</span><span class="o">.</span><span class="n">nwise</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">q_target_measure_one</span><span class="p">,</span> <span class="n">q_target_measure_two</span> <span class="ow">in</span> <span class="n">pairs</span><span class="p">:</span>
             <span class="n">measure</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Container</span><span class="p">()</span>
+            <span class="n">voice</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">measure</span><span class="p">)</span>
             <span class="k">for</span> <span class="n">beat</span> <span class="ow">in</span> <span class="n">q_target_measure_two</span><span class="o">.</span><span class="n">beats</span><span class="p">:</span>
                 <span class="n">measure</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">beat</span><span class="o">.</span><span class="n">q_grid</span><span class="p">(</span><span class="n">beat</span><span class="o">.</span><span class="n">beatspan</span><span class="p">))</span>
             <span class="k">if</span> <span class="p">(</span>
@@ -544,24 +545,18 @@
             <span class="p">):</span>
                 <span class="n">time_signature</span> <span class="o">=</span> <span class="n">q_target_measure_two</span><span class="o">.</span><span class="n">time_signature</span>
                 <span class="n">leaf</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">get</span><span class="o">.</span><span class="n">leaf</span><span class="p">(</span><span class="n">measure</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-                <span class="n">root</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">get</span><span class="o">.</span><span class="n">parentage</span><span class="p">(</span><span class="n">leaf</span><span class="p">)</span><span class="o">.</span><span class="n">root</span>
-                <span class="n">score</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Score</span><span class="p">([</span><span class="n">root</span><span class="p">],</span> <span class="n">simultaneous</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
                 <span class="n">abjad</span><span class="o">.</span><span class="n">attach</span><span class="p">(</span><span class="n">time_signature</span><span class="p">,</span> <span class="n">leaf</span><span class="p">)</span>
-                <span class="n">score</span><span class="p">[:]</span> <span class="o">=</span> <span class="p">[]</span>
             <span class="k">if</span> <span class="p">(</span>
                 <span class="n">q_target_measure_two</span><span class="o">.</span><span class="n">tempo</span> <span class="o">!=</span> <span class="n">q_target_measure_one</span><span class="o">.</span><span class="n">tempo</span>
             <span class="p">)</span> <span class="ow">and</span> <span class="n">attach_tempos</span><span class="p">:</span>
                 <span class="n">tempo</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">q_target_measure_two</span><span class="o">.</span><span class="n">tempo</span><span class="p">)</span>
                 <span class="n">leaf</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">get</span><span class="o">.</span><span class="n">leaf</span><span class="p">(</span><span class="n">measure</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
                 <span class="n">abjad</span><span class="o">.</span><span class="n">attach</span><span class="p">(</span><span class="n">tempo</span><span class="p">,</span> <span class="n">leaf</span><span class="p">)</span>
-            <span class="n">voice</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">measure</span><span class="p">)</span>
         <span class="c1"># apply logical ties, pitches, grace containers</span>
         <span class="n">q_events_attachments</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_notate_leaves</span><span class="p">(</span>
             <span class="n">grace_handler</span><span class="o">=</span><span class="n">grace_handler</span><span class="p">,</span> <span class="n">voice</span><span class="o">=</span><span class="n">voice</span>
         <span class="p">)</span>
         <span class="c1"># partition logical ties in each measure</span>
-        <span class="n">root</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">get</span><span class="o">.</span><span class="n">parentage</span><span class="p">(</span><span class="n">voice</span><span class="p">)</span><span class="o">.</span><span class="n">root</span>
-        <span class="n">score</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Score</span><span class="p">([</span><span class="n">root</span><span class="p">],</span> <span class="n">simultaneous</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">measure</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">voice</span><span class="p">):</span>
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">attack_point_optimizer</span><span class="p">,</span> <span class="n">MeasurewiseAttackPointOptimizer</span><span class="p">):</span>
                 <span class="c1"># then we need to pass the time signature of each measure</span>
@@ -570,7 +565,7 @@
                 <span class="n">attack_point_optimizer</span><span class="p">(</span><span class="n">measure</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">grace_handler</span><span class="p">,</span> <span class="n">ConcatenatingGraceHandler</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_attach_attachments_to_logical_ties</span><span class="p">(</span><span class="n">voice</span><span class="p">,</span> <span class="n">q_events_attachments</span><span class="p">)</span>
-        <span class="n">score</span><span class="p">[:]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">temporary_score</span><span class="p">[:]</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">return</span> <span class="n">voice</span>
 
     <span class="c1">### PUBLIC PROPERTIES ###</span>

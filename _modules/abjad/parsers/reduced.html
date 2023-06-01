@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>abjad.parsers.reduced &mdash; Abjad 3.17 documentation</title>
+  <title>abjad.parsers.reduced &mdash; Abjad 3.18 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/abjad.css" type="text/css" />
@@ -34,11 +34,11 @@
   <div class="wy-grid-for-nav">
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search"  style="background: #bb6611" >
+        <div class="wy-side-nav-search"  style="background: #cc8844" >
 
 
     <a href="../../../index.html" class="icon icon-home" alt="Documentation
-    Home"> Abjad 3.17
+    Home"> Abjad 3.18
 
 
 
@@ -111,7 +111,7 @@
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #bb6611" >
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #cc8844" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../../index.html">Abjad</a>
       </nav>
@@ -521,7 +521,7 @@
         <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
         <span class="k">if</span> <span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">]:</span>
             <span class="n">annotation</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;post events&quot;</span><span class="p">:</span> <span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">]}</span>
-            <span class="n">_bind</span><span class="o">.</span><span class="n">attach</span><span class="p">(</span><span class="n">annotation</span><span class="p">,</span> <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span></div>
+            <span class="n">_bind</span><span class="o">.</span><span class="n">_unsafe_attach</span><span class="p">(</span><span class="n">annotation</span><span class="p">,</span> <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span></div>
 
 <div class="viewcode-block" id="ReducedLyParser.p_leaf_body__chord_body"><a class="viewcode-back" href="../../../api/abjad/parsers/reduced.html#abjad.parsers.reduced.ReducedLyParser.p_leaf_body__chord_body">[docs]</a>    <span class="k">def</span> <span class="nf">p_leaf_body__chord_body</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -551,10 +551,10 @@
         <span class="n">leaf</span> <span class="o">=</span> <span class="n">_iterlib</span><span class="o">.</span><span class="n">_get_leaf</span><span class="p">(</span><span class="n">measure</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
         <span class="n">time_signature</span> <span class="o">=</span> <span class="n">_indicators</span><span class="o">.</span><span class="n">TimeSignature</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="n">_bind</span><span class="o">.</span><span class="n">attach</span><span class="p">(</span><span class="n">time_signature</span><span class="p">,</span> <span class="n">leaf</span><span class="p">)</span>
+            <span class="n">_bind</span><span class="o">.</span><span class="n">_unsafe_attach</span><span class="p">(</span><span class="n">time_signature</span><span class="p">,</span> <span class="n">leaf</span><span class="p">)</span>
         <span class="k">except</span> <span class="n">_exceptions</span><span class="o">.</span><span class="n">MissingContextError</span><span class="p">:</span>
             <span class="n">score</span> <span class="o">=</span> <span class="n">_score</span><span class="o">.</span><span class="n">Score</span><span class="p">([</span><span class="n">measure</span><span class="p">])</span>
-            <span class="n">_bind</span><span class="o">.</span><span class="n">attach</span><span class="p">(</span><span class="n">time_signature</span><span class="p">,</span> <span class="n">leaf</span><span class="p">)</span>
+            <span class="n">_bind</span><span class="o">.</span><span class="n">_unsafe_attach</span><span class="p">(</span><span class="n">time_signature</span><span class="p">,</span> <span class="n">leaf</span><span class="p">)</span>
             <span class="n">score</span><span class="p">[:]</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">measure</span></div>
 
@@ -741,18 +741,18 @@
                     <span class="n">_indicators</span><span class="o">.</span><span class="n">StopSlur</span><span class="p">,</span>
                 <span class="p">):</span>
                     <span class="n">indicator</span> <span class="o">=</span> <span class="n">current_class</span><span class="p">()</span>
-                    <span class="n">_bind</span><span class="o">.</span><span class="n">attach</span><span class="p">(</span><span class="n">indicator</span><span class="p">,</span> <span class="n">leaf</span><span class="p">)</span>
+                    <span class="n">_bind</span><span class="o">.</span><span class="n">_unsafe_attach</span><span class="p">(</span><span class="n">indicator</span><span class="p">,</span> <span class="n">leaf</span><span class="p">)</span>
                     <span class="k">continue</span>
                 <span class="k">if</span> <span class="n">current_class</span> <span class="ow">in</span> <span class="p">(</span>
                     <span class="n">_indicators</span><span class="o">.</span><span class="n">StartBeam</span><span class="p">,</span>
                     <span class="n">_indicators</span><span class="o">.</span><span class="n">StopBeam</span><span class="p">,</span>
                 <span class="p">):</span>
                     <span class="n">indicator</span> <span class="o">=</span> <span class="n">current_class</span><span class="p">()</span>
-                    <span class="n">_bind</span><span class="o">.</span><span class="n">attach</span><span class="p">(</span><span class="n">indicator</span><span class="p">,</span> <span class="n">leaf</span><span class="p">)</span>
+                    <span class="n">_bind</span><span class="o">.</span><span class="n">_unsafe_attach</span><span class="p">(</span><span class="n">indicator</span><span class="p">,</span> <span class="n">leaf</span><span class="p">)</span>
                     <span class="k">continue</span>
                 <span class="k">if</span> <span class="n">current_class</span> <span class="ow">is</span> <span class="n">_indicators</span><span class="o">.</span><span class="n">Tie</span><span class="p">:</span>
                     <span class="n">indicator</span> <span class="o">=</span> <span class="n">current_class</span><span class="p">()</span>
-                    <span class="n">_bind</span><span class="o">.</span><span class="n">attach</span><span class="p">(</span><span class="n">indicator</span><span class="p">,</span> <span class="n">leaf</span><span class="p">)</span>
+                    <span class="n">_bind</span><span class="o">.</span><span class="n">_unsafe_attach</span><span class="p">(</span><span class="n">indicator</span><span class="p">,</span> <span class="n">leaf</span><span class="p">)</span>
                     <span class="k">continue</span>
 
     <span class="k">def</span> <span class="nf">_cleanup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parsed</span><span class="p">):</span>

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>abjadext.rmakers.functions &mdash; Abjad 3.17 documentation</title>
+  <title>abjadext.rmakers.functions &mdash; Abjad 3.18 documentation</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/abjad.css" type="text/css" />
@@ -34,11 +34,11 @@
   <div class="wy-grid-for-nav">
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search"  style="background: #bb6611" >
+        <div class="wy-side-nav-search"  style="background: #cc8844" >
 
 
     <a href="../../../index.html" class="icon icon-home" alt="Documentation
-    Home"> Abjad 3.17
+    Home"> Abjad 3.18
 
 
 
@@ -111,7 +111,7 @@
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #bb6611" >
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #cc8844" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../../index.html">Abjad</a>
       </nav>
@@ -405,13 +405,11 @@
 <span class="sd">        ...     time_signatures = rmakers.time_signatures(pairs)</span>
 <span class="sd">        ...     durations = [abjad.Duration(_) for _ in time_signatures]</span>
 <span class="sd">        ...     tuplets = rmakers.even_division(durations, [4], extra_counts=[2])</span>
-<span class="sd">        ...     container = abjad.Container(tuplets)</span>
-<span class="sd">        ...     tuplets = abjad.select.tuplets(container)</span>
+<span class="sd">        ...     lilypond_file = rmakers.example(tuplets, time_signatures)</span>
+<span class="sd">        ...     voice = lilypond_file[&quot;Voice&quot;]</span>
 <span class="sd">        ...     notes = [abjad.select.note(_, -1) for _ in tuplets]</span>
 <span class="sd">        ...     rmakers.after_grace_container(notes, [1, 4], beam=beam, slash=slash)</span>
-<span class="sd">        ...     rmakers.extract_trivial(container)</span>
-<span class="sd">        ...     components = abjad.mutate.eject_contents(container)</span>
-<span class="sd">        ...     lilypond_file = rmakers.example(components, time_signatures)</span>
+<span class="sd">        ...     rmakers.extract_trivial(voice)</span>
 <span class="sd">        ...     score = lilypond_file[&quot;Score&quot;]</span>
 <span class="sd">        ...     abjad.setting(score).autoBeaming = False</span>
 <span class="sd">        ...     return lilypond_file</span>
@@ -434,7 +432,7 @@
 <span class="sd">            {</span>
 <span class="sd">                autoBeaming = ##f</span>
 <span class="sd">            }</span>
-<span class="sd">            &lt;&lt;</span>
+<span class="sd">            {</span>
 <span class="sd">                \context RhythmicStaff = &quot;Staff&quot;</span>
 <span class="sd">                \with</span>
 <span class="sd">                {</span>
@@ -475,7 +473,7 @@
 <span class="sd">                        }</span>
 <span class="sd">                    }</span>
 <span class="sd">                }</span>
-<span class="sd">            &gt;&gt;</span>
+<span class="sd">            }</span>
 
 <span class="sd">    ..  container:: example</span>
 
@@ -497,7 +495,7 @@
 <span class="sd">            {</span>
 <span class="sd">                autoBeaming = ##f</span>
 <span class="sd">            }</span>
-<span class="sd">            &lt;&lt;</span>
+<span class="sd">            {</span>
 <span class="sd">                \context RhythmicStaff = &quot;Staff&quot;</span>
 <span class="sd">                \with</span>
 <span class="sd">                {</span>
@@ -541,7 +539,7 @@
 <span class="sd">                        }</span>
 <span class="sd">                    }</span>
 <span class="sd">                }</span>
-<span class="sd">            &gt;&gt;</span>
+<span class="sd">            }</span>
 
 <span class="sd">        When ``slash=True`` then ``beam`` must also be true.</span>
 
@@ -562,14 +560,32 @@
         <span class="n">stop</span> <span class="o">=</span> <span class="n">start</span> <span class="o">+</span> <span class="n">count</span>
         <span class="n">durations</span> <span class="o">=</span> <span class="n">talea</span><span class="p">[</span><span class="n">start</span><span class="p">:</span><span class="n">stop</span><span class="p">]</span>
         <span class="n">notes</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">makers</span><span class="o">.</span><span class="n">make_leaves</span><span class="p">([</span><span class="mi">0</span><span class="p">],</span> <span class="n">durations</span><span class="p">)</span>
+        <span class="n">container</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">AfterGraceContainer</span><span class="p">(</span><span class="n">notes</span><span class="p">)</span>
+        <span class="n">abjad</span><span class="o">.</span><span class="n">attach</span><span class="p">(</span><span class="n">container</span><span class="p">,</span> <span class="n">leaf</span><span class="p">)</span>
         <span class="k">if</span> <span class="mi">1</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">notes</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">beam</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
                 <span class="n">abjad</span><span class="o">.</span><span class="n">beam</span><span class="p">(</span><span class="n">notes</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">slash</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
                 <span class="n">literal</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">LilyPondLiteral</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\slash&quot;</span><span class="p">,</span> <span class="n">site</span><span class="o">=</span><span class="s2">&quot;before&quot;</span><span class="p">)</span>
-                <span class="n">abjad</span><span class="o">.</span><span class="n">attach</span><span class="p">(</span><span class="n">literal</span><span class="p">,</span> <span class="n">notes</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-        <span class="n">container</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">AfterGraceContainer</span><span class="p">(</span><span class="n">notes</span><span class="p">)</span>
-        <span class="n">abjad</span><span class="o">.</span><span class="n">attach</span><span class="p">(</span><span class="n">container</span><span class="p">,</span> <span class="n">leaf</span><span class="p">)</span></div>
+                <span class="n">abjad</span><span class="o">.</span><span class="n">attach</span><span class="p">(</span><span class="n">literal</span><span class="p">,</span> <span class="n">notes</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span></div>
+
+
+<div class="viewcode-block" id="attach_time_signatures"><a class="viewcode-back" href="../../../api/abjadext/rmakers/functions.html#abjadext.rmakers.functions.attach_time_signatures">[docs]</a><span class="k">def</span> <span class="nf">attach_time_signatures</span><span class="p">(</span>
+    <span class="n">voice</span><span class="p">:</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Voice</span><span class="p">,</span>
+    <span class="n">time_signatures</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">abjad</span><span class="o">.</span><span class="n">TimeSignature</span><span class="p">],</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">leaves</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">select</span><span class="o">.</span><span class="n">leaves</span><span class="p">(</span><span class="n">voice</span><span class="p">,</span> <span class="n">grace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">durations</span> <span class="o">=</span> <span class="p">[</span><span class="n">_</span><span class="o">.</span><span class="n">duration</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">time_signatures</span><span class="p">]</span>
+    <span class="n">parts</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">select</span><span class="o">.</span><span class="n">partition_by_durations</span><span class="p">(</span><span class="n">leaves</span><span class="p">,</span> <span class="n">durations</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">parts</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">time_signatures</span><span class="p">)</span>
+    <span class="n">previous_time_signature</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">for</span> <span class="n">time_signature</span><span class="p">,</span> <span class="n">part</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">time_signatures</span><span class="p">,</span> <span class="n">parts</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">time_signature</span><span class="p">,</span> <span class="n">abjad</span><span class="o">.</span><span class="n">TimeSignature</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">time_signature</span> <span class="o">!=</span> <span class="n">previous_time_signature</span><span class="p">:</span>
+            <span class="n">leaf</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">select</span><span class="o">.</span><span class="n">leaf</span><span class="p">(</span><span class="n">part</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="n">abjad</span><span class="o">.</span><span class="n">detach</span><span class="p">(</span><span class="n">abjad</span><span class="o">.</span><span class="n">TimeSignature</span><span class="p">,</span> <span class="n">leaf</span><span class="p">)</span>
+            <span class="n">abjad</span><span class="o">.</span><span class="n">attach</span><span class="p">(</span><span class="n">time_signature</span><span class="p">,</span> <span class="n">leaf</span><span class="p">)</span>
+        <span class="n">previous_time_signature</span> <span class="o">=</span> <span class="n">time_signature</span></div>
 
 
 <div class="viewcode-block" id="beam"><a class="viewcode-back" href="../../../api/abjadext/rmakers/functions.html#abjadext.rmakers.functions.beam">[docs]</a><span class="k">def</span> <span class="nf">beam</span><span class="p">(</span>
@@ -589,13 +605,12 @@
 <span class="sd">        ...     time_signatures = rmakers.time_signatures(pairs)</span>
 <span class="sd">        ...     durations = [abjad.Duration(_) for _ in time_signatures]</span>
 <span class="sd">        ...     tuplets = rmakers.talea(durations, [1, 1, 1, -1], 16)</span>
-<span class="sd">        ...     container = abjad.Container(tuplets)</span>
+<span class="sd">        ...     lilypond_file = rmakers.example(tuplets, time_signatures)</span>
+<span class="sd">        ...     voice = lilypond_file[&quot;Voice&quot;]</span>
 <span class="sd">        ...     rmakers.beam(</span>
-<span class="sd">        ...         container, beam_rests=beam_rests, stemlet_length=stemlet_length</span>
+<span class="sd">        ...         voice, beam_rests=beam_rests, stemlet_length=stemlet_length</span>
 <span class="sd">        ...     )</span>
-<span class="sd">        ...     rmakers.swap_trivial(container)</span>
-<span class="sd">        ...     components = abjad.mutate.eject_contents(container)</span>
-<span class="sd">        ...     lilypond_file = rmakers.example(components, time_signatures)</span>
+<span class="sd">        ...     rmakers.swap_trivial(voice)</span>
 <span class="sd">        ...     score = lilypond_file[&quot;Score&quot;]</span>
 <span class="sd">        ...     abjad.setting(score).autoBeaming = False</span>
 <span class="sd">        ...     return lilypond_file</span>
@@ -618,7 +633,7 @@
 <span class="sd">            {</span>
 <span class="sd">                autoBeaming = ##f</span>
 <span class="sd">            }</span>
-<span class="sd">            &lt;&lt;</span>
+<span class="sd">            {</span>
 <span class="sd">                \context RhythmicStaff = &quot;Staff&quot;</span>
 <span class="sd">                \with</span>
 <span class="sd">                {</span>
@@ -683,7 +698,7 @@
 <span class="sd">                        }</span>
 <span class="sd">                    }</span>
 <span class="sd">                }</span>
-<span class="sd">            &gt;&gt;</span>
+<span class="sd">            }</span>
 
 <span class="sd">    ..  container:: example</span>
 
@@ -706,7 +721,7 @@
 <span class="sd">            {</span>
 <span class="sd">                autoBeaming = ##f</span>
 <span class="sd">            }</span>
-<span class="sd">            &lt;&lt;</span>
+<span class="sd">            {</span>
 <span class="sd">                \context RhythmicStaff = &quot;Staff&quot;</span>
 <span class="sd">                \with</span>
 <span class="sd">                {</span>
@@ -716,7 +731,7 @@
 <span class="sd">                    \context Voice = &quot;Voice&quot;</span>
 <span class="sd">                    {</span>
 <span class="sd">                        {</span>
-<span class="sd">                            \override Staff.Stem.stemlet-length = 0.75</span>
+<span class="sd">                            \override RhythmicStaff.Stem.stemlet-length = 0.75</span>
 <span class="sd">                            \time 3/8</span>
 <span class="sd">                            c&#39;16</span>
 <span class="sd">                            [</span>
@@ -726,10 +741,10 @@
 <span class="sd">                            c&#39;16</span>
 <span class="sd">                            c&#39;16</span>
 <span class="sd">                            ]</span>
-<span class="sd">                            \revert Staff.Stem.stemlet-length</span>
+<span class="sd">                            \revert RhythmicStaff.Stem.stemlet-length</span>
 <span class="sd">                        }</span>
 <span class="sd">                        {</span>
-<span class="sd">                            \override Staff.Stem.stemlet-length = 0.75</span>
+<span class="sd">                            \override RhythmicStaff.Stem.stemlet-length = 0.75</span>
 <span class="sd">                            \time 4/8</span>
 <span class="sd">                            c&#39;16</span>
 <span class="sd">                            [</span>
@@ -741,10 +756,10 @@
 <span class="sd">                            c&#39;16</span>
 <span class="sd">                            c&#39;16</span>
 <span class="sd">                            ]</span>
-<span class="sd">                            \revert Staff.Stem.stemlet-length</span>
+<span class="sd">                            \revert RhythmicStaff.Stem.stemlet-length</span>
 <span class="sd">                        }</span>
 <span class="sd">                        {</span>
-<span class="sd">                            \override Staff.Stem.stemlet-length = 0.75</span>
+<span class="sd">                            \override RhythmicStaff.Stem.stemlet-length = 0.75</span>
 <span class="sd">                            \time 3/8</span>
 <span class="sd">                            c&#39;16</span>
 <span class="sd">                            [</span>
@@ -754,10 +769,10 @@
 <span class="sd">                            c&#39;16</span>
 <span class="sd">                            r16</span>
 <span class="sd">                            ]</span>
-<span class="sd">                            \revert Staff.Stem.stemlet-length</span>
+<span class="sd">                            \revert RhythmicStaff.Stem.stemlet-length</span>
 <span class="sd">                        }</span>
 <span class="sd">                        {</span>
-<span class="sd">                            \override Staff.Stem.stemlet-length = 0.75</span>
+<span class="sd">                            \override RhythmicStaff.Stem.stemlet-length = 0.75</span>
 <span class="sd">                            \time 4/8</span>
 <span class="sd">                            c&#39;16</span>
 <span class="sd">                            [</span>
@@ -769,11 +784,11 @@
 <span class="sd">                            c&#39;16</span>
 <span class="sd">                            r16</span>
 <span class="sd">                            ]</span>
-<span class="sd">                            \revert Staff.Stem.stemlet-length</span>
+<span class="sd">                            \revert RhythmicStaff.Stem.stemlet-length</span>
 <span class="sd">                        }</span>
 <span class="sd">                    }</span>
 <span class="sd">                }</span>
-<span class="sd">            &gt;&gt;</span>
+<span class="sd">            }</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">tag</span> <span class="o">=</span> <span class="n">tag</span> <span class="ow">or</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Tag</span><span class="p">()</span>
@@ -807,11 +822,10 @@
 <span class="sd">        ...     time_signatures = rmakers.time_signatures(pairs)</span>
 <span class="sd">        ...     durations = [abjad.Duration(_) for _ in time_signatures]</span>
 <span class="sd">        ...     tuplets = rmakers.talea(durations, [1], 16)</span>
-<span class="sd">        ...     container = abjad.Container(tuplets)</span>
+<span class="sd">        ...     lilypond_file = rmakers.example(tuplets, time_signatures)</span>
+<span class="sd">        ...     voice = lilypond_file[&quot;Voice&quot;]</span>
 <span class="sd">        ...     rmakers.beam_groups(tuplets)</span>
-<span class="sd">        ...     rmakers.swap_trivial(container)</span>
-<span class="sd">        ...     components = abjad.mutate.eject_contents(container)</span>
-<span class="sd">        ...     lilypond_file = rmakers.example(components, time_signatures)</span>
+<span class="sd">        ...     rmakers.swap_trivial(voice)</span>
 <span class="sd">        ...     return lilypond_file</span>
 
 <span class="sd">        &gt;&gt;&gt; pairs = [(3, 8), (4, 8), (3, 8), (4, 8)]</span>
@@ -824,7 +838,7 @@
 <span class="sd">            &gt;&gt;&gt; string = abjad.lilypond(score)</span>
 <span class="sd">            &gt;&gt;&gt; print(string)</span>
 <span class="sd">            \context Score = &quot;Score&quot;</span>
-<span class="sd">            &lt;&lt;</span>
+<span class="sd">            {</span>
 <span class="sd">                \context RhythmicStaff = &quot;Staff&quot;</span>
 <span class="sd">                \with</span>
 <span class="sd">                {</span>
@@ -933,7 +947,7 @@
 <span class="sd">                        }</span>
 <span class="sd">                    }</span>
 <span class="sd">                }</span>
-<span class="sd">            &gt;&gt;</span>
+<span class="sd">            }</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">tag</span> <span class="o">=</span> <span class="n">tag</span> <span class="ow">or</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Tag</span><span class="p">()</span>
@@ -998,7 +1012,7 @@
 <span class="sd">            {</span>
 <span class="sd">                autoBeaming = ##f</span>
 <span class="sd">            }</span>
-<span class="sd">            &lt;&lt;</span>
+<span class="sd">            {</span>
 <span class="sd">                \context RhythmicStaff = &quot;Staff&quot;</span>
 <span class="sd">                \with</span>
 <span class="sd">                {</span>
@@ -1031,7 +1045,7 @@
 <span class="sd">                        }</span>
 <span class="sd">                    }</span>
 <span class="sd">                }</span>
-<span class="sd">            &gt;&gt;</span>
+<span class="sd">            }</span>
 
 <span class="sd">    ..  container:: example</span>
 
@@ -1067,7 +1081,7 @@
 <span class="sd">            {</span>
 <span class="sd">                autoBeaming = ##f</span>
 <span class="sd">            }</span>
-<span class="sd">            &lt;&lt;</span>
+<span class="sd">            {</span>
 <span class="sd">                \context RhythmicStaff = &quot;Staff&quot;</span>
 <span class="sd">                \with</span>
 <span class="sd">                {</span>
@@ -1100,7 +1114,7 @@
 <span class="sd">                        }</span>
 <span class="sd">                    }</span>
 <span class="sd">                }</span>
-<span class="sd">            &gt;&gt;</span>
+<span class="sd">            }</span>
 
 <span class="sd">    ..  container:: example</span>
 
@@ -1110,14 +1124,12 @@
 <span class="sd">        ...     time_signatures = rmakers.time_signatures(pairs)</span>
 <span class="sd">        ...     durations = [abjad.Duration(_) for _ in time_signatures]</span>
 <span class="sd">        ...     tuplets = rmakers.even_division(durations, [4], extra_counts=[2])</span>
-<span class="sd">        ...     container = abjad.Container(tuplets)</span>
-<span class="sd">        ...     tuplets = abjad.select.tuplets(container)</span>
+<span class="sd">        ...     lilypond_file = rmakers.example(tuplets, time_signatures)</span>
+<span class="sd">        ...     voice = lilypond_file[&quot;Voice&quot;]</span>
 <span class="sd">        ...     notes = [abjad.select.notes(_) for _ in tuplets]</span>
 <span class="sd">        ...     notes = [abjad.select.exclude(_, [0, -1]) for _ in notes]</span>
 <span class="sd">        ...     rmakers.before_grace_container(notes, [1, 2, 3], beam=True)</span>
-<span class="sd">        ...     rmakers.extract_trivial(container)</span>
-<span class="sd">        ...     components = abjad.mutate.eject_contents(container)</span>
-<span class="sd">        ...     lilypond_file = rmakers.example(components, time_signatures)</span>
+<span class="sd">        ...     rmakers.extract_trivial(voice)</span>
 <span class="sd">        ...     return lilypond_file</span>
 
 <span class="sd">        &gt;&gt;&gt; pairs = [(3, 4)]</span>
@@ -1136,7 +1148,7 @@
 <span class="sd">            {</span>
 <span class="sd">                autoBeaming = ##f</span>
 <span class="sd">            }</span>
-<span class="sd">            &lt;&lt;</span>
+<span class="sd">            {</span>
 <span class="sd">                \context RhythmicStaff = &quot;Staff&quot;</span>
 <span class="sd">                \with</span>
 <span class="sd">                {</span>
@@ -1173,7 +1185,7 @@
 <span class="sd">                        }</span>
 <span class="sd">                    }</span>
 <span class="sd">                }</span>
-<span class="sd">            &gt;&gt;</span>
+<span class="sd">            }</span>
 
 <span class="sd">    ..  container:: example</span>
 
@@ -1183,14 +1195,12 @@
 <span class="sd">        ...     time_signatures = rmakers.time_signatures(pairs)</span>
 <span class="sd">        ...     durations = [abjad.Duration(_) for _ in time_signatures]</span>
 <span class="sd">        ...     tuplets = rmakers.even_division(durations, [4], extra_counts=[2])</span>
-<span class="sd">        ...     container = abjad.Container(tuplets)</span>
-<span class="sd">        ...     tuplets = abjad.select.tuplets(container)</span>
+<span class="sd">        ...     lilypond_file = rmakers.example(tuplets, time_signatures)</span>
+<span class="sd">        ...     voice = lilypond_file[&quot;Voice&quot;]</span>
 <span class="sd">        ...     notes = [abjad.select.notes(_) for _ in tuplets]</span>
 <span class="sd">        ...     notes = [abjad.select.exclude(_, [0, -1]) for _ in notes]</span>
 <span class="sd">        ...     rmakers.before_grace_container(notes, [1, 2, 3], beam=True, slur=True)</span>
-<span class="sd">        ...     rmakers.extract_trivial(container)</span>
-<span class="sd">        ...     components = abjad.mutate.eject_contents(container)</span>
-<span class="sd">        ...     lilypond_file = rmakers.example(components, time_signatures)</span>
+<span class="sd">        ...     rmakers.extract_trivial(voice)</span>
 <span class="sd">        ...     return lilypond_file</span>
 
 <span class="sd">        &gt;&gt;&gt; pairs = [(3, 4)]</span>
@@ -1209,7 +1219,7 @@
 <span class="sd">            {</span>
 <span class="sd">                autoBeaming = ##f</span>
 <span class="sd">            }</span>
-<span class="sd">            &lt;&lt;</span>
+<span class="sd">            {</span>
 <span class="sd">                \context RhythmicStaff = &quot;Staff&quot;</span>
 <span class="sd">                \with</span>
 <span class="sd">                {</span>
@@ -1246,7 +1256,7 @@
 <span class="sd">                        }</span>
 <span class="sd">                    }</span>
 <span class="sd">                }</span>
-<span class="sd">            &gt;&gt;</span>
+<span class="sd">            }</span>
 
 <span class="sd">    ..  container:: example</span>
 
@@ -1256,14 +1266,12 @@
 <span class="sd">        ...     time_signatures = rmakers.time_signatures(pairs)</span>
 <span class="sd">        ...     durations = [abjad.Duration(_) for _ in time_signatures]</span>
 <span class="sd">        ...     tuplets = rmakers.even_division(durations, [4], extra_counts=[2])</span>
-<span class="sd">        ...     container = abjad.Container(tuplets)</span>
-<span class="sd">        ...     tuplets = abjad.select.tuplets(container)</span>
+<span class="sd">        ...     lilypond_file = rmakers.example(tuplets, time_signatures)</span>
+<span class="sd">        ...     voice = lilypond_file[&quot;Voice&quot;]</span>
 <span class="sd">        ...     notes = [abjad.select.notes(_) for _ in tuplets]</span>
 <span class="sd">        ...     notes = [abjad.select.exclude(_, [0, -1]) for _ in notes]</span>
 <span class="sd">        ...     rmakers.before_grace_container(notes, [1, 2, 3], beam=True, slash=True)</span>
-<span class="sd">        ...     rmakers.extract_trivial(container)</span>
-<span class="sd">        ...     components = abjad.mutate.eject_contents(container)</span>
-<span class="sd">        ...     lilypond_file = rmakers.example(components, time_signatures)</span>
+<span class="sd">        ...     rmakers.extract_trivial(voice)</span>
 <span class="sd">        ...     return lilypond_file</span>
 
 <span class="sd">        &gt;&gt;&gt; pairs = [(3, 4)]</span>
@@ -1282,7 +1290,7 @@
 <span class="sd">            {</span>
 <span class="sd">                autoBeaming = ##f</span>
 <span class="sd">            }</span>
-<span class="sd">            &lt;&lt;</span>
+<span class="sd">            {</span>
 <span class="sd">                \context RhythmicStaff = &quot;Staff&quot;</span>
 <span class="sd">                \with</span>
 <span class="sd">                {</span>
@@ -1321,7 +1329,7 @@
 <span class="sd">                        }</span>
 <span class="sd">                    }</span>
 <span class="sd">                }</span>
-<span class="sd">            &gt;&gt;</span>
+<span class="sd">            }</span>
 
 <span class="sd">        (When ``slash=True`` then ``beam`` must also be true.)</span>
 
@@ -1333,16 +1341,14 @@
 <span class="sd">        ...     time_signatures = rmakers.time_signatures(pairs)</span>
 <span class="sd">        ...     durations = [abjad.Duration(_) for _ in time_signatures]</span>
 <span class="sd">        ...     tuplets = rmakers.even_division(durations, [4], extra_counts=[2])</span>
-<span class="sd">        ...     container = abjad.Container(tuplets)</span>
-<span class="sd">        ...     tuplets = abjad.select.tuplets(container)</span>
+<span class="sd">        ...     lilypond_file = rmakers.example(tuplets, time_signatures)</span>
+<span class="sd">        ...     voice = lilypond_file[&quot;Voice&quot;]</span>
 <span class="sd">        ...     notes = [abjad.select.notes(_) for _ in tuplets]</span>
 <span class="sd">        ...     notes = [abjad.select.exclude(_, [0, -1]) for _ in notes]</span>
 <span class="sd">        ...     rmakers.before_grace_container(</span>
 <span class="sd">        ...         notes, [1, 2, 3], beam=True, slash=True, slur=True</span>
 <span class="sd">        ...     )</span>
-<span class="sd">        ...     rmakers.extract_trivial(container)</span>
-<span class="sd">        ...     components = abjad.mutate.eject_contents(container)</span>
-<span class="sd">        ...     lilypond_file = rmakers.example(components, time_signatures)</span>
+<span class="sd">        ...     rmakers.extract_trivial(voice)</span>
 <span class="sd">        ...     return lilypond_file</span>
 
 <span class="sd">        &gt;&gt;&gt; pairs = [(3, 4)]</span>
@@ -1361,7 +1367,7 @@
 <span class="sd">            {</span>
 <span class="sd">                autoBeaming = ##f</span>
 <span class="sd">            }</span>
-<span class="sd">            &lt;&lt;</span>
+<span class="sd">            {</span>
 <span class="sd">                \context RhythmicStaff = &quot;Staff&quot;</span>
 <span class="sd">                \with</span>
 <span class="sd">                {</span>
@@ -1400,7 +1406,7 @@
 <span class="sd">                        }</span>
 <span class="sd">                    }</span>
 <span class="sd">                }</span>
-<span class="sd">            &gt;&gt;</span>
+<span class="sd">            }</span>
 
 <span class="sd">        (When ``slash=True`` then ``beam`` must also be true.)</span>
 
@@ -1431,8 +1437,6 @@
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">Exception</span>
         <span class="k">elif</span> <span class="mi">1</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">notes</span><span class="p">):</span>
-            <span class="k">if</span> <span class="n">beam</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
-                <span class="n">abjad</span><span class="o">.</span><span class="n">beam</span><span class="p">(</span><span class="n">notes</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">slash</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
                 <span class="n">literal</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">LilyPondLiteral</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\slash&quot;</span><span class="p">,</span> <span class="n">site</span><span class="o">=</span><span class="s2">&quot;before&quot;</span><span class="p">)</span>
                 <span class="n">abjad</span><span class="o">.</span><span class="n">attach</span><span class="p">(</span><span class="n">literal</span><span class="p">,</span> <span class="n">notes</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
@@ -1447,7 +1451,10 @@
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">Exception</span>
         <span class="n">container</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">BeforeGraceContainer</span><span class="p">(</span><span class="n">notes</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="n">command</span><span class="p">)</span>
-        <span class="n">abjad</span><span class="o">.</span><span class="n">attach</span><span class="p">(</span><span class="n">container</span><span class="p">,</span> <span class="n">leaf</span><span class="p">)</span></div>
+        <span class="n">abjad</span><span class="o">.</span><span class="n">attach</span><span class="p">(</span><span class="n">container</span><span class="p">,</span> <span class="n">leaf</span><span class="p">)</span>
+        <span class="k">if</span> <span class="mi">1</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">notes</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">beam</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+                <span class="n">abjad</span><span class="o">.</span><span class="n">beam</span><span class="p">(</span><span class="n">notes</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="denominator"><a class="viewcode-back" href="../../../api/abjadext/rmakers/functions.html#abjadext.rmakers.functions.denominator">[docs]</a><span class="k">def</span> <span class="nf">denominator</span><span class="p">(</span><span class="n">argument</span><span class="p">,</span> <span class="n">denominator</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="n">abjad</span><span class="o">.</span><span class="n">typings</span><span class="o">.</span><span class="n">Duration</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
@@ -1460,15 +1467,13 @@
 <span class="sd">        ...     time_signatures = rmakers.time_signatures(pairs)</span>
 <span class="sd">        ...     durations = [abjad.Duration(_) for _ in time_signatures]</span>
 <span class="sd">        ...     tuplets = rmakers.tuplet(durations, [(1, 4)])</span>
-<span class="sd">        ...     container = abjad.Container(tuplets)</span>
-<span class="sd">        ...     tuplets = abjad.select.tuplets(container)</span>
-<span class="sd">        ...     rmakers.rewrite_dots(container)</span>
-<span class="sd">        ...     rmakers.beam(container)</span>
-<span class="sd">        ...     rmakers.force_fraction(container)</span>
+<span class="sd">        ...     lilypond_file = rmakers.example(tuplets, time_signatures)</span>
+<span class="sd">        ...     voice = lilypond_file[&quot;Voice&quot;]</span>
+<span class="sd">        ...     rmakers.rewrite_dots(voice)</span>
+<span class="sd">        ...     rmakers.beam(voice)</span>
+<span class="sd">        ...     rmakers.force_fraction(voice)</span>
 <span class="sd">        ...     if denominator is not None:</span>
-<span class="sd">        ...         rmakers.denominator(container, denominator)</span>
-<span class="sd">        ...     components = abjad.mutate.eject_contents(container)</span>
-<span class="sd">        ...     lilypond_file = rmakers.example(components, time_signatures)</span>
+<span class="sd">        ...         rmakers.denominator(voice, denominator)</span>
 <span class="sd">        ...     score = lilypond_file[&quot;Score&quot;]</span>
 <span class="sd">        ...     abjad.override(score).TupletBracket.bracket_visibility = True</span>
 <span class="sd">        ...     abjad.override(score).TupletBracket.staff_padding = 4.5</span>
@@ -1497,7 +1502,7 @@
 <span class="sd">                \override TupletBracket.staff-padding = 4.5</span>
 <span class="sd">                tupletFullLength = ##t</span>
 <span class="sd">            }</span>
-<span class="sd">            &lt;&lt;</span>
+<span class="sd">            {</span>
 <span class="sd">                \context RhythmicStaff = &quot;Staff&quot;</span>
 <span class="sd">                \with</span>
 <span class="sd">                {</span>
@@ -1538,7 +1543,7 @@
 <span class="sd">                        }</span>
 <span class="sd">                    }</span>
 <span class="sd">                }</span>
-<span class="sd">            &gt;&gt;</span>
+<span class="sd">            }</span>
 
 <span class="sd">    ..  container:: example</span>
 
@@ -1568,7 +1573,7 @@
 <span class="sd">                    \override TupletBracket.staff-padding = 4.5</span>
 <span class="sd">                    tupletFullLength = ##t</span>
 <span class="sd">                }</span>
-<span class="sd">                &lt;&lt;</span>
+<span class="sd">                {</span>
 <span class="sd">                    \context RhythmicStaff = &quot;Staff&quot;</span>
 <span class="sd">                    \with</span>
 <span class="sd">                    {</span>
@@ -1609,7 +1614,7 @@
 <span class="sd">                            }</span>
 <span class="sd">                        }</span>
 <span class="sd">                    }</span>
-<span class="sd">                &gt;&gt;</span>
+<span class="sd">                }</span>
 
 <span class="sd">        ..  container:: example</span>
 
@@ -1633,7 +1638,7 @@
 <span class="sd">                    \override TupletBracket.staff-padding = 4.5</span>
 <span class="sd">                    tupletFullLength = ##t</span>
 <span class="sd">                }</span>
-<span class="sd">                &lt;&lt;</span>
+<span class="sd">                {</span>
 <span class="sd">                    \context RhythmicStaff = &quot;Staff&quot;</span>
 <span class="sd">                    \with</span>
 <span class="sd">                    {</span>
@@ -1674,7 +1679,7 @@
 <span class="sd">                            }</span>
 <span class="sd">                        }</span>
 <span class="sd">                    }</span>
-<span class="sd">                &gt;&gt;</span>
+<span class="sd">                }</span>
 
 <span class="sd">        ..  container:: example</span>
 
@@ -1697,7 +1702,7 @@
 <span class="sd">                    \override TupletBracket.staff-padding = 4.5</span>
 <span class="sd">                    tupletFullLength = ##t</span>
 <span class="sd">                }</span>
-<span class="sd">                &lt;&lt;</span>
+<span class="sd">                {</span>
 <span class="sd">                    \context RhythmicStaff = &quot;Staff&quot;</span>
 <span class="sd">                    \with</span>
 <span class="sd">                    {</span>
@@ -1738,7 +1743,7 @@
 <span class="sd">                            }</span>
 <span class="sd">                        }</span>
 <span class="sd">                    }</span>
-<span class="sd">                &gt;&gt;</span>
+<span class="sd">                }</span>
 
 <span class="sd">    ..  container:: example</span>
 
@@ -1765,7 +1770,7 @@
 <span class="sd">                    \override TupletBracket.staff-padding = 4.5</span>
 <span class="sd">                    tupletFullLength = ##t</span>
 <span class="sd">                }</span>
-<span class="sd">                &lt;&lt;</span>
+<span class="sd">                {</span>
 <span class="sd">                    \context RhythmicStaff = &quot;Staff&quot;</span>
 <span class="sd">                    \with</span>
 <span class="sd">                    {</span>
@@ -1806,7 +1811,7 @@
 <span class="sd">                            }</span>
 <span class="sd">                        }</span>
 <span class="sd">                    }</span>
-<span class="sd">                &gt;&gt;</span>
+<span class="sd">                }</span>
 
 <span class="sd">        ..  container:: example</span>
 
@@ -1828,7 +1833,7 @@
 <span class="sd">                    \override TupletBracket.staff-padding = 4.5</span>
 <span class="sd">                    tupletFullLength = ##t</span>
 <span class="sd">                }</span>
-<span class="sd">                &lt;&lt;</span>
+<span class="sd">                {</span>
 <span class="sd">                    \context RhythmicStaff = &quot;Staff&quot;</span>
 <span class="sd">                    \with</span>
 <span class="sd">                    {</span>
@@ -1869,7 +1874,7 @@
 <span class="sd">                            }</span>
 <span class="sd">                        }</span>
 <span class="sd">                    }</span>
-<span class="sd">                &gt;&gt;</span>
+<span class="sd">                }</span>
 
 <span class="sd">        ..  container:: example</span>
 
@@ -1891,7 +1896,7 @@
 <span class="sd">                    \override TupletBracket.staff-padding = 4.5</span>
 <span class="sd">                    tupletFullLength = ##t</span>
 <span class="sd">                }</span>
-<span class="sd">                &lt;&lt;</span>
+<span class="sd">                {</span>
 <span class="sd">                    \context RhythmicStaff = &quot;Staff&quot;</span>
 <span class="sd">                    \with</span>
 <span class="sd">                    {</span>
@@ -1932,7 +1937,7 @@
 <span class="sd">                            }</span>
 <span class="sd">                        }</span>
 <span class="sd">                    }</span>
-<span class="sd">                &gt;&gt;</span>
+<span class="sd">                }</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">denominator</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
@@ -2015,12 +2020,11 @@
 <span class="sd">        ...     time_signatures = rmakers.time_signatures(pairs)</span>
 <span class="sd">        ...     durations = [abjad.Duration(_) for _ in time_signatures]</span>
 <span class="sd">        ...     tuplets = rmakers.even_division(durations, [8])</span>
-<span class="sd">        ...     container = abjad.Container(tuplets)</span>
-<span class="sd">        ...     rmakers.beam(container)</span>
-<span class="sd">        ...     tuplets = abjad.select.tuplets(container)[-2:]</span>
+<span class="sd">        ...     lilypond_file = rmakers.example(tuplets, time_signatures)</span>
+<span class="sd">        ...     voice = lilypond_file[&quot;Voice&quot;]</span>
+<span class="sd">        ...     rmakers.beam(voice)</span>
+<span class="sd">        ...     tuplets = abjad.select.tuplets(voice)[-2:]</span>
 <span class="sd">        ...     rmakers.extract_trivial(tuplets)</span>
-<span class="sd">        ...     components = abjad.mutate.eject_contents(container)</span>
-<span class="sd">        ...     lilypond_file = rmakers.example(components, time_signatures)</span>
 <span class="sd">        ...     return lilypond_file</span>
 
 <span class="sd">        &gt;&gt;&gt; pairs = [(3, 8), (3, 8), (3, 8), (3, 8)]</span>
@@ -2033,7 +2037,7 @@
 <span class="sd">            &gt;&gt;&gt; string = abjad.lilypond(score)</span>
 <span class="sd">            &gt;&gt;&gt; print(string)</span>
 <span class="sd">            \context Score = &quot;Score&quot;</span>
-<span class="sd">            &lt;&lt;</span>
+<span class="sd">            {</span>
 <span class="sd">                \context RhythmicStaff = &quot;Staff&quot;</span>
 <span class="sd">                \with</span>
 <span class="sd">                {</span>
@@ -2073,7 +2077,7 @@
 <span class="sd">                        ]</span>
 <span class="sd">                    }</span>
 <span class="sd">                }</span>
-<span class="sd">            &gt;&gt;</span>
+<span class="sd">            }</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">tuplets</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">select</span><span class="o">.</span><span class="n">tuplets</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span>
@@ -2121,13 +2125,12 @@
 <span class="sd">        ...     time_signatures = rmakers.time_signatures(pairs)</span>
 <span class="sd">        ...     durations = [abjad.Duration(_) for _ in time_signatures]</span>
 <span class="sd">        ...     tuplets = rmakers.even_division(durations, [8], extra_counts=[1])</span>
-<span class="sd">        ...     container = abjad.Container(tuplets)</span>
-<span class="sd">        ...     rmakers.force_fraction(container)</span>
-<span class="sd">        ...     rmakers.beam(container)</span>
+<span class="sd">        ...     lilypond_file = rmakers.example(tuplets, time_signatures)</span>
+<span class="sd">        ...     voice = lilypond_file[&quot;Voice&quot;]</span>
+<span class="sd">        ...     rmakers.force_fraction(voice)</span>
+<span class="sd">        ...     rmakers.beam(voice)</span>
 <span class="sd">        ...     if force_augmentation is True:</span>
-<span class="sd">        ...         rmakers.force_augmentation(container)</span>
-<span class="sd">        ...     components = abjad.mutate.eject_contents(container)</span>
-<span class="sd">        ...     lilypond_file = rmakers.example(components, time_signatures)</span>
+<span class="sd">        ...         rmakers.force_augmentation(voice)</span>
 <span class="sd">        ...     score = lilypond_file[&quot;Score&quot;]</span>
 <span class="sd">        ...     abjad.override(score).TupletBracket.bracket_visibility = True</span>
 <span class="sd">        ...     abjad.override(score).TupletBracket.staff_padding = 4.5</span>
@@ -2154,7 +2157,7 @@
 <span class="sd">                \override TupletBracket.staff-padding = 4.5</span>
 <span class="sd">                tupletFullLength = ##t</span>
 <span class="sd">            }</span>
-<span class="sd">            &lt;&lt;</span>
+<span class="sd">            {</span>
 <span class="sd">                \context RhythmicStaff = &quot;Staff&quot;</span>
 <span class="sd">                \with</span>
 <span class="sd">                {</span>
@@ -2193,7 +2196,7 @@
 <span class="sd">                        }</span>
 <span class="sd">                    }</span>
 <span class="sd">                }</span>
-<span class="sd">            &gt;&gt;</span>
+<span class="sd">            }</span>
 
 <span class="sd">    ..  container:: example</span>
 
@@ -2215,7 +2218,7 @@
 <span class="sd">                \override TupletBracket.staff-padding = 4.5</span>
 <span class="sd">                tupletFullLength = ##t</span>
 <span class="sd">            }</span>
-<span class="sd">            &lt;&lt;</span>
+<span class="sd">            {</span>
 <span class="sd">                \context RhythmicStaff = &quot;Staff&quot;</span>
 <span class="sd">                \with</span>
 <span class="sd">                {</span>
@@ -2254,7 +2257,7 @@
 <span class="sd">                        }</span>
 <span class="sd">                    }</span>
 <span class="sd">                }</span>
-<span class="sd">            &gt;&gt;</span>
+<span class="sd">            }</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">for</span> <span class="n">tuplet</span> <span class="ow">in</span> <span class="n">abjad</span><span class="o">.</span><span class="n">select</span><span class="o">.</span><span class="n">tuplets</span><span class="p">(</span><span class="n">argument</span><span class="p">):</span>
@@ -2272,14 +2275,13 @@
 <span class="sd">        ...     time_signatures = rmakers.time_signatures(pairs)</span>
 <span class="sd">        ...     durations = [abjad.Duration(_) for _ in time_signatures]</span>
 <span class="sd">        ...     tuplets = rmakers.talea(durations, [1], 16, extra_counts=[0, -1])</span>
-<span class="sd">        ...     container = abjad.Container(tuplets)</span>
-<span class="sd">        ...     rmakers.force_fraction(container)</span>
-<span class="sd">        ...     rmakers.beam(container)</span>
-<span class="sd">        ...     rmakers.swap_trivial(container)</span>
+<span class="sd">        ...     lilypond_file = rmakers.example(tuplets, time_signatures)</span>
+<span class="sd">        ...     voice = lilypond_file[&quot;Voice&quot;]</span>
+<span class="sd">        ...     rmakers.force_fraction(voice)</span>
+<span class="sd">        ...     rmakers.beam(voice)</span>
+<span class="sd">        ...     rmakers.swap_trivial(voice)</span>
 <span class="sd">        ...     if force_diminution is True:</span>
-<span class="sd">        ...         rmakers.force_diminution(container)</span>
-<span class="sd">        ...     components = abjad.mutate.eject_contents(container)</span>
-<span class="sd">        ...     lilypond_file = rmakers.example(components, time_signatures)</span>
+<span class="sd">        ...         rmakers.force_diminution(voice)</span>
 <span class="sd">        ...     score = lilypond_file[&quot;Score&quot;]</span>
 <span class="sd">        ...     abjad.override(score).TupletBracket.bracket_visibility = True</span>
 <span class="sd">        ...     abjad.override(score).TupletBracket.staff_padding = 4.5</span>
@@ -2306,7 +2308,7 @@
 <span class="sd">                \override TupletBracket.staff-padding = 4.5</span>
 <span class="sd">                tupletFullLength = ##t</span>
 <span class="sd">            }</span>
-<span class="sd">            &lt;&lt;</span>
+<span class="sd">            {</span>
 <span class="sd">                \context RhythmicStaff = &quot;Staff&quot;</span>
 <span class="sd">                \with</span>
 <span class="sd">                {</span>
@@ -2352,7 +2354,7 @@
 <span class="sd">                        }</span>
 <span class="sd">                    }</span>
 <span class="sd">                }</span>
-<span class="sd">            &gt;&gt;</span>
+<span class="sd">            }</span>
 
 <span class="sd">    ..  container:: example</span>
 
@@ -2374,7 +2376,7 @@
 <span class="sd">                \override TupletBracket.staff-padding = 4.5</span>
 <span class="sd">                tupletFullLength = ##t</span>
 <span class="sd">            }</span>
-<span class="sd">            &lt;&lt;</span>
+<span class="sd">            {</span>
 <span class="sd">                \context RhythmicStaff = &quot;Staff&quot;</span>
 <span class="sd">                \with</span>
 <span class="sd">                {</span>
@@ -2420,7 +2422,7 @@
 <span class="sd">                        }</span>
 <span class="sd">                    }</span>
 <span class="sd">                }</span>
-<span class="sd">            &gt;&gt;</span>
+<span class="sd">            }</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">for</span> <span class="n">tuplet</span> <span class="ow">in</span> <span class="n">abjad</span><span class="o">.</span><span class="n">select</span><span class="o">.</span><span class="n">tuplets</span><span class="p">(</span><span class="n">argument</span><span class="p">):</span>
@@ -2467,7 +2469,7 @@
 <span class="sd">            &gt;&gt;&gt; string = abjad.lilypond(score)</span>
 <span class="sd">            &gt;&gt;&gt; print(string)</span>
 <span class="sd">            \context Score = &quot;Score&quot;</span>
-<span class="sd">            &lt;&lt;</span>
+<span class="sd">            {</span>
 <span class="sd">                \context RhythmicStaff = &quot;Staff&quot;</span>
 <span class="sd">                \with</span>
 <span class="sd">                {</span>
@@ -2486,7 +2488,7 @@
 <span class="sd">                        r4.</span>
 <span class="sd">                    }</span>
 <span class="sd">                }</span>
-<span class="sd">            &gt;&gt;</span>
+<span class="sd">            }</span>
 
 <span class="sd">    ..  container:: example</span>
 
@@ -2517,7 +2519,7 @@
 <span class="sd">            &gt;&gt;&gt; string = abjad.lilypond(score)</span>
 <span class="sd">            &gt;&gt;&gt; print(string)</span>
 <span class="sd">            \context Score = &quot;Score&quot;</span>
-<span class="sd">            &lt;&lt;</span>
+<span class="sd">            {</span>
 <span class="sd">                \context RhythmicStaff = &quot;Staff&quot;</span>
 <span class="sd">                \with</span>
 <span class="sd">                {</span>
@@ -2536,7 +2538,7 @@
 <span class="sd">                        c&#39;4.</span>
 <span class="sd">                    }</span>
 <span class="sd">                }</span>
-<span class="sd">            &gt;&gt;</span>
+<span class="sd">            }</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">tag</span> <span class="o">=</span> <span class="n">tag</span> <span class="ow">or</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Tag</span><span class="p">()</span>
@@ -2566,13 +2568,12 @@
 <span class="sd">        ...     time_signatures = rmakers.time_signatures(pairs)</span>
 <span class="sd">        ...     durations = [abjad.Duration(_) for _ in time_signatures]</span>
 <span class="sd">        ...     tuplets = rmakers.even_division(durations, [8], extra_counts=[1])</span>
-<span class="sd">        ...     container = abjad.Container(tuplets)</span>
-<span class="sd">        ...     tuplets = abjad.select.tuplets(container)[:-1]</span>
+<span class="sd">        ...     lilypond_file = rmakers.example(tuplets, time_signatures)</span>
+<span class="sd">        ...     voice = lilypond_file[&quot;Voice&quot;]</span>
+<span class="sd">        ...     tuplets = abjad.select.tuplets(voice)[:-1]</span>
 <span class="sd">        ...     notes = [abjad.select.note(_, -1) for _ in tuplets]</span>
 <span class="sd">        ...     rmakers.tie(notes)</span>
-<span class="sd">        ...     rmakers.beam(container)</span>
-<span class="sd">        ...     components = abjad.mutate.eject_contents(container)</span>
-<span class="sd">        ...     lilypond_file = rmakers.example(components, time_signatures)</span>
+<span class="sd">        ...     rmakers.beam(voice)</span>
 <span class="sd">        ...     return lilypond_file</span>
 
 <span class="sd">    ..  container:: example</span>
@@ -2589,7 +2590,7 @@
 <span class="sd">            &gt;&gt;&gt; string = abjad.lilypond(score)</span>
 <span class="sd">            &gt;&gt;&gt; print(string)</span>
 <span class="sd">            \context Score = &quot;Score&quot;</span>
-<span class="sd">            &lt;&lt;</span>
+<span class="sd">            {</span>
 <span class="sd">                \context RhythmicStaff = &quot;Staff&quot;</span>
 <span class="sd">                \with</span>
 <span class="sd">                {</span>
@@ -2636,7 +2637,7 @@
 <span class="sd">                        }</span>
 <span class="sd">                    }</span>
 <span class="sd">                }</span>
-<span class="sd">            &gt;&gt;</span>
+<span class="sd">            }</span>
 
 <span class="sd">    ..  container:: example</span>
 
@@ -2651,7 +2652,7 @@
 <span class="sd">            &gt;&gt;&gt; string = abjad.lilypond(score)</span>
 <span class="sd">            &gt;&gt;&gt; print(string)</span>
 <span class="sd">            \context Score = &quot;Score&quot;</span>
-<span class="sd">            &lt;&lt;</span>
+<span class="sd">            {</span>
 <span class="sd">                \context RhythmicStaff = &quot;Staff&quot;</span>
 <span class="sd">                \with</span>
 <span class="sd">                {</span>
@@ -2698,7 +2699,7 @@
 <span class="sd">                        }</span>
 <span class="sd">                    }</span>
 <span class="sd">                }</span>
-<span class="sd">            &gt;&gt;</span>
+<span class="sd">            }</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">tag</span> <span class="o">=</span> <span class="n">tag</span> <span class="ow">or</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Tag</span><span class="p">()</span>
@@ -2754,14 +2755,14 @@
 <span class="sd">        ...     time_signatures = rmakers.time_signatures(pairs)</span>
 <span class="sd">        ...     durations = [abjad.Duration(_) for _ in time_signatures]</span>
 <span class="sd">        ...     tuplets = rmakers.talea(durations, [1, 2, 3, 4], 16)</span>
-<span class="sd">        ...     container = abjad.Container(tuplets)</span>
-<span class="sd">        ...     logical_ties = abjad.select.logical_ties(container)</span>
+<span class="sd">        ...     lilypond_file = rmakers.example(tuplets, time_signatures)</span>
+<span class="sd">        ...     voice = lilypond_file[&quot;Voice&quot;]</span>
+<span class="sd">        ...     logical_ties = abjad.select.logical_ties(voice)</span>
 <span class="sd">        ...     logical_ties = abjad.select.get(logical_ties, [0, -1])</span>
 <span class="sd">        ...     rmakers.force_rest(logical_ties)</span>
-<span class="sd">        ...     rmakers.beam(container)</span>
-<span class="sd">        ...     rmakers.extract_trivial(container)</span>
-<span class="sd">        ...     components = abjad.mutate.eject_contents(container)</span>
-<span class="sd">        ...     lilypond_file = rmakers.example(components, time_signatures)</span>
+<span class="sd">        ...     rmakers.beam(voice)</span>
+<span class="sd">        ...     rmakers.attach_time_signatures(voice, time_signatures)</span>
+<span class="sd">        ...     rmakers.extract_trivial(voice)</span>
 <span class="sd">        ...     return lilypond_file</span>
 
 <span class="sd">        &gt;&gt;&gt; pairs = [(3, 8), (4, 8), (3, 8), (4, 8)]</span>
@@ -2774,7 +2775,7 @@
 <span class="sd">            &gt;&gt;&gt; string = abjad.lilypond(score)</span>
 <span class="sd">            &gt;&gt;&gt; print(string)</span>
 <span class="sd">            \context Score = &quot;Score&quot;</span>
-<span class="sd">            &lt;&lt;</span>
+<span class="sd">            {</span>
 <span class="sd">                \context RhythmicStaff = &quot;Staff&quot;</span>
 <span class="sd">                \with</span>
 <span class="sd">                {</span>
@@ -2809,7 +2810,7 @@
 <span class="sd">                        r8</span>
 <span class="sd">                    }</span>
 <span class="sd">                }</span>
-<span class="sd">            &gt;&gt;</span>
+<span class="sd">            }</span>
 
 <span class="sd">    ..  container:: example</span>
 
@@ -2841,7 +2842,7 @@
 <span class="sd">            &gt;&gt;&gt; string = abjad.lilypond(score)</span>
 <span class="sd">            &gt;&gt;&gt; print(string)</span>
 <span class="sd">            \context Score = &quot;Score&quot;</span>
-<span class="sd">            &lt;&lt;</span>
+<span class="sd">            {</span>
 <span class="sd">                \context RhythmicStaff = &quot;Staff&quot;</span>
 <span class="sd">                \with</span>
 <span class="sd">                {</span>
@@ -2869,7 +2870,7 @@
 <span class="sd">                        c&#39;8</span>
 <span class="sd">                    }</span>
 <span class="sd">                }</span>
-<span class="sd">            &gt;&gt;</span>
+<span class="sd">            }</span>
 
 <span class="sd">    ..  container:: example</span>
 
@@ -2879,15 +2880,14 @@
 <span class="sd">        ...     time_signatures = rmakers.time_signatures(pairs)</span>
 <span class="sd">        ...     durations = [abjad.Duration(_) for _ in time_signatures]</span>
 <span class="sd">        ...     tuplets = rmakers.talea(durations, [1, 2, 3, 4], 16)</span>
-<span class="sd">        ...     container = abjad.Container(tuplets)</span>
-<span class="sd">        ...     tuplets = abjad.select.tuplets(container)</span>
+<span class="sd">        ...     lilypond_file = rmakers.example(tuplets, time_signatures)</span>
+<span class="sd">        ...     voice = lilypond_file[&quot;Voice&quot;]</span>
 <span class="sd">        ...     tuplets = abjad.select.get(tuplets, [1], 2)</span>
 <span class="sd">        ...     rmakers.force_rest(tuplets)</span>
-<span class="sd">        ...     rmakers.beam(container)</span>
-<span class="sd">        ...     rmakers.rewrite_rest_filled(container)</span>
-<span class="sd">        ...     rmakers.extract_trivial(container)</span>
-<span class="sd">        ...     components = abjad.mutate.eject_contents(container)</span>
-<span class="sd">        ...     lilypond_file = rmakers.example(components, time_signatures)</span>
+<span class="sd">        ...     rmakers.beam(voice)</span>
+<span class="sd">        ...     rmakers.rewrite_rest_filled(voice)</span>
+<span class="sd">        ...     rmakers.extract_trivial(voice)</span>
+<span class="sd">        ...     rmakers.attach_time_signatures(voice, time_signatures)</span>
 <span class="sd">        ...     return lilypond_file</span>
 
 <span class="sd">        &gt;&gt;&gt; pairs = [(3, 8), (4, 8), (3, 8), (4, 8)]</span>
@@ -2900,7 +2900,7 @@
 <span class="sd">            &gt;&gt;&gt; string = abjad.lilypond(score)</span>
 <span class="sd">            &gt;&gt;&gt; print(string)</span>
 <span class="sd">            \context Score = &quot;Score&quot;</span>
-<span class="sd">            &lt;&lt;</span>
+<span class="sd">            {</span>
 <span class="sd">                \context RhythmicStaff = &quot;Staff&quot;</span>
 <span class="sd">                \with</span>
 <span class="sd">                {</span>
@@ -2924,7 +2924,7 @@
 <span class="sd">                        r2</span>
 <span class="sd">                    }</span>
 <span class="sd">                }</span>
-<span class="sd">            &gt;&gt;</span>
+<span class="sd">            }</span>
 
 <span class="sd">    ..  container:: example</span>
 
@@ -2934,14 +2934,14 @@
 <span class="sd">        ...     time_signatures = rmakers.time_signatures(pairs)</span>
 <span class="sd">        ...     durations = [abjad.Duration(_) for _ in time_signatures]</span>
 <span class="sd">        ...     tuplets = rmakers.talea(durations, [1, 2, 3, 4], 16)</span>
-<span class="sd">        ...     container = abjad.Container(tuplets)</span>
-<span class="sd">        ...     leaves = abjad.select.leaves(container)</span>
+<span class="sd">        ...     lilypond_file = rmakers.example(tuplets, time_signatures)</span>
+<span class="sd">        ...     voice = lilypond_file[&quot;Voice&quot;]</span>
+<span class="sd">        ...     leaves = abjad.select.leaves(voice)</span>
 <span class="sd">        ...     leaves = abjad.select.get(leaves, [0, -2, -1])</span>
 <span class="sd">        ...     rmakers.force_rest(leaves)</span>
-<span class="sd">        ...     rmakers.beam(container)</span>
-<span class="sd">        ...     rmakers.extract_trivial(container)</span>
-<span class="sd">        ...     components = abjad.mutate.eject_contents(container)</span>
-<span class="sd">        ...     lilypond_file = rmakers.example(components, time_signatures)</span>
+<span class="sd">        ...     rmakers.beam(voice)</span>
+<span class="sd">        ...     rmakers.extract_trivial(voice)</span>
+<span class="sd">        ...     rmakers.attach_time_signatures(voice, time_signatures)</span>
 <span class="sd">        ...     return lilypond_file</span>
 
 <span class="sd">        &gt;&gt;&gt; pairs = [(3, 8), (4, 8), (3, 8), (4, 8)]</span>
@@ -2954,7 +2954,7 @@
 <span class="sd">            &gt;&gt;&gt; string = abjad.lilypond(score)</span>
 <span class="sd">            &gt;&gt;&gt; print(string)</span>
 <span class="sd">            \context Score = &quot;Score&quot;</span>
-<span class="sd">            &lt;&lt;</span>
+<span class="sd">            {</span>
 <span class="sd">                \context RhythmicStaff = &quot;Staff&quot;</span>
 <span class="sd">                \with</span>
 <span class="sd">                {</span>
@@ -2989,7 +2989,7 @@
 <span class="sd">                        r8</span>
 <span class="sd">                    }</span>
 <span class="sd">                }</span>
-<span class="sd">            &gt;&gt;</span>
+<span class="sd">            }</span>
 
 <span class="sd">    ..  container:: example</span>
 
@@ -2999,14 +2999,13 @@
 <span class="sd">        ...     time_signatures = rmakers.time_signatures(pairs)</span>
 <span class="sd">        ...     durations = [abjad.Duration(_) for _ in time_signatures]</span>
 <span class="sd">        ...     tuplets = rmakers.talea(durations, [1, 2, 3, 4], 16)</span>
-<span class="sd">        ...     container = abjad.Container(tuplets)</span>
-<span class="sd">        ...     tuplets = abjad.select.tuplets(container)</span>
+<span class="sd">        ...     lilypond_file = rmakers.example(tuplets, time_signatures)</span>
+<span class="sd">        ...     voice = lilypond_file[&quot;Voice&quot;]</span>
 <span class="sd">        ...     leaves = [abjad.select.leaf(_, 0) for _ in tuplets]</span>
 <span class="sd">        ...     rmakers.force_rest(leaves)</span>
-<span class="sd">        ...     rmakers.beam(container)</span>
-<span class="sd">        ...     rmakers.extract_trivial(container)</span>
-<span class="sd">        ...     components = abjad.mutate.eject_contents(container)</span>
-<span class="sd">        ...     lilypond_file = rmakers.example(components, time_signatures)</span>
+<span class="sd">        ...     rmakers.beam(voice)</span>
+<span class="sd">        ...     rmakers.extract_trivial(voice)</span>
+<span class="sd">        ...     rmakers.attach_time_signatures(voice, time_signatures)</span>
 <span class="sd">        ...     return lilypond_file</span>
 
 <span class="sd">        &gt;&gt;&gt; pairs = [(3, 8), (4, 8), (3, 8), (4, 8)]</span>
@@ -3019,7 +3018,7 @@
 <span class="sd">            &gt;&gt;&gt; string = abjad.lilypond(score)</span>
 <span class="sd">            &gt;&gt;&gt; print(string)</span>
 <span class="sd">            \context Score = &quot;Score&quot;</span>
-<span class="sd">            &lt;&lt;</span>
+<span class="sd">            {</span>
 <span class="sd">                \context RhythmicStaff = &quot;Staff&quot;</span>
 <span class="sd">                \with</span>
 <span class="sd">                {</span>
@@ -3053,7 +3052,7 @@
 <span class="sd">                        ]</span>
 <span class="sd">                    }</span>
 <span class="sd">                }</span>
-<span class="sd">            &gt;&gt;</span>
+<span class="sd">            }</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">tag</span> <span class="o">=</span> <span class="n">tag</span> <span class="ow">or</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Tag</span><span class="p">()</span>
@@ -3094,12 +3093,11 @@
 <span class="sd">        ...     time_signatures = rmakers.time_signatures(pairs)</span>
 <span class="sd">        ...     durations = [abjad.Duration(_) for _ in time_signatures]</span>
 <span class="sd">        ...     tuplets = rmakers.even_division(durations, [8])</span>
-<span class="sd">        ...     container = abjad.Container(tuplets)</span>
-<span class="sd">        ...     rmakers.beam(container)</span>
-<span class="sd">        ...     tuplets = abjad.select.tuplets(container)[-2:]</span>
+<span class="sd">        ...     lilypond_file = rmakers.example(tuplets, time_signatures)</span>
+<span class="sd">        ...     voice = lilypond_file[&quot;Voice&quot;]</span>
+<span class="sd">        ...     rmakers.beam(voice)</span>
+<span class="sd">        ...     tuplets = abjad.select.tuplets(tuplets)[-2:]</span>
 <span class="sd">        ...     rmakers.hide_trivial(tuplets)</span>
-<span class="sd">        ...     components = abjad.mutate.eject_contents(container)</span>
-<span class="sd">        ...     lilypond_file = rmakers.example(components, time_signatures)</span>
 <span class="sd">        ...     return lilypond_file</span>
 
 <span class="sd">        &gt;&gt;&gt; pairs = [(3, 8), (3, 8), (3, 8), (3, 8)]</span>
@@ -3112,7 +3110,7 @@
 <span class="sd">            &gt;&gt;&gt; string = abjad.lilypond(score)</span>
 <span class="sd">            &gt;&gt;&gt; print(string)</span>
 <span class="sd">            \context Score = &quot;Score&quot;</span>
-<span class="sd">            &lt;&lt;</span>
+<span class="sd">            {</span>
 <span class="sd">                \context RhythmicStaff = &quot;Staff&quot;</span>
 <span class="sd">                \with</span>
 <span class="sd">                {</span>
@@ -3158,7 +3156,7 @@
 <span class="sd">                        }</span>
 <span class="sd">                    }</span>
 <span class="sd">                }</span>
-<span class="sd">            &gt;&gt;</span>
+<span class="sd">            }</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">tuplets</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">select</span><span class="o">.</span><span class="n">tuplets</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span>
@@ -3265,7 +3263,7 @@
 <span class="sd">            &gt;&gt;&gt; string = abjad.lilypond(score)</span>
 <span class="sd">            &gt;&gt;&gt; print(string)</span>
 <span class="sd">            \context Score = &quot;Score&quot;</span>
-<span class="sd">            &lt;&lt;</span>
+<span class="sd">            {</span>
 <span class="sd">                \context RhythmicStaff = &quot;Staff&quot;</span>
 <span class="sd">                \with</span>
 <span class="sd">                {</span>
@@ -3360,7 +3358,7 @@
 <span class="sd">                        }</span>
 <span class="sd">                    }</span>
 <span class="sd">                }</span>
-<span class="sd">            &gt;&gt;</span>
+<span class="sd">            }</span>
 
 <span class="sd">    ..  container:: example</span>
 
@@ -3395,7 +3393,7 @@
 <span class="sd">            &gt;&gt;&gt; string = abjad.lilypond(score)</span>
 <span class="sd">            &gt;&gt;&gt; print(string)</span>
 <span class="sd">            \context Score = &quot;Score&quot;</span>
-<span class="sd">            &lt;&lt;</span>
+<span class="sd">            {</span>
 <span class="sd">                \context RhythmicStaff = &quot;Staff&quot;</span>
 <span class="sd">                \with</span>
 <span class="sd">                {</span>
@@ -3545,7 +3543,7 @@
 <span class="sd">                        }</span>
 <span class="sd">                    }</span>
 <span class="sd">                }</span>
-<span class="sd">            &gt;&gt;</span>
+<span class="sd">            }</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">tag</span> <span class="o">=</span> <span class="n">tag</span> <span class="ow">or</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Tag</span><span class="p">()</span>
@@ -3614,7 +3612,7 @@
 <span class="sd">            &gt;&gt;&gt; string = abjad.lilypond(score)</span>
 <span class="sd">            &gt;&gt;&gt; print(string)</span>
 <span class="sd">            \context Score = &quot;Score&quot;</span>
-<span class="sd">            &lt;&lt;</span>
+<span class="sd">            {</span>
 <span class="sd">                \context RhythmicStaff = &quot;Staff&quot;</span>
 <span class="sd">                \with</span>
 <span class="sd">                {</span>
@@ -3679,7 +3677,7 @@
 <span class="sd">                        }</span>
 <span class="sd">                    }</span>
 <span class="sd">                }</span>
-<span class="sd">            &gt;&gt;</span>
+<span class="sd">            }</span>
 
 <span class="sd">    ..  container:: example</span>
 
@@ -3708,7 +3706,7 @@
 <span class="sd">            &gt;&gt;&gt; string = abjad.lilypond(score)</span>
 <span class="sd">            &gt;&gt;&gt; print(string)</span>
 <span class="sd">            \context Score = &quot;Score&quot;</span>
-<span class="sd">            &lt;&lt;</span>
+<span class="sd">            {</span>
 <span class="sd">                \context RhythmicStaff = &quot;Staff&quot;</span>
 <span class="sd">                \with</span>
 <span class="sd">                {</span>
@@ -3780,7 +3778,7 @@
 <span class="sd">                        }</span>
 <span class="sd">                    }</span>
 <span class="sd">                }</span>
-<span class="sd">            &gt;&gt;</span>
+<span class="sd">            }</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">tag</span> <span class="o">=</span> <span class="n">tag</span> <span class="ow">or</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Tag</span><span class="p">()</span>
@@ -3850,7 +3848,7 @@
 <span class="sd">            &gt;&gt;&gt; string = abjad.lilypond(score)</span>
 <span class="sd">            &gt;&gt;&gt; print(string)</span>
 <span class="sd">            \context Score = &quot;Score&quot;</span>
-<span class="sd">            &lt;&lt;</span>
+<span class="sd">            {</span>
 <span class="sd">                \context RhythmicStaff = &quot;Staff&quot;</span>
 <span class="sd">                \with</span>
 <span class="sd">                {</span>
@@ -3896,7 +3894,7 @@
 <span class="sd">                        c&#39;4</span>
 <span class="sd">                    }</span>
 <span class="sd">                }</span>
-<span class="sd">            &gt;&gt;</span>
+<span class="sd">            }</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">tag</span> <span class="o">=</span> <span class="n">tag</span> <span class="ow">or</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Tag</span><span class="p">()</span>
@@ -3983,7 +3981,7 @@
 <span class="sd">            &gt;&gt;&gt; string = abjad.lilypond(score)</span>
 <span class="sd">            &gt;&gt;&gt; print(string)</span>
 <span class="sd">            \context Score = &quot;Score&quot;</span>
-<span class="sd">            &lt;&lt;</span>
+<span class="sd">            {</span>
 <span class="sd">                \context RhythmicStaff = &quot;Staff&quot;</span>
 <span class="sd">                \with</span>
 <span class="sd">                {</span>
@@ -4032,7 +4030,7 @@
 <span class="sd">                        }</span>
 <span class="sd">                    }</span>
 <span class="sd">                }</span>
-<span class="sd">            &gt;&gt;</span>
+<span class="sd">            }</span>
 
 <span class="sd">        Rewrites rest-filled tuplets:</span>
 
@@ -4058,7 +4056,7 @@
 <span class="sd">            &gt;&gt;&gt; string = abjad.lilypond(score)</span>
 <span class="sd">            &gt;&gt;&gt; print(string)</span>
 <span class="sd">            \context Score = &quot;Score&quot;</span>
-<span class="sd">            &lt;&lt;</span>
+<span class="sd">            {</span>
 <span class="sd">                \context RhythmicStaff = &quot;Staff&quot;</span>
 <span class="sd">                \with</span>
 <span class="sd">                {</span>
@@ -4077,7 +4075,7 @@
 <span class="sd">                        r16</span>
 <span class="sd">                    }</span>
 <span class="sd">                }</span>
-<span class="sd">            &gt;&gt;</span>
+<span class="sd">            }</span>
 
 <span class="sd">        With spelling specifier:</span>
 
@@ -4106,7 +4104,7 @@
 <span class="sd">            &gt;&gt;&gt; string = abjad.lilypond(score)</span>
 <span class="sd">            &gt;&gt;&gt; print(string)</span>
 <span class="sd">            \context Score = &quot;Score&quot;</span>
-<span class="sd">            &lt;&lt;</span>
+<span class="sd">            {</span>
 <span class="sd">                \context RhythmicStaff = &quot;Staff&quot;</span>
 <span class="sd">                \with</span>
 <span class="sd">                {</span>
@@ -4125,7 +4123,7 @@
 <span class="sd">                        r4</span>
 <span class="sd">                    }</span>
 <span class="sd">                }</span>
-<span class="sd">            &gt;&gt;</span>
+<span class="sd">            }</span>
 
 <span class="sd">    ..  container:: example</span>
 
@@ -4139,10 +4137,9 @@
 <span class="sd">        ...     tuplets = rmakers.talea(</span>
 <span class="sd">        ...         durations, [3, 3, -6, -6], 16, extra_counts=[1, 0]</span>
 <span class="sd">        ...     )</span>
-<span class="sd">        ...     container = abjad.Container(tuplets)</span>
-<span class="sd">        ...     rmakers.beam(container)</span>
-<span class="sd">        ...     components = abjad.mutate.eject_contents(container)</span>
-<span class="sd">        ...     lilypond_file = rmakers.example(components, time_signatures)</span>
+<span class="sd">        ...     lilypond_file = rmakers.example(tuplets, time_signatures)</span>
+<span class="sd">        ...     voice = lilypond_file[&quot;Voice&quot;]</span>
+<span class="sd">        ...     rmakers.beam(voice)</span>
 <span class="sd">        ...     return lilypond_file</span>
 
 <span class="sd">        &gt;&gt;&gt; pairs = [(3, 8), (4, 8), (3, 8), (4, 8)]</span>
@@ -4155,7 +4152,7 @@
 <span class="sd">            &gt;&gt;&gt; string = abjad.lilypond(score)</span>
 <span class="sd">            &gt;&gt;&gt; print(string)</span>
 <span class="sd">            \context Score = &quot;Score&quot;</span>
-<span class="sd">            &lt;&lt;</span>
+<span class="sd">            {</span>
 <span class="sd">                \context RhythmicStaff = &quot;Staff&quot;</span>
 <span class="sd">                \with</span>
 <span class="sd">                {</span>
@@ -4202,7 +4199,7 @@
 <span class="sd">                        }</span>
 <span class="sd">                    }</span>
 <span class="sd">                }</span>
-<span class="sd">            &gt;&gt;</span>
+<span class="sd">            }</span>
 
 <span class="sd">        Rewrites rest-filled tuplets:</span>
 
@@ -4212,11 +4209,11 @@
 <span class="sd">        ...     tuplets = rmakers.talea(</span>
 <span class="sd">        ...         durations, [3, 3, -6, -6], 16, extra_counts=[1, 0]</span>
 <span class="sd">        ...     )</span>
-<span class="sd">        ...     container = abjad.Container(tuplets)</span>
-<span class="sd">        ...     rmakers.beam(container)</span>
-<span class="sd">        ...     rmakers.rewrite_rest_filled(container)</span>
-<span class="sd">        ...     components = abjad.mutate.eject_contents(container)</span>
-<span class="sd">        ...     lilypond_file = rmakers.example(components, time_signatures)</span>
+<span class="sd">        ...     lilypond_file = rmakers.example(tuplets, time_signatures)</span>
+<span class="sd">        ...     voice = lilypond_file[&quot;Voice&quot;]</span>
+<span class="sd">        ...     rmakers.beam(voice)</span>
+<span class="sd">        ...     rmakers.rewrite_rest_filled(voice)</span>
+<span class="sd">        ...     rmakers.attach_time_signatures(voice, time_signatures)</span>
 <span class="sd">        ...     return lilypond_file</span>
 
 <span class="sd">        &gt;&gt;&gt; pairs = [(3, 8), (4, 8), (3, 8), (4, 8)]</span>
@@ -4229,7 +4226,7 @@
 <span class="sd">            &gt;&gt;&gt; string = abjad.lilypond(score)</span>
 <span class="sd">            &gt;&gt;&gt; print(string)</span>
 <span class="sd">            \context Score = &quot;Score&quot;</span>
-<span class="sd">            &lt;&lt;</span>
+<span class="sd">            {</span>
 <span class="sd">                \context RhythmicStaff = &quot;Staff&quot;</span>
 <span class="sd">                \with</span>
 <span class="sd">                {</span>
@@ -4274,7 +4271,7 @@
 <span class="sd">                        }</span>
 <span class="sd">                    }</span>
 <span class="sd">                }</span>
-<span class="sd">            &gt;&gt;</span>
+<span class="sd">            }</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">tag</span> <span class="o">=</span> <span class="n">tag</span> <span class="ow">or</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Tag</span><span class="p">()</span>
@@ -4336,7 +4333,7 @@
 <span class="sd">            &gt;&gt;&gt; string = abjad.lilypond(score)</span>
 <span class="sd">            &gt;&gt;&gt; print(string)</span>
 <span class="sd">            \context Score = &quot;Score&quot;</span>
-<span class="sd">            &lt;&lt;</span>
+<span class="sd">            {</span>
 <span class="sd">                \context RhythmicStaff = &quot;Staff&quot;</span>
 <span class="sd">                \with</span>
 <span class="sd">                {</span>
@@ -4371,7 +4368,7 @@
 <span class="sd">                        }</span>
 <span class="sd">                    }</span>
 <span class="sd">                }</span>
-<span class="sd">            &gt;&gt;</span>
+<span class="sd">            }</span>
 
 <span class="sd">        The first three tuplets in the example above qualify as sustained:</span>
 
@@ -4420,7 +4417,7 @@
 <span class="sd">            &gt;&gt;&gt; string = abjad.lilypond(score)</span>
 <span class="sd">            &gt;&gt;&gt; print(string)</span>
 <span class="sd">            \context Score = &quot;Score&quot;</span>
-<span class="sd">            &lt;&lt;</span>
+<span class="sd">            {</span>
 <span class="sd">                \context RhythmicStaff = &quot;Staff&quot;</span>
 <span class="sd">                \with</span>
 <span class="sd">                {</span>
@@ -4454,7 +4451,7 @@
 <span class="sd">                        }</span>
 <span class="sd">                    }</span>
 <span class="sd">                }</span>
-<span class="sd">            &gt;&gt;</span>
+<span class="sd">            }</span>
 
 <span class="sd">    ..  container:: example</span>
 
@@ -4488,7 +4485,7 @@
 <span class="sd">            &gt;&gt;&gt; string = abjad.lilypond(score)</span>
 <span class="sd">            &gt;&gt;&gt; print(string)</span>
 <span class="sd">            \context Score = &quot;Score&quot;</span>
-<span class="sd">            &lt;&lt;</span>
+<span class="sd">            {</span>
 <span class="sd">                \context RhythmicStaff = &quot;Staff&quot;</span>
 <span class="sd">                \with</span>
 <span class="sd">                {</span>
@@ -4510,7 +4507,7 @@
 <span class="sd">                        }</span>
 <span class="sd">                    }</span>
 <span class="sd">                }</span>
-<span class="sd">            &gt;&gt;</span>
+<span class="sd">            }</span>
 
 <span class="sd">    ..  container:: example</span>
 
@@ -4520,14 +4517,12 @@
 <span class="sd">        ...     time_signatures = rmakers.time_signatures(pairs)</span>
 <span class="sd">        ...     durations = [abjad.Duration(_) for _ in time_signatures]</span>
 <span class="sd">        ...     tuplets = rmakers.even_division(durations, [8], extra_counts=[1])</span>
-<span class="sd">        ...     container = abjad.Container(tuplets)</span>
-<span class="sd">        ...     tuplets = abjad.select.tuplets(container)</span>
+<span class="sd">        ...     lilypond_file = rmakers.example(tuplets, time_signatures)</span>
+<span class="sd">        ...     voice = lilypond_file[&quot;Voice&quot;]</span>
 <span class="sd">        ...     notes = [abjad.select.notes(_)[:-1] for _ in tuplets]</span>
 <span class="sd">        ...     rmakers.tie(notes)</span>
 <span class="sd">        ...     rmakers.rewrite_sustained(tuplets[-2:])</span>
-<span class="sd">        ...     rmakers.beam(container)</span>
-<span class="sd">        ...     components = abjad.mutate.eject_contents(container)</span>
-<span class="sd">        ...     lilypond_file = rmakers.example(components, time_signatures)</span>
+<span class="sd">        ...     rmakers.beam(voice)</span>
 <span class="sd">        ...     return lilypond_file</span>
 
 <span class="sd">        &gt;&gt;&gt; pairs = [(2, 8), (2, 8), (2, 8), (2, 8)]</span>
@@ -4540,7 +4535,7 @@
 <span class="sd">            &gt;&gt;&gt; string = abjad.lilypond(score)</span>
 <span class="sd">            &gt;&gt;&gt; print(string)</span>
 <span class="sd">            \context Score = &quot;Score&quot;</span>
-<span class="sd">            &lt;&lt;</span>
+<span class="sd">            {</span>
 <span class="sd">                \context RhythmicStaff = &quot;Staff&quot;</span>
 <span class="sd">                \with</span>
 <span class="sd">                {</span>
@@ -4582,7 +4577,7 @@
 <span class="sd">                        }</span>
 <span class="sd">                    }</span>
 <span class="sd">                }</span>
-<span class="sd">            &gt;&gt;</span>
+<span class="sd">            }</span>
 
 <span class="sd">    ..  container:: example</span>
 
@@ -4592,16 +4587,14 @@
 <span class="sd">        ...     time_signatures = rmakers.time_signatures(pairs)</span>
 <span class="sd">        ...     durations = [abjad.Duration(_) for _ in time_signatures]</span>
 <span class="sd">        ...     tuplets = rmakers.talea(durations, [1, 2, 3, 4], 16)</span>
-<span class="sd">        ...     container = abjad.Container(tuplets)</span>
-<span class="sd">        ...     tuplets = abjad.select.tuplets(container)</span>
+<span class="sd">        ...     lilypond_file = rmakers.example(tuplets, time_signatures)</span>
+<span class="sd">        ...     voice = lilypond_file[&quot;Voice&quot;]</span>
 <span class="sd">        ...     tuplets = abjad.select.get(tuplets, [1], 2)</span>
 <span class="sd">        ...     notes = [abjad.select.notes(_)[:-1] for _ in tuplets]</span>
 <span class="sd">        ...     rmakers.tie(notes)</span>
 <span class="sd">        ...     rmakers.rewrite_sustained(tuplets)</span>
-<span class="sd">        ...     rmakers.beam(container)</span>
-<span class="sd">        ...     rmakers.extract_trivial(container)</span>
-<span class="sd">        ...     components = abjad.mutate.eject_contents(container)</span>
-<span class="sd">        ...     lilypond_file = rmakers.example(components, time_signatures)</span>
+<span class="sd">        ...     rmakers.beam(voice)</span>
+<span class="sd">        ...     rmakers.extract_trivial(voice)</span>
 <span class="sd">        ...     return lilypond_file</span>
 
 <span class="sd">        &gt;&gt;&gt; pairs = [(3, 8), (4, 8), (3, 8), (4, 8)]</span>
@@ -4614,7 +4607,7 @@
 <span class="sd">            &gt;&gt;&gt; string = abjad.lilypond(score)</span>
 <span class="sd">            &gt;&gt;&gt; print(string)</span>
 <span class="sd">            \context Score = &quot;Score&quot;</span>
-<span class="sd">            &lt;&lt;</span>
+<span class="sd">            {</span>
 <span class="sd">                \context RhythmicStaff = &quot;Staff&quot;</span>
 <span class="sd">                \with</span>
 <span class="sd">                {</span>
@@ -4639,7 +4632,7 @@
 <span class="sd">                        c&#39;2</span>
 <span class="sd">                    }</span>
 <span class="sd">                }</span>
-<span class="sd">            &gt;&gt;</span>
+<span class="sd">            }</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">tag</span> <span class="o">=</span> <span class="n">tag</span> <span class="ow">or</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Tag</span><span class="p">()</span>
@@ -4724,12 +4717,11 @@
 <span class="sd">        ...     time_signatures = rmakers.time_signatures(pairs)</span>
 <span class="sd">        ...     durations = [abjad.Duration(_) for _ in time_signatures]</span>
 <span class="sd">        ...     tuplets = rmakers.even_division(durations, [8])</span>
-<span class="sd">        ...     container = abjad.Container(tuplets)</span>
-<span class="sd">        ...     rmakers.beam(container)</span>
-<span class="sd">        ...     tuplets = abjad.select.tuplets(container)[-2:]</span>
+<span class="sd">        ...     lilypond_file = rmakers.example(tuplets, time_signatures)</span>
+<span class="sd">        ...     voice = lilypond_file[&quot;Voice&quot;]</span>
+<span class="sd">        ...     rmakers.beam(voice)</span>
+<span class="sd">        ...     tuplets = abjad.select.tuplets(tuplets)[-2:]</span>
 <span class="sd">        ...     rmakers.swap_trivial(tuplets)</span>
-<span class="sd">        ...     components = abjad.mutate.eject_contents(container)</span>
-<span class="sd">        ...     lilypond_file = rmakers.example(components, time_signatures)</span>
 <span class="sd">        ...     return lilypond_file</span>
 
 <span class="sd">        &gt;&gt;&gt; pairs = [(3, 8), (3, 8), (3, 8), (3, 8)]</span>
@@ -4742,7 +4734,7 @@
 <span class="sd">            &gt;&gt;&gt; string = abjad.lilypond(score)</span>
 <span class="sd">            &gt;&gt;&gt; print(string)</span>
 <span class="sd">            \context Score = &quot;Score&quot;</span>
-<span class="sd">            &lt;&lt;</span>
+<span class="sd">            {</span>
 <span class="sd">                \context RhythmicStaff = &quot;Staff&quot;</span>
 <span class="sd">                \with</span>
 <span class="sd">                {</span>
@@ -4786,7 +4778,7 @@
 <span class="sd">                        }</span>
 <span class="sd">                    }</span>
 <span class="sd">                }</span>
-<span class="sd">            &gt;&gt;</span>
+<span class="sd">            }</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">tuplets</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">select</span><span class="o">.</span><span class="n">tuplets</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span>
@@ -4808,13 +4800,12 @@
 <span class="sd">        ...     time_signatures = rmakers.time_signatures(pairs)</span>
 <span class="sd">        ...     durations = [abjad.Duration(_) for _ in time_signatures]</span>
 <span class="sd">        ...     tuplets = rmakers.even_division(durations, [8], extra_counts=[1])</span>
-<span class="sd">        ...     container = abjad.Container(tuplets)</span>
-<span class="sd">        ...     tuplets = abjad.select.tuplets(container)[:-1]</span>
+<span class="sd">        ...     lilypond_file = rmakers.example(tuplets, time_signatures)</span>
+<span class="sd">        ...     voice = lilypond_file[&quot;Voice&quot;]</span>
+<span class="sd">        ...     tuplets = abjad.select.tuplets(tuplets)[:-1]</span>
 <span class="sd">        ...     notes = [abjad.select.note(_, -1) for _ in tuplets]</span>
 <span class="sd">        ...     rmakers.tie(notes)</span>
-<span class="sd">        ...     rmakers.beam(container)</span>
-<span class="sd">        ...     components = abjad.mutate.eject_contents(container)</span>
-<span class="sd">        ...     lilypond_file = rmakers.example(components, time_signatures)</span>
+<span class="sd">        ...     rmakers.beam(voice)</span>
 <span class="sd">        ...     return lilypond_file</span>
 
 <span class="sd">        &gt;&gt;&gt; pairs = [(2, 8), (2, 8), (2, 8), (2, 8), (2, 8), (2, 8)]</span>
@@ -4827,7 +4818,7 @@
 <span class="sd">            &gt;&gt;&gt; string = abjad.lilypond(score)</span>
 <span class="sd">            &gt;&gt;&gt; print(string)</span>
 <span class="sd">            \context Score = &quot;Score&quot;</span>
-<span class="sd">            &lt;&lt;</span>
+<span class="sd">            {</span>
 <span class="sd">                \context RhythmicStaff = &quot;Staff&quot;</span>
 <span class="sd">                \with</span>
 <span class="sd">                {</span>
@@ -4892,7 +4883,7 @@
 <span class="sd">                        }</span>
 <span class="sd">                    }</span>
 <span class="sd">                }</span>
-<span class="sd">            &gt;&gt;</span>
+<span class="sd">            }</span>
 
 <span class="sd">    ..  container:: example</span>
 
@@ -4902,14 +4893,13 @@
 <span class="sd">        ...     time_signatures = rmakers.time_signatures(pairs)</span>
 <span class="sd">        ...     durations = [abjad.Duration(_) for _ in time_signatures]</span>
 <span class="sd">        ...     tuplets = rmakers.talea(durations, [5, 3, 3, 3], 16)</span>
-<span class="sd">        ...     container = abjad.Container(tuplets)</span>
-<span class="sd">        ...     tuplets = abjad.select.tuplets(container)[:-1]</span>
+<span class="sd">        ...     lilypond_file = rmakers.example(tuplets, time_signatures)</span>
+<span class="sd">        ...     voice = lilypond_file[&quot;Voice&quot;]</span>
+<span class="sd">        ...     tuplets = abjad.select.tuplets(tuplets)[:-1]</span>
 <span class="sd">        ...     leaves = [abjad.select.leaf(_, -1) for _ in tuplets]</span>
 <span class="sd">        ...     rmakers.tie(leaves)</span>
-<span class="sd">        ...     rmakers.beam(container)</span>
-<span class="sd">        ...     rmakers.extract_trivial(container)</span>
-<span class="sd">        ...     components = abjad.mutate.eject_contents(container)</span>
-<span class="sd">        ...     lilypond_file = rmakers.example(components, time_signatures)</span>
+<span class="sd">        ...     rmakers.beam(voice)</span>
+<span class="sd">        ...     rmakers.extract_trivial(voice)</span>
 <span class="sd">        ...     return lilypond_file</span>
 
 <span class="sd">        &gt;&gt;&gt; pairs = [(4, 8), (3, 8), (4, 8), (3, 8)]</span>
@@ -4922,7 +4912,7 @@
 <span class="sd">            &gt;&gt;&gt; string = abjad.lilypond(score)</span>
 <span class="sd">            &gt;&gt;&gt; print(string)</span>
 <span class="sd">            \context Score = &quot;Score&quot;</span>
-<span class="sd">            &lt;&lt;</span>
+<span class="sd">            {</span>
 <span class="sd">                \context RhythmicStaff = &quot;Staff&quot;</span>
 <span class="sd">                \with</span>
 <span class="sd">                {</span>
@@ -4960,7 +4950,7 @@
 <span class="sd">                        ]</span>
 <span class="sd">                    }</span>
 <span class="sd">                }</span>
-<span class="sd">            &gt;&gt;</span>
+<span class="sd">            }</span>
 
 <span class="sd">    ..  container:: example</span>
 
@@ -4970,15 +4960,13 @@
 <span class="sd">        ...     time_signatures = rmakers.time_signatures(pairs)</span>
 <span class="sd">        ...     durations = [abjad.Duration(_) for _ in time_signatures]</span>
 <span class="sd">        ...     tuplets = rmakers.talea(durations, [5, 3, 3, 3], 16)</span>
-<span class="sd">        ...     container = abjad.Container(tuplets)</span>
-<span class="sd">        ...     tuplets = abjad.select.tuplets(container)[:-1]</span>
-<span class="sd">        ...     tuplets = abjad.select.get(tuplets, [0], 2)</span>
+<span class="sd">        ...     lilypond_file = rmakers.example(tuplets, time_signatures)</span>
+<span class="sd">        ...     voice = lilypond_file[&quot;Voice&quot;]</span>
+<span class="sd">        ...     tuplets = abjad.select.get(tuplets[:-1], [0], 2)</span>
 <span class="sd">        ...     leaves = [abjad.select.leaf(_, -1) for _ in tuplets]</span>
 <span class="sd">        ...     rmakers.tie(leaves)</span>
-<span class="sd">        ...     rmakers.beam(container)</span>
-<span class="sd">        ...     rmakers.extract_trivial(container)</span>
-<span class="sd">        ...     components = abjad.mutate.eject_contents(container)</span>
-<span class="sd">        ...     lilypond_file = rmakers.example(components, time_signatures)</span>
+<span class="sd">        ...     rmakers.beam(voice)</span>
+<span class="sd">        ...     rmakers.extract_trivial(voice)</span>
 <span class="sd">        ...     return lilypond_file</span>
 
 <span class="sd">        &gt;&gt;&gt; pairs = [(4, 8), (3, 8), (4, 8), (3, 8)]</span>
@@ -4991,7 +4979,7 @@
 <span class="sd">            &gt;&gt;&gt; string = abjad.lilypond(score)</span>
 <span class="sd">            &gt;&gt;&gt; print(string)</span>
 <span class="sd">            \context Score = &quot;Score&quot;</span>
-<span class="sd">            &lt;&lt;</span>
+<span class="sd">            {</span>
 <span class="sd">                \context RhythmicStaff = &quot;Staff&quot;</span>
 <span class="sd">                \with</span>
 <span class="sd">                {</span>
@@ -5028,7 +5016,7 @@
 <span class="sd">                        ]</span>
 <span class="sd">                    }</span>
 <span class="sd">                }</span>
-<span class="sd">            &gt;&gt;</span>
+<span class="sd">            }</span>
 
 <span class="sd">    ..  container:: example</span>
 
@@ -5038,15 +5026,14 @@
 <span class="sd">        ...     time_signatures = rmakers.time_signatures(pairs)</span>
 <span class="sd">        ...     durations = [abjad.Duration(_) for _ in time_signatures]</span>
 <span class="sd">        ...     tuplets = rmakers.talea(durations, [5, -3, 3, 3], 16)</span>
-<span class="sd">        ...     container = abjad.Container(tuplets)</span>
-<span class="sd">        ...     rmakers.untie(container)</span>
-<span class="sd">        ...     runs = abjad.select.runs(container)</span>
+<span class="sd">        ...     lilypond_file = rmakers.example(tuplets, time_signatures)</span>
+<span class="sd">        ...     voice = lilypond_file[&quot;Voice&quot;]</span>
+<span class="sd">        ...     rmakers.untie(voice)</span>
+<span class="sd">        ...     runs = abjad.select.runs(voice)</span>
 <span class="sd">        ...     notes = [abjad.select.notes(_)[:-1] for _ in runs]</span>
 <span class="sd">        ...     rmakers.tie(notes)</span>
-<span class="sd">        ...     rmakers.beam(container)</span>
-<span class="sd">        ...     rmakers.extract_trivial(container)</span>
-<span class="sd">        ...     components = abjad.mutate.eject_contents(container)</span>
-<span class="sd">        ...     lilypond_file = rmakers.example(components, time_signatures)</span>
+<span class="sd">        ...     rmakers.beam(voice)</span>
+<span class="sd">        ...     rmakers.extract_trivial(voice)</span>
 <span class="sd">        ...     return lilypond_file</span>
 
 <span class="sd">        &gt;&gt;&gt; pairs = [(4, 8), (3, 8), (4, 8), (3, 8)]</span>
@@ -5059,7 +5046,7 @@
 <span class="sd">            &gt;&gt;&gt; string = abjad.lilypond(score)</span>
 <span class="sd">            &gt;&gt;&gt; print(string)</span>
 <span class="sd">            \context Score = &quot;Score&quot;</span>
-<span class="sd">            &lt;&lt;</span>
+<span class="sd">            {</span>
 <span class="sd">                \context RhythmicStaff = &quot;Staff&quot;</span>
 <span class="sd">                \with</span>
 <span class="sd">                {</span>
@@ -5093,7 +5080,7 @@
 <span class="sd">                        ]</span>
 <span class="sd">                    }</span>
 <span class="sd">                }</span>
-<span class="sd">            &gt;&gt;</span>
+<span class="sd">            }</span>
 
 
 <span class="sd">    ..  container:: example</span>
@@ -5104,14 +5091,12 @@
 <span class="sd">        ...     time_signatures = rmakers.time_signatures(pairs)</span>
 <span class="sd">        ...     durations = [abjad.Duration(_) for _ in time_signatures]</span>
 <span class="sd">        ...     tuplets = rmakers.even_division(durations, [8], extra_counts=[1])</span>
-<span class="sd">        ...     container = abjad.Container(tuplets)</span>
-<span class="sd">        ...     tuplets = abjad.select.tuplets(container)</span>
+<span class="sd">        ...     lilypond_file = rmakers.example(tuplets, time_signatures)</span>
+<span class="sd">        ...     voice = lilypond_file[&quot;Voice&quot;]</span>
 <span class="sd">        ...     notes = [abjad.select.notes(_)[:-1] for _ in tuplets]</span>
 <span class="sd">        ...     rmakers.untie(notes)</span>
 <span class="sd">        ...     rmakers.tie(notes)</span>
-<span class="sd">        ...     rmakers.beam(container)</span>
-<span class="sd">        ...     components = abjad.mutate.eject_contents(container)</span>
-<span class="sd">        ...     lilypond_file = rmakers.example(components, time_signatures)</span>
+<span class="sd">        ...     rmakers.beam(voice)</span>
 <span class="sd">        ...     return lilypond_file</span>
 
 <span class="sd">        &gt;&gt;&gt; pairs = [(2, 8), (2, 8), (2, 8), (2, 8), (2, 8), (2, 8)]</span>
@@ -5124,7 +5109,7 @@
 <span class="sd">            &gt;&gt;&gt; string = abjad.lilypond(score)</span>
 <span class="sd">            &gt;&gt;&gt; print(string)</span>
 <span class="sd">            \context Score = &quot;Score&quot;</span>
-<span class="sd">            &lt;&lt;</span>
+<span class="sd">            {</span>
 <span class="sd">                \context RhythmicStaff = &quot;Staff&quot;</span>
 <span class="sd">                \with</span>
 <span class="sd">                {</span>
@@ -5196,7 +5181,7 @@
 <span class="sd">                        }</span>
 <span class="sd">                    }</span>
 <span class="sd">                }</span>
-<span class="sd">            &gt;&gt;</span>
+<span class="sd">            }</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">tag</span> <span class="o">=</span> <span class="n">tag</span> <span class="ow">or</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Tag</span><span class="p">()</span>
@@ -5228,16 +5213,15 @@
 <span class="sd">        ...     time_signatures = rmakers.time_signatures(pairs)</span>
 <span class="sd">        ...     durations = [abjad.Duration(_) for _ in time_signatures]</span>
 <span class="sd">        ...     tuplets = rmakers.even_division(durations, [4])</span>
-<span class="sd">        ...     container = abjad.Container(tuplets)</span>
-<span class="sd">        ...     tuplets = abjad.select.tuplets(container)</span>
+<span class="sd">        ...     lilypond_file = rmakers.example(tuplets, time_signatures)</span>
+<span class="sd">        ...     voice = lilypond_file[&quot;Voice&quot;]</span>
 <span class="sd">        ...     notes = [abjad.select.notes(_) for _ in tuplets]</span>
 <span class="sd">        ...     groups = [abjad.select.get(_, [0, -1]) for _ in notes]</span>
 <span class="sd">        ...     rmakers.tremolo_container(groups, 2)</span>
-<span class="sd">        ...     rmakers.extract_trivial(container)</span>
-<span class="sd">        ...     components = abjad.mutate.eject_contents(container)</span>
-<span class="sd">        ...     containers = abjad.select.components(components, abjad.TremoloContainer)</span>
+<span class="sd">        ...     rmakers.extract_trivial(voice)</span>
+<span class="sd">        ...     containers = abjad.select.components(voice, abjad.TremoloContainer)</span>
 <span class="sd">        ...     result = [abjad.slur(_) for _ in containers]</span>
-<span class="sd">        ...     lilypond_file = rmakers.example(components, time_signatures)</span>
+<span class="sd">        ...     rmakers.attach_time_signatures(voice, time_signatures)</span>
 <span class="sd">        ...     return lilypond_file</span>
 
 <span class="sd">        &gt;&gt;&gt; pairs = [(4, 4), (3, 4)]</span>
@@ -5250,7 +5234,7 @@
 <span class="sd">            &gt;&gt;&gt; string = abjad.lilypond(score)</span>
 <span class="sd">            &gt;&gt;&gt; print(string)</span>
 <span class="sd">            \context Score = &quot;Score&quot;</span>
-<span class="sd">            &lt;&lt;</span>
+<span class="sd">            {</span>
 <span class="sd">                \context RhythmicStaff = &quot;Staff&quot;</span>
 <span class="sd">                \with</span>
 <span class="sd">                {</span>
@@ -5290,7 +5274,7 @@
 <span class="sd">                        }</span>
 <span class="sd">                    }</span>
 <span class="sd">                }</span>
-<span class="sd">            &gt;&gt;</span>
+<span class="sd">            }</span>
 
 <span class="sd">        Repeats figures four times each:</span>
 
@@ -5298,16 +5282,15 @@
 <span class="sd">        ...     time_signatures = rmakers.time_signatures(pairs)</span>
 <span class="sd">        ...     durations = [abjad.Duration(_) for _ in time_signatures]</span>
 <span class="sd">        ...     tuplets = rmakers.even_division(durations, [4])</span>
-<span class="sd">        ...     container = abjad.Container(tuplets)</span>
-<span class="sd">        ...     tuplets = abjad.select.tuplets(container)</span>
+<span class="sd">        ...     lilypond_file = rmakers.example(tuplets, time_signatures)</span>
+<span class="sd">        ...     voice = lilypond_file[&quot;Voice&quot;]</span>
 <span class="sd">        ...     notes = [abjad.select.notes(_) for _ in tuplets]</span>
 <span class="sd">        ...     groups = [abjad.select.get(_, [0, -1]) for _ in notes]</span>
 <span class="sd">        ...     rmakers.tremolo_container(groups, 4)</span>
-<span class="sd">        ...     rmakers.extract_trivial(container)</span>
-<span class="sd">        ...     components = abjad.mutate.eject_contents(container)</span>
-<span class="sd">        ...     containers = abjad.select.components(components, abjad.TremoloContainer)</span>
+<span class="sd">        ...     rmakers.extract_trivial(voice)</span>
+<span class="sd">        ...     containers = abjad.select.components(voice, abjad.TremoloContainer)</span>
 <span class="sd">        ...     result = [abjad.slur(_) for _ in containers]</span>
-<span class="sd">        ...     lilypond_file = rmakers.example(components, time_signatures)</span>
+<span class="sd">        ...     rmakers.attach_time_signatures(voice, time_signatures)</span>
 <span class="sd">        ...     return lilypond_file</span>
 
 <span class="sd">        &gt;&gt;&gt; pairs = [(4, 4), (3, 4)]</span>
@@ -5320,7 +5303,7 @@
 <span class="sd">            &gt;&gt;&gt; string = abjad.lilypond(score)</span>
 <span class="sd">            &gt;&gt;&gt; print(string)</span>
 <span class="sd">            \context Score = &quot;Score&quot;</span>
-<span class="sd">            &lt;&lt;</span>
+<span class="sd">            {</span>
 <span class="sd">                \context RhythmicStaff = &quot;Staff&quot;</span>
 <span class="sd">                \with</span>
 <span class="sd">                {</span>
@@ -5360,7 +5343,7 @@
 <span class="sd">                        }</span>
 <span class="sd">                    }</span>
 <span class="sd">                }</span>
-<span class="sd">            &gt;&gt;</span>
+<span class="sd">            }</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">tag</span> <span class="o">=</span> <span class="n">tag</span> <span class="ow">or</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Tag</span><span class="p">()</span>
@@ -5389,10 +5372,9 @@
 <span class="sd">        ...     tuplets = rmakers.talea(</span>
 <span class="sd">        ...         durations, [3, 3, 6, 6], 16, extra_counts=[0, 4]</span>
 <span class="sd">        ...     )</span>
-<span class="sd">        ...     container = abjad.Container(tuplets)</span>
-<span class="sd">        ...     rmakers.beam(container)</span>
-<span class="sd">        ...     components = abjad.mutate.eject_contents(container)</span>
-<span class="sd">        ...     lilypond_file = rmakers.example(components, time_signatures)</span>
+<span class="sd">        ...     lilypond_file = rmakers.example(tuplets, time_signatures)</span>
+<span class="sd">        ...     voice = lilypond_file[&quot;Voice&quot;]</span>
+<span class="sd">        ...     rmakers.beam(voice)</span>
 <span class="sd">        ...     return lilypond_file</span>
 
 <span class="sd">        &gt;&gt;&gt; pairs = [(3, 8), (4, 8), (3, 8), (4, 8)]</span>
@@ -5405,7 +5387,7 @@
 <span class="sd">            &gt;&gt;&gt; string = abjad.lilypond(score)</span>
 <span class="sd">            &gt;&gt;&gt; print(string)</span>
 <span class="sd">            \context Score = &quot;Score&quot;</span>
-<span class="sd">            &lt;&lt;</span>
+<span class="sd">            {</span>
 <span class="sd">                \context RhythmicStaff = &quot;Staff&quot;</span>
 <span class="sd">                \with</span>
 <span class="sd">                {</span>
@@ -5446,7 +5428,7 @@
 <span class="sd">                        }</span>
 <span class="sd">                    }</span>
 <span class="sd">                }</span>
-<span class="sd">            &gt;&gt;</span>
+<span class="sd">            }</span>
 
 <span class="sd">        Rewrites trivializable tuplets as trivial (1:1) tuplets when ``trivialize`` is</span>
 <span class="sd">        true:</span>
@@ -5457,11 +5439,10 @@
 <span class="sd">        ...     tuplets = rmakers.talea(</span>
 <span class="sd">        ...         durations, [3, 3, 6, 6], 16, extra_counts=[0, 4]</span>
 <span class="sd">        ...     )</span>
-<span class="sd">        ...     container = abjad.Container(tuplets)</span>
-<span class="sd">        ...     rmakers.trivialize(container)</span>
-<span class="sd">        ...     rmakers.beam(container)</span>
-<span class="sd">        ...     components = abjad.mutate.eject_contents(container)</span>
-<span class="sd">        ...     lilypond_file = rmakers.example(components, time_signatures)</span>
+<span class="sd">        ...     lilypond_file = rmakers.example(tuplets, time_signatures)</span>
+<span class="sd">        ...     voice = lilypond_file[&quot;Voice&quot;]</span>
+<span class="sd">        ...     rmakers.trivialize(voice)</span>
+<span class="sd">        ...     rmakers.beam(voice)</span>
 <span class="sd">        ...     return lilypond_file</span>
 
 <span class="sd">        &gt;&gt;&gt; pairs = [(3, 8), (4, 8), (3, 8), (4, 8)]</span>
@@ -5474,7 +5455,7 @@
 <span class="sd">            &gt;&gt;&gt; string = abjad.lilypond(score)</span>
 <span class="sd">            &gt;&gt;&gt; print(string)</span>
 <span class="sd">            \context Score = &quot;Score&quot;</span>
-<span class="sd">            &lt;&lt;</span>
+<span class="sd">            {</span>
 <span class="sd">                \context RhythmicStaff = &quot;Staff&quot;</span>
 <span class="sd">                \with</span>
 <span class="sd">                {</span>
@@ -5517,7 +5498,7 @@
 <span class="sd">                        }</span>
 <span class="sd">                    }</span>
 <span class="sd">                }</span>
-<span class="sd">            &gt;&gt;</span>
+<span class="sd">            }</span>
 
 <span class="sd">        REGRESSION #907a. Rewrites trivializable tuplets even when tuplets contain</span>
 <span class="sd">        multiple ties:</span>
@@ -5528,14 +5509,12 @@
 <span class="sd">        ...     tuplets = rmakers.talea(</span>
 <span class="sd">        ...         durations, [3, 3, 6, 6], 16, extra_counts=[0, 4]</span>
 <span class="sd">        ...     )</span>
-<span class="sd">        ...     container = abjad.Container(tuplets)</span>
-<span class="sd">        ...     rmakers.trivialize(container)</span>
-<span class="sd">        ...     tuplets = abjad.select.tuplets(container)[:-1]</span>
-<span class="sd">        ...     leaves = [abjad.select.leaf(_, -1) for _ in tuplets]</span>
+<span class="sd">        ...     lilypond_file = rmakers.example(tuplets, time_signatures)</span>
+<span class="sd">        ...     voice = lilypond_file[&quot;Voice&quot;]</span>
+<span class="sd">        ...     rmakers.trivialize(voice)</span>
+<span class="sd">        ...     leaves = [abjad.select.leaf(_, -1) for _ in tuplets[:-1]]</span>
 <span class="sd">        ...     rmakers.tie(leaves)</span>
-<span class="sd">        ...     rmakers.beam(container)</span>
-<span class="sd">        ...     components = abjad.mutate.eject_contents(container)</span>
-<span class="sd">        ...     lilypond_file = rmakers.example(components, time_signatures)</span>
+<span class="sd">        ...     rmakers.beam(voice)</span>
 <span class="sd">        ...     return lilypond_file</span>
 
 <span class="sd">        &gt;&gt;&gt; pairs = [(3, 8), (4, 8), (3, 8), (4, 8)]</span>
@@ -5548,7 +5527,7 @@
 <span class="sd">            &gt;&gt;&gt; string = abjad.lilypond(score)</span>
 <span class="sd">            &gt;&gt;&gt; print(string)</span>
 <span class="sd">            \context Score = &quot;Score&quot;</span>
-<span class="sd">            &lt;&lt;</span>
+<span class="sd">            {</span>
 <span class="sd">                \context RhythmicStaff = &quot;Staff&quot;</span>
 <span class="sd">                \with</span>
 <span class="sd">                {</span>
@@ -5594,7 +5573,7 @@
 <span class="sd">                        }</span>
 <span class="sd">                    }</span>
 <span class="sd">                }</span>
-<span class="sd">            &gt;&gt;</span>
+<span class="sd">            }</span>
 
 <span class="sd">        REGRESSION #907b. Rewrites trivializable tuplets even when tuplets contain very</span>
 <span class="sd">        long ties:</span>
@@ -5605,13 +5584,12 @@
 <span class="sd">        ...     tuplets = rmakers.talea(</span>
 <span class="sd">        ...         durations, [3, 3, 6, 6], 16, extra_counts=[0, 4]</span>
 <span class="sd">        ...     )</span>
-<span class="sd">        ...     container = abjad.Container(tuplets)</span>
-<span class="sd">        ...     rmakers.trivialize(container)</span>
-<span class="sd">        ...     notes = abjad.select.notes(container)[:-1]</span>
+<span class="sd">        ...     lilypond_file = rmakers.example(tuplets, time_signatures)</span>
+<span class="sd">        ...     voice = lilypond_file[&quot;Voice&quot;]</span>
+<span class="sd">        ...     rmakers.trivialize(voice)</span>
+<span class="sd">        ...     notes = abjad.select.notes(voice)[:-1]</span>
 <span class="sd">        ...     rmakers.tie(notes)</span>
-<span class="sd">        ...     rmakers.beam(container)</span>
-<span class="sd">        ...     components = abjad.mutate.eject_contents(container)</span>
-<span class="sd">        ...     lilypond_file = rmakers.example(components, time_signatures)</span>
+<span class="sd">        ...     rmakers.beam(voice)</span>
 <span class="sd">        ...     return lilypond_file</span>
 
 <span class="sd">        &gt;&gt;&gt; pairs = [(3, 8), (4, 8), (3, 8), (4, 8)]</span>
@@ -5624,7 +5602,7 @@
 <span class="sd">            &gt;&gt;&gt; string = abjad.lilypond(score)</span>
 <span class="sd">            &gt;&gt;&gt; print(string)</span>
 <span class="sd">            \context Score = &quot;Score&quot;</span>
-<span class="sd">            &lt;&lt;</span>
+<span class="sd">            {</span>
 <span class="sd">                \context RhythmicStaff = &quot;Staff&quot;</span>
 <span class="sd">                \with</span>
 <span class="sd">                {</span>
@@ -5674,7 +5652,7 @@
 <span class="sd">                        }</span>
 <span class="sd">                    }</span>
 <span class="sd">                }</span>
-<span class="sd">            &gt;&gt;</span>
+<span class="sd">            }</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">for</span> <span class="n">tuplet</span> <span class="ow">in</span> <span class="n">abjad</span><span class="o">.</span><span class="n">select</span><span class="o">.</span><span class="n">tuplets</span><span class="p">(</span><span class="n">argument</span><span class="p">):</span>
@@ -5691,10 +5669,11 @@
 
 <span class="sd">    ..  container:: example</span>
 
-<span class="sd">        &gt;&gt;&gt; staff = abjad.Staff(&quot;c&#39;8 [ d&#39; e&#39; f&#39; g&#39; a&#39; ]&quot;)</span>
+<span class="sd">        &gt;&gt;&gt; voice = abjad.Voice(&quot;c&#39;8 [ d&#39; e&#39; f&#39; g&#39; a&#39; ]&quot;)</span>
+<span class="sd">        &gt;&gt;&gt; staff = abjad.Staff([voice])</span>
 <span class="sd">        &gt;&gt;&gt; score = abjad.Score([staff])</span>
 <span class="sd">        &gt;&gt;&gt; abjad.setting(score).autoBeaming = False</span>
-<span class="sd">        &gt;&gt;&gt; rmakers.unbeam(staff[0], smart=True)</span>
+<span class="sd">        &gt;&gt;&gt; rmakers.unbeam(voice[0], smart=True)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(score) # doctest: +SKIP</span>
 
 <span class="sd">        ..  docs::</span>
@@ -5709,21 +5688,25 @@
 <span class="sd">            &lt;&lt;</span>
 <span class="sd">                \new Staff</span>
 <span class="sd">                {</span>
-<span class="sd">                    c&#39;8</span>
-<span class="sd">                    d&#39;8</span>
-<span class="sd">                    [</span>
-<span class="sd">                    e&#39;8</span>
-<span class="sd">                    f&#39;8</span>
-<span class="sd">                    g&#39;8</span>
-<span class="sd">                    a&#39;8</span>
-<span class="sd">                    ]</span>
+<span class="sd">                    \new Voice</span>
+<span class="sd">                    {</span>
+<span class="sd">                        c&#39;8</span>
+<span class="sd">                        d&#39;8</span>
+<span class="sd">                        [</span>
+<span class="sd">                        e&#39;8</span>
+<span class="sd">                        f&#39;8</span>
+<span class="sd">                        g&#39;8</span>
+<span class="sd">                        a&#39;8</span>
+<span class="sd">                        ]</span>
+<span class="sd">                    }</span>
 <span class="sd">                }</span>
 <span class="sd">            &gt;&gt;</span>
 
-<span class="sd">        &gt;&gt;&gt; staff = abjad.Staff(&quot;c&#39;8 [ d&#39; e&#39; f&#39; g&#39; a&#39; ]&quot;)</span>
+<span class="sd">        &gt;&gt;&gt; voice = abjad.Voice(&quot;c&#39;8 [ d&#39; e&#39; f&#39; g&#39; a&#39; ]&quot;)</span>
+<span class="sd">        &gt;&gt;&gt; staff = abjad.Staff([voice])</span>
 <span class="sd">        &gt;&gt;&gt; score = abjad.Score([staff])</span>
 <span class="sd">        &gt;&gt;&gt; abjad.setting(score).autoBeaming = False</span>
-<span class="sd">        &gt;&gt;&gt; rmakers.unbeam(staff[1], smart=True)</span>
+<span class="sd">        &gt;&gt;&gt; rmakers.unbeam(voice[1], smart=True)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(score) # doctest: +SKIP</span>
 
 <span class="sd">        ..  docs::</span>
@@ -5738,21 +5721,25 @@
 <span class="sd">            &lt;&lt;</span>
 <span class="sd">                \new Staff</span>
 <span class="sd">                {</span>
-<span class="sd">                    c&#39;8</span>
-<span class="sd">                    d&#39;8</span>
-<span class="sd">                    e&#39;8</span>
-<span class="sd">                    [</span>
-<span class="sd">                    f&#39;8</span>
-<span class="sd">                    g&#39;8</span>
-<span class="sd">                    a&#39;8</span>
-<span class="sd">                    ]</span>
+<span class="sd">                    \new Voice</span>
+<span class="sd">                    {</span>
+<span class="sd">                        c&#39;8</span>
+<span class="sd">                        d&#39;8</span>
+<span class="sd">                        e&#39;8</span>
+<span class="sd">                        [</span>
+<span class="sd">                        f&#39;8</span>
+<span class="sd">                        g&#39;8</span>
+<span class="sd">                        a&#39;8</span>
+<span class="sd">                        ]</span>
+<span class="sd">                    }</span>
 <span class="sd">                }</span>
 <span class="sd">            &gt;&gt;</span>
 
-<span class="sd">        &gt;&gt;&gt; staff = abjad.Staff(&quot;c&#39;8 [ d&#39; e&#39; f&#39; g&#39; a&#39; ]&quot;)</span>
+<span class="sd">        &gt;&gt;&gt; voice = abjad.Voice(&quot;c&#39;8 [ d&#39; e&#39; f&#39; g&#39; a&#39; ]&quot;)</span>
+<span class="sd">        &gt;&gt;&gt; staff = abjad.Staff([voice])</span>
 <span class="sd">        &gt;&gt;&gt; score = abjad.Score([staff])</span>
 <span class="sd">        &gt;&gt;&gt; abjad.setting(score).autoBeaming = False</span>
-<span class="sd">        &gt;&gt;&gt; rmakers.unbeam(staff[2], smart=True)</span>
+<span class="sd">        &gt;&gt;&gt; rmakers.unbeam(voice[2], smart=True)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(score) # doctest: +SKIP</span>
 
 <span class="sd">        ..  docs::</span>
@@ -5767,23 +5754,27 @@
 <span class="sd">            &lt;&lt;</span>
 <span class="sd">                \new Staff</span>
 <span class="sd">                {</span>
-<span class="sd">                    c&#39;8</span>
-<span class="sd">                    [</span>
-<span class="sd">                    d&#39;8</span>
-<span class="sd">                    ]</span>
-<span class="sd">                    e&#39;8</span>
-<span class="sd">                    f&#39;8</span>
-<span class="sd">                    [</span>
-<span class="sd">                    g&#39;8</span>
-<span class="sd">                    a&#39;8</span>
-<span class="sd">                    ]</span>
+<span class="sd">                    \new Voice</span>
+<span class="sd">                    {</span>
+<span class="sd">                        c&#39;8</span>
+<span class="sd">                        [</span>
+<span class="sd">                        d&#39;8</span>
+<span class="sd">                        ]</span>
+<span class="sd">                        e&#39;8</span>
+<span class="sd">                        f&#39;8</span>
+<span class="sd">                        [</span>
+<span class="sd">                        g&#39;8</span>
+<span class="sd">                        a&#39;8</span>
+<span class="sd">                        ]</span>
+<span class="sd">                    }</span>
 <span class="sd">                }</span>
 <span class="sd">            &gt;&gt;</span>
 
-<span class="sd">        &gt;&gt;&gt; staff = abjad.Staff(&quot;c&#39;8 [ d&#39; e&#39; f&#39; g&#39; a&#39; ]&quot;)</span>
+<span class="sd">        &gt;&gt;&gt; voice = abjad.Voice(&quot;c&#39;8 [ d&#39; e&#39; f&#39; g&#39; a&#39; ]&quot;)</span>
+<span class="sd">        &gt;&gt;&gt; staff = abjad.Staff([voice])</span>
 <span class="sd">        &gt;&gt;&gt; score = abjad.Score([staff])</span>
 <span class="sd">        &gt;&gt;&gt; abjad.setting(score).autoBeaming = False</span>
-<span class="sd">        &gt;&gt;&gt; rmakers.unbeam(staff[3], smart=True)</span>
+<span class="sd">        &gt;&gt;&gt; rmakers.unbeam(voice[3], smart=True)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(score) # doctest: +SKIP</span>
 
 <span class="sd">        ..  docs::</span>
@@ -5798,23 +5789,27 @@
 <span class="sd">            &lt;&lt;</span>
 <span class="sd">                \new Staff</span>
 <span class="sd">                {</span>
-<span class="sd">                    c&#39;8</span>
-<span class="sd">                    [</span>
-<span class="sd">                    d&#39;8</span>
-<span class="sd">                    e&#39;8</span>
-<span class="sd">                    ]</span>
-<span class="sd">                    f&#39;8</span>
-<span class="sd">                    g&#39;8</span>
-<span class="sd">                    [</span>
-<span class="sd">                    a&#39;8</span>
-<span class="sd">                    ]</span>
+<span class="sd">                    \new Voice</span>
+<span class="sd">                    {</span>
+<span class="sd">                        c&#39;8</span>
+<span class="sd">                        [</span>
+<span class="sd">                        d&#39;8</span>
+<span class="sd">                        e&#39;8</span>
+<span class="sd">                        ]</span>
+<span class="sd">                        f&#39;8</span>
+<span class="sd">                        g&#39;8</span>
+<span class="sd">                        [</span>
+<span class="sd">                        a&#39;8</span>
+<span class="sd">                        ]</span>
+<span class="sd">                    }</span>
 <span class="sd">                }</span>
 <span class="sd">            &gt;&gt;</span>
 
-<span class="sd">        &gt;&gt;&gt; staff = abjad.Staff(&quot;c&#39;8 [ d&#39; e&#39; f&#39; g&#39; a&#39; ]&quot;)</span>
+<span class="sd">        &gt;&gt;&gt; voice = abjad.Voice(&quot;c&#39;8 [ d&#39; e&#39; f&#39; g&#39; a&#39; ]&quot;)</span>
+<span class="sd">        &gt;&gt;&gt; staff = abjad.Staff([voice])</span>
 <span class="sd">        &gt;&gt;&gt; score = abjad.Score([staff])</span>
 <span class="sd">        &gt;&gt;&gt; abjad.setting(score).autoBeaming = False</span>
-<span class="sd">        &gt;&gt;&gt; rmakers.unbeam(staff[4], smart=True)</span>
+<span class="sd">        &gt;&gt;&gt; rmakers.unbeam(voice[4], smart=True)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(score) # doctest: +SKIP</span>
 
 <span class="sd">        ..  docs::</span>
@@ -5829,21 +5824,25 @@
 <span class="sd">            &lt;&lt;</span>
 <span class="sd">                \new Staff</span>
 <span class="sd">                {</span>
-<span class="sd">                    c&#39;8</span>
-<span class="sd">                    [</span>
-<span class="sd">                    d&#39;8</span>
-<span class="sd">                    e&#39;8</span>
-<span class="sd">                    f&#39;8</span>
-<span class="sd">                    ]</span>
-<span class="sd">                    g&#39;8</span>
-<span class="sd">                    a&#39;8</span>
+<span class="sd">                    \new Voice</span>
+<span class="sd">                    {</span>
+<span class="sd">                        c&#39;8</span>
+<span class="sd">                        [</span>
+<span class="sd">                        d&#39;8</span>
+<span class="sd">                        e&#39;8</span>
+<span class="sd">                        f&#39;8</span>
+<span class="sd">                        ]</span>
+<span class="sd">                        g&#39;8</span>
+<span class="sd">                        a&#39;8</span>
+<span class="sd">                    }</span>
 <span class="sd">                }</span>
 <span class="sd">            &gt;&gt;</span>
 
-<span class="sd">        &gt;&gt;&gt; staff = abjad.Staff(&quot;c&#39;8 [ d&#39; e&#39; f&#39; g&#39; a&#39; ]&quot;)</span>
+<span class="sd">        &gt;&gt;&gt; voice = abjad.Voice(&quot;c&#39;8 [ d&#39; e&#39; f&#39; g&#39; a&#39; ]&quot;)</span>
+<span class="sd">        &gt;&gt;&gt; staff = abjad.Staff([voice])</span>
 <span class="sd">        &gt;&gt;&gt; score = abjad.Score([staff])</span>
 <span class="sd">        &gt;&gt;&gt; abjad.setting(score).autoBeaming = False</span>
-<span class="sd">        &gt;&gt;&gt; rmakers.unbeam(staff[5], smart=True)</span>
+<span class="sd">        &gt;&gt;&gt; rmakers.unbeam(voice[5], smart=True)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(score) # doctest: +SKIP</span>
 
 <span class="sd">        ..  docs::</span>
@@ -5858,14 +5857,17 @@
 <span class="sd">            &lt;&lt;</span>
 <span class="sd">                \new Staff</span>
 <span class="sd">                {</span>
-<span class="sd">                    c&#39;8</span>
-<span class="sd">                    [</span>
-<span class="sd">                    d&#39;8</span>
-<span class="sd">                    e&#39;8</span>
-<span class="sd">                    f&#39;8</span>
-<span class="sd">                    g&#39;8</span>
-<span class="sd">                    ]</span>
-<span class="sd">                    a&#39;8</span>
+<span class="sd">                    \new Voice</span>
+<span class="sd">                    {</span>
+<span class="sd">                        c&#39;8</span>
+<span class="sd">                        [</span>
+<span class="sd">                        d&#39;8</span>
+<span class="sd">                        e&#39;8</span>
+<span class="sd">                        f&#39;8</span>
+<span class="sd">                        g&#39;8</span>
+<span class="sd">                        ]</span>
+<span class="sd">                        a&#39;8</span>
+<span class="sd">                    }</span>
 <span class="sd">                }</span>
 <span class="sd">            &gt;&gt;</span>
 
@@ -5873,10 +5875,11 @@
 
 <span class="sd">        Unbeams 2 notes:</span>
 
-<span class="sd">        &gt;&gt;&gt; staff = abjad.Staff(&quot;c&#39;8 [ d&#39; e&#39; f&#39; g&#39; a&#39; ]&quot;)</span>
+<span class="sd">        &gt;&gt;&gt; voice = abjad.Voice(&quot;c&#39;8 [ d&#39; e&#39; f&#39; g&#39; a&#39; ]&quot;)</span>
+<span class="sd">        &gt;&gt;&gt; staff = abjad.Staff([voice])</span>
 <span class="sd">        &gt;&gt;&gt; score = abjad.Score([staff])</span>
 <span class="sd">        &gt;&gt;&gt; abjad.setting(score).autoBeaming = False</span>
-<span class="sd">        &gt;&gt;&gt; rmakers.unbeam(staff[:2], smart=True)</span>
+<span class="sd">        &gt;&gt;&gt; rmakers.unbeam(voice[:2], smart=True)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(score) # doctest: +SKIP</span>
 
 <span class="sd">        ..  docs::</span>
@@ -5891,21 +5894,25 @@
 <span class="sd">            &lt;&lt;</span>
 <span class="sd">                \new Staff</span>
 <span class="sd">                {</span>
-<span class="sd">                    c&#39;8</span>
-<span class="sd">                    d&#39;8</span>
-<span class="sd">                    e&#39;8</span>
-<span class="sd">                    [</span>
-<span class="sd">                    f&#39;8</span>
-<span class="sd">                    g&#39;8</span>
-<span class="sd">                    a&#39;8</span>
-<span class="sd">                    ]</span>
+<span class="sd">                    \new Voice</span>
+<span class="sd">                    {</span>
+<span class="sd">                        c&#39;8</span>
+<span class="sd">                        d&#39;8</span>
+<span class="sd">                        e&#39;8</span>
+<span class="sd">                        [</span>
+<span class="sd">                        f&#39;8</span>
+<span class="sd">                        g&#39;8</span>
+<span class="sd">                        a&#39;8</span>
+<span class="sd">                        ]</span>
+<span class="sd">                    }</span>
 <span class="sd">                }</span>
 <span class="sd">            &gt;&gt;</span>
 
-<span class="sd">        &gt;&gt;&gt; staff = abjad.Staff(&quot;c&#39;8 [ d&#39; e&#39; f&#39; g&#39; a&#39; ]&quot;)</span>
+<span class="sd">        &gt;&gt;&gt; voice = abjad.Voice(&quot;c&#39;8 [ d&#39; e&#39; f&#39; g&#39; a&#39; ]&quot;)</span>
+<span class="sd">        &gt;&gt;&gt; staff = abjad.Staff([voice])</span>
 <span class="sd">        &gt;&gt;&gt; score = abjad.Score([staff])</span>
 <span class="sd">        &gt;&gt;&gt; abjad.setting(score).autoBeaming = False</span>
-<span class="sd">        &gt;&gt;&gt; rmakers.unbeam(staff[1:3], smart=True)</span>
+<span class="sd">        &gt;&gt;&gt; rmakers.unbeam(voice[1:3], smart=True)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(score) # doctest: +SKIP</span>
 
 <span class="sd">        ..  docs::</span>
@@ -5920,21 +5927,25 @@
 <span class="sd">            &lt;&lt;</span>
 <span class="sd">                \new Staff</span>
 <span class="sd">                {</span>
-<span class="sd">                    c&#39;8</span>
-<span class="sd">                    d&#39;8</span>
-<span class="sd">                    e&#39;8</span>
-<span class="sd">                    f&#39;8</span>
-<span class="sd">                    [</span>
-<span class="sd">                    g&#39;8</span>
-<span class="sd">                    a&#39;8</span>
-<span class="sd">                    ]</span>
+<span class="sd">                    \new Voice</span>
+<span class="sd">                    {</span>
+<span class="sd">                        c&#39;8</span>
+<span class="sd">                        d&#39;8</span>
+<span class="sd">                        e&#39;8</span>
+<span class="sd">                        f&#39;8</span>
+<span class="sd">                        [</span>
+<span class="sd">                        g&#39;8</span>
+<span class="sd">                        a&#39;8</span>
+<span class="sd">                        ]</span>
+<span class="sd">                    }</span>
 <span class="sd">                }</span>
 <span class="sd">            &gt;&gt;</span>
 
-<span class="sd">        &gt;&gt;&gt; staff = abjad.Staff(&quot;c&#39;8 [ d&#39; e&#39; f&#39; g&#39; a&#39; ]&quot;)</span>
+<span class="sd">        &gt;&gt;&gt; voice = abjad.Voice(&quot;c&#39;8 [ d&#39; e&#39; f&#39; g&#39; a&#39; ]&quot;)</span>
+<span class="sd">        &gt;&gt;&gt; staff = abjad.Staff([voice])</span>
 <span class="sd">        &gt;&gt;&gt; score = abjad.Score([staff])</span>
 <span class="sd">        &gt;&gt;&gt; abjad.setting(score).autoBeaming = False</span>
-<span class="sd">        &gt;&gt;&gt; rmakers.unbeam(staff[2:4], smart=True)</span>
+<span class="sd">        &gt;&gt;&gt; rmakers.unbeam(voice[2:4], smart=True)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(score) # doctest: +SKIP</span>
 
 <span class="sd">        ..  docs::</span>
@@ -5949,23 +5960,27 @@
 <span class="sd">            &lt;&lt;</span>
 <span class="sd">                \new Staff</span>
 <span class="sd">                {</span>
-<span class="sd">                    c&#39;8</span>
-<span class="sd">                    [</span>
-<span class="sd">                    d&#39;8</span>
-<span class="sd">                    ]</span>
-<span class="sd">                    e&#39;8</span>
-<span class="sd">                    f&#39;8</span>
-<span class="sd">                    g&#39;8</span>
-<span class="sd">                    [</span>
-<span class="sd">                    a&#39;8</span>
-<span class="sd">                    ]</span>
+<span class="sd">                    \new Voice</span>
+<span class="sd">                    {</span>
+<span class="sd">                        c&#39;8</span>
+<span class="sd">                        [</span>
+<span class="sd">                        d&#39;8</span>
+<span class="sd">                        ]</span>
+<span class="sd">                        e&#39;8</span>
+<span class="sd">                        f&#39;8</span>
+<span class="sd">                        g&#39;8</span>
+<span class="sd">                        [</span>
+<span class="sd">                        a&#39;8</span>
+<span class="sd">                        ]</span>
+<span class="sd">                    }</span>
 <span class="sd">                }</span>
 <span class="sd">            &gt;&gt;</span>
 
-<span class="sd">        &gt;&gt;&gt; staff = abjad.Staff(&quot;c&#39;8 [ d&#39; e&#39; f&#39; g&#39; a&#39; ]&quot;)</span>
+<span class="sd">        &gt;&gt;&gt; voice = abjad.Voice(&quot;c&#39;8 [ d&#39; e&#39; f&#39; g&#39; a&#39; ]&quot;)</span>
+<span class="sd">        &gt;&gt;&gt; staff = abjad.Staff([voice])</span>
 <span class="sd">        &gt;&gt;&gt; score = abjad.Score([staff])</span>
 <span class="sd">        &gt;&gt;&gt; abjad.setting(score).autoBeaming = False</span>
-<span class="sd">        &gt;&gt;&gt; rmakers.unbeam(staff[3:5], smart=True)</span>
+<span class="sd">        &gt;&gt;&gt; rmakers.unbeam(voice[3:5], smart=True)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(score) # doctest: +SKIP</span>
 
 <span class="sd">        ..  docs::</span>
@@ -5980,21 +5995,25 @@
 <span class="sd">            &lt;&lt;</span>
 <span class="sd">                \new Staff</span>
 <span class="sd">                {</span>
-<span class="sd">                    c&#39;8</span>
-<span class="sd">                    [</span>
-<span class="sd">                    d&#39;8</span>
-<span class="sd">                    e&#39;8</span>
-<span class="sd">                    ]</span>
-<span class="sd">                    f&#39;8</span>
-<span class="sd">                    g&#39;8</span>
-<span class="sd">                    a&#39;8</span>
+<span class="sd">                    \new Voice</span>
+<span class="sd">                    {</span>
+<span class="sd">                        c&#39;8</span>
+<span class="sd">                        [</span>
+<span class="sd">                        d&#39;8</span>
+<span class="sd">                        e&#39;8</span>
+<span class="sd">                        ]</span>
+<span class="sd">                        f&#39;8</span>
+<span class="sd">                        g&#39;8</span>
+<span class="sd">                        a&#39;8</span>
+<span class="sd">                    }</span>
 <span class="sd">                }</span>
 <span class="sd">            &gt;&gt;</span>
 
-<span class="sd">        &gt;&gt;&gt; staff = abjad.Staff(&quot;c&#39;8 [ d&#39; e&#39; f&#39; g&#39; a&#39; ]&quot;)</span>
+<span class="sd">        &gt;&gt;&gt; voice = abjad.Voice(&quot;c&#39;8 [ d&#39; e&#39; f&#39; g&#39; a&#39; ]&quot;)</span>
+<span class="sd">        &gt;&gt;&gt; staff = abjad.Staff([voice])</span>
 <span class="sd">        &gt;&gt;&gt; score = abjad.Score([staff])</span>
 <span class="sd">        &gt;&gt;&gt; abjad.setting(score).autoBeaming = False</span>
-<span class="sd">        &gt;&gt;&gt; rmakers.unbeam(staff[4:], smart=True)</span>
+<span class="sd">        &gt;&gt;&gt; rmakers.unbeam(voice[4:], smart=True)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(score) # doctest: +SKIP</span>
 
 <span class="sd">        ..  docs::</span>
@@ -6009,14 +6028,17 @@
 <span class="sd">            &lt;&lt;</span>
 <span class="sd">                \new Staff</span>
 <span class="sd">                {</span>
-<span class="sd">                    c&#39;8</span>
-<span class="sd">                    [</span>
-<span class="sd">                    d&#39;8</span>
-<span class="sd">                    e&#39;8</span>
-<span class="sd">                    f&#39;8</span>
-<span class="sd">                    ]</span>
-<span class="sd">                    g&#39;8</span>
-<span class="sd">                    a&#39;8</span>
+<span class="sd">                    \new Voice</span>
+<span class="sd">                    {</span>
+<span class="sd">                        c&#39;8</span>
+<span class="sd">                        [</span>
+<span class="sd">                        d&#39;8</span>
+<span class="sd">                        e&#39;8</span>
+<span class="sd">                        f&#39;8</span>
+<span class="sd">                        ]</span>
+<span class="sd">                        g&#39;8</span>
+<span class="sd">                        a&#39;8</span>
+<span class="sd">                    }</span>
 <span class="sd">                }</span>
 <span class="sd">            &gt;&gt;</span>
 
@@ -6024,10 +6046,11 @@
 
 <span class="sd">        Unbeams 1 note:</span>
 
-<span class="sd">        &gt;&gt;&gt; staff = abjad.Staff(&quot;c&#39;8 [ d&#39; ] e&#39; [ f&#39; ] g&#39; [ a&#39; ]&quot;)</span>
+<span class="sd">        &gt;&gt;&gt; voice = abjad.Voice(&quot;c&#39;8 [ d&#39; ] e&#39; [ f&#39; ] g&#39; [ a&#39; ]&quot;)</span>
+<span class="sd">        &gt;&gt;&gt; staff = abjad.Staff([voice])</span>
 <span class="sd">        &gt;&gt;&gt; score = abjad.Score([staff])</span>
 <span class="sd">        &gt;&gt;&gt; abjad.setting(score).autoBeaming = False</span>
-<span class="sd">        &gt;&gt;&gt; rmakers.unbeam(staff[0], smart=True)</span>
+<span class="sd">        &gt;&gt;&gt; rmakers.unbeam(voice[0], smart=True)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(score) # doctest: +SKIP</span>
 
 <span class="sd">        ..  docs::</span>
@@ -6042,23 +6065,27 @@
 <span class="sd">            &lt;&lt;</span>
 <span class="sd">                \new Staff</span>
 <span class="sd">                {</span>
-<span class="sd">                    c&#39;8</span>
-<span class="sd">                    d&#39;8</span>
-<span class="sd">                    e&#39;8</span>
-<span class="sd">                    [</span>
-<span class="sd">                    f&#39;8</span>
-<span class="sd">                    ]</span>
-<span class="sd">                    g&#39;8</span>
-<span class="sd">                    [</span>
-<span class="sd">                    a&#39;8</span>
-<span class="sd">                    ]</span>
+<span class="sd">                    \new Voice</span>
+<span class="sd">                    {</span>
+<span class="sd">                        c&#39;8</span>
+<span class="sd">                        d&#39;8</span>
+<span class="sd">                        e&#39;8</span>
+<span class="sd">                        [</span>
+<span class="sd">                        f&#39;8</span>
+<span class="sd">                        ]</span>
+<span class="sd">                        g&#39;8</span>
+<span class="sd">                        [</span>
+<span class="sd">                        a&#39;8</span>
+<span class="sd">                        ]</span>
+<span class="sd">                    }</span>
 <span class="sd">                }</span>
 <span class="sd">            &gt;&gt;</span>
 
-<span class="sd">        &gt;&gt;&gt; staff = abjad.Staff(&quot;c&#39;8 [ d&#39; ] e&#39; [ f&#39; ] g&#39; [ a&#39; ]&quot;)</span>
+<span class="sd">        &gt;&gt;&gt; voice = abjad.Voice(&quot;c&#39;8 [ d&#39; ] e&#39; [ f&#39; ] g&#39; [ a&#39; ]&quot;)</span>
+<span class="sd">        &gt;&gt;&gt; staff = abjad.Staff([voice])</span>
 <span class="sd">        &gt;&gt;&gt; score = abjad.Score([staff])</span>
 <span class="sd">        &gt;&gt;&gt; abjad.setting(score).autoBeaming = False</span>
-<span class="sd">        &gt;&gt;&gt; rmakers.unbeam(staff[1], smart=True)</span>
+<span class="sd">        &gt;&gt;&gt; rmakers.unbeam(voice[1], smart=True)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(score) # doctest: +SKIP</span>
 
 <span class="sd">        ..  docs::</span>
@@ -6073,16 +6100,19 @@
 <span class="sd">            &lt;&lt;</span>
 <span class="sd">                \new Staff</span>
 <span class="sd">                {</span>
-<span class="sd">                    c&#39;8</span>
-<span class="sd">                    d&#39;8</span>
-<span class="sd">                    e&#39;8</span>
-<span class="sd">                    [</span>
-<span class="sd">                    f&#39;8</span>
-<span class="sd">                    ]</span>
-<span class="sd">                    g&#39;8</span>
-<span class="sd">                    [</span>
-<span class="sd">                    a&#39;8</span>
-<span class="sd">                    ]</span>
+<span class="sd">                    \new Voice</span>
+<span class="sd">                    {</span>
+<span class="sd">                        c&#39;8</span>
+<span class="sd">                        d&#39;8</span>
+<span class="sd">                        e&#39;8</span>
+<span class="sd">                        [</span>
+<span class="sd">                        f&#39;8</span>
+<span class="sd">                        ]</span>
+<span class="sd">                        g&#39;8</span>
+<span class="sd">                        [</span>
+<span class="sd">                        a&#39;8</span>
+<span class="sd">                        ]</span>
+<span class="sd">                    }</span>
 <span class="sd">                }</span>
 <span class="sd">            &gt;&gt;</span>
 
@@ -6433,15 +6463,14 @@
 <span class="sd">        ...     time_signatures = rmakers.time_signatures(pairs)</span>
 <span class="sd">        ...     durations = [abjad.Duration(_) for _ in time_signatures]</span>
 <span class="sd">        ...     tuplets = rmakers.even_division(durations, [8], extra_counts=[1])</span>
-<span class="sd">        ...     container = abjad.Container(tuplets)</span>
-<span class="sd">        ...     notes = abjad.select.notes(container)[:-1]</span>
+<span class="sd">        ...     lilypond_file = rmakers.example(tuplets, time_signatures)</span>
+<span class="sd">        ...     voice = lilypond_file[&quot;Voice&quot;]</span>
+<span class="sd">        ...     notes = abjad.select.notes(voice)[:-1]</span>
 <span class="sd">        ...     rmakers.tie(notes)</span>
-<span class="sd">        ...     notes = abjad.select.notes(container)</span>
+<span class="sd">        ...     notes = abjad.select.notes(voice)</span>
 <span class="sd">        ...     notes = abjad.select.get(notes, [0], 4)</span>
 <span class="sd">        ...     rmakers.untie(notes)</span>
-<span class="sd">        ...     rmakers.beam(container)</span>
-<span class="sd">        ...     components = abjad.mutate.eject_contents(container)</span>
-<span class="sd">        ...     lilypond_file = rmakers.example(components, time_signatures)</span>
+<span class="sd">        ...     rmakers.beam(voice)</span>
 <span class="sd">        ...     return lilypond_file</span>
 
 <span class="sd">        &gt;&gt;&gt; pairs = [(2, 8), (2, 8), (2, 8), (2, 8), (2, 8), (2, 8)]</span>
@@ -6454,7 +6483,7 @@
 <span class="sd">            &gt;&gt;&gt; string = abjad.lilypond(score)</span>
 <span class="sd">            &gt;&gt;&gt; print(string)</span>
 <span class="sd">            \context Score = &quot;Score&quot;</span>
-<span class="sd">            &lt;&lt;</span>
+<span class="sd">            {</span>
 <span class="sd">                \context RhythmicStaff = &quot;Staff&quot;</span>
 <span class="sd">                \with</span>
 <span class="sd">                {</span>
@@ -6526,7 +6555,7 @@
 <span class="sd">                        }</span>
 <span class="sd">                    }</span>
 <span class="sd">                }</span>
-<span class="sd">            &gt;&gt;</span>
+<span class="sd">            }</span>
 
 <span class="sd">    ..  container:: example</span>
 
@@ -6557,7 +6586,7 @@
 <span class="sd">            &gt;&gt;&gt; string = abjad.lilypond(score)</span>
 <span class="sd">            &gt;&gt;&gt; print(string)</span>
 <span class="sd">            \context Score = &quot;Score&quot;</span>
-<span class="sd">            &lt;&lt;</span>
+<span class="sd">            {</span>
 <span class="sd">                \context RhythmicStaff = &quot;Staff&quot;</span>
 <span class="sd">                \with</span>
 <span class="sd">                {</span>
@@ -6630,7 +6659,7 @@
 <span class="sd">                        }</span>
 <span class="sd">                    }</span>
 <span class="sd">                }</span>
-<span class="sd">            &gt;&gt;</span>
+<span class="sd">            }</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">for</span> <span class="n">leaf</span> <span class="ow">in</span> <span class="n">abjad</span><span class="o">.</span><span class="n">select</span><span class="o">.</span><span class="n">leaves</span><span class="p">(</span><span class="n">argument</span><span class="p">):</span>
