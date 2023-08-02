@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>abjad.bind &mdash; Abjad 3.18 documentation</title>
+  <title>abjad.bind &mdash; Abjad 3.19 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/abjad.css" type="text/css" />
@@ -34,11 +34,11 @@
   <div class="wy-grid-for-nav">
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search"  style="background: #cc8844" >
+        <div class="wy-side-nav-search"  style="background: #ddaa77" >
 
 
     <a href="../../index.html" class="icon icon-home" alt="Documentation
-    Home"> Abjad 3.18
+    Home"> Abjad 3.19
 
 
 
@@ -111,7 +111,7 @@
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #cc8844" >
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #ddaa77" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../index.html">Abjad</a>
       </nav>
@@ -168,28 +168,29 @@
     <span class="k">if</span> <span class="n">deactivate</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
         <span class="k">return</span>
     <span class="k">for</span> <span class="n">wrapper</span> <span class="ow">in</span> <span class="n">component</span><span class="o">.</span><span class="n">_get_indicators</span><span class="p">(</span><span class="n">unwrap</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">wrapper</span><span class="o">.</span><span class="n">indicator</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">indicator</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">wrapper</span><span class="o">.</span><span class="n">unbundle_indicator</span><span class="p">(),</span> <span class="nb">type</span><span class="p">(</span><span class="n">indicator</span><span class="p">)):</span>
             <span class="k">continue</span>
-        <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">indicator</span><span class="p">,</span> <span class="s2">&quot;leak&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">wrapper</span><span class="o">.</span><span class="n">indicator</span><span class="p">,</span> <span class="s2">&quot;leak&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">indicator</span><span class="p">,</span> <span class="s2">&quot;leak&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">getattr</span><span class="p">(</span>
+            <span class="n">wrapper</span><span class="o">.</span><span class="n">unbundle_indicator</span><span class="p">(),</span> <span class="s2">&quot;leak&quot;</span><span class="p">,</span> <span class="kc">None</span>
+        <span class="p">):</span>
             <span class="k">continue</span>
-        <span class="k">if</span> <span class="n">indicator</span> <span class="o">!=</span> <span class="n">wrapper</span><span class="o">.</span><span class="n">indicator</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">indicator</span> <span class="o">!=</span> <span class="n">wrapper</span><span class="o">.</span><span class="n">unbundle_indicator</span><span class="p">():</span>
             <span class="k">if</span> <span class="p">(</span>
                 <span class="nb">getattr</span><span class="p">(</span><span class="n">indicator</span><span class="p">,</span> <span class="s2">&quot;allow_multiple_with_different_values&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
                 <span class="ow">is</span> <span class="kc">True</span>
             <span class="p">):</span>
                 <span class="k">continue</span>
             <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">indicator</span><span class="p">,</span> <span class="s2">&quot;hide&quot;</span><span class="p">):</span>
-                <span class="k">if</span> <span class="n">indicator</span><span class="o">.</span><span class="n">hide</span> <span class="o">!=</span> <span class="n">wrapper</span><span class="o">.</span><span class="n">indicator</span><span class="o">.</span><span class="n">hide</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">indicator</span><span class="o">.</span><span class="n">hide</span> <span class="o">!=</span> <span class="n">wrapper</span><span class="o">.</span><span class="n">unbundle_indicator</span><span class="p">()</span><span class="o">.</span><span class="n">hide</span><span class="p">:</span>
                     <span class="k">continue</span>
             <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">indicator</span><span class="p">,</span> <span class="s2">&quot;site&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">getattr</span><span class="p">(</span>
-                <span class="n">wrapper</span><span class="o">.</span><span class="n">indicator</span><span class="p">,</span> <span class="s2">&quot;site&quot;</span><span class="p">,</span> <span class="kc">None</span>
+                <span class="n">wrapper</span><span class="o">.</span><span class="n">unbundle_indicator</span><span class="p">(),</span> <span class="s2">&quot;site&quot;</span><span class="p">,</span> <span class="kc">None</span>
             <span class="p">):</span>
                 <span class="k">continue</span>
         <span class="n">classname</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="n">component</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span>
         <span class="n">message</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;attempting to attach conflicting indicator to </span><span class="si">{</span><span class="n">classname</span><span class="si">}</span><span class="s2">:&quot;</span>
         <span class="n">message</span> <span class="o">+=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">  Already attached:&quot;</span>
-        <span class="n">message</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">    </span><span class="si">{</span><span class="n">wrapper</span><span class="o">.</span><span class="n">indicator</span><span class="si">!r}</span><span class="s2">&quot;</span>
-        <span class="c1"># message += f&quot;\n    {wrapper!r}&quot;</span>
+        <span class="n">message</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">    </span><span class="si">{</span><span class="n">wrapper</span><span class="o">.</span><span class="n">unbundle_indicator</span><span class="p">()</span><span class="si">!r}</span><span class="s2">&quot;</span>
         <span class="n">message</span> <span class="o">+=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">  Attempting to attach:&quot;</span>
         <span class="n">message</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">    </span><span class="si">{</span><span class="n">indicator</span><span class="si">!r}</span><span class="s2">&quot;</span>
         <span class="k">raise</span> <span class="n">_exceptions</span><span class="o">.</span><span class="n">PersistentIndicatorError</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
