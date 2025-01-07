@@ -1,30 +1,29 @@
+
+
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="../../">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>abjad.duration &mdash; Abjad 3.19 documentation</title>
-      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/abjad.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/uqbar.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/lightbox2/css/lightbox.css" type="text/css" />
+  <title>abjad.duration &mdash; Abjad 3.20 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../_static/abjad.css?v=1f187528" />
+      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="../../_static/uqbar.css?v=e6773f5c" />
+      <link rel="stylesheet" type="text/css" href="../../_static/lightbox2/css/lightbox.css?v=d2ef71d2" />
+
+  
     <link rel="shortcut icon" href="../../_static/favicon.ico"/>
     <link rel="canonical" href="https://abjad.github.io_modules/abjad/duration.html"/>
-  <!--[if lt IE 9]>
-    <script src="../../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
-        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-        <script src="../../_static/jquery.js"></script>
-        <script src="../../_static/underscore.js"></script>
-        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="../../_static/doctools.js"></script>
-        <script src="../../_static/sphinx_highlight.js"></script>
-        <script defer="defer" src="../../_static/copybutton.js"></script>
-        <script src="../../_static/ga.js"></script>
-        <script defer="defer" src="../../_static/lightbox2/js/lightbox.js"></script>
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=360ea7ac"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script defer="defer" src="../../_static/copybutton.js?v=0c784ec5"></script>
+      <script src="../../_static/ga.js?v=c455bbd5"></script>
+      <script defer="defer" src="../../_static/lightbox2/js/lightbox.js?v=bc25c2e6"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
@@ -34,15 +33,13 @@
   <div class="wy-grid-for-nav">
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search"  style="background: #ddaa77" >
+        <div class="wy-side-nav-search"  style="background: #eeccaa" >
 
 
     <a href="../../index.html" class="icon icon-home" alt="Documentation
-    Home"> Abjad 3.19
+    Home"> Abjad 3.20
 
 
-
-    <img src="../../_static/abjad-logo.png" class="logo" alt="Logo"/>
 
 </a>
 
@@ -51,7 +48,7 @@
 
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -111,14 +108,14 @@
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #ddaa77" >
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #eeccaa" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../index.html">Abjad</a>
       </nav>
 
       <div class="wy-nav-content">
 
-<div class="rst-content">
+<div class="rst-content style-external-links">
 
     
 
@@ -127,16 +124,18 @@
     <div itemprop="articleBody">
     
   <h1>Source code for abjad.duration</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">fractions</span>
-<span class="kn">import</span> <span class="nn">math</span>
-<span class="kn">import</span> <span class="nn">re</span>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">fractions</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">math</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
 
-<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">exceptions</span> <span class="k">as</span> <span class="n">_exceptions</span>
-<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">math</span> <span class="k">as</span> <span class="n">_math</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">exceptions</span> <span class="k">as</span> <span class="n">_exceptions</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">math</span> <span class="k">as</span> <span class="n">_math</span>
 
 
-<div class="viewcode-block" id="Duration"><a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.Duration">[docs]</a><span class="k">class</span> <span class="nc">Duration</span><span class="p">(</span><span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="Duration">
+<a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.Duration">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">Duration</span><span class="p">(</span><span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Duration.</span>
 
 <span class="sd">    ..  container:: example</span>
@@ -228,15 +227,17 @@
     <span class="c1">### DUMMY INITIALIZER ###</span>
 
     <span class="c1"># dummy initializer so that mypy knows about _denominator, _numerator</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">arguments</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">arguments</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_denominator</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_denominator</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_numerator</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_numerator</span>
         <span class="k">return</span> <span class="kc">None</span>
 
     <span class="c1">### CONSTRUCTOR ###</span>
 
-<div class="viewcode-block" id="Duration.__new__"><a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.Duration.__new__">[docs]</a>    <span class="k">def</span> <span class="fm">__new__</span><span class="p">(</span><span class="n">class_</span><span class="p">,</span> <span class="o">*</span><span class="n">arguments</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="Duration.__new__">
+<a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.Duration.__new__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__new__</span><span class="p">(</span><span class="n">class_</span><span class="p">,</span> <span class="o">*</span><span class="n">arguments</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Makes new duration.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">arguments</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
@@ -283,18 +284,24 @@
                 <span class="k">return</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="o">.</span><span class="fm">__new__</span><span class="p">(</span><span class="n">class_</span><span class="p">,</span> <span class="o">*</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">arguments</span><span class="p">])</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;can not construct duration: </span><span class="si">{</span><span class="n">arguments</span><span class="si">!r}</span><span class="s2">.&quot;</span><span class="p">)</span></div>
 
+
     <span class="c1">### SPECIAL METHODS ###</span>
 
-<div class="viewcode-block" id="Duration.__abs__"><a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.Duration.__abs__">[docs]</a>    <span class="k">def</span> <span class="fm">__abs__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">arguments</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="Duration.__abs__">
+<a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.Duration.__abs__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__abs__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">arguments</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets absolute value of duration.</span>
 
 <span class="sd">        Returns nonnegative duration.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span><span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="o">.</span><span class="fm">__abs__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">arguments</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="Duration.__add__"><a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.Duration.__add__">[docs]</a>    <span class="k">def</span> <span class="fm">__add__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">arguments</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Duration.__add__">
+<a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.Duration.__add__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__add__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">arguments</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Adds duration to ``arguments``.</span>
 
 <span class="sd">        ..  container:: example</span>
@@ -311,8 +318,11 @@
         <span class="n">result</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span><span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="o">.</span><span class="fm">__add__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">arguments</span><span class="p">))</span>
         <span class="k">return</span> <span class="n">result</span></div>
 
-<div class="viewcode-block" id="Duration.__div__"><a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.Duration.__div__">[docs]</a>    <span class="k">def</span> <span class="nf">__div__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">arguments</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Duration.__div__">
+<a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.Duration.__div__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">__div__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">arguments</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Divides duration by ``arguments``.</span>
 
 <span class="sd">        ..  container:: example</span>
@@ -328,8 +338,11 @@
             <span class="n">result</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span><span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="o">.</span><span class="fm">__truediv__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">arguments</span><span class="p">))</span>
         <span class="k">return</span> <span class="n">result</span></div>
 
-<div class="viewcode-block" id="Duration.__divmod__"><a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.Duration.__divmod__">[docs]</a>    <span class="k">def</span> <span class="fm">__divmod__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">arguments</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Duration.__divmod__">
+<a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.Duration.__divmod__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__divmod__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">arguments</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Equals the pair (duration // ``arguments``, duration % ``arguments``).</span>
 
 <span class="sd">        Returns pair.</span>
@@ -339,52 +352,76 @@
         <span class="n">residue</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span><span class="n">residue</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">truncated</span><span class="p">,</span> <span class="n">residue</span></div>
 
-<div class="viewcode-block" id="Duration.__eq__"><a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.Duration.__eq__">[docs]</a>    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Duration.__eq__">
+<a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.Duration.__eq__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Is true when duration equals ``argument``.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="o">.</span><span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Duration.__ge__"><a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.Duration.__ge__">[docs]</a>    <span class="k">def</span> <span class="fm">__ge__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Duration.__ge__">
+<a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.Duration.__ge__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__ge__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Is true when duration is greater than or equal to ``argument``.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="o">.</span><span class="fm">__ge__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Duration.__gt__"><a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.Duration.__gt__">[docs]</a>    <span class="k">def</span> <span class="fm">__gt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Duration.__gt__">
+<a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.Duration.__gt__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__gt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Is true when duration is greater than ``argument``.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="o">.</span><span class="fm">__gt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Duration.__hash__"><a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.Duration.__hash__">[docs]</a>    <span class="k">def</span> <span class="fm">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Duration.__hash__">
+<a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.Duration.__hash__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Hashes duration.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__hash__</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="Duration.__le__"><a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.Duration.__le__">[docs]</a>    <span class="k">def</span> <span class="fm">__le__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Duration.__le__">
+<a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.Duration.__le__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__le__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Is true when duration is less than or equal to ``argument``.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="o">.</span><span class="fm">__le__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Duration.__lt__"><a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.Duration.__lt__">[docs]</a>    <span class="k">def</span> <span class="fm">__lt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Duration.__lt__">
+<a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.Duration.__lt__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__lt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Is true when duration is less than ``argument``.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="o">.</span><span class="fm">__lt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Duration.__mod__"><a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.Duration.__mod__">[docs]</a>    <span class="k">def</span> <span class="fm">__mod__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">arguments</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Duration.__mod__">
+<a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.Duration.__mod__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__mod__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">arguments</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Modulus operator applied to duration.</span>
 
 <span class="sd">        Returns duration.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span><span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="o">.</span><span class="fm">__mod__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">arguments</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="Duration.__mul__"><a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.Duration.__mul__">[docs]</a>    <span class="k">def</span> <span class="fm">__mul__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Duration.__mul__">
+<a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.Duration.__mul__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__mul__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Duration multiplied by ``argument``.</span>
 
 <span class="sd">        ..  container:: example</span>
@@ -401,8 +438,11 @@
         <span class="n">result</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span><span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="o">.</span><span class="fm">__mul__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">))</span>
         <span class="k">return</span> <span class="n">result</span></div>
 
-<div class="viewcode-block" id="Duration.__ne__"><a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.Duration.__ne__">[docs]</a>    <span class="k">def</span> <span class="fm">__ne__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Duration.__ne__">
+<a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.Duration.__ne__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__ne__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Redefined explicitly because ``abjad.Duration`` inherits from built-in</span>
 <span class="sd">        ``fractions.Fraction``:</span>
 
@@ -412,9 +452,9 @@
 
 <span class="sd">        See https://bugs.python.org/issue4395#msg89533.</span>
 
-<span class="sd">        REGRESSION:</span>
-
 <span class="sd">        ..  container:: example</span>
+
+<span class="sd">            REGRESSION:</span>
 
 <span class="sd">            &gt;&gt;&gt; offset_1 = abjad.Offset(1)</span>
 <span class="sd">            &gt;&gt;&gt; offset_2 = abjad.Offset(1, displacement=(-1, 16))</span>
@@ -428,110 +468,149 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="ow">not</span> <span class="bp">self</span> <span class="o">==</span> <span class="n">argument</span></div>
 
-<div class="viewcode-block" id="Duration.__neg__"><a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.Duration.__neg__">[docs]</a>    <span class="k">def</span> <span class="fm">__neg__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">arguments</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Duration.__neg__">
+<a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.Duration.__neg__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__neg__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">arguments</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Negates duration.</span>
 
 <span class="sd">        Returns new duration.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span><span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="o">.</span><span class="fm">__neg__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">arguments</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="Duration.__pos__"><a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.Duration.__pos__">[docs]</a>    <span class="k">def</span> <span class="fm">__pos__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">arguments</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Duration.__pos__">
+<a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.Duration.__pos__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__pos__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">arguments</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get positive duration.</span>
 
 <span class="sd">        Returns new duration.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span><span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="o">.</span><span class="fm">__pos__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">arguments</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="Duration.__pow__"><a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.Duration.__pow__">[docs]</a>    <span class="k">def</span> <span class="fm">__pow__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">arguments</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Duration.__pow__">
+<a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.Duration.__pow__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__pow__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">arguments</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Raises duration to ``arguments`` power.</span>
 
 <span class="sd">        Returns new duration.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span><span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="o">.</span><span class="fm">__pow__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">arguments</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="Duration.__radd__"><a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.Duration.__radd__">[docs]</a>    <span class="k">def</span> <span class="fm">__radd__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">arguments</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Duration.__radd__">
+<a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.Duration.__radd__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__radd__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">arguments</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Adds ``arguments`` to duration.</span>
 
 <span class="sd">        Returns new duration.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span><span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="o">.</span><span class="fm">__radd__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">arguments</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="Duration.__rdiv__"><a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.Duration.__rdiv__">[docs]</a>    <span class="k">def</span> <span class="nf">__rdiv__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">arguments</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Duration.__rdiv__">
+<a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.Duration.__rdiv__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">__rdiv__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">arguments</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Divides ``arguments`` by duration.</span>
 
 <span class="sd">        Returns new duration.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span><span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="o">.</span><span class="n">__rdiv__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">arguments</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="Duration.__rdivmod__"><a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.Duration.__rdivmod__">[docs]</a>    <span class="k">def</span> <span class="fm">__rdivmod__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">arguments</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Duration.__rdivmod__">
+<a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.Duration.__rdivmod__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__rdivmod__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">arguments</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Documentation required.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span><span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="o">.</span><span class="fm">__rdivmod__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">arguments</span><span class="p">))</span></div>
 
-    <span class="k">def</span> <span class="nf">__reduce__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">__reduce__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Documentation required.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">),</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">numerator</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">denominator</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">__reduce_ex__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">protocol</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">__reduce_ex__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">protocol</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Documentation required.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">),</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">numerator</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">denominator</span><span class="p">)</span>
 
-<div class="viewcode-block" id="Duration.__repr__"><a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.Duration.__repr__">[docs]</a>    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="Duration.__repr__">
+<a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.Duration.__repr__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets repr.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">(</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">numerator</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">denominator</span><span class="si">}</span><span class="s2">)&quot;</span></div>
 
-<div class="viewcode-block" id="Duration.__rmod__"><a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.Duration.__rmod__">[docs]</a>    <span class="k">def</span> <span class="fm">__rmod__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">arguments</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Duration.__rmod__">
+<a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.Duration.__rmod__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__rmod__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">arguments</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Documentation required.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span><span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="o">.</span><span class="fm">__rmod__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">arguments</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="Duration.__rmul__"><a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.Duration.__rmul__">[docs]</a>    <span class="k">def</span> <span class="fm">__rmul__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">arguments</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Duration.__rmul__">
+<a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.Duration.__rmul__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__rmul__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">arguments</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Multiplies ``arguments`` by duration.</span>
 
 <span class="sd">        Returns new duration.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span><span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="o">.</span><span class="fm">__rmul__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">arguments</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="Duration.__rpow__"><a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.Duration.__rpow__">[docs]</a>    <span class="k">def</span> <span class="fm">__rpow__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">arguments</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Duration.__rpow__">
+<a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.Duration.__rpow__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__rpow__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">arguments</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Raises ``arguments`` to the power of duration.</span>
 
 <span class="sd">        Returns new duration.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span><span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="o">.</span><span class="fm">__rpow__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">arguments</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="Duration.__rsub__"><a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.Duration.__rsub__">[docs]</a>    <span class="k">def</span> <span class="fm">__rsub__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">arguments</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Duration.__rsub__">
+<a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.Duration.__rsub__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__rsub__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">arguments</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Subtracts duration from ``arguments``.</span>
 
 <span class="sd">        Returns new duration.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span><span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="o">.</span><span class="fm">__rsub__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">arguments</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="Duration.__rtruediv__"><a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.Duration.__rtruediv__">[docs]</a>    <span class="k">def</span> <span class="fm">__rtruediv__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">arguments</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Duration.__rtruediv__">
+<a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.Duration.__rtruediv__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__rtruediv__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">arguments</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Documentation required.</span>
 
 <span class="sd">        Returns new duration.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span><span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="o">.</span><span class="fm">__rtruediv__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">arguments</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="Duration.__sub__"><a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.Duration.__sub__">[docs]</a>    <span class="k">def</span> <span class="fm">__sub__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">arguments</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Duration.__sub__">
+<a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.Duration.__sub__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__sub__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">arguments</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Subtracts ``arguments`` from duration.</span>
 
 <span class="sd">        ..  container:: example</span>
@@ -543,16 +622,20 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span><span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="o">.</span><span class="fm">__sub__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">arguments</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="Duration.__truediv__"><a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.Duration.__truediv__">[docs]</a>    <span class="k">def</span> <span class="fm">__truediv__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">arguments</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Duration.__truediv__">
+<a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.Duration.__truediv__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__truediv__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">arguments</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Documentation required.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__div__</span><span class="p">(</span><span class="o">*</span><span class="n">arguments</span><span class="p">)</span></div>
 
+
     <span class="c1">### PRIVATE METHODS ###</span>
 
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">_initialize_from_lilypond_duration_string</span><span class="p">(</span><span class="n">duration_string</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_initialize_from_lilypond_duration_string</span><span class="p">(</span><span class="n">duration_string</span><span class="p">):</span>
         <span class="n">numeric_body_strings</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="mi">2</span><span class="o">**</span><span class="n">n</span><span class="p">)</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">8</span><span class="p">)]</span>
         <span class="n">other_body_strings</span> <span class="o">=</span> <span class="p">[</span><span class="sa">r</span><span class="s2">&quot;</span><span class="se">\\</span><span class="s2">breve&quot;</span><span class="p">,</span> <span class="sa">r</span><span class="s2">&quot;</span><span class="se">\\</span><span class="s2">longa&quot;</span><span class="p">,</span> <span class="sa">r</span><span class="s2">&quot;</span><span class="se">\\</span><span class="s2">maxima&quot;</span><span class="p">]</span>
         <span class="n">body_strings</span> <span class="o">=</span> <span class="n">numeric_body_strings</span> <span class="o">+</span> <span class="n">other_body_strings</span>
@@ -584,8 +667,8 @@
         <span class="k">return</span> <span class="n">rational</span>
 
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">_least_power_of_two_greater_equal</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_least_power_of_two_greater_equal</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        When ``i = 2``, returns the second integer power of 2 greater than</span>
 <span class="sd">        the least integer power of 2 greater than or equal to ``n``, and, in</span>
 <span class="sd">        general, return the ``i`` th integer power of 2 greater than the least</span>
@@ -599,8 +682,8 @@
     <span class="c1">### PUBLIC PROPERTIES ###</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">dot_count</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">dot_count</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets dot count.</span>
 
 <span class="sd">        ..  container:: example</span>
@@ -647,8 +730,8 @@
         <span class="k">return</span> <span class="n">dot_count</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">equal_or_greater_assignable</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Duration&quot;</span><span class="p">:</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">equal_or_greater_assignable</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Duration&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets assignable duration equal to or just greater than this</span>
 <span class="sd">        duration.</span>
 
@@ -689,8 +772,8 @@
         <span class="k">return</span> <span class="n">candidate</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">equal_or_greater_power_of_two</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Duration&quot;</span><span class="p">:</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">equal_or_greater_power_of_two</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Duration&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets duration equal or just greater power of two.</span>
 
 <span class="sd">        ..  container:: example</span>
@@ -725,8 +808,8 @@
         <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="o">**</span> <span class="n">denominator_exponent</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">equal_or_lesser_assignable</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Duration&quot;</span><span class="p">:</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">equal_or_lesser_assignable</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Duration&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets assignable duration equal or just less than this duration.</span>
 
 <span class="sd">        ..  container:: example</span>
@@ -766,8 +849,8 @@
         <span class="k">return</span> <span class="n">candidate</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">equal_or_lesser_power_of_two</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Duration&quot;</span><span class="p">:</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">equal_or_lesser_power_of_two</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Duration&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets duration of the form ``d**2`` equal to or just less than this</span>
 <span class="sd">        duration.</span>
 
@@ -802,8 +885,8 @@
         <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="o">**</span> <span class="bp">self</span><span class="o">.</span><span class="n">exponent</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">exponent</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">exponent</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets base-2 exponent.</span>
 
 <span class="sd">        ..  container:: example</span>
@@ -837,8 +920,8 @@
         <span class="k">return</span> <span class="o">-</span><span class="nb">int</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="mi">2</span><span class="p">)))</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">flag_count</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">flag_count</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets flag count.</span>
 
 <span class="sd">        ..  container:: example</span>
@@ -875,8 +958,8 @@
         <span class="k">return</span> <span class="nb">max</span><span class="p">(</span><span class="n">count</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">is_dyadic_rational</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_dyadic_rational</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Is true when duration is an integer power of two.</span>
 
 <span class="sd">        ..  container:: example</span>
@@ -910,8 +993,8 @@
         <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">exponent</span><span class="p">)</span> <span class="o">==</span> <span class="n">exponent</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">implied_prolation</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">:</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">implied_prolation</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">:</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets implied prolation.</span>
 
 <span class="sd">        ..  container:: example</span>
@@ -945,8 +1028,8 @@
         <span class="k">return</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">(</span><span class="n">numerator</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">denominator</span><span class="p">)</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">is_assignable</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_assignable</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Is true when duration is assignable.</span>
 
 <span class="sd">        ..  container:: example</span>
@@ -984,8 +1067,8 @@
         <span class="k">return</span> <span class="kc">False</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">lilypond_duration_string</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">lilypond_duration_string</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets LilyPond duration string.</span>
 
 <span class="sd">        ..  container:: example</span>
@@ -1016,8 +1099,8 @@
         <span class="k">return</span> <span class="n">dotted_duration_string</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">pair</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">pair</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets numerator and denominator.</span>
 
 <span class="sd">        ..  container:: example</span>
@@ -1031,8 +1114,8 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">numerator</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">denominator</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">prolation_string</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">prolation_string</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets prolation string.</span>
 
 <span class="sd">        ..  container:: example</span>
@@ -1046,8 +1129,8 @@
         <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">denominator</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">numerator</span><span class="si">}</span><span class="s2">&quot;</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">reciprocal</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Duration&quot;</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">reciprocal</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Duration&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets reciprocal.</span>
 
 <span class="sd">        ..  container:: example</span>
@@ -1062,9 +1145,11 @@
 
     <span class="c1">### PUBLIC FUNCTIONS ###</span>
 
-<div class="viewcode-block" id="Duration.durations_to_nonreduced_fractions"><a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.Duration.durations_to_nonreduced_fractions">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">durations_to_nonreduced_fractions</span><span class="p">(</span><span class="n">durations</span><span class="p">:</span> <span class="nb">list</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]]:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="Duration.durations_to_nonreduced_fractions">
+<a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.Duration.durations_to_nonreduced_fractions">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">durations_to_nonreduced_fractions</span><span class="p">(</span><span class="n">durations</span><span class="p">:</span> <span class="nb">list</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Changes ``durations`` to pairs sharing least common denominator.</span>
 
 <span class="sd">        ..  container:: example</span>
@@ -1085,9 +1170,12 @@
         <span class="n">pairs</span> <span class="o">=</span> <span class="p">[</span><span class="n">with_denominator</span><span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="n">lcd</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">durations_</span><span class="p">]</span>
         <span class="k">return</span> <span class="n">pairs</span></div>
 
-<div class="viewcode-block" id="Duration.from_clock_string"><a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.Duration.from_clock_string">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">from_clock_string</span><span class="p">(</span><span class="n">clock_string</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Duration&quot;</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Duration.from_clock_string">
+<a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.Duration.from_clock_string">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">from_clock_string</span><span class="p">(</span><span class="n">clock_string</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Duration&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Initializes duration (in seconds) from clock string.</span>
 
 <span class="sd">        ..  container:: example</span>
@@ -1115,9 +1203,12 @@
         <span class="n">seconds</span> <span class="o">=</span> <span class="mi">60</span> <span class="o">*</span> <span class="n">minutes</span> <span class="o">+</span> <span class="n">seconds</span>
         <span class="k">return</span> <span class="n">Duration</span><span class="p">(</span><span class="n">seconds</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Duration.from_dot_count"><a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.Duration.from_dot_count">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">from_dot_count</span><span class="p">(</span><span class="n">dot_count</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Duration&quot;</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Duration.from_dot_count">
+<a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.Duration.from_dot_count">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">from_dot_count</span><span class="p">(</span><span class="n">dot_count</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Duration&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Makes duration from ``dot_count``.</span>
 
 <span class="sd">        ..  container:: example</span>
@@ -1144,11 +1235,14 @@
         <span class="n">numerator</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">**</span> <span class="p">(</span><span class="n">dot_count</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
         <span class="k">return</span> <span class="n">Duration</span><span class="p">(</span><span class="n">numerator</span><span class="p">,</span> <span class="n">denominator</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Duration.from_lilypond_duration_string"><a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.Duration.from_lilypond_duration_string">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">from_lilypond_duration_string</span><span class="p">(</span>
+
+<div class="viewcode-block" id="Duration.from_lilypond_duration_string">
+<a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.Duration.from_lilypond_duration_string">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">from_lilypond_duration_string</span><span class="p">(</span>
         <span class="n">lilypond_duration_string</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Duration&quot;</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Initializes duration from LilyPond duration string.</span>
 
 <span class="sd">        ..  container:: example</span>
@@ -1162,9 +1256,12 @@
         <span class="p">)</span>
         <span class="k">return</span> <span class="n">Duration</span><span class="p">(</span><span class="n">fraction</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Duration.is_token"><a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.Duration.is_token">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">is_token</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Duration.is_token">
+<a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.Duration.is_token">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_token</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Is true when ``argument`` correctly initializes a duration.</span>
 
 <span class="sd">        ..  container:: example</span>
@@ -1179,8 +1276,11 @@
         <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">False</span></div>
 
-<div class="viewcode-block" id="Duration.normalized"><a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.Duration.normalized">[docs]</a>    <span class="k">def</span> <span class="nf">normalized</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Duration.normalized">
+<a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.Duration.normalized">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">normalized</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Is true when duration is greater than ``1/2`` and less than ``2``.</span>
 
 <span class="sd">        ..  container:: example</span>
@@ -1191,13 +1291,16 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="o">&lt;</span> <span class="bp">self</span> <span class="o">&lt;</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span><span class="mi">2</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Duration.to_clock_string"><a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.Duration.to_clock_string">[docs]</a>    <span class="k">def</span> <span class="nf">to_clock_string</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Duration.to_clock_string">
+<a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.Duration.to_clock_string">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">to_clock_string</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Changes duration to clock string.</span>
 
-<span class="sd">        Changes duration to clock string:</span>
-
 <span class="sd">        ..  container:: example</span>
+
+<span class="sd">            Changes duration to clock string:</span>
 
 <span class="sd">            &gt;&gt;&gt; note = abjad.Note(&quot;c&#39;4&quot;)</span>
 <span class="sd">            &gt;&gt;&gt; duration = abjad.Duration(117)</span>
@@ -1222,11 +1325,15 @@
         <span class="n">minutes</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span> <span class="o">/</span> <span class="mi">60</span><span class="p">)</span>
         <span class="n">seconds</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span> <span class="o">-</span> <span class="n">minutes</span> <span class="o">*</span> <span class="mi">60</span><span class="p">))</span><span class="o">.</span><span class="n">zfill</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
         <span class="n">clock_string</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">minutes</span><span class="si">}</span><span class="s2">&#39;</span><span class="si">{</span><span class="n">seconds</span><span class="si">}</span><span class="s2">&#39;&#39;&quot;</span>
-        <span class="k">return</span> <span class="n">clock_string</span></div></div>
+        <span class="k">return</span> <span class="n">clock_string</span></div>
+</div>
 
 
-<div class="viewcode-block" id="Offset"><a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.Offset">[docs]</a><span class="k">class</span> <span class="nc">Offset</span><span class="p">(</span><span class="n">Duration</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Offset">
+<a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.Offset">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">Offset</span><span class="p">(</span><span class="n">Duration</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Offset.</span>
 
 <span class="sd">    ..  container:: example</span>
@@ -1333,7 +1440,7 @@
     <span class="c1">### DUMMY INITIALIZER ###</span>
 
     <span class="c1"># dummy initializer so that mypy knows about _denominator, _displacement, _numerator</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">arguments</span><span class="p">,</span> <span class="o">**</span><span class="n">keywords</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">arguments</span><span class="p">,</span> <span class="o">**</span><span class="n">keywords</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_denominator</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_denominator</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_displacement</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_displacement</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_numerator</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_numerator</span>
@@ -1341,7 +1448,9 @@
 
     <span class="c1">### CONSTRUCTOR ###</span>
 
-<div class="viewcode-block" id="Offset.__new__"><a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.Offset.__new__">[docs]</a>    <span class="k">def</span> <span class="fm">__new__</span><span class="p">(</span><span class="n">class_</span><span class="p">,</span> <span class="o">*</span><span class="n">arguments</span><span class="p">,</span> <span class="o">**</span><span class="n">keywords</span><span class="p">):</span>
+<div class="viewcode-block" id="Offset.__new__">
+<a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.Offset.__new__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__new__</span><span class="p">(</span><span class="n">class_</span><span class="p">,</span> <span class="o">*</span><span class="n">arguments</span><span class="p">,</span> <span class="o">**</span><span class="n">keywords</span><span class="p">):</span>
         <span class="n">displacement</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">for</span> <span class="n">argument</span> <span class="ow">in</span> <span class="n">arguments</span><span class="p">:</span>
             <span class="k">try</span><span class="p">:</span>
@@ -1359,10 +1468,13 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_displacement</span> <span class="o">=</span> <span class="n">displacement</span>
         <span class="k">return</span> <span class="bp">self</span></div>
 
+
     <span class="c1">### SPECIAL METHODS ###</span>
 
-<div class="viewcode-block" id="Offset.__copy__"><a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.Offset.__copy__">[docs]</a>    <span class="k">def</span> <span class="nf">__copy__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">arguments</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Offset&quot;</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="Offset.__copy__">
+<a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.Offset.__copy__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">__copy__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">arguments</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Offset&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Copies offset.</span>
 
 <span class="sd">        &gt;&gt;&gt; import copy</span>
@@ -1389,8 +1501,11 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span><span class="bp">self</span><span class="o">.</span><span class="n">pair</span><span class="p">,</span> <span class="n">displacement</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">displacement</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Offset.__deepcopy__"><a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.Offset.__deepcopy__">[docs]</a>    <span class="k">def</span> <span class="nf">__deepcopy__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">arguments</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Offset&quot;</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Offset.__deepcopy__">
+<a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.Offset.__deepcopy__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">__deepcopy__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">arguments</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Offset&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Deep copies offset.</span>
 
 <span class="sd">        &gt;&gt;&gt; import copy</span>
@@ -1417,13 +1532,16 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__copy__</span><span class="p">(</span><span class="o">*</span><span class="n">arguments</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Offset.__eq__"><a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.Offset.__eq__">[docs]</a>    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Offset.__eq__">
+<a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.Offset.__eq__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Is true when offset equals ``argument``.</span>
 
-<span class="sd">        With equal numerators, denominators and displacement:</span>
-
 <span class="sd">        ..  container:: example</span>
+
+<span class="sd">            With equal numerators, denominators and displacement:</span>
 
 <span class="sd">            &gt;&gt;&gt; offset_1 = abjad.Offset((1, 4), displacement=(-1, 16))</span>
 <span class="sd">            &gt;&gt;&gt; offset_2 = abjad.Offset((1, 4), displacement=(-1, 16))</span>
@@ -1476,13 +1594,16 @@
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_displacement</span><span class="p">()</span> <span class="o">==</span> <span class="n">argument</span><span class="o">.</span><span class="n">_get_displacement</span><span class="p">()</span>
         <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__eq__</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Offset.__ge__"><a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.Offset.__ge__">[docs]</a>    <span class="k">def</span> <span class="fm">__ge__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Offset.__ge__">
+<a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.Offset.__ge__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__ge__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Is true when offset is greater than or equal to ``argument``.</span>
 
-<span class="sd">        With equal numerators, denominators and displacement:</span>
-
 <span class="sd">        ..  container:: example</span>
+
+<span class="sd">            With equal numerators, denominators and displacement:</span>
 
 <span class="sd">            &gt;&gt;&gt; offset_1 = abjad.Offset((1, 4), displacement=(-1, 16))</span>
 <span class="sd">            &gt;&gt;&gt; offset_2 = abjad.Offset((1, 4), displacement=(-1, 16))</span>
@@ -1535,13 +1656,16 @@
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_displacement</span><span class="p">()</span> <span class="o">&gt;=</span> <span class="n">argument</span><span class="o">.</span><span class="n">_get_displacement</span><span class="p">()</span>
         <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__ge__</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Offset.__gt__"><a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.Offset.__gt__">[docs]</a>    <span class="k">def</span> <span class="fm">__gt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Offset.__gt__">
+<a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.Offset.__gt__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__gt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Is true when offset is greater than ``argument``.</span>
 
-<span class="sd">        With equal numerators, denominators and displacement:</span>
-
 <span class="sd">        ..  container:: example</span>
+
+<span class="sd">            With equal numerators, denominators and displacement:</span>
 
 <span class="sd">            &gt;&gt;&gt; offset_1 = abjad.Offset((1, 4), displacement=(-1, 16))</span>
 <span class="sd">            &gt;&gt;&gt; offset_2 = abjad.Offset((1, 4), displacement=(-1, 16))</span>
@@ -1594,19 +1718,25 @@
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_displacement</span><span class="p">()</span> <span class="o">&gt;</span> <span class="n">argument</span><span class="o">.</span><span class="n">_get_displacement</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">Duration</span><span class="o">.</span><span class="fm">__gt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Offset.__hash__"><a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.Offset.__hash__">[docs]</a>    <span class="k">def</span> <span class="fm">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Offset.__hash__">
+<a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.Offset.__hash__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Hashes offset.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__hash__</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="Offset.__le__"><a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.Offset.__le__">[docs]</a>    <span class="k">def</span> <span class="fm">__le__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Offset.__le__">
+<a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.Offset.__le__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__le__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Is true when offset is less than or equal to ``argument``.</span>
 
-<span class="sd">        With equal numerators, denominators and displacement:</span>
-
 <span class="sd">        ..  container:: example</span>
+
+<span class="sd">            With equal numerators, denominators and displacement:</span>
 
 <span class="sd">            &gt;&gt;&gt; offset_1 = abjad.Offset((1, 4), displacement=(-1, 16))</span>
 <span class="sd">            &gt;&gt;&gt; offset_2 = abjad.Offset((1, 4), displacement=(-1, 16))</span>
@@ -1659,8 +1789,11 @@
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_displacement</span><span class="p">()</span> <span class="o">&lt;=</span> <span class="n">argument</span><span class="o">.</span><span class="n">_get_displacement</span><span class="p">()</span>
         <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__le__</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Offset.__lt__"><a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.Offset.__lt__">[docs]</a>    <span class="k">def</span> <span class="fm">__lt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Offset.__lt__">
+<a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.Offset.__lt__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__lt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Is true when offset is less than ``argument``.</span>
 
 <span class="sd">        With equal numerators, denominators and displacement:</span>
@@ -1735,8 +1868,11 @@
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_displacement</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">argument</span><span class="o">.</span><span class="n">_get_displacement</span><span class="p">()</span>
         <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__lt__</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Offset.__repr__"><a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.Offset.__repr__">[docs]</a>    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Offset.__repr__">
+<a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.Offset.__repr__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets interpreter representation of offset.</span>
 
 <span class="sd">        ..  container:: example</span>
@@ -1754,8 +1890,11 @@
             <span class="n">string</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">pair</span><span class="si">}</span><span class="s2">, displacement=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">displacement</span><span class="si">!r}</span><span class="s2">&quot;</span>
             <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">(</span><span class="si">{</span><span class="n">string</span><span class="si">}</span><span class="s2">)&quot;</span></div>
 
-<div class="viewcode-block" id="Offset.__sub__"><a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.Offset.__sub__">[docs]</a>    <span class="k">def</span> <span class="fm">__sub__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Offset.__sub__">
+<a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.Offset.__sub__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__sub__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Subtracts ``argument`` from offset.</span>
 
 <span class="sd">        ..  container:: example</span>
@@ -1788,9 +1927,10 @@
             <span class="n">argument</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span><span class="n">argument</span><span class="p">)</span>
             <span class="k">return</span> <span class="bp">self</span> <span class="o">-</span> <span class="n">argument</span></div>
 
+
     <span class="c1">### PRIVATE METHODS ###</span>
 
-    <span class="k">def</span> <span class="nf">_get_displacement</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_displacement</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">displacement</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">Duration</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">displacement</span>
@@ -1798,8 +1938,8 @@
     <span class="c1">### PUBLIC PROPERTIES ###</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">displacement</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">displacement</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets displacement.</span>
 
 <span class="sd">        ..  container:: example</span>
@@ -1833,7 +1973,10 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_displacement</span></div>
 
 
-<div class="viewcode-block" id="add_pairs"><a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.add_pairs">[docs]</a><span class="k">def</span> <span class="nf">add_pairs</span><span class="p">(</span><span class="n">pair_1</span><span class="p">,</span> <span class="n">pair_2</span><span class="p">):</span>
+
+<div class="viewcode-block" id="add_pairs">
+<a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.add_pairs">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">add_pairs</span><span class="p">(</span><span class="n">pair_1</span><span class="p">,</span> <span class="n">pair_2</span><span class="p">):</span>
     <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">pair_1</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">pair_1</span><span class="p">)</span>
     <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">pair_2</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">pair_2</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">pair_1</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">pair_2</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
@@ -1850,8 +1993,11 @@
     <span class="k">return</span> <span class="n">pair</span></div>
 
 
-<div class="viewcode-block" id="divide_pair"><a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.divide_pair">[docs]</a><span class="k">def</span> <span class="nf">divide_pair</span><span class="p">(</span><span class="n">pair</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="divide_pair">
+<a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.divide_pair">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">divide_pair</span><span class="p">(</span><span class="n">pair</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Divides ``pair`` by integer ``n``.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">pair</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">pair</span><span class="p">)</span>
@@ -1861,8 +2007,11 @@
     <span class="k">return</span> <span class="n">pair</span></div>
 
 
-<div class="viewcode-block" id="durations"><a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.durations">[docs]</a><span class="k">def</span> <span class="nf">durations</span><span class="p">(</span><span class="n">durations</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Duration</span><span class="p">]:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="durations">
+<a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.durations">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">durations</span><span class="p">(</span><span class="n">durations</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Duration</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Changes ``durations`` to durations.</span>
 
 <span class="sd">    ..  container:: example</span>
@@ -1875,8 +2024,11 @@
     <span class="k">return</span> <span class="n">durations</span></div>
 
 
-<div class="viewcode-block" id="pair"><a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.pair">[docs]</a><span class="k">def</span> <span class="nf">pair</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="pair">
+<a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.pair">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">pair</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Changes ``argument`` to pair.</span>
 
 <span class="sd">    ..  container:: example</span>
@@ -1904,8 +2056,11 @@
     <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="with_denominator"><a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.with_denominator">[docs]</a><span class="k">def</span> <span class="nf">with_denominator</span><span class="p">(</span><span class="n">duration</span><span class="p">,</span> <span class="n">denominator</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="with_denominator">
+<a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.with_denominator">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">with_denominator</span><span class="p">(</span><span class="n">duration</span><span class="p">,</span> <span class="n">denominator</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Spells ``duration`` as pair with ``denominator``.</span>
 
 <span class="sd">    ..  container:: example</span>
@@ -1982,6 +2137,7 @@
     <span class="k">else</span><span class="p">:</span>
         <span class="n">pair</span> <span class="o">=</span> <span class="p">(</span><span class="n">current_numerator</span><span class="p">,</span> <span class="n">current_denominator</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">pair</span></div>
+
 </pre></div>
 
     </div>
@@ -2008,7 +2164,7 @@
   </div>
   <script>
       jQuery(function () {
-          SphinxRtdTheme.Navigation.enable(true);
+          SphinxRtdTheme.Navigation.enable(false);
       });
   </script> 
 

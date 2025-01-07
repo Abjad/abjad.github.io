@@ -1,30 +1,29 @@
+
+
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="../../../">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>abjad.parsers.scheme &mdash; Abjad 3.19 documentation</title>
-      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="../../../_static/abjad.css" type="text/css" />
-      <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
-      <link rel="stylesheet" href="../../../_static/uqbar.css" type="text/css" />
-      <link rel="stylesheet" href="../../../_static/lightbox2/css/lightbox.css" type="text/css" />
+  <title>abjad.parsers.scheme &mdash; Abjad 3.20 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/abjad.css?v=1f187528" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/uqbar.css?v=e6773f5c" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/lightbox2/css/lightbox.css?v=d2ef71d2" />
+
+  
     <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
     <link rel="canonical" href="https://abjad.github.io_modules/abjad/parsers/scheme.html"/>
-  <!--[if lt IE 9]>
-    <script src="../../../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
-        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
-        <script src="../../../_static/jquery.js"></script>
-        <script src="../../../_static/underscore.js"></script>
-        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="../../../_static/doctools.js"></script>
-        <script src="../../../_static/sphinx_highlight.js"></script>
-        <script defer="defer" src="../../../_static/copybutton.js"></script>
-        <script src="../../../_static/ga.js"></script>
-        <script defer="defer" src="../../../_static/lightbox2/js/lightbox.js"></script>
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=360ea7ac"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script defer="defer" src="../../../_static/copybutton.js?v=0c784ec5"></script>
+      <script src="../../../_static/ga.js?v=c455bbd5"></script>
+      <script defer="defer" src="../../../_static/lightbox2/js/lightbox.js?v=bc25c2e6"></script>
     <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
@@ -34,15 +33,13 @@
   <div class="wy-grid-for-nav">
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search"  style="background: #ddaa77" >
+        <div class="wy-side-nav-search"  style="background: #eeccaa" >
 
 
     <a href="../../../index.html" class="icon icon-home" alt="Documentation
-    Home"> Abjad 3.19
+    Home"> Abjad 3.20
 
 
-
-    <img src="../../../_static/abjad-logo.png" class="logo" alt="Logo"/>
 
 </a>
 
@@ -51,7 +48,7 @@
 
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -111,14 +108,14 @@
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #ddaa77" >
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #eeccaa" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../../index.html">Abjad</a>
       </nav>
 
       <div class="wy-nav-content">
 
-<div class="rst-content">
+<div class="rst-content style-external-links">
 
     
 
@@ -127,26 +124,31 @@
     <div itemprop="articleBody">
     
   <h1>Source code for abjad.parsers.scheme</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">dataclasses</span>
-<span class="kn">import</span> <span class="nn">typing</span>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">dataclasses</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">typing</span>
 
-<span class="kn">from</span> <span class="nn">ply</span> <span class="kn">import</span> <span class="n">lex</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">ply</span><span class="w"> </span><span class="kn">import</span> <span class="n">lex</span>
 
-<span class="kn">from</span> <span class="nn">..</span> <span class="kn">import</span> <span class="n">exceptions</span>
-<span class="kn">from</span> <span class="nn">.base</span> <span class="kn">import</span> <span class="n">Parser</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..</span><span class="w"> </span><span class="kn">import</span> <span class="n">exceptions</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.base</span><span class="w"> </span><span class="kn">import</span> <span class="n">Parser</span>
 
 
-<div class="viewcode-block" id="Scheme"><a class="viewcode-back" href="../../../api/abjad/parsers/scheme.html#abjad.parsers.scheme.Scheme">[docs]</a><span class="nd">@dataclasses</span><span class="o">.</span><span class="n">dataclass</span><span class="p">(</span><span class="n">slots</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="k">class</span> <span class="nc">Scheme</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="Scheme">
+<a class="viewcode-back" href="../../../api/abjad/parsers/scheme.html#abjad.parsers.scheme.Scheme">[docs]</a>
+<span class="nd">@dataclasses</span><span class="o">.</span><span class="n">dataclass</span><span class="p">(</span><span class="n">slots</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Scheme</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Abjad model of Scheme code.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">value</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Any</span> <span class="o">=</span> <span class="kc">None</span></div>
 
 
-<div class="viewcode-block" id="SchemeParser"><a class="viewcode-back" href="../../../api/abjad/parsers/scheme.html#abjad.parsers.scheme.SchemeParser">[docs]</a><span class="k">class</span> <span class="nc">SchemeParser</span><span class="p">(</span><span class="n">Parser</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="SchemeParser">
+<a class="viewcode-back" href="../../../api/abjad/parsers/scheme.html#abjad.parsers.scheme.SchemeParser">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">SchemeParser</span><span class="p">(</span><span class="n">Parser</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    ``SchemeParser`` mimics how LilyPond&#39;s embedded Scheme parser behaves.</span>
 
 <span class="sd">    It parses a single Scheme expression and then stops, by raising a</span>
@@ -170,7 +172,7 @@
 
     <span class="c1">### INITIALIZER ###</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">cursor</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">cursor_end</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">expression_depth</span> <span class="o">=</span> <span class="kc">None</span>
@@ -180,7 +182,7 @@
 
     <span class="c1">### PRIVATE METHODS ###</span>
 
-    <span class="k">def</span> <span class="nf">_setup</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_setup</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">expression_depth</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">cursor</span> <span class="o">=</span> <span class="mi">0</span>
 
@@ -238,13 +240,18 @@
 
     <span class="n">t_ignore</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
 
-<div class="viewcode-block" id="SchemeParser.t_whitespace"><a class="viewcode-back" href="../../../api/abjad/parsers/scheme.html#abjad.parsers.scheme.SchemeParser.t_whitespace">[docs]</a>    <span class="k">def</span> <span class="nf">t_whitespace</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
+<div class="viewcode-block" id="SchemeParser.t_whitespace">
+<a class="viewcode-back" href="../../../api/abjad/parsers/scheme.html#abjad.parsers.scheme.SchemeParser.t_whitespace">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">t_whitespace</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
         <span class="sa">r</span><span class="s2">&quot;[ \t\r]+&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">cursor</span> <span class="o">+=</span> <span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
         <span class="n">t</span><span class="o">.</span><span class="n">cursor_end</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cursor</span>
         <span class="k">pass</span></div>
 
-<div class="viewcode-block" id="SchemeParser.t_BOOLEAN"><a class="viewcode-back" href="../../../api/abjad/parsers/scheme.html#abjad.parsers.scheme.SchemeParser.t_BOOLEAN">[docs]</a>    <span class="k">def</span> <span class="nf">t_BOOLEAN</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
+
+<div class="viewcode-block" id="SchemeParser.t_BOOLEAN">
+<a class="viewcode-back" href="../../../api/abjad/parsers/scheme.html#abjad.parsers.scheme.SchemeParser.t_BOOLEAN">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">t_BOOLEAN</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
         <span class="sa">r</span><span class="s2">&quot;\#(T|F|t|f)&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">cursor</span> <span class="o">+=</span> <span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
         <span class="n">t</span><span class="o">.</span><span class="n">cursor_end</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cursor</span>
@@ -254,47 +261,68 @@
             <span class="n">t</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="k">return</span> <span class="n">t</span></div>
 
-<div class="viewcode-block" id="SchemeParser.t_HEXADECIMAL"><a class="viewcode-back" href="../../../api/abjad/parsers/scheme.html#abjad.parsers.scheme.SchemeParser.t_HEXADECIMAL">[docs]</a>    <span class="nd">@lex</span><span class="o">.</span><span class="n">TOKEN</span><span class="p">(</span><span class="n">HEX</span><span class="p">)</span>
-    <span class="k">def</span> <span class="nf">t_HEXADECIMAL</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
+
+<div class="viewcode-block" id="SchemeParser.t_HEXADECIMAL">
+<a class="viewcode-back" href="../../../api/abjad/parsers/scheme.html#abjad.parsers.scheme.SchemeParser.t_HEXADECIMAL">[docs]</a>
+    <span class="nd">@lex</span><span class="o">.</span><span class="n">TOKEN</span><span class="p">(</span><span class="n">HEX</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">t_HEXADECIMAL</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">cursor</span> <span class="o">+=</span> <span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
         <span class="n">t</span><span class="o">.</span><span class="n">cursor_end</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cursor</span>
         <span class="n">t</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">value</span><span class="p">[</span><span class="mi">2</span><span class="p">:],</span> <span class="mi">16</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">t</span></div>
 
-<div class="viewcode-block" id="SchemeParser.t_DECIMAL"><a class="viewcode-back" href="../../../api/abjad/parsers/scheme.html#abjad.parsers.scheme.SchemeParser.t_DECIMAL">[docs]</a>    <span class="nd">@lex</span><span class="o">.</span><span class="n">TOKEN</span><span class="p">(</span><span class="n">REAL</span><span class="p">)</span>
-    <span class="k">def</span> <span class="nf">t_DECIMAL</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
+
+<div class="viewcode-block" id="SchemeParser.t_DECIMAL">
+<a class="viewcode-back" href="../../../api/abjad/parsers/scheme.html#abjad.parsers.scheme.SchemeParser.t_DECIMAL">[docs]</a>
+    <span class="nd">@lex</span><span class="o">.</span><span class="n">TOKEN</span><span class="p">(</span><span class="n">REAL</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">t_DECIMAL</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">cursor</span> <span class="o">+=</span> <span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
         <span class="n">t</span><span class="o">.</span><span class="n">cursor_end</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cursor</span>
         <span class="n">t</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">t</span></div>
 
-<div class="viewcode-block" id="SchemeParser.t_HASH"><a class="viewcode-back" href="../../../api/abjad/parsers/scheme.html#abjad.parsers.scheme.SchemeParser.t_HASH">[docs]</a>    <span class="k">def</span> <span class="nf">t_HASH</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
+
+<div class="viewcode-block" id="SchemeParser.t_HASH">
+<a class="viewcode-back" href="../../../api/abjad/parsers/scheme.html#abjad.parsers.scheme.SchemeParser.t_HASH">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">t_HASH</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
         <span class="sa">r</span><span class="s2">&quot;\#&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">cursor</span> <span class="o">+=</span> <span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
         <span class="n">t</span><span class="o">.</span><span class="n">cursor_end</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cursor</span>
         <span class="k">return</span> <span class="n">t</span></div>
 
-<div class="viewcode-block" id="SchemeParser.t_INTEGER"><a class="viewcode-back" href="../../../api/abjad/parsers/scheme.html#abjad.parsers.scheme.SchemeParser.t_INTEGER">[docs]</a>    <span class="nd">@lex</span><span class="o">.</span><span class="n">TOKEN</span><span class="p">(</span><span class="n">INT</span><span class="p">)</span>
-    <span class="k">def</span> <span class="nf">t_INTEGER</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
+
+<div class="viewcode-block" id="SchemeParser.t_INTEGER">
+<a class="viewcode-back" href="../../../api/abjad/parsers/scheme.html#abjad.parsers.scheme.SchemeParser.t_INTEGER">[docs]</a>
+    <span class="nd">@lex</span><span class="o">.</span><span class="n">TOKEN</span><span class="p">(</span><span class="n">INT</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">t_INTEGER</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">cursor</span> <span class="o">+=</span> <span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
         <span class="n">t</span><span class="o">.</span><span class="n">cursor_end</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cursor</span>
         <span class="n">t</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">t</span></div>
 
-<div class="viewcode-block" id="SchemeParser.t_L_PAREN"><a class="viewcode-back" href="../../../api/abjad/parsers/scheme.html#abjad.parsers.scheme.SchemeParser.t_L_PAREN">[docs]</a>    <span class="k">def</span> <span class="nf">t_L_PAREN</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
+
+<div class="viewcode-block" id="SchemeParser.t_L_PAREN">
+<a class="viewcode-back" href="../../../api/abjad/parsers/scheme.html#abjad.parsers.scheme.SchemeParser.t_L_PAREN">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">t_L_PAREN</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
         <span class="sa">r</span><span class="s2">&quot;\(&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">cursor</span> <span class="o">+=</span> <span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
         <span class="n">t</span><span class="o">.</span><span class="n">cursor_end</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cursor</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">expression_depth</span> <span class="o">+=</span> <span class="mi">1</span>
         <span class="k">return</span> <span class="n">t</span></div>
 
-<div class="viewcode-block" id="SchemeParser.t_R_PAREN"><a class="viewcode-back" href="../../../api/abjad/parsers/scheme.html#abjad.parsers.scheme.SchemeParser.t_R_PAREN">[docs]</a>    <span class="k">def</span> <span class="nf">t_R_PAREN</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
+
+<div class="viewcode-block" id="SchemeParser.t_R_PAREN">
+<a class="viewcode-back" href="../../../api/abjad/parsers/scheme.html#abjad.parsers.scheme.SchemeParser.t_R_PAREN">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">t_R_PAREN</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
         <span class="sa">r</span><span class="s2">&quot;\)&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">cursor</span> <span class="o">+=</span> <span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
         <span class="n">t</span><span class="o">.</span><span class="n">cursor_end</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cursor</span>
         <span class="k">return</span> <span class="n">t</span></div>
 
-<div class="viewcode-block" id="SchemeParser.t_quote"><a class="viewcode-back" href="../../../api/abjad/parsers/scheme.html#abjad.parsers.scheme.SchemeParser.t_quote">[docs]</a>    <span class="k">def</span> <span class="nf">t_quote</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
+
+<div class="viewcode-block" id="SchemeParser.t_quote">
+<a class="viewcode-back" href="../../../api/abjad/parsers/scheme.html#abjad.parsers.scheme.SchemeParser.t_quote">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">t_quote</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
         <span class="sa">r</span><span class="s2">&quot;</span><span class="se">\&quot;</span><span class="s2"> &quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">cursor</span> <span class="o">+=</span> <span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
         <span class="n">t</span><span class="o">.</span><span class="n">cursor_end</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cursor</span>
@@ -302,21 +330,30 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">string_accumulator</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
         <span class="k">pass</span></div>
 
-<div class="viewcode-block" id="SchemeParser.t_quote_440"><a class="viewcode-back" href="../../../api/abjad/parsers/scheme.html#abjad.parsers.scheme.SchemeParser.t_quote_440">[docs]</a>    <span class="k">def</span> <span class="nf">t_quote_440</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;\\[nt\\&#39;&quot;]&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="SchemeParser.t_quote_440">
+<a class="viewcode-back" href="../../../api/abjad/parsers/scheme.html#abjad.parsers.scheme.SchemeParser.t_quote_440">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">t_quote_440</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;\\[nt\\&#39;&quot;]&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">cursor</span> <span class="o">+=</span> <span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
         <span class="n">t</span><span class="o">.</span><span class="n">cursor_end</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cursor</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">string_accumulator</span> <span class="o">+=</span> <span class="n">t</span><span class="o">.</span><span class="n">value</span>
         <span class="k">pass</span></div>
 
-<div class="viewcode-block" id="SchemeParser.t_quote_443"><a class="viewcode-back" href="../../../api/abjad/parsers/scheme.html#abjad.parsers.scheme.SchemeParser.t_quote_443">[docs]</a>    <span class="k">def</span> <span class="nf">t_quote_443</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
+
+<div class="viewcode-block" id="SchemeParser.t_quote_443">
+<a class="viewcode-back" href="../../../api/abjad/parsers/scheme.html#abjad.parsers.scheme.SchemeParser.t_quote_443">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">t_quote_443</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
         <span class="sa">r</span><span class="s1">&#39;[^</span><span class="se">\\</span><span class="s1">&quot;&quot;]+&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">cursor</span> <span class="o">+=</span> <span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
         <span class="n">t</span><span class="o">.</span><span class="n">cursor_end</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cursor</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">string_accumulator</span> <span class="o">+=</span> <span class="n">t</span><span class="o">.</span><span class="n">value</span>
         <span class="k">pass</span></div>
 
-<div class="viewcode-block" id="SchemeParser.t_quote_446"><a class="viewcode-back" href="../../../api/abjad/parsers/scheme.html#abjad.parsers.scheme.SchemeParser.t_quote_446">[docs]</a>    <span class="k">def</span> <span class="nf">t_quote_446</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
+
+<div class="viewcode-block" id="SchemeParser.t_quote_446">
+<a class="viewcode-back" href="../../../api/abjad/parsers/scheme.html#abjad.parsers.scheme.SchemeParser.t_quote_446">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">t_quote_446</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
         <span class="sa">r</span><span class="s2">&quot;</span><span class="se">\&quot;</span><span class="s2"> &quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">cursor</span> <span class="o">+=</span> <span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
         <span class="n">t</span><span class="o">.</span><span class="n">cursor_end</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cursor</span>
@@ -326,26 +363,38 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">string_accumulator</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
         <span class="k">return</span> <span class="n">t</span></div>
 
-<div class="viewcode-block" id="SchemeParser.t_quote_456"><a class="viewcode-back" href="../../../api/abjad/parsers/scheme.html#abjad.parsers.scheme.SchemeParser.t_quote_456">[docs]</a>    <span class="k">def</span> <span class="nf">t_quote_456</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
+
+<div class="viewcode-block" id="SchemeParser.t_quote_456">
+<a class="viewcode-back" href="../../../api/abjad/parsers/scheme.html#abjad.parsers.scheme.SchemeParser.t_quote_456">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">t_quote_456</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
         <span class="sa">r</span><span class="s2">&quot;.&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">cursor</span> <span class="o">+=</span> <span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
         <span class="n">t</span><span class="o">.</span><span class="n">cursor_end</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cursor</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">string_accumulator</span> <span class="o">+=</span> <span class="n">t</span><span class="o">.</span><span class="n">value</span>
         <span class="k">pass</span></div>
 
-<div class="viewcode-block" id="SchemeParser.t_IDENTIFIER"><a class="viewcode-back" href="../../../api/abjad/parsers/scheme.html#abjad.parsers.scheme.SchemeParser.t_IDENTIFIER">[docs]</a>    <span class="nd">@lex</span><span class="o">.</span><span class="n">TOKEN</span><span class="p">(</span><span class="n">IDENTIFIER</span><span class="p">)</span>
-    <span class="k">def</span> <span class="nf">t_IDENTIFIER</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
+
+<div class="viewcode-block" id="SchemeParser.t_IDENTIFIER">
+<a class="viewcode-back" href="../../../api/abjad/parsers/scheme.html#abjad.parsers.scheme.SchemeParser.t_IDENTIFIER">[docs]</a>
+    <span class="nd">@lex</span><span class="o">.</span><span class="n">TOKEN</span><span class="p">(</span><span class="n">IDENTIFIER</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">t_IDENTIFIER</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">cursor</span> <span class="o">+=</span> <span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
         <span class="n">t</span><span class="o">.</span><span class="n">cursor_end</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cursor</span>
         <span class="k">return</span> <span class="n">t</span></div>
 
-<div class="viewcode-block" id="SchemeParser.t_newline"><a class="viewcode-back" href="../../../api/abjad/parsers/scheme.html#abjad.parsers.scheme.SchemeParser.t_newline">[docs]</a>    <span class="k">def</span> <span class="nf">t_newline</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
+
+<div class="viewcode-block" id="SchemeParser.t_newline">
+<a class="viewcode-back" href="../../../api/abjad/parsers/scheme.html#abjad.parsers.scheme.SchemeParser.t_newline">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">t_newline</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
         <span class="sa">r</span><span class="s2">&quot;\n+&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">cursor</span> <span class="o">+=</span> <span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
         <span class="n">t</span><span class="o">.</span><span class="n">cursor_end</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cursor</span>
         <span class="n">t</span><span class="o">.</span><span class="n">lexer</span><span class="o">.</span><span class="n">lineno</span> <span class="o">+=</span> <span class="n">t</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="SchemeParser.t_anything"><a class="viewcode-back" href="../../../api/abjad/parsers/scheme.html#abjad.parsers.scheme.SchemeParser.t_anything">[docs]</a>    <span class="k">def</span> <span class="nf">t_anything</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
+
+<div class="viewcode-block" id="SchemeParser.t_anything">
+<a class="viewcode-back" href="../../../api/abjad/parsers/scheme.html#abjad.parsers.scheme.SchemeParser.t_anything">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">t_anything</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
         <span class="sa">r</span><span class="s2">&quot;.&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">cursor</span> <span class="o">+=</span> <span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
         <span class="n">t</span><span class="o">.</span><span class="n">cursor_end</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cursor</span>
@@ -377,11 +426,15 @@
             <span class="c1"># t.lexer.skip(1)</span>
             <span class="k">pass</span></div>
 
-<div class="viewcode-block" id="SchemeParser.t_error"><a class="viewcode-back" href="../../../api/abjad/parsers/scheme.html#abjad.parsers.scheme.SchemeParser.t_error">[docs]</a>    <span class="k">def</span> <span class="nf">t_error</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
+
+<div class="viewcode-block" id="SchemeParser.t_error">
+<a class="viewcode-back" href="../../../api/abjad/parsers/scheme.html#abjad.parsers.scheme.SchemeParser.t_error">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">t_error</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">cursor</span> <span class="o">+=</span> <span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
         <span class="n">t</span><span class="o">.</span><span class="n">cursor_end</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cursor</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;SchemeParser-</span><span class="si">{</span><span class="nb">id</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="si">}</span><span class="s2">: Illegal character </span><span class="si">{</span><span class="n">t</span><span class="o">.</span><span class="n">value</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">!r}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
         <span class="c1"># t.lexer.skip(1)</span>
 
     <span class="n">t_quote_error</span> <span class="o">=</span> <span class="n">t_error</span>
@@ -395,36 +448,47 @@
 
     <span class="c1">### program ###</span>
 
-    <span class="sd">&quot;&quot;&quot;&lt;program&gt; : &lt;form&gt;*</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;&lt;program&gt; : &lt;form&gt;*</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="SchemeParser.p_program__forms"><a class="viewcode-back" href="../../../api/abjad/parsers/scheme.html#abjad.parsers.scheme.SchemeParser.p_program__forms">[docs]</a>    <span class="k">def</span> <span class="nf">p_program__forms</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="SchemeParser.p_program__forms">
+<a class="viewcode-back" href="../../../api/abjad/parsers/scheme.html#abjad.parsers.scheme.SchemeParser.p_program__forms">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">p_program__forms</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        program : forms</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">p</span><span class="o">.</span><span class="n">slice</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">cursor_end</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">slice</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">cursor_end</span>
         <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span></div>
 
-<div class="viewcode-block" id="SchemeParser.p_forms__EMPTY"><a class="viewcode-back" href="../../../api/abjad/parsers/scheme.html#abjad.parsers.scheme.SchemeParser.p_forms__EMPTY">[docs]</a>    <span class="k">def</span> <span class="nf">p_forms__EMPTY</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="SchemeParser.p_forms__EMPTY">
+<a class="viewcode-back" href="../../../api/abjad/parsers/scheme.html#abjad.parsers.scheme.SchemeParser.p_forms__EMPTY">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">p_forms__EMPTY</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        forms :</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span></div>
 
-<div class="viewcode-block" id="SchemeParser.p_forms__forms__form"><a class="viewcode-back" href="../../../api/abjad/parsers/scheme.html#abjad.parsers.scheme.SchemeParser.p_forms__forms__form">[docs]</a>    <span class="k">def</span> <span class="nf">p_forms__forms__form</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="SchemeParser.p_forms__forms__form">
+<a class="viewcode-back" href="../../../api/abjad/parsers/scheme.html#abjad.parsers.scheme.SchemeParser.p_forms__forms__form">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">p_forms__forms__form</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        forms : forms form</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">p</span><span class="o">.</span><span class="n">slice</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">cursor_end</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">slice</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">cursor_end</span>
         <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">]]</span></div>
 
+
     <span class="c1">### form ###</span>
 
-    <span class="sd">&quot;&quot;&quot;&lt;form&gt; : &lt;definition&gt; | &lt;expression&gt;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;&lt;form&gt; : &lt;definition&gt; | &lt;expression&gt;</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="SchemeParser.p_form__expression"><a class="viewcode-back" href="../../../api/abjad/parsers/scheme.html#abjad.parsers.scheme.SchemeParser.p_form__expression">[docs]</a>    <span class="k">def</span> <span class="nf">p_form__expression</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="SchemeParser.p_form__expression">
+<a class="viewcode-back" href="../../../api/abjad/parsers/scheme.html#abjad.parsers.scheme.SchemeParser.p_form__expression">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">p_form__expression</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        form : expression</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># print &#39;form : expression&#39;</span>
@@ -437,9 +501,10 @@
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;PARSED </span><span class="si">{!r}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lexer</span><span class="o">.</span><span class="n">lexdata</span><span class="p">[:</span> <span class="bp">self</span><span class="o">.</span><span class="n">cursor_end</span><span class="p">]))</span>
         <span class="k">raise</span> <span class="n">exceptions</span><span class="o">.</span><span class="n">SchemeParserFinishedError</span></div>
 
+
     <span class="c1">### definition ###</span>
 
-    <span class="sd">&quot;&quot;&quot;&lt;definition&gt; : &lt;variable definition&gt;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;&lt;definition&gt; : &lt;variable definition&gt;</span>
 <span class="sd">    |   &lt;syntax definition&gt;</span>
 <span class="sd">    |   (begin &lt;definition&gt;*)</span>
 <span class="sd">    |   (let-syntax (&lt;syntax binding&gt;*) &lt;definition&gt;*)</span>
@@ -449,18 +514,20 @@
 
     <span class="c1">### variable definition ###</span>
 
-    <span class="sd">&quot;&quot;&quot;&lt;variable definition&gt; : (define &lt;variable&gt; &lt;expression&gt;)</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;&lt;variable definition&gt; : (define &lt;variable&gt; &lt;expression&gt;)</span>
 <span class="sd">    |   (define (&lt;variable&gt; &lt;variable&gt;*) &lt;body&gt;)</span>
 <span class="sd">    |   (define (&lt;variable&gt; &lt;variable&gt;* . &lt;variable&gt;) &lt;body&gt;)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="c1">### variable ###</span>
 
-    <span class="sd">&quot;&quot;&quot;&lt;variable&gt; : &lt;identifier&gt;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;&lt;variable&gt; : &lt;identifier&gt;</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="SchemeParser.p_variable__IDENTIFIER"><a class="viewcode-back" href="../../../api/abjad/parsers/scheme.html#abjad.parsers.scheme.SchemeParser.p_variable__IDENTIFIER">[docs]</a>    <span class="k">def</span> <span class="nf">p_variable__IDENTIFIER</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="SchemeParser.p_variable__IDENTIFIER">
+<a class="viewcode-back" href="../../../api/abjad/parsers/scheme.html#abjad.parsers.scheme.SchemeParser.p_variable__IDENTIFIER">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">p_variable__IDENTIFIER</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        variable : IDENTIFIER</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># print &#39;variable : IDENTIFIER&#39;</span>
@@ -469,29 +536,30 @@
         <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="s2">&quot;AAA&quot;</span><span class="p">)</span>
         <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">Scheme</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span></div>
 
+
     <span class="c1">### body ###</span>
 
-    <span class="sd">&quot;&quot;&quot;&lt;body&gt; : &lt;definition&gt;* &lt;expression&gt;+</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;&lt;body&gt; : &lt;definition&gt;* &lt;expression&gt;+</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="c1">### syntax definition ###</span>
 
-    <span class="sd">&quot;&quot;&quot;&lt;syntax definition&gt; : (define-syntax &lt;keyword&gt; &lt;transformer expression&gt;)</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;&lt;syntax definition&gt; : (define-syntax &lt;keyword&gt; &lt;transformer expression&gt;)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="c1">### keyword ###</span>
 
-    <span class="sd">&quot;&quot;&quot;&lt;keyword&gt; : &lt;identifier&gt;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;&lt;keyword&gt; : &lt;identifier&gt;</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="c1">### syntax binding ###</span>
 
-    <span class="sd">&quot;&quot;&quot;&lt;syntax binding&gt; : (&lt;keyword&gt; &lt;transformer expression&gt;)</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;&lt;syntax binding&gt; : (&lt;keyword&gt; &lt;transformer expression&gt;)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="c1">### expression ###</span>
 
-    <span class="sd">&quot;&quot;&quot;&lt;expression&gt; : &lt;constant&gt;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;&lt;expression&gt; : &lt;constant&gt;</span>
 <span class="sd">    |   &lt;variable&gt;</span>
 <span class="sd">    |   (quote &lt;datum&gt;) | &#39; &lt;datum&gt;</span>
 <span class="sd">    |   (lambda &lt;formals&gt; &lt;body&gt;)</span>
@@ -503,8 +571,10 @@
 <span class="sd">    |   &lt;derived expression&gt;</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="SchemeParser.p_expression__variable"><a class="viewcode-back" href="../../../api/abjad/parsers/scheme.html#abjad.parsers.scheme.SchemeParser.p_expression__variable">[docs]</a>    <span class="k">def</span> <span class="nf">p_expression__variable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="SchemeParser.p_expression__variable">
+<a class="viewcode-back" href="../../../api/abjad/parsers/scheme.html#abjad.parsers.scheme.SchemeParser.p_expression__variable">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">p_expression__variable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        expression : variable</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># print &#39;expression : variable&#39;</span>
@@ -512,8 +582,11 @@
         <span class="n">p</span><span class="o">.</span><span class="n">slice</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">cursor_end</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">slice</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">cursor_end</span>
         <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span></div>
 
-<div class="viewcode-block" id="SchemeParser.p_expression__QUOTE__datum"><a class="viewcode-back" href="../../../api/abjad/parsers/scheme.html#abjad.parsers.scheme.SchemeParser.p_expression__QUOTE__datum">[docs]</a>    <span class="k">def</span> <span class="nf">p_expression__QUOTE__datum</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="SchemeParser.p_expression__QUOTE__datum">
+<a class="viewcode-back" href="../../../api/abjad/parsers/scheme.html#abjad.parsers.scheme.SchemeParser.p_expression__QUOTE__datum">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">p_expression__QUOTE__datum</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        expression : QUOTE datum</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># print &#39;expression : QUOTE datum&#39;</span>
@@ -522,20 +595,26 @@
         <span class="n">datum</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
         <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">Scheme</span><span class="p">(</span><span class="n">datum</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="SchemeParser.p_expression__constant"><a class="viewcode-back" href="../../../api/abjad/parsers/scheme.html#abjad.parsers.scheme.SchemeParser.p_expression__constant">[docs]</a>    <span class="k">def</span> <span class="nf">p_expression__constant</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="SchemeParser.p_expression__constant">
+<a class="viewcode-back" href="../../../api/abjad/parsers/scheme.html#abjad.parsers.scheme.SchemeParser.p_expression__constant">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">p_expression__constant</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        expression : constant</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">p</span><span class="o">.</span><span class="n">slice</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">cursor_end</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">slice</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">cursor_end</span>
         <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span></div>
 
+
     <span class="c1">### constant ###</span>
 
-    <span class="sd">&quot;&quot;&quot;&lt;constant&gt; : &lt;boolean&gt; | &lt;number&gt; | &lt;character&gt; | &lt;string&gt;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;&lt;constant&gt; : &lt;boolean&gt; | &lt;number&gt; | &lt;character&gt; | &lt;string&gt;</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="SchemeParser.p_constant__boolean"><a class="viewcode-back" href="../../../api/abjad/parsers/scheme.html#abjad.parsers.scheme.SchemeParser.p_constant__boolean">[docs]</a>    <span class="k">def</span> <span class="nf">p_constant__boolean</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="SchemeParser.p_constant__boolean">
+<a class="viewcode-back" href="../../../api/abjad/parsers/scheme.html#abjad.parsers.scheme.SchemeParser.p_constant__boolean">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">p_constant__boolean</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        constant : boolean</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">p</span><span class="o">.</span><span class="n">slice</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">cursor_end</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">slice</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">cursor_end</span>
@@ -547,8 +626,11 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">cursor_end</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">slice</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">cursor_end</span>
             <span class="k">raise</span> <span class="n">exceptions</span><span class="o">.</span><span class="n">SchemeParserFinishedError</span></div>
 
-<div class="viewcode-block" id="SchemeParser.p_constant__number"><a class="viewcode-back" href="../../../api/abjad/parsers/scheme.html#abjad.parsers.scheme.SchemeParser.p_constant__number">[docs]</a>    <span class="k">def</span> <span class="nf">p_constant__number</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="SchemeParser.p_constant__number">
+<a class="viewcode-back" href="../../../api/abjad/parsers/scheme.html#abjad.parsers.scheme.SchemeParser.p_constant__number">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">p_constant__number</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        constant : number</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">p</span><span class="o">.</span><span class="n">slice</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">cursor_end</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">slice</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">cursor_end</span>
@@ -560,8 +642,11 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">cursor_end</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">slice</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">cursor_end</span>
             <span class="k">raise</span> <span class="n">exceptions</span><span class="o">.</span><span class="n">SchemeParserFinishedError</span></div>
 
-<div class="viewcode-block" id="SchemeParser.p_constant__string"><a class="viewcode-back" href="../../../api/abjad/parsers/scheme.html#abjad.parsers.scheme.SchemeParser.p_constant__string">[docs]</a>    <span class="k">def</span> <span class="nf">p_constant__string</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="SchemeParser.p_constant__string">
+<a class="viewcode-back" href="../../../api/abjad/parsers/scheme.html#abjad.parsers.scheme.SchemeParser.p_constant__string">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">p_constant__string</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        constant : string</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">p</span><span class="o">.</span><span class="n">slice</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">cursor_end</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">slice</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">cursor_end</span>
@@ -573,59 +658,66 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">cursor_end</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">slice</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">cursor_end</span>
             <span class="k">raise</span> <span class="n">exceptions</span><span class="o">.</span><span class="n">SchemeParserFinishedError</span></div>
 
+
     <span class="c1">### formals ###</span>
 
-    <span class="sd">&quot;&quot;&quot;&lt;formals&gt; : &lt;variable&gt; | (&lt;variable&gt;*) | (&lt;variable&gt;+ . &lt;variable&gt;)</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;&lt;formals&gt; : &lt;variable&gt; | (&lt;variable&gt;*) | (&lt;variable&gt;+ . &lt;variable&gt;)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="c1">### application ###</span>
 
-    <span class="sd">&quot;&quot;&quot;&lt;application&gt; : (&lt;expression&gt; &lt;expression&gt;*)</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;&lt;application&gt; : (&lt;expression&gt; &lt;expression&gt;*)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="c1">### identifier ###</span>
 
-    <span class="sd">&quot;&quot;&quot;&lt;identifier&gt; : &lt;initial&gt; &lt;subsequent&gt;* | + | - | ...</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;&lt;identifier&gt; : &lt;initial&gt; &lt;subsequent&gt;* | + | - | ...</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="c1">### initial ###</span>
 
-    <span class="sd">&quot;&quot;&quot;&lt;initial&gt; : &lt;letter&gt; | ! | $ | % | &amp; | * | / | : | &lt; | = | &gt; | ? | ~ | _ | ^</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;&lt;initial&gt; : &lt;letter&gt; | ! | $ | % | &amp; | * | / | : | &lt; | = | &gt; | ? | ~ | _ | ^</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="c1">### subsequent ###</span>
 
-    <span class="sd">&quot;&quot;&quot;&lt;subsequent&gt; : &lt;initial&gt; | &lt;digit&gt; | . | + | -</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;&lt;subsequent&gt; : &lt;initial&gt; | &lt;digit&gt; | . | + | -</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="c1">### letter ###</span>
 
-    <span class="sd">&quot;&quot;&quot;&lt;letter&gt; : a | b | ... | z</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;&lt;letter&gt; : a | b | ... | z</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="c1">### digit ###</span>
 
-    <span class="sd">&quot;&quot;&quot;&lt;digit&gt; : 0 | 1 | ... | 9</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;&lt;digit&gt; : 0 | 1 | ... | 9</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="c1">### datum ###</span>
 
-    <span class="sd">&quot;&quot;&quot;&lt;datum&gt; : &lt;boolean&gt; | &lt;number&gt; | &lt;character&gt; | &lt;string&gt; | &lt;symbol&gt; | &lt;list&gt; | &lt;vector&gt;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;&lt;datum&gt; : &lt;boolean&gt; | &lt;number&gt; | &lt;character&gt; | &lt;string&gt; | &lt;symbol&gt; | &lt;list&gt; | &lt;vector&gt;</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="SchemeParser.p_datum__constant"><a class="viewcode-back" href="../../../api/abjad/parsers/scheme.html#abjad.parsers.scheme.SchemeParser.p_datum__constant">[docs]</a>    <span class="k">def</span> <span class="nf">p_datum__constant</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="SchemeParser.p_datum__constant">
+<a class="viewcode-back" href="../../../api/abjad/parsers/scheme.html#abjad.parsers.scheme.SchemeParser.p_datum__constant">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">p_datum__constant</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        datum : constant</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">p</span><span class="o">.</span><span class="n">slice</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">cursor_end</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">slice</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">cursor_end</span>
         <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span></div>
 
-<div class="viewcode-block" id="SchemeParser.p_datum__symbol"><a class="viewcode-back" href="../../../api/abjad/parsers/scheme.html#abjad.parsers.scheme.SchemeParser.p_datum__symbol">[docs]</a>    <span class="k">def</span> <span class="nf">p_datum__symbol</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="SchemeParser.p_datum__symbol">
+<a class="viewcode-back" href="../../../api/abjad/parsers/scheme.html#abjad.parsers.scheme.SchemeParser.p_datum__symbol">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">p_datum__symbol</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        datum : symbol</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">p</span><span class="o">.</span><span class="n">slice</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">cursor_end</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">slice</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">cursor_end</span>
         <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span></div>
+
 
     <span class="c1"># def p_datum__boolean(self, p):</span>
     <span class="c1">#    &quot;&quot;&quot;datum : boolean&quot;&quot;&quot;</span>
@@ -639,100 +731,129 @@
     <span class="c1">#    &quot;&quot;&quot;datum : string&quot;&quot;&quot;</span>
     <span class="c1">#    p[0] = p[1]</span>
 
-<div class="viewcode-block" id="SchemeParser.p_datum__list"><a class="viewcode-back" href="../../../api/abjad/parsers/scheme.html#abjad.parsers.scheme.SchemeParser.p_datum__list">[docs]</a>    <span class="k">def</span> <span class="nf">p_datum__list</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="SchemeParser.p_datum__list">
+<a class="viewcode-back" href="../../../api/abjad/parsers/scheme.html#abjad.parsers.scheme.SchemeParser.p_datum__list">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">p_datum__list</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        datum : list</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">p</span><span class="o">.</span><span class="n">slice</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">cursor_end</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">slice</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">cursor_end</span>
         <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span></div>
 
-<div class="viewcode-block" id="SchemeParser.p_datum__vector"><a class="viewcode-back" href="../../../api/abjad/parsers/scheme.html#abjad.parsers.scheme.SchemeParser.p_datum__vector">[docs]</a>    <span class="k">def</span> <span class="nf">p_datum__vector</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="SchemeParser.p_datum__vector">
+<a class="viewcode-back" href="../../../api/abjad/parsers/scheme.html#abjad.parsers.scheme.SchemeParser.p_datum__vector">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">p_datum__vector</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        datum : vector</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">p</span><span class="o">.</span><span class="n">slice</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">cursor_end</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">slice</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">cursor_end</span>
         <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span></div>
 
-<div class="viewcode-block" id="SchemeParser.p_data__EMPTY"><a class="viewcode-back" href="../../../api/abjad/parsers/scheme.html#abjad.parsers.scheme.SchemeParser.p_data__EMPTY">[docs]</a>    <span class="k">def</span> <span class="nf">p_data__EMPTY</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="SchemeParser.p_data__EMPTY">
+<a class="viewcode-back" href="../../../api/abjad/parsers/scheme.html#abjad.parsers.scheme.SchemeParser.p_data__EMPTY">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">p_data__EMPTY</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        data :</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span></div>
 
-<div class="viewcode-block" id="SchemeParser.p_data__data__datum"><a class="viewcode-back" href="../../../api/abjad/parsers/scheme.html#abjad.parsers.scheme.SchemeParser.p_data__data__datum">[docs]</a>    <span class="k">def</span> <span class="nf">p_data__data__datum</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="SchemeParser.p_data__data__datum">
+<a class="viewcode-back" href="../../../api/abjad/parsers/scheme.html#abjad.parsers.scheme.SchemeParser.p_data__data__datum">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">p_data__data__datum</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        data : data datum</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">p</span><span class="o">.</span><span class="n">slice</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">cursor_end</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">slice</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">cursor_end</span>
         <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">]]</span></div>
 
+
     <span class="c1">### boolean ###</span>
 
-    <span class="sd">&quot;&quot;&quot;&lt;boolean&gt; : #t | #f</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;&lt;boolean&gt; : #t | #f</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="SchemeParser.p_boolean__BOOLEAN"><a class="viewcode-back" href="../../../api/abjad/parsers/scheme.html#abjad.parsers.scheme.SchemeParser.p_boolean__BOOLEAN">[docs]</a>    <span class="k">def</span> <span class="nf">p_boolean__BOOLEAN</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="SchemeParser.p_boolean__BOOLEAN">
+<a class="viewcode-back" href="../../../api/abjad/parsers/scheme.html#abjad.parsers.scheme.SchemeParser.p_boolean__BOOLEAN">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">p_boolean__BOOLEAN</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        boolean : BOOLEAN</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">p</span><span class="o">.</span><span class="n">slice</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">cursor_end</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">slice</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">cursor_end</span>
         <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span></div>
 
+
     <span class="c1">### number ###</span>
 
-    <span class="sd">&quot;&quot;&quot;&lt;number&gt; : &lt;num 2&gt; | &lt;num 8&gt; | &lt;num 10&gt; | &lt;num 16&gt;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;&lt;number&gt; : &lt;num 2&gt; | &lt;num 8&gt; | &lt;num 10&gt; | &lt;num 16&gt;</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="SchemeParser.p_number__DECIMAL"><a class="viewcode-back" href="../../../api/abjad/parsers/scheme.html#abjad.parsers.scheme.SchemeParser.p_number__DECIMAL">[docs]</a>    <span class="k">def</span> <span class="nf">p_number__DECIMAL</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="SchemeParser.p_number__DECIMAL">
+<a class="viewcode-back" href="../../../api/abjad/parsers/scheme.html#abjad.parsers.scheme.SchemeParser.p_number__DECIMAL">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">p_number__DECIMAL</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        number : DECIMAL</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">p</span><span class="o">.</span><span class="n">slice</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">cursor_end</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">slice</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">cursor_end</span>
         <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span></div>
 
-<div class="viewcode-block" id="SchemeParser.p_number__HEXADECIMAL"><a class="viewcode-back" href="../../../api/abjad/parsers/scheme.html#abjad.parsers.scheme.SchemeParser.p_number__HEXADECIMAL">[docs]</a>    <span class="k">def</span> <span class="nf">p_number__HEXADECIMAL</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="SchemeParser.p_number__HEXADECIMAL">
+<a class="viewcode-back" href="../../../api/abjad/parsers/scheme.html#abjad.parsers.scheme.SchemeParser.p_number__HEXADECIMAL">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">p_number__HEXADECIMAL</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        number : HEXADECIMAL</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">p</span><span class="o">.</span><span class="n">slice</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">cursor_end</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">slice</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">cursor_end</span>
         <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span></div>
 
-<div class="viewcode-block" id="SchemeParser.p_number__INTEGER"><a class="viewcode-back" href="../../../api/abjad/parsers/scheme.html#abjad.parsers.scheme.SchemeParser.p_number__INTEGER">[docs]</a>    <span class="k">def</span> <span class="nf">p_number__INTEGER</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="SchemeParser.p_number__INTEGER">
+<a class="viewcode-back" href="../../../api/abjad/parsers/scheme.html#abjad.parsers.scheme.SchemeParser.p_number__INTEGER">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">p_number__INTEGER</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        number : INTEGER</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">p</span><span class="o">.</span><span class="n">slice</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">cursor_end</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">slice</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">cursor_end</span>
         <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span></div>
 
+
     <span class="c1">### character ###</span>
 
-    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;&lt;character&gt; : #\ &lt;any character&gt; | #\newline | #\space</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;&lt;character&gt; : #\ &lt;any character&gt; | #\newline | #\space</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="c1">### string ###</span>
 
-    <span class="sd">&quot;&quot;&quot;&lt;string&gt; : &quot; &lt;string character&gt;* &quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;&lt;string&gt; : &quot; &lt;string character&gt;* &quot;</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="SchemeParser.p_string__STRING"><a class="viewcode-back" href="../../../api/abjad/parsers/scheme.html#abjad.parsers.scheme.SchemeParser.p_string__STRING">[docs]</a>    <span class="k">def</span> <span class="nf">p_string__STRING</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="SchemeParser.p_string__STRING">
+<a class="viewcode-back" href="../../../api/abjad/parsers/scheme.html#abjad.parsers.scheme.SchemeParser.p_string__STRING">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">p_string__STRING</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        string : STRING</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">p</span><span class="o">.</span><span class="n">slice</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">cursor_end</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">slice</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">cursor_end</span>
         <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span></div>
 
+
     <span class="c1">### string character ###</span>
 
-    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;&lt;string character&gt; : \&quot; | \\ | &lt;any character other than &quot; or \&gt;</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;&lt;string character&gt; : \&quot; | \\ | &lt;any character other than &quot; or \&gt;</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="c1">### symbol ###</span>
 
-    <span class="sd">&quot;&quot;&quot;&lt;symbol&gt; : &lt;identifier&gt;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;&lt;symbol&gt; : &lt;identifier&gt;</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="SchemeParser.p_symbol__IDENTIFIER"><a class="viewcode-back" href="../../../api/abjad/parsers/scheme.html#abjad.parsers.scheme.SchemeParser.p_symbol__IDENTIFIER">[docs]</a>    <span class="k">def</span> <span class="nf">p_symbol__IDENTIFIER</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="SchemeParser.p_symbol__IDENTIFIER">
+<a class="viewcode-back" href="../../../api/abjad/parsers/scheme.html#abjad.parsers.scheme.SchemeParser.p_symbol__IDENTIFIER">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">p_symbol__IDENTIFIER</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        symbol : IDENTIFIER</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># print &#39;symbol : IDENTIFIER&#39;</span>
@@ -740,47 +861,59 @@
         <span class="n">p</span><span class="o">.</span><span class="n">slice</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">cursor_end</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">slice</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">cursor_end</span>
         <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span></div>
 
+
     <span class="c1">### vector ###</span>
 
-    <span class="sd">&quot;&quot;&quot;&lt;vector&gt; : #(&lt;datum&gt;*)</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;&lt;vector&gt; : #(&lt;datum&gt;*)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="SchemeParser.p_vector__HASH__L_PAREN__data__R_PAREN"><a class="viewcode-back" href="../../../api/abjad/parsers/scheme.html#abjad.parsers.scheme.SchemeParser.p_vector__HASH__L_PAREN__data__R_PAREN">[docs]</a>    <span class="k">def</span> <span class="nf">p_vector__HASH__L_PAREN__data__R_PAREN</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="SchemeParser.p_vector__HASH__L_PAREN__data__R_PAREN">
+<a class="viewcode-back" href="../../../api/abjad/parsers/scheme.html#abjad.parsers.scheme.SchemeParser.p_vector__HASH__L_PAREN__data__R_PAREN">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">p_vector__HASH__L_PAREN__data__R_PAREN</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        vector : HASH L_PAREN data R_PAREN</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">p</span><span class="o">.</span><span class="n">slice</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">cursor_end</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">slice</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">cursor_end</span>
         <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">expression_depth</span> <span class="o">-=</span> <span class="mi">1</span></div>
 
+
     <span class="c1">### list ###</span>
 
-    <span class="sd">&quot;&quot;&quot;&lt;list&gt; : (&lt;datum&gt;*) | (&lt;datum&gt;+ . &lt;datum&gt;) | &lt;abbreviation&gt;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;&lt;list&gt; : (&lt;datum&gt;*) | (&lt;datum&gt;+ . &lt;datum&gt;) | &lt;abbreviation&gt;</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="SchemeParser.p_list__L_PAREN__data__R_PAREN"><a class="viewcode-back" href="../../../api/abjad/parsers/scheme.html#abjad.parsers.scheme.SchemeParser.p_list__L_PAREN__data__R_PAREN">[docs]</a>    <span class="k">def</span> <span class="nf">p_list__L_PAREN__data__R_PAREN</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="SchemeParser.p_list__L_PAREN__data__R_PAREN">
+<a class="viewcode-back" href="../../../api/abjad/parsers/scheme.html#abjad.parsers.scheme.SchemeParser.p_list__L_PAREN__data__R_PAREN">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">p_list__L_PAREN__data__R_PAREN</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        list : L_PAREN data R_PAREN</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">p</span><span class="o">.</span><span class="n">slice</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">cursor_end</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">slice</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">cursor_end</span>
         <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">expression_depth</span> <span class="o">-=</span> <span class="mi">1</span></div>
 
-<div class="viewcode-block" id="SchemeParser.p_list__L_PAREN__data__datum__PERIOD__datum__R_PAREN"><a class="viewcode-back" href="../../../api/abjad/parsers/scheme.html#abjad.parsers.scheme.SchemeParser.p_list__L_PAREN__data__datum__PERIOD__datum__R_PAREN">[docs]</a>    <span class="k">def</span> <span class="nf">p_list__L_PAREN__data__datum__PERIOD__datum__R_PAREN</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="SchemeParser.p_list__L_PAREN__data__datum__PERIOD__datum__R_PAREN">
+<a class="viewcode-back" href="../../../api/abjad/parsers/scheme.html#abjad.parsers.scheme.SchemeParser.p_list__L_PAREN__data__datum__PERIOD__datum__R_PAREN">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">p_list__L_PAREN__data__datum__PERIOD__datum__R_PAREN</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        list : L_PAREN data datum PERIOD datum R_PAREN</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">p</span><span class="o">.</span><span class="n">slice</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">cursor_end</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">slice</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">cursor_end</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">expression_depth</span> <span class="o">-=</span> <span class="mi">1</span></div>
 
+
     <span class="c1">### abbreviation ###</span>
 
-    <span class="sd">&quot;&quot;&quot;&lt;abbreviation&gt; : &#39; &lt;datum&gt; | ` &lt;datum&gt; | , &lt;datum&gt; | ,@ &lt;datum&gt;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;&lt;abbreviation&gt; : &#39; &lt;datum&gt; | ` &lt;datum&gt; | , &lt;datum&gt; | ,@ &lt;datum&gt;</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="c1">### error ###</span>
 
-<div class="viewcode-block" id="SchemeParser.p_error"><a class="viewcode-back" href="../../../api/abjad/parsers/scheme.html#abjad.parsers.scheme.SchemeParser.p_error">[docs]</a>    <span class="k">def</span> <span class="nf">p_error</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
+<div class="viewcode-block" id="SchemeParser.p_error">
+<a class="viewcode-back" href="../../../api/abjad/parsers/scheme.html#abjad.parsers.scheme.SchemeParser.p_error">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">p_error</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">p</span><span class="p">:</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
                 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;SchemeParser-</span><span class="si">{}</span><span class="s2">: Syntax error at </span><span class="si">{!r}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">id</span><span class="p">(</span><span class="bp">self</span><span class="p">),</span> <span class="n">p</span><span class="o">.</span><span class="n">value</span><span class="p">))</span>
@@ -789,21 +922,23 @@
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
                 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;SchemeParser-</span><span class="si">{}</span><span class="s2">: Syntax error at EOF&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">id</span><span class="p">(</span><span class="bp">self</span><span class="p">)))</span></div>
 
+
     <span class="c1">### PUBLIC PROPERTIES ###</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">lexer_rules_object</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">lexer_rules_object</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Lexer rules object of Scheme parser.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">parser_rules_object</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">parser_rules_object</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Parser rules object of Scheme parser.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span></div>
+
 </pre></div>
 
     </div>
@@ -830,7 +965,7 @@
   </div>
   <script>
       jQuery(function () {
-          SphinxRtdTheme.Navigation.enable(true);
+          SphinxRtdTheme.Navigation.enable(false);
       });
   </script> 
 

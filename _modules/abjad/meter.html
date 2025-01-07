@@ -1,30 +1,29 @@
+
+
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="../../">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>abjad.meter &mdash; Abjad 3.19 documentation</title>
-      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/abjad.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/uqbar.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/lightbox2/css/lightbox.css" type="text/css" />
+  <title>abjad.meter &mdash; Abjad 3.20 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../_static/abjad.css?v=1f187528" />
+      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="../../_static/uqbar.css?v=e6773f5c" />
+      <link rel="stylesheet" type="text/css" href="../../_static/lightbox2/css/lightbox.css?v=d2ef71d2" />
+
+  
     <link rel="shortcut icon" href="../../_static/favicon.ico"/>
     <link rel="canonical" href="https://abjad.github.io_modules/abjad/meter.html"/>
-  <!--[if lt IE 9]>
-    <script src="../../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
-        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-        <script src="../../_static/jquery.js"></script>
-        <script src="../../_static/underscore.js"></script>
-        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="../../_static/doctools.js"></script>
-        <script src="../../_static/sphinx_highlight.js"></script>
-        <script defer="defer" src="../../_static/copybutton.js"></script>
-        <script src="../../_static/ga.js"></script>
-        <script defer="defer" src="../../_static/lightbox2/js/lightbox.js"></script>
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=360ea7ac"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script defer="defer" src="../../_static/copybutton.js?v=0c784ec5"></script>
+      <script src="../../_static/ga.js?v=c455bbd5"></script>
+      <script defer="defer" src="../../_static/lightbox2/js/lightbox.js?v=bc25c2e6"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
@@ -34,15 +33,13 @@
   <div class="wy-grid-for-nav">
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search"  style="background: #ddaa77" >
+        <div class="wy-side-nav-search"  style="background: #eeccaa" >
 
 
     <a href="../../index.html" class="icon icon-home" alt="Documentation
-    Home"> Abjad 3.19
+    Home"> Abjad 3.20
 
 
-
-    <img src="../../_static/abjad-logo.png" class="logo" alt="Logo"/>
 
 </a>
 
@@ -51,7 +48,7 @@
 
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -111,14 +108,14 @@
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #ddaa77" >
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #eeccaa" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../index.html">Abjad</a>
       </nav>
 
       <div class="wy-nav-content">
 
-<div class="rst-content">
+<div class="rst-content style-external-links">
 
     
 
@@ -130,28 +127,31 @@
 <span></span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">Tools for modeling musical meter.</span>
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="kn">import</span> <span class="nn">bisect</span>
-<span class="kn">import</span> <span class="nn">collections</span>
-<span class="kn">import</span> <span class="nn">fractions</span>
 
-<span class="kn">import</span> <span class="nn">uqbar.graphs</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">bisect</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">collections</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">fractions</span>
 
-<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">_getlib</span><span class="p">,</span> <span class="n">_iterlib</span>
-<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">duration</span> <span class="k">as</span> <span class="n">_duration</span>
-<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">indicators</span> <span class="k">as</span> <span class="n">_indicators</span>
-<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">lilypondfile</span> <span class="k">as</span> <span class="n">_lilypondfile</span>
-<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">math</span> <span class="k">as</span> <span class="n">_math</span>
-<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">mutate</span> <span class="k">as</span> <span class="n">_mutate</span>
-<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">parentage</span> <span class="k">as</span> <span class="n">_parentage</span>
-<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">rhythmtrees</span> <span class="k">as</span> <span class="n">_rhythmtrees</span>
-<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">score</span> <span class="k">as</span> <span class="n">_score</span>
-<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">select</span> <span class="k">as</span> <span class="n">_select</span>
-<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">sequence</span> <span class="k">as</span> <span class="n">_sequence</span>
-<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">timespan</span> <span class="k">as</span> <span class="n">_timespan</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">uqbar.graphs</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">_getlib</span><span class="p">,</span> <span class="n">_iterlib</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">duration</span> <span class="k">as</span> <span class="n">_duration</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">indicators</span> <span class="k">as</span> <span class="n">_indicators</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">lilypondfile</span> <span class="k">as</span> <span class="n">_lilypondfile</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">math</span> <span class="k">as</span> <span class="n">_math</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">mutate</span> <span class="k">as</span> <span class="n">_mutate</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">parentage</span> <span class="k">as</span> <span class="n">_parentage</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">rhythmtrees</span> <span class="k">as</span> <span class="n">_rhythmtrees</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">score</span> <span class="k">as</span> <span class="n">_score</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">select</span> <span class="k">as</span> <span class="n">_select</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">sequence</span> <span class="k">as</span> <span class="n">_sequence</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">timespan</span> <span class="k">as</span> <span class="n">_timespan</span>
 
 
-<div class="viewcode-block" id="Meter"><a class="viewcode-back" href="../../api/abjad/meter.html#abjad.meter.Meter">[docs]</a><span class="k">class</span> <span class="nc">Meter</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="Meter">
+<a class="viewcode-back" href="../../api/abjad/meter.html#abjad.meter.Meter">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">Meter</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Meter models a common practice understanding of beats and other levels of rhythmic</span>
 <span class="sd">    organization structured as a tree. Meter structure corresponds to the monotonically</span>
 <span class="sd">    increasing sequence of factors in the numerator of a given time signature.</span>
@@ -386,7 +386,7 @@
 
     <span class="c1">### INITIALIZER ###</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">argument</span><span class="o">=</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span>
         <span class="n">increase_monotonic</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
@@ -395,7 +395,7 @@
         <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">preferred_boundary_depth</span><span class="p">,</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">type</span><span class="p">(</span><span class="kc">None</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_preferred_boundary_depth</span> <span class="o">=</span> <span class="n">preferred_boundary_depth</span>
 
-        <span class="k">def</span> <span class="nf">recurse</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">factors</span><span class="p">,</span> <span class="n">denominator</span><span class="p">,</span> <span class="n">increase_monotonic</span><span class="p">):</span>
+        <span class="k">def</span><span class="w"> </span><span class="nf">recurse</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">factors</span><span class="p">,</span> <span class="n">denominator</span><span class="p">,</span> <span class="n">increase_monotonic</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">factors</span><span class="p">:</span>
                 <span class="n">factor</span><span class="p">,</span> <span class="n">factors</span> <span class="o">=</span> <span class="n">factors</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">factors</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
                 <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">factor</span><span class="p">,</span> <span class="nb">int</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">factor</span><span class="p">)</span>
@@ -503,8 +503,10 @@
 
     <span class="c1">### SPECIAL METHODS ###</span>
 
-<div class="viewcode-block" id="Meter.__eq__"><a class="viewcode-back" href="../../api/abjad/meter.html#abjad.meter.Meter.__eq__">[docs]</a>    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="Meter.__eq__">
+<a class="viewcode-back" href="../../api/abjad/meter.html#abjad.meter.Meter.__eq__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Compares ``numerator``, ``denominator``, ``increase_monotonic``,</span>
 <span class="sd">        ``preferred_boundary_depth``.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -517,8 +519,11 @@
             <span class="p">)</span>
         <span class="k">return</span> <span class="kc">False</span></div>
 
-<div class="viewcode-block" id="Meter.__graph__"><a class="viewcode-back" href="../../api/abjad/meter.html#abjad.meter.Meter.__graph__">[docs]</a>    <span class="k">def</span> <span class="nf">__graph__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">keywords</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Meter.__graph__">
+<a class="viewcode-back" href="../../api/abjad/meter.html#abjad.meter.Meter.__graph__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">__graph__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">keywords</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets Graphviz format of meter.</span>
 
 <span class="sd">        ..  container:: example</span>
@@ -646,7 +651,7 @@
 <span class="sd">        Returns Graphviz graph.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="k">def</span> <span class="nf">make_offset_node</span><span class="p">(</span><span class="n">offset</span><span class="p">,</span> <span class="n">leaf_one</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">leaf_two</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">is_last</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="k">def</span><span class="w"> </span><span class="nf">make_offset_node</span><span class="p">(</span><span class="n">offset</span><span class="p">,</span> <span class="n">leaf_one</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">leaf_two</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">is_last</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
             <span class="n">offset</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Offset</span><span class="p">(</span><span class="n">offset</span><span class="p">)</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">is_last</span><span class="p">:</span>
                 <span class="n">offset_node</span> <span class="o">=</span> <span class="n">uqbar</span><span class="o">.</span><span class="n">graphs</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span>
@@ -719,16 +724,22 @@
         <span class="n">make_offset_node</span><span class="p">(</span><span class="n">offset</span><span class="p">,</span> <span class="n">leaves</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">is_last</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">graph</span></div>
 
-<div class="viewcode-block" id="Meter.__hash__"><a class="viewcode-back" href="../../api/abjad/meter.html#abjad.meter.Meter.__hash__">[docs]</a>    <span class="k">def</span> <span class="fm">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Meter.__hash__">
+<a class="viewcode-back" href="../../api/abjad/meter.html#abjad.meter.Meter.__hash__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Hashes meter.</span>
 
 <span class="sd">        Returns integer.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__hash__</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="Meter.__iter__"><a class="viewcode-back" href="../../api/abjad/meter.html#abjad.meter.Meter.__iter__">[docs]</a>    <span class="k">def</span> <span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Meter.__iter__">
+<a class="viewcode-back" href="../../api/abjad/meter.html#abjad.meter.Meter.__iter__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Iterates meter.</span>
 
 <span class="sd">        ..  container:: example</span>
@@ -752,7 +763,7 @@
 <span class="sd">        Yields pairs.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="k">def</span> <span class="nf">recurse</span><span class="p">(</span><span class="n">node</span><span class="p">):</span>
+        <span class="k">def</span><span class="w"> </span><span class="nf">recurse</span><span class="p">(</span><span class="n">node</span><span class="p">):</span>
             <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
             <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">node</span><span class="p">:</span>
                 <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">child</span><span class="p">,</span> <span class="n">_rhythmtrees</span><span class="o">.</span><span class="n">RhythmTreeLeaf</span><span class="p">):</span>
@@ -770,17 +781,21 @@
             <span class="n">stop_offset</span> <span class="o">=</span> <span class="n">pair</span>
             <span class="k">yield</span> <span class="n">start_offset</span><span class="p">,</span> <span class="n">stop_offset</span></div>
 
-<div class="viewcode-block" id="Meter.__repr__"><a class="viewcode-back" href="../../api/abjad/meter.html#abjad.meter.Meter.__repr__">[docs]</a>    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Meter.__repr__">
+<a class="viewcode-back" href="../../api/abjad/meter.html#abjad.meter.Meter.__repr__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets repr.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">(</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">rtm_format</span><span class="si">!r}</span><span class="s2">)&quot;</span></div>
 
+
     <span class="c1">### PUBLIC PROPERTIES ###</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">denominator</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">denominator</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets denominator of meter.</span>
 
 <span class="sd">        ..  container:: example</span>
@@ -794,8 +809,8 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_denominator</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">depthwise_offset_inventory</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">depthwise_offset_inventory</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets depthwise offset inventory of meter.</span>
 
 <span class="sd">        ..  container:: example</span>
@@ -820,8 +835,8 @@
         <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">inventory</span><span class="p">)</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">duration</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">duration</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets duration of meter.</span>
 
 <span class="sd">        ..  container:: example</span>
@@ -835,15 +850,15 @@
         <span class="k">return</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">numerator</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">denominator</span><span class="p">)</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">fraction_string</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">fraction_string</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets fraction string.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">pair</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">pair</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">implied_time_signature</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">implied_time_signature</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets implied time signature of meter.</span>
 
 <span class="sd">        ..  container:: example</span>
@@ -861,8 +876,8 @@
         <span class="k">return</span> <span class="n">_indicators</span><span class="o">.</span><span class="n">TimeSignature</span><span class="p">(</span><span class="n">pair</span><span class="p">)</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">increase_monotonic</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">increase_monotonic</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Is true when meter divides large primes into collections of ``2``</span>
 <span class="sd">        and ``3`` that increase monotonically.</span>
 
@@ -923,8 +938,8 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_increase_monotonic</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">is_compound</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_compound</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Is true when meter is compound.</span>
 
 <span class="sd">        ..  container:: example</span>
@@ -982,8 +997,8 @@
         <span class="k">return</span> <span class="kc">False</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">is_simple</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_simple</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Is true when meter is simple.</span>
 
 <span class="sd">        ..  container:: example</span>
@@ -1040,8 +1055,8 @@
         <span class="k">return</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_compound</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">numerator</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">numerator</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets numerator of meter.</span>
 
 <span class="sd">        ..  container:: example</span>
@@ -1055,8 +1070,8 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_numerator</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">pair</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">pair</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets pair of numerator and denominator of meter.</span>
 
 <span class="sd">        ..  container:: example</span>
@@ -1070,8 +1085,8 @@
         <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">numerator</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">denominator</span><span class="p">)</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">preferred_boundary_depth</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">preferred_boundary_depth</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets preferred boundary depth of meter.</span>
 
 <span class="sd">        ..  container:: example</span>
@@ -1103,8 +1118,8 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_preferred_boundary_depth</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">pretty_rtm_format</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">pretty_rtm_format</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets pretty RTM format of meter.</span>
 
 <span class="sd">        ..  container:: example</span>
@@ -1128,8 +1143,8 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">root_node</span><span class="o">.</span><span class="n">pretty_rtm_format</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">root_node</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">root_node</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets root node of meter.</span>
 
 <span class="sd">        ..  container:: example</span>
@@ -1145,8 +1160,8 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_root_node</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">rtm_format</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">rtm_format</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets RTM format of meter.</span>
 
 <span class="sd">        ..  container:: example</span>
@@ -1161,8 +1176,10 @@
 
     <span class="c1">### PUBLIC METHODS ###</span>
 
-<div class="viewcode-block" id="Meter.fit_meters"><a class="viewcode-back" href="../../api/abjad/meter.html#abjad.meter.Meter.fit_meters">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">fit_meters</span><span class="p">(</span>
+<div class="viewcode-block" id="Meter.fit_meters">
+<a class="viewcode-back" href="../../api/abjad/meter.html#abjad.meter.Meter.fit_meters">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">fit_meters</span><span class="p">(</span>
         <span class="n">argument</span><span class="p">,</span>
         <span class="n">meters</span><span class="p">,</span>
         <span class="n">denominator</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span>
@@ -1170,7 +1187,7 @@
         <span class="n">maximum_run_length</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">starting_offset</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Finds the best-matching sequence of meters for the offsets contained in</span>
 <span class="sd">        ``argument``.</span>
 
@@ -1219,8 +1236,11 @@
         <span class="n">meters</span> <span class="o">=</span> <span class="n">session</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">meters</span></div>
 
-<div class="viewcode-block" id="Meter.generate_offset_kernel_to_denominator"><a class="viewcode-back" href="../../api/abjad/meter.html#abjad.meter.Meter.generate_offset_kernel_to_denominator">[docs]</a>    <span class="k">def</span> <span class="nf">generate_offset_kernel_to_denominator</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">denominator</span><span class="p">,</span> <span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Meter.generate_offset_kernel_to_denominator">
+<a class="viewcode-back" href="../../api/abjad/meter.html#abjad.meter.Meter.generate_offset_kernel_to_denominator">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">generate_offset_kernel_to_denominator</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">denominator</span><span class="p">,</span> <span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generates a dictionary of all offsets in a meter up to ``denominator``.</span>
 
 <span class="sd">        Keys are the offsets and the values are the normalized weights of those offsets.</span>
@@ -1273,8 +1293,11 @@
                 <span class="n">kernel</span><span class="p">[</span><span class="n">offset</span><span class="p">]</span> <span class="o">=</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">(</span><span class="n">response</span><span class="p">,</span> <span class="n">total</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">MetricAccentKernel</span><span class="p">(</span><span class="n">kernel</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Meter.rewrite_meter"><a class="viewcode-back" href="../../api/abjad/meter.html#abjad.meter.Meter.rewrite_meter">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">rewrite_meter</span><span class="p">(</span>
+
+<div class="viewcode-block" id="Meter.rewrite_meter">
+<a class="viewcode-back" href="../../api/abjad/meter.html#abjad.meter.Meter.rewrite_meter">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">rewrite_meter</span><span class="p">(</span>
         <span class="n">components</span><span class="p">,</span>
         <span class="n">meter</span><span class="p">,</span>
         <span class="n">boundary_depth</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
@@ -1282,7 +1305,7 @@
         <span class="n">maximum_dot_count</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">rewrite_tuplets</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
     <span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Rewrites ``components`` according to ``meter``.</span>
 
 <span class="sd">        ..  container:: example</span>
@@ -2138,11 +2161,13 @@
 <span class="sd">                        c&#39;4</span>
 <span class="sd">                        d&#39;8.</span>
 <span class="sd">                        ~</span>
-<span class="sd">                        \times 2/3 {</span>
+<span class="sd">                        \tuplet 3/2</span>
+<span class="sd">                        {</span>
 <span class="sd">                            d&#39;8.</span>
 <span class="sd">                            ~</span>
 <span class="sd">                            \tweak text #tuplet-number::calc-fraction-text</span>
-<span class="sd">                            \times 3/5 {</span>
+<span class="sd">                            \tuplet 5/3</span>
+<span class="sd">                            {</span>
 <span class="sd">                                d&#39;16</span>
 <span class="sd">                                e&#39;8.</span>
 <span class="sd">                                f&#39;16</span>
@@ -2183,13 +2208,15 @@
 <span class="sd">                        c&#39;16</span>
 <span class="sd">                        d&#39;8.</span>
 <span class="sd">                        ~</span>
-<span class="sd">                        \times 2/3 {</span>
+<span class="sd">                        \tuplet 3/2</span>
+<span class="sd">                        {</span>
 <span class="sd">                            d&#39;8</span>
 <span class="sd">                            ~</span>
 <span class="sd">                            d&#39;16</span>
 <span class="sd">                            ~</span>
 <span class="sd">                            \tweak text #tuplet-number::calc-fraction-text</span>
-<span class="sd">                            \times 3/5 {</span>
+<span class="sd">                            \tuplet 5/3</span>
+<span class="sd">                            {</span>
 <span class="sd">                                d&#39;16</span>
 <span class="sd">                                e&#39;8</span>
 <span class="sd">                                ~</span>
@@ -2303,12 +2330,14 @@
 <span class="sd">                    ~</span>
 <span class="sd">                    c&#39;8</span>
 <span class="sd">                    \tweak text #tuplet-number::calc-fraction-text</span>
-<span class="sd">                    \times 6/7 {</span>
+<span class="sd">                    \tuplet 7/6</span>
+<span class="sd">                    {</span>
 <span class="sd">                        c&#39;4.</span>
 <span class="sd">                        r16</span>
 <span class="sd">                    }</span>
 <span class="sd">                    \tweak text #tuplet-number::calc-fraction-text</span>
-<span class="sd">                    \times 6/7 {</span>
+<span class="sd">                    \tuplet 7/6</span>
+<span class="sd">                    {</span>
 <span class="sd">                        r16</span>
 <span class="sd">                        c&#39;4.</span>
 <span class="sd">                    }</span>
@@ -2336,7 +2365,8 @@
 <span class="sd">                    \time 6/4</span>
 <span class="sd">                    c&#39;4.</span>
 <span class="sd">                    \tweak text #tuplet-number::calc-fraction-text</span>
-<span class="sd">                    \times 6/7 {</span>
+<span class="sd">                    \tuplet 7/6</span>
+<span class="sd">                    {</span>
 <span class="sd">                        c&#39;8.</span>
 <span class="sd">                        ~</span>
 <span class="sd">                        c&#39;8</span>
@@ -2345,7 +2375,8 @@
 <span class="sd">                        r16</span>
 <span class="sd">                    }</span>
 <span class="sd">                    \tweak text #tuplet-number::calc-fraction-text</span>
-<span class="sd">                    \times 6/7 {</span>
+<span class="sd">                    \tuplet 7/6</span>
+<span class="sd">                    {</span>
 <span class="sd">                        r16</span>
 <span class="sd">                        c&#39;8</span>
 <span class="sd">                        ~</span>
@@ -2379,12 +2410,14 @@
 <span class="sd">                    ~</span>
 <span class="sd">                    c&#39;8</span>
 <span class="sd">                    \tweak text #tuplet-number::calc-fraction-text</span>
-<span class="sd">                    \times 6/7 {</span>
+<span class="sd">                    \tuplet 7/6</span>
+<span class="sd">                    {</span>
 <span class="sd">                        c&#39;4.</span>
 <span class="sd">                        r16</span>
 <span class="sd">                    }</span>
 <span class="sd">                    \tweak text #tuplet-number::calc-fraction-text</span>
-<span class="sd">                    \times 6/7 {</span>
+<span class="sd">                    \tuplet 7/6</span>
+<span class="sd">                    {</span>
 <span class="sd">                        r16</span>
 <span class="sd">                        c&#39;4.</span>
 <span class="sd">                    }</span>
@@ -2413,12 +2446,14 @@
 <span class="sd">                    \time 6/4</span>
 <span class="sd">                    c&#39;4.</span>
 <span class="sd">                    \tweak text #tuplet-number::calc-fraction-text</span>
-<span class="sd">                    \times 6/7 {</span>
+<span class="sd">                    \tuplet 7/6</span>
+<span class="sd">                    {</span>
 <span class="sd">                        c&#39;4.</span>
 <span class="sd">                        r16</span>
 <span class="sd">                    }</span>
 <span class="sd">                    \tweak text #tuplet-number::calc-fraction-text</span>
-<span class="sd">                    \times 6/7 {</span>
+<span class="sd">                    \tuplet 7/6</span>
+<span class="sd">                    {</span>
 <span class="sd">                        r16</span>
 <span class="sd">                        c&#39;4.</span>
 <span class="sd">                    }</span>
@@ -2428,7 +2463,7 @@
 <span class="sd">        Operates in place and returns none.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="k">def</span> <span class="nf">recurse</span><span class="p">(</span>
+        <span class="k">def</span><span class="w"> </span><span class="nf">recurse</span><span class="p">(</span>
             <span class="n">boundary_depth</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
             <span class="n">boundary_offsets</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
             <span class="n">depth</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
@@ -2518,8 +2553,15 @@
         <span class="k">if</span> <span class="n">initial_offset</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">initial_offset</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Offset</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
         <span class="n">initial_offset</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Offset</span><span class="p">(</span><span class="n">initial_offset</span><span class="p">)</span>
-        <span class="n">first_start_offset</span> <span class="o">=</span> <span class="n">components</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">_get_timespan</span><span class="p">()</span><span class="o">.</span><span class="n">start_offset</span>
-        <span class="n">last_start_offset</span> <span class="o">=</span> <span class="n">components</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">_get_timespan</span><span class="p">()</span><span class="o">.</span><span class="n">start_offset</span>
+        <span class="n">nongrace_components</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">_</span>
+            <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">components</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="n">_score</span><span class="o">.</span><span class="n">IndependentAfterGraceContainer</span><span class="p">)</span>
+        <span class="p">]</span>
+        <span class="c1"># first_start_offset = components[0]._get_timespan().start_offset</span>
+        <span class="c1"># last_start_offset = components[-1]._get_timespan().start_offset</span>
+        <span class="n">first_start_offset</span> <span class="o">=</span> <span class="n">nongrace_components</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">_get_timespan</span><span class="p">()</span><span class="o">.</span><span class="n">start_offset</span>
+        <span class="n">last_start_offset</span> <span class="o">=</span> <span class="n">nongrace_components</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">_get_timespan</span><span class="p">()</span><span class="o">.</span><span class="n">start_offset</span>
         <span class="n">difference</span> <span class="o">=</span> <span class="n">last_start_offset</span> <span class="o">-</span> <span class="n">first_start_offset</span> <span class="o">+</span> <span class="n">initial_offset</span>
         <span class="k">assert</span> <span class="n">difference</span> <span class="o">&lt;</span> <span class="n">meter</span><span class="o">.</span><span class="n">implied_time_signature</span><span class="o">.</span><span class="n">duration</span>
         <span class="c1"># Build offset inventory, adjusted for initial offset and prolation.</span>
@@ -2571,13 +2613,17 @@
                     <span class="n">sub_metrical_hierarchy</span><span class="p">,</span>
                     <span class="n">boundary_depth</span><span class="o">=</span><span class="n">sub_boundary_depth</span><span class="p">,</span>
                     <span class="n">maximum_dot_count</span><span class="o">=</span><span class="n">maximum_dot_count</span><span class="p">,</span>
-                <span class="p">)</span></div></div>
+                <span class="p">)</span></div>
+</div>
 
 
-<div class="viewcode-block" id="illustrate_meter_list"><a class="viewcode-back" href="../../api/abjad/meter.html#abjad.meter.illustrate_meter_list">[docs]</a><span class="k">def</span> <span class="nf">illustrate_meter_list</span><span class="p">(</span>
+
+<div class="viewcode-block" id="illustrate_meter_list">
+<a class="viewcode-back" href="../../api/abjad/meter.html#abjad.meter.illustrate_meter_list">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">illustrate_meter_list</span><span class="p">(</span>
     <span class="n">meter_list</span><span class="p">,</span> <span class="n">denominator</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> <span class="n">range_</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="kc">None</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">_lilypondfile</span><span class="o">.</span><span class="n">LilyPondFile</span><span class="p">:</span>
-    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Illustrates meters.</span>
 
 <span class="sd">    ..  container:: example</span>
@@ -2818,8 +2864,11 @@
     <span class="k">return</span> <span class="n">lilypond_file</span></div>
 
 
-<div class="viewcode-block" id="MetricAccentKernel"><a class="viewcode-back" href="../../api/abjad/meter.html#abjad.meter.MetricAccentKernel">[docs]</a><span class="k">class</span> <span class="nc">MetricAccentKernel</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="MetricAccentKernel">
+<a class="viewcode-back" href="../../api/abjad/meter.html#abjad.meter.MetricAccentKernel">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">MetricAccentKernel</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Metric accent kernel.</span>
 
 <span class="sd">    ..  container:: example</span>
@@ -2846,7 +2895,7 @@
 
     <span class="c1">### INITIALIZER ###</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">kernel</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">kernel</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="n">kernel</span> <span class="o">=</span> <span class="n">kernel</span> <span class="ow">or</span> <span class="p">{}</span>
         <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">kernel</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">kernel</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
@@ -2857,8 +2906,10 @@
 
     <span class="c1">### SPECIAL METHODS ###</span>
 
-<div class="viewcode-block" id="MetricAccentKernel.__call__"><a class="viewcode-back" href="../../api/abjad/meter.html#abjad.meter.MetricAccentKernel.__call__">[docs]</a>    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="MetricAccentKernel.__call__">
+<a class="viewcode-back" href="../../api/abjad/meter.html#abjad.meter.MetricAccentKernel.__call__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">):</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Calls metrical accent kernal on ``argument``.</span>
 
 <span class="sd">        &gt;&gt;&gt; upper_staff = abjad.Staff(&quot;c&#39;8 d&#39;4. e&#39;8 f&#39;4.&quot;)</span>
@@ -2880,8 +2931,11 @@
                 <span class="n">response</span> <span class="o">+=</span> <span class="n">weighted_count</span>
         <span class="k">return</span> <span class="n">response</span></div>
 
-<div class="viewcode-block" id="MetricAccentKernel.__eq__"><a class="viewcode-back" href="../../api/abjad/meter.html#abjad.meter.MetricAccentKernel.__eq__">[docs]</a>    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="MetricAccentKernel.__eq__">
+<a class="viewcode-back" href="../../api/abjad/meter.html#abjad.meter.MetricAccentKernel.__eq__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Is true when ``argument`` is a metrical accent kernal with a kernal equal to that</span>
 <span class="sd">        of this metrical accent kernel.</span>
 
@@ -2893,25 +2947,32 @@
                     <span class="k">return</span> <span class="kc">True</span>
         <span class="k">return</span> <span class="kc">False</span></div>
 
-<div class="viewcode-block" id="MetricAccentKernel.__hash__"><a class="viewcode-back" href="../../api/abjad/meter.html#abjad.meter.MetricAccentKernel.__hash__">[docs]</a>    <span class="k">def</span> <span class="fm">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="MetricAccentKernel.__hash__">
+<a class="viewcode-back" href="../../api/abjad/meter.html#abjad.meter.MetricAccentKernel.__hash__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Hashes metric accent kernel.</span>
 
 <span class="sd">        Returns integer.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__hash__</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="MetricAccentKernel.__repr__"><a class="viewcode-back" href="../../api/abjad/meter.html#abjad.meter.MetricAccentKernel.__repr__">[docs]</a>    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="MetricAccentKernel.__repr__">
+<a class="viewcode-back" href="../../api/abjad/meter.html#abjad.meter.MetricAccentKernel.__repr__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets repr.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">(kernel=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">kernel</span><span class="si">}</span><span class="s2">)&quot;</span></div>
 
+
     <span class="c1">### PUBLIC PROPERTIES ###</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">duration</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">duration</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets duration.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_offsets</span><span class="p">:</span>
@@ -2920,8 +2981,8 @@
             <span class="k">return</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">kernel</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">kernel</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The kernel datastructure.</span>
 
 <span class="sd">        Returns dict.</span>
@@ -2930,9 +2991,11 @@
 
     <span class="c1">### PUBLIC METHODS ###</span>
 
-<div class="viewcode-block" id="MetricAccentKernel.count_offsets"><a class="viewcode-back" href="../../api/abjad/meter.html#abjad.meter.MetricAccentKernel.count_offsets">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">count_offsets</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">_timespan</span><span class="o">.</span><span class="n">OffsetCounter</span><span class="p">:</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="MetricAccentKernel.count_offsets">
+<a class="viewcode-back" href="../../api/abjad/meter.html#abjad.meter.MetricAccentKernel.count_offsets">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">count_offsets</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">_timespan</span><span class="o">.</span><span class="n">OffsetCounter</span><span class="p">:</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Count offsets in ``argument``.</span>
 
 <span class="sd">        ..  container:: example</span>
@@ -2996,9 +3059,12 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">_timespan</span><span class="o">.</span><span class="n">OffsetCounter</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="MetricAccentKernel.from_meter"><a class="viewcode-back" href="../../api/abjad/meter.html#abjad.meter.MetricAccentKernel.from_meter">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">from_meter</span><span class="p">(</span><span class="n">meter</span><span class="p">,</span> <span class="n">denominator</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="MetricAccentKernel.from_meter">
+<a class="viewcode-back" href="../../api/abjad/meter.html#abjad.meter.MetricAccentKernel.from_meter">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">from_meter</span><span class="p">(</span><span class="n">meter</span><span class="p">,</span> <span class="n">denominator</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Create a metric accent kernel from ``meter``.</span>
 
 <span class="sd">        Returns new metric accent kernel.</span>
@@ -3007,11 +3073,13 @@
             <span class="n">meter</span> <span class="o">=</span> <span class="n">Meter</span><span class="p">(</span><span class="n">meter</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">meter</span><span class="o">.</span><span class="n">generate_offset_kernel_to_denominator</span><span class="p">(</span>
             <span class="n">denominator</span><span class="o">=</span><span class="n">denominator</span><span class="p">,</span> <span class="n">normalize</span><span class="o">=</span><span class="n">normalize</span>
-        <span class="p">)</span></div></div>
+        <span class="p">)</span></div>
+</div>
 
 
-<span class="k">class</span> <span class="nc">_MeterFittingSession</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">_MeterFittingSession</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Meter-fitting session.</span>
 
 <span class="sd">    Used internally by Meter.fit_meters().</span>
@@ -3034,7 +3102,7 @@
 
     <span class="c1">### INITIALIZER ###</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">kernel_denominator</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span>
         <span class="n">maximum_run_length</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
@@ -3067,8 +3135,8 @@
 
     <span class="c1">### SPECIAL METHODS ###</span>
 
-    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Fits meters.</span>
 
 <span class="sd">        Returns meter list.</span>
@@ -3110,10 +3178,10 @@
 
     <span class="c1">### PRIVATE METHODS ###</span>
 
-    <span class="k">def</span> <span class="nf">_get_kernels</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">selected_kernels</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_kernels</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">selected_kernels</span><span class="p">):</span>
         <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">kernels</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_get_lookahead_score</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">current_offset</span><span class="p">,</span> <span class="n">kernel</span><span class="p">,</span> <span class="n">kernels</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_lookahead_score</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">current_offset</span><span class="p">,</span> <span class="n">kernel</span><span class="p">,</span> <span class="n">kernels</span><span class="p">):</span>
         <span class="n">lookahead_scores</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">lookahead_offset</span> <span class="o">=</span> <span class="n">current_offset</span> <span class="o">+</span> <span class="n">kernel</span><span class="o">.</span><span class="n">duration</span>
         <span class="n">lookahead_offset_counter</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_offset_counter_at</span><span class="p">(</span><span class="n">lookahead_offset</span><span class="p">)</span>
@@ -3122,7 +3190,7 @@
         <span class="n">lookahead_score</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">lookahead_scores</span><span class="p">)</span>  <span class="c1"># / len(lookahead_scores)</span>
         <span class="k">return</span> <span class="n">lookahead_score</span>
 
-    <span class="k">def</span> <span class="nf">_get_offset_counter_at</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start_offset</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_offset_counter_at</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start_offset</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">start_offset</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">cached_offset_counters</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">cached_offset_counters</span><span class="p">[</span><span class="n">start_offset</span><span class="p">]</span>
         <span class="n">offset_counter</span> <span class="o">=</span> <span class="p">{}</span>
@@ -3144,8 +3212,8 @@
     <span class="c1">### PUBLIC PROPERTIES ###</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">cached_offset_counters</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">cached_offset_counters</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets cached offset counters</span>
 
 <span class="sd">        Returns dictionary.</span>
@@ -3153,8 +3221,8 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cached_offset_counters</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">kernel_denominator</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">kernel_denominator</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets kernel denominator.</span>
 
 <span class="sd">        Returns duration.</span>
@@ -3162,8 +3230,8 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_kernel_denominator</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">kernels</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">kernels</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets kernels-to-meter dictionary.</span>
 
 <span class="sd">        Returns dictionary.</span>
@@ -3171,8 +3239,8 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_kernels</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">longest_kernel</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">longest_kernel</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets longest kernel.</span>
 
 <span class="sd">        Returns kernel.</span>
@@ -3180,8 +3248,8 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_longest_kernel</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">maximum_run_length</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">maximum_run_length</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets maximum meter repetitions.</span>
 
 <span class="sd">        Returns integer or none.</span>
@@ -3189,8 +3257,8 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_maximum_run_length</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">meters</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">meters</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets meters.</span>
 
 <span class="sd">        Returns meters.</span>
@@ -3198,8 +3266,8 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_meters</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">offset_counter</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">offset_counter</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets offset counter.</span>
 
 <span class="sd">        Returns offset counter.</span>
@@ -3207,8 +3275,8 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_offset_counter</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">ordered_offsets</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">ordered_offsets</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets ordered offsets.</span>
 
 <span class="sd">        Returns offsets.</span>
@@ -3216,8 +3284,8 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ordered_offsets</span>
 
 
-<span class="k">class</span> <span class="nc">_MeterManager</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">_MeterManager</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Meter manager.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -3228,8 +3296,8 @@
     <span class="c1">### PUBLIC METHODS ###</span>
 
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">get_offsets_at_depth</span><span class="p">(</span><span class="n">depth</span><span class="p">,</span> <span class="n">offset_inventory</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_offsets_at_depth</span><span class="p">(</span><span class="n">depth</span><span class="p">,</span> <span class="n">offset_inventory</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets offsets at ``depth`` in ``offset_inventory``.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">depth</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">offset_inventory</span><span class="p">):</span>
@@ -3254,13 +3322,13 @@
         <span class="k">return</span> <span class="n">offset_inventory</span><span class="p">[</span><span class="n">depth</span><span class="p">]</span>
 
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">is_acceptable_logical_tie</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_acceptable_logical_tie</span><span class="p">(</span>
         <span class="n">logical_tie_duration</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">logical_tie_starts_in_offsets</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">logical_tie_stops_in_offsets</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">maximum_dot_count</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Is true if logical tie is acceptable.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># print &#39;\tTESTING ACCEPTABILITY&#39;</span>
@@ -3276,13 +3344,13 @@
         <span class="k">return</span> <span class="kc">True</span>
 
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">is_boundary_crossing_logical_tie</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_boundary_crossing_logical_tie</span><span class="p">(</span>
         <span class="n">boundary_depth</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">boundary_offsets</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">logical_tie_start_offset</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">logical_tie_stop_offset</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Is true if logical tie crosses meter boundaries.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># print &#39;\tTESTING BOUNDARY CROSSINGS&#39;</span>
@@ -3301,8 +3369,8 @@
         <span class="k">return</span> <span class="kc">True</span>
 
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">iterate_rewrite_inputs</span><span class="p">(</span><span class="n">argument</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">iterate_rewrite_inputs</span><span class="p">(</span><span class="n">argument</span><span class="p">):</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Iterates topmost masked logical ties, rest groups and containers in ``argument``,</span>
 <span class="sd">        masked by ``argument``.</span>
 
@@ -3336,7 +3404,8 @@
 <span class="sd">                    r8.</span>
 <span class="sd">                    e&#39;16</span>
 <span class="sd">                    ~</span>
-<span class="sd">                    \times 2/3 {</span>
+<span class="sd">                    \tuplet 3/2</span>
+<span class="sd">                    {</span>
 <span class="sd">                        e&#39;8</span>
 <span class="sd">                        ~</span>
 <span class="sd">                        e&#39;8</span>
@@ -3460,7 +3529,7 @@
   </div>
   <script>
       jQuery(function () {
-          SphinxRtdTheme.Navigation.enable(true);
+          SphinxRtdTheme.Navigation.enable(false);
       });
   </script> 
 
