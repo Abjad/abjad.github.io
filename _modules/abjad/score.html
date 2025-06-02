@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>abjad.score &mdash; Abjad 3.24 documentation</title>
+  <title>abjad.score &mdash; Abjad 3.25 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../_static/abjad.css?v=1f187528" />
@@ -18,7 +18,7 @@
     <link rel="canonical" href="https://abjad.github.io_modules/abjad/score.html"/>
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=ca7fbd0b"></script>
+      <script src="../../_static/documentation_options.js?v=6e073912"></script>
       <script src="../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script src="../../_static/ga.js?v=c455bbd5"></script>
@@ -33,11 +33,11 @@
   <div class="wy-grid-for-nav">
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search"  style="background: #664422" >
+        <div class="wy-side-nav-search"  style="background: #996633" >
 
 
     <a href="../../index.html" class="icon icon-home" alt="Documentation
-    Home"> Abjad 3.24
+    Home"> Abjad 3.25
 
 
 
@@ -108,7 +108,7 @@
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #664422" >
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #996633" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../index.html">Abjad</a>
       </nav>
@@ -5065,6 +5065,7 @@
 <span class="sd">        ...     r&quot;\times 9/10 { bf&#39;16 e&#39;&#39;16 e&#39;&#39;4 ~ e&#39;&#39;16 r16 fs&#39;&#39;16 af&#39;&#39;16 }&quot;,</span>
 <span class="sd">        ...     r&quot;\times 4/5 { a&#39;16 r4 }&quot;,</span>
 <span class="sd">        ... ])</span>
+<span class="sd">        &gt;&gt;&gt; abjad.makers.tweak_tuplet_number_text(staff)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(staff) # doctest: +SKIP</span>
 
 <span class="sd">        ..  docs::</span>
@@ -5349,6 +5350,7 @@
 
 <span class="sd">        &gt;&gt;&gt; second_tuplet = abjad.Tuplet(&quot;7:4&quot;, &quot;g&#39;4. ( a&#39;16 )&quot;)</span>
 <span class="sd">        &gt;&gt;&gt; tuplet.insert(1, second_tuplet)</span>
+<span class="sd">        &gt;&gt;&gt; abjad.makers.tweak_tuplet_bracket_edge_height(tuplet)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(tuplet) # doctest: +SKIP</span>
 
 <span class="sd">        ..  docs::</span>
@@ -5378,6 +5380,7 @@
 <span class="sd">            &gt;&gt;&gt; third_tuplet = abjad.Tuplet(&quot;5:4&quot;, [])</span>
 <span class="sd">            &gt;&gt;&gt; third_tuplet.extend(&quot;e&#39;&#39;32 [ ef&#39;&#39;32 d&#39;&#39;32 cs&#39;&#39;32 cqs&#39;&#39;32 ]&quot;)</span>
 <span class="sd">            &gt;&gt;&gt; second_tuplet.insert(1, third_tuplet)</span>
+<span class="sd">            &gt;&gt;&gt; abjad.makers.tweak_tuplet_bracket_edge_height(tuplet)</span>
 <span class="sd">            &gt;&gt;&gt; abjad.show(tuplet) # doctest: +SKIP</span>
 
 <span class="sd">        ..  docs::</span>
@@ -5473,6 +5476,7 @@
 
 <span class="sd">        &gt;&gt;&gt; staff = abjad.Staff([tuplet_3])</span>
 <span class="sd">        &gt;&gt;&gt; score = abjad.Score([staff], name=&quot;Score&quot;)</span>
+<span class="sd">        &gt;&gt;&gt; abjad.makers.tweak_tuplet_number_text(score)</span>
 <span class="sd">        &gt;&gt;&gt; leaves = abjad.select.leaves(staff)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.attach(abjad.TimeSignature((5, 4)), leaves[0])</span>
 <span class="sd">        &gt;&gt;&gt; literal = abjad.LilyPondLiteral(</span>
@@ -5488,9 +5492,9 @@
 <span class="sd">            \new Staff</span>
 <span class="sd">            {</span>
 <span class="sd">                \set tupletFullLength = ##t</span>
-<span class="sd">                \tweak text #tuplet-number::calc-fraction-text</span>
 <span class="sd">                \tweak color #blue</span>
 <span class="sd">                \tweak staff-padding 4</span>
+<span class="sd">                \tweak text #tuplet-number::calc-fraction-text</span>
 <span class="sd">                \tuplet 4/5</span>
 <span class="sd">                {</span>
 <span class="sd">                    \tweak color #red</span>
@@ -5529,10 +5533,14 @@
 
     <span class="vm">__slots__</span> <span class="o">=</span> <span class="p">(</span>
         <span class="s2">&quot;_denominator&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;_force_fraction&quot;</span><span class="p">,</span>
         <span class="s2">&quot;_hide&quot;</span><span class="p">,</span>
         <span class="s2">&quot;_multiplier&quot;</span><span class="p">,</span>
         <span class="s2">&quot;tweaks&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">edge_height_tweak_string</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;\tweak edge-height #&#39;(0.7 . 0)&quot;</span>
+    <span class="n">tuplet_number_calc_fraction_text_tweak_string</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="sa">r</span><span class="s2">&quot;\tweak text #tuplet-number::calc-fraction-text&quot;</span>
     <span class="p">)</span>
 
     <span class="c1">### INITIALIZER ###</span>
@@ -5543,7 +5551,6 @@
         <span class="n">components</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="o">*</span><span class="p">,</span>
         <span class="n">denominator</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">force_fraction</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
         <span class="n">hide</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
         <span class="n">language</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;english&quot;</span><span class="p">,</span>
         <span class="n">tag</span><span class="p">:</span> <span class="n">_tag</span><span class="o">.</span><span class="n">Tag</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -5562,7 +5569,6 @@
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">multiplier</span> <span class="o">=</span> <span class="n">pair</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">denominator</span> <span class="o">=</span> <span class="n">denominator</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">force_fraction</span> <span class="o">=</span> <span class="n">force_fraction</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">hide</span> <span class="o">=</span> <span class="n">hide</span>
 
     <span class="c1">### SPECIAL METHODS ###</span>
@@ -5631,20 +5637,6 @@
         <span class="n">result</span> <span class="o">=</span> <span class="n">_indent_strings</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">result</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">_format_lilypond_fraction_command_string</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">hide</span><span class="p">:</span>
-            <span class="k">return</span> <span class="s2">&quot;&quot;</span>
-        <span class="k">if</span> <span class="s2">&quot;text&quot;</span> <span class="ow">in</span> <span class="nb">vars</span><span class="p">(</span><span class="n">_overrides</span><span class="o">.</span><span class="n">override</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">TupletNumber</span><span class="p">):</span>
-            <span class="k">return</span> <span class="s2">&quot;&quot;</span>
-        <span class="k">if</span> <span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">augmentation</span><span class="p">()</span>
-            <span class="ow">or</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_dyadic_rational</span><span class="p">()</span>
-            <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">multiplier</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span>
-            <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">force_fraction</span>
-        <span class="p">):</span>
-            <span class="k">return</span> <span class="sa">r</span><span class="s2">&quot;\tweak text #tuplet-number::calc-fraction-text&quot;</span>
-        <span class="k">return</span> <span class="s2">&quot;&quot;</span>
-
     <span class="k">def</span><span class="w"> </span><span class="nf">_format_open_brackets_site</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">contributions</span><span class="p">):</span>
         <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">multiplier</span><span class="p">:</span>
@@ -5653,14 +5645,6 @@
                 <span class="n">contributions</span> <span class="o">=</span> <span class="p">[</span><span class="n">string</span><span class="p">,</span> <span class="s2">&quot;{&quot;</span><span class="p">]</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">contributions</span> <span class="o">=</span> <span class="p">[]</span>
-                <span class="n">fraction_command_string</span> <span class="o">=</span> <span class="p">(</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">_format_lilypond_fraction_command_string</span><span class="p">()</span>
-                <span class="p">)</span>
-                <span class="k">if</span> <span class="n">fraction_command_string</span><span class="p">:</span>
-                    <span class="n">contributions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">fraction_command_string</span><span class="p">)</span>
-                <span class="n">edge_height_tweak_string</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_edge_height_tweak_string</span><span class="p">()</span>
-                <span class="k">if</span> <span class="n">edge_height_tweak_string</span><span class="p">:</span>
-                    <span class="n">contributions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">edge_height_tweak_string</span><span class="p">)</span>
                 <span class="k">for</span> <span class="n">tweak</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tweaks</span><span class="p">):</span>
                     <span class="n">strings</span> <span class="o">=</span> <span class="n">tweak</span><span class="o">.</span><span class="n">_list_contributions</span><span class="p">()</span>
                     <span class="n">contributions</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">strings</span><span class="p">)</span>
@@ -5686,12 +5670,6 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="p">:</span>
             <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="se">{{</span><span class="s2"> </span><span class="si">{</span><span class="n">d</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2"> </span><span class="se">}}</span><span class="s2">&quot;</span>
         <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="se">{{</span><span class="s2"> </span><span class="si">{</span><span class="n">d</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_contents_summary</span><span class="p">()</span><span class="si">}</span><span class="s2"> </span><span class="se">}}</span><span class="s2">&quot;</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">_get_edge_height_tweak_string</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">duration</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_preprolated_duration</span><span class="p">()</span>
-        <span class="n">denominator</span> <span class="o">=</span> <span class="n">duration</span><span class="o">.</span><span class="n">denominator</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">_math</span><span class="o">.</span><span class="n">is_nonnegative_integer_power_of_two</span><span class="p">(</span><span class="n">denominator</span><span class="p">):</span>
-            <span class="k">return</span> <span class="sa">r</span><span class="s2">&quot;\tweak edge-height #&#39;(0.7 . 0)&quot;</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_get_multiplier_fraction_string</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">numerator</span><span class="p">,</span> <span class="n">denominator</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">multiplier</span>
@@ -5850,167 +5828,6 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_denominator</span> <span class="o">=</span> <span class="n">argument</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">force_fraction</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Gets and sets force fraction flag.</span>
-
-<span class="sd">        ..  container:: example</span>
-
-<span class="sd">            To illustrate the effect of Abjad&#39;s force fraction property, we can</span>
-<span class="sd">            temporarily restore LilyPond&#39;s default tuplet number formatting</span>
-<span class="sd">            like this:</span>
-
-<span class="sd">            &gt;&gt;&gt; staff = abjad.Staff()</span>
-<span class="sd">            &gt;&gt;&gt; staff.append(abjad.Tuplet((2, 3), &quot;c&#39;4 d&#39; e&#39;&quot;))</span>
-<span class="sd">            &gt;&gt;&gt; staff.append(abjad.Tuplet((2, 3), &quot;c&#39;4 d&#39; e&#39;&quot;))</span>
-<span class="sd">            &gt;&gt;&gt; staff.append(abjad.Tuplet((2, 3), &quot;c&#39;4 d&#39; e&#39;&quot;))</span>
-<span class="sd">            &gt;&gt;&gt; string = &#39;#tuplet-number::calc-denominator-text&#39;</span>
-<span class="sd">            &gt;&gt;&gt; abjad.override(staff).TupletNumber.text = string</span>
-<span class="sd">            &gt;&gt;&gt; abjad.show(staff) # doctest: +SKIP</span>
-
-<span class="sd">            ..  docs::</span>
-
-<span class="sd">                &gt;&gt;&gt; string = abjad.lilypond(staff)</span>
-<span class="sd">                &gt;&gt;&gt; print(string)</span>
-<span class="sd">                \new Staff</span>
-<span class="sd">                \with</span>
-<span class="sd">                {</span>
-<span class="sd">                    \override TupletNumber.text = #tuplet-number::calc-denominator-text</span>
-<span class="sd">                }</span>
-<span class="sd">                {</span>
-<span class="sd">                    \tuplet 3/2</span>
-<span class="sd">                    {</span>
-<span class="sd">                        c&#39;4</span>
-<span class="sd">                        d&#39;4</span>
-<span class="sd">                        e&#39;4</span>
-<span class="sd">                    }</span>
-<span class="sd">                    \tuplet 3/2</span>
-<span class="sd">                    {</span>
-<span class="sd">                        c&#39;4</span>
-<span class="sd">                        d&#39;4</span>
-<span class="sd">                        e&#39;4</span>
-<span class="sd">                    }</span>
-<span class="sd">                    \tuplet 3/2</span>
-<span class="sd">                    {</span>
-<span class="sd">                        c&#39;4</span>
-<span class="sd">                        d&#39;4</span>
-<span class="sd">                        e&#39;4</span>
-<span class="sd">                    }</span>
-<span class="sd">                }</span>
-
-<span class="sd">            Which makes it possible to see the effect of setting force fraction</span>
-<span class="sd">            to true on a single tuplet:</span>
-
-<span class="sd">            &gt;&gt;&gt; tuplet = staff[1]</span>
-<span class="sd">            &gt;&gt;&gt; tuplet.force_fraction = True</span>
-<span class="sd">            &gt;&gt;&gt; abjad.show(staff) # doctest: +SKIP</span>
-
-<span class="sd">            ..  docs::</span>
-
-<span class="sd">                &gt;&gt;&gt; string = abjad.lilypond(staff)</span>
-<span class="sd">                &gt;&gt;&gt; print(string)</span>
-<span class="sd">                \new Staff</span>
-<span class="sd">                \with</span>
-<span class="sd">                {</span>
-<span class="sd">                    \override TupletNumber.text = #tuplet-number::calc-denominator-text</span>
-<span class="sd">                }</span>
-<span class="sd">                {</span>
-<span class="sd">                    \tuplet 3/2</span>
-<span class="sd">                    {</span>
-<span class="sd">                        c&#39;4</span>
-<span class="sd">                        d&#39;4</span>
-<span class="sd">                        e&#39;4</span>
-<span class="sd">                    }</span>
-<span class="sd">                    \tweak text #tuplet-number::calc-fraction-text</span>
-<span class="sd">                    \tuplet 3/2</span>
-<span class="sd">                    {</span>
-<span class="sd">                        c&#39;4</span>
-<span class="sd">                        d&#39;4</span>
-<span class="sd">                        e&#39;4</span>
-<span class="sd">                    }</span>
-<span class="sd">                    \tuplet 3/2</span>
-<span class="sd">                    {</span>
-<span class="sd">                        c&#39;4</span>
-<span class="sd">                        d&#39;4</span>
-<span class="sd">                        e&#39;4</span>
-<span class="sd">                    }</span>
-<span class="sd">                }</span>
-
-<span class="sd">        ..  container:: example</span>
-
-<span class="sd">            Ignored when tuplet number text is overridden explicitly:</span>
-
-<span class="sd">            &gt;&gt;&gt; tuplet = abjad.Tuplet((2, 3), &quot;c&#39;8 d&#39;8 e&#39;8&quot;)</span>
-<span class="sd">            &gt;&gt;&gt; duration = abjad.get.duration(tuplet)</span>
-<span class="sd">            &gt;&gt;&gt; note = abjad.Note.from_pitch_and_duration(0, duration)</span>
-<span class="sd">            &gt;&gt;&gt; string = abjad.illustrators.components_to_score_markup_string([note])</span>
-<span class="sd">            &gt;&gt;&gt; string = rf&quot;\markup {{ {string} }}&quot;</span>
-<span class="sd">            &gt;&gt;&gt; abjad.override(tuplet).TupletNumber.text = string</span>
-<span class="sd">            &gt;&gt;&gt; staff = abjad.Staff([tuplet])</span>
-<span class="sd">            &gt;&gt;&gt; abjad.show(staff) # doctest: +SKIP</span>
-
-<span class="sd">            ..  docs::</span>
-
-<span class="sd">                &gt;&gt;&gt; string = abjad.lilypond(staff)</span>
-<span class="sd">                &gt;&gt;&gt; print(string)</span>
-<span class="sd">                \new Staff</span>
-<span class="sd">                {</span>
-<span class="sd">                    \override TupletNumber.text = \markup { \score</span>
-<span class="sd">                        {</span>
-<span class="sd">                            \context Score = &quot;Score&quot;</span>
-<span class="sd">                            \with</span>
-<span class="sd">                            {</span>
-<span class="sd">                                \override SpacingSpanner.spacing-increment = 0.5</span>
-<span class="sd">                                proportionalNotationDuration = ##f</span>
-<span class="sd">                            }</span>
-<span class="sd">                            &lt;&lt;</span>
-<span class="sd">                                \context RhythmicStaff = &quot;Rhythmic_Staff&quot;</span>
-<span class="sd">                                \with</span>
-<span class="sd">                                {</span>
-<span class="sd">                                    \remove Time_signature_engraver</span>
-<span class="sd">                                    \remove Staff_symbol_engraver</span>
-<span class="sd">                                    \override Stem.direction = #up</span>
-<span class="sd">                                    \override Stem.length = 5</span>
-<span class="sd">                                    \override TupletBracket.bracket-visibility = ##t</span>
-<span class="sd">                                    \override TupletBracket.direction = #up</span>
-<span class="sd">                                    \override TupletBracket.minimum-length = 4</span>
-<span class="sd">                                    \override TupletBracket.padding = 1.25</span>
-<span class="sd">                                    \override TupletBracket.shorten-pair = #&#39;(-1 . -1.5)</span>
-<span class="sd">                                    \override TupletBracket.springs-and-rods = #ly:spanner::set-spacing-rods</span>
-<span class="sd">                                    \override TupletNumber.font-size = 0</span>
-<span class="sd">                                    \override TupletNumber.text = #tuplet-number::calc-fraction-text</span>
-<span class="sd">                                    tupletFullLength = ##t</span>
-<span class="sd">                                }</span>
-<span class="sd">                                {</span>
-<span class="sd">                                    c&#39;4</span>
-<span class="sd">                                }</span>
-<span class="sd">                            &gt;&gt;</span>
-<span class="sd">                            \layout</span>
-<span class="sd">                            {</span>
-<span class="sd">                                indent = 0</span>
-<span class="sd">                                ragged-right = ##t</span>
-<span class="sd">                            }</span>
-<span class="sd">                        } }</span>
-<span class="sd">                    \tuplet 3/2</span>
-<span class="sd">                    {</span>
-<span class="sd">                        c&#39;8</span>
-<span class="sd">                        d&#39;8</span>
-<span class="sd">                        e&#39;8</span>
-<span class="sd">                    }</span>
-<span class="sd">                    \revert TupletNumber.text</span>
-<span class="sd">                }</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_force_fraction</span>
-
-    <span class="nd">@force_fraction</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">force_fraction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">):</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">argument</span><span class="p">,</span> <span class="nb">bool</span><span class="p">):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_force_fraction</span> <span class="o">=</span> <span class="n">argument</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;force fraction must be boolean (not </span><span class="si">{</span><span class="n">argument</span><span class="si">!r}</span><span class="s2">).&quot;</span><span class="p">)</span>
-
-    <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">hide</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Is true when tuplet bracket hides.</span>
@@ -6137,8 +5954,8 @@
 
 <span class="sd">            Gets tuplet multiplier:</span>
 
-<span class="sd">                &gt;&gt;&gt; tuplet = abjad.Tuplet((2, 3), &quot;c&#39;8 d&#39;8 e&#39;8&quot;)</span>
-<span class="sd">                &gt;&gt;&gt; abjad.show(tuplet) # doctest: +SKIP</span>
+<span class="sd">            &gt;&gt;&gt; tuplet = abjad.Tuplet((2, 3), &quot;c&#39;8 d&#39;8 e&#39;8&quot;)</span>
+<span class="sd">            &gt;&gt;&gt; abjad.show(tuplet) # doctest: +SKIP</span>
 
 <span class="sd">            &gt;&gt;&gt; tuplet.multiplier</span>
 <span class="sd">            (2, 3)</span>
@@ -6147,8 +5964,9 @@
 
 <span class="sd">            Sets tuplet multiplier:</span>
 
-<span class="sd">                &gt;&gt;&gt; tuplet.multiplier = (4, 3)</span>
-<span class="sd">                &gt;&gt;&gt; abjad.show(tuplet) # doctest: +SKIP</span>
+<span class="sd">            &gt;&gt;&gt; tuplet.multiplier = (4, 3)</span>
+<span class="sd">            &gt;&gt;&gt; abjad.makers.tweak_tuplet_number_text(tuplet)</span>
+<span class="sd">            &gt;&gt;&gt; abjad.show(tuplet) # doctest: +SKIP</span>
 
 <span class="sd">            ..  docs::</span>
 
@@ -6241,6 +6059,7 @@
 <span class="sd">                }</span>
 
 <span class="sd">            &gt;&gt;&gt; tuplet.append(abjad.Note(&quot;e&#39;4&quot;))</span>
+<span class="sd">            &gt;&gt;&gt; abjad.makers.tweak_tuplet_bracket_edge_height(tuplet)</span>
 <span class="sd">            &gt;&gt;&gt; abjad.show(tuplet) # doctest: +SKIP</span>
 
 <span class="sd">            ..  docs::</span>
@@ -6392,6 +6211,32 @@
             <span class="k">return</span> <span class="kc">False</span></div>
 
 
+<div class="viewcode-block" id="Tuplet.dyadic">
+<a class="viewcode-back" href="../../api/abjad/score.html#abjad.score.Tuplet.dyadic">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">dyadic</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Is true when denominator of tuplet multiplier is power of 2.</span>
+
+<span class="sd">        ..  container:: example</span>
+
+<span class="sd">            3:2 is dyadic (because 2 is a power of 2):</span>
+
+<span class="sd">            &gt;&gt;&gt; abjad.Tuplet(&quot;3:2&quot;, &quot;c&#39;4 d&#39;4 e&#39;4&quot;).dyadic()</span>
+<span class="sd">            True</span>
+
+<span class="sd">            4:3 is nondyadic (because 3 is not a power of 2):</span>
+
+<span class="sd">            &gt;&gt;&gt; abjad.Tuplet(&quot;4:3&quot;, &quot;c&#39;4 d&#39;4 e&#39;4 f&#39;4&quot;).dyadic()</span>
+<span class="sd">            False</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">multiplier</span><span class="p">:</span>
+            <span class="n">numerator</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">multiplier</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="k">return</span> <span class="n">_math</span><span class="o">.</span><span class="n">is_nonnegative_integer_power_of_two</span><span class="p">(</span><span class="n">numerator</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span></div>
+
+
 <div class="viewcode-block" id="Tuplet.extend">
 <a class="viewcode-back" href="../../api/abjad/score.html#abjad.score.Tuplet.extend">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">extend</span><span class="p">(</span>
@@ -6422,6 +6267,7 @@
 
 <span class="sd">            &gt;&gt;&gt; notes = [abjad.Note(&quot;e&#39;32&quot;), abjad.Note(&quot;d&#39;32&quot;), abjad.Note(&quot;e&#39;16&quot;)]</span>
 <span class="sd">            &gt;&gt;&gt; tuplet.extend(notes)</span>
+<span class="sd">            &gt;&gt;&gt; abjad.makers.tweak_tuplet_bracket_edge_height(tuplet)</span>
 <span class="sd">            &gt;&gt;&gt; abjad.show(tuplet) # doctest: +SKIP</span>
 
 <span class="sd">            ..  docs::</span>
@@ -6573,6 +6419,7 @@
 <span class="sd">        ..  container:: example</span>
 
 <span class="sd">            &gt;&gt;&gt; tuplet = abjad.Tuplet((8, 3), &quot;c&#39;32 d&#39;32 e&#39;32&quot;)</span>
+<span class="sd">            &gt;&gt;&gt; abjad.makers.tweak_tuplet_number_text(tuplet)</span>
 <span class="sd">            &gt;&gt;&gt; abjad.show(tuplet) # doctest: +SKIP</span>
 
 <span class="sd">            ..  docs::</span>
@@ -6611,6 +6458,7 @@
 <span class="sd">        ..  container:: example</span>
 
 <span class="sd">            &gt;&gt;&gt; tuplet = abjad.Tuplet((5, 12), &quot;c&#39;4 d&#39;4 e&#39;4&quot;)</span>
+<span class="sd">            &gt;&gt;&gt; abjad.makers.tweak_tuplet_number_text(tuplet)</span>
 <span class="sd">            &gt;&gt;&gt; abjad.show(tuplet) # doctest: +SKIP</span>
 
 <span class="sd">            ..  docs::</span>
@@ -6671,6 +6519,7 @@
 <span class="sd">        ..  container:: example</span>
 
 <span class="sd">            &gt;&gt;&gt; tuplet = abjad.Tuplet((3, 2), &quot;r4 r r&quot;)</span>
+<span class="sd">            &gt;&gt;&gt; abjad.makers.tweak_tuplet_number_text(tuplet)</span>
 <span class="sd">            &gt;&gt;&gt; abjad.show(tuplet) # doctest: +SKIP</span>
 
 <span class="sd">            ..  container:: example</span>
@@ -6703,6 +6552,7 @@
 <span class="sd">            Rewrites single dots as 3:2 prolation:</span>
 
 <span class="sd">            &gt;&gt;&gt; tuplet = abjad.Tuplet((1, 1), &quot;c&#39;8. c&#39;8.&quot;)</span>
+<span class="sd">            &gt;&gt;&gt; abjad.makers.tweak_tuplet_number_text(tuplet)</span>
 <span class="sd">            &gt;&gt;&gt; abjad.show(tuplet) # doctest: +SKIP</span>
 
 <span class="sd">            ..  docs::</span>
@@ -6735,6 +6585,7 @@
 <span class="sd">            Rewrites double dots as 7:4 prolation:</span>
 
 <span class="sd">            &gt;&gt;&gt; tuplet = abjad.Tuplet((1, 1), &quot;c&#39;8.. c&#39;8..&quot;)</span>
+<span class="sd">            &gt;&gt;&gt; abjad.makers.tweak_tuplet_number_text(tuplet)</span>
 <span class="sd">            &gt;&gt;&gt; abjad.show(tuplet) # doctest: +SKIP</span>
 
 <span class="sd">            ..  docs::</span>
@@ -6767,6 +6618,7 @@
 <span class="sd">            Does nothing when dot counts differ:</span>
 
 <span class="sd">            &gt;&gt;&gt; tuplet = abjad.Tuplet((1, 1), &quot;c&#39;8. d&#39;8. e&#39;8&quot;)</span>
+<span class="sd">            &gt;&gt;&gt; abjad.makers.tweak_tuplet_number_text(tuplet)</span>
 <span class="sd">            &gt;&gt;&gt; abjad.show(tuplet) # doctest: +SKIP</span>
 
 <span class="sd">            ..  docs::</span>
@@ -6801,6 +6653,7 @@
 <span class="sd">            Does nothing when leaves carry no dots:</span>
 
 <span class="sd">            &gt;&gt;&gt; tuplet = abjad.Tuplet((3, 2), &quot;c&#39;8 d&#39; e&#39;&quot;)</span>
+<span class="sd">            &gt;&gt;&gt; abjad.makers.tweak_tuplet_number_text(tuplet)</span>
 <span class="sd">            &gt;&gt;&gt; abjad.show(tuplet) # doctest: +SKIP</span>
 
 <span class="sd">            ..  docs::</span>
@@ -6852,62 +6705,6 @@
             <span class="n">component</span><span class="o">.</span><span class="n">written_duration</span> <span class="o">*=</span> <span class="n">dot_multiplier_reciprocal</span></div>
 
 
-<div class="viewcode-block" id="Tuplet.set_minimum_denominator">
-<a class="viewcode-back" href="../../api/abjad/score.html#abjad.score.Tuplet.set_minimum_denominator">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">set_minimum_denominator</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">denominator</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Sets preferred denominator of tuplet to at least ``denominator``.</span>
-
-<span class="sd">        ..  container:: example</span>
-
-<span class="sd">            Sets preferred denominator of tuplet to ``8`` at least:</span>
-
-<span class="sd">            &gt;&gt;&gt; tuplet = abjad.Tuplet((3, 5), &quot;c&#39;4 d&#39;8 e&#39;8 f&#39;4 g&#39;2&quot;)</span>
-<span class="sd">            &gt;&gt;&gt; abjad.show(tuplet) # doctest: +SKIP</span>
-
-<span class="sd">            ..  docs::</span>
-
-<span class="sd">                &gt;&gt;&gt; string = abjad.lilypond(tuplet)</span>
-<span class="sd">                &gt;&gt;&gt; print(string)</span>
-<span class="sd">                \tweak text #tuplet-number::calc-fraction-text</span>
-<span class="sd">                \tuplet 5/3</span>
-<span class="sd">                {</span>
-<span class="sd">                    c&#39;4</span>
-<span class="sd">                    d&#39;8</span>
-<span class="sd">                    e&#39;8</span>
-<span class="sd">                    f&#39;4</span>
-<span class="sd">                    g&#39;2</span>
-<span class="sd">                }</span>
-
-<span class="sd">            &gt;&gt;&gt; tuplet.set_minimum_denominator(8)</span>
-<span class="sd">            &gt;&gt;&gt; abjad.show(tuplet) # doctest: +SKIP</span>
-
-<span class="sd">            ..  docs::</span>
-
-<span class="sd">                &gt;&gt;&gt; string = abjad.lilypond(tuplet)</span>
-<span class="sd">                &gt;&gt;&gt; print(string)</span>
-<span class="sd">                \tweak text #tuplet-number::calc-fraction-text</span>
-<span class="sd">                \tuplet 10/6</span>
-<span class="sd">                {</span>
-<span class="sd">                    c&#39;4</span>
-<span class="sd">                    d&#39;8</span>
-<span class="sd">                    e&#39;8</span>
-<span class="sd">                    f&#39;4</span>
-<span class="sd">                    g&#39;2</span>
-<span class="sd">                }</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">assert</span> <span class="n">_math</span><span class="o">.</span><span class="n">is_nonnegative_integer_power_of_two</span><span class="p">(</span><span class="n">denominator</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">force_fraction</span> <span class="o">=</span> <span class="kc">True</span>
-        <span class="n">durations</span> <span class="o">=</span> <span class="p">[</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_get_contents_duration</span><span class="p">(),</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_get_preprolated_duration</span><span class="p">(),</span>
-            <span class="n">_duration</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">denominator</span><span class="p">),</span>
-        <span class="p">]</span>
-        <span class="n">pairs</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Duration</span><span class="o">.</span><span class="n">durations_to_nonreduced_fractions</span><span class="p">(</span><span class="n">durations</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">denominator</span> <span class="o">=</span> <span class="n">pairs</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span></div>
-
-
 <div class="viewcode-block" id="Tuplet.toggle_prolation">
 <a class="viewcode-back" href="../../api/abjad/score.html#abjad.score.Tuplet.toggle_prolation">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">toggle_prolation</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
@@ -6919,6 +6716,7 @@
 <span class="sd">            Changes augmented tuplet to diminished:</span>
 
 <span class="sd">            &gt;&gt;&gt; tuplet = abjad.Tuplet((4, 3), &quot;c&#39;8 d&#39;8 e&#39;8&quot;)</span>
+<span class="sd">            &gt;&gt;&gt; abjad.makers.tweak_tuplet_number_text(tuplet)</span>
 <span class="sd">            &gt;&gt;&gt; abjad.show(tuplet) # doctest: +SKIP</span>
 
 <span class="sd">            ..  docs::</span>
@@ -6940,6 +6738,7 @@
 
 <span class="sd">                &gt;&gt;&gt; string = abjad.lilypond(tuplet)</span>
 <span class="sd">                &gt;&gt;&gt; print(string)</span>
+<span class="sd">                \tweak text #tuplet-number::calc-fraction-text</span>
 <span class="sd">                \tuplet 3/2</span>
 <span class="sd">                {</span>
 <span class="sd">                    c&#39;4</span>
@@ -6969,6 +6768,7 @@
 <span class="sd">                }</span>
 
 <span class="sd">            &gt;&gt;&gt; tuplet.toggle_prolation()</span>
+<span class="sd">            &gt;&gt;&gt; abjad.makers.tweak_tuplet_number_text(tuplet)</span>
 <span class="sd">            &gt;&gt;&gt; abjad.show(tuplet) # doctest: +SKIP</span>
 
 <span class="sd">            ..  docs::</span>
@@ -6991,6 +6791,7 @@
 <span class="sd">            REGRESSION. Leaves trivial tuplets unchanged:</span>
 
 <span class="sd">            &gt;&gt;&gt; tuplet = abjad.Tuplet((1, 1), &quot;c&#39;4 d&#39;4 e&#39;4&quot;)</span>
+<span class="sd">            &gt;&gt;&gt; abjad.makers.tweak_tuplet_number_text(tuplet)</span>
 <span class="sd">            &gt;&gt;&gt; abjad.show(tuplet) # doctest: +SKIP</span>
 
 <span class="sd">            ..  docs::</span>
@@ -7050,6 +6851,7 @@
 <span class="sd">        ..  container:: example</span>
 
 <span class="sd">            &gt;&gt;&gt; tuplet = abjad.Tuplet((1, 1), &quot;c&#39;8 d&#39;8 e&#39;8&quot;)</span>
+<span class="sd">            &gt;&gt;&gt; abjad.makers.tweak_tuplet_number_text(tuplet)</span>
 <span class="sd">            &gt;&gt;&gt; abjad.show(tuplet) # doctest: +SKIP</span>
 
 <span class="sd">            ..  docs::</span>
@@ -7074,6 +6876,7 @@
 <span class="sd">            &gt;&gt;&gt; tuplet = abjad.Tuplet((1, 1), &quot;c&#39;8 d&#39;8 e&#39;8&quot;)</span>
 <span class="sd">            &gt;&gt;&gt; tuplet[0].multiplier = (3, 2)</span>
 <span class="sd">            &gt;&gt;&gt; tuplet[-1].multiplier = (1, 2)</span>
+<span class="sd">            &gt;&gt;&gt; abjad.makers.tweak_tuplet_number_text(tuplet)</span>
 <span class="sd">            &gt;&gt;&gt; abjad.show(tuplet) # doctest: +SKIP</span>
 
 <span class="sd">            ..  docs::</span>
@@ -7114,6 +6917,7 @@
 <span class="sd">        ..  container:: example</span>
 
 <span class="sd">            &gt;&gt;&gt; tuplet = abjad.Tuplet((3, 4), &quot;c&#39;4 c&#39;4&quot;)</span>
+<span class="sd">            &gt;&gt;&gt; abjad.makers.tweak_tuplet_number_text(tuplet)</span>
 <span class="sd">            &gt;&gt;&gt; staff = abjad.Staff([tuplet])</span>
 <span class="sd">            &gt;&gt;&gt; score = abjad.Score([staff], name=&quot;Score&quot;)</span>
 <span class="sd">            &gt;&gt;&gt; abjad.attach(abjad.TimeSignature((3, 8)), tuplet[0])</span>
@@ -7157,6 +6961,7 @@
 <span class="sd">            Nontrivializable tuplet:</span>
 
 <span class="sd">            &gt;&gt;&gt; tuplet = abjad.Tuplet((3, 5), &quot;c&#39;4 c&#39;4 c&#39;4 c&#39;4 c&#39;4&quot;)</span>
+<span class="sd">            &gt;&gt;&gt; abjad.makers.tweak_tuplet_number_text(tuplet)</span>
 <span class="sd">            &gt;&gt;&gt; staff = abjad.Staff([tuplet])</span>
 <span class="sd">            &gt;&gt;&gt; score = abjad.Score([staff], name=&quot;Score&quot;)</span>
 <span class="sd">            &gt;&gt;&gt; abjad.attach(abjad.TimeSignature((3, 4)), tuplet[0])</span>
@@ -7190,6 +6995,7 @@
 <span class="sd">            REGRESSION. Nontrivializable tuplet:</span>
 
 <span class="sd">            &gt;&gt;&gt; tuplet = abjad.Tuplet((3, 4), &quot;c&#39;2. c4&quot;)</span>
+<span class="sd">            &gt;&gt;&gt; abjad.makers.tweak_tuplet_number_text(tuplet)</span>
 <span class="sd">            &gt;&gt;&gt; staff = abjad.Staff([tuplet])</span>
 <span class="sd">            &gt;&gt;&gt; score = abjad.Score([staff], name=&quot;Score&quot;)</span>
 <span class="sd">            &gt;&gt;&gt; abjad.attach(abjad.TimeSignature((3, 4)), tuplet[0])</span>
@@ -7234,6 +7040,7 @@
 <span class="sd">        ..  container:: example</span>
 
 <span class="sd">            &gt;&gt;&gt; tuplet = abjad.Tuplet((3, 4), &quot;c&#39;2&quot;)</span>
+<span class="sd">            &gt;&gt;&gt; abjad.makers.tweak_tuplet_number_text(tuplet)</span>
 <span class="sd">            &gt;&gt;&gt; abjad.show(tuplet) # doctest: +SKIP</span>
 
 <span class="sd">            ..  docs::</span>
@@ -7688,7 +7495,7 @@
         
         &copy; Copyright 2008-2025, Trevor Bača &amp; Joséphine Oberholtzer.
       <span class="lastupdated">
-        Last updated on May 02, 2025.
+        Last updated on Jun 02, 2025.
       </span>
 
     </p>

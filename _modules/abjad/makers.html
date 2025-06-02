@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>abjad.makers &mdash; Abjad 3.24 documentation</title>
+  <title>abjad.makers &mdash; Abjad 3.25 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../_static/abjad.css?v=1f187528" />
@@ -18,7 +18,7 @@
     <link rel="canonical" href="https://abjad.github.io_modules/abjad/makers.html"/>
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=ca7fbd0b"></script>
+      <script src="../../_static/documentation_options.js?v=6e073912"></script>
       <script src="../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script src="../../_static/ga.js?v=c455bbd5"></script>
@@ -33,11 +33,11 @@
   <div class="wy-grid-for-nav">
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search"  style="background: #664422" >
+        <div class="wy-side-nav-search"  style="background: #996633" >
 
 
     <a href="../../index.html" class="icon icon-home" alt="Documentation
-    Home"> Abjad 3.24
+    Home"> Abjad 3.25
 
 
 
@@ -108,7 +108,7 @@
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #664422" >
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #996633" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../index.html">Abjad</a>
       </nav>
@@ -124,65 +124,77 @@
     <div itemprop="articleBody">
     
   <h1>Source code for abjad.makers</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">collections</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">fractions</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">math</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">numbers</span>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">math</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">duration</span> <span class="k">as</span> <span class="n">_duration</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">iterate</span> <span class="k">as</span> <span class="n">_iterate</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">math</span> <span class="k">as</span> <span class="n">_math</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">overrides</span> <span class="k">as</span> <span class="n">_overrides</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">pitch</span> <span class="k">as</span> <span class="n">_pitch</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">score</span> <span class="k">as</span> <span class="n">_score</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">sequence</span> <span class="k">as</span> <span class="n">_sequence</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">spanners</span> <span class="k">as</span> <span class="n">_spanners</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">tag</span> <span class="k">as</span> <span class="n">_tag</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">tweaks</span> <span class="k">as</span> <span class="n">_tweaks</span>
 
 
-<span class="k">def</span><span class="w"> </span><span class="nf">_group_by_implied_prolation</span><span class="p">(</span><span class="n">durations</span><span class="p">):</span>
-    <span class="n">pairs</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">duration</span> <span class="ow">in</span> <span class="n">durations</span><span class="p">:</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">duration</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
-            <span class="n">pairs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">duration</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_group_by_implied_prolation</span><span class="p">(</span><span class="n">pairs</span><span class="p">):</span>
+    <span class="k">assert</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">pairs</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">pairs</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="mi">0</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">pairs</span><span class="p">)</span>
+    <span class="n">pair_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">pairs</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+    <span class="n">pair_lists</span> <span class="o">=</span> <span class="p">[</span><span class="n">pair_list</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">pair</span> <span class="ow">in</span> <span class="n">pairs</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
+        <span class="n">pair_denominator_factors</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">_math</span><span class="o">.</span><span class="n">factors</span><span class="p">(</span><span class="n">pair</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+        <span class="n">pair_denominator_factors</span><span class="o">.</span><span class="n">discard</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">group_zero_denominator_factors</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">_math</span><span class="o">.</span><span class="n">factors</span><span class="p">(</span><span class="n">pair_list</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]))</span>
+        <span class="n">group_zero_denominator_factors</span><span class="o">.</span><span class="n">discard</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">pair_denominator_factors</span> <span class="o">==</span> <span class="n">group_zero_denominator_factors</span><span class="p">:</span>
+            <span class="n">pair_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pair</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">pairs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">duration</span><span class="o">.</span><span class="n">pair</span><span class="p">)</span>
-    <span class="n">durations</span> <span class="o">=</span> <span class="n">pairs</span>
-    <span class="k">assert</span> <span class="mi">0</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">durations</span><span class="p">)</span>
-    <span class="n">group</span> <span class="o">=</span> <span class="p">[</span><span class="n">durations</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
-    <span class="n">result</span> <span class="o">=</span> <span class="p">[</span><span class="n">group</span><span class="p">]</span>
-    <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">durations</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
-        <span class="n">d_f</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">_math</span><span class="o">.</span><span class="n">factors</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
-        <span class="n">d_f</span><span class="o">.</span><span class="n">discard</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-        <span class="n">gd_f</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">_math</span><span class="o">.</span><span class="n">factors</span><span class="p">(</span><span class="n">group</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]))</span>
-        <span class="n">gd_f</span><span class="o">.</span><span class="n">discard</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">d_f</span> <span class="o">==</span> <span class="n">gd_f</span><span class="p">:</span>
-            <span class="n">group</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">group</span> <span class="o">=</span> <span class="p">[</span><span class="n">d</span><span class="p">]</span>
-            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">group</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">result</span>
+            <span class="n">pair_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">pair</span><span class="p">]</span>
+            <span class="n">pair_lists</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pair_list</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">pair_lists</span>
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">_make_leaf_on_pitch</span><span class="p">(</span>
-    <span class="n">pitch</span><span class="p">,</span>
+    <span class="n">pitch_list</span><span class="p">,</span>
     <span class="n">duration</span><span class="p">,</span>
     <span class="o">*</span><span class="p">,</span>
-    <span class="n">increase_monotonic</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">increase_monotonic</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
     <span class="n">forbidden_note_duration</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="n">forbidden_rest_duration</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-    <span class="n">skips_instead_of_rests</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">skips_instead_of_rests</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
     <span class="n">tag</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-    <span class="n">use_multimeasure_rests</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">use_multimeasure_rests</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
 <span class="p">):</span>
-    <span class="n">note_prototype</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="n">numbers</span><span class="o">.</span><span class="n">Number</span><span class="p">,</span>
-        <span class="nb">str</span><span class="p">,</span>
-        <span class="n">_pitch</span><span class="o">.</span><span class="n">NamedPitch</span><span class="p">,</span>
-        <span class="n">_pitch</span><span class="o">.</span><span class="n">NumberedPitch</span><span class="p">,</span>
-        <span class="n">_pitch</span><span class="o">.</span><span class="n">PitchClass</span><span class="p">,</span>
-    <span class="p">)</span>
-    <span class="n">chord_prototype</span> <span class="o">=</span> <span class="p">(</span><span class="nb">tuple</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span>
-    <span class="n">rest_prototype</span> <span class="o">=</span> <span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="kc">None</span><span class="p">),)</span>
-    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">pitch</span><span class="p">,</span> <span class="n">note_prototype</span><span class="p">):</span>
+    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">pitch_list</span><span class="p">,</span> <span class="nb">list</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">pitch_list</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="n">_pitch</span><span class="o">.</span><span class="n">NamedPitch</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">pitch_list</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">pitch_list</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">duration</span><span class="p">,</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Duration</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">duration</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">pitch_list</span> <span class="o">==</span> <span class="p">[]:</span>
+        <span class="k">if</span> <span class="n">skips_instead_of_rests</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="n">leaves</span> <span class="o">=</span> <span class="n">_make_tied_leaf</span><span class="p">(</span>
+                <span class="n">_score</span><span class="o">.</span><span class="n">Skip</span><span class="p">,</span>
+                <span class="n">duration</span><span class="p">,</span>
+                <span class="n">increase_monotonic</span><span class="o">=</span><span class="n">increase_monotonic</span><span class="p">,</span>
+                <span class="n">forbidden_duration</span><span class="o">=</span><span class="n">forbidden_rest_duration</span><span class="p">,</span>
+                <span class="n">pitches</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                <span class="n">tag</span><span class="o">=</span><span class="n">tag</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="k">elif</span> <span class="n">use_multimeasure_rests</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="n">multimeasure_rest</span> <span class="o">=</span> <span class="n">_score</span><span class="o">.</span><span class="n">MultimeasureRest</span><span class="p">((</span><span class="mi">1</span><span class="p">),</span> <span class="n">tag</span><span class="o">=</span><span class="n">tag</span><span class="p">)</span>
+            <span class="n">multimeasure_rest</span><span class="o">.</span><span class="n">multiplier</span> <span class="o">=</span> <span class="n">duration</span><span class="o">.</span><span class="n">pair</span>
+            <span class="n">leaves</span> <span class="o">=</span> <span class="p">[</span><span class="n">multimeasure_rest</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">leaves</span> <span class="o">=</span> <span class="n">_make_tied_leaf</span><span class="p">(</span>
+                <span class="n">_score</span><span class="o">.</span><span class="n">Rest</span><span class="p">,</span>
+                <span class="n">duration</span><span class="p">,</span>
+                <span class="n">increase_monotonic</span><span class="o">=</span><span class="n">increase_monotonic</span><span class="p">,</span>
+                <span class="n">forbidden_duration</span><span class="o">=</span><span class="n">forbidden_rest_duration</span><span class="p">,</span>
+                <span class="n">pitches</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                <span class="n">tag</span><span class="o">=</span><span class="n">tag</span><span class="p">,</span>
+            <span class="p">)</span>
+    <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">pitch_list</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">pitch</span> <span class="o">=</span> <span class="n">pitch_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
         <span class="n">leaves</span> <span class="o">=</span> <span class="n">_make_tied_leaf</span><span class="p">(</span>
             <span class="n">_score</span><span class="o">.</span><span class="n">Note</span><span class="p">,</span>
             <span class="n">duration</span><span class="p">,</span>
@@ -191,78 +203,47 @@
             <span class="n">pitches</span><span class="o">=</span><span class="n">pitch</span><span class="p">,</span>
             <span class="n">tag</span><span class="o">=</span><span class="n">tag</span><span class="p">,</span>
         <span class="p">)</span>
-    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">pitch</span><span class="p">,</span> <span class="n">chord_prototype</span><span class="p">):</span>
+    <span class="k">else</span><span class="p">:</span>
         <span class="n">leaves</span> <span class="o">=</span> <span class="n">_make_tied_leaf</span><span class="p">(</span>
             <span class="n">_score</span><span class="o">.</span><span class="n">Chord</span><span class="p">,</span>
             <span class="n">duration</span><span class="p">,</span>
             <span class="n">increase_monotonic</span><span class="o">=</span><span class="n">increase_monotonic</span><span class="p">,</span>
             <span class="n">forbidden_duration</span><span class="o">=</span><span class="n">forbidden_note_duration</span><span class="p">,</span>
-            <span class="n">pitches</span><span class="o">=</span><span class="n">pitch</span><span class="p">,</span>
+            <span class="n">pitches</span><span class="o">=</span><span class="n">pitch_list</span><span class="p">,</span>
             <span class="n">tag</span><span class="o">=</span><span class="n">tag</span><span class="p">,</span>
         <span class="p">)</span>
-    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">pitch</span><span class="p">,</span> <span class="n">rest_prototype</span><span class="p">)</span> <span class="ow">and</span> <span class="n">skips_instead_of_rests</span><span class="p">:</span>
-        <span class="n">leaves</span> <span class="o">=</span> <span class="n">_make_tied_leaf</span><span class="p">(</span>
-            <span class="n">_score</span><span class="o">.</span><span class="n">Skip</span><span class="p">,</span>
-            <span class="n">duration</span><span class="p">,</span>
-            <span class="n">increase_monotonic</span><span class="o">=</span><span class="n">increase_monotonic</span><span class="p">,</span>
-            <span class="n">forbidden_duration</span><span class="o">=</span><span class="n">forbidden_rest_duration</span><span class="p">,</span>
-            <span class="n">pitches</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-            <span class="n">tag</span><span class="o">=</span><span class="n">tag</span><span class="p">,</span>
-        <span class="p">)</span>
-    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">pitch</span><span class="p">,</span> <span class="n">rest_prototype</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">use_multimeasure_rests</span><span class="p">:</span>
-        <span class="n">leaves</span> <span class="o">=</span> <span class="n">_make_tied_leaf</span><span class="p">(</span>
-            <span class="n">_score</span><span class="o">.</span><span class="n">Rest</span><span class="p">,</span>
-            <span class="n">duration</span><span class="p">,</span>
-            <span class="n">increase_monotonic</span><span class="o">=</span><span class="n">increase_monotonic</span><span class="p">,</span>
-            <span class="n">forbidden_duration</span><span class="o">=</span><span class="n">forbidden_rest_duration</span><span class="p">,</span>
-            <span class="n">pitches</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-            <span class="n">tag</span><span class="o">=</span><span class="n">tag</span><span class="p">,</span>
-        <span class="p">)</span>
-    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">pitch</span><span class="p">,</span> <span class="n">rest_prototype</span><span class="p">)</span> <span class="ow">and</span> <span class="n">use_multimeasure_rests</span><span class="p">:</span>
-        <span class="n">multimeasure_rest</span> <span class="o">=</span> <span class="n">_score</span><span class="o">.</span><span class="n">MultimeasureRest</span><span class="p">((</span><span class="mi">1</span><span class="p">),</span> <span class="n">tag</span><span class="o">=</span><span class="n">tag</span><span class="p">)</span>
-        <span class="n">multimeasure_rest</span><span class="o">.</span><span class="n">multiplier</span> <span class="o">=</span> <span class="n">duration</span>
-        <span class="n">leaves</span> <span class="o">=</span> <span class="p">(</span><span class="n">multimeasure_rest</span><span class="p">,)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;unknown pitch: </span><span class="si">{</span><span class="n">pitch</span><span class="si">!r}</span><span class="s2">.&quot;</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">leaves</span><span class="p">,</span> <span class="nb">list</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">leaves</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="n">_score</span><span class="o">.</span><span class="n">Leaf</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">leaves</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">leaves</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">leaves</span>
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">_make_tied_leaf</span><span class="p">(</span>
     <span class="n">class_</span><span class="p">,</span>
     <span class="n">duration</span><span class="p">,</span>
-    <span class="n">increase_monotonic</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">increase_monotonic</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
     <span class="n">forbidden_duration</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="n">multiplier</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="n">pitches</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="n">tag</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-    <span class="n">tie_parts</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
 <span class="p">):</span>
-    <span class="n">duration</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="n">duration</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">duration</span><span class="p">,</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Duration</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">duration</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">multiplier</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">multiplier</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">multiplier</span><span class="p">)</span>
     <span class="n">duration_pair</span> <span class="o">=</span> <span class="n">duration</span><span class="o">.</span><span class="n">pair</span>
     <span class="k">if</span> <span class="n">forbidden_duration</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">assert</span> <span class="n">forbidden_duration</span><span class="o">.</span><span class="n">is_assignable</span>
         <span class="k">assert</span> <span class="n">forbidden_duration</span><span class="o">.</span><span class="n">numerator</span> <span class="o">==</span> <span class="mi">1</span>
-    <span class="c1"># find preferred numerator of written durations if necessary</span>
-    <span class="k">if</span> <span class="n">forbidden_duration</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">forbidden_duration</span> <span class="o">&lt;=</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">(</span>
-        <span class="o">*</span><span class="n">duration_pair</span>
-    <span class="p">):</span>
-        <span class="n">denominators</span> <span class="o">=</span> <span class="p">[</span>
-            <span class="mi">2</span> <span class="o">*</span> <span class="n">forbidden_duration</span><span class="o">.</span><span class="n">denominator</span><span class="p">,</span>
-            <span class="n">duration_pair</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
-        <span class="p">]</span>
+    <span class="k">if</span> <span class="n">forbidden_duration</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">forbidden_duration</span> <span class="o">&lt;=</span> <span class="n">duration</span><span class="p">:</span>
+        <span class="n">denominators</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span> <span class="o">*</span> <span class="n">forbidden_duration</span><span class="o">.</span><span class="n">denominator</span><span class="p">,</span> <span class="n">duration</span><span class="o">.</span><span class="n">denominator</span><span class="p">]</span>
         <span class="n">denominator</span> <span class="o">=</span> <span class="n">_math</span><span class="o">.</span><span class="n">least_common_multiple</span><span class="p">(</span><span class="o">*</span><span class="n">denominators</span><span class="p">)</span>
-        <span class="n">pair</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">with_denominator</span><span class="p">(</span><span class="n">forbidden_duration</span><span class="p">,</span> <span class="n">denominator</span><span class="p">)</span>
-        <span class="n">forbidden_numerator</span> <span class="o">=</span> <span class="n">pair</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">forbidden_pair</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">with_denominator</span><span class="p">(</span><span class="n">forbidden_duration</span><span class="p">,</span> <span class="n">denominator</span><span class="p">)</span>
+        <span class="n">forbidden_numerator</span> <span class="o">=</span> <span class="n">forbidden_pair</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
         <span class="k">assert</span> <span class="n">forbidden_numerator</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span>
         <span class="n">preferred_numerator</span> <span class="o">=</span> <span class="n">forbidden_numerator</span> <span class="o">/</span> <span class="mi">2</span>
-        <span class="n">pair</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">with_denominator</span><span class="p">(</span><span class="n">duration_pair</span><span class="p">,</span> <span class="n">denominator</span><span class="p">)</span>
-        <span class="n">duration_pair</span> <span class="o">=</span> <span class="n">pair</span>
-    <span class="c1"># make written duration numerators</span>
-    <span class="n">numerators</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">duration_pair</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">with_denominator</span><span class="p">(</span><span class="n">duration_pair</span><span class="p">,</span> <span class="n">denominator</span><span class="p">)</span>
     <span class="n">parts</span> <span class="o">=</span> <span class="n">_math</span><span class="o">.</span><span class="n">partition_integer_into_canonic_parts</span><span class="p">(</span><span class="n">duration_pair</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-    <span class="k">if</span> <span class="n">forbidden_duration</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">(</span>
-        <span class="n">forbidden_duration</span>
-    <span class="p">)</span> <span class="o">&lt;=</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">(</span><span class="o">*</span><span class="n">duration_pair</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">forbidden_duration</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">forbidden_duration</span> <span class="o">&lt;=</span> <span class="n">duration</span><span class="p">:</span>
+        <span class="n">numerators</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">part</span> <span class="ow">in</span> <span class="n">parts</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">forbidden_numerator</span> <span class="o">&lt;=</span> <span class="n">part</span><span class="p">:</span>
                 <span class="n">better_parts</span> <span class="o">=</span> <span class="n">_partition_less_than_double</span><span class="p">(</span><span class="n">part</span><span class="p">,</span> <span class="n">preferred_numerator</span><span class="p">)</span>
@@ -271,39 +252,39 @@
                 <span class="n">numerators</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">part</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">numerators</span> <span class="o">=</span> <span class="n">parts</span>
-    <span class="c1"># reverse numerators if necessary</span>
     <span class="k">if</span> <span class="n">increase_monotonic</span><span class="p">:</span>
         <span class="n">numerators</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">reversed</span><span class="p">(</span><span class="n">numerators</span><span class="p">))</span>
-    <span class="c1"># make one leaf per written duration</span>
-    <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">leaves</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">numerator</span> <span class="ow">in</span> <span class="n">numerators</span><span class="p">:</span>
         <span class="n">written_duration</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="n">numerator</span><span class="p">,</span> <span class="n">duration_pair</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
         <span class="k">if</span> <span class="n">pitches</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">arguments</span> <span class="o">=</span> <span class="p">(</span><span class="n">pitches</span><span class="p">,</span> <span class="n">written_duration</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">arguments</span> <span class="o">=</span> <span class="p">(</span><span class="n">written_duration</span><span class="p">,)</span>
-        <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">class_</span><span class="p">(</span><span class="o">*</span><span class="n">arguments</span><span class="p">,</span> <span class="n">multiplier</span><span class="o">=</span><span class="n">multiplier</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="n">tag</span><span class="p">))</span>
-    <span class="c1"># tie if required</span>
-    <span class="k">if</span> <span class="n">tie_parts</span> <span class="ow">and</span> <span class="mi">1</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="p">):</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">class_</span><span class="p">,</span> <span class="p">(</span><span class="n">_score</span><span class="o">.</span><span class="n">Rest</span><span class="p">,</span> <span class="n">_score</span><span class="o">.</span><span class="n">Skip</span><span class="p">)):</span>
-            <span class="n">_spanners</span><span class="o">.</span><span class="n">tie</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">result</span>
+        <span class="n">leaf</span> <span class="o">=</span> <span class="n">class_</span><span class="p">(</span><span class="o">*</span><span class="n">arguments</span><span class="p">,</span> <span class="n">multiplier</span><span class="o">=</span><span class="n">multiplier</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="n">tag</span><span class="p">)</span>
+        <span class="n">leaves</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">leaf</span><span class="p">)</span>
+    <span class="k">if</span> <span class="mi">1</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">leaves</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">class_</span><span class="p">,</span> <span class="n">_score</span><span class="o">.</span><span class="n">Rest</span> <span class="o">|</span> <span class="n">_score</span><span class="o">.</span><span class="n">Skip</span><span class="p">):</span>
+            <span class="n">_spanners</span><span class="o">.</span><span class="n">tie</span><span class="p">(</span><span class="n">leaves</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">leaves</span><span class="p">,</span> <span class="nb">list</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">leaves</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="n">_score</span><span class="o">.</span><span class="n">Leaf</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">leaves</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">leaves</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">leaves</span>
 
 
-<span class="k">def</span><span class="w"> </span><span class="nf">_make_unprolated_notes</span><span class="p">(</span><span class="n">pitches</span><span class="p">,</span> <span class="n">durations</span><span class="p">,</span> <span class="n">increase_monotonic</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">pitches</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">durations</span><span class="p">)</span>
-    <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">pitch</span><span class="p">,</span> <span class="n">duration</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">pitches</span><span class="p">,</span> <span class="n">durations</span><span class="p">):</span>
-        <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span>
-            <span class="n">_make_tied_leaf</span><span class="p">(</span>
-                <span class="n">_score</span><span class="o">.</span><span class="n">Note</span><span class="p">,</span>
-                <span class="n">duration</span><span class="p">,</span>
-                <span class="n">pitches</span><span class="o">=</span><span class="n">pitch</span><span class="p">,</span>
-                <span class="n">increase_monotonic</span><span class="o">=</span><span class="n">increase_monotonic</span><span class="p">,</span>
-                <span class="n">tag</span><span class="o">=</span><span class="n">tag</span><span class="p">,</span>
-            <span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_make_unprolated_notes</span><span class="p">(</span><span class="n">pitches</span><span class="p">,</span> <span class="n">durations</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">increase_monotonic</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">assert</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Duration</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">durations</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">durations</span><span class="p">)</span>
+    <span class="n">notes</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">pitch</span><span class="p">,</span> <span class="n">duration</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">pitches</span><span class="p">,</span> <span class="n">durations</span><span class="p">,</span> <span class="n">strict</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="n">notes_</span> <span class="o">=</span> <span class="n">_make_tied_leaf</span><span class="p">(</span>
+            <span class="n">_score</span><span class="o">.</span><span class="n">Note</span><span class="p">,</span>
+            <span class="n">duration</span><span class="p">,</span>
+            <span class="n">pitches</span><span class="o">=</span><span class="n">pitch</span><span class="p">,</span>
+            <span class="n">increase_monotonic</span><span class="o">=</span><span class="n">increase_monotonic</span><span class="p">,</span>
+            <span class="n">tag</span><span class="o">=</span><span class="n">tag</span><span class="p">,</span>
         <span class="p">)</span>
-    <span class="k">return</span> <span class="n">result</span>
+        <span class="n">notes</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">notes_</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="n">_score</span><span class="o">.</span><span class="n">Note</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">notes</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">notes</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">notes</span>
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">_partition_less_than_double</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">m</span><span class="p">):</span>
@@ -320,29 +301,66 @@
     <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
 
 
+<div class="viewcode-block" id="make_durations">
+<a class="viewcode-back" href="../../api/abjad/makers.html#abjad.makers.make_durations">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">make_durations</span><span class="p">(</span><span class="n">items</span><span class="p">:</span> <span class="nb">list</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">_duration</span><span class="o">.</span><span class="n">Duration</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Changes list of arbitrary ``items`` to list of durations.</span>
+
+<span class="sd">    ..  container:: example</span>
+
+<span class="sd">        &gt;&gt;&gt; abjad.makers.make_durations([(1, 8), (1, 2), (1, 16)])</span>
+<span class="sd">        [Duration(1, 8), Duration(1, 2), Duration(1, 16)]</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">durations</span> <span class="o">=</span> <span class="p">[</span><span class="n">_duration</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="n">_</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">items</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">durations</span></div>
+
+
+
 <div class="viewcode-block" id="make_leaves">
 <a class="viewcode-back" href="../../api/abjad/makers.html#abjad.makers.make_leaves">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">make_leaves</span><span class="p">(</span>
-    <span class="n">pitches</span><span class="p">,</span>
-    <span class="n">durations</span><span class="p">,</span>
+    <span class="n">pitch_lists</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="n">_pitch</span><span class="o">.</span><span class="n">NamedPitch</span><span class="p">]],</span>
+    <span class="n">durations</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">_duration</span><span class="o">.</span><span class="n">Duration</span><span class="p">],</span>
     <span class="o">*</span><span class="p">,</span>
     <span class="n">forbidden_note_duration</span><span class="p">:</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Duration</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">forbidden_rest_duration</span><span class="p">:</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Duration</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">skips_instead_of_rests</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="n">increase_monotonic</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">skips_instead_of_rests</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="n">tag</span><span class="p">:</span> <span class="n">_tag</span><span class="o">.</span><span class="n">Tag</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">use_multimeasure_rests</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
 <span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Makes leaves from ``pitches`` and ``durations``.</span>
+<span class="sd">    Makes leaves from ``pitch_lists`` and ``durations``.</span>
 
 <span class="sd">    ..  container:: example</span>
 
-<span class="sd">        Integer and string elements in ``pitches`` result in notes:</span>
+<span class="sd">        Interprets empty pitch lists as rests:</span>
 
-<span class="sd">        &gt;&gt;&gt; pitches = [2, 4, &quot;F#5&quot;, &quot;G#5&quot;]</span>
-<span class="sd">        &gt;&gt;&gt; duration = abjad.Duration(1, 4)</span>
-<span class="sd">        &gt;&gt;&gt; leaves = abjad.makers.make_leaves(pitches, duration)</span>
+<span class="sd">        &gt;&gt;&gt; items = [[], [], [], []]</span>
+<span class="sd">        &gt;&gt;&gt; pitch_lists = abjad.makers.make_pitch_lists(items)</span>
+<span class="sd">        &gt;&gt;&gt; leaves = abjad.makers.make_leaves(pitch_lists, [abjad.Duration(1, 4)])</span>
+<span class="sd">        &gt;&gt;&gt; staff = abjad.Staff(leaves)</span>
+<span class="sd">        &gt;&gt;&gt; abjad.show(staff) # doctest: +SKIP</span>
+
+<span class="sd">        ..  docs::</span>
+
+<span class="sd">            &gt;&gt;&gt; string = abjad.lilypond(staff)</span>
+<span class="sd">            &gt;&gt;&gt; print(string)</span>
+<span class="sd">            \new Staff</span>
+<span class="sd">            {</span>
+<span class="sd">                r4</span>
+<span class="sd">                r4</span>
+<span class="sd">                r4</span>
+<span class="sd">                r4</span>
+<span class="sd">            }</span>
+
+<span class="sd">        Interprets length-1 pitch lists as notes:</span>
+
+<span class="sd">        &gt;&gt;&gt; items = [2, 4, &quot;F#5&quot;, &quot;G#5&quot;]</span>
+<span class="sd">        &gt;&gt;&gt; pitch_lists = abjad.makers.make_pitch_lists(items)</span>
+<span class="sd">        &gt;&gt;&gt; leaves = abjad.makers.make_leaves(pitch_lists, [abjad.Duration(1, 4)])</span>
 <span class="sd">        &gt;&gt;&gt; staff = abjad.Staff(leaves)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(staff) # doctest: +SKIP</span>
 
@@ -358,13 +376,11 @@
 <span class="sd">                gs&#39;&#39;4</span>
 <span class="sd">            }</span>
 
-<span class="sd">    ..  container:: example</span>
+<span class="sd">        Interprets pitch lists with length greater than 1 as chords:</span>
 
-<span class="sd">        Tuple elements in ``pitches`` result in chords:</span>
-
-<span class="sd">        &gt;&gt;&gt; pitches = [(0, 2, 4), (&quot;F#5&quot;, &quot;G#5&quot;, &quot;A#5&quot;)]</span>
-<span class="sd">        &gt;&gt;&gt; duration = abjad.Duration(1, 2)</span>
-<span class="sd">        &gt;&gt;&gt; leaves = abjad.makers.make_leaves(pitches, duration)</span>
+<span class="sd">        &gt;&gt;&gt; items = [[0, 2, 4], [&quot;F#5&quot;, &quot;G#5&quot;, &quot;A#5&quot;]]</span>
+<span class="sd">        &gt;&gt;&gt; pitch_lists = abjad.makers.make_pitch_lists(items)</span>
+<span class="sd">        &gt;&gt;&gt; leaves = abjad.makers.make_leaves(pitch_lists, [abjad.Duration(1, 4)])</span>
 <span class="sd">        &gt;&gt;&gt; staff = abjad.Staff(leaves)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(staff) # doctest: +SKIP</span>
 
@@ -374,39 +390,15 @@
 <span class="sd">            &gt;&gt;&gt; print(string)</span>
 <span class="sd">            \new Staff</span>
 <span class="sd">            {</span>
-<span class="sd">                &lt;c&#39; d&#39; e&#39;&gt;2</span>
-<span class="sd">                &lt;fs&#39;&#39; gs&#39;&#39; as&#39;&#39;&gt;2</span>
+<span class="sd">                &lt;c&#39; d&#39; e&#39;&gt;4</span>
+<span class="sd">                &lt;fs&#39;&#39; gs&#39;&#39; as&#39;&#39;&gt;4</span>
 <span class="sd">            }</span>
 
-<span class="sd">    ..  container:: example</span>
+<span class="sd">        Interprets mixed types of pitch list like this:</span>
 
-<span class="sd">        None-valued elements in ``pitches`` result in rests:</span>
-
-<span class="sd">        &gt;&gt;&gt; pitches = 4 * [None]</span>
-<span class="sd">        &gt;&gt;&gt; durations = [abjad.Duration(1, 4)]</span>
-<span class="sd">        &gt;&gt;&gt; leaves = abjad.makers.make_leaves(pitches, durations)</span>
-<span class="sd">        &gt;&gt;&gt; staff = abjad.Staff(leaves, lilypond_type=&quot;RhythmicStaff&quot;)</span>
-<span class="sd">        &gt;&gt;&gt; abjad.show(staff) # doctest: +SKIP</span>
-
-<span class="sd">        ..  docs::</span>
-
-<span class="sd">            &gt;&gt;&gt; string = abjad.lilypond(staff)</span>
-<span class="sd">            &gt;&gt;&gt; print(string)</span>
-<span class="sd">            \new RhythmicStaff</span>
-<span class="sd">            {</span>
-<span class="sd">                r4</span>
-<span class="sd">                r4</span>
-<span class="sd">                r4</span>
-<span class="sd">                r4</span>
-<span class="sd">            }</span>
-
-<span class="sd">    ..  container:: example</span>
-
-<span class="sd">        You can mix and match values passed to ``pitches``:</span>
-
-<span class="sd">        &gt;&gt;&gt; pitches = [(0, 2, 4), None, &quot;C#5&quot;, &quot;D#5&quot;]</span>
-<span class="sd">        &gt;&gt;&gt; durations = [abjad.Duration(1, 4)]</span>
-<span class="sd">        &gt;&gt;&gt; leaves = abjad.makers.make_leaves(pitches, durations)</span>
+<span class="sd">        &gt;&gt;&gt; items = [[0, 2, 4], [], &quot;C#5&quot;, &quot;D#5&quot;]</span>
+<span class="sd">        &gt;&gt;&gt; pitch_lists = abjad.makers.make_pitch_lists(items)</span>
+<span class="sd">        &gt;&gt;&gt; leaves = abjad.makers.make_leaves(pitch_lists, [abjad.Duration(1, 4)])</span>
 <span class="sd">        &gt;&gt;&gt; staff = abjad.Staff(leaves)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(staff) # doctest: +SKIP</span>
 
@@ -424,11 +416,43 @@
 
 <span class="sd">    ..  container:: example</span>
 
-<span class="sd">        Works with segments:</span>
+<span class="sd">        Interprets nondyadic durations as (possibly incomplete) tuplets:</span>
 
-<span class="sd">        &gt;&gt;&gt; pitches = &quot;e&#39;&#39; ef&#39;&#39; d&#39;&#39; df&#39;&#39; c&#39;&#39;&quot;</span>
-<span class="sd">        &gt;&gt;&gt; durations = [abjad.Duration(1, 4)]</span>
-<span class="sd">        &gt;&gt;&gt; leaves = abjad.makers.make_leaves(pitches, durations)</span>
+<span class="sd">        &gt;&gt;&gt; pitch_list = [abjad.NamedPitch(&quot;d&#39;&#39;&quot;)]</span>
+<span class="sd">        &gt;&gt;&gt; durations = [abjad.Duration(1, 3)]</span>
+<span class="sd">        &gt;&gt;&gt; leaves = abjad.makers.make_leaves([pitch_list], durations)</span>
+<span class="sd">        &gt;&gt;&gt; abjad.makers.tweak_tuplet_bracket_edge_height(leaves)</span>
+<span class="sd">        &gt;&gt;&gt; staff = abjad.Staff(leaves)</span>
+<span class="sd">        &gt;&gt;&gt; score = abjad.Score([staff])</span>
+<span class="sd">        &gt;&gt;&gt; abjad.override(score).TupletBracket.bracket_visibility = True</span>
+<span class="sd">        &gt;&gt;&gt; abjad.setting(score).tupletFullLength = True</span>
+<span class="sd">        &gt;&gt;&gt; abjad.show(score) # doctest: +SKIP</span>
+
+<span class="sd">        ..  docs::</span>
+
+<span class="sd">            &gt;&gt;&gt; string = abjad.lilypond(score)</span>
+<span class="sd">            &gt;&gt;&gt; print(string)</span>
+<span class="sd">            \new Score</span>
+<span class="sd">            \with</span>
+<span class="sd">            {</span>
+<span class="sd">                \override TupletBracket.bracket-visibility = ##t</span>
+<span class="sd">                tupletFullLength = ##t</span>
+<span class="sd">            }</span>
+<span class="sd">            &lt;&lt;</span>
+<span class="sd">                \new Staff</span>
+<span class="sd">                {</span>
+<span class="sd">                    \tweak edge-height #&#39;(0.7 . 0)</span>
+<span class="sd">                    \tuplet 3/2</span>
+<span class="sd">                    {</span>
+<span class="sd">                        d&#39;&#39;2</span>
+<span class="sd">                    }</span>
+<span class="sd">                }</span>
+<span class="sd">            &gt;&gt;</span>
+
+<span class="sd">        &gt;&gt;&gt; pitch_list = [abjad.NamedPitch(&quot;d&#39;&#39;&quot;)]</span>
+<span class="sd">        &gt;&gt;&gt; durations = 2 * [abjad.Duration(1, 3)]</span>
+<span class="sd">        &gt;&gt;&gt; leaves = abjad.makers.make_leaves([pitch_list], durations)</span>
+<span class="sd">        &gt;&gt;&gt; abjad.makers.tweak_tuplet_bracket_edge_height(leaves)</span>
 <span class="sd">        &gt;&gt;&gt; staff = abjad.Staff(leaves)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(staff) # doctest: +SKIP</span>
 
@@ -438,67 +462,17 @@
 <span class="sd">            &gt;&gt;&gt; print(string)</span>
 <span class="sd">            \new Staff</span>
 <span class="sd">            {</span>
-<span class="sd">                e&#39;&#39;4</span>
-<span class="sd">                ef&#39;&#39;4</span>
-<span class="sd">                d&#39;&#39;4</span>
-<span class="sd">                df&#39;&#39;4</span>
-<span class="sd">                c&#39;&#39;4</span>
+<span class="sd">                \tweak edge-height #&#39;(0.7 . 0)</span>
+<span class="sd">                \tuplet 3/2</span>
+<span class="sd">                {</span>
+<span class="sd">                    d&#39;&#39;2</span>
+<span class="sd">                    d&#39;&#39;2</span>
+<span class="sd">                }</span>
 <span class="sd">            }</span>
 
-<span class="sd">    ..  container:: example</span>
-
-<span class="sd">        Reads ``pitches`` cyclically when the length of ``pitches`` is less than the</span>
-<span class="sd">        length of ``durations``:</span>
-
-<span class="sd">        &gt;&gt;&gt; pitches = [&quot;C5&quot;]</span>
-<span class="sd">        &gt;&gt;&gt; durations = 2 * [abjad.Duration(3, 8), abjad.Duration(1, 8)]</span>
-<span class="sd">        &gt;&gt;&gt; leaves = abjad.makers.make_leaves(pitches, durations)</span>
-<span class="sd">        &gt;&gt;&gt; staff = abjad.Staff(leaves)</span>
-<span class="sd">        &gt;&gt;&gt; abjad.show(staff) # doctest: +SKIP</span>
-
-<span class="sd">        ..  docs::</span>
-
-<span class="sd">            &gt;&gt;&gt; string = abjad.lilypond(staff)</span>
-<span class="sd">            &gt;&gt;&gt; print(string)</span>
-<span class="sd">            \new Staff</span>
-<span class="sd">            {</span>
-<span class="sd">                c&#39;&#39;4.</span>
-<span class="sd">                c&#39;&#39;8</span>
-<span class="sd">                c&#39;&#39;4.</span>
-<span class="sd">                c&#39;&#39;8</span>
-<span class="sd">            }</span>
-
-<span class="sd">    ..  container:: example</span>
-
-<span class="sd">        Reads ``durations`` cyclically when the length of ``durations`` is less than the</span>
-<span class="sd">        length of ``pitches``:</span>
-
-<span class="sd">        &gt;&gt;&gt; pitches = &quot;c&#39;&#39; d&#39;&#39; e&#39;&#39; f&#39;&#39;&quot;</span>
-<span class="sd">        &gt;&gt;&gt; durations = [abjad.Duration(1, 4)]</span>
-<span class="sd">        &gt;&gt;&gt; leaves = abjad.makers.make_leaves(pitches, durations)</span>
-<span class="sd">        &gt;&gt;&gt; staff = abjad.Staff(leaves)</span>
-<span class="sd">        &gt;&gt;&gt; abjad.show(staff) # doctest: +SKIP</span>
-
-<span class="sd">        ..  docs::</span>
-
-<span class="sd">            &gt;&gt;&gt; string = abjad.lilypond(staff)</span>
-<span class="sd">            &gt;&gt;&gt; print(string)</span>
-<span class="sd">            \new Staff</span>
-<span class="sd">            {</span>
-<span class="sd">                c&#39;&#39;4</span>
-<span class="sd">                d&#39;&#39;4</span>
-<span class="sd">                e&#39;&#39;4</span>
-<span class="sd">                f&#39;&#39;4</span>
-<span class="sd">            }</span>
-
-<span class="sd">    ..  container:: example</span>
-
-<span class="sd">        Elements in ``durations`` with non-power-of-two denominators result in</span>
-<span class="sd">        tuplet-nested leaves:</span>
-
-<span class="sd">        &gt;&gt;&gt; pitches = [&quot;D5&quot;]</span>
+<span class="sd">        &gt;&gt;&gt; pitch_list = [abjad.NamedPitch(&quot;d&#39;&#39;&quot;)]</span>
 <span class="sd">        &gt;&gt;&gt; durations = 3 * [abjad.Duration(1, 3)]</span>
-<span class="sd">        &gt;&gt;&gt; leaves = abjad.makers.make_leaves(pitches, durations)</span>
+<span class="sd">        &gt;&gt;&gt; leaves = abjad.makers.make_leaves([pitch_list], durations)</span>
 <span class="sd">        &gt;&gt;&gt; staff = abjad.Staff(leaves)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(staff) # doctest: +SKIP</span>
 
@@ -516,14 +490,148 @@
 <span class="sd">                }</span>
 <span class="sd">            }</span>
 
+<span class="sd">        &gt;&gt;&gt; pitch_list = [abjad.NamedPitch(&quot;d&#39;&#39;&quot;)]</span>
+<span class="sd">        &gt;&gt;&gt; leaves = abjad.makers.make_leaves([pitch_list], [abjad.Duration(5, 14)])</span>
+<span class="sd">        &gt;&gt;&gt; abjad.makers.tweak_tuplet_bracket_edge_height(leaves)</span>
+<span class="sd">        &gt;&gt;&gt; staff = abjad.Staff(leaves)</span>
+<span class="sd">        &gt;&gt;&gt; time_signature = abjad.TimeSignature((5, 14))</span>
+<span class="sd">        &gt;&gt;&gt; leaf = abjad.get.leaf(staff, 0)</span>
+<span class="sd">        &gt;&gt;&gt; abjad.attach(time_signature, leaf)</span>
+<span class="sd">        &gt;&gt;&gt; score = abjad.Score([staff], name=&quot;Score&quot;)</span>
+<span class="sd">        &gt;&gt;&gt; abjad.show(score) # doctest: +SKIP</span>
+
+<span class="sd">        ..  docs::</span>
+
+<span class="sd">            &gt;&gt;&gt; string = abjad.lilypond(score)</span>
+<span class="sd">            &gt;&gt;&gt; print(string)</span>
+<span class="sd">            \context Score = &quot;Score&quot;</span>
+<span class="sd">            &lt;&lt;</span>
+<span class="sd">                \new Staff</span>
+<span class="sd">                {</span>
+<span class="sd">                    \tweak edge-height #&#39;(0.7 . 0)</span>
+<span class="sd">                    \tuplet 14/8</span>
+<span class="sd">                    {</span>
+<span class="sd">                        #(ly:expect-warning &quot;strange time signature found&quot;)</span>
+<span class="sd">                        \time 5/14</span>
+<span class="sd">                        d&#39;&#39;2</span>
+<span class="sd">                        ~</span>
+<span class="sd">                        d&#39;&#39;8</span>
+<span class="sd">                    }</span>
+<span class="sd">                }</span>
+<span class="sd">            &gt;&gt;</span>
+
 <span class="sd">    ..  container:: example</span>
 
-<span class="sd">        Set ``increase_monotonic`` to false to return nonassignable durations tied from</span>
-<span class="sd">        greatest to least:</span>
+<span class="sd">        Reads ``pitch_lists`` cyclically when the length of ``pitch_lists`` is less</span>
+<span class="sd">        than the length of ``durations``:</span>
 
-<span class="sd">        &gt;&gt;&gt; pitches = [&quot;D#5&quot;]</span>
+<span class="sd">        &gt;&gt;&gt; pitch_lists = abjad.makers.make_pitch_lists([[12, 14], []])</span>
+<span class="sd">        &gt;&gt;&gt; pairs = [(1, 16), (1, 16), (1, 8), (1, 8), (1, 8)]</span>
+<span class="sd">        &gt;&gt;&gt; durations = abjad.makers.make_durations(pairs)</span>
+<span class="sd">        &gt;&gt;&gt; leaves = abjad.makers.make_leaves(pitch_lists, durations)</span>
+<span class="sd">        &gt;&gt;&gt; staff = abjad.Staff(leaves)</span>
+<span class="sd">        &gt;&gt;&gt; abjad.show(staff) # doctest: +SKIP</span>
+
+<span class="sd">        ..  docs::</span>
+
+<span class="sd">            &gt;&gt;&gt; string = abjad.lilypond(staff)</span>
+<span class="sd">            &gt;&gt;&gt; print(string)</span>
+<span class="sd">            \new Staff</span>
+<span class="sd">            {</span>
+<span class="sd">                &lt;c&#39;&#39; d&#39;&#39;&gt;16</span>
+<span class="sd">                r16</span>
+<span class="sd">                &lt;c&#39;&#39; d&#39;&#39;&gt;8</span>
+<span class="sd">                r8</span>
+<span class="sd">                &lt;c&#39;&#39; d&#39;&#39;&gt;8</span>
+<span class="sd">            }</span>
+
+<span class="sd">        Reads ``durations`` cyclically when the length of ``durations`` is less</span>
+<span class="sd">        than the length of ``pitch_lists``:</span>
+
+<span class="sd">        &gt;&gt;&gt; pitch_lists = abjad.makers.make_pitch_lists([[12, 14], [], 10, 9, 7])</span>
+<span class="sd">        &gt;&gt;&gt; durations = [abjad.Duration(1, 16), abjad.Duration(1, 8)]</span>
+<span class="sd">        &gt;&gt;&gt; leaves = abjad.makers.make_leaves(pitch_lists, durations)</span>
+<span class="sd">        &gt;&gt;&gt; staff = abjad.Staff(leaves)</span>
+<span class="sd">        &gt;&gt;&gt; abjad.show(staff) # doctest: +SKIP</span>
+
+<span class="sd">        ..  docs::</span>
+
+<span class="sd">            &gt;&gt;&gt; string = abjad.lilypond(staff)</span>
+<span class="sd">            &gt;&gt;&gt; print(string)</span>
+<span class="sd">            \new Staff</span>
+<span class="sd">            {</span>
+<span class="sd">                &lt;c&#39;&#39; d&#39;&#39;&gt;16</span>
+<span class="sd">                r8</span>
+<span class="sd">                bf&#39;16</span>
+<span class="sd">                a&#39;8</span>
+<span class="sd">                g&#39;16</span>
+<span class="sd">            }</span>
+
+<span class="sd">    ..  container:: example</span>
+
+<span class="sd">        Avoids durations greater than or equal to ``forbidden_note_duration``:</span>
+
+<span class="sd">        &gt;&gt;&gt; pitch_lists = abjad.makers.make_pitch_lists(&quot;f&#39; g&#39;&quot;)</span>
+<span class="sd">        &gt;&gt;&gt; durations = [abjad.Duration(5, 8)]</span>
+<span class="sd">        &gt;&gt;&gt; leaves = abjad.makers.make_leaves(pitch_lists, durations)</span>
+<span class="sd">        &gt;&gt;&gt; staff = abjad.Staff(leaves)</span>
+<span class="sd">        &gt;&gt;&gt; score = abjad.Score([staff], name=&quot;Score&quot;)</span>
+<span class="sd">        &gt;&gt;&gt; time_signature = abjad.TimeSignature((5, 4))</span>
+<span class="sd">        &gt;&gt;&gt; abjad.attach(time_signature, staff[0])</span>
+<span class="sd">        &gt;&gt;&gt; abjad.show(staff) # doctest: +SKIP</span>
+
+<span class="sd">        ..  docs::</span>
+
+<span class="sd">            &gt;&gt;&gt; string = abjad.lilypond(staff)</span>
+<span class="sd">            &gt;&gt;&gt; print(string)</span>
+<span class="sd">            \new Staff</span>
+<span class="sd">            {</span>
+<span class="sd">                \time 5/4</span>
+<span class="sd">                f&#39;2</span>
+<span class="sd">                ~</span>
+<span class="sd">                f&#39;8</span>
+<span class="sd">                g&#39;2</span>
+<span class="sd">                ~</span>
+<span class="sd">                g&#39;8</span>
+<span class="sd">            }</span>
+
+<span class="sd">        &gt;&gt;&gt; leaves = abjad.makers.make_leaves(</span>
+<span class="sd">        ...     pitch_lists,</span>
+<span class="sd">        ...     durations,</span>
+<span class="sd">        ...     forbidden_note_duration=abjad.Duration(1, 2),</span>
+<span class="sd">        ... )</span>
+<span class="sd">        &gt;&gt;&gt; staff = abjad.Staff(leaves)</span>
+<span class="sd">        &gt;&gt;&gt; score = abjad.Score([staff], name=&quot;Score&quot;)</span>
+<span class="sd">        &gt;&gt;&gt; time_signature = abjad.TimeSignature((5, 4))</span>
+<span class="sd">        &gt;&gt;&gt; abjad.attach(time_signature, staff[0])</span>
+<span class="sd">        &gt;&gt;&gt; abjad.show(staff) # doctest: +SKIP</span>
+
+<span class="sd">        ..  docs::</span>
+
+<span class="sd">            &gt;&gt;&gt; string = abjad.lilypond(staff)</span>
+<span class="sd">            &gt;&gt;&gt; print(string)</span>
+<span class="sd">            \new Staff</span>
+<span class="sd">            {</span>
+<span class="sd">                \time 5/4</span>
+<span class="sd">                f&#39;4</span>
+<span class="sd">                ~</span>
+<span class="sd">                f&#39;4</span>
+<span class="sd">                ~</span>
+<span class="sd">                f&#39;8</span>
+<span class="sd">                g&#39;4</span>
+<span class="sd">                ~</span>
+<span class="sd">                g&#39;4</span>
+<span class="sd">                ~</span>
+<span class="sd">                g&#39;8</span>
+<span class="sd">            }</span>
+
+<span class="sd">    ..  container:: example</span>
+
+<span class="sd">        Writes tied durations in monotonically decreasing order by default:</span>
+
+<span class="sd">        &gt;&gt;&gt; pitch_list = [abjad.NamedPitch(&quot;ds&#39;&#39;&quot;)]</span>
 <span class="sd">        &gt;&gt;&gt; durations = [abjad.Duration(13, 16)]</span>
-<span class="sd">        &gt;&gt;&gt; leaves = abjad.makers.make_leaves(pitches, durations)</span>
+<span class="sd">        &gt;&gt;&gt; leaves = abjad.makers.make_leaves([pitch_list], durations)</span>
 <span class="sd">        &gt;&gt;&gt; staff = abjad.Staff(leaves)</span>
 <span class="sd">        &gt;&gt;&gt; score = abjad.Score([staff], name=&quot;Score&quot;)</span>
 <span class="sd">        &gt;&gt;&gt; time_signature = abjad.TimeSignature((13, 16))</span>
@@ -542,14 +650,14 @@
 <span class="sd">                ds&#39;&#39;16</span>
 <span class="sd">            }</span>
 
-<span class="sd">    ..  container:: example</span>
+<span class="sd">        Writes tied durations in monotonically increasing order when</span>
+<span class="sd">        ``increase_monotonic`` is true:</span>
 
-<span class="sd">        Set ``increase_monotonic`` to true to return nonassignable durations tied from</span>
-<span class="sd">        least to greatest:</span>
-
-<span class="sd">        &gt;&gt;&gt; pitches = [&quot;E5&quot;]</span>
-<span class="sd">        &gt;&gt;&gt; durations = [abjad.Duration(13, 16)]</span>
-<span class="sd">        &gt;&gt;&gt; leaves = abjad.makers.make_leaves(pitches, durations, increase_monotonic=True)</span>
+<span class="sd">        &gt;&gt;&gt; leaves = abjad.makers.make_leaves(</span>
+<span class="sd">        ...     [[abjad.NamedPitch(&quot;e&#39;&#39;&quot;)]],</span>
+<span class="sd">        ...     [abjad.Duration(13, 16)],</span>
+<span class="sd">        ...     increase_monotonic=True,</span>
+<span class="sd">        ... )</span>
 <span class="sd">        &gt;&gt;&gt; staff = abjad.Staff(leaves)</span>
 <span class="sd">        &gt;&gt;&gt; score = abjad.Score([staff], name=&quot;Score&quot;)</span>
 <span class="sd">        &gt;&gt;&gt; time_signature = abjad.TimeSignature((13, 16))</span>
@@ -570,224 +678,75 @@
 
 <span class="sd">    ..  container:: example</span>
 
-<span class="sd">        Set ``forbidden_note_duration`` to avoid notes greater than or equal to a certain</span>
-<span class="sd">        written duration:</span>
+<span class="sd">        Interprets empty pitch lists as skips when ``skips_instead_of_rests``</span>
+<span class="sd">        is true:</span>
 
-<span class="sd">        &gt;&gt;&gt; pitches = &quot;f&#39; g&#39;&quot;</span>
-<span class="sd">        &gt;&gt;&gt; durations = [abjad.Duration(5, 8)]</span>
-<span class="sd">        &gt;&gt;&gt; leaves = abjad.makers.make_leaves(pitches, durations,</span>
-<span class="sd">        ...     forbidden_note_duration=abjad.Duration(1, 2))</span>
-<span class="sd">        &gt;&gt;&gt; staff = abjad.Staff(leaves)</span>
-<span class="sd">        &gt;&gt;&gt; score = abjad.Score([staff], name=&quot;Score&quot;)</span>
-<span class="sd">        &gt;&gt;&gt; time_signature = abjad.TimeSignature((5, 4))</span>
-<span class="sd">        &gt;&gt;&gt; abjad.attach(time_signature, staff[0])</span>
-<span class="sd">        &gt;&gt;&gt; abjad.show(staff) # doctest: +SKIP</span>
-
-<span class="sd">        ..  docs::</span>
-
-<span class="sd">            &gt;&gt;&gt; string = abjad.lilypond(staff)</span>
-<span class="sd">            &gt;&gt;&gt; print(string)</span>
-<span class="sd">            \new Staff</span>
-<span class="sd">            {</span>
-<span class="sd">                \time 5/4</span>
-<span class="sd">                f&#39;4</span>
-<span class="sd">                ~</span>
-<span class="sd">                f&#39;4</span>
-<span class="sd">                ~</span>
-<span class="sd">                f&#39;8</span>
-<span class="sd">                g&#39;4</span>
-<span class="sd">                ~</span>
-<span class="sd">                g&#39;4</span>
-<span class="sd">                ~</span>
-<span class="sd">                g&#39;8</span>
-<span class="sd">            }</span>
-
-<span class="sd">    ..  container:: example</span>
-
-<span class="sd">        You may set ``forbidden_note_duration`` and ``increase_monotonic`` together:</span>
-
-<span class="sd">        &gt;&gt;&gt; pitches = &quot;f&#39; g&#39;&quot;</span>
-<span class="sd">        &gt;&gt;&gt; durations = [abjad.Duration(5, 8)]</span>
-<span class="sd">        &gt;&gt;&gt; leaves = abjad.makers.make_leaves(</span>
-<span class="sd">        ...     pitches, durations,</span>
-<span class="sd">        ...     forbidden_note_duration=abjad.Duration(1, 2),</span>
-<span class="sd">        ...     increase_monotonic=True,</span>
-<span class="sd">        ... )</span>
-<span class="sd">        &gt;&gt;&gt; staff = abjad.Staff(leaves)</span>
-<span class="sd">        &gt;&gt;&gt; score = abjad.Score([staff], name=&quot;Score&quot;)</span>
-<span class="sd">        &gt;&gt;&gt; time_signature = abjad.TimeSignature((5, 4))</span>
-<span class="sd">        &gt;&gt;&gt; abjad.attach(time_signature, staff[0])</span>
-<span class="sd">        &gt;&gt;&gt; abjad.show(staff) # doctest: +SKIP</span>
-
-<span class="sd">        ..  docs::</span>
-
-<span class="sd">            &gt;&gt;&gt; string = abjad.lilypond(staff)</span>
-<span class="sd">            &gt;&gt;&gt; print(string)</span>
-<span class="sd">            \new Staff</span>
-<span class="sd">            {</span>
-<span class="sd">                \time 5/4</span>
-<span class="sd">                f&#39;8</span>
-<span class="sd">                ~</span>
-<span class="sd">                f&#39;4</span>
-<span class="sd">                ~</span>
-<span class="sd">                f&#39;4</span>
-<span class="sd">                g&#39;8</span>
-<span class="sd">                ~</span>
-<span class="sd">                g&#39;4</span>
-<span class="sd">                ~</span>
-<span class="sd">                g&#39;4</span>
-<span class="sd">            }</span>
-
-<span class="sd">    ..  container:: example</span>
-
-<span class="sd">        Produces diminished tuplets:</span>
-
-<span class="sd">        &gt;&gt;&gt; pitches = &quot;f&#39;&quot;</span>
-<span class="sd">        &gt;&gt;&gt; durations = [abjad.Duration(5, 14)]</span>
-<span class="sd">        &gt;&gt;&gt; leaves = abjad.makers.make_leaves(pitches, durations)</span>
-<span class="sd">        &gt;&gt;&gt; staff = abjad.Staff(leaves)</span>
-<span class="sd">        &gt;&gt;&gt; score = abjad.Score([staff], name=&quot;Score&quot;)</span>
-<span class="sd">        &gt;&gt;&gt; time_signature = abjad.TimeSignature((5, 14))</span>
-<span class="sd">        &gt;&gt;&gt; leaf = abjad.get.leaf(staff, 0)</span>
-<span class="sd">        &gt;&gt;&gt; abjad.attach(time_signature, leaf)</span>
-<span class="sd">        &gt;&gt;&gt; abjad.show(staff) # doctest: +SKIP</span>
-
-<span class="sd">        ..  docs::</span>
-
-<span class="sd">            &gt;&gt;&gt; string = abjad.lilypond(staff)</span>
-<span class="sd">            &gt;&gt;&gt; print(string)</span>
-<span class="sd">            \new Staff</span>
-<span class="sd">            {</span>
-<span class="sd">                \tweak edge-height #&#39;(0.7 . 0)</span>
-<span class="sd">                \tuplet 14/8</span>
-<span class="sd">                {</span>
-<span class="sd">                    #(ly:expect-warning &quot;strange time signature found&quot;)</span>
-<span class="sd">                    \time 5/14</span>
-<span class="sd">                    f&#39;2</span>
-<span class="sd">                    ~</span>
-<span class="sd">                    f&#39;8</span>
-<span class="sd">                }</span>
-<span class="sd">            }</span>
-
-<span class="sd">        This is default behavior.</span>
-
-<span class="sd">    ..  container:: example</span>
-
-<span class="sd">        None-valued elements in ``pitches`` result in multimeasure rests when the</span>
-<span class="sd">        multimeasure rest keyword is set:</span>
-
-<span class="sd">        &gt;&gt;&gt; pitches = [None]</span>
-<span class="sd">        &gt;&gt;&gt; durations = [abjad.Duration(3, 8), abjad.Duration(5, 8)]</span>
-<span class="sd">        &gt;&gt;&gt; leaves = abjad.makers.make_leaves(pitches, durations,</span>
-<span class="sd">        ...     use_multimeasure_rests=True)</span>
-<span class="sd">        &gt;&gt;&gt; leaves</span>
-<span class="sd">        [MultimeasureRest(&#39;R1 * 3/8&#39;), MultimeasureRest(&#39;R1 * 5/8&#39;)]</span>
-
-<span class="sd">        &gt;&gt;&gt; staff = abjad.Staff(leaves, lilypond_type=&quot;RhythmicStaff&quot;)</span>
-<span class="sd">        &gt;&gt;&gt; score = abjad.Score([staff], name=&quot;Score&quot;)</span>
-<span class="sd">        &gt;&gt;&gt; abjad.attach(abjad.TimeSignature((3, 8)), leaves[0])</span>
-<span class="sd">        &gt;&gt;&gt; abjad.attach(abjad.TimeSignature((5, 8)), leaves[1])</span>
-<span class="sd">        &gt;&gt;&gt; abjad.show(staff) # doctest: +SKIP</span>
-
-<span class="sd">        ..  docs::</span>
-
-<span class="sd">            &gt;&gt;&gt; string = abjad.lilypond(staff)</span>
-<span class="sd">            &gt;&gt;&gt; print(string)</span>
-<span class="sd">            \new RhythmicStaff</span>
-<span class="sd">            {</span>
-<span class="sd">                \time 3/8</span>
-<span class="sd">                R1 * 3/8</span>
-<span class="sd">                \time 5/8</span>
-<span class="sd">                R1 * 5/8</span>
-<span class="sd">            }</span>
-
-<span class="sd">    ..  container:: example</span>
-
-<span class="sd">        Works with numbered pitch-class:</span>
-
-<span class="sd">        &gt;&gt;&gt; pitches = [abjad.NumberedPitchClass(6)]</span>
 <span class="sd">        &gt;&gt;&gt; durations = [abjad.Duration(13, 16)]</span>
-<span class="sd">        &gt;&gt;&gt; leaves = abjad.makers.make_leaves(pitches, durations)</span>
-<span class="sd">        &gt;&gt;&gt; staff = abjad.Staff(leaves)</span>
-<span class="sd">        &gt;&gt;&gt; score = abjad.Score([staff], name=&quot;Score&quot;)</span>
-<span class="sd">        &gt;&gt;&gt; abjad.show(staff) # doctest: +SKIP</span>
-
-<span class="sd">        ..  docs::</span>
-
-<span class="sd">            &gt;&gt;&gt; string = abjad.lilypond(staff)</span>
-<span class="sd">            &gt;&gt;&gt; print(string)</span>
-<span class="sd">            \new Staff</span>
-<span class="sd">            {</span>
-<span class="sd">                fs&#39;2.</span>
-<span class="sd">                ~</span>
-<span class="sd">                fs&#39;16</span>
-<span class="sd">            }</span>
-
-<span class="sd">    ..  container:: example</span>
-
-<span class="sd">        Makes skips instead of rests:</span>
-
-<span class="sd">        &gt;&gt;&gt; pitches = [None]</span>
-<span class="sd">        &gt;&gt;&gt; durations = [abjad.Duration(13, 16)]</span>
-<span class="sd">        &gt;&gt;&gt; abjad.makers.make_leaves(pitches, durations, skips_instead_of_rests=True)</span>
+<span class="sd">        &gt;&gt;&gt; abjad.makers.make_leaves([[]], durations, skips_instead_of_rests=True)</span>
 <span class="sd">        [Skip(&#39;s2.&#39;), Skip(&#39;s16&#39;)]</span>
 
 <span class="sd">    ..  container:: example</span>
 
-<span class="sd">        Integer and string elements in ``pitches`` result in notes:</span>
+<span class="sd">        Interprets empty pitch lists as multimeasure rests when</span>
+<span class="sd">        ``use_multimeasure_rests`` is true:</span>
 
-<span class="sd">        &gt;&gt;&gt; tag = abjad.Tag(&quot;leaf_maker&quot;)</span>
-<span class="sd">        &gt;&gt;&gt; pitches = [2, 4, &quot;F#5&quot;, &quot;G#5&quot;]</span>
-<span class="sd">        &gt;&gt;&gt; duration = abjad.Duration(1, 4)</span>
-<span class="sd">        &gt;&gt;&gt; leaves = abjad.makers.make_leaves(pitches, duration, tag=tag)</span>
+<span class="sd">        &gt;&gt;&gt; durations = [abjad.Duration(3, 8), abjad.Duration(5, 8)]</span>
+<span class="sd">        &gt;&gt;&gt; leaves = abjad.makers.make_leaves(</span>
+<span class="sd">        ...     [[]],</span>
+<span class="sd">        ...     durations,</span>
+<span class="sd">        ...     use_multimeasure_rests=True,</span>
+<span class="sd">        ... )</span>
 <span class="sd">        &gt;&gt;&gt; staff = abjad.Staff(leaves)</span>
+<span class="sd">        &gt;&gt;&gt; abjad.attach(abjad.TimeSignature((3, 8)), leaves[0])</span>
+<span class="sd">        &gt;&gt;&gt; abjad.attach(abjad.TimeSignature((5, 8)), leaves[1])</span>
 <span class="sd">        &gt;&gt;&gt; score = abjad.Score([staff], name=&quot;Score&quot;)</span>
-<span class="sd">        &gt;&gt;&gt; abjad.show(staff) # doctest: +SKIP</span>
+<span class="sd">        &gt;&gt;&gt; abjad.show(score) # doctest: +SKIP</span>
 
 <span class="sd">        ..  docs::</span>
 
-<span class="sd">            &gt;&gt;&gt; string = abjad.lilypond(staff, tags=True)</span>
+<span class="sd">            &gt;&gt;&gt; string = abjad.lilypond(score)</span>
 <span class="sd">            &gt;&gt;&gt; print(string)</span>
-<span class="sd">            \new Staff</span>
-<span class="sd">            {</span>
-<span class="sd">                %! leaf_maker</span>
-<span class="sd">                d&#39;4</span>
-<span class="sd">                %! leaf_maker</span>
-<span class="sd">                e&#39;4</span>
-<span class="sd">                %! leaf_maker</span>
-<span class="sd">                fs&#39;&#39;4</span>
-<span class="sd">                %! leaf_maker</span>
-<span class="sd">                gs&#39;&#39;4</span>
-<span class="sd">            }</span>
+<span class="sd">            \context Score = &quot;Score&quot;</span>
+<span class="sd">            &lt;&lt;</span>
+<span class="sd">                \new Staff</span>
+<span class="sd">                {</span>
+<span class="sd">                    \time 3/8</span>
+<span class="sd">                    R1 * 3/8</span>
+<span class="sd">                    \time 5/8</span>
+<span class="sd">                    R1 * 5/8</span>
+<span class="sd">                }</span>
+<span class="sd">            &gt;&gt;</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">pitches</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-        <span class="n">pitches</span> <span class="o">=</span> <span class="n">pitches</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">pitches</span><span class="p">,</span> <span class="n">collections</span><span class="o">.</span><span class="n">abc</span><span class="o">.</span><span class="n">Iterable</span><span class="p">):</span>
-        <span class="n">pitches</span> <span class="o">=</span> <span class="p">[</span><span class="n">pitches</span><span class="p">]</span>
-    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">durations</span><span class="p">,</span> <span class="n">numbers</span><span class="o">.</span><span class="n">Number</span> <span class="o">|</span> <span class="nb">tuple</span><span class="p">):</span>
-        <span class="n">durations</span> <span class="o">=</span> <span class="p">[</span><span class="n">durations</span><span class="p">]</span>
+    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">pitch_lists</span><span class="p">,</span> <span class="nb">list</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">pitch_lists</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">pitch_list</span> <span class="ow">in</span> <span class="n">pitch_lists</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">pitch_list</span><span class="p">,</span> <span class="nb">list</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">pitch_lists</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="n">_pitch</span><span class="o">.</span><span class="n">NamedPitch</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">pitch_list</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span>
+            <span class="n">pitch_lists</span>
+        <span class="p">)</span>
+    <span class="k">assert</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Duration</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">durations</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">durations</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">forbidden_note_duration</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">forbidden_note_duration</span><span class="p">,</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Duration</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">forbidden_rest_duration</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">forbidden_rest_duration</span><span class="p">,</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Duration</span><span class="p">)</span>
-    <span class="n">nonreduced_fractions</span> <span class="o">=</span> <span class="p">[</span><span class="n">_duration</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="n">_</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">durations</span><span class="p">]</span>
-    <span class="n">size</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">nonreduced_fractions</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">pitches</span><span class="p">))</span>
-    <span class="n">nonreduced_fractions</span> <span class="o">=</span> <span class="n">_sequence</span><span class="o">.</span><span class="n">repeat_to_length</span><span class="p">(</span><span class="n">nonreduced_fractions</span><span class="p">,</span> <span class="n">size</span><span class="p">)</span>
-    <span class="n">pitches</span> <span class="o">=</span> <span class="n">_sequence</span><span class="o">.</span><span class="n">repeat_to_length</span><span class="p">(</span><span class="n">pitches</span><span class="p">,</span> <span class="n">size</span><span class="p">)</span>
-    <span class="n">duration_groups</span> <span class="o">=</span> <span class="n">_group_by_implied_prolation</span><span class="p">(</span><span class="n">nonreduced_fractions</span><span class="p">)</span>
+    <span class="n">maximum_length</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">durations</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">pitch_lists</span><span class="p">))</span>
+    <span class="n">durations</span> <span class="o">=</span> <span class="n">_sequence</span><span class="o">.</span><span class="n">repeat_to_length</span><span class="p">(</span><span class="n">durations</span><span class="p">,</span> <span class="n">maximum_length</span><span class="p">)</span>
+    <span class="n">pitch_lists</span> <span class="o">=</span> <span class="n">_sequence</span><span class="o">.</span><span class="n">repeat_to_length</span><span class="p">(</span><span class="n">pitch_lists</span><span class="p">,</span> <span class="n">maximum_length</span><span class="p">)</span>
+    <span class="n">pairs</span> <span class="o">=</span> <span class="p">[</span><span class="n">_</span><span class="o">.</span><span class="n">pair</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">durations</span><span class="p">]</span>
+    <span class="n">pair_lists</span> <span class="o">=</span> <span class="n">_group_by_implied_prolation</span><span class="p">(</span><span class="n">pairs</span><span class="p">)</span>
     <span class="n">result</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">_score</span><span class="o">.</span><span class="n">Tuplet</span> <span class="o">|</span> <span class="n">_score</span><span class="o">.</span><span class="n">Leaf</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">duration_group</span> <span class="ow">in</span> <span class="n">duration_groups</span><span class="p">:</span>
-        <span class="n">factors_</span> <span class="o">=</span> <span class="n">_math</span><span class="o">.</span><span class="n">factors</span><span class="p">(</span><span class="n">duration_group</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span>
+    <span class="k">for</span> <span class="n">pair_list</span> <span class="ow">in</span> <span class="n">pair_lists</span><span class="p">:</span>
+        <span class="n">factors_</span> <span class="o">=</span> <span class="n">_math</span><span class="o">.</span><span class="n">factors</span><span class="p">(</span><span class="n">pair_list</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span>
         <span class="n">factors</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">factors_</span><span class="p">)</span>
         <span class="n">factors</span><span class="o">.</span><span class="n">discard</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
         <span class="n">factors</span><span class="o">.</span><span class="n">discard</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-        <span class="n">current_pitches</span> <span class="o">=</span> <span class="n">pitches</span><span class="p">[</span><span class="mi">0</span> <span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">duration_group</span><span class="p">)]</span>
-        <span class="n">pitches</span> <span class="o">=</span> <span class="n">pitches</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">duration_group</span><span class="p">)</span> <span class="p">:]</span>
+        <span class="n">current_pitch_lists</span> <span class="o">=</span> <span class="n">pitch_lists</span><span class="p">[</span><span class="mi">0</span> <span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">pair_list</span><span class="p">)]</span>
+        <span class="n">pitch_lists</span> <span class="o">=</span> <span class="n">pitch_lists</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">pair_list</span><span class="p">)</span> <span class="p">:]</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">factors</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="k">for</span> <span class="n">pitch</span><span class="p">,</span> <span class="n">duration</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">current_pitches</span><span class="p">,</span> <span class="n">duration_group</span><span class="p">):</span>
+            <span class="n">pair_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">_duration</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="n">_</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">pair_list</span><span class="p">]</span>
+            <span class="k">for</span> <span class="n">pitch_list</span><span class="p">,</span> <span class="n">duration</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">current_pitch_lists</span><span class="p">,</span> <span class="n">pair_list</span><span class="p">):</span>
                 <span class="n">leaves</span> <span class="o">=</span> <span class="n">_make_leaf_on_pitch</span><span class="p">(</span>
-                    <span class="n">pitch</span><span class="p">,</span>
+                    <span class="n">pitch_list</span><span class="p">,</span>
                     <span class="n">duration</span><span class="p">,</span>
                     <span class="n">increase_monotonic</span><span class="o">=</span><span class="n">increase_monotonic</span><span class="p">,</span>
                     <span class="n">forbidden_note_duration</span><span class="o">=</span><span class="n">forbidden_note_duration</span><span class="p">,</span>
@@ -798,17 +757,15 @@
                 <span class="p">)</span>
                 <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">leaves</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">denominator</span> <span class="o">=</span> <span class="n">duration_group</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">denominator</span> <span class="o">=</span> <span class="n">pair_list</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
             <span class="n">numerator</span> <span class="o">=</span> <span class="n">_math</span><span class="o">.</span><span class="n">greatest_power_of_two_less_equal</span><span class="p">(</span><span class="n">denominator</span><span class="p">)</span>
             <span class="n">multiplier</span> <span class="o">=</span> <span class="p">(</span><span class="n">numerator</span><span class="p">,</span> <span class="n">denominator</span><span class="p">)</span>
             <span class="n">ratio</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="o">*</span><span class="n">multiplier</span><span class="p">)</span>
-            <span class="n">duration_group</span> <span class="o">=</span> <span class="p">[</span>
-                <span class="n">ratio</span> <span class="o">*</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="n">duration</span><span class="p">)</span> <span class="k">for</span> <span class="n">duration</span> <span class="ow">in</span> <span class="n">duration_group</span>
-            <span class="p">]</span>
+            <span class="n">pair_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">ratio</span> <span class="o">*</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="n">duration</span><span class="p">)</span> <span class="k">for</span> <span class="n">duration</span> <span class="ow">in</span> <span class="n">pair_list</span><span class="p">]</span>
             <span class="n">tuplet_leaves</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">_score</span><span class="o">.</span><span class="n">Leaf</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
-            <span class="k">for</span> <span class="n">pitch</span><span class="p">,</span> <span class="n">duration</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">current_pitches</span><span class="p">,</span> <span class="n">duration_group</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">pitch_list</span><span class="p">,</span> <span class="n">duration</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">current_pitch_lists</span><span class="p">,</span> <span class="n">pair_list</span><span class="p">):</span>
                 <span class="n">leaves</span> <span class="o">=</span> <span class="n">_make_leaf_on_pitch</span><span class="p">(</span>
-                    <span class="n">pitch</span><span class="p">,</span>
+                    <span class="n">pitch_list</span><span class="p">,</span>
                     <span class="n">duration</span><span class="p">,</span>
                     <span class="n">increase_monotonic</span><span class="o">=</span><span class="n">increase_monotonic</span><span class="p">,</span>
                     <span class="n">skips_instead_of_rests</span><span class="o">=</span><span class="n">skips_instead_of_rests</span><span class="p">,</span>
@@ -825,22 +782,23 @@
 <div class="viewcode-block" id="make_notes">
 <a class="viewcode-back" href="../../api/abjad/makers.html#abjad.makers.make_notes">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">make_notes</span><span class="p">(</span>
-    <span class="n">pitches</span><span class="p">,</span> <span class="n">durations</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">increase_monotonic</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">tag</span><span class="p">:</span> <span class="n">_tag</span><span class="o">.</span><span class="n">Tag</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">pitches</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">_pitch</span><span class="o">.</span><span class="n">NamedPitch</span><span class="p">],</span>
+    <span class="n">durations</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">_duration</span><span class="o">.</span><span class="n">Duration</span><span class="p">],</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">increase_monotonic</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">tag</span><span class="p">:</span> <span class="n">_tag</span><span class="o">.</span><span class="n">Tag</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">_score</span><span class="o">.</span><span class="n">Note</span> <span class="o">|</span> <span class="n">_score</span><span class="o">.</span><span class="n">Tuplet</span><span class="p">]:</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Makes notes from ``pitches`` and ``durations``.</span>
-
-<span class="sd">    Set ``pitches`` to a single pitch or a sequence of pitches.</span>
-
-<span class="sd">    Set ``durations`` to a single duration or a list of durations.</span>
 
 <span class="sd">    ..  container:: example</span>
 
 <span class="sd">        Cycles through ``pitches`` when the length of ``pitches`` is less than</span>
 <span class="sd">        the length of ``durations``:</span>
 
-<span class="sd">        &gt;&gt;&gt; pitches = [0]</span>
-<span class="sd">        &gt;&gt;&gt; durations = [(1, 16), (1, 8), (1, 8)]</span>
+<span class="sd">        &gt;&gt;&gt; pitches = abjad.makers.make_pitches(&quot;c&#39; d&#39;&quot;)</span>
+<span class="sd">        &gt;&gt;&gt; pairs = [(1, 16), (1, 16), (1, 8), (1, 8), (1, 8)]</span>
+<span class="sd">        &gt;&gt;&gt; durations = abjad.makers.make_durations(pairs)</span>
 <span class="sd">        &gt;&gt;&gt; notes = abjad.makers.make_notes(pitches, durations)</span>
 <span class="sd">        &gt;&gt;&gt; staff = abjad.Staff(notes)</span>
 <span class="sd">        &gt;&gt;&gt; score = abjad.Score([staff], name=&quot;Score&quot;)</span>
@@ -853,17 +811,17 @@
 <span class="sd">            \new Staff</span>
 <span class="sd">            {</span>
 <span class="sd">                c&#39;16</span>
+<span class="sd">                d&#39;16</span>
 <span class="sd">                c&#39;8</span>
+<span class="sd">                d&#39;8</span>
 <span class="sd">                c&#39;8</span>
 <span class="sd">            }</span>
 
-<span class="sd">    ..  container:: example</span>
+<span class="sd">        Cycles through ``durations`` when the length of ``durations`` is less</span>
+<span class="sd">        than the length of ``pitches``:</span>
 
-<span class="sd">        Cycles through ``durations`` when the length of ``durations`` is less than the</span>
-<span class="sd">        length of ``pitches``:</span>
-
-<span class="sd">        &gt;&gt;&gt; pitches = [0, 2, 4, 5, 7]</span>
-<span class="sd">        &gt;&gt;&gt; durations = [(1, 16), (1, 8), (1, 8)]</span>
+<span class="sd">        &gt;&gt;&gt; pitches = abjad.makers.make_pitches(&quot;c&#39; d&#39; e&#39; f&#39; g&#39;&quot;)</span>
+<span class="sd">        &gt;&gt;&gt; durations = abjad.makers.make_durations([(1, 16), (1, 8)])</span>
 <span class="sd">        &gt;&gt;&gt; notes = abjad.makers.make_notes(pitches, durations)</span>
 <span class="sd">        &gt;&gt;&gt; staff = abjad.Staff(notes)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(staff) # doctest: +SKIP</span>
@@ -876,42 +834,56 @@
 <span class="sd">            {</span>
 <span class="sd">                c&#39;16</span>
 <span class="sd">                d&#39;8</span>
-<span class="sd">                e&#39;8</span>
-<span class="sd">                f&#39;16</span>
-<span class="sd">                g&#39;8</span>
+<span class="sd">                e&#39;16</span>
+<span class="sd">                f&#39;8</span>
+<span class="sd">                g&#39;16</span>
 <span class="sd">            }</span>
 
 <span class="sd">    ..  container:: example</span>
 
-<span class="sd">        Creates ad hoc tuplets for nonassignable durations:</span>
+<span class="sd">        Interprets nondyadic durations as (possibly incomplete) tuplets:</span>
 
-<span class="sd">        &gt;&gt;&gt; pitches = [0]</span>
-<span class="sd">        &gt;&gt;&gt; durations = [(1, 16), (1, 12), (1, 8)]</span>
-<span class="sd">        &gt;&gt;&gt; notes = abjad.makers.make_notes(pitches, durations)</span>
-<span class="sd">        &gt;&gt;&gt; staff = abjad.Staff(notes)</span>
-<span class="sd">        &gt;&gt;&gt; abjad.show(staff) # doctest: +SKIP</span>
+<span class="sd">        &gt;&gt;&gt; pitches = abjad.makers.make_pitches([0])</span>
+<span class="sd">        &gt;&gt;&gt; durations = abjad.makers.make_durations([(1, 16), (1, 12), (1, 8)])</span>
+<span class="sd">        &gt;&gt;&gt; components = abjad.makers.make_notes(pitches, durations)</span>
+<span class="sd">        &gt;&gt;&gt; abjad.makers.tweak_tuplet_bracket_edge_height(components)</span>
+<span class="sd">        &gt;&gt;&gt; staff = abjad.Staff(components)</span>
+<span class="sd">        &gt;&gt;&gt; score = abjad.Score([staff])</span>
+<span class="sd">        &gt;&gt;&gt; abjad.override(score).TupletBracket.bracket_visibility = True</span>
+<span class="sd">        &gt;&gt;&gt; abjad.setting(score).proportionalNotationDuration = &quot;#1/24&quot;</span>
+<span class="sd">        &gt;&gt;&gt; abjad.setting(score).tupletFullLength = True</span>
+<span class="sd">        &gt;&gt;&gt; abjad.show(score) # doctest: +SKIP</span>
 
 <span class="sd">        ..  docs::</span>
 
-<span class="sd">            &gt;&gt;&gt; string = abjad.lilypond(staff)</span>
+<span class="sd">            &gt;&gt;&gt; string = abjad.lilypond(score)</span>
 <span class="sd">            &gt;&gt;&gt; print(string)</span>
-<span class="sd">            \new Staff</span>
+<span class="sd">            \new Score</span>
+<span class="sd">            \with</span>
 <span class="sd">            {</span>
-<span class="sd">                c&#39;16</span>
-<span class="sd">                \tweak edge-height #&#39;(0.7 . 0)</span>
-<span class="sd">                \tuplet 3/2</span>
+<span class="sd">                \override TupletBracket.bracket-visibility = ##t</span>
+<span class="sd">                proportionalNotationDuration = #1/24</span>
+<span class="sd">                tupletFullLength = ##t</span>
+<span class="sd">            }</span>
+<span class="sd">            &lt;&lt;</span>
+<span class="sd">                \new Staff</span>
 <span class="sd">                {</span>
+<span class="sd">                    c&#39;16</span>
+<span class="sd">                    \tweak edge-height #&#39;(0.7 . 0)</span>
+<span class="sd">                    \tuplet 3/2</span>
+<span class="sd">                    {</span>
+<span class="sd">                        c&#39;8</span>
+<span class="sd">                    }</span>
 <span class="sd">                    c&#39;8</span>
 <span class="sd">                }</span>
-<span class="sd">                c&#39;8</span>
-<span class="sd">            }</span>
+<span class="sd">            &gt;&gt;</span>
 
 <span class="sd">    ..  container:: example</span>
 
-<span class="sd">        Tied values are written in decreasing duration by default:</span>
+<span class="sd">        Writes tied durations in monotonically decreasing order by default:</span>
 
-<span class="sd">        &gt;&gt;&gt; pitches = [0]</span>
-<span class="sd">        &gt;&gt;&gt; durations = [(13, 16)]</span>
+<span class="sd">        &gt;&gt;&gt; pitches = abjad.makers.make_pitches([0])</span>
+<span class="sd">        &gt;&gt;&gt; durations = [abjad.Duration(13, 16)]</span>
 <span class="sd">        &gt;&gt;&gt; notes = abjad.makers.make_notes(pitches, durations)</span>
 <span class="sd">        &gt;&gt;&gt; staff = abjad.Staff(notes)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(staff) # doctest: +SKIP</span>
@@ -927,10 +899,11 @@
 <span class="sd">                c&#39;16</span>
 <span class="sd">            }</span>
 
-<span class="sd">        Set ``increase_monotonic=True`` to express tied values in increasing duration:</span>
+<span class="sd">        Writes tied durations in monotonically increasing order when</span>
+<span class="sd">        ``increase_monotonic`` is true:</span>
 
-<span class="sd">        &gt;&gt;&gt; pitches = [0]</span>
-<span class="sd">        &gt;&gt;&gt; durations = [(13, 16)]</span>
+<span class="sd">        &gt;&gt;&gt; pitches = abjad.makers.make_pitches([0])</span>
+<span class="sd">        &gt;&gt;&gt; durations = [abjad.Duration(13, 16)]</span>
 <span class="sd">        &gt;&gt;&gt; notes = abjad.makers.make_notes(pitches, durations, increase_monotonic=True)</span>
 <span class="sd">        &gt;&gt;&gt; staff = abjad.Staff(notes)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(staff) # doctest: +SKIP</span>
@@ -946,106 +919,113 @@
 <span class="sd">                c&#39;2.</span>
 <span class="sd">            }</span>
 
-<span class="sd">    ..  container:: example</span>
-
-<span class="sd">        Works with pitch segments:</span>
-
-<span class="sd">        &gt;&gt;&gt; pitches = abjad.PitchSegment([-2, -1.5, 6, 7, -1.5, 7])</span>
-<span class="sd">        &gt;&gt;&gt; durations = [(1, 8)]</span>
-<span class="sd">        &gt;&gt;&gt; notes = abjad.makers.make_notes(pitches, durations)</span>
-<span class="sd">        &gt;&gt;&gt; staff = abjad.Staff(notes)</span>
-<span class="sd">        &gt;&gt;&gt; abjad.show(staff) # doctest: +SKIP</span>
-
-<span class="sd">        ..  docs::</span>
-
-<span class="sd">            &gt;&gt;&gt; string = abjad.lilypond(staff)</span>
-<span class="sd">            &gt;&gt;&gt; print(string)</span>
-<span class="sd">            \new Staff</span>
-<span class="sd">            {</span>
-<span class="sd">                bf8</span>
-<span class="sd">                bqf8</span>
-<span class="sd">                fs&#39;8</span>
-<span class="sd">                g&#39;8</span>
-<span class="sd">                bqf8</span>
-<span class="sd">                g&#39;8</span>
-<span class="sd">            }</span>
-
-<span class="sd">    ..  container:: example</span>
-
-<span class="sd">        Tag output like this:</span>
-
-<span class="sd">        &gt;&gt;&gt; pitches = [0]</span>
-<span class="sd">        &gt;&gt;&gt; durations = [(1, 16), (1, 8), (1, 8)]</span>
-<span class="sd">        &gt;&gt;&gt; tag = abjad.Tag(&quot;note_maker&quot;)</span>
-<span class="sd">        &gt;&gt;&gt; notes = abjad.makers.make_notes(pitches, durations, tag=tag)</span>
-<span class="sd">        &gt;&gt;&gt; staff = abjad.Staff(notes)</span>
-<span class="sd">        &gt;&gt;&gt; abjad.show(staff) # doctest: +SKIP</span>
-
-<span class="sd">        ..  docs::</span>
-
-<span class="sd">            &gt;&gt;&gt; string = abjad.lilypond(staff, tags=True)</span>
-<span class="sd">            &gt;&gt;&gt; print(string)</span>
-<span class="sd">            \new Staff</span>
-<span class="sd">            {</span>
-<span class="sd">                %! note_maker</span>
-<span class="sd">                c&#39;16</span>
-<span class="sd">                %! note_maker</span>
-<span class="sd">                c&#39;8</span>
-<span class="sd">                %! note_maker</span>
-<span class="sd">                c&#39;8</span>
-<span class="sd">            }</span>
-
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">pitches</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-        <span class="n">pitches</span> <span class="o">=</span> <span class="n">pitches</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">pitches</span><span class="p">,</span> <span class="n">collections</span><span class="o">.</span><span class="n">abc</span><span class="o">.</span><span class="n">Iterable</span><span class="p">):</span>
-        <span class="n">pitches</span> <span class="o">=</span> <span class="p">[</span><span class="n">pitches</span><span class="p">]</span>
-    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">durations</span><span class="p">,</span> <span class="n">numbers</span><span class="o">.</span><span class="n">Number</span> <span class="o">|</span> <span class="nb">tuple</span><span class="p">):</span>
-        <span class="n">durations</span> <span class="o">=</span> <span class="p">[</span><span class="n">durations</span><span class="p">]</span>
-    <span class="n">pairs</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">duration</span> <span class="ow">in</span> <span class="n">durations</span><span class="p">:</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">duration</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
-            <span class="n">pairs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">duration</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">duration</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
-            <span class="n">pair</span> <span class="o">=</span> <span class="p">(</span><span class="n">duration</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-            <span class="n">pairs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pair</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">pairs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">duration</span><span class="o">.</span><span class="n">pair</span><span class="p">)</span>
-    <span class="n">size</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">pairs</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">pitches</span><span class="p">))</span>
-    <span class="n">pairs</span> <span class="o">=</span> <span class="n">_sequence</span><span class="o">.</span><span class="n">repeat_to_length</span><span class="p">(</span><span class="n">pairs</span><span class="p">,</span> <span class="n">size</span><span class="p">)</span>
-    <span class="n">pitches</span> <span class="o">=</span> <span class="n">_sequence</span><span class="o">.</span><span class="n">repeat_to_length</span><span class="p">(</span><span class="n">pitches</span><span class="p">,</span> <span class="n">size</span><span class="p">)</span>
-    <span class="n">durations</span> <span class="o">=</span> <span class="n">_group_by_implied_prolation</span><span class="p">(</span><span class="n">pairs</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">pitches</span><span class="p">,</span> <span class="nb">list</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">pitches</span><span class="p">)</span>
+    <span class="n">prototype</span> <span class="o">=</span> <span class="n">_pitch</span><span class="o">.</span><span class="n">NamedPitch</span> <span class="o">|</span> <span class="n">_pitch</span><span class="o">.</span><span class="n">NumberedPitch</span>
+    <span class="k">assert</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="n">prototype</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">pitches</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">pitches</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Duration</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">durations</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">durations</span><span class="p">)</span>
+    <span class="n">maximum_length</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">pitches</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">durations</span><span class="p">))</span>
+    <span class="n">pitches</span> <span class="o">=</span> <span class="n">_sequence</span><span class="o">.</span><span class="n">repeat_to_length</span><span class="p">(</span><span class="n">pitches</span><span class="p">,</span> <span class="n">maximum_length</span><span class="p">)</span>
+    <span class="n">pairs</span> <span class="o">=</span> <span class="p">[</span><span class="n">_</span><span class="o">.</span><span class="n">pair</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">durations</span><span class="p">]</span>
+    <span class="n">pairs</span> <span class="o">=</span> <span class="n">_sequence</span><span class="o">.</span><span class="n">repeat_to_length</span><span class="p">(</span><span class="n">pairs</span><span class="p">,</span> <span class="n">maximum_length</span><span class="p">)</span>
+    <span class="n">pair_lists</span> <span class="o">=</span> <span class="n">_group_by_implied_prolation</span><span class="p">(</span><span class="n">pairs</span><span class="p">)</span>
     <span class="n">result</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">_score</span><span class="o">.</span><span class="n">Note</span> <span class="o">|</span> <span class="n">_score</span><span class="o">.</span><span class="n">Tuplet</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">duration</span> <span class="ow">in</span> <span class="n">durations</span><span class="p">:</span>
-        <span class="n">factors</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">_math</span><span class="o">.</span><span class="n">factors</span><span class="p">(</span><span class="n">duration</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]))</span>
+    <span class="k">for</span> <span class="n">pair_list</span> <span class="ow">in</span> <span class="n">pair_lists</span><span class="p">:</span>
+        <span class="n">factors</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">_math</span><span class="o">.</span><span class="n">factors</span><span class="p">(</span><span class="n">pair_list</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]))</span>
         <span class="n">factors</span><span class="o">.</span><span class="n">discard</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
         <span class="n">factors</span><span class="o">.</span><span class="n">discard</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-        <span class="n">ps</span> <span class="o">=</span> <span class="n">pitches</span><span class="p">[</span><span class="mi">0</span> <span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">duration</span><span class="p">)]</span>
-        <span class="n">pitches</span> <span class="o">=</span> <span class="n">pitches</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">duration</span><span class="p">)</span> <span class="p">:]</span>
+        <span class="n">pitches_</span> <span class="o">=</span> <span class="n">pitches</span><span class="p">[</span><span class="mi">0</span> <span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">pair_list</span><span class="p">)]</span>
+        <span class="n">pitches</span> <span class="o">=</span> <span class="n">pitches</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">pair_list</span><span class="p">)</span> <span class="p">:]</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">factors</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span>
-                <span class="n">_make_unprolated_notes</span><span class="p">(</span>
-                    <span class="n">ps</span><span class="p">,</span>
-                    <span class="n">duration</span><span class="p">,</span>
-                    <span class="n">increase_monotonic</span><span class="o">=</span><span class="n">increase_monotonic</span><span class="p">,</span>
-                    <span class="n">tag</span><span class="o">=</span><span class="n">tag</span><span class="p">,</span>
-                <span class="p">)</span>
-            <span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">denominator</span> <span class="o">=</span> <span class="n">duration</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
-            <span class="n">numerator</span> <span class="o">=</span> <span class="n">_math</span><span class="o">.</span><span class="n">greatest_power_of_two_less_equal</span><span class="p">(</span><span class="n">denominator</span><span class="p">)</span>
-            <span class="n">multiplier</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="n">numerator</span><span class="p">,</span> <span class="n">denominator</span><span class="p">)</span>
-            <span class="n">ratio</span> <span class="o">=</span> <span class="n">multiplier</span><span class="o">.</span><span class="n">reciprocal</span>
-            <span class="n">duration</span> <span class="o">=</span> <span class="p">[</span><span class="n">ratio</span> <span class="o">*</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="n">d</span><span class="p">)</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">duration</span><span class="p">]</span>
-            <span class="n">ns</span> <span class="o">=</span> <span class="n">_make_unprolated_notes</span><span class="p">(</span>
-                <span class="n">ps</span><span class="p">,</span>
-                <span class="n">duration</span><span class="p">,</span>
+            <span class="n">duration_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">_duration</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="n">_</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">pair_list</span><span class="p">]</span>
+            <span class="n">notes</span> <span class="o">=</span> <span class="n">_make_unprolated_notes</span><span class="p">(</span>
+                <span class="n">pitches_</span><span class="p">,</span>
+                <span class="n">duration_list</span><span class="p">,</span>
                 <span class="n">increase_monotonic</span><span class="o">=</span><span class="n">increase_monotonic</span><span class="p">,</span>
                 <span class="n">tag</span><span class="o">=</span><span class="n">tag</span><span class="p">,</span>
             <span class="p">)</span>
-            <span class="n">tuplet</span> <span class="o">=</span> <span class="n">_score</span><span class="o">.</span><span class="n">Tuplet</span><span class="p">(</span><span class="n">multiplier</span><span class="o">.</span><span class="n">pair</span><span class="p">,</span> <span class="n">ns</span><span class="p">)</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">notes</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">denominator</span> <span class="o">=</span> <span class="n">pair_list</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">numerator</span> <span class="o">=</span> <span class="n">_math</span><span class="o">.</span><span class="n">greatest_power_of_two_less_equal</span><span class="p">(</span><span class="n">denominator</span><span class="p">)</span>
+            <span class="n">duration</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="n">numerator</span><span class="p">,</span> <span class="n">denominator</span><span class="p">)</span>
+            <span class="n">duration_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">_duration</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="n">_</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">pair_list</span><span class="p">]</span>
+            <span class="n">duration_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">duration</span><span class="o">.</span><span class="n">reciprocal</span> <span class="o">*</span> <span class="n">_</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">duration_list</span><span class="p">]</span>
+            <span class="n">notes</span> <span class="o">=</span> <span class="n">_make_unprolated_notes</span><span class="p">(</span>
+                <span class="n">pitches_</span><span class="p">,</span>
+                <span class="n">duration_list</span><span class="p">,</span>
+                <span class="n">increase_monotonic</span><span class="o">=</span><span class="n">increase_monotonic</span><span class="p">,</span>
+                <span class="n">tag</span><span class="o">=</span><span class="n">tag</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="n">tuplet</span> <span class="o">=</span> <span class="n">_score</span><span class="o">.</span><span class="n">Tuplet</span><span class="p">(</span><span class="n">duration</span><span class="o">.</span><span class="n">pair</span><span class="p">,</span> <span class="n">notes</span><span class="p">)</span>
             <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tuplet</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="nb">list</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="n">_score</span><span class="o">.</span><span class="n">Note</span> <span class="o">|</span> <span class="n">_score</span><span class="o">.</span><span class="n">Tuplet</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">result</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">result</span></div>
+
+
+
+<div class="viewcode-block" id="make_pitch_lists">
+<a class="viewcode-back" href="../../api/abjad/makers.html#abjad.makers.make_pitch_lists">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">make_pitch_lists</span><span class="p">(</span><span class="n">argument</span><span class="p">:</span> <span class="nb">list</span> <span class="o">|</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="n">_pitch</span><span class="o">.</span><span class="n">NamedPitch</span><span class="p">]]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Changes list or string ``argument`` to list of pitch lists.</span>
+
+<span class="sd">    ..  container:: example</span>
+
+<span class="sd">        &gt;&gt;&gt; abjad.makers.make_pitch_lists([3, None, [4, 5]])</span>
+<span class="sd">        [[NamedPitch(&quot;ef&#39;&quot;)], [], [NamedPitch(&quot;e&#39;&quot;), NamedPitch(&quot;f&#39;&quot;)]]</span>
+
+<span class="sd">        &gt;&gt;&gt; abjad.makers.make_pitch_lists([3, [], [4, 5]])</span>
+<span class="sd">        [[NamedPitch(&quot;ef&#39;&quot;)], [], [NamedPitch(&quot;e&#39;&quot;), NamedPitch(&quot;f&#39;&quot;)]]</span>
+
+<span class="sd">        &gt;&gt;&gt; abjad.makers.make_pitch_lists(&quot;e&#39;&#39; ef&#39;&#39; d&#39;&#39;&quot;)</span>
+<span class="sd">        [[NamedPitch(&quot;e&#39;&#39;&quot;)], [NamedPitch(&quot;ef&#39;&#39;&quot;)], [NamedPitch(&quot;d&#39;&#39;&quot;)]]</span>
+
+<span class="sd">    Use this function to format input for ``abjad.makers.make_leaves()``.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">pitch_lists</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">argument</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="n">argument</span> <span class="o">=</span> <span class="n">argument</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">argument</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="nb">list</span> <span class="o">|</span> <span class="nb">tuple</span><span class="p">):</span>
+            <span class="n">pitch_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">_pitch</span><span class="o">.</span><span class="n">NamedPitch</span><span class="p">(</span><span class="n">_</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">item</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="n">item</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">pitch_list</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">pitch_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">_pitch</span><span class="o">.</span><span class="n">NamedPitch</span><span class="p">(</span><span class="n">item</span><span class="p">)]</span>
+        <span class="n">pitch_lists</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pitch_list</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">pitch_lists</span></div>
+
+
+
+<div class="viewcode-block" id="make_pitches">
+<a class="viewcode-back" href="../../api/abjad/makers.html#abjad.makers.make_pitches">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">make_pitches</span><span class="p">(</span><span class="n">argument</span><span class="p">:</span> <span class="nb">list</span> <span class="o">|</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">_pitch</span><span class="o">.</span><span class="n">NamedPitch</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Changes list or string ``argument`` to list of named pitches.</span>
+
+<span class="sd">    ..  container:: example</span>
+
+<span class="sd">        &gt;&gt;&gt; abjad.makers.make_pitches([3, 16, 16.5])</span>
+<span class="sd">        [NamedPitch(&quot;ef&#39;&quot;), NamedPitch(&quot;e&#39;&#39;&quot;), NamedPitch(&quot;eqs&#39;&#39;&quot;)]</span>
+
+<span class="sd">        &gt;&gt;&gt; abjad.makers.make_pitches(&quot;ef&#39; e&#39;&#39; eqs&#39;&#39;&quot;)</span>
+<span class="sd">        [NamedPitch(&quot;ef&#39;&quot;), NamedPitch(&quot;e&#39;&#39;&quot;), NamedPitch(&quot;eqs&#39;&#39;&quot;)]</span>
+
+<span class="sd">        &gt;&gt;&gt; abjad.makers.make_pitches([&quot;ef&#39;&quot;, &quot;e&#39;&#39;&quot;, &quot;eqs&#39;&#39;&quot;])</span>
+<span class="sd">        [NamedPitch(&quot;ef&#39;&quot;), NamedPitch(&quot;e&#39;&#39;&quot;), NamedPitch(&quot;eqs&#39;&#39;&quot;)]</span>
+
+<span class="sd">        &gt;&gt;&gt; abjad.makers.make_pitches([3, &quot;e&#39;&#39;&quot;, abjad.NamedPitch(&quot;eqs&#39;&#39;&quot;)])</span>
+<span class="sd">        [NamedPitch(&quot;ef&#39;&quot;), NamedPitch(&quot;e&#39;&#39;&quot;), NamedPitch(&quot;eqs&#39;&#39;&quot;)]</span>
+
+<span class="sd">    Use this function to format input for ``abjad.makers.make_notes()``.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">argument</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="n">argument</span> <span class="o">=</span> <span class="n">argument</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+    <span class="k">assert</span> <span class="ow">not</span> <span class="nb">any</span><span class="p">(</span><span class="n">_</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">argument</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span>
+    <span class="n">pitches</span> <span class="o">=</span> <span class="p">[</span><span class="n">_pitch</span><span class="o">.</span><span class="n">NamedPitch</span><span class="p">(</span><span class="n">_</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">argument</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">pitches</span></div>
 
 
 
@@ -1066,6 +1046,7 @@
 
 <span class="sd">        &gt;&gt;&gt; def make_score(ratio, pair):</span>
 <span class="sd">        ...     tuplet = abjad.makers.tuplet_from_ratio_and_pair(ratio, pair)</span>
+<span class="sd">        ...     abjad.makers.tweak_tuplet_number_text(tuplet)</span>
 <span class="sd">        ...     staff = abjad.Staff([tuplet], lilypond_type=&quot;RhythmicStaff&quot;)</span>
 <span class="sd">        ...     score = abjad.Score([staff], name=&quot;Score&quot;)</span>
 <span class="sd">        ...     time_signature = abjad.TimeSignature(pair)</span>
@@ -1364,11 +1345,11 @@
     <span class="n">duration</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="n">pair</span><span class="p">)</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">ratio</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
         <span class="k">if</span> <span class="mi">0</span> <span class="o">&lt;</span> <span class="n">ratio</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
-            <span class="n">pitch</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">pitch_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">_pitch</span><span class="o">.</span><span class="n">NamedPitch</span><span class="p">(</span><span class="s2">&quot;c&#39;&quot;</span><span class="p">)]</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">assert</span> <span class="n">ratio</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">ratio</span><span class="p">)</span>
-            <span class="n">pitch</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="n">leaves</span> <span class="o">=</span> <span class="n">make_leaves</span><span class="p">([</span><span class="n">pitch</span><span class="p">],</span> <span class="p">[</span><span class="n">duration</span><span class="p">],</span> <span class="n">tag</span><span class="o">=</span><span class="n">tag</span><span class="p">)</span>
+            <span class="n">pitch_list</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">leaves</span> <span class="o">=</span> <span class="n">make_leaves</span><span class="p">([</span><span class="n">pitch_list</span><span class="p">],</span> <span class="p">[</span><span class="n">duration</span><span class="p">],</span> <span class="n">tag</span><span class="o">=</span><span class="n">tag</span><span class="p">)</span>
         <span class="n">tuplet</span> <span class="o">=</span> <span class="n">_score</span><span class="o">.</span><span class="n">Tuplet</span><span class="o">.</span><span class="n">from_duration</span><span class="p">(</span><span class="n">duration</span><span class="p">,</span> <span class="n">leaves</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="n">tag</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">numerator</span><span class="p">,</span> <span class="n">denominator</span> <span class="o">=</span> <span class="n">pair</span>
@@ -1377,14 +1358,112 @@
         <span class="n">components</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">_score</span><span class="o">.</span><span class="n">Leaf</span> <span class="o">|</span> <span class="n">_score</span><span class="o">.</span><span class="n">Tuplet</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">ratio</span><span class="p">:</span>
             <span class="k">if</span> <span class="mi">0</span> <span class="o">&lt;</span> <span class="n">item</span><span class="p">:</span>
-                <span class="n">pitch</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="n">pitch_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">_pitch</span><span class="o">.</span><span class="n">NamedPitch</span><span class="p">(</span><span class="s2">&quot;c&#39;&quot;</span><span class="p">)]</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">assert</span> <span class="n">item</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
-                <span class="n">pitch</span> <span class="o">=</span> <span class="kc">None</span>
-            <span class="n">leaves</span> <span class="o">=</span> <span class="n">make_leaves</span><span class="p">([</span><span class="n">pitch</span><span class="p">],</span> <span class="p">[(</span><span class="nb">abs</span><span class="p">(</span><span class="n">item</span><span class="p">),</span> <span class="n">denominator</span><span class="p">)],</span> <span class="n">tag</span><span class="o">=</span><span class="n">tag</span><span class="p">)</span>
+                <span class="n">pitch_list</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">duration_</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">item</span><span class="p">),</span> <span class="n">denominator</span><span class="p">)</span>
+            <span class="n">leaves</span> <span class="o">=</span> <span class="n">make_leaves</span><span class="p">([</span><span class="n">pitch_list</span><span class="p">],</span> <span class="p">[</span><span class="n">duration_</span><span class="p">],</span> <span class="n">tag</span><span class="o">=</span><span class="n">tag</span><span class="p">)</span>
             <span class="n">components</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">leaves</span><span class="p">)</span>
         <span class="n">tuplet</span> <span class="o">=</span> <span class="n">_score</span><span class="o">.</span><span class="n">Tuplet</span><span class="o">.</span><span class="n">from_duration</span><span class="p">(</span><span class="n">duration</span><span class="p">,</span> <span class="n">components</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="n">tag</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">tuplet</span></div>
+
+
+
+<div class="viewcode-block" id="tweak_tuplet_bracket_edge_height">
+<a class="viewcode-back" href="../../api/abjad/makers.html#abjad.makers.tweak_tuplet_bracket_edge_height">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">tweak_tuplet_bracket_edge_height</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Tweaks tuplet bracket edge height of incomplete tuplets in ``argument``.</span>
+
+<span class="sd">    A tuplet is defined as incomplete when the denominator ``d`` of the</span>
+<span class="sd">    tuplet&#39;s duration ``n/d`` is nondyadic. For example, the duration of</span>
+<span class="sd">    ``\tuplet 3/2 { c&#39;4 d&#39;4 }`` is nondyadic because the denominator of ``2/3 *</span>
+<span class="sd">    2/4 = 1/3`` is 3. But the duration of ``\tuplet 3/2 { c&#39;4 d&#39;4 e&#39;4 }`` is</span>
+<span class="sd">    dyadic because the denominator of ``2/3 * 3/4 = 1/2`` is 2.</span>
+
+<span class="sd">    ..  container:: example</span>
+
+<span class="sd">        By default, LilyPond engraves all tuplets with a complete bracket,</span>
+<span class="sd">        even those that are incomplete, like the first tuplet below:</span>
+
+<span class="sd">        &gt;&gt;&gt; string = r&quot;\tuplet 3/2 { c&#39;4 d&#39;4 } \tuplet 3/2 { c&#39;4 d&#39;4 e&#39;4 }&quot;</span>
+<span class="sd">        &gt;&gt;&gt; staff = abjad.Staff(string)</span>
+<span class="sd">        &gt;&gt;&gt; abjad.show(staff) # doctest: +SKIP</span>
+
+<span class="sd">        ..  docs::</span>
+
+<span class="sd">            &gt;&gt;&gt; string = abjad.lilypond(staff)</span>
+<span class="sd">            &gt;&gt;&gt; print(string)</span>
+<span class="sd">            \new Staff</span>
+<span class="sd">            {</span>
+<span class="sd">                \tuplet 3/2</span>
+<span class="sd">                {</span>
+<span class="sd">                    c&#39;4</span>
+<span class="sd">                    d&#39;4</span>
+<span class="sd">                }</span>
+<span class="sd">                \tuplet 3/2</span>
+<span class="sd">                {</span>
+<span class="sd">                    c&#39;4</span>
+<span class="sd">                    d&#39;4</span>
+<span class="sd">                    e&#39;4</span>
+<span class="sd">                }</span>
+<span class="sd">            }</span>
+
+<span class="sd">        Call ``abjad.makers.tweak_tuplet_bracket_edge_height()`` to adjust</span>
+<span class="sd">        the right edge of incomplete tuplets:</span>
+
+<span class="sd">        &gt;&gt;&gt; abjad.makers.tweak_tuplet_bracket_edge_height(staff)</span>
+<span class="sd">        &gt;&gt;&gt; abjad.show(staff) # doctest: +SKIP</span>
+
+<span class="sd">        ..  docs::</span>
+
+<span class="sd">            &gt;&gt;&gt; string = abjad.lilypond(staff)</span>
+<span class="sd">            &gt;&gt;&gt; print(string)</span>
+<span class="sd">            \new Staff</span>
+<span class="sd">            {</span>
+<span class="sd">                \tweak edge-height #&#39;(0.7 . 0)</span>
+<span class="sd">                \tuplet 3/2</span>
+<span class="sd">                {</span>
+<span class="sd">                    c&#39;4</span>
+<span class="sd">                    d&#39;4</span>
+<span class="sd">                }</span>
+<span class="sd">                \tuplet 3/2</span>
+<span class="sd">                {</span>
+<span class="sd">                    c&#39;4</span>
+<span class="sd">                    d&#39;4</span>
+<span class="sd">                    e&#39;4</span>
+<span class="sd">                }</span>
+<span class="sd">            }</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">tuplet</span> <span class="ow">in</span> <span class="n">_iterate</span><span class="o">.</span><span class="n">components</span><span class="p">(</span><span class="n">argument</span><span class="p">,</span> <span class="n">_score</span><span class="o">.</span><span class="n">Tuplet</span><span class="p">):</span>
+        <span class="n">duration</span> <span class="o">=</span> <span class="n">tuplet</span><span class="o">.</span><span class="n">_get_preprolated_duration</span><span class="p">()</span>
+        <span class="n">denominator</span> <span class="o">=</span> <span class="n">duration</span><span class="o">.</span><span class="n">denominator</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">_math</span><span class="o">.</span><span class="n">is_nonnegative_integer_power_of_two</span><span class="p">(</span><span class="n">denominator</span><span class="p">):</span>
+            <span class="n">_tweaks</span><span class="o">.</span><span class="n">tweak</span><span class="p">(</span><span class="n">tuplet</span><span class="p">,</span> <span class="n">tuplet</span><span class="o">.</span><span class="n">edge_height_tweak_string</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="tweak_tuplet_number_text">
+<a class="viewcode-back" href="../../api/abjad/makers.html#abjad.makers.tweak_tuplet_number_text">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">tweak_tuplet_number_text</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Tweaks tuplet number text for tuplets in ``argument``. Sets tuplet</span>
+<span class="sd">    number text equal to ``#tuplet-number::calc-fraction-text`` when</span>
+<span class="sd">    any of these conditions is true:</span>
+
+<span class="sd">      * tuplet is an augmentation (like 3:4), or</span>
+<span class="sd">      * tuplet is nondyadic (like 4:3), or</span>
+<span class="sd">      * denominator of tuplet multiplier is 1</span>
+
+<span class="sd">    Does not tweak tuplets for which none of these conditions holds.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">tuplet</span> <span class="ow">in</span> <span class="n">_iterate</span><span class="o">.</span><span class="n">components</span><span class="p">(</span><span class="n">argument</span><span class="p">,</span> <span class="n">_score</span><span class="o">.</span><span class="n">Tuplet</span><span class="p">):</span>
+        <span class="k">if</span> <span class="s2">&quot;text&quot;</span> <span class="ow">in</span> <span class="nb">vars</span><span class="p">(</span><span class="n">_overrides</span><span class="o">.</span><span class="n">override</span><span class="p">(</span><span class="n">tuplet</span><span class="p">)</span><span class="o">.</span><span class="n">TupletNumber</span><span class="p">):</span>
+            <span class="k">continue</span>
+        <span class="k">if</span> <span class="n">tuplet</span><span class="o">.</span><span class="n">augmentation</span><span class="p">()</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">tuplet</span><span class="o">.</span><span class="n">dyadic</span><span class="p">()</span> <span class="ow">or</span> <span class="n">tuplet</span><span class="o">.</span><span class="n">multiplier</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">_tweaks</span><span class="o">.</span><span class="n">tweak</span><span class="p">(</span><span class="n">tuplet</span><span class="p">,</span> <span class="n">tuplet</span><span class="o">.</span><span class="n">tuplet_number_calc_fraction_text_tweak_string</span><span class="p">)</span></div>
 
 </pre></div>
 
@@ -1403,7 +1482,7 @@
         
         &copy; Copyright 2008-2025, Trevor Bača &amp; Joséphine Oberholtzer.
       <span class="lastupdated">
-        Last updated on May 02, 2025.
+        Last updated on Jun 02, 2025.
       </span>
 
     </p>
