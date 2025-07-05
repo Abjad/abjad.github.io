@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>abjad.bind &mdash; Abjad 3.25 documentation</title>
+  <title>abjad.bind &mdash; Abjad 3.26 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../_static/abjad.css?v=1f187528" />
@@ -18,12 +18,14 @@
     <link rel="canonical" href="https://abjad.github.io_modules/abjad/bind.html"/>
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=6e073912"></script>
+      <script src="../../_static/documentation_options.js?v=59ffb378"></script>
       <script src="../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script src="../../_static/ga.js?v=c455bbd5"></script>
       <script src="../../_static/toggleprompt.js?v=5801b3bb"></script>
       <script defer="defer" src="../../_static/lightbox2/js/lightbox.js?v=bc25c2e6"></script>
+      <script src="../../_static/inject-autosummary-fqns.js?v=49afa734"></script>
+      <script src="../../_static/inject-fqns.js?v=c5423c1b"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
@@ -33,11 +35,11 @@
   <div class="wy-grid-for-nav">
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search"  style="background: #996633" >
+        <div class="wy-side-nav-search"  style="background: #CC8844" >
 
 
     <a href="../../index.html" class="icon icon-home" alt="Documentation
-    Home"> Abjad 3.25
+    Home"> Abjad 3.26
 
 
 
@@ -108,7 +110,7 @@
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #996633" >
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #CC8844" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../index.html">Abjad</a>
       </nav>
@@ -124,18 +126,20 @@
     <div itemprop="articleBody">
     
   <h1>Source code for abjad.bind</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">copy</span>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Functions to bind indicators to score components.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
 <span class="kn">import</span><span class="w"> </span><span class="nn">enum</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">importlib</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">typing</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">_getlib</span><span class="p">,</span> <span class="n">_updatelib</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">duration</span> <span class="k">as</span> <span class="n">_duration</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">enums</span> <span class="k">as</span> <span class="n">_enums</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">exceptions</span> <span class="k">as</span> <span class="n">_exceptions</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">score</span> <span class="k">as</span> <span class="n">_score</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">tag</span> <span class="k">as</span> <span class="n">_tag</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">tweaks</span> <span class="k">as</span> <span class="n">_tweaks</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">wrapper</span> <span class="k">as</span> <span class="n">_wrapper</span>
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">_before_attach</span><span class="p">(</span><span class="n">indicator</span><span class="p">,</span> <span class="n">context</span><span class="p">,</span> <span class="n">deactivate</span><span class="p">,</span> <span class="n">component</span><span class="p">):</span>
@@ -154,7 +158,9 @@
     <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">indicator</span><span class="p">,</span> <span class="s2">&quot;find_context_on_attach&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
         <span class="n">the_context</span> <span class="o">=</span> <span class="n">context</span> <span class="ow">or</span> <span class="n">indicator</span><span class="o">.</span><span class="n">context</span>
         <span class="k">if</span> <span class="n">the_context</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">context_</span> <span class="o">=</span> <span class="n">Wrapper</span><span class="o">.</span><span class="n">_find_correct_effective_context</span><span class="p">(</span><span class="n">component</span><span class="p">,</span> <span class="n">the_context</span><span class="p">)</span>
+            <span class="n">context_</span> <span class="o">=</span> <span class="n">_wrapper</span><span class="o">.</span><span class="n">Wrapper</span><span class="o">.</span><span class="n">_find_correct_effective_context</span><span class="p">(</span>
+                <span class="n">component</span><span class="p">,</span> <span class="n">the_context</span>
+            <span class="p">)</span>
             <span class="k">if</span> <span class="n">context_</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="n">message</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">    </span><span class="si">{</span><span class="n">indicator</span><span class="si">}</span><span class="s2"> requires </span><span class="si">{</span><span class="n">the_context</span><span class="si">}</span><span class="s2"> context;&quot;</span>
                 <span class="n">message</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">    can not find </span><span class="si">{</span><span class="n">the_context</span><span class="si">}</span><span class="s2">&quot;</span>
@@ -164,7 +170,7 @@
         <span class="k">return</span>
     <span class="k">if</span> <span class="n">deactivate</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
         <span class="k">return</span>
-    <span class="k">for</span> <span class="n">wrapper</span> <span class="ow">in</span> <span class="n">component</span><span class="o">.</span><span class="n">_get_indicators</span><span class="p">(</span><span class="n">unwrap</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">wrapper</span> <span class="ow">in</span> <span class="n">component</span><span class="o">.</span><span class="n">_get_wrappers</span><span class="p">():</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">wrapper</span><span class="o">.</span><span class="n">unbundle_indicator</span><span class="p">(),</span> <span class="nb">type</span><span class="p">(</span><span class="n">indicator</span><span class="p">)):</span>
             <span class="k">continue</span>
         <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">indicator</span><span class="p">,</span> <span class="s2">&quot;leak&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">getattr</span><span class="p">(</span>
@@ -193,699 +199,8 @@
         <span class="k">raise</span> <span class="n">_exceptions</span><span class="o">.</span><span class="n">PersistentIndicatorError</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="Wrapper">
-<a class="viewcode-back" href="../../api/abjad/bind.html#abjad.bind.Wrapper">[docs]</a>
-<span class="k">class</span><span class="w"> </span><span class="nc">Wrapper</span><span class="p">:</span>
-<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Wrapper.</span>
-
-<span class="sd">    ..  container:: example</span>
-
-<span class="sd">        &gt;&gt;&gt; component = abjad.Note(&quot;c&#39;4&quot;)</span>
-<span class="sd">        &gt;&gt;&gt; articulation = abjad.Articulation(&quot;accent&quot;)</span>
-<span class="sd">        &gt;&gt;&gt; abjad.attach(articulation, component, direction=abjad.UP)</span>
-<span class="sd">        &gt;&gt;&gt; abjad.get.wrapper(component)</span>
-<span class="sd">        Wrapper(annotation=None, context=None, deactivate=False, direction=&lt;Vertical.UP: 1&gt;, indicator=Articulation(name=&#39;accent&#39;), synthetic_offset=None, tag=Tag(string=&#39;&#39;))</span>
-
-<span class="sd">    ..  container:: example</span>
-
-<span class="sd">        Duplicate indicator warnings take two forms.</span>
-
-<span class="sd">        &gt;&gt;&gt; voice_1 = abjad.Voice(&quot;c&#39;&#39;4 d&#39;&#39; e&#39;&#39; f&#39;&#39;&quot;, name=&quot;VoiceI&quot;)</span>
-<span class="sd">        &gt;&gt;&gt; voice_2 = abjad.Voice(&quot;c&#39;4 d&#39; e&#39; f&#39;&quot;, name=&quot;VoiceII&quot;)</span>
-<span class="sd">        &gt;&gt;&gt; staff = abjad.Staff([voice_1, voice_2], simultaneous=True)</span>
-<span class="sd">        &gt;&gt;&gt; abjad.attach(abjad.Clef(&quot;alto&quot;), voice_2[0])</span>
-<span class="sd">        &gt;&gt;&gt; abjad.show(staff) # doctest: +SKIP</span>
-
-<span class="sd">        ..  docs::</span>
-
-<span class="sd">            &gt;&gt;&gt; string = abjad.lilypond(staff)</span>
-<span class="sd">            &gt;&gt;&gt; print(string)</span>
-<span class="sd">            \new Staff</span>
-<span class="sd">            &lt;&lt;</span>
-<span class="sd">                \context Voice = &quot;VoiceI&quot;</span>
-<span class="sd">                {</span>
-<span class="sd">                    c&#39;&#39;4</span>
-<span class="sd">                    d&#39;&#39;4</span>
-<span class="sd">                    e&#39;&#39;4</span>
-<span class="sd">                    f&#39;&#39;4</span>
-<span class="sd">                }</span>
-<span class="sd">                \context Voice = &quot;VoiceII&quot;</span>
-<span class="sd">                {</span>
-<span class="sd">                    \clef &quot;alto&quot;</span>
-<span class="sd">                    c&#39;4</span>
-<span class="sd">                    d&#39;4</span>
-<span class="sd">                    e&#39;4</span>
-<span class="sd">                    f&#39;4</span>
-<span class="sd">                }</span>
-<span class="sd">            &gt;&gt;</span>
-
-<span class="sd">        First form when attempting to attach a contexted indicator to a leaf that already</span>
-<span class="sd">        carries a contexted indicator of the same type:</span>
-
-<span class="sd">        &gt;&gt;&gt; # abjad.attach(abjad.Clef(&quot;treble&quot;), voice_2[0])</span>
-
-<span class="sd">        Second form when attempting to attach a contexted indicator to a leaf governed by</span>
-<span class="sd">        some other component carrying a contexted indicator of the same type.</span>
-
-<span class="sd">        &gt;&gt;&gt; # abjad.attach(abjad.Clef(&quot;treble&quot;), voice_1[0])</span>
-
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="n">__documentation_section__</span> <span class="o">=</span> <span class="s2">&quot;Internals&quot;</span>
-
-    <span class="vm">__slots__</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="s2">&quot;_annotation&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;_component&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;_context&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;_deactivate&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;_direction&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;_effective_context&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;_indicator&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;_synthetic_offset&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;_tag&quot;</span><span class="p">,</span>
-    <span class="p">)</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span>
-        <span class="n">annotation</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">enum</span><span class="o">.</span><span class="n">Enum</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="c1"># TODO: maybe remove check_duplicate_indicator and check automatically?</span>
-        <span class="n">check_duplicate_indicator</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-        <span class="n">component</span><span class="p">:</span> <span class="n">_score</span><span class="o">.</span><span class="n">Component</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">context</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">deactivate</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-        <span class="n">direction</span><span class="p">:</span> <span class="n">_enums</span><span class="o">.</span><span class="n">Vertical</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">indicator</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Any</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">synthetic_offset</span><span class="p">:</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Offset</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">tag</span><span class="p">:</span> <span class="n">_tag</span><span class="o">.</span><span class="n">Tag</span> <span class="o">=</span> <span class="n">_tag</span><span class="o">.</span><span class="n">Tag</span><span class="p">(),</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">assert</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">indicator</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">indicator</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">annotation</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">annotation</span><span class="p">,</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">enum</span><span class="o">.</span><span class="n">Enum</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">annotation</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_annotation</span> <span class="o">=</span> <span class="n">annotation</span>
-        <span class="k">if</span> <span class="n">component</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">component</span><span class="p">,</span> <span class="n">_score</span><span class="o">.</span><span class="n">Component</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">component</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_component</span> <span class="o">=</span> <span class="n">component</span>
-        <span class="n">deactivate</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">deactivate</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">context</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="nb">str</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">context</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_context</span> <span class="o">=</span> <span class="n">context</span>
-        <span class="k">if</span> <span class="n">deactivate</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">deactivate</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">deactivate</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_deactivate</span> <span class="o">=</span> <span class="n">deactivate</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_direction</span> <span class="o">=</span> <span class="n">direction</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_effective_context</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_indicator</span> <span class="o">=</span> <span class="n">indicator</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_synthetic_offset</span><span class="p">:</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Offset</span> <span class="o">|</span> <span class="kc">None</span>
-        <span class="k">if</span> <span class="n">synthetic_offset</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">synthetic_offset</span><span class="p">,</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Offset</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span>
-                <span class="n">synthetic_offset</span>
-            <span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_synthetic_offset</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Offset</span><span class="p">(</span><span class="n">synthetic_offset</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_synthetic_offset</span> <span class="o">=</span> <span class="n">synthetic_offset</span>
-        <span class="k">if</span> <span class="n">tag</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">_tag</span><span class="o">.</span><span class="n">Tag</span><span class="p">)</span>
-        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="n">_tag</span><span class="o">.</span><span class="n">Tag</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">tag</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_tag</span> <span class="o">=</span> <span class="n">tag</span>
-        <span class="k">if</span> <span class="n">component</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_bind_component</span><span class="p">(</span>
-                <span class="n">component</span><span class="p">,</span> <span class="n">check_duplicate_indicator</span><span class="o">=</span><span class="n">check_duplicate_indicator</span>
-            <span class="p">)</span>
-
-<div class="viewcode-block" id="Wrapper.__copy__">
-<a class="viewcode-back" href="../../api/abjad/bind.html#abjad.bind.Wrapper.__copy__">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">__copy__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">arguments</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Wrapper&quot;</span><span class="p">:</span>
-<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Copies wrapper.</span>
-
-<span class="sd">        Preserves annotation flag:</span>
-
-<span class="sd">        ..  container:: example</span>
-
-<span class="sd">            &gt;&gt;&gt; old_staff = abjad.Staff(&quot;c&#39;4 d&#39;4 e&#39;4 f&#39;4&quot;)</span>
-<span class="sd">            &gt;&gt;&gt; abjad.annotate(old_staff[0], &quot;bow_direction&quot;, abjad.DOWN)</span>
-<span class="sd">            &gt;&gt;&gt; string = abjad.lilypond(old_staff)</span>
-<span class="sd">            &gt;&gt;&gt; print(string)</span>
-<span class="sd">            \new Staff {</span>
-<span class="sd">                c&#39;4</span>
-<span class="sd">                d&#39;4</span>
-<span class="sd">                e&#39;4</span>
-<span class="sd">                f&#39;4</span>
-<span class="sd">            }</span>
-
-<span class="sd">            &gt;&gt;&gt; leaf = old_staff[0]</span>
-<span class="sd">            &gt;&gt;&gt; abjad.get.annotation(leaf, &quot;bow_direction&quot;)</span>
-<span class="sd">            &lt;Vertical.DOWN: -1&gt;</span>
-
-<span class="sd">            &gt;&gt;&gt; new_staff = abjad.mutate.copy(old_staff)</span>
-<span class="sd">            &gt;&gt;&gt; string = abjad.lilypond(new_staff)</span>
-<span class="sd">            &gt;&gt;&gt; print(string)</span>
-<span class="sd">            \new Staff {</span>
-<span class="sd">                c&#39;4</span>
-<span class="sd">                d&#39;4</span>
-<span class="sd">                e&#39;4</span>
-<span class="sd">                f&#39;4</span>
-<span class="sd">            }</span>
-
-<span class="sd">            &gt;&gt;&gt; leaf = new_staff[0]</span>
-<span class="sd">            &gt;&gt;&gt; abjad.get.annotation(leaf, &quot;bow_direction&quot;)</span>
-<span class="sd">            &lt;Vertical.DOWN: -1&gt;</span>
-
-<span class="sd">        ..  container:: example</span>
-
-<span class="sd">            Preserves tag:</span>
-
-<span class="sd">            &gt;&gt;&gt; old_staff = abjad.Staff(&quot;c&#39;4 d&#39;4 e&#39;4 f&#39;4&quot;)</span>
-<span class="sd">            &gt;&gt;&gt; clef = abjad.Clef(&quot;alto&quot;)</span>
-<span class="sd">            &gt;&gt;&gt; abjad.attach(clef, old_staff[0], tag=abjad.Tag(&quot;RED:M1&quot;))</span>
-<span class="sd">            &gt;&gt;&gt; string = abjad.lilypond(old_staff, tags=True)</span>
-<span class="sd">            &gt;&gt;&gt; print(string)</span>
-<span class="sd">            \new Staff</span>
-<span class="sd">            {</span>
-<span class="sd">                %! M1</span>
-<span class="sd">                %! RED</span>
-<span class="sd">                \clef &quot;alto&quot;</span>
-<span class="sd">                c&#39;4</span>
-<span class="sd">                d&#39;4</span>
-<span class="sd">                e&#39;4</span>
-<span class="sd">                f&#39;4</span>
-<span class="sd">            }</span>
-
-<span class="sd">            &gt;&gt;&gt; leaf = old_staff[0]</span>
-<span class="sd">            &gt;&gt;&gt; abjad.get.wrapper(leaf)</span>
-<span class="sd">            Wrapper(annotation=None, context=&#39;Staff&#39;, deactivate=False, direction=None, indicator=Clef(name=&#39;alto&#39;, hide=False), synthetic_offset=None, tag=Tag(string=&#39;RED:M1&#39;))</span>
-
-<span class="sd">            &gt;&gt;&gt; new_staff = abjad.mutate.copy(old_staff)</span>
-<span class="sd">            &gt;&gt;&gt; string = abjad.lilypond(new_staff, tags=True)</span>
-<span class="sd">            &gt;&gt;&gt; print(string)</span>
-<span class="sd">            \new Staff</span>
-<span class="sd">            {</span>
-<span class="sd">                %! M1</span>
-<span class="sd">                %! RED</span>
-<span class="sd">                \clef &quot;alto&quot;</span>
-<span class="sd">                c&#39;4</span>
-<span class="sd">                d&#39;4</span>
-<span class="sd">                e&#39;4</span>
-<span class="sd">                f&#39;4</span>
-<span class="sd">            }</span>
-
-<span class="sd">            &gt;&gt;&gt; leaf = new_staff[0]</span>
-<span class="sd">            &gt;&gt;&gt; abjad.get.wrapper(leaf)</span>
-<span class="sd">            Wrapper(annotation=None, context=&#39;Staff&#39;, deactivate=False, direction=None, indicator=Clef(name=&#39;alto&#39;, hide=False), synthetic_offset=None, tag=Tag(string=&#39;RED:M1&#39;))</span>
-
-<span class="sd">        ..  container:: example</span>
-
-<span class="sd">            Preserves deactivate flag:</span>
-
-<span class="sd">            &gt;&gt;&gt; old_staff = abjad.Staff(&quot;c&#39;4 d&#39;4 e&#39;4 f&#39;4&quot;)</span>
-<span class="sd">            &gt;&gt;&gt; abjad.attach(</span>
-<span class="sd">            ...     abjad.Clef(&quot;alto&quot;),</span>
-<span class="sd">            ...     old_staff[0],</span>
-<span class="sd">            ...     deactivate=True,</span>
-<span class="sd">            ...     tag=abjad.Tag(&quot;RED:M1&quot;),</span>
-<span class="sd">            ... )</span>
-<span class="sd">            &gt;&gt;&gt; string = abjad.lilypond(old_staff, tags=True)</span>
-<span class="sd">            &gt;&gt;&gt; print(string)</span>
-<span class="sd">            \new Staff</span>
-<span class="sd">            {</span>
-<span class="sd">                %! M1</span>
-<span class="sd">                %! RED</span>
-<span class="sd">                %@% \clef &quot;alto&quot;</span>
-<span class="sd">                c&#39;4</span>
-<span class="sd">                d&#39;4</span>
-<span class="sd">                e&#39;4</span>
-<span class="sd">                f&#39;4</span>
-<span class="sd">            }</span>
-
-<span class="sd">            &gt;&gt;&gt; leaf = old_staff[0]</span>
-<span class="sd">            &gt;&gt;&gt; abjad.get.wrapper(leaf)</span>
-<span class="sd">            Wrapper(annotation=None, context=&#39;Staff&#39;, deactivate=True, direction=None, indicator=Clef(name=&#39;alto&#39;, hide=False), synthetic_offset=None, tag=Tag(string=&#39;RED:M1&#39;))</span>
-
-<span class="sd">            &gt;&gt;&gt; new_staff = abjad.mutate.copy(old_staff)</span>
-<span class="sd">            &gt;&gt;&gt; string = abjad.lilypond(new_staff, tags=True)</span>
-<span class="sd">            &gt;&gt;&gt; print(string)</span>
-<span class="sd">            \new Staff</span>
-<span class="sd">            {</span>
-<span class="sd">                %! M1</span>
-<span class="sd">                %! RED</span>
-<span class="sd">                %@% \clef &quot;alto&quot;</span>
-<span class="sd">                c&#39;4</span>
-<span class="sd">                d&#39;4</span>
-<span class="sd">                e&#39;4</span>
-<span class="sd">                f&#39;4</span>
-<span class="sd">            }</span>
-
-<span class="sd">            &gt;&gt;&gt; leaf = new_staff[0]</span>
-<span class="sd">            &gt;&gt;&gt; abjad.get.wrapper(leaf)</span>
-<span class="sd">            Wrapper(annotation=None, context=&#39;Staff&#39;, deactivate=True, direction=None, indicator=Clef(name=&#39;alto&#39;, hide=False), synthetic_offset=None, tag=Tag(string=&#39;RED:M1&#39;))</span>
-
-<span class="sd">        Copies all properties except component.</span>
-
-<span class="sd">        Copy operations must supply component after wrapper copy.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">new</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span>
-            <span class="n">annotation</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">annotation</span><span class="p">,</span>
-            <span class="n">component</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-            <span class="n">context</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="p">,</span>
-            <span class="n">deactivate</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">deactivate</span><span class="p">,</span>
-            <span class="n">direction</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">direction</span><span class="p">,</span>
-            <span class="n">indicator</span><span class="o">=</span><span class="n">copy</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">indicator</span><span class="p">),</span>
-            <span class="n">synthetic_offset</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">synthetic_offset</span><span class="p">,</span>
-            <span class="n">tag</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">tag</span><span class="p">,</span>
-        <span class="p">)</span>
-        <span class="k">return</span> <span class="n">new</span></div>
-
-
-<div class="viewcode-block" id="Wrapper.__eq__">
-<a class="viewcode-back" href="../../api/abjad/bind.html#abjad.bind.Wrapper.__eq__">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Is true when self equals ``argument``.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">argument</span><span class="p">,</span> <span class="n">Wrapper</span><span class="p">):</span>
-            <span class="k">return</span> <span class="kc">False</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">annotation</span> <span class="o">!=</span> <span class="n">argument</span><span class="o">.</span><span class="n">annotation</span><span class="p">:</span>
-            <span class="k">return</span> <span class="kc">False</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">component</span> <span class="o">!=</span> <span class="n">argument</span><span class="o">.</span><span class="n">component</span><span class="p">:</span>
-            <span class="k">return</span> <span class="kc">False</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">context</span> <span class="o">!=</span> <span class="n">argument</span><span class="o">.</span><span class="n">context</span><span class="p">:</span>
-            <span class="k">return</span> <span class="kc">False</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">deactivate</span> <span class="o">!=</span> <span class="n">argument</span><span class="o">.</span><span class="n">deactivate</span><span class="p">:</span>
-            <span class="k">return</span> <span class="kc">False</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">indicator</span> <span class="o">!=</span> <span class="n">argument</span><span class="o">.</span><span class="n">indicator</span><span class="p">:</span>
-            <span class="k">return</span> <span class="kc">False</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">synthetic_offset</span> <span class="o">!=</span> <span class="n">argument</span><span class="o">.</span><span class="n">synthetic_offset</span><span class="p">:</span>
-            <span class="k">return</span> <span class="kc">False</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">tag</span> <span class="o">!=</span> <span class="n">argument</span><span class="o">.</span><span class="n">tag</span><span class="p">:</span>
-            <span class="k">return</span> <span class="kc">False</span>
-        <span class="k">return</span> <span class="kc">True</span></div>
-
-
-<div class="viewcode-block" id="Wrapper.__hash__">
-<a class="viewcode-back" href="../../api/abjad/bind.html#abjad.bind.Wrapper.__hash__">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="fm">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Hashes wrapper.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="nb">hash</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span></div>
-
-
-<div class="viewcode-block" id="Wrapper.__repr__">
-<a class="viewcode-back" href="../../api/abjad/bind.html#abjad.bind.Wrapper.__repr__">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Gets repr.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">parameters</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">            annotation=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">annotation</span><span class="si">!r}</span><span class="s2">,</span>
-<span class="s2">            context=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="si">!r}</span><span class="s2">,</span>
-<span class="s2">            deactivate=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">deactivate</span><span class="si">!r}</span><span class="s2">,</span>
-<span class="s2">            direction=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">direction</span><span class="si">!r}</span><span class="s2">,</span>
-<span class="s2">            indicator=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">indicator</span><span class="si">!r}</span><span class="s2">,</span>
-<span class="s2">            synthetic_offset=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">synthetic_offset</span><span class="si">!r}</span><span class="s2">,</span>
-<span class="s2">            tag=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">tag</span><span class="si">!r}</span>
-<span class="s2">        &quot;&quot;&quot;</span>
-        <span class="n">parameters</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">parameters</span><span class="o">.</span><span class="n">split</span><span class="p">())</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">(</span><span class="si">{</span><span class="n">parameters</span><span class="si">}</span><span class="s2">)&quot;</span></div>
-
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">_bind_component</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">component</span><span class="p">,</span> <span class="n">check_duplicate_indicator</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">indicator</span><span class="p">,</span> <span class="n">_tweaks</span><span class="o">.</span><span class="n">Bundle</span><span class="p">):</span>
-            <span class="n">indicator</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">indicator</span><span class="o">.</span><span class="n">indicator</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">indicator</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">indicator</span>
-        <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">indicator</span><span class="p">,</span> <span class="s2">&quot;context&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">check_duplicate_indicator</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_warn_duplicate_indicator</span><span class="p">(</span><span class="n">component</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_unbind_component</span><span class="p">()</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_component</span> <span class="o">=</span> <span class="n">component</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_update_effective_context</span><span class="p">()</span>
-            <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">indicator</span><span class="p">,</span> <span class="s2">&quot;mutates_offsets_in_seconds&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_component</span><span class="o">.</span><span class="n">_update_later</span><span class="p">(</span><span class="n">offsets_in_seconds</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-        <span class="n">component</span><span class="o">.</span><span class="n">_wrappers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">_bind_effective_context</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">correct_effective_context</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_unbind_effective_context</span><span class="p">()</span>
-        <span class="k">if</span> <span class="n">correct_effective_context</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">if</span> <span class="bp">self</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">correct_effective_context</span><span class="o">.</span><span class="n">_dependent_wrappers</span><span class="p">:</span>
-                <span class="n">correct_effective_context</span><span class="o">.</span><span class="n">_dependent_wrappers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_effective_context</span> <span class="o">=</span> <span class="n">correct_effective_context</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_update_effective_context</span><span class="p">()</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">indicator</span><span class="p">,</span> <span class="n">_tweaks</span><span class="o">.</span><span class="n">Bundle</span><span class="p">):</span>
-            <span class="n">indicator</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">indicator</span><span class="o">.</span><span class="n">indicator</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">indicator</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">indicator</span>
-        <span class="k">if</span> <span class="n">correct_effective_context</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">indicator</span><span class="p">,</span> <span class="s2">&quot;mutates_offsets_in_seconds&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span>
-                <span class="n">correct_effective_context</span><span class="o">.</span><span class="n">_update_later</span><span class="p">(</span><span class="n">offsets_in_seconds</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">_detach</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_unbind_component</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_unbind_effective_context</span><span class="p">()</span>
-        <span class="k">return</span> <span class="bp">self</span>
-
-    <span class="nd">@staticmethod</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">_find_correct_effective_context</span><span class="p">(</span><span class="n">component</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">context</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">return</span> <span class="kc">None</span>
-        <span class="n">abjad</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="s2">&quot;abjad&quot;</span><span class="p">)</span>
-        <span class="n">context</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">abjad</span><span class="p">,</span> <span class="n">context</span><span class="p">,</span> <span class="n">context</span><span class="p">)</span>
-        <span class="n">candidate</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="n">parentage</span> <span class="o">=</span> <span class="n">component</span><span class="o">.</span><span class="n">_get_parentage</span><span class="p">()</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="nb">type</span><span class="p">):</span>
-            <span class="k">for</span> <span class="n">component</span> <span class="ow">in</span> <span class="n">parentage</span><span class="p">:</span>
-                <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">component</span><span class="p">,</span> <span class="s2">&quot;_lilypond_type&quot;</span><span class="p">):</span>
-                    <span class="k">continue</span>
-                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">component</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
-                    <span class="n">candidate</span> <span class="o">=</span> <span class="n">component</span>
-                    <span class="k">break</span>
-        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-            <span class="k">for</span> <span class="n">component</span> <span class="ow">in</span> <span class="n">parentage</span><span class="p">:</span>
-                <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">component</span><span class="p">,</span> <span class="s2">&quot;_lilypond_type&quot;</span><span class="p">):</span>
-                    <span class="k">continue</span>
-                <span class="k">if</span> <span class="n">component</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">context</span> <span class="ow">or</span> <span class="n">component</span><span class="o">.</span><span class="n">lilypond_type</span> <span class="o">==</span> <span class="n">context</span><span class="p">:</span>
-                    <span class="n">candidate</span> <span class="o">=</span> <span class="n">component</span>
-                    <span class="k">break</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;must be context or string: </span><span class="si">{context!r}</span><span class="s2">.&quot;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">candidate</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;Voice&quot;</span><span class="p">:</span>
-            <span class="k">for</span> <span class="n">component</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="n">parentage</span><span class="p">):</span>
-                <span class="k">if</span> <span class="ow">not</span> <span class="n">component</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;Voice&quot;</span><span class="p">:</span>
-                    <span class="k">continue</span>
-                <span class="k">if</span> <span class="n">component</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">candidate</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>
-                    <span class="n">candidate</span> <span class="o">=</span> <span class="n">component</span>
-                    <span class="k">break</span>
-        <span class="k">return</span> <span class="n">candidate</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">_get_effective_context</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">component</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">_updatelib</span><span class="o">.</span><span class="n">_update_now</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">component</span><span class="p">,</span> <span class="n">indicators</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_effective_context</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">_unbind_component</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_component</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">id</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="ow">in</span> <span class="p">[</span>
-            <span class="nb">id</span><span class="p">(</span><span class="n">_</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_component</span><span class="o">.</span><span class="n">_wrappers</span>
-        <span class="p">]:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_component</span><span class="o">.</span><span class="n">_wrappers</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_component</span> <span class="o">=</span> <span class="kc">None</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">_unbind_effective_context</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">if</span> <span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_effective_context</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
-            <span class="ow">and</span> <span class="bp">self</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_effective_context</span><span class="o">.</span><span class="n">_dependent_wrappers</span>
-        <span class="p">):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_effective_context</span><span class="o">.</span><span class="n">_dependent_wrappers</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_effective_context</span> <span class="o">=</span> <span class="kc">None</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">_update_effective_context</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">correct_effective_context</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_find_correct_effective_context</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">component</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">context</span>
-        <span class="p">)</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_effective_context</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">correct_effective_context</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_bind_effective_context</span><span class="p">(</span><span class="n">correct_effective_context</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">correct_effective_context</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">if</span> <span class="bp">self</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">correct_effective_context</span><span class="o">.</span><span class="n">_dependent_wrappers</span><span class="p">:</span>
-                <span class="n">correct_effective_context</span><span class="o">.</span><span class="n">_dependent_wrappers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">_warn_duplicate_indicator</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">component</span><span class="p">):</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">deactivate</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
-            <span class="k">return</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">indicator</span><span class="p">,</span> <span class="n">_tweaks</span><span class="o">.</span><span class="n">Bundle</span><span class="p">):</span>
-            <span class="n">indicator</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">indicator</span><span class="o">.</span><span class="n">indicator</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">indicator</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">indicator</span>
-        <span class="n">prototype</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="n">indicator</span><span class="p">)</span>
-        <span class="n">command</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">indicator</span><span class="p">,</span> <span class="s2">&quot;command&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
-        <span class="n">wrapper</span> <span class="o">=</span> <span class="n">_getlib</span><span class="o">.</span><span class="n">_get_effective</span><span class="p">(</span>
-            <span class="n">component</span><span class="p">,</span>
-            <span class="n">prototype</span><span class="p">,</span>
-            <span class="n">attributes</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;command&quot;</span><span class="p">:</span> <span class="n">command</span><span class="p">},</span>
-            <span class="n">unwrap</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-        <span class="p">)</span>
-        <span class="n">wrapper_site</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="k">if</span> <span class="n">wrapper</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">wrapper_site</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">wrapper</span><span class="o">.</span><span class="n">unbundle_indicator</span><span class="p">(),</span> <span class="s2">&quot;site&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
-        <span class="n">my_site</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">indicator</span><span class="p">,</span> <span class="s2">&quot;site&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
-        <span class="k">if</span> <span class="p">(</span>
-            <span class="n">wrapper</span> <span class="ow">is</span> <span class="kc">None</span>
-            <span class="ow">or</span> <span class="n">wrapper</span><span class="o">.</span><span class="n">context</span> <span class="ow">is</span> <span class="kc">None</span>
-            <span class="ow">or</span> <span class="n">wrapper</span><span class="o">.</span><span class="n">deactivate</span> <span class="ow">is</span> <span class="kc">True</span>
-            <span class="ow">or</span> <span class="n">wrapper</span><span class="o">.</span><span class="n">start_offset</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_offset</span>
-            <span class="ow">or</span> <span class="n">wrapper_site</span> <span class="o">!=</span> <span class="n">my_site</span>
-        <span class="p">):</span>
-            <span class="k">return</span>
-        <span class="n">my_leak</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">indicator</span><span class="p">,</span> <span class="s2">&quot;leak&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
-        <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">wrapper</span><span class="o">.</span><span class="n">unbundle_indicator</span><span class="p">(),</span> <span class="s2">&quot;leak&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="o">!=</span> <span class="n">my_leak</span><span class="p">:</span>
-            <span class="k">return</span>
-        <span class="n">context</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="k">for</span> <span class="n">parent</span> <span class="ow">in</span> <span class="n">component</span><span class="o">.</span><span class="n">_get_parentage</span><span class="p">():</span>
-            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;_lilypond_type&quot;</span><span class="p">):</span>
-                <span class="n">context</span> <span class="o">=</span> <span class="n">parent</span>
-                <span class="k">break</span>
-        <span class="n">wrapper_context</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="k">for</span> <span class="n">parent</span> <span class="ow">in</span> <span class="n">wrapper</span><span class="o">.</span><span class="n">component</span><span class="o">.</span><span class="n">_get_parentage</span><span class="p">():</span>
-            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;_lilypond_type&quot;</span><span class="p">):</span>
-                <span class="n">wrapper_context</span> <span class="o">=</span> <span class="n">parent</span>
-                <span class="k">break</span>
-        <span class="k">if</span> <span class="n">wrapper</span><span class="o">.</span><span class="n">unbundle_indicator</span><span class="p">()</span> <span class="o">==</span> <span class="n">indicator</span> <span class="ow">and</span> <span class="n">context</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">wrapper_context</span><span class="p">:</span>
-            <span class="k">return</span>
-        <span class="n">message</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">Can not attach ...</span><span class="se">\n\n</span><span class="si">{</span><span class="nb">repr</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="si">}</span><span class="se">\n\n</span><span class="s2">...&quot;</span>
-        <span class="n">message</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot; to </span><span class="si">{</span><span class="nb">repr</span><span class="p">(</span><span class="n">component</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
-        <span class="n">message</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot; in </span><span class="si">{</span><span class="nb">getattr</span><span class="p">(</span><span class="n">context</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;name&#39;</span><span class="p">,</span><span class="w"> </span><span class="kc">None</span><span class="p">)</span><span class="si">}</span><span class="s2"> because ...&quot;</span>
-        <span class="n">message</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n\n</span><span class="si">{</span><span class="nb">repr</span><span class="p">(</span><span class="n">wrapper</span><span class="p">)</span><span class="si">}</span><span class="se">\n\n</span><span class="s2">&quot;</span>
-        <span class="n">message</span> <span class="o">+=</span> <span class="s2">&quot;... is already attached&quot;</span>
-        <span class="k">if</span> <span class="n">component</span> <span class="ow">is</span> <span class="n">wrapper</span><span class="o">.</span><span class="n">component</span><span class="p">:</span>
-            <span class="n">message</span> <span class="o">+=</span> <span class="s2">&quot; to the same leaf.&quot;</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">message</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot; to </span><span class="si">{</span><span class="nb">repr</span><span class="p">(</span><span class="n">wrapper</span><span class="o">.</span><span class="n">component</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
-            <span class="n">message</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot; in </span><span class="si">{</span><span class="n">wrapper_context</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">.&quot;</span>
-        <span class="n">message</span> <span class="o">+=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
-        <span class="k">raise</span> <span class="n">_exceptions</span><span class="o">.</span><span class="n">PersistentIndicatorError</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
-
-    <span class="nd">@property</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">annotation</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">enum</span><span class="o">.</span><span class="n">Enum</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Gets wrapper annotation.</span>
-
-<span class="sd">        ..  container:: example</span>
-
-<span class="sd">            &gt;&gt;&gt; note = abjad.Note(&quot;c&#39;4&quot;)</span>
-<span class="sd">            &gt;&gt;&gt; articulation = abjad.Articulation(&quot;accent&quot;)</span>
-<span class="sd">            &gt;&gt;&gt; abjad.attach(articulation, note, direction=abjad.UP)</span>
-<span class="sd">            &gt;&gt;&gt; wrapper = abjad.get.wrapper(note)</span>
-<span class="sd">            &gt;&gt;&gt; wrapper.annotation is None</span>
-<span class="sd">            True</span>
-
-<span class="sd">            &gt;&gt;&gt; note = abjad.Note(&quot;c&#39;4&quot;)</span>
-<span class="sd">            &gt;&gt;&gt; articulation = abjad.Articulation(&quot;accent&quot;)</span>
-<span class="sd">            &gt;&gt;&gt; abjad.annotate(note, &quot;foo&quot;, articulation)</span>
-<span class="sd">            &gt;&gt;&gt; abjad.get.annotation(note, &quot;foo&quot;)</span>
-<span class="sd">            Articulation(name=&#39;accent&#39;)</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_annotation</span>
-
-    <span class="nd">@property</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">component</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Gets start component.</span>
-
-<span class="sd">        Returns component or none.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_component</span>
-
-    <span class="nd">@property</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">context</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Gets context (name).</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_context</span>
-
-    <span class="nd">@property</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">deactivate</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Is true when wrapper deactivates tag.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">_deactivate</span> <span class="ow">in</span> <span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_deactivate</span>
-
-    <span class="nd">@deactivate</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">deactivate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">):</span>
-        <span class="k">assert</span> <span class="n">argument</span> <span class="ow">in</span> <span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_deactivate</span> <span class="o">=</span> <span class="n">argument</span>
-
-    <span class="nd">@property</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">direction</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Gets direction of indicator.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_direction</span>
-
-    <span class="nd">@property</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">indicator</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Any</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Gets indicator.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_indicator</span>
-
-    <span class="nd">@property</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">leaked_start_offset</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Offset</span><span class="p">:</span>
-<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Gets start offset and checks to see whether indicator leaks to the right.</span>
-
-<span class="sd">        This is either the wrapper&#39;s synthetic offset (if set); or the START offset of</span>
-<span class="sd">        the wrapper&#39;s component (if indicator DOES NOT leak); or else the STOP offset of</span>
-<span class="sd">        the wrapper&#39;s component (if indicator DOES leak).</span>
-
-<span class="sd">        ..  container:: example</span>
-
-<span class="sd">            Start- and stop-text-spans attach to the same leaf. But stop-text-span leaks</span>
-<span class="sd">            to the right:</span>
-
-<span class="sd">            &gt;&gt;&gt; voice = abjad.Voice(&quot;c&#39;2 d&#39;2&quot;)</span>
-<span class="sd">            &gt;&gt;&gt; start_text_span = abjad.StartTextSpan()</span>
-<span class="sd">            &gt;&gt;&gt; abjad.attach(start_text_span, voice[0])</span>
-<span class="sd">            &gt;&gt;&gt; stop_text_span = abjad.StopTextSpan(leak=True)</span>
-<span class="sd">            &gt;&gt;&gt; abjad.attach(stop_text_span, voice[0])</span>
-<span class="sd">            &gt;&gt;&gt; abjad.show(voice) # doctest: +SKIP</span>
-
-<span class="sd">            &gt;&gt;&gt; string = abjad.lilypond(voice)</span>
-<span class="sd">            &gt;&gt;&gt; print(string)</span>
-<span class="sd">            \new Voice</span>
-<span class="sd">            {</span>
-<span class="sd">                c&#39;2</span>
-<span class="sd">                \startTextSpan</span>
-<span class="sd">                &lt;&gt; \stopTextSpan</span>
-<span class="sd">                d&#39;2</span>
-<span class="sd">            }</span>
-
-<span class="sd">            Start offset and leaked start offset are the same for start-text-span:</span>
-
-<span class="sd">            &gt;&gt;&gt; wrapper = abjad.get.wrapper(voice[0], abjad.StartTextSpan)</span>
-<span class="sd">            &gt;&gt;&gt; wrapper.start_offset, wrapper.leaked_start_offset</span>
-<span class="sd">            (Offset((0, 1)), Offset((0, 1)))</span>
-
-<span class="sd">            Start offset and leaked start offset differ for stop-text-span:</span>
-
-<span class="sd">            &gt;&gt;&gt; wrapper = abjad.get.wrapper(voice[0], abjad.StopTextSpan)</span>
-<span class="sd">            &gt;&gt;&gt; wrapper.start_offset, wrapper.leaked_start_offset</span>
-<span class="sd">            (Offset((0, 1)), Offset((1, 2)))</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_synthetic_offset</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_synthetic_offset</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">indicator</span><span class="p">,</span> <span class="n">_tweaks</span><span class="o">.</span><span class="n">Bundle</span><span class="p">):</span>
-            <span class="n">indicator</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">indicator</span><span class="o">.</span><span class="n">indicator</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">indicator</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">indicator</span>
-        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">component</span><span class="p">,</span> <span class="n">_score</span><span class="o">.</span><span class="n">Component</span><span class="p">)</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">indicator</span><span class="p">,</span> <span class="s2">&quot;leak&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">component</span><span class="o">.</span><span class="n">_get_timespan</span><span class="p">()</span><span class="o">.</span><span class="n">start_offset</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">component</span><span class="o">.</span><span class="n">_get_timespan</span><span class="p">()</span><span class="o">.</span><span class="n">stop_offset</span>
-
-    <span class="nd">@property</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">site_adjusted_start_offset</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Offset</span><span class="p">:</span>
-<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Gets site-adjusted start offset.</span>
-
-<span class="sd">        ..  container:: example</span>
-
-<span class="sd">            &gt;&gt;&gt; staff = abjad.Staff(&quot;c&#39;4&quot;)</span>
-<span class="sd">            &gt;&gt;&gt; abjad.attach(abjad.Ottava(-1, site=&quot;before&quot;), staff[0])</span>
-<span class="sd">            &gt;&gt;&gt; abjad.attach(abjad.Ottava(0, site=&quot;after&quot;), staff[0])</span>
-<span class="sd">            &gt;&gt;&gt; for wrapper in abjad.get.wrappers(staff[0], abjad.Ottava):</span>
-<span class="sd">            ...     wrapper.indicator, wrapper.site_adjusted_start_offset</span>
-<span class="sd">            (Ottava(n=-1, site=&#39;before&#39;), Offset((0, 1)))</span>
-<span class="sd">            (Ottava(n=0, site=&#39;after&#39;), Offset((1, 4)))</span>
-
-<span class="sd">        Indicators with site equal to ``absolute_after``, ``after`` or ``closing``</span>
-<span class="sd">        give a site-adjusted start offset equal to the stop offset of the wrapper&#39;s</span>
-<span class="sd">        component.</span>
-
-<span class="sd">        Indicators with any other site give a site-adjusted start offset equal to the</span>
-<span class="sd">        start offset of the wrapper&#39;s component. This is the usual case, and means</span>
-<span class="sd">        that site-adjusted start offset equals vanilla start offset.</span>
-
-<span class="sd">        But if ``synthetic_offset`` is set then ``synthetic_offset`` is returned</span>
-<span class="sd">        directly without examining the format site at all.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">synthetic_offset</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">synthetic_offset</span>
-        <span class="n">site</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">unbundle_indicator</span><span class="p">(),</span> <span class="s2">&quot;site&quot;</span><span class="p">,</span> <span class="s2">&quot;before&quot;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">site</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;absolute_after&quot;</span><span class="p">,</span> <span class="s2">&quot;after&quot;</span><span class="p">,</span> <span class="s2">&quot;closing&quot;</span><span class="p">):</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">component</span><span class="o">.</span><span class="n">_get_timespan</span><span class="p">()</span><span class="o">.</span><span class="n">stop_offset</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">component</span><span class="o">.</span><span class="n">_get_timespan</span><span class="p">()</span><span class="o">.</span><span class="n">start_offset</span>
-
-    <span class="nd">@property</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">start_offset</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Offset</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Gets start offset.</span>
-
-<span class="sd">        This is either the wrapper&#39;s synthetic offset or the start offset of the</span>
-<span class="sd">        wrapper&#39;s component.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">synthetic_offset</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">synthetic_offset</span>
-        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">component</span><span class="p">,</span> <span class="n">_score</span><span class="o">.</span><span class="n">Component</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">component</span><span class="o">.</span><span class="n">_get_timespan</span><span class="p">()</span><span class="o">.</span><span class="n">start_offset</span>
-
-    <span class="nd">@property</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">synthetic_offset</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Offset</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Gets synthetic offset.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_synthetic_offset</span>
-
-    <span class="nd">@property</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">tag</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">_tag</span><span class="o">.</span><span class="n">Tag</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Gets and sets tag.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_tag</span><span class="p">,</span> <span class="n">_tag</span><span class="o">.</span><span class="n">Tag</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_tag</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tag</span>
-
-    <span class="nd">@tag</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">tag</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">):</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">argument</span><span class="p">,</span> <span class="n">_tag</span><span class="o">.</span><span class="n">Tag</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;must be tag: </span><span class="si">{</span><span class="n">argument</span><span class="si">!r}</span><span class="s2">.&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_tag</span> <span class="o">=</span> <span class="n">argument</span>
-
-<div class="viewcode-block" id="Wrapper.bundled">
-<a class="viewcode-back" href="../../api/abjad/bind.html#abjad.bind.Wrapper.bundled">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">bundled</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Is true when indicator is bundled.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_indicator</span><span class="p">,</span> <span class="n">_tweaks</span><span class="o">.</span><span class="n">Bundle</span><span class="p">)</span></div>
-
-
-<div class="viewcode-block" id="Wrapper.get_item">
-<a class="viewcode-back" href="../../api/abjad/bind.html#abjad.bind.Wrapper.get_item">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">get_item</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Gets indicator or bundled indicator.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_indicator</span></div>
-
-
-<div class="viewcode-block" id="Wrapper.unbundle_indicator">
-<a class="viewcode-back" href="../../api/abjad/bind.html#abjad.bind.Wrapper.unbundle_indicator">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">unbundle_indicator</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Gets unbundled indicator.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">indicator</span><span class="p">,</span> <span class="n">_tweaks</span><span class="o">.</span><span class="n">Bundle</span><span class="p">):</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">indicator</span><span class="o">.</span><span class="n">indicator</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">indicator</span></div>
-</div>
-
-
-
 <span class="k">def</span><span class="w"> </span><span class="nf">_unsafe_attach</span><span class="p">(</span>
-    <span class="n">attachable</span><span class="p">,</span>
+    <span class="n">indicator</span><span class="p">,</span>
     <span class="n">target</span><span class="p">,</span>
     <span class="o">*</span><span class="p">,</span>
     <span class="n">check_duplicate_indicator</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
@@ -895,112 +210,94 @@
     <span class="n">do_not_test</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="n">synthetic_offset</span><span class="p">:</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Offset</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">tag</span><span class="p">:</span> <span class="n">_tag</span><span class="o">.</span><span class="n">Tag</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">wrapper</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Wrapper</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
-    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">attachable</span><span class="p">,</span> <span class="n">_tweaks</span><span class="o">.</span><span class="n">Bundle</span><span class="p">):</span>
-        <span class="n">nonbundle_attachable</span> <span class="o">=</span> <span class="n">attachable</span><span class="o">.</span><span class="n">indicator</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">indicator</span><span class="p">,</span> <span class="n">_tweaks</span><span class="o">.</span><span class="n">Bundle</span><span class="p">):</span>
+        <span class="n">nonbundle_indicator</span> <span class="o">=</span> <span class="n">indicator</span><span class="o">.</span><span class="n">indicator</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="n">nonbundle_attachable</span> <span class="o">=</span> <span class="n">attachable</span>
-    <span class="k">assert</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">nonbundle_attachable</span><span class="p">,</span> <span class="n">_tweaks</span><span class="o">.</span><span class="n">Bundle</span><span class="p">)</span>
-
-    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">nonbundle_attachable</span><span class="p">,</span> <span class="n">_tag</span><span class="o">.</span><span class="n">Tag</span><span class="p">):</span>
+        <span class="n">nonbundle_indicator</span> <span class="o">=</span> <span class="n">indicator</span>
+    <span class="k">assert</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">nonbundle_indicator</span><span class="p">,</span> <span class="n">_tweaks</span><span class="o">.</span><span class="n">Bundle</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">nonbundle_indicator</span><span class="p">,</span> <span class="n">_tag</span><span class="o">.</span><span class="n">Tag</span><span class="p">):</span>
         <span class="n">message</span> <span class="o">=</span> <span class="s2">&quot;use the tag=None keyword instead of attach():</span><span class="se">\n</span><span class="s2">&quot;</span>
-        <span class="n">message</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;   </span><span class="si">{</span><span class="nb">repr</span><span class="p">(</span><span class="n">attachable</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="n">message</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;   </span><span class="si">{</span><span class="nb">repr</span><span class="p">(</span><span class="n">indicator</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
         <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">tag</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="n">_tag</span><span class="o">.</span><span class="n">Tag</span><span class="p">):</span>
         <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;must be be tag: </span><span class="si">{</span><span class="nb">repr</span><span class="p">(</span><span class="n">tag</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-
-    <span class="k">assert</span> <span class="n">nonbundle_attachable</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">nonbundle_attachable</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">nonbundle_indicator</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">nonbundle_indicator</span><span class="p">)</span>
     <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">_score</span><span class="o">.</span><span class="n">Component</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">target</span><span class="p">)</span>
-
     <span class="n">grace_prototype</span> <span class="o">=</span> <span class="p">(</span><span class="n">_score</span><span class="o">.</span><span class="n">AfterGraceContainer</span><span class="p">,</span> <span class="n">_score</span><span class="o">.</span><span class="n">BeforeGraceContainer</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">context</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">nonbundle_attachable</span><span class="p">,</span> <span class="n">grace_prototype</span><span class="p">):</span>
-        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;set context only for indicators, not </span><span class="si">{</span><span class="n">attachable</span><span class="si">!r}</span><span class="s2">.&quot;</span><span class="p">)</span>
-
+    <span class="k">if</span> <span class="n">context</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">nonbundle_indicator</span><span class="p">,</span> <span class="n">grace_prototype</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;set context only for indicators, not </span><span class="si">{</span><span class="n">indicator</span><span class="si">!r}</span><span class="s2">.&quot;</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">deactivate</span> <span class="ow">is</span> <span class="kc">True</span> <span class="ow">and</span> <span class="n">tag</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;tag must exist when deactivate is true.&quot;</span><span class="p">)</span>
-
-    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">nonbundle_attachable</span><span class="p">,</span> <span class="s2">&quot;_attachment_test_all&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">do_not_test</span><span class="p">:</span>
-        <span class="n">result</span> <span class="o">=</span> <span class="n">nonbundle_attachable</span><span class="o">.</span><span class="n">_attachment_test_all</span><span class="p">(</span><span class="n">target</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">nonbundle_indicator</span><span class="p">,</span> <span class="s2">&quot;_attachment_test_all&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">do_not_test</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">nonbundle_indicator</span><span class="o">.</span><span class="n">_attachment_test_all</span><span class="p">(</span><span class="n">target</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">result</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">True</span><span class="p">:</span>
             <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="nb">list</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
             <span class="n">result</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;  &quot;</span> <span class="o">+</span> <span class="n">_</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">result</span><span class="p">]</span>
-            <span class="n">message</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">nonbundle_attachable</span><span class="si">!r}</span><span class="s2">._attachment_test_all():&quot;</span>
+            <span class="n">message</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">nonbundle_indicator</span><span class="si">!r}</span><span class="s2">._attachment_test_all():&quot;</span>
             <span class="n">result</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">message</span><span class="p">)</span>
             <span class="n">message</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
             <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
-
-    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">nonbundle_attachable</span><span class="p">,</span> <span class="n">grace_prototype</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">nonbundle_indicator</span><span class="p">,</span> <span class="n">grace_prototype</span><span class="p">):</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">_score</span><span class="o">.</span><span class="n">Leaf</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;grace containers attach to single leaf only.&quot;</span><span class="p">)</span>
-        <span class="n">nonbundle_attachable</span><span class="o">.</span><span class="n">_attach</span><span class="p">(</span><span class="n">target</span><span class="p">)</span>
+        <span class="n">nonbundle_indicator</span><span class="o">.</span><span class="n">_attach</span><span class="p">(</span><span class="n">target</span><span class="p">)</span>
         <span class="k">return</span> <span class="kc">None</span>
-
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">_score</span><span class="o">.</span><span class="n">Container</span><span class="p">):</span>
         <span class="n">acceptable</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span>
-            <span class="n">nonbundle_attachable</span><span class="p">,</span> <span class="nb">dict</span> <span class="o">|</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">enum</span><span class="o">.</span><span class="n">Enum</span> <span class="o">|</span> <span class="n">_tag</span><span class="o">.</span><span class="n">Tag</span> <span class="o">|</span> <span class="n">Wrapper</span>
+            <span class="n">nonbundle_indicator</span><span class="p">,</span> <span class="nb">dict</span> <span class="o">|</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">enum</span><span class="o">.</span><span class="n">Enum</span> <span class="o">|</span> <span class="n">_tag</span><span class="o">.</span><span class="n">Tag</span> <span class="o">|</span> <span class="n">_wrapper</span><span class="o">.</span><span class="n">Wrapper</span>
         <span class="p">):</span>
             <span class="n">acceptable</span> <span class="o">=</span> <span class="kc">True</span>
-        <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">nonbundle_attachable</span><span class="p">,</span> <span class="s2">&quot;can_attach_to_containers&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">nonbundle_indicator</span><span class="p">,</span> <span class="s2">&quot;can_attach_to_containers&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span>
             <span class="n">acceptable</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">acceptable</span><span class="p">:</span>
-            <span class="n">message</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;can not attach </span><span class="si">{</span><span class="n">attachable</span><span class="si">!r}</span><span class="s2"> to containers: </span><span class="si">{</span><span class="n">target</span><span class="si">!r}</span><span class="s2">&quot;</span>
+            <span class="n">message</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;can not attach </span><span class="si">{</span><span class="n">indicator</span><span class="si">!r}</span><span class="s2"> to containers: </span><span class="si">{</span><span class="n">target</span><span class="si">!r}</span><span class="s2">&quot;</span>
             <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
     <span class="k">elif</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">_score</span><span class="o">.</span><span class="n">Leaf</span><span class="p">):</span>
-        <span class="n">message</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;indicator </span><span class="si">{</span><span class="n">attachable</span><span class="si">!r}</span><span class="s2"> must attach to leaf, not </span><span class="si">{</span><span class="n">target</span><span class="si">!r}</span><span class="s2">.&quot;</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;indicator </span><span class="si">{</span><span class="n">indicator</span><span class="si">!r}</span><span class="s2"> must attach to leaf, not </span><span class="si">{</span><span class="n">target</span><span class="si">!r}</span><span class="s2">.&quot;</span>
         <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
-
     <span class="n">component</span> <span class="o">=</span> <span class="n">target</span>
     <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">component</span><span class="p">,</span> <span class="n">_score</span><span class="o">.</span><span class="n">Component</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">component</span><span class="p">)</span>
-
     <span class="n">annotation</span> <span class="o">=</span> <span class="kc">None</span>
-    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">attachable</span><span class="p">,</span> <span class="n">Wrapper</span><span class="p">):</span>
-        <span class="n">annotation</span> <span class="o">=</span> <span class="n">attachable</span><span class="o">.</span><span class="n">annotation</span>
-        <span class="n">context</span> <span class="o">=</span> <span class="n">context</span> <span class="ow">or</span> <span class="n">attachable</span><span class="o">.</span><span class="n">context</span>
-        <span class="n">deactivate</span> <span class="o">=</span> <span class="n">deactivate</span> <span class="ow">or</span> <span class="n">attachable</span><span class="o">.</span><span class="n">deactivate</span>
-        <span class="n">synthetic_offset</span> <span class="o">=</span> <span class="n">synthetic_offset</span> <span class="ow">or</span> <span class="n">attachable</span><span class="o">.</span><span class="n">synthetic_offset</span>
-        <span class="n">tag</span> <span class="o">=</span> <span class="n">tag</span> <span class="ow">or</span> <span class="n">attachable</span><span class="o">.</span><span class="n">tag</span>
-        <span class="n">attachable</span><span class="o">.</span><span class="n">_detach</span><span class="p">()</span>
-        <span class="n">attachable</span> <span class="o">=</span> <span class="n">attachable</span><span class="o">.</span><span class="n">indicator</span>
-
-    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">nonbundle_attachable</span><span class="p">,</span> <span class="s2">&quot;context&quot;</span><span class="p">):</span>
-        <span class="n">context</span> <span class="o">=</span> <span class="n">context</span> <span class="ow">or</span> <span class="n">nonbundle_attachable</span><span class="o">.</span><span class="n">context</span>
-
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">indicator</span><span class="p">,</span> <span class="n">_wrapper</span><span class="o">.</span><span class="n">Wrapper</span><span class="p">):</span>
+        <span class="n">annotation</span> <span class="o">=</span> <span class="n">indicator</span><span class="o">.</span><span class="n">annotation</span>
+        <span class="n">context</span> <span class="o">=</span> <span class="n">context</span> <span class="ow">or</span> <span class="n">indicator</span><span class="o">.</span><span class="n">context</span>
+        <span class="n">deactivate</span> <span class="o">=</span> <span class="n">deactivate</span> <span class="ow">or</span> <span class="n">indicator</span><span class="o">.</span><span class="n">deactivate</span>
+        <span class="n">synthetic_offset</span> <span class="o">=</span> <span class="n">synthetic_offset</span> <span class="ow">or</span> <span class="n">indicator</span><span class="o">.</span><span class="n">synthetic_offset</span>
+        <span class="n">tag</span> <span class="o">=</span> <span class="n">tag</span> <span class="ow">or</span> <span class="n">indicator</span><span class="o">.</span><span class="n">tag</span>
+        <span class="n">indicator</span><span class="o">.</span><span class="n">_detach</span><span class="p">()</span>
+        <span class="n">indicator</span> <span class="o">=</span> <span class="n">indicator</span><span class="o">.</span><span class="n">indicator</span>
+    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">nonbundle_indicator</span><span class="p">,</span> <span class="s2">&quot;context&quot;</span><span class="p">):</span>
+        <span class="n">context</span> <span class="o">=</span> <span class="n">context</span> <span class="ow">or</span> <span class="n">nonbundle_indicator</span><span class="o">.</span><span class="n">context</span>
     <span class="k">if</span> <span class="n">tag</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">tag</span> <span class="o">=</span> <span class="n">_tag</span><span class="o">.</span><span class="n">Tag</span><span class="p">()</span>
-
-    <span class="n">wrapper_</span> <span class="o">=</span> <span class="n">Wrapper</span><span class="p">(</span>
+    <span class="n">_wrapper</span><span class="o">.</span><span class="n">Wrapper</span><span class="p">(</span>
         <span class="n">annotation</span><span class="o">=</span><span class="n">annotation</span><span class="p">,</span>
         <span class="n">check_duplicate_indicator</span><span class="o">=</span><span class="n">check_duplicate_indicator</span><span class="p">,</span>
         <span class="n">component</span><span class="o">=</span><span class="n">component</span><span class="p">,</span>
         <span class="n">context</span><span class="o">=</span><span class="n">context</span><span class="p">,</span>
         <span class="n">deactivate</span><span class="o">=</span><span class="n">deactivate</span><span class="p">,</span>
         <span class="n">direction</span><span class="o">=</span><span class="n">direction</span><span class="p">,</span>
-        <span class="n">indicator</span><span class="o">=</span><span class="n">attachable</span><span class="p">,</span>
+        <span class="n">indicator</span><span class="o">=</span><span class="n">indicator</span><span class="p">,</span>
         <span class="n">synthetic_offset</span><span class="o">=</span><span class="n">synthetic_offset</span><span class="p">,</span>
         <span class="n">tag</span><span class="o">=</span><span class="n">tag</span><span class="p">,</span>
     <span class="p">)</span>
 
-    <span class="k">if</span> <span class="n">wrapper</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">wrapper_</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">return</span> <span class="kc">None</span>
-
 
 <div class="viewcode-block" id="annotate">
 <a class="viewcode-back" href="../../api/abjad/bind.html#abjad.bind.annotate">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">annotate</span><span class="p">(</span><span class="n">component</span><span class="p">,</span> <span class="n">annotation</span><span class="p">,</span> <span class="n">indicator</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">annotate</span><span class="p">(</span><span class="n">component</span><span class="p">:</span> <span class="n">_score</span><span class="o">.</span><span class="n">Component</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Annotates ``component`` with ``indicator``.</span>
-
-<span class="sd">    Annotates first note in staff:</span>
+<span class="sd">    Annotates ``component`` with ``key`` equal to ``value``.</span>
 
 <span class="sd">    ..  container:: example</span>
 
+<span class="sd">        Annotations do not affect LilyPond output.</span>
+
 <span class="sd">        &gt;&gt;&gt; staff = abjad.Staff(&quot;c&#39;4 d&#39; e&#39; f&#39;&quot;)</span>
-<span class="sd">        &gt;&gt;&gt; abjad.annotate(staff[0], &quot;bow_direction&quot;, abjad.DOWN)</span>
+<span class="sd">        &gt;&gt;&gt; abjad.annotate(staff[0], &quot;motive_number&quot;, 6)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(staff) # doctest: +SKIP</span>
 
 <span class="sd">        ..  docs::</span>
@@ -1015,64 +312,21 @@
 <span class="sd">                f&#39;4</span>
 <span class="sd">            }</span>
 
-<span class="sd">        &gt;&gt;&gt; abjad.get.annotation(staff[0], &quot;bow_direction&quot;)</span>
-<span class="sd">        &lt;Vertical.DOWN: -1&gt;</span>
-
-<span class="sd">        &gt;&gt;&gt; abjad.get.annotation(staff[0], &quot;bow_fraction&quot;) is None</span>
-<span class="sd">        True</span>
-
-<span class="sd">        &gt;&gt;&gt; abjad.get.annotation(staff[0], &quot;bow_fraction&quot;, 99)</span>
-<span class="sd">        99</span>
+<span class="sd">        &gt;&gt;&gt; abjad.get.annotation(staff[0], &quot;motive_number&quot;)</span>
+<span class="sd">        6</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">annotation</span><span class="p">,</span> <span class="n">_tag</span><span class="o">.</span><span class="n">Tag</span><span class="p">):</span>
-        <span class="n">message</span> <span class="o">=</span> <span class="s2">&quot;use the tag=None keyword instead of annotate():</span><span class="se">\n</span><span class="s2">&quot;</span>
-        <span class="n">message</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;   </span><span class="si">{</span><span class="nb">repr</span><span class="p">(</span><span class="n">annotation</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
-        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
-    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">annotation</span><span class="p">,</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">enum</span><span class="o">.</span><span class="n">Enum</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">annotation</span><span class="p">)</span>
-    <span class="n">Wrapper</span><span class="p">(</span><span class="n">annotation</span><span class="o">=</span><span class="n">annotation</span><span class="p">,</span> <span class="n">component</span><span class="o">=</span><span class="n">component</span><span class="p">,</span> <span class="n">indicator</span><span class="o">=</span><span class="n">indicator</span><span class="p">)</span></div>
+    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">component</span><span class="p">,</span> <span class="n">_score</span><span class="o">.</span><span class="n">Component</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">component</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="nb">str</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+    <span class="n">_wrapper</span><span class="o">.</span><span class="n">Wrapper</span><span class="p">(</span><span class="n">annotation</span><span class="o">=</span><span class="n">key</span><span class="p">,</span> <span class="n">component</span><span class="o">=</span><span class="n">component</span><span class="p">,</span> <span class="n">indicator</span><span class="o">=</span><span class="n">value</span><span class="p">)</span></div>
 
-
-
-<span class="nd">@typing</span><span class="o">.</span><span class="n">overload</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">attach</span><span class="p">(</span>
-    <span class="n">attachable</span><span class="p">,</span>
-    <span class="n">target</span><span class="p">,</span>
-    <span class="o">*</span><span class="p">,</span>
-    <span class="n">check_duplicate_indicator</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-    <span class="n">context</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">deactivate</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-    <span class="n">direction</span><span class="p">:</span> <span class="n">_enums</span><span class="o">.</span><span class="n">Vertical</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">do_not_test</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-    <span class="n">synthetic_offset</span><span class="p">:</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Offset</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">tag</span><span class="p">:</span> <span class="n">_tag</span><span class="o">.</span><span class="n">Tag</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">wrapper</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span><span class="kc">True</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Wrapper</span><span class="p">:</span>
-    <span class="k">pass</span>
-
-
-<span class="nd">@typing</span><span class="o">.</span><span class="n">overload</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">attach</span><span class="p">(</span>
-    <span class="n">attachable</span><span class="p">,</span>
-    <span class="n">target</span><span class="p">,</span>
-    <span class="o">*</span><span class="p">,</span>
-    <span class="n">check_duplicate_indicator</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-    <span class="n">context</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">deactivate</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-    <span class="n">direction</span><span class="p">:</span> <span class="n">_enums</span><span class="o">.</span><span class="n">Vertical</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">do_not_test</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-    <span class="n">synthetic_offset</span><span class="p">:</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Offset</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">tag</span><span class="p">:</span> <span class="n">_tag</span><span class="o">.</span><span class="n">Tag</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">wrapper</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Literal</span><span class="p">[</span><span class="kc">False</span><span class="p">],</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-    <span class="k">pass</span>
 
 
 <div class="viewcode-block" id="attach">
 <a class="viewcode-back" href="../../api/abjad/bind.html#abjad.bind.attach">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">attach</span><span class="p">(</span>
-    <span class="n">attachable</span><span class="p">,</span>
-    <span class="n">target</span><span class="p">,</span>
+    <span class="n">indicator</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Any</span><span class="p">,</span>
+    <span class="n">component</span><span class="p">:</span> <span class="n">_score</span><span class="o">.</span><span class="n">Component</span><span class="p">,</span>
     <span class="o">*</span><span class="p">,</span>
     <span class="n">check_duplicate_indicator</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="n">context</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -1081,51 +335,30 @@
     <span class="n">do_not_test</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="n">synthetic_offset</span><span class="p">:</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Offset</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">tag</span><span class="p">:</span> <span class="n">_tag</span><span class="o">.</span><span class="n">Tag</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">wrapper</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Wrapper</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Attaches ``attachable`` to (leaf or container) ``target``.</span>
-
-<span class="sd">    Acceptable types of ``attachable``:</span>
-
-<span class="sd">    ::</span>
-
-<span class="sd">        * indicator</span>
-<span class="sd">        * abjad.Wrapper</span>
-<span class="sd">        * abjad.BeforeGraceContainer</span>
-<span class="sd">        * abjad.AfterGraceContainer</span>
-
-<span class="sd">    The class of ``target`` is almost always ``abjad.Leaf``. A small number</span>
-<span class="sd">    of indicators (like ``abjad.LilyPondLiteral``) can attach to both ``abjad.Leaf``</span>
-<span class="sd">    and ``abjad.Container`` objects.</span>
-
-<span class="sd">    Attaches clef to first note in staff:</span>
+<span class="sd">    Attaches ``indicator`` to ``component``.</span>
 
 <span class="sd">    ..  container:: example</span>
 
-<span class="sd">        &gt;&gt;&gt; staff = abjad.Staff(&quot;c&#39;4 d&#39; e&#39; f&#39;&quot;)</span>
-<span class="sd">        &gt;&gt;&gt; abjad.attach(abjad.Clef(&quot;alto&quot;), staff[0])</span>
-<span class="sd">        &gt;&gt;&gt; abjad.show(staff) # doctest: +SKIP</span>
+<span class="sd">        The class of ``component`` is almost always a leaf. (A small number of</span>
+<span class="sd">        indicators can attach to both leaves and containers.) Acceptable types</span>
+<span class="sd">        of ``indicator``:</span>
 
-<span class="sd">        ..  docs::</span>
+<span class="sd">        ::</span>
 
-<span class="sd">            &gt;&gt;&gt; string = abjad.lilypond(staff)</span>
-<span class="sd">            &gt;&gt;&gt; print(string)</span>
-<span class="sd">            \new Staff</span>
-<span class="sd">            {</span>
-<span class="sd">                \clef &quot;alto&quot;</span>
-<span class="sd">                c&#39;4</span>
-<span class="sd">                d&#39;4</span>
-<span class="sd">                e&#39;4</span>
-<span class="sd">                f&#39;4</span>
-<span class="sd">            }</span>
+<span class="sd">            * indicator</span>
+<span class="sd">            * abjad.Wrapper</span>
+<span class="sd">            * abjad.BeforeGraceContainer (DEPRECATED)</span>
+<span class="sd">            * abjad.AfterGraceContainer  (DEPRECATED)</span>
 
 <span class="sd">    ..  container:: example</span>
 
-<span class="sd">        Attaches accent to last note in staff:</span>
+<span class="sd">        Attaches articulation to last note in staff:</span>
 
 <span class="sd">        &gt;&gt;&gt; staff = abjad.Staff(&quot;c&#39;4 d&#39; e&#39; f&#39;&quot;)</span>
-<span class="sd">        &gt;&gt;&gt; abjad.attach(abjad.Articulation(&quot;&gt;&quot;), staff[-1])</span>
+<span class="sd">        &gt;&gt;&gt; articulation = abjad.Articulation(&quot;&gt;&quot;)</span>
+<span class="sd">        &gt;&gt;&gt; abjad.attach(articulation, staff[-1])</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(staff) # doctest: +SKIP</span>
 
 <span class="sd">        ..  docs::</span>
@@ -1143,11 +376,90 @@
 
 <span class="sd">    ..  container:: example</span>
 
-<span class="sd">        Works with context names:</span>
+<span class="sd">        The ``check_duplicate_indicator=False`` keyword. Consider the case of a</span>
+<span class="sd">        score with two staves. In the usual case, it is necessary to attach a</span>
+<span class="sd">        metronome mark to the first note of only one of the two staves:</span>
+
+<span class="sd">        &gt;&gt;&gt; staff_1 = abjad.Staff(&quot;c&#39;&#39;4 d&#39;&#39;4 e&#39;&#39;4 f&#39;&#39;4&quot;)</span>
+<span class="sd">        &gt;&gt;&gt; staff_2 = abjad.Staff(&quot;c&#39;4 d&#39;4 e&#39;4 f&#39;4&quot;)</span>
+<span class="sd">        &gt;&gt;&gt; score = abjad.Score([staff_1, staff_2])</span>
+<span class="sd">        &gt;&gt;&gt; metronome_mark = abjad.MetronomeMark(abjad.Duration(1, 4), 52)</span>
+<span class="sd">        &gt;&gt;&gt; abjad.attach(metronome_mark, staff_1[0])</span>
+<span class="sd">        &gt;&gt;&gt; abjad.show(score) # doctest: +SKIP</span>
+
+<span class="sd">        ..  docs::</span>
+
+<span class="sd">            &gt;&gt;&gt; string = abjad.lilypond(score)</span>
+<span class="sd">            &gt;&gt;&gt; print(string)</span>
+<span class="sd">            \new Score</span>
+<span class="sd">            &lt;&lt;</span>
+<span class="sd">                \new Staff</span>
+<span class="sd">                {</span>
+<span class="sd">                    \tempo 4=52</span>
+<span class="sd">                    c&#39;&#39;4</span>
+<span class="sd">                    d&#39;&#39;4</span>
+<span class="sd">                    e&#39;&#39;4</span>
+<span class="sd">                    f&#39;&#39;4</span>
+<span class="sd">                }</span>
+<span class="sd">                \new Staff</span>
+<span class="sd">                {</span>
+<span class="sd">                    c&#39;4</span>
+<span class="sd">                    d&#39;4</span>
+<span class="sd">                    e&#39;4</span>
+<span class="sd">                    f&#39;4</span>
+<span class="sd">                }</span>
+<span class="sd">            &gt;&gt;</span>
+
+<span class="sd">        But what should happen when a conflicting metronome mark is attached at</span>
+<span class="sd">        the same moment in a different context? Abjad allows this behavior, but</span>
+<span class="sd">        it is not clear what it should mean to have two metronome marks in</span>
+<span class="sd">        effect at the same time. Set ``check_duplicate_indicators=True`` to</span>
+<span class="sd">        raise an exception instead.</span>
+
+<span class="sd">    ..  container:: example</span>
+
+<span class="sd">        The ``context=None`` keyword. Indicators that affect many notes, rests</span>
+<span class="sd">        or chords in a row define the context at which they take effect. Clefs</span>
+<span class="sd">        effect all notes on a staff, for example, which is why attaching a clef</span>
+<span class="sd">        to the first note in a staff effects all the others:</span>
+
+<span class="sd">        &gt;&gt;&gt; clef = abjad.Clef(&quot;alto&quot;)</span>
+<span class="sd">        &gt;&gt;&gt; clef.context</span>
+<span class="sd">        &#39;Staff&#39;</span>
+
+<span class="sd">        &gt;&gt;&gt; staff = abjad.Staff(&quot;c&#39;4 d&#39; e&#39; f&#39;&quot;)</span>
+<span class="sd">        &gt;&gt;&gt; abjad.attach(clef, staff[0])</span>
+<span class="sd">        &gt;&gt;&gt; abjad.show(staff) # doctest: +SKIP</span>
+
+<span class="sd">        ..  docs::</span>
+
+<span class="sd">            &gt;&gt;&gt; string = abjad.lilypond(staff)</span>
+<span class="sd">            &gt;&gt;&gt; print(string)</span>
+<span class="sd">            \new Staff</span>
+<span class="sd">            {</span>
+<span class="sd">                \clef &quot;alto&quot;</span>
+<span class="sd">                c&#39;4</span>
+<span class="sd">                d&#39;4</span>
+<span class="sd">                e&#39;4</span>
+<span class="sd">                f&#39;4</span>
+<span class="sd">            }</span>
+
+<span class="sd">        &gt;&gt;&gt; for leaf in abjad.select.leaves(staff):</span>
+<span class="sd">        ...     leaf, abjad.get.effective(leaf, abjad.Clef)</span>
+<span class="sd">        ...</span>
+<span class="sd">        (Note(&quot;c&#39;4&quot;), Clef(name=&#39;alto&#39;, hide=False))</span>
+<span class="sd">        (Note(&quot;d&#39;4&quot;), Clef(name=&#39;alto&#39;, hide=False))</span>
+<span class="sd">        (Note(&quot;e&#39;4&quot;), Clef(name=&#39;alto&#39;, hide=False))</span>
+<span class="sd">        (Note(&quot;f&#39;4&quot;), Clef(name=&#39;alto&#39;, hide=False))</span>
+
+<span class="sd">        This example sets ``context=&quot;MusicStaff&quot;`` to show that the alto clef</span>
+<span class="sd">        governs all notes in a custom staff context (rather than the default</span>
+<span class="sd">        staff context):</span>
 
 <span class="sd">        &gt;&gt;&gt; voice = abjad.Voice(&quot;c&#39;4 d&#39; e&#39; f&#39;&quot;, name=&quot;MusicVoice&quot;)</span>
 <span class="sd">        &gt;&gt;&gt; staff = abjad.Staff([voice], name=&quot;MusicStaff&quot;)</span>
-<span class="sd">        &gt;&gt;&gt; abjad.attach(abjad.Clef(&quot;alto&quot;), voice[0], context=&quot;MusicStaff&quot;)</span>
+<span class="sd">        &gt;&gt;&gt; clef = abjad.Clef(&quot;alto&quot;)</span>
+<span class="sd">        &gt;&gt;&gt; abjad.attach(clef, voice[0], context=&quot;MusicStaff&quot;)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(staff) # doctest: +SKIP</span>
 
 <span class="sd">        ..  docs::</span>
@@ -1173,8 +485,6 @@
 <span class="sd">        (Note(&quot;d&#39;4&quot;), Clef(name=&#39;alto&#39;, hide=False))</span>
 <span class="sd">        (Note(&quot;e&#39;4&quot;), Clef(name=&#39;alto&#39;, hide=False))</span>
 <span class="sd">        (Note(&quot;f&#39;4&quot;), Clef(name=&#39;alto&#39;, hide=False))</span>
-
-<span class="sd">        Derives context from ``attachable.context`` context when ``context=None``.</span>
 
 <span class="sd">    ..  container:: example</span>
 
@@ -1216,8 +526,8 @@
 <span class="sd">                f&#39;4</span>
 <span class="sd">            }</span>
 
-<span class="sd">        Active indicator is always effective when competing inactive indicators are</span>
-<span class="sd">        present:</span>
+<span class="sd">        Active indicator is always effective when competing inactive indicators</span>
+<span class="sd">        are present:</span>
 
 <span class="sd">        &gt;&gt;&gt; for note in staff:</span>
 <span class="sd">        ...     clef = abjad.get.effective(staff[0], abjad.Clef)</span>
@@ -1228,7 +538,10 @@
 <span class="sd">        (Note(&quot;e&#39;4&quot;), Clef(name=&#39;treble&#39;, hide=False))</span>
 <span class="sd">        (Note(&quot;f&#39;4&quot;), Clef(name=&#39;treble&#39;, hide=False))</span>
 
-<span class="sd">        But a lone inactivate indicator is effective when no active indicator is present:</span>
+<span class="sd">        But a lone inactivate indicator is effective when no active indicator</span>
+<span class="sd">        is present. Note that ``tag`` must be an ``abjad.Tag`` when</span>
+<span class="sd">        ``deactivate=True``:</span>
+
 
 <span class="sd">        &gt;&gt;&gt; staff = abjad.Staff(&quot;c&#39;4 d&#39; e&#39; f&#39;&quot;)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.attach(</span>
@@ -1262,25 +575,18 @@
 <span class="sd">        (Note(&quot;e&#39;4&quot;), Clef(name=&#39;alto&#39;, hide=False))</span>
 <span class="sd">        (Note(&quot;f&#39;4&quot;), Clef(name=&#39;alto&#39;, hide=False))</span>
 
-<span class="sd">        Note that ``tag`` must be an ``abjad.Tag`` when ``deactivate=True``.</span>
-
-<span class="sd">    Return type depends on value of ``wrapper``:</span>
-
-<span class="sd">        * returns ``abjad.Wrapper`` when ``wrapper`` is true</span>
-<span class="sd">        * returns none when ``wrapper`` is not true</span>
-
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">attachable</span><span class="p">,</span> <span class="n">_tweaks</span><span class="o">.</span><span class="n">Bundle</span><span class="p">):</span>
-        <span class="n">nonbundle_attachable</span> <span class="o">=</span> <span class="n">attachable</span><span class="o">.</span><span class="n">indicator</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">indicator</span><span class="p">,</span> <span class="n">_tweaks</span><span class="o">.</span><span class="n">Bundle</span><span class="p">):</span>
+        <span class="n">nonbundle_indicator</span> <span class="o">=</span> <span class="n">indicator</span><span class="o">.</span><span class="n">indicator</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="n">nonbundle_attachable</span> <span class="o">=</span> <span class="n">attachable</span>
-    <span class="k">assert</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">nonbundle_attachable</span><span class="p">,</span> <span class="n">_tweaks</span><span class="o">.</span><span class="n">Bundle</span><span class="p">)</span>
-    <span class="k">assert</span> <span class="n">nonbundle_attachable</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">nonbundle_attachable</span><span class="p">)</span>
-    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">_score</span><span class="o">.</span><span class="n">Component</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">target</span><span class="p">)</span>
-    <span class="n">_before_attach</span><span class="p">(</span><span class="n">nonbundle_attachable</span><span class="p">,</span> <span class="n">context</span><span class="p">,</span> <span class="n">deactivate</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
-    <span class="n">result</span> <span class="o">=</span> <span class="n">_unsafe_attach</span><span class="p">(</span>
-        <span class="n">attachable</span><span class="p">,</span>
-        <span class="n">target</span><span class="p">,</span>
+        <span class="n">nonbundle_indicator</span> <span class="o">=</span> <span class="n">indicator</span>
+    <span class="k">assert</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">nonbundle_indicator</span><span class="p">,</span> <span class="n">_tweaks</span><span class="o">.</span><span class="n">Bundle</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">nonbundle_indicator</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">nonbundle_indicator</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">component</span><span class="p">,</span> <span class="n">_score</span><span class="o">.</span><span class="n">Component</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">component</span><span class="p">)</span>
+    <span class="n">_before_attach</span><span class="p">(</span><span class="n">nonbundle_indicator</span><span class="p">,</span> <span class="n">context</span><span class="p">,</span> <span class="n">deactivate</span><span class="p">,</span> <span class="n">component</span><span class="p">)</span>
+    <span class="n">_unsafe_attach</span><span class="p">(</span>
+        <span class="n">indicator</span><span class="p">,</span>
+        <span class="n">component</span><span class="p">,</span>
         <span class="n">check_duplicate_indicator</span><span class="o">=</span><span class="n">check_duplicate_indicator</span><span class="p">,</span>
         <span class="n">context</span><span class="o">=</span><span class="n">context</span><span class="p">,</span>
         <span class="n">deactivate</span><span class="o">=</span><span class="n">deactivate</span><span class="p">,</span>
@@ -1288,20 +594,16 @@
         <span class="n">do_not_test</span><span class="o">=</span><span class="n">do_not_test</span><span class="p">,</span>
         <span class="n">synthetic_offset</span><span class="o">=</span><span class="n">synthetic_offset</span><span class="p">,</span>
         <span class="n">tag</span><span class="o">=</span><span class="n">tag</span><span class="p">,</span>
-        <span class="n">wrapper</span><span class="o">=</span><span class="n">wrapper</span><span class="p">,</span>
-    <span class="p">)</span>
-    <span class="k">return</span> <span class="n">result</span></div>
+    <span class="p">)</span></div>
 
 
 
 <div class="viewcode-block" id="detach">
 <a class="viewcode-back" href="../../api/abjad/bind.html#abjad.bind.detach">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">detach</span><span class="p">(</span><span class="n">argument</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">by_id</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">detach</span><span class="p">(</span><span class="n">indicator</span><span class="p">,</span> <span class="n">component</span><span class="p">:</span> <span class="n">_score</span><span class="o">.</span><span class="n">Component</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">by_id</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">:</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Detaches indicators-equal-to-``argument`` from ``target``.</span>
-
-<span class="sd">    Set ``by_id`` to true to detach exact ``argument`` from ``target`` (rather than</span>
-<span class="sd">    detaching all indicators-equal-to-``argument``).</span>
+<span class="sd">    Detaches indicators equals to ``indicator`` from ``component``. Returns</span>
+<span class="sd">    tuple of zero or more detached items.</span>
 
 <span class="sd">    ..  container:: example</span>
 
@@ -1343,7 +645,9 @@
 
 <span class="sd">    ..  container:: example</span>
 
-<span class="sd">        The use of ``by_id`` is motivated by the following.</span>
+<span class="sd">        Set ``by_id`` to true to detach exact ``indicator`` from ``component``</span>
+<span class="sd">        (rather than detaching all indicatorslequal to ``indicator``). The use</span>
+<span class="sd">        of ``by_id`` is motivated by the following.</span>
 
 <span class="sd">        Consider the three document-specifier markups below:</span>
 
@@ -1533,61 +837,62 @@
 <span class="sd">                f&#39;4</span>
 <span class="sd">            }</span>
 
-<span class="sd">    Returns tuple of zero or more detached items.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">assert</span> <span class="n">target</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">component</span><span class="p">,</span> <span class="n">_score</span><span class="o">.</span><span class="n">Component</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">component</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">by_id</span><span class="p">,</span> <span class="nb">bool</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">by_id</span><span class="p">)</span>
     <span class="n">after_grace_container</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">before_grace_container</span> <span class="o">=</span> <span class="kc">None</span>
-    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">argument</span><span class="p">,</span> <span class="nb">type</span><span class="p">):</span>
-        <span class="k">if</span> <span class="s2">&quot;AfterGraceContainer&quot;</span> <span class="ow">in</span> <span class="n">argument</span><span class="o">.</span><span class="vm">__name__</span><span class="p">:</span>
-            <span class="n">after_grace_container</span> <span class="o">=</span> <span class="n">target</span><span class="o">.</span><span class="n">_after_grace_container</span>
-        <span class="k">elif</span> <span class="s2">&quot;BeforeGraceContainer&quot;</span> <span class="ow">in</span> <span class="n">argument</span><span class="o">.</span><span class="vm">__name__</span><span class="p">:</span>
-            <span class="n">before_grace_container</span> <span class="o">=</span> <span class="n">target</span><span class="o">.</span><span class="n">_before_grace_container</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">indicator</span><span class="p">,</span> <span class="nb">type</span><span class="p">):</span>
+        <span class="k">if</span> <span class="s2">&quot;AfterGraceContainer&quot;</span> <span class="ow">in</span> <span class="n">indicator</span><span class="o">.</span><span class="vm">__name__</span><span class="p">:</span>
+            <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">component</span><span class="p">,</span> <span class="n">_score</span><span class="o">.</span><span class="n">Leaf</span><span class="p">)</span>
+            <span class="n">after_grace_container</span> <span class="o">=</span> <span class="n">component</span><span class="o">.</span><span class="n">_after_grace_container</span>
+        <span class="k">elif</span> <span class="s2">&quot;BeforeGraceContainer&quot;</span> <span class="ow">in</span> <span class="n">indicator</span><span class="o">.</span><span class="vm">__name__</span><span class="p">:</span>
+            <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">component</span><span class="p">,</span> <span class="n">_score</span><span class="o">.</span><span class="n">Leaf</span><span class="p">)</span>
+            <span class="n">before_grace_container</span> <span class="o">=</span> <span class="n">component</span><span class="o">.</span><span class="n">_before_grace_container</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">assert</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="s2">&quot;_wrappers&quot;</span><span class="p">)</span>
+            <span class="k">assert</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">component</span><span class="p">,</span> <span class="s2">&quot;_wrappers&quot;</span><span class="p">)</span>
             <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
-            <span class="k">for</span> <span class="n">wrapper</span> <span class="ow">in</span> <span class="n">target</span><span class="o">.</span><span class="n">_wrappers</span><span class="p">[:]:</span>
-                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">wrapper</span><span class="p">,</span> <span class="n">argument</span><span class="p">):</span>
-                    <span class="n">target</span><span class="o">.</span><span class="n">_wrappers</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">wrapper</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">wrapper</span> <span class="ow">in</span> <span class="n">component</span><span class="o">.</span><span class="n">_wrappers</span><span class="p">[:]:</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">wrapper</span><span class="p">,</span> <span class="n">indicator</span><span class="p">):</span>
+                    <span class="n">component</span><span class="o">.</span><span class="n">_wrappers</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">wrapper</span><span class="p">)</span>
                     <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">wrapper</span><span class="p">)</span>
-                <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">wrapper</span><span class="o">.</span><span class="n">unbundle_indicator</span><span class="p">(),</span> <span class="n">argument</span><span class="p">):</span>
+                <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">wrapper</span><span class="o">.</span><span class="n">unbundle_indicator</span><span class="p">(),</span> <span class="n">indicator</span><span class="p">):</span>
                     <span class="n">wrapper</span><span class="o">.</span><span class="n">_detach</span><span class="p">()</span>
                     <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">wrapper</span><span class="o">.</span><span class="n">get_item</span><span class="p">())</span>
-            <span class="n">result</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
-            <span class="k">return</span> <span class="n">result</span>
+            <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="k">if</span> <span class="s2">&quot;AfterGraceContainer&quot;</span> <span class="ow">in</span> <span class="n">argument</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">:</span>
-            <span class="n">after_grace_container</span> <span class="o">=</span> <span class="n">target</span><span class="o">.</span><span class="n">_after_grace_container</span>
-        <span class="k">elif</span> <span class="s2">&quot;BeforeGraceContainer&quot;</span> <span class="ow">in</span> <span class="n">argument</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">:</span>
-            <span class="n">before_grace_container</span> <span class="o">=</span> <span class="n">target</span><span class="o">.</span><span class="n">_before_grace_container</span>
+        <span class="k">if</span> <span class="s2">&quot;AfterGraceContainer&quot;</span> <span class="ow">in</span> <span class="n">indicator</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">:</span>
+            <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">component</span><span class="p">,</span> <span class="n">_score</span><span class="o">.</span><span class="n">Leaf</span><span class="p">)</span>
+            <span class="n">after_grace_container</span> <span class="o">=</span> <span class="n">component</span><span class="o">.</span><span class="n">_after_grace_container</span>
+        <span class="k">elif</span> <span class="s2">&quot;BeforeGraceContainer&quot;</span> <span class="ow">in</span> <span class="n">indicator</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">:</span>
+            <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">component</span><span class="p">,</span> <span class="n">_score</span><span class="o">.</span><span class="n">Leaf</span><span class="p">)</span>
+            <span class="n">before_grace_container</span> <span class="o">=</span> <span class="n">component</span><span class="o">.</span><span class="n">_before_grace_container</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">assert</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="s2">&quot;_wrappers&quot;</span><span class="p">)</span>
+            <span class="k">assert</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">component</span><span class="p">,</span> <span class="s2">&quot;_wrappers&quot;</span><span class="p">)</span>
             <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
-            <span class="k">for</span> <span class="n">wrapper</span> <span class="ow">in</span> <span class="n">target</span><span class="o">.</span><span class="n">_wrappers</span><span class="p">[:]:</span>
-                <span class="k">if</span> <span class="n">wrapper</span> <span class="ow">is</span> <span class="n">argument</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">wrapper</span> <span class="ow">in</span> <span class="n">component</span><span class="o">.</span><span class="n">_wrappers</span><span class="p">[:]:</span>
+                <span class="k">if</span> <span class="n">wrapper</span> <span class="ow">is</span> <span class="n">indicator</span><span class="p">:</span>
                     <span class="n">wrapper</span><span class="o">.</span><span class="n">_detach</span><span class="p">()</span>
                     <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">wrapper</span><span class="p">)</span>
-                <span class="k">elif</span> <span class="n">wrapper</span><span class="o">.</span><span class="n">unbundle_indicator</span><span class="p">()</span> <span class="o">==</span> <span class="n">argument</span><span class="p">:</span>
-                    <span class="k">if</span> <span class="n">by_id</span> <span class="ow">is</span> <span class="kc">True</span> <span class="ow">and</span> <span class="nb">id</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">id</span><span class="p">(</span>
+                <span class="k">elif</span> <span class="n">wrapper</span><span class="o">.</span><span class="n">unbundle_indicator</span><span class="p">()</span> <span class="o">==</span> <span class="n">indicator</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">by_id</span> <span class="ow">is</span> <span class="kc">True</span> <span class="ow">and</span> <span class="nb">id</span><span class="p">(</span><span class="n">indicator</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">id</span><span class="p">(</span>
                         <span class="n">wrapper</span><span class="o">.</span><span class="n">unbundle_indicator</span><span class="p">()</span>
                     <span class="p">):</span>
                         <span class="k">pass</span>
                     <span class="k">else</span><span class="p">:</span>
                         <span class="n">wrapper</span><span class="o">.</span><span class="n">_detach</span><span class="p">()</span>
                         <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">wrapper</span><span class="o">.</span><span class="n">get_item</span><span class="p">())</span>
-            <span class="n">result</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
-            <span class="k">return</span> <span class="n">result</span>
+            <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
     <span class="n">items</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">if</span> <span class="n">after_grace_container</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">items</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">after_grace_container</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">before_grace_container</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">items</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">before_grace_container</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">by_id</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
-        <span class="n">items</span> <span class="o">=</span> <span class="p">[</span><span class="n">_</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">items</span> <span class="k">if</span> <span class="nb">id</span><span class="p">(</span><span class="n">_</span><span class="p">)</span> <span class="o">==</span> <span class="nb">id</span><span class="p">(</span><span class="n">argument</span><span class="p">)]</span>
+        <span class="n">items</span> <span class="o">=</span> <span class="p">[</span><span class="n">_</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">items</span> <span class="k">if</span> <span class="nb">id</span><span class="p">(</span><span class="n">_</span><span class="p">)</span> <span class="o">==</span> <span class="nb">id</span><span class="p">(</span><span class="n">indicator</span><span class="p">)]</span>
     <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">items</span><span class="p">:</span>
         <span class="n">item</span><span class="o">.</span><span class="n">_detach</span><span class="p">()</span>
-    <span class="n">items</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">items</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">items</span></div>
+    <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">items</span><span class="p">)</span></div>
 
 </pre></div>
 
@@ -1606,7 +911,7 @@
         
         &copy; Copyright 2008-2025, Trevor Bača &amp; Joséphine Oberholtzer.
       <span class="lastupdated">
-        Last updated on Jun 02, 2025.
+        Last updated on Jul 05, 2025.
       </span>
 
     </p>

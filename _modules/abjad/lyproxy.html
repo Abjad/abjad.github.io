@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>abjad.lyproxy &mdash; Abjad 3.25 documentation</title>
+  <title>abjad.lyproxy &mdash; Abjad 3.26 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../_static/abjad.css?v=1f187528" />
@@ -18,12 +18,14 @@
     <link rel="canonical" href="https://abjad.github.io_modules/abjad/lyproxy.html"/>
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=6e073912"></script>
+      <script src="../../_static/documentation_options.js?v=59ffb378"></script>
       <script src="../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script src="../../_static/ga.js?v=c455bbd5"></script>
       <script src="../../_static/toggleprompt.js?v=5801b3bb"></script>
       <script defer="defer" src="../../_static/lightbox2/js/lightbox.js?v=bc25c2e6"></script>
+      <script src="../../_static/inject-autosummary-fqns.js?v=49afa734"></script>
+      <script src="../../_static/inject-fqns.js?v=c5423c1b"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
@@ -33,11 +35,11 @@
   <div class="wy-grid-for-nav">
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search"  style="background: #996633" >
+        <div class="wy-side-nav-search"  style="background: #CC8844" >
 
 
     <a href="../../index.html" class="icon icon-home" alt="Documentation
-    Home"> Abjad 3.25
+    Home"> Abjad 3.26
 
 
 
@@ -108,7 +110,7 @@
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #996633" >
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #CC8844" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../index.html">Abjad</a>
       </nav>
@@ -124,7 +126,11 @@
     <div itemprop="articleBody">
     
   <h1>Source code for abjad.lyproxy</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">typing</span>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">LilyPond proxy classes for the Abjad parser.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">typing</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">lyenv</span> <span class="k">as</span> <span class="n">_lyenv</span>
 
@@ -200,8 +206,6 @@
 
     <span class="c1">### CONSTRUCTOR ###</span>
 
-<div class="viewcode-block" id="LilyPondContext.__new__">
-<a class="viewcode-back" href="../../api/abjad/lyproxy.html#abjad.lyproxy.LilyPondContext.__new__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__new__</span><span class="p">(</span><span class="n">class_</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Voice&quot;</span><span class="p">):</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">class_</span><span class="p">):</span>
             <span class="n">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">.</span><span class="n">name</span>
@@ -210,8 +214,7 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="n">obj</span> <span class="o">=</span> <span class="nb">object</span><span class="o">.</span><span class="fm">__new__</span><span class="p">(</span><span class="n">class_</span><span class="p">)</span>
             <span class="n">class_</span><span class="o">.</span><span class="n">_identity_map</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">obj</span>
-        <span class="k">return</span> <span class="n">obj</span></div>
-
+        <span class="k">return</span> <span class="n">obj</span>
 
     <span class="c1">### INITIALIZER ###</span>
 
@@ -219,14 +222,11 @@
         <span class="k">assert</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">_lyenv</span><span class="o">.</span><span class="n">contexts</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_name</span> <span class="o">=</span> <span class="n">name</span>
 
-<div class="viewcode-block" id="LilyPondContext.__repr__">
-<a class="viewcode-back" href="../../api/abjad/lyproxy.html#abjad.lyproxy.LilyPondContext.__repr__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets repr.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">(name=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">!r}</span><span class="s2">)&quot;</span></div>
-
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">(name=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">!r}</span><span class="s2">)&quot;</span>
 
     <span class="c1">### PUBLIC PROPERTIES ###</span>
 
@@ -1003,8 +1003,6 @@
 
     <span class="c1">### PUBLIC METHODS ###</span>
 
-<div class="viewcode-block" id="LilyPondContext.list_all_contexts">
-<a class="viewcode-back" href="../../api/abjad/lyproxy.html#abjad.lyproxy.LilyPondContext.list_all_contexts">[docs]</a>
     <span class="nd">@staticmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">list_all_contexts</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="s2">&quot;LilyPondContext&quot;</span><span class="p">,</span> <span class="o">...</span><span class="p">]:</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
@@ -1050,11 +1048,8 @@
 <span class="sd">            LilyPondContext(name=&#39;Voice&#39;)</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">LilyPondContext</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">)</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">_lyenv</span><span class="o">.</span><span class="n">contexts</span><span class="p">))</span></div>
+        <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">LilyPondContext</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">)</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">_lyenv</span><span class="o">.</span><span class="n">contexts</span><span class="p">))</span>
 
-
-<div class="viewcode-block" id="LilyPondContext.register">
-<a class="viewcode-back" href="../../api/abjad/lyproxy.html#abjad.lyproxy.LilyPondContext.register">[docs]</a>
     <span class="nd">@classmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">register</span><span class="p">(</span>
         <span class="n">class_</span><span class="p">,</span>
@@ -1180,8 +1175,7 @@
             <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dictionary</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span>
             <span class="n">dictionary</span><span class="p">[</span><span class="s2">&quot;accepts&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
         <span class="n">custom_context</span> <span class="o">=</span> <span class="n">class_</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">custom_context</span></div>
-
+        <span class="k">return</span> <span class="n">custom_context</span>
 
 <div class="viewcode-block" id="LilyPondContext.unregister">
 <a class="viewcode-back" href="../../api/abjad/lyproxy.html#abjad.lyproxy.LilyPondContext.unregister">[docs]</a>
@@ -1287,16 +1281,13 @@
 
     <span class="c1">### CONSTRUCTOR ###</span>
 
-<div class="viewcode-block" id="LilyPondEngraver.__new__">
-<a class="viewcode-back" href="../../api/abjad/lyproxy.html#abjad.lyproxy.LilyPondEngraver.__new__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__new__</span><span class="p">(</span><span class="n">class_</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Note_heads_engraver&quot;</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">class_</span><span class="o">.</span><span class="n">_identity_map</span><span class="p">:</span>
             <span class="n">obj</span> <span class="o">=</span> <span class="n">class_</span><span class="o">.</span><span class="n">_identity_map</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">obj</span> <span class="o">=</span> <span class="nb">object</span><span class="o">.</span><span class="fm">__new__</span><span class="p">(</span><span class="n">class_</span><span class="p">)</span>
             <span class="n">class_</span><span class="o">.</span><span class="n">_identity_map</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">obj</span>
-        <span class="k">return</span> <span class="n">obj</span></div>
-
+        <span class="k">return</span> <span class="n">obj</span>
 
     <span class="c1">### INITIALIZER ###</span>
 
@@ -1304,19 +1295,14 @@
         <span class="k">assert</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">_lyenv</span><span class="o">.</span><span class="n">engravers</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_name</span> <span class="o">=</span> <span class="n">name</span>
 
-<div class="viewcode-block" id="LilyPondEngraver.__repr__">
-<a class="viewcode-back" href="../../api/abjad/lyproxy.html#abjad.lyproxy.LilyPondEngraver.__repr__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets repr.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">(name=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">!r}</span><span class="s2">)&quot;</span></div>
-
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">(name=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">!r}</span><span class="s2">)&quot;</span>
 
     <span class="c1">### PUBLIC METHODS ###</span>
 
-<div class="viewcode-block" id="LilyPondEngraver.list_all_engravers">
-<a class="viewcode-back" href="../../api/abjad/lyproxy.html#abjad.lyproxy.LilyPondEngraver.list_all_engravers">[docs]</a>
     <span class="nd">@staticmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">list_all_engravers</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="s2">&quot;LilyPondEngraver&quot;</span><span class="p">,</span> <span class="o">...</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
@@ -1465,8 +1451,7 @@
 <span class="sd">            LilyPondEngraver(name=&#39;Volta_engraver&#39;)</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">LilyPondEngraver</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">)</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">_lyenv</span><span class="o">.</span><span class="n">engravers</span><span class="p">))</span></div>
-
+        <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">LilyPondEngraver</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">)</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">_lyenv</span><span class="o">.</span><span class="n">engravers</span><span class="p">))</span>
 
     <span class="c1">### PUBLIC PROPERTIES ###</span>
 
@@ -1551,16 +1536,13 @@
 
     <span class="c1">### CONSTRUCTOR ###</span>
 
-<div class="viewcode-block" id="LilyPondGrob.__new__">
-<a class="viewcode-back" href="../../api/abjad/lyproxy.html#abjad.lyproxy.LilyPondGrob.__new__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__new__</span><span class="p">(</span><span class="n">class_</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;NoteHead&quot;</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">class_</span><span class="o">.</span><span class="n">_identity_map</span><span class="p">:</span>
             <span class="n">obj</span> <span class="o">=</span> <span class="n">class_</span><span class="o">.</span><span class="n">_identity_map</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">obj</span> <span class="o">=</span> <span class="nb">object</span><span class="o">.</span><span class="fm">__new__</span><span class="p">(</span><span class="n">class_</span><span class="p">)</span>
             <span class="n">class_</span><span class="o">.</span><span class="n">_identity_map</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">obj</span>
-        <span class="k">return</span> <span class="n">obj</span></div>
-
+        <span class="k">return</span> <span class="n">obj</span>
 
     <span class="c1">### INITIALIZER ###</span>
 
@@ -1568,14 +1550,11 @@
         <span class="k">assert</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">_lyenv</span><span class="o">.</span><span class="n">grob_interfaces</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_name</span> <span class="o">=</span> <span class="n">name</span>
 
-<div class="viewcode-block" id="LilyPondGrob.__repr__">
-<a class="viewcode-back" href="../../api/abjad/lyproxy.html#abjad.lyproxy.LilyPondGrob.__repr__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets repr.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">(name=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">!r}</span><span class="s2">)&quot;</span></div>
-
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">(name=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">!r}</span><span class="s2">)&quot;</span>
 
     <span class="c1">### PUBLIC PROPERTIES ###</span>
 
@@ -1700,8 +1679,6 @@
 
     <span class="c1">### PUBLIC METHODS ###</span>
 
-<div class="viewcode-block" id="LilyPondGrob.list_all_grobs">
-<a class="viewcode-back" href="../../api/abjad/lyproxy.html#abjad.lyproxy.LilyPondGrob.list_all_grobs">[docs]</a>
     <span class="nd">@staticmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">list_all_grobs</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="s2">&quot;LilyPondGrob&quot;</span><span class="p">,</span> <span class="o">...</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
@@ -1855,7 +1832,6 @@
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">LilyPondGrob</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">_lyenv</span><span class="o">.</span><span class="n">grob_interfaces</span><span class="p">))</span></div>
-</div>
 
 
 
@@ -1880,16 +1856,13 @@
 
     <span class="c1">### CONSTRUCTOR ###</span>
 
-<div class="viewcode-block" id="LilyPondGrobInterface.__new__">
-<a class="viewcode-back" href="../../api/abjad/lyproxy.html#abjad.lyproxy.LilyPondGrobInterface.__new__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__new__</span><span class="p">(</span><span class="n">class_</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;grob-interface&quot;</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">class_</span><span class="o">.</span><span class="n">_identity_map</span><span class="p">:</span>
             <span class="n">obj</span> <span class="o">=</span> <span class="n">class_</span><span class="o">.</span><span class="n">_identity_map</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">obj</span> <span class="o">=</span> <span class="nb">object</span><span class="o">.</span><span class="fm">__new__</span><span class="p">(</span><span class="n">class_</span><span class="p">)</span>
             <span class="n">class_</span><span class="o">.</span><span class="n">_identity_map</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">obj</span>
-        <span class="k">return</span> <span class="n">obj</span></div>
-
+        <span class="k">return</span> <span class="n">obj</span>
 
     <span class="c1">### INITIALIZER ###</span>
 
@@ -1899,19 +1872,14 @@
 
     <span class="c1">### SPECIAL METHODS ###</span>
 
-<div class="viewcode-block" id="LilyPondGrobInterface.__repr__">
-<a class="viewcode-back" href="../../api/abjad/lyproxy.html#abjad.lyproxy.LilyPondGrobInterface.__repr__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets repr.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">(name=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">!r}</span><span class="s2">)&quot;</span></div>
-
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">(name=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">!r}</span><span class="s2">)&quot;</span>
 
     <span class="c1">### PUBLIC METHODS ###</span>
 
-<div class="viewcode-block" id="LilyPondGrobInterface.list_all_interfaces">
-<a class="viewcode-back" href="../../api/abjad/lyproxy.html#abjad.lyproxy.LilyPondGrobInterface.list_all_interfaces">[docs]</a>
     <span class="nd">@staticmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">list_all_interfaces</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="s2">&quot;LilyPondGrobInterface&quot;</span><span class="p">,</span> <span class="o">...</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
@@ -2063,8 +2031,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span>
             <span class="n">LilyPondGrobInterface</span><span class="p">(</span><span class="n">_</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">_lyenv</span><span class="o">.</span><span class="n">interface_properties</span><span class="p">)</span>
-        <span class="p">)</span></div>
-
+        <span class="p">)</span>
 
     <span class="c1">### PUBLIC PROPERTIES ###</span>
 
@@ -2140,7 +2107,7 @@
         
         &copy; Copyright 2008-2025, Trevor Bača &amp; Joséphine Oberholtzer.
       <span class="lastupdated">
-        Last updated on Jun 02, 2025.
+        Last updated on Jul 05, 2025.
       </span>
 
     </p>

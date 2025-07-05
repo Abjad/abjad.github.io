@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>abjad.rhythmtrees &mdash; Abjad 3.25 documentation</title>
+  <title>abjad.rhythmtrees &mdash; Abjad 3.26 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../_static/abjad.css?v=1f187528" />
@@ -18,12 +18,14 @@
     <link rel="canonical" href="https://abjad.github.io_modules/abjad/rhythmtrees.html"/>
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=6e073912"></script>
+      <script src="../../_static/documentation_options.js?v=59ffb378"></script>
       <script src="../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script src="../../_static/ga.js?v=c455bbd5"></script>
       <script src="../../_static/toggleprompt.js?v=5801b3bb"></script>
       <script defer="defer" src="../../_static/lightbox2/js/lightbox.js?v=bc25c2e6"></script>
+      <script src="../../_static/inject-autosummary-fqns.js?v=49afa734"></script>
+      <script src="../../_static/inject-fqns.js?v=c5423c1b"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
@@ -33,11 +35,11 @@
   <div class="wy-grid-for-nav">
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search"  style="background: #996633" >
+        <div class="wy-side-nav-search"  style="background: #CC8844" >
 
 
     <a href="../../index.html" class="icon icon-home" alt="Documentation
-    Home"> Abjad 3.25
+    Home"> Abjad 3.26
 
 
 
@@ -108,7 +110,7 @@
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #996633" >
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #CC8844" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../index.html">Abjad</a>
       </nav>
@@ -125,7 +127,7 @@
     
   <h1>Source code for abjad.rhythmtrees</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">Tools for modeling IRCAM-style rhythm trees.</span>
+<span class="sd">Classes to work with IRCAM-style rhythm trees.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">fractions</span>
@@ -245,7 +247,6 @@
 <span class="sd">            &gt;&gt;&gt; string = &#39;(1 ((1 (1 1)) (1 (1 1))))&#39;</span>
 <span class="sd">            &gt;&gt;&gt; rtc = abjad.rhythmtrees.parse(string)[0]</span>
 <span class="sd">            &gt;&gt;&gt; components = rtc(abjad.Duration(1, 1))</span>
-<span class="sd">            &gt;&gt;&gt; abjad.makers.tweak_tuplet_number_text(components)</span>
 <span class="sd">            &gt;&gt;&gt; voice = abjad.Voice(components)</span>
 <span class="sd">            &gt;&gt;&gt; score = abjad.Score([voice])</span>
 <span class="sd">            &gt;&gt;&gt; abjad.setting(score).proportionalNotationDuration = &quot;#1/12&quot;</span>
@@ -263,16 +264,13 @@
 <span class="sd">                &lt;&lt;</span>
 <span class="sd">                    \new Voice</span>
 <span class="sd">                    {</span>
-<span class="sd">                        \tweak text #tuplet-number::calc-fraction-text</span>
 <span class="sd">                        \tuplet 1/1</span>
 <span class="sd">                        {</span>
-<span class="sd">                            \tweak text #tuplet-number::calc-fraction-text</span>
 <span class="sd">                            \tuplet 1/1</span>
 <span class="sd">                            {</span>
 <span class="sd">                                c&#39;4</span>
 <span class="sd">                                c&#39;4</span>
 <span class="sd">                            }</span>
-<span class="sd">                            \tweak text #tuplet-number::calc-fraction-text</span>
 <span class="sd">                            \tuplet 1/1</span>
 <span class="sd">                            {</span>
 <span class="sd">                                c&#39;4</span>
@@ -431,7 +429,7 @@
 
 <span class="sd">        Pitched rhythm-tree leaves makes notes:</span>
 
-<span class="sd">        &gt;&gt;&gt; rtl = abjad.rhythmtrees.RhythmTreeLeaf((5, 1), is_pitched=True)</span>
+<span class="sd">        &gt;&gt;&gt; rtl = abjad.rhythmtrees.RhythmTreeLeaf((5, 1), is_unpitched=False)</span>
 <span class="sd">        &gt;&gt;&gt; components = rtl(abjad.Duration(1, 4))</span>
 <span class="sd">        &gt;&gt;&gt; voice = abjad.Voice(components)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.setting(voice[0]).Score.proportionalNotationDuration = &quot;#1/12&quot;</span>
@@ -453,7 +451,7 @@
 
 <span class="sd">        Unpitched rhythm-tree leaves make rests:</span>
 
-<span class="sd">        &gt;&gt;&gt; rtl = abjad.rhythmtrees.RhythmTreeLeaf((5, 1), is_pitched=False)</span>
+<span class="sd">        &gt;&gt;&gt; rtl = abjad.rhythmtrees.RhythmTreeLeaf((5, 1), is_unpitched=True)</span>
 <span class="sd">        &gt;&gt;&gt; components = rtl(abjad.Duration(1, 4))</span>
 <span class="sd">        &gt;&gt;&gt; voice = abjad.Voice(components)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.setting(voice[0]).Score.proportionalNotationDuration = &quot;#1/12&quot;</span>
@@ -477,16 +475,14 @@
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">pair</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span>
         <span class="o">*</span><span class="p">,</span>
-        <span class="n">is_pitched</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="n">is_unpitched</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
         <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">pair</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">pair</span><span class="p">)</span>
         <span class="n">uqbar</span><span class="o">.</span><span class="n">containers</span><span class="o">.</span><span class="n">UniqueTreeNode</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">)</span>
         <span class="n">RhythmTreeNode</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pair</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">is_pitched</span> <span class="o">=</span> <span class="n">is_pitched</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">is_unpitched</span> <span class="o">=</span> <span class="n">is_unpitched</span>
 
-<div class="viewcode-block" id="RhythmTreeLeaf.__call__">
-<a class="viewcode-back" href="../../api/abjad/rhythmtrees.html#abjad.rhythmtrees.RhythmTreeLeaf.__call__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__call__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">duration</span><span class="p">:</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Duration</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">_score</span><span class="o">.</span><span class="n">Leaf</span> <span class="o">|</span> <span class="n">_score</span><span class="o">.</span><span class="n">Tuplet</span><span class="p">]:</span>
@@ -495,18 +491,16 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">duration</span><span class="p">,</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Duration</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">duration</span><span class="p">)</span>
         <span class="n">pitches</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span><span class="p">]</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_pitched</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_unpitched</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
             <span class="n">pitches</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>
         <span class="k">else</span><span class="p">:</span>
+            <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_unpitched</span> <span class="ow">is</span> <span class="kc">True</span>
             <span class="n">pitches</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span>
         <span class="n">pitch_lists</span> <span class="o">=</span> <span class="n">_makers</span><span class="o">.</span><span class="n">make_pitch_lists</span><span class="p">(</span><span class="n">pitches</span><span class="p">)</span>
         <span class="n">duration</span> <span class="o">*=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pair</span><span class="p">)</span>
         <span class="n">components</span> <span class="o">=</span> <span class="n">_makers</span><span class="o">.</span><span class="n">make_leaves</span><span class="p">(</span><span class="n">pitch_lists</span><span class="p">,</span> <span class="p">[</span><span class="n">duration</span><span class="p">])</span>
-        <span class="k">return</span> <span class="n">components</span></div>
+        <span class="k">return</span> <span class="n">components</span>
 
-
-<div class="viewcode-block" id="RhythmTreeLeaf.__graph__">
-<a class="viewcode-back" href="../../api/abjad/rhythmtrees.html#abjad.rhythmtrees.RhythmTreeLeaf.__graph__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">__graph__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">keywords</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">uqbar</span><span class="o">.</span><span class="n">graphs</span><span class="o">.</span><span class="n">Graph</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets Graphviz graph of rhythm-tree leaf.</span>
@@ -515,38 +509,34 @@
         <span class="n">label</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">_duration</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pair</span><span class="p">))</span>
         <span class="n">node</span> <span class="o">=</span> <span class="n">uqbar</span><span class="o">.</span><span class="n">graphs</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">attributes</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;label&quot;</span><span class="p">:</span> <span class="n">label</span><span class="p">,</span> <span class="s2">&quot;shape&quot;</span><span class="p">:</span> <span class="s2">&quot;box&quot;</span><span class="p">})</span>
         <span class="n">graph</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">graph</span></div>
+        <span class="k">return</span> <span class="n">graph</span>
 
-
-<div class="viewcode-block" id="RhythmTreeLeaf.__repr__">
-<a class="viewcode-back" href="../../api/abjad/rhythmtrees.html#abjad.rhythmtrees.RhythmTreeLeaf.__repr__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets interpreter representation of rhythm-tree leaf.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">properties</span> <span class="o">=</span> <span class="p">[</span>
             <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">pair</span><span class="si">!r}</span><span class="s2">&quot;</span><span class="p">,</span>
-            <span class="sa">f</span><span class="s2">&quot;is_pitched=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">is_pitched</span><span class="si">!r}</span><span class="s2">&quot;</span><span class="p">,</span>
+            <span class="sa">f</span><span class="s2">&quot;is_unpitched=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">is_unpitched</span><span class="si">!r}</span><span class="s2">&quot;</span><span class="p">,</span>
         <span class="p">]</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">properties</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;name=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">!r}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="n">properties_string</span> <span class="o">=</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">properties</span><span class="p">)</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">(</span><span class="si">{</span><span class="n">properties_string</span><span class="si">}</span><span class="s2">)&quot;</span></div>
-
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">(</span><span class="si">{</span><span class="n">properties_string</span><span class="si">}</span><span class="s2">)&quot;</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_pretty_rtm_format_pieces</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_fraction_string</span><span class="p">())]</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">is_pitched</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_unpitched</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Is true when rhythm-tree leaf is pitched.</span>
+<span class="sd">        Is true when rhythm-tree leaf is unpitched.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_pitched</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_unpitched</span>
 
-    <span class="nd">@is_pitched</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">is_pitched</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_is_pitched</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span>
+    <span class="nd">@is_unpitched</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_unpitched</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_is_unpitched</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">rtm_format</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
@@ -555,16 +545,17 @@
 
 <span class="sd">        ..  container:: example</span>
 
-<span class="sd">            &gt;&gt;&gt; abjad.rhythmtrees.RhythmTreeLeaf((5, 1), is_pitched=True).rtm_format</span>
+<span class="sd">            &gt;&gt;&gt; abjad.rhythmtrees.RhythmTreeLeaf((5, 1), is_unpitched=False).rtm_format</span>
 <span class="sd">            &#39;5&#39;</span>
 
-<span class="sd">            &gt;&gt;&gt; abjad.rhythmtrees.RhythmTreeLeaf((5, 1), is_pitched=False).rtm_format</span>
+<span class="sd">            &gt;&gt;&gt; abjad.rhythmtrees.RhythmTreeLeaf((5, 1), is_unpitched=True).rtm_format</span>
 <span class="sd">            &#39;-5&#39;</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">string</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_fraction_string</span><span class="p">()</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_pitched</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_unpitched</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
             <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">string</span><span class="si">!s}</span><span class="s2">&quot;</span>
+        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_unpitched</span> <span class="ow">is</span> <span class="kc">True</span>
         <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;-</span><span class="si">{</span><span class="n">string</span><span class="si">!s}</span><span class="s2">&quot;</span></div>
 
 
@@ -636,8 +627,6 @@
 
     <span class="c1">### SPECIAL METHODS ###</span>
 
-<div class="viewcode-block" id="RhythmTreeContainer.__add__">
-<a class="viewcode-back" href="../../api/abjad/rhythmtrees.html#abjad.rhythmtrees.RhythmTreeContainer.__add__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__add__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rtc</span><span class="p">:</span> <span class="s2">&quot;RhythmTreeContainer&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;RhythmTreeContainer&quot;</span><span class="p">:</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Concatenates ``self`` and ``rtc``.</span>
@@ -734,11 +723,8 @@
         <span class="n">container</span> <span class="o">=</span> <span class="n">RhythmTreeContainer</span><span class="p">(</span><span class="n">new_duration</span><span class="o">.</span><span class="n">pair</span><span class="p">)</span>
         <span class="n">container</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="bp">self</span><span class="p">[:])</span>
         <span class="n">container</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">rtc</span><span class="p">[:])</span>
-        <span class="k">return</span> <span class="n">container</span></div>
+        <span class="k">return</span> <span class="n">container</span>
 
-
-<div class="viewcode-block" id="RhythmTreeContainer.__call__">
-<a class="viewcode-back" href="../../api/abjad/rhythmtrees.html#abjad.rhythmtrees.RhythmTreeContainer.__call__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__call__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">duration</span><span class="p">:</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Duration</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">_score</span><span class="o">.</span><span class="n">Leaf</span> <span class="o">|</span> <span class="n">_score</span><span class="o">.</span><span class="n">Tuplet</span><span class="p">]:</span>
@@ -789,7 +775,7 @@
                 <span class="n">basic_written_duration</span><span class="o">.</span><span class="n">equal_or_greater_power_of_two</span>
             <span class="p">)</span>
             <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">basic_written_duration</span><span class="p">,</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Duration</span><span class="p">)</span>
-            <span class="n">tuplet</span> <span class="o">=</span> <span class="n">_score</span><span class="o">.</span><span class="n">Tuplet</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">[])</span>
+            <span class="n">tuplet</span> <span class="o">=</span> <span class="n">_score</span><span class="o">.</span><span class="n">Tuplet</span><span class="p">(</span><span class="s2">&quot;1:1&quot;</span><span class="p">,</span> <span class="p">[])</span>
             <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">rtc</span><span class="o">.</span><span class="n">children</span><span class="p">:</span>
                 <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)):</span>
                     <span class="n">tuplet_duration_</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">pair</span><span class="p">)</span>
@@ -801,22 +787,20 @@
                     <span class="n">tuplet</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">leaves</span><span class="p">)</span>
                     <span class="k">if</span> <span class="mi">1</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">leaves</span><span class="p">):</span>
                         <span class="n">_spanners</span><span class="o">.</span><span class="n">tie</span><span class="p">(</span><span class="n">leaves</span><span class="p">)</span>
-            <span class="k">assert</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">(</span><span class="o">*</span><span class="n">tuplet</span><span class="o">.</span><span class="n">multiplier</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">tuplet</span><span class="o">.</span><span class="n">multiplier</span><span class="p">)</span>
+            <span class="k">assert</span> <span class="n">tuplet</span><span class="o">.</span><span class="n">multiplier</span><span class="p">()</span> <span class="o">==</span> <span class="mi">1</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">tuplet</span><span class="o">.</span><span class="n">multiplier</span><span class="p">())</span>
             <span class="n">contents_duration</span> <span class="o">=</span> <span class="n">tuplet</span><span class="o">.</span><span class="n">_get_duration</span><span class="p">()</span>
             <span class="n">target_duration</span> <span class="o">=</span> <span class="n">tuplet_duration</span>
             <span class="n">multiplier</span> <span class="o">=</span> <span class="n">target_duration</span> <span class="o">/</span> <span class="n">contents_duration</span>
-            <span class="n">tuplet</span><span class="o">.</span><span class="n">multiplier</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">pair</span><span class="p">(</span><span class="n">multiplier</span><span class="p">)</span>
+            <span class="n">ratio</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Ratio</span><span class="p">(</span><span class="n">multiplier</span><span class="o">.</span><span class="n">denominator</span><span class="p">,</span> <span class="n">multiplier</span><span class="o">.</span><span class="n">numerator</span><span class="p">)</span>
+            <span class="n">tuplet</span><span class="o">.</span><span class="n">ratio</span> <span class="o">=</span> <span class="n">ratio</span>
             <span class="k">return</span> <span class="p">[</span><span class="n">tuplet</span><span class="p">]</span>
 
         <span class="n">tuplet_duration_</span> <span class="o">=</span> <span class="n">duration</span> <span class="o">*</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pair</span><span class="p">)</span>
         <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">tuplet_duration_</span><span class="p">,</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Duration</span><span class="p">)</span>
         <span class="n">components</span> <span class="o">=</span> <span class="n">recurse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tuplet_duration_</span><span class="p">)</span>
         <span class="k">assert</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="n">_score</span><span class="o">.</span><span class="n">Leaf</span> <span class="o">|</span> <span class="n">_score</span><span class="o">.</span><span class="n">Tuplet</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">components</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">components</span></div>
+        <span class="k">return</span> <span class="n">components</span>
 
-
-<div class="viewcode-block" id="RhythmTreeContainer.__graph__">
-<a class="viewcode-back" href="../../api/abjad/rhythmtrees.html#abjad.rhythmtrees.RhythmTreeContainer.__graph__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">__graph__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">keywords</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">uqbar</span><span class="o">.</span><span class="n">graphs</span><span class="o">.</span><span class="n">Graph</span><span class="p">:</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Graphs rhythm-tree container.</span>
@@ -879,27 +863,20 @@
                 <span class="n">uqbar</span><span class="o">.</span><span class="n">graphs</span><span class="o">.</span><span class="n">Edge</span><span class="p">()</span><span class="o">.</span><span class="n">attach</span><span class="p">(</span>
                     <span class="n">node_mapping</span><span class="p">[</span><span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="p">],</span> <span class="n">node_mapping</span><span class="p">[</span><span class="n">node</span><span class="p">]</span>
                 <span class="p">)</span>
-        <span class="k">return</span> <span class="n">graph</span></div>
+        <span class="k">return</span> <span class="n">graph</span>
 
-
-<div class="viewcode-block" id="RhythmTreeContainer.__radd__">
-<a class="viewcode-back" href="../../api/abjad/rhythmtrees.html#abjad.rhythmtrees.RhythmTreeContainer.__radd__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__radd__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rtc</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;RhythmTreeContainer&quot;</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Adds ``rtc`` and ``self``.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">rtc</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
-        <span class="k">return</span> <span class="n">rtc</span><span class="o">.</span><span class="fm">__add__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">rtc</span><span class="o">.</span><span class="fm">__add__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 
-
-<div class="viewcode-block" id="RhythmTreeContainer.__repr__">
-<a class="viewcode-back" href="../../api/abjad/rhythmtrees.html#abjad.rhythmtrees.RhythmTreeContainer.__repr__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets interpreter representation of rhythm-tree container.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">(</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">pair</span><span class="si">}</span><span class="s2">)&quot;</span></div>
-
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">(</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">pair</span><span class="si">}</span><span class="s2">)&quot;</span>
 
     <span class="c1">### PRIVATE METHODS ###</span>
 
@@ -987,7 +964,7 @@
 <span class="sd">                1))))</span>
 
 <span class="sd">        &gt;&gt;&gt; components = rtc(abjad.Duration(1, 2))</span>
-<span class="sd">        &gt;&gt;&gt; abjad.makers.tweak_tuplet_number_text(components)</span>
+<span class="sd">        &gt;&gt;&gt; abjad.tweak(components[0], r&quot;\tweak text #tuplet-number::calc-fraction-text&quot;)</span>
 <span class="sd">        &gt;&gt;&gt; voice = abjad.Voice(components)</span>
 <span class="sd">        &gt;&gt;&gt; staff = abjad.Staff([voice])</span>
 <span class="sd">        &gt;&gt;&gt; score = abjad.Score([staff])</span>
@@ -1126,7 +1103,7 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Duration</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
             <span class="n">pair</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">pair</span>
-        <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">RhythmTreeLeaf</span><span class="p">(</span><span class="n">pair</span><span class="p">,</span> <span class="n">is_pitched</span><span class="o">=</span><span class="mi">0</span> <span class="o">&lt;</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span></div>
+        <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">RhythmTreeLeaf</span><span class="p">(</span><span class="n">pair</span><span class="p">,</span> <span class="n">is_unpitched</span><span class="o">=</span><span class="ow">not</span> <span class="mi">0</span> <span class="o">&lt;</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span></div>
 
 
 <div class="viewcode-block" id="RhythmTreeParser.p_node__container">
@@ -1310,7 +1287,6 @@
 <span class="sd">        &gt;&gt;&gt; string = &quot;(2 (1 1))&quot;</span>
 <span class="sd">        &gt;&gt;&gt; nodes = abjad.rhythmtrees.parse(string)</span>
 <span class="sd">        &gt;&gt;&gt; components = abjad.rhythmtrees.call(nodes)</span>
-<span class="sd">        &gt;&gt;&gt; abjad.makers.tweak_tuplet_number_text(components)</span>
 <span class="sd">        &gt;&gt;&gt; voice = abjad.Voice(components)</span>
 <span class="sd">        &gt;&gt;&gt; leaf = abjad.select.leaf(voice, 0)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.setting(leaf).Score.proportionalNotationDuration = &quot;#1/12&quot;</span>
@@ -1322,7 +1298,6 @@
 <span class="sd">            &gt;&gt;&gt; print(string)</span>
 <span class="sd">            \new Voice</span>
 <span class="sd">            {</span>
-<span class="sd">                \tweak text #tuplet-number::calc-fraction-text</span>
 <span class="sd">                \tuplet 1/1</span>
 <span class="sd">                {</span>
 <span class="sd">                    \set Score.proportionalNotationDuration = #1/12</span>
@@ -1378,7 +1353,6 @@
 <span class="sd">        &gt;&gt;&gt; string = &quot;(1 (1)) (1 (1 1)) (1 (1 2))&quot;</span>
 <span class="sd">        &gt;&gt;&gt; nodes = abjad.rhythmtrees.parse(string)</span>
 <span class="sd">        &gt;&gt;&gt; components = abjad.rhythmtrees.call(nodes)</span>
-<span class="sd">        &gt;&gt;&gt; abjad.makers.tweak_tuplet_number_text(components)</span>
 <span class="sd">        &gt;&gt;&gt; voice = abjad.Voice(components)</span>
 <span class="sd">        &gt;&gt;&gt; leaf = abjad.select.leaf(voice, 0)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.setting(leaf).Score.proportionalNotationDuration = &quot;#1/12&quot;</span>
@@ -1390,13 +1364,11 @@
 <span class="sd">            &gt;&gt;&gt; print(string)</span>
 <span class="sd">            \new Voice</span>
 <span class="sd">            {</span>
-<span class="sd">                \tweak text #tuplet-number::calc-fraction-text</span>
 <span class="sd">                \tuplet 1/1</span>
 <span class="sd">                {</span>
 <span class="sd">                    \set Score.proportionalNotationDuration = #1/12</span>
 <span class="sd">                    c&#39;4</span>
 <span class="sd">                }</span>
-<span class="sd">                \tweak text #tuplet-number::calc-fraction-text</span>
 <span class="sd">                \tuplet 1/1</span>
 <span class="sd">                {</span>
 <span class="sd">                    c&#39;8</span>
@@ -1460,7 +1432,6 @@
 <span class="sd">        &gt;&gt;&gt; string = &quot;(1 (1 (1 (1 1)) 1))&quot;</span>
 <span class="sd">        &gt;&gt;&gt; nodes = abjad.rhythmtrees.parse(string)</span>
 <span class="sd">        &gt;&gt;&gt; components = abjad.rhythmtrees.call(nodes, abjad.Duration(1, 2))</span>
-<span class="sd">        &gt;&gt;&gt; abjad.makers.tweak_tuplet_number_text(components)</span>
 <span class="sd">        &gt;&gt;&gt; voice = abjad.Voice(components)</span>
 <span class="sd">        &gt;&gt;&gt; leaf = abjad.select.leaf(voice, 0)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.setting(leaf).Score.proportionalNotationDuration = &quot;#1/12&quot;</span>
@@ -1476,7 +1447,6 @@
 <span class="sd">                {</span>
 <span class="sd">                    \set Score.proportionalNotationDuration = #1/12</span>
 <span class="sd">                    c&#39;4</span>
-<span class="sd">                    \tweak text #tuplet-number::calc-fraction-text</span>
 <span class="sd">                    \tuplet 1/1</span>
 <span class="sd">                    {</span>
 <span class="sd">                        c&#39;8</span>
@@ -1520,7 +1490,7 @@
 <span class="sd">    Extracts trivial tuplets from ``argument``.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">for</span> <span class="n">tuplet</span> <span class="ow">in</span> <span class="n">_select</span><span class="o">.</span><span class="n">tuplets</span><span class="p">(</span><span class="n">argument</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">tuplet</span><span class="o">.</span><span class="n">trivial</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">tuplet</span><span class="o">.</span><span class="n">ratio</span><span class="o">.</span><span class="n">is_trivial</span><span class="p">():</span>
             <span class="n">_mutate</span><span class="o">.</span><span class="n">extract</span><span class="p">(</span><span class="n">tuplet</span><span class="p">)</span></div>
 
 </pre></div>
@@ -1540,7 +1510,7 @@
         
         &copy; Copyright 2008-2025, Trevor Bača &amp; Joséphine Oberholtzer.
       <span class="lastupdated">
-        Last updated on Jun 02, 2025.
+        Last updated on Jul 05, 2025.
       </span>
 
     </p>

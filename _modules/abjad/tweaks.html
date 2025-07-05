@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>abjad.tweaks &mdash; Abjad 3.25 documentation</title>
+  <title>abjad.tweaks &mdash; Abjad 3.26 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../_static/abjad.css?v=1f187528" />
@@ -18,12 +18,14 @@
     <link rel="canonical" href="https://abjad.github.io_modules/abjad/tweaks.html"/>
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=6e073912"></script>
+      <script src="../../_static/documentation_options.js?v=59ffb378"></script>
       <script src="../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script src="../../_static/ga.js?v=c455bbd5"></script>
       <script src="../../_static/toggleprompt.js?v=5801b3bb"></script>
       <script defer="defer" src="../../_static/lightbox2/js/lightbox.js?v=bc25c2e6"></script>
+      <script src="../../_static/inject-autosummary-fqns.js?v=49afa734"></script>
+      <script src="../../_static/inject-fqns.js?v=c5423c1b"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
@@ -33,11 +35,11 @@
   <div class="wy-grid-for-nav">
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search"  style="background: #996633" >
+        <div class="wy-side-nav-search"  style="background: #CC8844" >
 
 
     <a href="../../index.html" class="icon icon-home" alt="Documentation
-    Home"> Abjad 3.25
+    Home"> Abjad 3.26
 
 
 
@@ -108,7 +110,7 @@
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #996633" >
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #CC8844" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../index.html">Abjad</a>
       </nav>
@@ -124,7 +126,11 @@
     <div itemprop="articleBody">
     
   <h1>Source code for abjad.tweaks</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">dataclasses</span>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Classes and functions to work with LilyPond tweaks.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">dataclasses</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">typing</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">tag</span> <span class="k">as</span> <span class="n">_tag</span>
@@ -142,16 +148,13 @@
     <span class="n">i</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">tag</span><span class="p">:</span> <span class="n">_tag</span><span class="o">.</span><span class="n">Tag</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
 
-<div class="viewcode-block" id="Tweak.__post_init__">
-<a class="viewcode-back" href="../../api/abjad/tweaks.html#abjad.tweaks.Tweak.__post_init__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">__post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">string</span><span class="p">,</span> <span class="nb">str</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">string</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">i</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">i</span><span class="p">,</span> <span class="nb">int</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">i</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">tag</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tag</span><span class="p">,</span> <span class="n">_tag</span><span class="o">.</span><span class="n">Tag</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tag</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_parse</span><span class="p">()</span></div>
-
+        <span class="bp">self</span><span class="o">.</span><span class="n">_parse</span><span class="p">()</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_list_contributions</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
@@ -178,13 +181,19 @@
 <div class="viewcode-block" id="Tweak.attribute">
 <a class="viewcode-back" href="../../api/abjad/tweaks.html#abjad.tweaks.Tweak.attribute">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">attribute</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets tweak attribute.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">post_event</span><span class="p">,</span> <span class="n">attribute</span><span class="p">,</span> <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parse</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">attribute</span></div>
 
 
-<div class="viewcode-block" id="Tweak.post_event">
-<a class="viewcode-back" href="../../api/abjad/tweaks.html#abjad.tweaks.Tweak.post_event">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">post_event</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<div class="viewcode-block" id="Tweak.is_post_event">
+<a class="viewcode-back" href="../../api/abjad/tweaks.html#abjad.tweaks.Tweak.is_post_event">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_post_event</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Is true when tweak is post-event.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">post_event</span><span class="p">,</span> <span class="n">attribute</span><span class="p">,</span> <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parse</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">post_event</span></div>
 
@@ -192,6 +201,9 @@
 <div class="viewcode-block" id="Tweak.value">
 <a class="viewcode-back" href="../../api/abjad/tweaks.html#abjad.tweaks.Tweak.value">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">value</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets tweak value.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">post_event</span><span class="p">,</span> <span class="n">attribute</span><span class="p">,</span> <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parse</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">value</span></div>
 </div>
@@ -226,8 +238,6 @@
     <span class="n">tweaks</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Tweak</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="p">()</span>
     <span class="n">comment</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
 
-<div class="viewcode-block" id="Bundle.__post_init__">
-<a class="viewcode-back" href="../../api/abjad/tweaks.html#abjad.tweaks.Bundle.__post_init__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">__post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">assert</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">indicator</span><span class="p">,</span> <span class="n">Bundle</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">indicator</span><span class="p">)</span>
         <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tweaks</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tweaks</span><span class="p">)</span>
@@ -236,8 +246,7 @@
         <span class="k">for</span> <span class="n">attribute</span> <span class="ow">in</span> <span class="n">attributes</span><span class="p">:</span>
             <span class="k">if</span> <span class="mi">1</span> <span class="o">&lt;</span> <span class="n">attributes</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">attribute</span><span class="p">):</span>
                 <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;duplicate </span><span class="si">{</span><span class="n">attribute</span><span class="si">!r}</span><span class="s2"> attribute.&quot;</span><span class="p">)</span>
-        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">comment</span><span class="p">,</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">comment</span><span class="p">)</span></div>
-
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">comment</span><span class="p">,</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">comment</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_get_contributions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">component</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">wrapper</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="k">try</span><span class="p">:</span>
@@ -565,7 +574,7 @@
         
         &copy; Copyright 2008-2025, Trevor Bača &amp; Joséphine Oberholtzer.
       <span class="lastupdated">
-        Last updated on Jun 02, 2025.
+        Last updated on Jul 05, 2025.
       </span>
 
     </p>

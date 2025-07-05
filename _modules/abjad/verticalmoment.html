@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>abjad.verticalmoment &mdash; Abjad 3.25 documentation</title>
+  <title>abjad.verticalmoment &mdash; Abjad 3.26 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../_static/abjad.css?v=1f187528" />
@@ -18,12 +18,14 @@
     <link rel="canonical" href="https://abjad.github.io_modules/abjad/verticalmoment.html"/>
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=6e073912"></script>
+      <script src="../../_static/documentation_options.js?v=59ffb378"></script>
       <script src="../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script src="../../_static/ga.js?v=c455bbd5"></script>
       <script src="../../_static/toggleprompt.js?v=5801b3bb"></script>
       <script defer="defer" src="../../_static/lightbox2/js/lightbox.js?v=bc25c2e6"></script>
+      <script src="../../_static/inject-autosummary-fqns.js?v=49afa734"></script>
+      <script src="../../_static/inject-fqns.js?v=c5423c1b"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
@@ -33,11 +35,11 @@
   <div class="wy-grid-for-nav">
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search"  style="background: #996633" >
+        <div class="wy-side-nav-search"  style="background: #CC8844" >
 
 
     <a href="../../index.html" class="icon icon-home" alt="Documentation
-    Home"> Abjad 3.25
+    Home"> Abjad 3.26
 
 
 
@@ -108,7 +110,7 @@
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #996633" >
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #CC8844" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../index.html">Abjad</a>
       </nav>
@@ -124,9 +126,16 @@
     <div itemprop="articleBody">
     
   <h1>Source code for abjad.verticalmoment</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="nb">enumerate</span> <span class="k">as</span> <span class="n">_enumerate</span>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Classes to model events that happen at the same time.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">typing</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="nb">enumerate</span> <span class="k">as</span> <span class="n">_enumerate</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">iterate</span> <span class="k">as</span> <span class="n">_iterate</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">parentage</span> <span class="k">as</span> <span class="n">_parentage</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">pitch</span> <span class="k">as</span> <span class="n">_pitch</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">score</span> <span class="k">as</span> <span class="n">_score</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">select</span> <span class="k">as</span> <span class="n">_select</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">sequence</span> <span class="k">as</span> <span class="n">_sequence</span>
@@ -194,8 +203,6 @@
 
     <span class="c1">### SPECIAL METHODS ###</span>
 
-<div class="viewcode-block" id="VerticalMoment.__eq__">
-<a class="viewcode-back" href="../../api/abjad/verticalmoment.html#abjad.verticalmoment.VerticalMoment.__eq__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Is true when ``argument`` is a vertical moment with the same components as this</span>
@@ -208,11 +215,8 @@
                         <span class="k">return</span> <span class="kc">False</span>
                 <span class="k">else</span><span class="p">:</span>
                     <span class="k">return</span> <span class="kc">True</span>
-        <span class="k">return</span> <span class="kc">False</span></div>
+        <span class="k">return</span> <span class="kc">False</span>
 
-
-<div class="viewcode-block" id="VerticalMoment.__hash__">
-<a class="viewcode-back" href="../../api/abjad/verticalmoment.html#abjad.verticalmoment.VerticalMoment.__hash__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Hases vertical moment.</span>
@@ -233,43 +237,21 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">components</span><span class="p">:</span>
             <span class="k">return</span> <span class="nb">hash</span><span class="p">(</span><span class="nb">tuple</span><span class="p">([</span><span class="nb">id</span><span class="p">(</span><span class="n">_</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">components</span><span class="p">]))</span>
-        <span class="k">return</span> <span class="mi">0</span></div>
+        <span class="k">return</span> <span class="mi">0</span>
 
-
-<div class="viewcode-block" id="VerticalMoment.__len__">
-<a class="viewcode-back" href="../../api/abjad/verticalmoment.html#abjad.verticalmoment.VerticalMoment.__len__">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Length of vertical moment.</span>
+<span class="sd">        Gets length of vertical moment.</span>
 
 <span class="sd">        ..  container:: example</span>
 
-<span class="sd">            &gt;&gt;&gt; score = abjad.Score(</span>
-<span class="sd">            ... r&#39;&#39;&#39;</span>
-<span class="sd">            ...    \new Staff {</span>
-<span class="sd">            ...        \times 4/3 {</span>
-<span class="sd">            ...            d&#39;&#39;8</span>
-<span class="sd">            ...            c&#39;&#39;8</span>
-<span class="sd">            ...            b&#39;8</span>
-<span class="sd">            ...        }</span>
-<span class="sd">            ...    }</span>
-<span class="sd">            ...    \new PianoStaff &lt;&lt;</span>
-<span class="sd">            ...        \new Staff {</span>
-<span class="sd">            ...            a&#39;4</span>
-<span class="sd">            ...            g&#39;4</span>
-<span class="sd">            ...        }</span>
-<span class="sd">            ...        \new Staff {</span>
-<span class="sd">            ...            \clef &quot;bass&quot;</span>
-<span class="sd">            ...            f&#39;8</span>
-<span class="sd">            ...            e&#39;8</span>
-<span class="sd">            ...            d&#39;8</span>
-<span class="sd">            ...            c&#39;8</span>
-<span class="sd">            ...        }</span>
-<span class="sd">            ...    &gt;&gt;</span>
-<span class="sd">            ...    &#39;&#39;&#39;</span>
-<span class="sd">            ...    )</span>
-
-<span class="sd">            &gt;&gt;&gt; abjad.makers.tweak_tuplet_number_text(score)</span>
+<span class="sd">            &gt;&gt;&gt; score = abjad.Score([</span>
+<span class="sd">            ...     abjad.Staff(r&quot;\tuplet 3/2 { d&#39;&#39;4 c&#39;&#39;4 b&#39;4 }&quot;),</span>
+<span class="sd">            ...     abjad.StaffGroup([</span>
+<span class="sd">            ...         abjad.Staff(&quot;a&#39;4 g&#39;4&quot;),</span>
+<span class="sd">            ...         abjad.Staff(r&#39;&#39;&#39;\clef &quot;bass&quot; f&#39;8 e&#39;8 d&#39;8 c&#39;8&#39;&#39;&#39;),</span>
+<span class="sd">            ...     ]),</span>
+<span class="sd">            ... ])</span>
 <span class="sd">            &gt;&gt;&gt; abjad.show(score) # doctest: +SKIP</span>
 
 <span class="sd">            ..  docs::</span>
@@ -280,15 +262,14 @@
 <span class="sd">                &lt;&lt;</span>
 <span class="sd">                    \new Staff</span>
 <span class="sd">                    {</span>
-<span class="sd">                        \tweak text #tuplet-number::calc-fraction-text</span>
-<span class="sd">                        \tuplet 3/4</span>
+<span class="sd">                        \tuplet 3/2</span>
 <span class="sd">                        {</span>
-<span class="sd">                            d&#39;&#39;8</span>
-<span class="sd">                            c&#39;&#39;8</span>
-<span class="sd">                            b&#39;8</span>
+<span class="sd">                            d&#39;&#39;4</span>
+<span class="sd">                            c&#39;&#39;4</span>
+<span class="sd">                            b&#39;4</span>
 <span class="sd">                        }</span>
 <span class="sd">                    }</span>
-<span class="sd">                    \new PianoStaff</span>
+<span class="sd">                    \new StaffGroup</span>
 <span class="sd">                    &lt;&lt;</span>
 <span class="sd">                        \new Staff</span>
 <span class="sd">                        {</span>
@@ -320,11 +301,8 @@
 
 <span class="sd">        Returns nonnegative integer.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">components</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">components</span><span class="p">)</span>
 
-
-<div class="viewcode-block" id="VerticalMoment.__repr__">
-<a class="viewcode-back" href="../../api/abjad/verticalmoment.html#abjad.verticalmoment.VerticalMoment.__repr__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets interpreter representation of vertical moment.</span>
@@ -335,45 +313,24 @@
             <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">()&quot;</span>
         <span class="n">length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">leaves</span><span class="p">)</span>
         <span class="n">result</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">(</span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">offset</span><span class="p">)</span><span class="si">}</span><span class="s2">, &lt;&lt;</span><span class="si">{</span><span class="n">length</span><span class="si">}</span><span class="s2">&gt;&gt;)&quot;</span>
-        <span class="k">return</span> <span class="n">result</span></div>
-
+        <span class="k">return</span> <span class="n">result</span>
 
     <span class="c1">### PUBLIC PROPERTIES ###</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">attack_count</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Positive integer number of pitch carriers starting at vertical</span>
-<span class="sd">        moment.</span>
+<span class="sd">        Positive integer number of pitch carriers starting at vertical moment.</span>
 
 <span class="sd">        ..  container:: example</span>
 
-<span class="sd">            &gt;&gt;&gt; score = abjad.Score(</span>
-<span class="sd">            ... r&#39;&#39;&#39;</span>
-<span class="sd">            ...    \new Staff {</span>
-<span class="sd">            ...        \times 4/3 {</span>
-<span class="sd">            ...            d&#39;&#39;8</span>
-<span class="sd">            ...            c&#39;&#39;8</span>
-<span class="sd">            ...            b&#39;8</span>
-<span class="sd">            ...        }</span>
-<span class="sd">            ...    }</span>
-<span class="sd">            ...    \new PianoStaff &lt;&lt;</span>
-<span class="sd">            ...        \new Staff {</span>
-<span class="sd">            ...            a&#39;4</span>
-<span class="sd">            ...            g&#39;4</span>
-<span class="sd">            ...        }</span>
-<span class="sd">            ...        \new Staff {</span>
-<span class="sd">            ...            \clef &quot;bass&quot;</span>
-<span class="sd">            ...            f&#39;8</span>
-<span class="sd">            ...            e&#39;8</span>
-<span class="sd">            ...            d&#39;8</span>
-<span class="sd">            ...            c&#39;8</span>
-<span class="sd">            ...        }</span>
-<span class="sd">            ...    &gt;&gt;</span>
-<span class="sd">            ...    &#39;&#39;&#39;</span>
-<span class="sd">            ...    )</span>
-
-<span class="sd">            &gt;&gt;&gt; abjad.makers.tweak_tuplet_number_text(score)</span>
+<span class="sd">            &gt;&gt;&gt; score = abjad.Score([</span>
+<span class="sd">            ...     abjad.Staff(r&quot;\tuplet 3/2 { d&#39;&#39;4 c&#39;&#39;4 b&#39;4 }&quot;),</span>
+<span class="sd">            ...     abjad.StaffGroup([</span>
+<span class="sd">            ...         abjad.Staff(&quot;a&#39;4 g&#39;4&quot;),</span>
+<span class="sd">            ...         abjad.Staff(r&#39;&#39;&#39;\clef &quot;bass&quot; f&#39;8 e&#39;8 d&#39;8 c&#39;8&#39;&#39;&#39;),</span>
+<span class="sd">            ...     ]),</span>
+<span class="sd">            ... ])</span>
 <span class="sd">            &gt;&gt;&gt; abjad.show(score) # doctest: +SKIP</span>
 
 <span class="sd">            ..  docs::</span>
@@ -384,15 +341,14 @@
 <span class="sd">                &lt;&lt;</span>
 <span class="sd">                    \new Staff</span>
 <span class="sd">                    {</span>
-<span class="sd">                        \tweak text #tuplet-number::calc-fraction-text</span>
-<span class="sd">                        \tuplet 3/4</span>
+<span class="sd">                        \tuplet 3/2</span>
 <span class="sd">                        {</span>
-<span class="sd">                            d&#39;&#39;8</span>
-<span class="sd">                            c&#39;&#39;8</span>
-<span class="sd">                            b&#39;8</span>
+<span class="sd">                            d&#39;&#39;4</span>
+<span class="sd">                            c&#39;&#39;4</span>
+<span class="sd">                            b&#39;4</span>
 <span class="sd">                        }</span>
 <span class="sd">                    }</span>
-<span class="sd">                    \new PianoStaff</span>
+<span class="sd">                    \new StaffGroup</span>
 <span class="sd">                    &lt;&lt;</span>
 <span class="sd">                        \new Staff</span>
 <span class="sd">                        {</span>
@@ -451,32 +407,13 @@
 
 <span class="sd">        ..  container:: example</span>
 
-<span class="sd">            &gt;&gt;&gt; score = abjad.Score(</span>
-<span class="sd">            ... r&#39;&#39;&#39;</span>
-<span class="sd">            ...    \new Staff {</span>
-<span class="sd">            ...        \times 4/3 {</span>
-<span class="sd">            ...            d&#39;&#39;8</span>
-<span class="sd">            ...            c&#39;&#39;8</span>
-<span class="sd">            ...            b&#39;8</span>
-<span class="sd">            ...        }</span>
-<span class="sd">            ...    }</span>
-<span class="sd">            ...    \new PianoStaff &lt;&lt;</span>
-<span class="sd">            ...        \new Staff {</span>
-<span class="sd">            ...            a&#39;4</span>
-<span class="sd">            ...            g&#39;4</span>
-<span class="sd">            ...        }</span>
-<span class="sd">            ...        \new Staff {</span>
-<span class="sd">            ...            \clef &quot;bass&quot;</span>
-<span class="sd">            ...            f&#39;8</span>
-<span class="sd">            ...            e&#39;8</span>
-<span class="sd">            ...            d&#39;8</span>
-<span class="sd">            ...            c&#39;8</span>
-<span class="sd">            ...        }</span>
-<span class="sd">            ...    &gt;&gt;</span>
-<span class="sd">            ...    &#39;&#39;&#39;</span>
-<span class="sd">            ...    )</span>
-
-<span class="sd">            &gt;&gt;&gt; abjad.makers.tweak_tuplet_number_text(score)</span>
+<span class="sd">            &gt;&gt;&gt; score = abjad.Score([</span>
+<span class="sd">            ...     abjad.Staff(r&quot;\tuplet 3/2 { d&#39;&#39;4 c&#39;&#39;4 b&#39;4 }&quot;),</span>
+<span class="sd">            ...     abjad.StaffGroup([</span>
+<span class="sd">            ...         abjad.Staff(&quot;a&#39;4 g&#39;4&quot;),</span>
+<span class="sd">            ...         abjad.Staff(r&#39;&#39;&#39;\clef &quot;bass&quot; f&#39;8 e&#39;8 d&#39;8 c&#39;8&#39;&#39;&#39;),</span>
+<span class="sd">            ...     ]),</span>
+<span class="sd">            ... ])</span>
 <span class="sd">            &gt;&gt;&gt; abjad.show(score) # doctest: +SKIP</span>
 
 <span class="sd">            ..  docs::</span>
@@ -487,15 +424,14 @@
 <span class="sd">                &lt;&lt;</span>
 <span class="sd">                    \new Staff</span>
 <span class="sd">                    {</span>
-<span class="sd">                        \tweak text #tuplet-number::calc-fraction-text</span>
-<span class="sd">                        \tuplet 3/4</span>
+<span class="sd">                        \tuplet 3/2</span>
 <span class="sd">                        {</span>
-<span class="sd">                            d&#39;&#39;8</span>
-<span class="sd">                            c&#39;&#39;8</span>
-<span class="sd">                            b&#39;8</span>
+<span class="sd">                            d&#39;&#39;4</span>
+<span class="sd">                            c&#39;&#39;4</span>
+<span class="sd">                            b&#39;4</span>
 <span class="sd">                        }</span>
 <span class="sd">                    }</span>
-<span class="sd">                    \new PianoStaff</span>
+<span class="sd">                    \new StaffGroup</span>
 <span class="sd">                    &lt;&lt;</span>
 <span class="sd">                        \new Staff</span>
 <span class="sd">                        {</span>
@@ -516,12 +452,12 @@
 <span class="sd">            &gt;&gt;&gt; for moment in abjad.iterate_vertical_moments(score):</span>
 <span class="sd">            ...     print(moment.offset, moment.leaves)</span>
 <span class="sd">            ...</span>
-<span class="sd">            0 [Note(&quot;d&#39;&#39;8&quot;), Note(&quot;a&#39;4&quot;), Note(&quot;f&#39;8&quot;)]</span>
-<span class="sd">            1/8 [Note(&quot;d&#39;&#39;8&quot;), Note(&quot;a&#39;4&quot;), Note(&quot;e&#39;8&quot;)]</span>
-<span class="sd">            1/6 [Note(&quot;c&#39;&#39;8&quot;), Note(&quot;a&#39;4&quot;), Note(&quot;e&#39;8&quot;)]</span>
-<span class="sd">            1/4 [Note(&quot;c&#39;&#39;8&quot;), Note(&quot;g&#39;4&quot;), Note(&quot;d&#39;8&quot;)]</span>
-<span class="sd">            1/3 [Note(&quot;b&#39;8&quot;), Note(&quot;g&#39;4&quot;), Note(&quot;d&#39;8&quot;)]</span>
-<span class="sd">            3/8 [Note(&quot;b&#39;8&quot;), Note(&quot;g&#39;4&quot;), Note(&quot;c&#39;8&quot;)]</span>
+<span class="sd">            0 [Note(&quot;d&#39;&#39;4&quot;), Note(&quot;a&#39;4&quot;), Note(&quot;f&#39;8&quot;)]</span>
+<span class="sd">            1/8 [Note(&quot;d&#39;&#39;4&quot;), Note(&quot;a&#39;4&quot;), Note(&quot;e&#39;8&quot;)]</span>
+<span class="sd">            1/6 [Note(&quot;c&#39;&#39;4&quot;), Note(&quot;a&#39;4&quot;), Note(&quot;e&#39;8&quot;)]</span>
+<span class="sd">            1/4 [Note(&quot;c&#39;&#39;4&quot;), Note(&quot;g&#39;4&quot;), Note(&quot;d&#39;8&quot;)]</span>
+<span class="sd">            1/3 [Note(&quot;b&#39;4&quot;), Note(&quot;g&#39;4&quot;), Note(&quot;d&#39;8&quot;)]</span>
+<span class="sd">            3/8 [Note(&quot;b&#39;4&quot;), Note(&quot;g&#39;4&quot;), Note(&quot;c&#39;8&quot;)]</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
@@ -636,23 +572,23 @@
 
 <div class="viewcode-block" id="iterate_vertical_moments">
 <a class="viewcode-back" href="../../api/abjad/verticalmoment.html#abjad.verticalmoment.iterate_vertical_moments">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">iterate_vertical_moments</span><span class="p">(</span><span class="n">components</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sa">r</span><span class="sd">&#39;&#39;&#39;</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">iterate_vertical_moments</span><span class="p">(</span><span class="n">components</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Iterates vertical moments.</span>
+
+<span class="sd">    Returns tuple.</span>
 
 <span class="sd">    ..  container:: example</span>
 
-<span class="sd">        Iterates vertical moments:</span>
+<span class="sd">        Iterates vertical moments forward:</span>
 
-<span class="sd">        &gt;&gt;&gt; score = abjad.Score([])</span>
-<span class="sd">        &gt;&gt;&gt; staff = abjad.Staff(r&quot;\times 4/3 { d&#39;&#39;8 c&#39;&#39;8 b&#39;8 }&quot;)</span>
-<span class="sd">        &gt;&gt;&gt; score.append(staff)</span>
-<span class="sd">        &gt;&gt;&gt; staff_group = abjad.StaffGroup([])</span>
-<span class="sd">        &gt;&gt;&gt; staff_group.lilypond_type = &#39;PianoStaff&#39;</span>
-<span class="sd">        &gt;&gt;&gt; staff_group.append(abjad.Staff(&quot;a&#39;4 g&#39;4&quot;))</span>
-<span class="sd">        &gt;&gt;&gt; staff_group.append(abjad.Staff(r&quot;&quot;&quot;\clef &quot;bass&quot; f&#39;8 e&#39;8 d&#39;8 c&#39;8&quot;&quot;&quot;))</span>
-<span class="sd">        &gt;&gt;&gt; score.append(staff_group)</span>
-<span class="sd">        &gt;&gt;&gt; abjad.makers.tweak_tuplet_number_text(score)</span>
+<span class="sd">        &gt;&gt;&gt; score = abjad.Score([</span>
+<span class="sd">        ...     abjad.Staff(r&quot;\tuplet 3/2 { d&#39;&#39;4 c&#39;&#39;4 b&#39;4 }&quot;),</span>
+<span class="sd">        ...     abjad.StaffGroup([</span>
+<span class="sd">        ...         abjad.Staff(&quot;a&#39;4 g&#39;4&quot;),</span>
+<span class="sd">        ...         abjad.Staff(r&#39;&#39;&#39;\clef &quot;bass&quot; f&#39;8 e&#39;8 d&#39;8 c&#39;8&#39;&#39;&#39;),</span>
+<span class="sd">        ...     ]),</span>
+<span class="sd">        ... ])</span>
 <span class="sd">        &gt;&gt;&gt; abjad.show(score) # doctest: +SKIP</span>
 
 <span class="sd">        ..  docs::</span>
@@ -663,15 +599,14 @@
 <span class="sd">            &lt;&lt;</span>
 <span class="sd">                \new Staff</span>
 <span class="sd">                {</span>
-<span class="sd">                    \tweak text #tuplet-number::calc-fraction-text</span>
-<span class="sd">                    \tuplet 3/4</span>
+<span class="sd">                    \tuplet 3/2</span>
 <span class="sd">                    {</span>
-<span class="sd">                        d&#39;&#39;8</span>
-<span class="sd">                        c&#39;&#39;8</span>
-<span class="sd">                        b&#39;8</span>
+<span class="sd">                        d&#39;&#39;4</span>
+<span class="sd">                        c&#39;&#39;4</span>
+<span class="sd">                        b&#39;4</span>
 <span class="sd">                    }</span>
 <span class="sd">                }</span>
-<span class="sd">                \new PianoStaff</span>
+<span class="sd">                \new StaffGroup</span>
 <span class="sd">                &lt;&lt;</span>
 <span class="sd">                    \new Staff</span>
 <span class="sd">                    {</span>
@@ -692,13 +627,14 @@
 <span class="sd">        &gt;&gt;&gt; for vertical_moment in abjad.iterate_vertical_moments(score):</span>
 <span class="sd">        ...     vertical_moment.leaves</span>
 <span class="sd">        ...</span>
-<span class="sd">        [Note(&quot;d&#39;&#39;8&quot;), Note(&quot;a&#39;4&quot;), Note(&quot;f&#39;8&quot;)]</span>
-<span class="sd">        [Note(&quot;d&#39;&#39;8&quot;), Note(&quot;a&#39;4&quot;), Note(&quot;e&#39;8&quot;)]</span>
-<span class="sd">        [Note(&quot;c&#39;&#39;8&quot;), Note(&quot;a&#39;4&quot;), Note(&quot;e&#39;8&quot;)]</span>
-<span class="sd">        [Note(&quot;c&#39;&#39;8&quot;), Note(&quot;g&#39;4&quot;), Note(&quot;d&#39;8&quot;)]</span>
-<span class="sd">        [Note(&quot;b&#39;8&quot;), Note(&quot;g&#39;4&quot;), Note(&quot;d&#39;8&quot;)]</span>
-<span class="sd">        [Note(&quot;b&#39;8&quot;), Note(&quot;g&#39;4&quot;), Note(&quot;c&#39;8&quot;)]</span>
+<span class="sd">        [Note(&quot;d&#39;&#39;4&quot;), Note(&quot;a&#39;4&quot;), Note(&quot;f&#39;8&quot;)]</span>
+<span class="sd">        [Note(&quot;d&#39;&#39;4&quot;), Note(&quot;a&#39;4&quot;), Note(&quot;e&#39;8&quot;)]</span>
+<span class="sd">        [Note(&quot;c&#39;&#39;4&quot;), Note(&quot;a&#39;4&quot;), Note(&quot;e&#39;8&quot;)]</span>
+<span class="sd">        [Note(&quot;c&#39;&#39;4&quot;), Note(&quot;g&#39;4&quot;), Note(&quot;d&#39;8&quot;)]</span>
+<span class="sd">        [Note(&quot;b&#39;4&quot;), Note(&quot;g&#39;4&quot;), Note(&quot;d&#39;8&quot;)]</span>
+<span class="sd">        [Note(&quot;b&#39;4&quot;), Note(&quot;g&#39;4&quot;), Note(&quot;c&#39;8&quot;)]</span>
 
+<span class="sd">        &gt;&gt;&gt; staff_group = score[1]</span>
 <span class="sd">        &gt;&gt;&gt; for vertical_moment in abjad.iterate_vertical_moments(staff_group):</span>
 <span class="sd">        ...     vertical_moment.leaves</span>
 <span class="sd">        ...</span>
@@ -711,74 +647,25 @@
 
 <span class="sd">        Iterates vertical moments in reverse:</span>
 
-<span class="sd">        &gt;&gt;&gt; score = abjad.Score([])</span>
-<span class="sd">        &gt;&gt;&gt; staff = abjad.Staff(r&quot;\times 4/3 { d&#39;&#39;8 c&#39;&#39;8 b&#39;8 }&quot;)</span>
-<span class="sd">        &gt;&gt;&gt; score.append(staff)</span>
-<span class="sd">        &gt;&gt;&gt; staff_group = abjad.StaffGroup([])</span>
-<span class="sd">        &gt;&gt;&gt; staff_group.lilypond_type = &#39;PianoStaff&#39;</span>
-<span class="sd">        &gt;&gt;&gt; staff_group.append(abjad.Staff(&quot;a&#39;4 g&#39;4&quot;))</span>
-<span class="sd">        &gt;&gt;&gt; staff_group.append(abjad.Staff(r&quot;&quot;&quot;\clef &quot;bass&quot; f&#39;8 e&#39;8 d&#39;8 c&#39;8&quot;&quot;&quot;))</span>
-<span class="sd">        &gt;&gt;&gt; score.append(staff_group)</span>
-<span class="sd">        &gt;&gt;&gt; abjad.makers.tweak_tuplet_number_text(score)</span>
-<span class="sd">        &gt;&gt;&gt; abjad.show(score) # doctest: +SKIP</span>
-
-<span class="sd">        ..  docs::</span>
-
-<span class="sd">            &gt;&gt;&gt; string = abjad.lilypond(score)</span>
-<span class="sd">            &gt;&gt;&gt; print(string)</span>
-<span class="sd">            \new Score</span>
-<span class="sd">            &lt;&lt;</span>
-<span class="sd">                \new Staff</span>
-<span class="sd">                {</span>
-<span class="sd">                    \tweak text #tuplet-number::calc-fraction-text</span>
-<span class="sd">                    \tuplet 3/4</span>
-<span class="sd">                    {</span>
-<span class="sd">                        d&#39;&#39;8</span>
-<span class="sd">                        c&#39;&#39;8</span>
-<span class="sd">                        b&#39;8</span>
-<span class="sd">                    }</span>
-<span class="sd">                }</span>
-<span class="sd">                \new PianoStaff</span>
-<span class="sd">                &lt;&lt;</span>
-<span class="sd">                    \new Staff</span>
-<span class="sd">                    {</span>
-<span class="sd">                        a&#39;4</span>
-<span class="sd">                        g&#39;4</span>
-<span class="sd">                    }</span>
-<span class="sd">                    \new Staff</span>
-<span class="sd">                    {</span>
-<span class="sd">                        \clef &quot;bass&quot;</span>
-<span class="sd">                        f&#39;8</span>
-<span class="sd">                        e&#39;8</span>
-<span class="sd">                        d&#39;8</span>
-<span class="sd">                        c&#39;8</span>
-<span class="sd">                    }</span>
-<span class="sd">                &gt;&gt;</span>
-<span class="sd">            &gt;&gt;</span>
-
-<span class="sd">        &gt;&gt;&gt; for vertical_moment in abjad.iterate_vertical_moments(score, reverse=True):</span>
-<span class="sd">        ...     vertical_moment.leaves</span>
+<span class="sd">        &gt;&gt;&gt; for vmoment in abjad.iterate_vertical_moments(score, reverse=True):</span>
+<span class="sd">        ...     vmoment.leaves</span>
 <span class="sd">        ...</span>
-<span class="sd">        [Note(&quot;b&#39;8&quot;), Note(&quot;g&#39;4&quot;), Note(&quot;c&#39;8&quot;)]</span>
-<span class="sd">        [Note(&quot;b&#39;8&quot;), Note(&quot;g&#39;4&quot;), Note(&quot;d&#39;8&quot;)]</span>
-<span class="sd">        [Note(&quot;c&#39;&#39;8&quot;), Note(&quot;g&#39;4&quot;), Note(&quot;d&#39;8&quot;)]</span>
-<span class="sd">        [Note(&quot;c&#39;&#39;8&quot;), Note(&quot;a&#39;4&quot;), Note(&quot;e&#39;8&quot;)]</span>
-<span class="sd">        [Note(&quot;d&#39;&#39;8&quot;), Note(&quot;a&#39;4&quot;), Note(&quot;e&#39;8&quot;)]</span>
-<span class="sd">        [Note(&quot;d&#39;&#39;8&quot;), Note(&quot;a&#39;4&quot;), Note(&quot;f&#39;8&quot;)]</span>
+<span class="sd">        [Note(&quot;b&#39;4&quot;), Note(&quot;g&#39;4&quot;), Note(&quot;c&#39;8&quot;)]</span>
+<span class="sd">        [Note(&quot;b&#39;4&quot;), Note(&quot;g&#39;4&quot;), Note(&quot;d&#39;8&quot;)]</span>
+<span class="sd">        [Note(&quot;c&#39;&#39;4&quot;), Note(&quot;g&#39;4&quot;), Note(&quot;d&#39;8&quot;)]</span>
+<span class="sd">        [Note(&quot;c&#39;&#39;4&quot;), Note(&quot;a&#39;4&quot;), Note(&quot;e&#39;8&quot;)]</span>
+<span class="sd">        [Note(&quot;d&#39;&#39;4&quot;), Note(&quot;a&#39;4&quot;), Note(&quot;e&#39;8&quot;)]</span>
+<span class="sd">        [Note(&quot;d&#39;&#39;4&quot;), Note(&quot;a&#39;4&quot;), Note(&quot;f&#39;8&quot;)]</span>
 
-<span class="sd">        &gt;&gt;&gt; for vertical_moment in abjad.iterate_vertical_moments(</span>
-<span class="sd">        ...     staff_group,</span>
-<span class="sd">        ...     reverse=True,</span>
-<span class="sd">        ...     ):</span>
-<span class="sd">        ...     vertical_moment.leaves</span>
+<span class="sd">        &gt;&gt;&gt; for vmoment in abjad.iterate_vertical_moments(staff_group, reverse=True):</span>
+<span class="sd">        ...     vmoment.leaves</span>
 <span class="sd">        ...</span>
 <span class="sd">        [Note(&quot;g&#39;4&quot;), Note(&quot;c&#39;8&quot;)]</span>
 <span class="sd">        [Note(&quot;g&#39;4&quot;), Note(&quot;d&#39;8&quot;)]</span>
 <span class="sd">        [Note(&quot;a&#39;4&quot;), Note(&quot;e&#39;8&quot;)]</span>
 <span class="sd">        [Note(&quot;a&#39;4&quot;), Note(&quot;f&#39;8&quot;)]</span>
 
-<span class="sd">    Returns tuple.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">moments</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">components</span> <span class="o">=</span> <span class="n">_select</span><span class="o">.</span><span class="n">components</span><span class="p">(</span><span class="n">components</span><span class="p">)</span>
     <span class="n">components</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">_</span><span class="p">:</span> <span class="n">_</span><span class="o">.</span><span class="n">_get_timespan</span><span class="p">()</span><span class="o">.</span><span class="n">start_offset</span><span class="p">)</span>
@@ -813,9 +700,11 @@
 
 <div class="viewcode-block" id="iterate_leaf_pairs">
 <a class="viewcode-back" href="../../api/abjad/verticalmoment.html#abjad.verticalmoment.iterate_leaf_pairs">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">iterate_leaf_pairs</span><span class="p">(</span><span class="n">components</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">iterate_leaf_pairs</span><span class="p">(</span><span class="n">components</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Iterator</span><span class="p">:</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Iterates leaf pairs.</span>
+
+<span class="sd">    Iterates leaf pairs left-to-right and top-to-bottom.</span>
 
 <span class="sd">    ..  container:: example</span>
 
@@ -866,9 +755,6 @@
 <span class="sd">        [Note(&#39;a,4&#39;), Note(&#39;g,4&#39;)]</span>
 <span class="sd">        [Note(&quot;g&#39;4&quot;), Note(&#39;g,4&#39;)]</span>
 
-<span class="sd">    Iterates leaf pairs left-to-right and top-to-bottom.</span>
-
-<span class="sd">    Returns generator.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">vertical_moments</span> <span class="o">=</span> <span class="n">iterate_vertical_moments</span><span class="p">(</span><span class="n">components</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">moment_1</span><span class="p">,</span> <span class="n">moment_2</span> <span class="ow">in</span> <span class="n">_sequence</span><span class="o">.</span><span class="n">nwise</span><span class="p">(</span><span class="n">vertical_moments</span><span class="p">):</span>
@@ -885,7 +771,9 @@
 
 <div class="viewcode-block" id="iterate_pitch_pairs">
 <a class="viewcode-back" href="../../api/abjad/verticalmoment.html#abjad.verticalmoment.iterate_pitch_pairs">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">iterate_pitch_pairs</span><span class="p">(</span><span class="n">components</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">iterate_pitch_pairs</span><span class="p">(</span>
+    <span class="n">components</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Iterator</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="n">_pitch</span><span class="o">.</span><span class="n">NamedPitch</span><span class="p">,</span> <span class="n">_pitch</span><span class="o">.</span><span class="n">NamedPitch</span><span class="p">]]:</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Iterates pitch pairs.</span>
 
@@ -970,7 +858,6 @@
 <span class="sd">        (NamedPitch(&quot;e&#39;&quot;), NamedPitch(&quot;g&#39;&#39;&quot;))</span>
 <span class="sd">        (NamedPitch(&quot;f&#39;&#39;&quot;), NamedPitch(&quot;g&#39;&#39;&quot;))</span>
 
-<span class="sd">    Returns generator.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">for</span> <span class="n">leaf_pair</span> <span class="ow">in</span> <span class="n">iterate_leaf_pairs</span><span class="p">(</span><span class="n">components</span><span class="p">):</span>
         <span class="n">pitches</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">_iterate</span><span class="o">.</span><span class="n">pitches</span><span class="p">(</span><span class="n">leaf_pair</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
@@ -1007,7 +894,7 @@
         
         &copy; Copyright 2008-2025, Trevor Bača &amp; Joséphine Oberholtzer.
       <span class="lastupdated">
-        Last updated on Jun 02, 2025.
+        Last updated on Jul 05, 2025.
       </span>
 
     </p>

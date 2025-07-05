@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>abjad.parentage &mdash; Abjad 3.25 documentation</title>
+  <title>abjad.parentage &mdash; Abjad 3.26 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../_static/abjad.css?v=1f187528" />
@@ -18,12 +18,14 @@
     <link rel="canonical" href="https://abjad.github.io_modules/abjad/parentage.html"/>
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=6e073912"></script>
+      <script src="../../_static/documentation_options.js?v=59ffb378"></script>
       <script src="../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script src="../../_static/ga.js?v=c455bbd5"></script>
       <script src="../../_static/toggleprompt.js?v=5801b3bb"></script>
       <script defer="defer" src="../../_static/lightbox2/js/lightbox.js?v=bc25c2e6"></script>
+      <script src="../../_static/inject-autosummary-fqns.js?v=49afa734"></script>
+      <script src="../../_static/inject-fqns.js?v=c5423c1b"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
@@ -33,11 +35,11 @@
   <div class="wy-grid-for-nav">
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search"  style="background: #996633" >
+        <div class="wy-side-nav-search"  style="background: #CC8844" >
 
 
     <a href="../../index.html" class="icon icon-home" alt="Documentation
-    Home"> Abjad 3.25
+    Home"> Abjad 3.26
 
 
 
@@ -108,7 +110,7 @@
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #996633" >
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #CC8844" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../index.html">Abjad</a>
       </nav>
@@ -124,7 +126,11 @@
     <div itemprop="articleBody">
     
   <h1>Source code for abjad.parentage</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">collections</span>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Classes to work with the parentage of score components.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">collections</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">fractions</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">math</span> <span class="k">as</span> <span class="n">_math</span>
@@ -201,8 +207,6 @@
 
     <span class="c1">### SPECIAL METHODS ###</span>
 
-<div class="viewcode-block" id="Parentage.__eq__">
-<a class="viewcode-back" href="../../api/abjad/parentage.html#abjad.parentage.Parentage.__eq__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Is true when ``argument`` is a parent with the same components as this parentage.</span>
@@ -214,37 +218,27 @@
                         <span class="k">return</span> <span class="kc">False</span>
                 <span class="k">else</span><span class="p">:</span>
                     <span class="k">return</span> <span class="kc">True</span>
-        <span class="k">return</span> <span class="kc">False</span></div>
+        <span class="k">return</span> <span class="kc">False</span>
 
-
-<div class="viewcode-block" id="Parentage.__getitem__">
-<a class="viewcode-back" href="../../api/abjad/parentage.html#abjad.parentage.Parentage.__getitem__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets ``argument``.</span>
 
 <span class="sd">        Returns component or tuple of components.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">components</span><span class="o">.</span><span class="fm">__getitem__</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">components</span><span class="o">.</span><span class="fm">__getitem__</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span>
 
-
-<div class="viewcode-block" id="Parentage.__len__">
-<a class="viewcode-back" href="../../api/abjad/parentage.html#abjad.parentage.Parentage.__len__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets number of components in parentage.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">components</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">components</span><span class="p">)</span>
 
-
-<div class="viewcode-block" id="Parentage.__repr__">
-<a class="viewcode-back" href="../../api/abjad/parentage.html#abjad.parentage.Parentage.__repr__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets repr.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">(component=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">component</span><span class="si">!r}</span><span class="s2">)&quot;</span></div>
-
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">(component=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">component</span><span class="si">!r}</span><span class="s2">)&quot;</span>
 
     <span class="c1">### PRIVATE METHODS ###</span>
 
@@ -253,14 +247,6 @@
         <span class="n">lhs</span> <span class="o">=</span> <span class="n">component</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
         <span class="n">rhs</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">component</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">id</span><span class="p">(</span><span class="n">component</span><span class="p">)</span>
         <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">lhs</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">rhs</span><span class="si">!r}</span><span class="s2">&quot;</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">_prolations</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">prolations</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">default</span> <span class="o">=</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-        <span class="k">for</span> <span class="n">parent</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
-            <span class="n">prolation</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;implied_prolation&quot;</span><span class="p">,</span> <span class="n">default</span><span class="p">)</span>
-            <span class="n">prolations</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">prolation</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">prolations</span>
 
     <span class="c1">### PUBLIC PROPERTIES ###</span>
 
@@ -516,99 +502,6 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_components</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">orphan</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Is true when component has no parent.</span>
-
-<span class="sd">        ..  container:: example</span>
-
-<span class="sd">            REGRESSION. Works with grace notes (and containers):</span>
-
-<span class="sd">            &gt;&gt;&gt; music_voice = abjad.Voice(&quot;c&#39;4 d&#39; e&#39; f&#39;&quot;, name=&quot;MusicVoice&quot;)</span>
-<span class="sd">            &gt;&gt;&gt; container = abjad.BeforeGraceContainer(&quot;cs&#39;16&quot;)</span>
-<span class="sd">            &gt;&gt;&gt; abjad.attach(container, music_voice[1])</span>
-<span class="sd">            &gt;&gt;&gt; obgc = abjad.on_beat_grace_container(&quot;g&#39;16 gs&#39; a&#39; as&#39;&quot;, music_voice[2:3])</span>
-<span class="sd">            &gt;&gt;&gt; abjad.attach(abjad.Articulation(&quot;&gt;&quot;), obgc[0])</span>
-<span class="sd">            &gt;&gt;&gt; container = abjad.AfterGraceContainer(&quot;fs&#39;16&quot;)</span>
-<span class="sd">            &gt;&gt;&gt; abjad.attach(container, music_voice[3])</span>
-<span class="sd">            &gt;&gt;&gt; staff = abjad.Staff([music_voice])</span>
-<span class="sd">            &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile([r&#39;\include &quot;abjad.ily&quot;&#39;, staff])</span>
-<span class="sd">            &gt;&gt;&gt; abjad.show(lilypond_file) # doctest: +SKIP</span>
-
-<span class="sd">            ..  docs::</span>
-
-<span class="sd">                &gt;&gt;&gt; string = abjad.lilypond(staff)</span>
-<span class="sd">                &gt;&gt;&gt; print(string)</span>
-<span class="sd">                \new Staff</span>
-<span class="sd">                {</span>
-<span class="sd">                    \context Voice = &quot;MusicVoice&quot;</span>
-<span class="sd">                    {</span>
-<span class="sd">                        c&#39;4</span>
-<span class="sd">                        \grace {</span>
-<span class="sd">                            cs&#39;16</span>
-<span class="sd">                        }</span>
-<span class="sd">                        d&#39;4</span>
-<span class="sd">                        &lt;&lt;</span>
-<span class="sd">                            \context Voice = &quot;On_Beat_Grace_Container&quot;</span>
-<span class="sd">                            {</span>
-<span class="sd">                                \set fontSize = #-3</span>
-<span class="sd">                                \slash</span>
-<span class="sd">                                \voiceOne</span>
-<span class="sd">                                &lt;</span>
-<span class="sd">                                    \tweak font-size 0</span>
-<span class="sd">                                    \tweak transparent ##t</span>
-<span class="sd">                                    e&#39;</span>
-<span class="sd">                                    g&#39;</span>
-<span class="sd">                                &gt;16</span>
-<span class="sd">                                - \accent</span>
-<span class="sd">                                [</span>
-<span class="sd">                                (</span>
-<span class="sd">                                gs&#39;16</span>
-<span class="sd">                                a&#39;16</span>
-<span class="sd">                                as&#39;16</span>
-<span class="sd">                                )</span>
-<span class="sd">                                ]</span>
-<span class="sd">                            }</span>
-<span class="sd">                            \context Voice = &quot;MusicVoice&quot;</span>
-<span class="sd">                            {</span>
-<span class="sd">                                \voiceTwo</span>
-<span class="sd">                                e&#39;4</span>
-<span class="sd">                            }</span>
-<span class="sd">                        &gt;&gt;</span>
-<span class="sd">                        \oneVoice</span>
-<span class="sd">                        \afterGrace</span>
-<span class="sd">                        f&#39;4</span>
-<span class="sd">                        {</span>
-<span class="sd">                            fs&#39;16</span>
-<span class="sd">                        }</span>
-<span class="sd">                    }</span>
-<span class="sd">                }</span>
-
-<span class="sd">            &gt;&gt;&gt; for component in abjad.select.components(staff):</span>
-<span class="sd">            ...     parentage = abjad.get.parentage(component)</span>
-<span class="sd">            ...     print(f&quot;{repr(component):30} {repr(parentage.orphan)}&quot;)</span>
-<span class="sd">            Staff(&quot;{ c&#39;4 d&#39;4 { { &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 } } f&#39;4 }&quot;) True</span>
-<span class="sd">            Voice(&quot;c&#39;4 d&#39;4 { { &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 } } f&#39;4&quot;, name=&#39;MusicVoice&#39;) False</span>
-<span class="sd">            Note(&quot;c&#39;4&quot;)                    False</span>
-<span class="sd">            BeforeGraceContainer(&quot;cs&#39;16&quot;)  False</span>
-<span class="sd">            Note(&quot;cs&#39;16&quot;)                  False</span>
-<span class="sd">            Note(&quot;d&#39;4&quot;)                    False</span>
-<span class="sd">            Container(&quot;{ &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 }&quot;) False</span>
-<span class="sd">            OnBeatGraceContainer(&quot;&lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16&quot;) False</span>
-<span class="sd">            Chord(&quot;&lt;e&#39; g&#39;&gt;16&quot;)             False</span>
-<span class="sd">            Note(&quot;gs&#39;16&quot;)                  False</span>
-<span class="sd">            Note(&quot;a&#39;16&quot;)                   False</span>
-<span class="sd">            Note(&quot;as&#39;16&quot;)                  False</span>
-<span class="sd">            Voice(&quot;e&#39;4&quot;, name=&#39;MusicVoice&#39;) False</span>
-<span class="sd">            Note(&quot;e&#39;4&quot;)                    False</span>
-<span class="sd">            Note(&quot;f&#39;4&quot;)                    False</span>
-<span class="sd">            AfterGraceContainer(&quot;fs&#39;16&quot;)   False</span>
-<span class="sd">            Note(&quot;fs&#39;16&quot;)                  False</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span> <span class="ow">is</span> <span class="kc">None</span>
-
-    <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">parent</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">_score</span><span class="o">.</span><span class="n">Component</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets parent.</span>
@@ -801,7 +694,14 @@
 <span class="sd">            Note(&quot;fs&#39;16&quot;)                  Fraction(2, 3)</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">prolations</span> <span class="o">=</span> <span class="p">[</span><span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">(</span><span class="mi">1</span><span class="p">)]</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_prolations</span><span class="p">()</span>
+        <span class="n">default</span> <span class="o">=</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">prolations</span> <span class="o">=</span> <span class="p">[</span><span class="n">default</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">parent</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="s2">&quot;_get_prolation&quot;</span><span class="p">):</span>
+                <span class="n">prolation</span> <span class="o">=</span> <span class="n">parent</span><span class="o">.</span><span class="n">_get_prolation</span><span class="p">()</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">prolation</span> <span class="o">=</span> <span class="n">default</span>
+            <span class="n">prolations</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">prolation</span><span class="p">)</span>
         <span class="n">products</span> <span class="o">=</span> <span class="n">_math</span><span class="o">.</span><span class="n">cumulative_products</span><span class="p">(</span><span class="n">prolations</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">products</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
 
@@ -1396,6 +1296,101 @@
         <span class="k">return</span> <span class="kc">None</span></div>
 
 
+<div class="viewcode-block" id="Parentage.is_orphan">
+<a class="viewcode-back" href="../../api/abjad/parentage.html#abjad.parentage.Parentage.is_orphan">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_orphan</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Is true when component has no parent.</span>
+
+<span class="sd">        ..  container:: example</span>
+
+<span class="sd">            REGRESSION. Works with grace notes (and containers):</span>
+
+<span class="sd">            &gt;&gt;&gt; music_voice = abjad.Voice(&quot;c&#39;4 d&#39; e&#39; f&#39;&quot;, name=&quot;MusicVoice&quot;)</span>
+<span class="sd">            &gt;&gt;&gt; container = abjad.BeforeGraceContainer(&quot;cs&#39;16&quot;)</span>
+<span class="sd">            &gt;&gt;&gt; abjad.attach(container, music_voice[1])</span>
+<span class="sd">            &gt;&gt;&gt; obgc = abjad.on_beat_grace_container(&quot;g&#39;16 gs&#39; a&#39; as&#39;&quot;, music_voice[2:3])</span>
+<span class="sd">            &gt;&gt;&gt; abjad.attach(abjad.Articulation(&quot;&gt;&quot;), obgc[0])</span>
+<span class="sd">            &gt;&gt;&gt; container = abjad.AfterGraceContainer(&quot;fs&#39;16&quot;)</span>
+<span class="sd">            &gt;&gt;&gt; abjad.attach(container, music_voice[3])</span>
+<span class="sd">            &gt;&gt;&gt; staff = abjad.Staff([music_voice])</span>
+<span class="sd">            &gt;&gt;&gt; lilypond_file = abjad.LilyPondFile([r&#39;\include &quot;abjad.ily&quot;&#39;, staff])</span>
+<span class="sd">            &gt;&gt;&gt; abjad.show(lilypond_file) # doctest: +SKIP</span>
+
+<span class="sd">            ..  docs::</span>
+
+<span class="sd">                &gt;&gt;&gt; string = abjad.lilypond(staff)</span>
+<span class="sd">                &gt;&gt;&gt; print(string)</span>
+<span class="sd">                \new Staff</span>
+<span class="sd">                {</span>
+<span class="sd">                    \context Voice = &quot;MusicVoice&quot;</span>
+<span class="sd">                    {</span>
+<span class="sd">                        c&#39;4</span>
+<span class="sd">                        \grace {</span>
+<span class="sd">                            cs&#39;16</span>
+<span class="sd">                        }</span>
+<span class="sd">                        d&#39;4</span>
+<span class="sd">                        &lt;&lt;</span>
+<span class="sd">                            \context Voice = &quot;On_Beat_Grace_Container&quot;</span>
+<span class="sd">                            {</span>
+<span class="sd">                                \set fontSize = #-3</span>
+<span class="sd">                                \slash</span>
+<span class="sd">                                \voiceOne</span>
+<span class="sd">                                &lt;</span>
+<span class="sd">                                    \tweak font-size 0</span>
+<span class="sd">                                    \tweak transparent ##t</span>
+<span class="sd">                                    e&#39;</span>
+<span class="sd">                                    g&#39;</span>
+<span class="sd">                                &gt;16</span>
+<span class="sd">                                - \accent</span>
+<span class="sd">                                [</span>
+<span class="sd">                                (</span>
+<span class="sd">                                gs&#39;16</span>
+<span class="sd">                                a&#39;16</span>
+<span class="sd">                                as&#39;16</span>
+<span class="sd">                                )</span>
+<span class="sd">                                ]</span>
+<span class="sd">                            }</span>
+<span class="sd">                            \context Voice = &quot;MusicVoice&quot;</span>
+<span class="sd">                            {</span>
+<span class="sd">                                \voiceTwo</span>
+<span class="sd">                                e&#39;4</span>
+<span class="sd">                            }</span>
+<span class="sd">                        &gt;&gt;</span>
+<span class="sd">                        \oneVoice</span>
+<span class="sd">                        \afterGrace</span>
+<span class="sd">                        f&#39;4</span>
+<span class="sd">                        {</span>
+<span class="sd">                            fs&#39;16</span>
+<span class="sd">                        }</span>
+<span class="sd">                    }</span>
+<span class="sd">                }</span>
+
+<span class="sd">            &gt;&gt;&gt; for component in abjad.select.components(staff):</span>
+<span class="sd">            ...     parentage = abjad.get.parentage(component)</span>
+<span class="sd">            ...     print(f&quot;{repr(component):30} {repr(parentage.is_orphan())}&quot;)</span>
+<span class="sd">            Staff(&quot;{ c&#39;4 d&#39;4 { { &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 } } f&#39;4 }&quot;) True</span>
+<span class="sd">            Voice(&quot;c&#39;4 d&#39;4 { { &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 } } f&#39;4&quot;, name=&#39;MusicVoice&#39;) False</span>
+<span class="sd">            Note(&quot;c&#39;4&quot;)                    False</span>
+<span class="sd">            BeforeGraceContainer(&quot;cs&#39;16&quot;)  False</span>
+<span class="sd">            Note(&quot;cs&#39;16&quot;)                  False</span>
+<span class="sd">            Note(&quot;d&#39;4&quot;)                    False</span>
+<span class="sd">            Container(&quot;{ &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 }&quot;) False</span>
+<span class="sd">            OnBeatGraceContainer(&quot;&lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16&quot;) False</span>
+<span class="sd">            Chord(&quot;&lt;e&#39; g&#39;&gt;16&quot;)             False</span>
+<span class="sd">            Note(&quot;gs&#39;16&quot;)                  False</span>
+<span class="sd">            Note(&quot;a&#39;16&quot;)                   False</span>
+<span class="sd">            Note(&quot;as&#39;16&quot;)                  False</span>
+<span class="sd">            Voice(&quot;e&#39;4&quot;, name=&#39;MusicVoice&#39;) False</span>
+<span class="sd">            Note(&quot;e&#39;4&quot;)                    False</span>
+<span class="sd">            Note(&quot;f&#39;4&quot;)                    False</span>
+<span class="sd">            AfterGraceContainer(&quot;fs&#39;16&quot;)   False</span>
+<span class="sd">            Note(&quot;fs&#39;16&quot;)                  False</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span> <span class="ow">is</span> <span class="kc">None</span></div>
+
+
 <div class="viewcode-block" id="Parentage.logical_voice">
 <a class="viewcode-back" href="../../api/abjad/parentage.html#abjad.parentage.Parentage.logical_voice">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">logical_voice</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
@@ -1512,6 +1507,8 @@
 
 <span class="sd">        ..  container:: example</span>
 
+<span class="sd">            Score root sets score index to ``()``:</span>
+
 <span class="sd">            &gt;&gt;&gt; staff_1 = abjad.Staff(r&quot;\times 2/3 { c&#39;&#39;2 b&#39;2 a&#39;2 }&quot;)</span>
 <span class="sd">            &gt;&gt;&gt; staff_2 = abjad.Staff(&quot;c&#39;2 d&#39;2&quot;)</span>
 <span class="sd">            &gt;&gt;&gt; score = abjad.Score([staff_1, staff_2])</span>
@@ -1552,8 +1549,6 @@
 <span class="sd">            (Staff(&quot;c&#39;2 d&#39;2&quot;), (1,))</span>
 <span class="sd">            (Note(&quot;c&#39;2&quot;), (1, 0))</span>
 <span class="sd">            (Note(&quot;d&#39;2&quot;), (1, 1))</span>
-
-<span class="sd">            Score root sets score index to ``()``.</span>
 
 <span class="sd">        ..  container:: example</span>
 
@@ -1677,7 +1672,7 @@
         
         &copy; Copyright 2008-2025, Trevor Bača &amp; Joséphine Oberholtzer.
       <span class="lastupdated">
-        Last updated on Jun 02, 2025.
+        Last updated on Jul 05, 2025.
       </span>
 
     </p>

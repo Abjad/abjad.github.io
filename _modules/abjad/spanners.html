@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>abjad.spanners &mdash; Abjad 3.25 documentation</title>
+  <title>abjad.spanners &mdash; Abjad 3.26 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../_static/abjad.css?v=1f187528" />
@@ -18,12 +18,14 @@
     <link rel="canonical" href="https://abjad.github.io_modules/abjad/spanners.html"/>
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=6e073912"></script>
+      <script src="../../_static/documentation_options.js?v=59ffb378"></script>
       <script src="../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script src="../../_static/ga.js?v=c455bbd5"></script>
       <script src="../../_static/toggleprompt.js?v=5801b3bb"></script>
       <script defer="defer" src="../../_static/lightbox2/js/lightbox.js?v=bc25c2e6"></script>
+      <script src="../../_static/inject-autosummary-fqns.js?v=49afa734"></script>
+      <script src="../../_static/inject-fqns.js?v=c5423c1b"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
@@ -33,11 +35,11 @@
   <div class="wy-grid-for-nav">
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search"  style="background: #996633" >
+        <div class="wy-side-nav-search"  style="background: #CC8844" >
 
 
     <a href="../../index.html" class="icon icon-home" alt="Documentation
-    Home"> Abjad 3.25
+    Home"> Abjad 3.26
 
 
 
@@ -108,7 +110,7 @@
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #996633" >
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #CC8844" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../index.html">Abjad</a>
       </nav>
@@ -125,7 +127,7 @@
     
   <h1>Source code for abjad.spanners</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">Classes and functions for modeling spanners: beams, hairpins, slurs, etc.</span>
+<span class="sd">Functions to work with spanners.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">typing</span>
@@ -584,7 +586,8 @@
 
 <span class="sd">    ..  container:: example</span>
 
-<span class="sd">        Allows both repeated pitches and ties:</span>
+<span class="sd">        Allows both repeated pitches and ties; ties are excluded when repeated</span>
+<span class="sd">        pitches are not allowed because all ties comprise repeated pitches:</span>
 
 <span class="sd">        &gt;&gt;&gt; voice = abjad.Voice(&quot;a8 a8 b8 ~ b8 c&#39;8 c&#39;8 d&#39;8 ~ d&#39;8&quot;, name=&quot;Voice&quot;)</span>
 <span class="sd">        &gt;&gt;&gt; staff = abjad.Staff([voice], name=&quot;Staff&quot;)</span>
@@ -622,9 +625,6 @@
 <span class="sd">                    d&#39;8</span>
 <span class="sd">                }</span>
 <span class="sd">            }</span>
-
-<span class="sd">        Ties are excluded when repeated pitches are not allowed because all ties</span>
-<span class="sd">        comprise repeated pitches.</span>
 
 <span class="sd">    ..  container:: example</span>
 
@@ -744,6 +744,9 @@
 
 <span class="sd">    ..  container:: example</span>
 
+<span class="sd">        ..  note:: Respects ``hide_middle_stems`` only when</span>
+<span class="sd">            ``hide_middle_note_heads=True``.</span>
+
 <span class="sd">        With ``hide_middle_note_heads=True`` and ``hide_middle_stems=True``:</span>
 
 <span class="sd">        &gt;&gt;&gt; voice = abjad.Voice(&quot;c&#39;8 d&#39;8 e&#39;8 f&#39;8&quot;, name=&quot;Voice&quot;)</span>
@@ -778,9 +781,6 @@
 <span class="sd">                \revert Stem.transparent</span>
 <span class="sd">                f&#39;8</span>
 <span class="sd">            }</span>
-
-<span class="sd">        ..  note:: Respects ``hide_middle_stems`` only when</span>
-<span class="sd">            ``hide_middle_note_heads=True``.</span>
 
 <span class="sd">    ..  container:: example</span>
 
@@ -947,6 +947,8 @@
 
 <span class="sd">    ..  container:: example</span>
 
+<span class="sd">        ..  note:: Respects left-broken only with ``hide_middle_note_heads=True``.</span>
+
 <span class="sd">        With ``left_broken=True`` (and ``hide_middle_note_heads=True``):</span>
 
 <span class="sd">        &gt;&gt;&gt; voice = abjad.Voice(&quot;c&#39;8 d&#39;8 e&#39;8 f&#39;8&quot;, name=&quot;Voice&quot;)</span>
@@ -994,8 +996,6 @@
 <span class="sd">            \undo \hide NoteHead</span>
 <span class="sd">            f&#39;8</span>
 <span class="sd">        }</span>
-
-<span class="sd">        ..  note:: Respects left-broken only with ``hide_middle_note_heads=True``.</span>
 
 <span class="sd">    ..  container:: example</span>
 
@@ -1537,8 +1537,8 @@
 
 <span class="sd">    ..  container:: example</span>
 
-<span class="sd">        Bundle start-group indicators to tweak the padding and outside-staff priority</span>
-<span class="sd">        of nested analysis brackets:</span>
+<span class="sd">        Bundle start-group indicators to tweak the padding and outside-staff</span>
+<span class="sd">        priority of nested analysis brackets:</span>
 
 <span class="sd">        &gt;&gt;&gt; voice = abjad.Voice(&quot;c&#39;4 d&#39; e&#39; f&#39; c&#39; d&#39; e&#39; f&#39;&quot;)</span>
 <span class="sd">        &gt;&gt;&gt; voice.consists_commands.append(&quot;Horizontal_bracket_engraver&quot;)</span>
@@ -1690,7 +1690,6 @@
 <span class="sd">                \)</span>
 <span class="sd">            }</span>
 
-
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">start_phrasing_slur</span> <span class="o">=</span> <span class="n">_indicators</span><span class="o">.</span><span class="n">StartPhrasingSlur</span><span class="p">()</span>
     <span class="n">stop_phrasing_slur</span> <span class="o">=</span> <span class="n">_indicators</span><span class="o">.</span><span class="n">StopPhrasingSlur</span><span class="p">()</span>
@@ -1787,7 +1786,6 @@
 <span class="sd">                f&#39;4</span>
 <span class="sd">                )</span>
 <span class="sd">            }</span>
-
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">start_slur</span> <span class="o">=</span> <span class="n">start_slur</span> <span class="ow">or</span> <span class="n">_indicators</span><span class="o">.</span><span class="n">StartSlur</span><span class="p">()</span>
@@ -2234,7 +2232,7 @@
         
         &copy; Copyright 2008-2025, Trevor Bača &amp; Joséphine Oberholtzer.
       <span class="lastupdated">
-        Last updated on Jun 02, 2025.
+        Last updated on Jul 05, 2025.
       </span>
 
     </p>

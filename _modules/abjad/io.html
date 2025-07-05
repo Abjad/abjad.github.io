@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>abjad.io &mdash; Abjad 3.25 documentation</title>
+  <title>abjad.io &mdash; Abjad 3.26 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../_static/abjad.css?v=1f187528" />
@@ -18,12 +18,14 @@
     <link rel="canonical" href="https://abjad.github.io_modules/abjad/io.html"/>
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=6e073912"></script>
+      <script src="../../_static/documentation_options.js?v=59ffb378"></script>
       <script src="../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script src="../../_static/ga.js?v=c455bbd5"></script>
       <script src="../../_static/toggleprompt.js?v=5801b3bb"></script>
       <script defer="defer" src="../../_static/lightbox2/js/lightbox.js?v=bc25c2e6"></script>
+      <script src="../../_static/inject-autosummary-fqns.js?v=49afa734"></script>
+      <script src="../../_static/inject-fqns.js?v=c5423c1b"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
@@ -33,11 +35,11 @@
   <div class="wy-grid-for-nav">
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search"  style="background: #996633" >
+        <div class="wy-side-nav-search"  style="background: #CC8844" >
 
 
     <a href="../../index.html" class="icon icon-home" alt="Documentation
-    Home"> Abjad 3.25
+    Home"> Abjad 3.26
 
 
 
@@ -108,7 +110,7 @@
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #996633" >
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #CC8844" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../index.html">Abjad</a>
       </nav>
@@ -124,7 +126,11 @@
     <div itemprop="articleBody">
     
   <h1>Source code for abjad.io</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">cProfile</span>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">IO.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">cProfile</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">datetime</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">hashlib</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">io</span>
@@ -153,6 +159,7 @@
 <span class="n">configuration</span> <span class="o">=</span> <span class="n">_configuration</span><span class="o">.</span><span class="n">Configuration</span><span class="p">()</span>
 
 
+<span class="c1"># TODO: maybe move to separate module</span>
 <div class="viewcode-block" id="AbjadGrapher">
 <a class="viewcode-back" href="../../api/abjad/io.html#abjad.io.AbjadGrapher">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">AbjadGrapher</span><span class="p">(</span><span class="n">uqbar</span><span class="o">.</span><span class="n">graphs</span><span class="o">.</span><span class="n">Grapher</span><span class="p">):</span>
@@ -166,17 +173,24 @@
 <div class="viewcode-block" id="AbjadGrapher.get_output_directory">
 <a class="viewcode-back" href="../../api/abjad/io.html#abjad.io.AbjadGrapher.get_output_directory">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">get_output_directory</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets output directory.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="n">configuration</span><span class="p">[</span><span class="s2">&quot;abjad_output_directory&quot;</span><span class="p">])</span></div>
 
 
 <div class="viewcode-block" id="AbjadGrapher.open_output_path">
 <a class="viewcode-back" href="../../api/abjad/io.html#abjad.io.AbjadGrapher.open_output_path">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">open_output_path</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">output_path</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Open ``output_path``.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">open_file</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">output_path</span><span class="p">))</span></div>
 </div>
 
 
 
+<span class="c1"># TODO: maybe move to separate module</span>
 <div class="viewcode-block" id="LilyPondIO">
 <a class="viewcode-back" href="../../api/abjad/io.html#abjad.io.LilyPondIO">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">LilyPondIO</span><span class="p">:</span>
@@ -207,8 +221,6 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">should_persist_log</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">should_persist_log</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">string</span> <span class="o">=</span> <span class="n">string</span>
 
-<div class="viewcode-block" id="LilyPondIO.__call__">
-<a class="viewcode-back" href="../../api/abjad/io.html#abjad.io.LilyPondIO.__call__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">with</span> <span class="n">_contextmanagers</span><span class="o">.</span><span class="n">Timer</span><span class="p">()</span> <span class="k">as</span> <span class="n">format_timer</span><span class="p">:</span>
             <span class="n">string</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">string</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_string</span><span class="p">()</span>
@@ -237,12 +249,14 @@
             <span class="n">openable_paths</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">output_path</span><span class="p">)</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">should_open</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">open_output_path</span><span class="p">(</span><span class="n">output_path</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">openable_paths</span><span class="p">,</span> <span class="n">format_time</span><span class="p">,</span> <span class="n">render_time</span><span class="p">,</span> <span class="n">success</span><span class="p">,</span> <span class="n">log</span></div>
-
+        <span class="k">return</span> <span class="n">openable_paths</span><span class="p">,</span> <span class="n">format_time</span><span class="p">,</span> <span class="n">render_time</span><span class="p">,</span> <span class="n">success</span><span class="p">,</span> <span class="n">log</span>
 
 <div class="viewcode-block" id="LilyPondIO.copy_stylesheets">
 <a class="viewcode-back" href="../../api/abjad/io.html#abjad.io.LilyPondIO.copy_stylesheets">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">copy_stylesheets</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">render_directory</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Copies stylesheets.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">directory</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_stylesheets_directories</span><span class="p">():</span>
             <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">directory</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s2">&quot;*.*ly&quot;</span><span class="p">):</span>
                 <span class="n">shutil</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">render_directory</span><span class="p">)</span></div>
@@ -251,6 +265,9 @@
 <div class="viewcode-block" id="LilyPondIO.get_lilypond_path">
 <a class="viewcode-back" href="../../api/abjad/io.html#abjad.io.LilyPondIO.get_lilypond_path">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">get_lilypond_path</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets LilyPond path.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">lilypond_path</span> <span class="o">=</span> <span class="n">configuration</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;lilypond_path&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">lilypond_path</span><span class="p">:</span>
             <span class="n">lilypond_paths</span> <span class="o">=</span> <span class="n">find_executable</span><span class="p">(</span><span class="s2">&quot;lilypond&quot;</span><span class="p">)</span>
@@ -266,6 +283,9 @@
     <span class="k">def</span><span class="w"> </span><span class="nf">get_openable_paths</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">output_paths</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Iterable</span><span class="p">[</span><span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">]</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Iterator</span><span class="p">[</span><span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets openable paths.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">output_paths</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">path</span><span class="o">.</span><span class="n">suffix</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;.pdf&quot;</span><span class="p">,</span> <span class="s2">&quot;.mid&quot;</span><span class="p">,</span> <span class="s2">&quot;.midi&quot;</span><span class="p">,</span> <span class="s2">&quot;.svg&quot;</span><span class="p">,</span> <span class="s2">&quot;.png&quot;</span><span class="p">):</span>
                 <span class="k">yield</span> <span class="n">path</span></div>
@@ -274,12 +294,18 @@
 <div class="viewcode-block" id="LilyPondIO.get_output_directory">
 <a class="viewcode-back" href="../../api/abjad/io.html#abjad.io.LilyPondIO.get_output_directory">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">get_output_directory</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets output directory.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="n">configuration</span><span class="p">[</span><span class="s2">&quot;abjad_output_directory&quot;</span><span class="p">])</span></div>
 
 
 <div class="viewcode-block" id="LilyPondIO.get_render_command">
 <a class="viewcode-back" href="../../api/abjad/io.html#abjad.io.LilyPondIO.get_render_command">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">get_render_command</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_path</span><span class="p">,</span> <span class="n">lilypond_path</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets render command.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">parts</span> <span class="o">=</span> <span class="p">[</span>
             <span class="nb">str</span><span class="p">(</span><span class="n">lilypond_path</span><span class="p">),</span>
             <span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">flags</span><span class="p">,</span>
@@ -294,12 +320,18 @@
 <div class="viewcode-block" id="LilyPondIO.get_render_directory">
 <a class="viewcode-back" href="../../api/abjad/io.html#abjad.io.LilyPondIO.get_render_directory">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">get_render_directory</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets render directory.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="n">tempfile</span><span class="o">.</span><span class="n">mkdtemp</span><span class="p">())</span></div>
 
 
 <div class="viewcode-block" id="LilyPondIO.get_render_prefix">
 <a class="viewcode-back" href="../../api/abjad/io.html#abjad.io.LilyPondIO.get_render_prefix">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">get_render_prefix</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">string</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets render prefix.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">timestamp</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;[^\w]&quot;</span><span class="p">,</span> <span class="s2">&quot;-&quot;</span><span class="p">,</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">isoformat</span><span class="p">())</span>
         <span class="n">checksum</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha1</span><span class="p">(</span><span class="n">string</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()[:</span><span class="mi">7</span><span class="p">]</span>
         <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">timestamp</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">checksum</span><span class="si">}</span><span class="s2">&quot;</span></div>
@@ -308,6 +340,9 @@
 <div class="viewcode-block" id="LilyPondIO.get_string">
 <a class="viewcode-back" href="../../api/abjad/io.html#abjad.io.LilyPondIO.get_string">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">get_string</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets string.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">illustrable</span><span class="p">,</span> <span class="n">_lilypondfile</span><span class="o">.</span><span class="n">LilyPondFile</span><span class="p">):</span>
             <span class="n">lilypond_file</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">illustrable</span>
         <span class="k">else</span><span class="p">:</span>
@@ -318,6 +353,9 @@
 <div class="viewcode-block" id="LilyPondIO.get_stylesheets_directories">
 <a class="viewcode-back" href="../../api/abjad/io.html#abjad.io.LilyPondIO.get_stylesheets_directories">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">get_stylesheets_directories</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets stylesheets directories.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">directories</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">path</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">abjad</span><span class="p">,</span> <span class="s2">&quot;__path__&quot;</span><span class="p">)</span>
         <span class="n">abjad_path</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="n">path</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
@@ -336,6 +374,9 @@
     <span class="k">def</span><span class="w"> </span><span class="nf">migrate_assets</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">render_prefix</span><span class="p">,</span> <span class="n">render_directory</span><span class="p">,</span> <span class="n">output_directory</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Sequence</span><span class="p">[</span><span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Migrates assets.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">migrated_assets</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">old_path</span> <span class="ow">in</span> <span class="n">render_directory</span><span class="o">.</span><span class="n">iterdir</span><span class="p">():</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">old_path</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">render_prefix</span><span class="p">):</span>
@@ -349,24 +390,36 @@
 <div class="viewcode-block" id="LilyPondIO.open_output_path">
 <a class="viewcode-back" href="../../api/abjad/io.html#abjad.io.LilyPondIO.open_output_path">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">open_output_path</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">output_path</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Opens ``output_path``.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">open_file</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">output_path</span><span class="p">))</span></div>
 
 
 <div class="viewcode-block" id="LilyPondIO.persist_log">
 <a class="viewcode-back" href="../../api/abjad/io.html#abjad.io.LilyPondIO.persist_log">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">persist_log</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">string</span><span class="p">,</span> <span class="n">input_path</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Persists log ``string`` to ``input_path``.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">input_path</span><span class="o">.</span><span class="n">write_text</span><span class="p">(</span><span class="n">string</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="LilyPondIO.persist_string">
 <a class="viewcode-back" href="../../api/abjad/io.html#abjad.io.LilyPondIO.persist_string">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">persist_string</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">string</span><span class="p">,</span> <span class="n">input_path</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Persists ``string`` to ``input_path``.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">input_path</span><span class="o">.</span><span class="n">write_text</span><span class="p">(</span><span class="n">string</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="LilyPondIO.run_command">
 <a class="viewcode-back" href="../../api/abjad/io.html#abjad.io.LilyPondIO.run_command">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">run_command</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">command</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Runs ``command``.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">completed_process</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span>
             <span class="n">command</span><span class="p">,</span>
             <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
@@ -380,6 +433,7 @@
 
 
 
+<span class="c1"># TODO: maybe move to separate module</span>
 <div class="viewcode-block" id="Illustrator">
 <a class="viewcode-back" href="../../api/abjad/io.html#abjad.io.Illustrator">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">Illustrator</span><span class="p">(</span><span class="n">LilyPondIO</span><span class="p">):</span>
@@ -390,6 +444,9 @@
 <div class="viewcode-block" id="Illustrator.get_openable_paths">
 <a class="viewcode-back" href="../../api/abjad/io.html#abjad.io.Illustrator.get_openable_paths">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">get_openable_paths</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">output_paths</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Iterator</span><span class="p">[</span><span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets openable paths.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">output_paths</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">path</span><span class="o">.</span><span class="n">suffix</span> <span class="o">==</span> <span class="s2">&quot;.pdf&quot;</span><span class="p">:</span>
                 <span class="k">yield</span> <span class="n">path</span></div>
@@ -397,6 +454,7 @@
 
 
 
+<span class="c1"># TODO: maybe move to separate module</span>
 <div class="viewcode-block" id="Player">
 <a class="viewcode-back" href="../../api/abjad/io.html#abjad.io.Player">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">Player</span><span class="p">(</span><span class="n">LilyPondIO</span><span class="p">):</span>
@@ -407,6 +465,9 @@
 <div class="viewcode-block" id="Player.get_openable_paths">
 <a class="viewcode-back" href="../../api/abjad/io.html#abjad.io.Player.get_openable_paths">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">get_openable_paths</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">output_paths</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Iterator</span><span class="p">[</span><span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets openable paths.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">output_paths</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">path</span><span class="o">.</span><span class="n">suffix</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;.mid&quot;</span><span class="p">,</span> <span class="s2">&quot;.midi&quot;</span><span class="p">):</span>
                 <span class="k">yield</span> <span class="n">path</span></div>
@@ -415,6 +476,9 @@
 <div class="viewcode-block" id="Player.get_string">
 <a class="viewcode-back" href="../../api/abjad/io.html#abjad.io.Player.get_string">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">get_string</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets string.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">lilypond_file</span> <span class="o">=</span> <span class="n">_illustrators</span><span class="o">.</span><span class="n">illustrate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">illustrable</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">keywords</span><span class="p">)</span>
         <span class="k">assert</span> <span class="s2">&quot;score&quot;</span> <span class="ow">in</span> <span class="n">lilypond_file</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">lilypond_file</span><span class="p">)</span>
         <span class="n">block</span> <span class="o">=</span> <span class="n">_lilypondfile</span><span class="o">.</span><span class="n">Block</span><span class="p">(</span><span class="s2">&quot;midi&quot;</span><span class="p">)</span>
@@ -541,23 +605,6 @@
     <span class="k">return</span> <span class="n">graph</span>
 
 
-<span class="c1"># TODO: remove because unused?</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">_compare_backup</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
-    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-        <span class="n">paths</span> <span class="o">=</span> <span class="p">[</span><span class="n">path</span><span class="p">]</span>
-    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">):</span>
-        <span class="n">paths</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">path</span><span class="p">)]</span>
-    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="nb">tuple</span> <span class="o">|</span> <span class="nb">list</span><span class="p">):</span>
-        <span class="n">paths</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">_</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">path</span><span class="p">]</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">paths</span><span class="p">:</span>
-        <span class="n">backup_path</span> <span class="o">=</span> <span class="n">path</span> <span class="o">+</span> <span class="s2">&quot;.backup&quot;</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">compare_files</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">backup_path</span><span class="p">):</span>
-            <span class="k">return</span> <span class="kc">False</span>
-    <span class="k">return</span> <span class="kc">True</span>
-
-
 <span class="k">def</span><span class="w"> </span><span class="nf">_compare_lys</span><span class="p">(</span><span class="n">path_1</span><span class="p">,</span> <span class="n">path_2</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Compares LilyPond file ``path_1`` to LilyPond file ``path_2``.</span>
@@ -650,7 +697,7 @@
     <span class="o">*</span><span class="p">,</span>
     <span class="n">global_context</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">local_context</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">fixed_point</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="n">only_one_time</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Counts function calls required to execute ``argument``.</span>
@@ -659,7 +706,7 @@
     <span class="k">def</span><span class="w"> </span><span class="nf">extract_count</span><span class="p">(</span><span class="n">profile_output</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
         <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">profile_output</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">()[</span><span class="mi">0</span><span class="p">])</span>
 
-    <span class="k">if</span> <span class="n">fixed_point</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">only_one_time</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
         <span class="c1"># profile at least twice to ensure consist results from profiler;</span>
         <span class="c1"># not sure why but profiler eventually levels off to consistent</span>
         <span class="c1"># output</span>
@@ -674,6 +721,8 @@
             <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span>
             <span class="n">current_result</span> <span class="o">=</span> <span class="n">extract_count</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">current_result</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="n">only_one_time</span> <span class="ow">is</span> <span class="kc">True</span>
     <span class="n">result</span> <span class="o">=</span> <span class="n">profile</span><span class="p">(</span>
         <span class="n">argument</span><span class="p">,</span>
         <span class="n">global_context</span><span class="o">=</span><span class="n">global_context</span><span class="p">,</span>
@@ -693,9 +742,11 @@
     <span class="n">layout</span><span class="o">=</span><span class="s2">&quot;dot&quot;</span><span class="p">,</span>
     <span class="n">return_timing</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
     <span class="o">**</span><span class="n">keywords</span><span class="p">,</span>
-<span class="p">):</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Graphs ``argument``.</span>
+
+<span class="sd">    Opens image in default image viewer.</span>
 
 <span class="sd">    ..  container:: example</span>
 
@@ -809,19 +860,19 @@
 <span class="sd">                node_1 -&gt; node_3;</span>
 <span class="sd">            }</span>
 
-<span class="sd">    Opens image in default image viewer.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">graphable</span><span class="p">,</span> <span class="n">_score</span><span class="o">.</span><span class="n">Container</span><span class="p">):</span>
         <span class="n">graphable</span> <span class="o">=</span> <span class="n">_graph_container</span><span class="p">(</span><span class="n">graphable</span><span class="p">)</span>
     <span class="n">grapher</span> <span class="o">=</span> <span class="n">AbjadGrapher</span><span class="p">(</span><span class="n">graphable</span><span class="p">,</span> <span class="n">format_</span><span class="o">=</span><span class="n">format_</span><span class="p">,</span> <span class="n">layout</span><span class="o">=</span><span class="n">layout</span><span class="p">,</span> <span class="o">**</span><span class="n">keywords</span><span class="p">)</span>
     <span class="n">result</span> <span class="o">=</span> <span class="n">grapher</span><span class="p">()</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">result</span><span class="p">:</span>
-        <span class="k">return</span>
+        <span class="k">return</span> <span class="kc">None</span>
     <span class="n">_</span><span class="p">,</span> <span class="n">format_time</span><span class="p">,</span> <span class="n">render_time</span><span class="p">,</span> <span class="n">success</span><span class="p">,</span> <span class="n">log</span> <span class="o">=</span> <span class="n">result</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">success</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="n">log</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">return_timing</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">format_time</span><span class="p">,</span> <span class="n">render_time</span></div>
+        <span class="k">return</span> <span class="n">format_time</span><span class="p">,</span> <span class="n">render_time</span>
+    <span class="k">return</span> <span class="kc">None</span></div>
 
 
 
@@ -829,7 +880,18 @@
 <a class="viewcode-back" href="../../api/abjad/io.html#abjad.io.show">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">show</span><span class="p">(</span><span class="n">illustrable</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">flags</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">return_timing</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">keywords</span><span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Shows ``argument``.</span>
+<span class="sd">    Shows ``illustrable``.</span>
+
+<span class="sd">    Makes LilyPond input files and output PDF.</span>
+
+<span class="sd">    Writes LilyPond input file and output PDF to Abjad output directory.</span>
+
+<span class="sd">    Opens output PDF.</span>
+
+<span class="sd">    Returns none when ``return_timing`` is false.</span>
+
+<span class="sd">    Returns pair of ``abjad_formatting_time`` and ``lilypond_rendering_time``</span>
+<span class="sd">    when ``return_timing`` is true.</span>
 
 <span class="sd">    ..  container:: example</span>
 
@@ -844,35 +906,6 @@
 <span class="sd">            &gt;&gt;&gt; print(string)</span>
 <span class="sd">            c&#39;4</span>
 
-<span class="sd">    ..  container:: example</span>
-
-<span class="sd">        Shows staff:</span>
-
-<span class="sd">        &gt;&gt;&gt; staff = abjad.Staff(&quot;c&#39;4 d&#39; e&#39; f&#39;&quot;)</span>
-<span class="sd">        &gt;&gt;&gt; abjad.show(staff) # doctest: +SKIP</span>
-
-<span class="sd">        ..  docs::</span>
-
-<span class="sd">            &gt;&gt;&gt; string = abjad.lilypond(staff)</span>
-<span class="sd">            &gt;&gt;&gt; print(string)</span>
-<span class="sd">            \new Staff</span>
-<span class="sd">            {</span>
-<span class="sd">                c&#39;4</span>
-<span class="sd">                d&#39;4</span>
-<span class="sd">                e&#39;4</span>
-<span class="sd">                f&#39;4</span>
-<span class="sd">            }</span>
-
-<span class="sd">    Makes LilyPond input files and output PDF.</span>
-
-<span class="sd">    Writes LilyPond input file and output PDF to Abjad output directory.</span>
-
-<span class="sd">    Opens output PDF.</span>
-
-<span class="sd">    Returns none when ``return_timing`` is false.</span>
-
-<span class="sd">    Returns pair of ``abjad_formatting_time`` and ``lilypond_rendering_time``</span>
-<span class="sd">    when ``return_timing`` is true.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">illustrator</span> <span class="o">=</span> <span class="n">Illustrator</span><span class="p">(</span><span class="n">illustrable</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="n">flags</span><span class="o">.</span><span class="n">split</span><span class="p">(),</span> <span class="o">**</span><span class="n">keywords</span><span class="p">)</span>
     <span class="n">result</span> <span class="o">=</span> <span class="n">illustrator</span><span class="p">()</span>
@@ -962,9 +995,11 @@
     <span class="o">*</span><span class="p">,</span>
     <span class="n">attribute_names</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">local_namespace</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-<span class="p">):</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Executes ``string``.</span>
+
+<span class="sd">    Returns ``attribute_names`` from executed string.</span>
 
 <span class="sd">    ..  container:: example</span>
 
@@ -976,7 +1011,6 @@
 <span class="sd">        ...     )</span>
 <span class="sd">        (23, None)</span>
 
-<span class="sd">    Returns ``attribute_names`` from executed string.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span>
     <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">attribute_names</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)</span>
@@ -987,7 +1021,7 @@
     <span class="k">try</span><span class="p">:</span>
         <span class="n">exec</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">local_namespace</span><span class="p">,</span> <span class="n">local_namespace</span><span class="p">)</span>
     <span class="k">except</span> <span class="ne">SyntaxError</span><span class="p">:</span>
-        <span class="k">return</span>
+        <span class="k">return</span> <span class="kc">None</span>
     <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">attribute_names</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">local_namespace</span><span class="p">:</span>
@@ -1032,16 +1066,17 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Makes Popen instance.</span>
 
-<span class="sd">    Defined equal to:</span>
+<span class="sd">    Redirects stderr to stdout.</span>
+
+<span class="sd">    Defined equal to::</span>
 
 <span class="sd">        process = subprocess.Popen(</span>
 <span class="sd">            command,</span>
 <span class="sd">            shell=True,</span>
 <span class="sd">            stdout=subprocess.PIPE,</span>
 <span class="sd">            stderr=subprocess.STDOUT,</span>
-<span class="sd">            )</span>
+<span class="sd">        )</span>
 
-<span class="sd">    Redirects stderr to stdout.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># TODO: replace with subprocess.run()</span>
     <span class="k">return</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">(</span>
@@ -1117,30 +1152,27 @@
 <span class="k">def</span><span class="w"> </span><span class="nf">profile</span><span class="p">(</span>
     <span class="n">string</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="o">*</span><span class="p">,</span>
+    <span class="n">do_not_strip_dirs</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="n">global_context</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">line_count</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">12</span><span class="p">,</span>
     <span class="n">local_context</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">print_callers</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="n">print_callees</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="n">sort_by</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;cumulative&quot;</span><span class="p">,</span>
-    <span class="n">strip_dirs</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Profiles ``string``.</span>
 
 <span class="sd">    ..  container:: example</span>
 
+<span class="sd">        Wraps Python&#39;s built-in ``cProfile`` module. Set ``sort_by`` to</span>
+<span class="sd">        ``&quot;cumulative&quot;``, ``&quot;time&quot;``, ``&quot;calls&quot;``. See the `Python</span>
+<span class="sd">        documentation &lt;https://docs.python.org/3/library/profile.html&gt;`_ for</span>
+<span class="sd">        more information.</span>
+
 <span class="sd">        &gt;&gt;&gt; string = &#39;abjad.Staff(&quot;c8 c8 c8 c8 c8 c8 c8 c8&quot;)&#39;</span>
 <span class="sd">        &gt;&gt;&gt; result = abjad.io.profile(string, global_context=globals())</span>
 
-<span class="sd">    Then print result.</span>
-
-<span class="sd">    Wraps Python&#39;s built-in ``cProfile`` module.</span>
-
-<span class="sd">    Set ``sort_by`` to ``&#39;cumulative&#39;``, ``&#39;time&#39;`` or ``&#39;calls&#39;``.</span>
-
-<span class="sd">    See `Python&#39;s docs &lt;https://docs.python.org/3/library/profile.html&gt;`_ for more</span>
-<span class="sd">    information.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">now_string</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">today</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%a</span><span class="s2"> %b </span><span class="si">%d</span><span class="s2"> %H:%M:%S %Y&quot;</span><span class="p">)</span>
     <span class="n">profile</span> <span class="o">=</span> <span class="n">cProfile</span><span class="o">.</span><span class="n">Profile</span><span class="p">()</span>
@@ -1151,13 +1183,14 @@
         <span class="n">profile</span> <span class="o">=</span> <span class="n">profile</span><span class="o">.</span><span class="n">runctx</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">global_context</span><span class="p">,</span> <span class="n">local_context</span><span class="p">)</span>
     <span class="n">stats_stream</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">StringIO</span><span class="p">()</span>
     <span class="n">stats</span> <span class="o">=</span> <span class="n">pstats</span><span class="o">.</span><span class="n">Stats</span><span class="p">(</span><span class="n">profile</span><span class="p">,</span> <span class="n">stream</span><span class="o">=</span><span class="n">stats_stream</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">strip_dirs</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">do_not_strip_dirs</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
         <span class="n">stats</span><span class="o">.</span><span class="n">strip_dirs</span><span class="p">()</span><span class="o">.</span><span class="n">sort_stats</span><span class="p">(</span><span class="n">sort_by</span><span class="p">)</span><span class="o">.</span><span class="n">print_stats</span><span class="p">(</span><span class="n">line_count</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="n">do_not_strip_dirs</span> <span class="ow">is</span> <span class="kc">True</span>
         <span class="n">stats</span><span class="o">.</span><span class="n">sort_stats</span><span class="p">(</span><span class="n">sort_by</span><span class="p">)</span><span class="o">.</span><span class="n">print_stats</span><span class="p">(</span><span class="n">line_count</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">print_callers</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">print_callers</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
         <span class="n">stats</span><span class="o">.</span><span class="n">sort_stats</span><span class="p">(</span><span class="n">sort_by</span><span class="p">)</span><span class="o">.</span><span class="n">print_callers</span><span class="p">(</span><span class="n">line_count</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">print_callees</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">print_callees</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
         <span class="n">stats</span><span class="o">.</span><span class="n">sort_stats</span><span class="p">(</span><span class="n">sort_by</span><span class="p">)</span><span class="o">.</span><span class="n">print_callees</span><span class="p">(</span><span class="n">line_count</span><span class="p">)</span>
     <span class="n">result</span> <span class="o">=</span> <span class="n">now_string</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="n">stats_stream</span><span class="o">.</span><span class="n">getvalue</span><span class="p">()</span>
     <span class="n">stats_stream</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
@@ -1262,7 +1295,7 @@
         
         &copy; Copyright 2008-2025, Trevor Bača &amp; Joséphine Oberholtzer.
       <span class="lastupdated">
-        Last updated on Jun 02, 2025.
+        Last updated on Jul 05, 2025.
       </span>
 
     </p>

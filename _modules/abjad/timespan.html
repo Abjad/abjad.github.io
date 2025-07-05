@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>abjad.timespan &mdash; Abjad 3.25 documentation</title>
+  <title>abjad.timespan &mdash; Abjad 3.26 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../_static/abjad.css?v=1f187528" />
@@ -18,12 +18,14 @@
     <link rel="canonical" href="https://abjad.github.io_modules/abjad/timespan.html"/>
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=6e073912"></script>
+      <script src="../../_static/documentation_options.js?v=59ffb378"></script>
       <script src="../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script src="../../_static/ga.js?v=c455bbd5"></script>
       <script src="../../_static/toggleprompt.js?v=5801b3bb"></script>
       <script defer="defer" src="../../_static/lightbox2/js/lightbox.js?v=bc25c2e6"></script>
+      <script src="../../_static/inject-autosummary-fqns.js?v=49afa734"></script>
+      <script src="../../_static/inject-fqns.js?v=c5423c1b"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
@@ -33,11 +35,11 @@
   <div class="wy-grid-for-nav">
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search"  style="background: #996633" >
+        <div class="wy-side-nav-search"  style="background: #CC8844" >
 
 
     <a href="../../index.html" class="icon icon-home" alt="Documentation
-    Home"> Abjad 3.25
+    Home"> Abjad 3.26
 
 
 
@@ -108,7 +110,7 @@
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #996633" >
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #CC8844" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../index.html">Abjad</a>
       </nav>
@@ -125,7 +127,7 @@
     
   <h1>Source code for abjad.timespan</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">Tools for modeling and manipulating timespans.</span>
+<span class="sd">Classes to work with timespans.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">collections</span>
@@ -177,8 +179,6 @@
     <span class="n">items</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Any</span> <span class="o">=</span> <span class="p">()</span>
     <span class="n">item_class</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Any</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Offset</span>
 
-<div class="viewcode-block" id="OffsetCounter.__post_init__">
-<a class="viewcode-back" href="../../api/abjad/timespan.html#abjad.timespan.OffsetCounter.__post_init__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">__post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">item_class</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Offset</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">items</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span> <span class="ow">or</span> <span class="p">[]</span>
@@ -206,8 +206,7 @@
             <span class="n">sorted_items</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
         <span class="k">for</span> <span class="n">item</span><span class="p">,</span> <span class="n">count</span> <span class="ow">in</span> <span class="n">sorted_items</span><span class="p">:</span>
             <span class="n">sorted_item_to_count</span><span class="p">[</span><span class="n">item</span><span class="p">]</span> <span class="o">=</span> <span class="n">count</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">items</span> <span class="o">=</span> <span class="n">sorted_item_to_count</span></div>
-
+        <span class="bp">self</span><span class="o">.</span><span class="n">items</span> <span class="o">=</span> <span class="n">sorted_item_to_count</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_coerce_item</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Offset</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
@@ -374,10 +373,6 @@
     <span class="n">stop_offset</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Any</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">annotation</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Any</span> <span class="o">=</span> <span class="kc">None</span>
 
-    <span class="n">__documentation_section__</span> <span class="o">=</span> <span class="s2">&quot;Timespans&quot;</span>
-
-<div class="viewcode-block" id="Timespan.__post_init__">
-<a class="viewcode-back" href="../../api/abjad/timespan.html#abjad.timespan.Timespan.__post_init__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">__post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">start_offset</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)):</span>
             <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;can not initialize from timespan.&quot;</span><span class="p">)</span>
@@ -391,13 +386,10 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">stop_offset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_initialize_offset</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stop_offset</span><span class="p">)</span>
         <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_offset</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">stop_offset</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span>
             <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">start_offset</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">stop_offset</span><span class="p">)</span>
-        <span class="p">)</span></div>
-
+        <span class="p">)</span>
 
     <span class="c1">### SPECIAL METHODS ###</span>
 
-<div class="viewcode-block" id="Timespan.__and__">
-<a class="viewcode-back" href="../../api/abjad/timespan.html#abjad.timespan.Timespan.__and__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__and__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;TimespanList&quot;</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Logical AND of two timespans.</span>
@@ -442,11 +434,8 @@
         <span class="n">timespan</span> <span class="o">=</span> <span class="n">dataclasses</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span>
             <span class="bp">self</span><span class="p">,</span> <span class="n">start_offset</span><span class="o">=</span><span class="n">new_start_offset</span><span class="p">,</span> <span class="n">stop_offset</span><span class="o">=</span><span class="n">new_stop_offset</span>
         <span class="p">)</span>
-        <span class="k">return</span> <span class="n">TimespanList</span><span class="p">([</span><span class="n">timespan</span><span class="p">])</span></div>
+        <span class="k">return</span> <span class="n">TimespanList</span><span class="p">([</span><span class="n">timespan</span><span class="p">])</span>
 
-
-<div class="viewcode-block" id="Timespan.__contains__">
-<a class="viewcode-back" href="../../api/abjad/timespan.html#abjad.timespan.Timespan.__contains__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__contains__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Is true when timespan contains ``argument``.</span>
@@ -496,11 +485,8 @@
         <span class="k">return</span> <span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">start_offset</span> <span class="o">&lt;=</span> <span class="n">timespan</span><span class="o">.</span><span class="n">start_offset</span>
             <span class="ow">and</span> <span class="n">timespan</span><span class="o">.</span><span class="n">stop_offset</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">stop_offset</span>
-        <span class="p">)</span></div>
+        <span class="p">)</span>
 
-
-<div class="viewcode-block" id="Timespan.__eq__">
-<a class="viewcode-back" href="../../api/abjad/timespan.html#abjad.timespan.Timespan.__eq__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Compares ``start_offset``, ``stop_offset``.</span>
@@ -517,11 +503,8 @@
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">argument</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)):</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_offset</span> <span class="o">==</span> <span class="n">argument</span><span class="o">.</span><span class="n">start_offset</span><span class="p">:</span>
                 <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">stop_offset</span> <span class="o">==</span> <span class="n">argument</span><span class="o">.</span><span class="n">stop_offset</span>
-        <span class="k">return</span> <span class="kc">False</span></div>
+        <span class="k">return</span> <span class="kc">False</span>
 
-
-<div class="viewcode-block" id="Timespan.__ge__">
-<a class="viewcode-back" href="../../api/abjad/timespan.html#abjad.timespan.Timespan.__ge__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__ge__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Is true when ``argument`` start offset is greater or equal to timespan start</span>
@@ -553,11 +536,8 @@
             <span class="p">):</span>
                 <span class="k">return</span> <span class="kc">True</span>
             <span class="k">return</span> <span class="kc">False</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_offset</span> <span class="o">&gt;=</span> <span class="n">expr_start_offset</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_offset</span> <span class="o">&gt;=</span> <span class="n">expr_start_offset</span>
 
-
-<div class="viewcode-block" id="Timespan.__gt__">
-<a class="viewcode-back" href="../../api/abjad/timespan.html#abjad.timespan.Timespan.__gt__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__gt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Is true when ``argument`` start offset is greater than timespan start offset.</span>
@@ -588,11 +568,8 @@
             <span class="p">):</span>
                 <span class="k">return</span> <span class="kc">True</span>
             <span class="k">return</span> <span class="kc">False</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_offset</span> <span class="o">&gt;</span> <span class="n">expr_start_offset</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_offset</span> <span class="o">&gt;</span> <span class="n">expr_start_offset</span>
 
-
-<div class="viewcode-block" id="Timespan.__le__">
-<a class="viewcode-back" href="../../api/abjad/timespan.html#abjad.timespan.Timespan.__le__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__le__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Is true when ``argument`` start offset is less than or equal to timespan start</span>
@@ -624,11 +601,8 @@
             <span class="p">):</span>
                 <span class="k">return</span> <span class="kc">True</span>
             <span class="k">return</span> <span class="kc">False</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_offset</span> <span class="o">&lt;=</span> <span class="n">expr_start_offset</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_offset</span> <span class="o">&lt;=</span> <span class="n">expr_start_offset</span>
 
-
-<div class="viewcode-block" id="Timespan.__len__">
-<a class="viewcode-back" href="../../api/abjad/timespan.html#abjad.timespan.Timespan.__len__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Defined equal to ``1`` for all timespans.</span>
@@ -641,11 +615,8 @@
 <span class="sd">            1</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="mi">1</span></div>
+        <span class="k">return</span> <span class="mi">1</span>
 
-
-<div class="viewcode-block" id="Timespan.__lt__">
-<a class="viewcode-back" href="../../api/abjad/timespan.html#abjad.timespan.Timespan.__lt__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__lt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Is true when ``argument`` start offset is less than timespan start offset.</span>
@@ -676,11 +647,8 @@
             <span class="p">):</span>
                 <span class="k">return</span> <span class="kc">True</span>
             <span class="k">return</span> <span class="kc">False</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_offset</span> <span class="o">&lt;</span> <span class="n">expr_start_offset</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_offset</span> <span class="o">&lt;</span> <span class="n">expr_start_offset</span>
 
-
-<div class="viewcode-block" id="Timespan.__or__">
-<a class="viewcode-back" href="../../api/abjad/timespan.html#abjad.timespan.Timespan.__or__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__or__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;TimespanList&quot;</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Logical OR of two timespans.</span>
@@ -733,11 +701,8 @@
         <span class="n">timespan</span> <span class="o">=</span> <span class="n">dataclasses</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span>
             <span class="bp">self</span><span class="p">,</span> <span class="n">start_offset</span><span class="o">=</span><span class="n">new_start_offset</span><span class="p">,</span> <span class="n">stop_offset</span><span class="o">=</span><span class="n">new_stop_offset</span>
         <span class="p">)</span>
-        <span class="k">return</span> <span class="n">TimespanList</span><span class="p">([</span><span class="n">timespan</span><span class="p">])</span></div>
+        <span class="k">return</span> <span class="n">TimespanList</span><span class="p">([</span><span class="n">timespan</span><span class="p">])</span>
 
-
-<div class="viewcode-block" id="Timespan.__repr__">
-<a class="viewcode-back" href="../../api/abjad/timespan.html#abjad.timespan.Timespan.__repr__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets repr.</span>
@@ -745,11 +710,8 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">(</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">start_offset</span><span class="si">!r}</span><span class="s2">, </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">stop_offset</span><span class="si">!r}</span><span class="s2">)&quot;</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">(</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">start_offset</span><span class="si">!r}</span><span class="s2">, </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">stop_offset</span><span class="si">!r}</span><span class="s2">, annotation=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">annotation</span><span class="si">!r}</span><span class="s2">)&quot;</span></div>
+            <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">(</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">start_offset</span><span class="si">!r}</span><span class="s2">, </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">stop_offset</span><span class="si">!r}</span><span class="s2">, annotation=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">annotation</span><span class="si">!r}</span><span class="s2">)&quot;</span>
 
-
-<div class="viewcode-block" id="Timespan.__sub__">
-<a class="viewcode-back" href="../../api/abjad/timespan.html#abjad.timespan.Timespan.__sub__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__sub__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;TimespanList&quot;</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Subtract ``argument`` from timespan.</span>
@@ -889,11 +851,8 @@
             <span class="n">timespans</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">timespan</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">timespans</span></div>
+        <span class="k">return</span> <span class="n">timespans</span>
 
-
-<div class="viewcode-block" id="Timespan.__xor__">
-<a class="viewcode-back" href="../../api/abjad/timespan.html#abjad.timespan.Timespan.__xor__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__xor__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;TimespanList&quot;</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Logical XOR of two timespans.</span>
@@ -958,13 +917,12 @@
         <span class="n">timespan_2</span> <span class="o">=</span> <span class="n">dataclasses</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span>
             <span class="bp">self</span><span class="p">,</span> <span class="n">start_offset</span><span class="o">=</span><span class="n">stop_offsets</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">stop_offset</span><span class="o">=</span><span class="n">stop_offsets</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
         <span class="p">)</span>
-        <span class="k">if</span> <span class="n">timespan_1</span><span class="o">.</span><span class="n">wellformed</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">timespan_1</span><span class="o">.</span><span class="n">is_wellformed</span><span class="p">():</span>
             <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">timespan_1</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">timespan_2</span><span class="o">.</span><span class="n">wellformed</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">timespan_2</span><span class="o">.</span><span class="n">is_wellformed</span><span class="p">():</span>
             <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">timespan_2</span><span class="p">)</span>
         <span class="n">result</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
-        <span class="k">return</span> <span class="n">result</span></div>
-
+        <span class="k">return</span> <span class="n">result</span>
 
     <span class="c1">### PRIVATE METHODS ###</span>
 
@@ -1091,19 +1049,6 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_offset</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">stop_offset</span>
 
-    <span class="nd">@property</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">wellformed</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Is true when timespan start offset preceeds timespan stop offset.</span>
-
-<span class="sd">        ..  container:: example</span>
-
-<span class="sd">            &gt;&gt;&gt; abjad.Timespan(0, 10).wellformed</span>
-<span class="sd">            True</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_offset</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">stop_offset</span>
-
     <span class="c1">### PUBLIC METHODS ###</span>
 
 <div class="viewcode-block" id="Timespan.divide_by_ratio">
@@ -1184,6 +1129,21 @@
             <span class="n">result</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">duration</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span> <span class="o">&amp;</span> <span class="n">timespan</span><span class="p">))</span>
             <span class="k">return</span> <span class="n">result</span>
         <span class="k">return</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="Timespan.is_wellformed">
+<a class="viewcode-back" href="../../api/abjad/timespan.html#abjad.timespan.Timespan.is_wellformed">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_wellformed</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Is true when timespan start offset preceeds timespan stop offset.</span>
+
+<span class="sd">        ..  container:: example</span>
+
+<span class="sd">            &gt;&gt;&gt; abjad.Timespan(0, 10).is_wellformed()</span>
+<span class="sd">            True</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_offset</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">stop_offset</span></div>
 
 
 <div class="viewcode-block" id="Timespan.reflect">
@@ -1327,8 +1287,8 @@
 <a class="viewcode-back" href="../../api/abjad/timespan.html#abjad.timespan.Timespan.set_offsets">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">set_offsets</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start_offset</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">stop_offset</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Timespan&quot;</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Sets timespan start offset to ``start_offset`` and</span>
-<span class="sd">        stop offset to ``stop_offset``.</span>
+<span class="sd">        Sets timespan start offset to ``start_offset`` and stop offset to</span>
+<span class="sd">        ``stop_offset``.</span>
 
 <span class="sd">        ..  container:: example</span>
 
@@ -1337,15 +1297,19 @@
 <span class="sd">            &gt;&gt;&gt; timespan.set_offsets(stop_offset=(7, 8))</span>
 <span class="sd">            Timespan(Offset((1, 2)), Offset((7, 8)))</span>
 
-<span class="sd">        Subtracts negative ``start_offset`` from existing stop offset:</span>
+<span class="sd">        ..  container:: example</span>
 
-<span class="sd">        &gt;&gt;&gt; timespan.set_offsets(start_offset=(-1, 2))</span>
-<span class="sd">        Timespan(Offset((1, 1)), Offset((3, 2)))</span>
+<span class="sd">            Subtracts negative ``start_offset`` from existing stop offset:</span>
 
-<span class="sd">        Subtracts negative ``stop_offset`` from existing stop offset:</span>
+<span class="sd">            &gt;&gt;&gt; timespan.set_offsets(start_offset=(-1, 2))</span>
+<span class="sd">            Timespan(Offset((1, 1)), Offset((3, 2)))</span>
 
-<span class="sd">        &gt;&gt;&gt; timespan.set_offsets(stop_offset=(-1, 2))</span>
-<span class="sd">        Timespan(Offset((1, 2)), Offset((1, 1)))</span>
+<span class="sd">        ..  container:: example</span>
+
+<span class="sd">            Subtracts negative ``stop_offset`` from existing stop offset:</span>
+
+<span class="sd">            &gt;&gt;&gt; timespan.set_offsets(stop_offset=(-1, 2))</span>
+<span class="sd">            Timespan(Offset((1, 2)), Offset((1, 1)))</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">start_offset</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -1620,14 +1584,10 @@
 <span class="sd">    Operations on timespan currently work in place.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">__documentation_section__</span> <span class="o">=</span> <span class="s2">&quot;Timespans&quot;</span>
-
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="o">=</span><span class="p">()):</span>
         <span class="n">timespans</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_coerce_item</span><span class="p">(</span><span class="n">_</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">argument</span><span class="p">]</span>
         <span class="nb">list</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timespans</span><span class="p">)</span>
 
-<div class="viewcode-block" id="TimespanList.__setitem__">
-<a class="viewcode-back" href="../../api/abjad/timespan.html#abjad.timespan.TimespanList.__setitem__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">argument</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Coerces ``argument`` and sets at ``i``.</span>
@@ -1637,8 +1597,7 @@
             <span class="nb">list</span><span class="o">.</span><span class="fm">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">item</span><span class="p">)</span>
         <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="nb">slice</span><span class="p">):</span>
             <span class="n">items</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_coerce_item</span><span class="p">(</span><span class="n">_</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">argument</span><span class="p">]</span>
-            <span class="nb">list</span><span class="o">.</span><span class="fm">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">items</span><span class="p">)</span></div>
-
+            <span class="nb">list</span><span class="o">.</span><span class="fm">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">items</span><span class="p">)</span>
 
 <div class="viewcode-block" id="TimespanList.append">
 <a class="viewcode-back" href="../../api/abjad/timespan.html#abjad.timespan.TimespanList.append">[docs]</a>
@@ -1670,8 +1629,6 @@
         <span class="nb">list</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="TimespanList.__and__">
-<a class="viewcode-back" href="../../api/abjad/timespan.html#abjad.timespan.TimespanList.__and__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__and__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timespan</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;TimespanList&quot;</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Keeps material that intersects ``timespan``.</span>
@@ -1702,17 +1659,13 @@
             <span class="n">result</span> <span class="o">=</span> <span class="n">current_timespan</span> <span class="o">&amp;</span> <span class="n">timespan</span>
             <span class="n">new_timespans</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
         <span class="bp">self</span><span class="p">[:]</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">new_timespans</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span></div>
+        <span class="k">return</span> <span class="bp">self</span>
 
-
-<div class="viewcode-block" id="TimespanList.__repr__">
-<a class="viewcode-back" href="../../api/abjad/timespan.html#abjad.timespan.TimespanList.__repr__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets repr.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">(</span><span class="si">{</span><span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="si">}</span><span class="s2">)&quot;</span></div>
-
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">(</span><span class="si">{</span><span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="si">}</span><span class="s2">)&quot;</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_make_markup</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
@@ -2039,8 +1992,6 @@
             <span class="n">markup</span> <span class="o">=</span> <span class="n">_indicators</span><span class="o">.</span><span class="n">Markup</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\\</span><span class="s2">markup</span><span class="se">\n\\</span><span class="s2">left-column </span><span class="se">{{\n</span><span class="si">{</span><span class="n">string</span><span class="si">}</span><span class="se">\n}}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">markup</span>
 
-<div class="viewcode-block" id="TimespanList.__invert__">
-<a class="viewcode-back" href="../../api/abjad/timespan.html#abjad.timespan.TimespanList.__invert__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__invert__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;TimespanList&quot;</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Inverts timespans.</span>
@@ -2081,11 +2032,8 @@
         <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">timespan</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">timespan</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
             <span class="n">result</span> <span class="o">=</span> <span class="n">result</span> <span class="o">-</span> <span class="n">timespan</span>
-        <span class="k">return</span> <span class="n">result</span></div>
+        <span class="k">return</span> <span class="n">result</span>
 
-
-<div class="viewcode-block" id="TimespanList.__sub__">
-<a class="viewcode-back" href="../../api/abjad/timespan.html#abjad.timespan.TimespanList.__sub__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__sub__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timespan</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;TimespanList&quot;</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Deletes material that intersects ``timespan``.</span>
@@ -2119,8 +2067,7 @@
             <span class="n">result</span> <span class="o">=</span> <span class="n">current_timespan</span> <span class="o">-</span> <span class="n">timespan</span>
             <span class="n">new_timespans</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
         <span class="bp">self</span><span class="p">[:]</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">new_timespans</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span></div>
-
+        <span class="k">return</span> <span class="bp">self</span>
 
     <span class="nd">@staticmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">_coerce_item</span><span class="p">(</span><span class="n">item</span><span class="p">):</span>
@@ -2262,6 +2209,8 @@
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Is true when all timespans are wellformed.</span>
 
+<span class="sd">        Is false when timespans are not all wellformed.</span>
+
 <span class="sd">        ..  container:: example</span>
 
 <span class="sd">            Is true when all timespans are wellformed:</span>
@@ -2299,9 +2248,8 @@
 <span class="sd">            &gt;&gt;&gt; abjad.TimespanList().all_are_wellformed</span>
 <span class="sd">            True</span>
 
-<span class="sd">        Is false when timespans are not all wellformed.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="nb">all</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_timespan</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span><span class="o">.</span><span class="n">wellformed</span> <span class="k">for</span> <span class="n">argument</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">all</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_timespan</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span><span class="o">.</span><span class="n">is_wellformed</span><span class="p">()</span> <span class="k">for</span> <span class="n">argument</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">)</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">axis</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Offset</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
@@ -2724,6 +2672,10 @@
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Computes logical AND of timespans.</span>
 
+<span class="sd">        Same as setwise intersection.</span>
+
+<span class="sd">        Operates in place and returns timespan list.</span>
+
 <span class="sd">        ..  container:: example</span>
 
 <span class="sd">            Computes logical AND:</span>
@@ -2772,9 +2724,6 @@
 <span class="sd">            &gt;&gt;&gt; for _ in timespans: _</span>
 <span class="sd">            Timespan(Offset((5, 1)), Offset((8, 1)))</span>
 
-<span class="sd">        Same as setwise intersection.</span>
-
-<span class="sd">        Operates in place and returns timespan list.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="mi">1</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
             <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
@@ -2794,6 +2743,8 @@
     <span class="k">def</span><span class="w"> </span><span class="nf">compute_logical_or</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;TimespanList&quot;</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Computes logical OR of timespans.</span>
+
+<span class="sd">        Operates in place and returns timespan list.</span>
 
 <span class="sd">        ..  container:: example</span>
 
@@ -2860,7 +2811,6 @@
 <span class="sd">            Timespan(Offset((-2, 1)), Offset((2, 1)))</span>
 <span class="sd">            Timespan(Offset((10, 1)), Offset((20, 1)))</span>
 
-<span class="sd">        Operates in place and returns timespan list.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">timespans</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Timespan</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">if</span> <span class="bp">self</span><span class="p">:</span>
@@ -2880,6 +2830,8 @@
     <span class="k">def</span><span class="w"> </span><span class="nf">compute_logical_xor</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;TimespanList&quot;</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Computes logical XOR of timespans.</span>
+
+<span class="sd">        Operates in place and returns timespan list.</span>
 
 <span class="sd">        ..  container:: example</span>
 
@@ -2978,7 +2930,6 @@
 <span class="sd">            &gt;&gt;&gt; timespans</span>
 <span class="sd">            TimespanList([])</span>
 
-<span class="sd">        Operates in place and returns timespan list.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">all_fragments</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">timespan_1</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -3099,6 +3050,8 @@
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Computes overlap factor for each consecutive offset pair in timespans.</span>
 
+<span class="sd">        Returns mapping.</span>
+
 <span class="sd">        ..  container:: example</span>
 
 <span class="sd">            &gt;&gt;&gt; timespans = abjad.TimespanList([</span>
@@ -3120,7 +3073,6 @@
 <span class="sd">            (Offset((20, 1)), Offset((25, 1)), Fraction(2, 1))</span>
 <span class="sd">            (Offset((25, 1)), Offset((30, 1)), Fraction(1, 1))</span>
 
-<span class="sd">        Returns mapping.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">mapping</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
         <span class="n">offsets</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">count_offsets</span><span class="p">()</span><span class="o">.</span><span class="n">items</span><span class="p">))</span>
@@ -3133,7 +3085,7 @@
 
 <div class="viewcode-block" id="TimespanList.count_offsets">
 <a class="viewcode-back" href="../../api/abjad/timespan.html#abjad.timespan.TimespanList.count_offsets">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">count_offsets</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">count_offsets</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">OffsetCounter</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Counts offsets.</span>
 
@@ -3226,7 +3178,6 @@
 <span class="sd">            (Offset((6, 1)), 1)</span>
 <span class="sd">            (Offset((9, 1)), 1)</span>
 
-<span class="sd">        Returns counter.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">OffsetCounter</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
 
@@ -3369,6 +3320,15 @@
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets timespan that satisifies ``time_relation``.</span>
 
+<span class="sd">        Returns timespan when timespan list contains exactly one timespan that</span>
+<span class="sd">        satisfies ``time_relation``.</span>
+
+<span class="sd">        Raises exception when timespan list contains no timespan that satisfies</span>
+<span class="sd">        ``time_relation``.</span>
+
+<span class="sd">        Raises exception when timespan list contains more than one timespan</span>
+<span class="sd">        that satisfies ``time_relation``.</span>
+
 <span class="sd">        ..  container:: example</span>
 
 <span class="sd">            &gt;&gt;&gt; timespans = abjad.TimespanList([</span>
@@ -3388,14 +3348,6 @@
 <span class="sd">            &gt;&gt;&gt; timespan</span>
 <span class="sd">            Timespan(Offset((3, 1)), Offset((6, 1)))</span>
 
-<span class="sd">        Returns timespan when timespan list contains exactly one</span>
-<span class="sd">        timespan that satisfies ``time_relation``.</span>
-
-<span class="sd">        Raises exception when timespan list contains no timespan</span>
-<span class="sd">        that satisfies ``time_relation``.</span>
-
-<span class="sd">        Raises exception when timespan list contains more than one</span>
-<span class="sd">        timespan that satisfies ``time_relation``.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">timespans</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_timespans_that_satisfy_time_relation</span><span class="p">(</span><span class="n">time_relation</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">timespans</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
@@ -3555,7 +3507,6 @@
 <span class="sd">            Timespan(Offset((6, 1)), Offset((10, 1)))</span>
 <span class="sd">            &#39;---&#39;</span>
 
-<span class="sd">        Returns zero or more timespan_lists.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="p">:</span>
             <span class="k">return</span> <span class="p">()</span>
@@ -3586,6 +3537,8 @@
     <span class="k">def</span><span class="w"> </span><span class="nf">reflect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;TimespanList&quot;</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Reflects timespans.</span>
+
+<span class="sd">        Operates in place.</span>
 
 <span class="sd">        ..  container:: example</span>
 
@@ -3625,7 +3578,6 @@
 <span class="sd">            Timespan(Offset((24, 1)), Offset((27, 1)))</span>
 <span class="sd">            Timespan(Offset((27, 1)), Offset((30, 1)))</span>
 
-<span class="sd">        Operates in place and returns timespan list.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">axis</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">axis</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">axis</span>
@@ -3644,6 +3596,8 @@
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Removes degenerate timespans.</span>
 
+<span class="sd">        Operates in place.</span>
+
 <span class="sd">        ..  container:: example</span>
 
 <span class="sd">            &gt;&gt;&gt; timespans = abjad.TimespanList([</span>
@@ -3660,9 +3614,8 @@
 <span class="sd">            Timespan(Offset((5, 1)), Offset((10, 1)))</span>
 <span class="sd">            Timespan(Offset((5, 1)), Offset((25, 1)))</span>
 
-<span class="sd">        Operates in place and returns timespan list.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">timespans</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span> <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">wellformed</span><span class="p">]</span>
+        <span class="n">timespans</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span> <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">is_wellformed</span><span class="p">()]</span>
         <span class="bp">self</span><span class="p">[:]</span> <span class="o">=</span> <span class="n">timespans</span>
         <span class="k">return</span> <span class="bp">self</span></div>
 
@@ -3672,6 +3625,8 @@
     <span class="k">def</span><span class="w"> </span><span class="nf">repeat_to_stop_offset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stop_offset</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;TimespanList&quot;</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Repeats timespans to ``stop_offset``.</span>
+
+<span class="sd">        Operates in place.</span>
 
 <span class="sd">        ..  container:: example</span>
 
@@ -3692,7 +3647,6 @@
 <span class="sd">            Timespan(Offset((10, 1)), Offset((13, 1)))</span>
 <span class="sd">            Timespan(Offset((13, 1)), Offset((15, 1)))</span>
 
-<span class="sd">        Operates in place and returns timespan list.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_sorted</span>
         <span class="n">stop_offset</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Offset</span><span class="p">(</span><span class="n">stop_offset</span><span class="p">)</span>
@@ -3715,6 +3669,8 @@
     <span class="k">def</span><span class="w"> </span><span class="nf">rotate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">count</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;TimespanList&quot;</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Rotates by ``count`` contiguous timespans.</span>
+
+<span class="sd">        Operates in place.</span>
 
 <span class="sd">        ..  container:: example</span>
 
@@ -3754,7 +3710,6 @@
 <span class="sd">            Timespan(Offset((6, 1)), Offset((9, 1)))</span>
 <span class="sd">            Timespan(Offset((9, 1)), Offset((10, 1)))</span>
 
-<span class="sd">        Operates in place and returns timespan list.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">count</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span>
         <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">all_are_contiguous</span>
@@ -3791,6 +3746,8 @@
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;TimespanList&quot;</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Rounds offsets of timespans in list to multiples of ``multiplier``.</span>
+
+<span class="sd">        Operates in place.</span>
 
 <span class="sd">        ..  container:: example</span>
 
@@ -3866,7 +3823,6 @@
 <span class="sd">            Timespan(Offset((5, 1)), Offset((5, 1)))</span>
 <span class="sd">            Timespan(Offset((5, 1)), Offset((10, 1)))</span>
 
-<span class="sd">        Operates in place and returns timespan list.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">timespans</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">timespan</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
@@ -3885,6 +3841,8 @@
     <span class="k">def</span><span class="w"> </span><span class="nf">scale</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">multiplier</span><span class="p">,</span> <span class="n">anchor</span><span class="o">=</span><span class="n">_enums</span><span class="o">.</span><span class="n">LEFT</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;TimespanList&quot;</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Scales timespan by ``multiplier`` relative to ``anchor``.</span>
+
+<span class="sd">        Operates in place.</span>
 
 <span class="sd">        ..  container:: example</span>
 
@@ -3924,7 +3882,6 @@
 <span class="sd">            Timespan(Offset((0, 1)), Offset((6, 1)))</span>
 <span class="sd">            Timespan(Offset((2, 1)), Offset((10, 1)))</span>
 
-<span class="sd">        Operates in place and returns timespan list.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">timespans</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">timespan</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
@@ -4076,6 +4033,8 @@
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Stretches timespans by ``multiplier`` relative to ``anchor``.</span>
 
+<span class="sd">        Operates in place.</span>
+
 <span class="sd">        ..  container:: example</span>
 
 <span class="sd">            &gt;&gt;&gt; timespans = abjad.TimespanList([</span>
@@ -4112,7 +4071,6 @@
 <span class="sd">            Timespan(Offset((-2, 1)), Offset((4, 1)))</span>
 <span class="sd">            Timespan(Offset((4, 1)), Offset((12, 1)))</span>
 
-<span class="sd">        Operates in place and returns timespan list.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">timespans</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">if</span> <span class="n">anchor</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -4129,6 +4087,8 @@
     <span class="k">def</span><span class="w"> </span><span class="nf">translate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">translation</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;TimespanList&quot;</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Translates timespans by ``translation``.</span>
+
+<span class="sd">        Operates in place.</span>
 
 <span class="sd">        ..  container:: example</span>
 
@@ -4149,7 +4109,6 @@
 <span class="sd">            Timespan(Offset((53, 1)), Offset((56, 1)))</span>
 <span class="sd">            Timespan(Offset((56, 1)), Offset((60, 1)))</span>
 
-<span class="sd">        Operates in place and returns timespan list.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">translate_offsets</span><span class="p">(</span><span class="n">translation</span><span class="p">,</span> <span class="n">translation</span><span class="p">)</span></div>
 
@@ -4162,6 +4121,8 @@
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Translates timespans by ``start_offset_translation`` and</span>
 <span class="sd">        ``stop_offset_translation``.</span>
+
+<span class="sd">        Operates in place.</span>
 
 <span class="sd">        ..  container:: example</span>
 
@@ -4201,7 +4162,6 @@
 <span class="sd">            Timespan(Offset((3, 1)), Offset((26, 1)))</span>
 <span class="sd">            Timespan(Offset((6, 1)), Offset((30, 1)))</span>
 
-<span class="sd">        Operates in place and returns timespan list.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">timespans</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">timespan</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
@@ -4342,7 +4302,7 @@
         
         &copy; Copyright 2008-2025, Trevor Bača &amp; Joséphine Oberholtzer.
       <span class="lastupdated">
-        Last updated on Jun 02, 2025.
+        Last updated on Jul 05, 2025.
       </span>
 
     </p>

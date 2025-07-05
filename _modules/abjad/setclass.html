@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>abjad.setclass &mdash; Abjad 3.25 documentation</title>
+  <title>abjad.setclass &mdash; Abjad 3.26 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../_static/abjad.css?v=1f187528" />
@@ -18,12 +18,14 @@
     <link rel="canonical" href="https://abjad.github.io_modules/abjad/setclass.html"/>
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=6e073912"></script>
+      <script src="../../_static/documentation_options.js?v=59ffb378"></script>
       <script src="../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script src="../../_static/ga.js?v=c455bbd5"></script>
       <script src="../../_static/toggleprompt.js?v=5801b3bb"></script>
       <script defer="defer" src="../../_static/lightbox2/js/lightbox.js?v=bc25c2e6"></script>
+      <script src="../../_static/inject-autosummary-fqns.js?v=49afa734"></script>
+      <script src="../../_static/inject-fqns.js?v=c5423c1b"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
@@ -33,11 +35,11 @@
   <div class="wy-grid-for-nav">
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search"  style="background: #996633" >
+        <div class="wy-side-nav-search"  style="background: #CC8844" >
 
 
     <a href="../../index.html" class="icon icon-home" alt="Documentation
-    Home"> Abjad 3.25
+    Home"> Abjad 3.26
 
 
 
@@ -108,7 +110,7 @@
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #996633" >
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #CC8844" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../index.html">Abjad</a>
       </nav>
@@ -124,7 +126,11 @@
     <div itemprop="articleBody">
     
   <h1>Source code for abjad.setclass</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">dataclasses</span>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Classes to model pitch-theoretic set classes.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">dataclasses</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">math</span> <span class="k">as</span> <span class="n">_math</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">pcollections</span> <span class="k">as</span> <span class="n">_pcollections</span>
@@ -1151,8 +1157,6 @@
         <span class="n">v</span><span class="p">:</span> <span class="n">k</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">_transposition_only_identifier_to_prime_form</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
     <span class="p">}</span>
 
-<div class="viewcode-block" id="SetClass.__post_init__">
-<a class="viewcode-back" href="../../api/abjad/setclass.html#abjad.setclass.SetClass.__post_init__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">__post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="nb">bool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">transposition_only</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">lex_rank</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;SG1 (transposition-only) set-classes must be lex-rank.&quot;</span><span class="p">)</span>
@@ -1161,11 +1165,8 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">rank</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rank</span><span class="p">)</span>
         <span class="k">assert</span> <span class="mi">1</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rank</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rank</span><span class="p">)</span>
         <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lex_rank</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span> <span class="o">|</span> <span class="nb">bool</span><span class="p">)</span>
-        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">transposition_only</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span> <span class="o">|</span> <span class="nb">bool</span><span class="p">)</span></div>
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">transposition_only</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span> <span class="o">|</span> <span class="nb">bool</span><span class="p">)</span>
 
-
-<div class="viewcode-block" id="SetClass.__str__">
-<a class="viewcode-back" href="../../api/abjad/setclass.html#abjad.setclass.SetClass.__str__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets string representation.</span>
@@ -1204,8 +1205,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">string</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;SC(</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">cardinality</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">rank</span><span class="si">}</span><span class="s2">)</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">prime_form</span><span class="si">!s}</span><span class="s2">&quot;</span>
         <span class="n">string</span> <span class="o">=</span> <span class="n">string</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;PC&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">string</span></div>
-
+        <span class="k">return</span> <span class="n">string</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_unrank</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cardinality</span><span class="p">,</span> <span class="n">rank</span><span class="p">,</span> <span class="n">transposition_only</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="n">pair</span> <span class="o">=</span> <span class="p">(</span><span class="n">cardinality</span><span class="p">,</span> <span class="n">rank</span><span class="p">)</span>
@@ -1345,7 +1345,6 @@
 <span class="sd">            &gt;&gt;&gt; set_class.prime_form</span>
 <span class="sd">            PitchClassSet([0, 2, 6, 7])</span>
 
-<span class="sd">        Returns numbered pitch-class set.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">prime_form</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_unrank</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">cardinality</span><span class="p">,</span>
@@ -1354,12 +1353,12 @@
         <span class="p">)</span>
         <span class="k">return</span> <span class="n">prime_form</span>
 
-<div class="viewcode-block" id="SetClass.from_pitches">
-<a class="viewcode-back" href="../../api/abjad/setclass.html#abjad.setclass.SetClass.from_pitches">[docs]</a>
     <span class="nd">@staticmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">from_pitches</span><span class="p">(</span><span class="n">pitches</span><span class="p">,</span> <span class="n">lex_rank</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">transposition_only</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Makes set-class from ``pitches``.</span>
+
+<span class="sd">        Returns new set-class.</span>
 
 <span class="sd">        ..  container:: example</span>
 
@@ -1453,7 +1452,6 @@
 <span class="sd">            &gt;&gt;&gt; print(set_class)</span>
 <span class="sd">            SC(3-17){0, 4, 7}</span>
 
-<span class="sd">        Returns new set-class.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">pitch_class_set</span> <span class="o">=</span> <span class="n">_pcollections</span><span class="o">.</span><span class="n">PitchClassSet</span><span class="p">(</span><span class="n">pitches</span><span class="p">)</span>
         <span class="n">prime_form</span> <span class="o">=</span> <span class="n">pitch_class_set</span><span class="o">.</span><span class="n">get_prime_form</span><span class="p">(</span>
@@ -1473,15 +1471,14 @@
             <span class="n">lex_rank</span><span class="o">=</span><span class="n">lex_rank</span><span class="p">,</span>
             <span class="n">transposition_only</span><span class="o">=</span><span class="n">transposition_only</span><span class="p">,</span>
         <span class="p">)</span>
-        <span class="k">return</span> <span class="n">set_class</span></div>
+        <span class="k">return</span> <span class="n">set_class</span>
 
-
-<div class="viewcode-block" id="SetClass.list_set_classes">
-<a class="viewcode-back" href="../../api/abjad/setclass.html#abjad.setclass.SetClass.list_set_classes">[docs]</a>
     <span class="nd">@staticmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">list_set_classes</span><span class="p">(</span><span class="n">cardinality</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">lex_rank</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">transposition_only</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        List set-classes.</span>
+
+<span class="sd">        Returns list of set-classes.</span>
 
 <span class="sd">        ..  container:: example</span>
 
@@ -1616,7 +1613,6 @@
 <span class="sd">            SC(4-42){0, 4, 5, 7}</span>
 <span class="sd">            SC(4-43){0, 4, 6, 7}</span>
 
-<span class="sd">        Returns list of set-classes.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">transposition_only</span><span class="p">:</span>
             <span class="n">identifiers</span> <span class="o">=</span> <span class="n">SetClass</span><span class="o">.</span><span class="n">_transposition_only_identifier_to_prime_form</span>
@@ -1638,7 +1634,6 @@
             <span class="p">)</span>
             <span class="n">set_classes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">set_class</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">set_classes</span></div>
-</div>
 
 
 
@@ -1714,7 +1709,7 @@
         
         &copy; Copyright 2008-2025, Trevor Bača &amp; Joséphine Oberholtzer.
       <span class="lastupdated">
-        Last updated on Jun 02, 2025.
+        Last updated on Jul 05, 2025.
       </span>
 
     </p>

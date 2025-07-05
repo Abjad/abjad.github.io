@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>abjad.ext.sphinx &mdash; Abjad 3.25 documentation</title>
+  <title>abjad.ext.sphinx &mdash; Abjad 3.26 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../../_static/abjad.css?v=1f187528" />
@@ -18,12 +18,14 @@
     <link rel="canonical" href="https://abjad.github.io_modules/abjad/ext/sphinx.html"/>
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=6e073912"></script>
+      <script src="../../../_static/documentation_options.js?v=59ffb378"></script>
       <script src="../../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script src="../../../_static/ga.js?v=c455bbd5"></script>
       <script src="../../../_static/toggleprompt.js?v=5801b3bb"></script>
       <script defer="defer" src="../../../_static/lightbox2/js/lightbox.js?v=bc25c2e6"></script>
+      <script src="../../../_static/inject-autosummary-fqns.js?v=49afa734"></script>
+      <script src="../../../_static/inject-fqns.js?v=c5423c1b"></script>
     <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
@@ -33,11 +35,11 @@
   <div class="wy-grid-for-nav">
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search"  style="background: #996633" >
+        <div class="wy-side-nav-search"  style="background: #CC8844" >
 
 
     <a href="../../../index.html" class="icon icon-home" alt="Documentation
-    Home"> Abjad 3.25
+    Home"> Abjad 3.26
 
 
 
@@ -108,7 +110,7 @@
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #996633" >
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #CC8844" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../../index.html">Abjad</a>
       </nav>
@@ -127,45 +129,319 @@
 <span></span><span class="kn">import</span><span class="w"> </span><span class="nn">copy</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">enum</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">hashlib</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">inspect</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">pathlib</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">shutil</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">subprocess</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">typing</span>
 
+<span class="kn">import</span><span class="w"> </span><span class="nn">docutils</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">sphinx</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">docutils.nodes</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
-    <span class="n">Element</span><span class="p">,</span>
-    <span class="n">FixedTextElement</span><span class="p">,</span>
-    <span class="n">General</span><span class="p">,</span>
-    <span class="n">SkipNode</span><span class="p">,</span>
-    <span class="n">image</span><span class="p">,</span>
-    <span class="n">literal_block</span><span class="p">,</span>
-<span class="p">)</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">docutils.parsers.rst</span><span class="w"> </span><span class="kn">import</span> <span class="n">Directive</span><span class="p">,</span> <span class="n">directives</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">sphinx.util</span><span class="w"> </span><span class="kn">import</span> <span class="n">logging</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">sphinx.util.console</span><span class="w"> </span><span class="kn">import</span> <span class="n">brown</span>  <span class="c1"># type: ignore</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">sphinx.util.nodes</span><span class="w"> </span><span class="kn">import</span> <span class="n">set_source_info</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">sphinx.util.osutil</span><span class="w"> </span><span class="kn">import</span> <span class="n">copyfile</span><span class="p">,</span> <span class="n">ensuredir</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">uqbar</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">uqbar.book.extensions</span><span class="w"> </span><span class="kn">import</span> <span class="n">Extension</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">uqbar.strings</span><span class="w"> </span><span class="kn">import</span> <span class="n">normalize</span>
 
+<span class="kn">from</span><span class="w"> </span><span class="nn">..</span><span class="w"> </span><span class="kn">import</span> <span class="n">configuration</span> <span class="k">as</span> <span class="n">_configuration</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..</span><span class="w"> </span><span class="kn">import</span> <span class="n">contextmanagers</span> <span class="k">as</span> <span class="n">_contextmanagers</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">..</span><span class="w"> </span><span class="kn">import</span> <span class="nb">format</span> <span class="k">as</span> <span class="n">_format</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..</span><span class="w"> </span><span class="kn">import</span> <span class="n">illustrators</span> <span class="k">as</span> <span class="n">_illustrators</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..</span><span class="w"> </span><span class="kn">import</span> <span class="n">io</span> <span class="k">as</span> <span class="n">_io</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">..</span><span class="w"> </span><span class="kn">import</span> <span class="n">lilypondfile</span> <span class="k">as</span> <span class="n">_lilypondfile</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">..</span><span class="w"> </span><span class="kn">import</span> <span class="n">tag</span> <span class="k">as</span> <span class="n">_tag</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">..configuration</span><span class="w"> </span><span class="kn">import</span> <span class="n">Configuration</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">..contextmanagers</span><span class="w"> </span><span class="kn">import</span> <span class="n">TemporaryDirectoryChange</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">..illustrators</span><span class="w"> </span><span class="kn">import</span> <span class="n">illustrate</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">..io</span><span class="w"> </span><span class="kn">import</span> <span class="n">Illustrator</span><span class="p">,</span> <span class="n">LilyPondIO</span><span class="p">,</span> <span class="n">Player</span>
 
-<span class="n">configuration</span> <span class="o">=</span> <span class="n">Configuration</span><span class="p">()</span>
-<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+<span class="n">configuration</span> <span class="o">=</span> <span class="n">_configuration</span><span class="o">.</span><span class="n">Configuration</span><span class="p">()</span>
+<span class="n">logger</span> <span class="o">=</span> <span class="n">sphinx</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="AbjadClassDocumenter">
+<a class="viewcode-back" href="../../../api/abjad/ext/sphinx.html#abjad.ext.sphinx.AbjadClassDocumenter">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">AbjadClassDocumenter</span><span class="p">(</span><span class="n">uqbar</span><span class="o">.</span><span class="n">apis</span><span class="o">.</span><span class="n">documenters</span><span class="o">.</span><span class="n">ClassDocumenter</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Abjad class documenter.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="p">,</span> <span class="nb">type</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">issubclass</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="p">,</span> <span class="ne">Exception</span><span class="p">):</span>
+            <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;.. autoexception:: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">package_path</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;.. autoclass:: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">package_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">]</span>
+        <span class="n">attributes</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">attribute</span> <span class="ow">in</span> <span class="n">inspect</span><span class="o">.</span><span class="n">classify_class_attrs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">attribute</span><span class="o">.</span><span class="n">defining_class</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="k">if</span> <span class="n">attribute</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;_&quot;</span><span class="p">):</span>
+                <span class="k">continue</span>
+            <span class="k">if</span> <span class="n">attribute</span><span class="o">.</span><span class="n">kind</span> <span class="ow">in</span> <span class="p">(</span>
+                <span class="s2">&quot;class_method&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;method&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;property&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;static_method&quot;</span><span class="p">,</span>
+            <span class="p">):</span>
+                <span class="n">attributes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">attribute</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">issubclass</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="p">,</span> <span class="n">enum</span><span class="o">.</span><span class="n">Enum</span><span class="p">):</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;   :members:&quot;</span><span class="p">)</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;   :undoc-members:&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">strings</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_build_member_autosummary</span><span class="p">(</span><span class="n">attributes</span><span class="p">)</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">strings</span><span class="p">)</span>
+        <span class="n">strings</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_format_all_attributes</span><span class="p">(</span><span class="n">attributes</span><span class="p">)</span>
+        <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">strings</span><span class="p">)</span>
+        <span class="k">return</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_build_member_autosummary</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attributes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+        <span class="n">all_attributes</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">attribute</span> <span class="ow">in</span> <span class="n">attributes</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">attribute</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;__&quot;</span><span class="p">):</span>
+                <span class="k">continue</span>
+            <span class="k">if</span> <span class="n">attribute</span><span class="o">.</span><span class="n">defining_class</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="n">all_attributes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">attribute</span><span class="p">)</span>
+        <span class="n">all_attributes</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="n">result</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">all_attributes</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">result</span>
+        <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+        <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;   .. autosummary::&quot;</span><span class="p">)</span>
+        <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">attribute</span> <span class="ow">in</span> <span class="n">all_attributes</span><span class="p">:</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;      </span><span class="si">{</span><span class="n">attribute</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">result</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_format_all_attributes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attributes</span><span class="p">):</span>
+        <span class="n">attributes</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">attributes</span><span class="p">)</span>
+        <span class="n">attributes</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">_</span><span class="p">:</span> <span class="n">_</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">attribute</span> <span class="ow">in</span> <span class="n">attributes</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">attribute</span><span class="o">.</span><span class="n">defining_class</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="k">if</span> <span class="n">attribute</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;_&quot;</span><span class="p">):</span>
+                <span class="k">continue</span>
+            <span class="k">if</span> <span class="n">attribute</span><span class="o">.</span><span class="n">kind</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;class_method&quot;</span><span class="p">,</span> <span class="s2">&quot;method&quot;</span><span class="p">,</span> <span class="s2">&quot;static_method&quot;</span><span class="p">):</span>
+                <span class="n">string</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;   .. automethod:: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">package_path</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">attribute</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="k">elif</span> <span class="n">attribute</span><span class="o">.</span><span class="n">kind</span> <span class="o">==</span> <span class="s2">&quot;property&quot;</span><span class="p">:</span>
+                <span class="n">string</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;   .. autoattribute:: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">package_path</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">attribute</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">result</span></div>
+
+
+
+<div class="viewcode-block" id="AbjadFunctionDocumenter">
+<a class="viewcode-back" href="../../../api/abjad/ext/sphinx.html#abjad.ext.sphinx.AbjadFunctionDocumenter">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">AbjadFunctionDocumenter</span><span class="p">(</span><span class="n">uqbar</span><span class="o">.</span><span class="n">apis</span><span class="o">.</span><span class="n">documenters</span><span class="o">.</span><span class="n">FunctionDocumenter</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Abjad function documenter.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;.. autofunction:: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">package_path</span><span class="si">}</span><span class="s2">&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="AbjadModuleDocumenter">
+<a class="viewcode-back" href="../../../api/abjad/ext/sphinx.html#abjad.ext.sphinx.AbjadModuleDocumenter">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">AbjadModuleDocumenter</span><span class="p">(</span><span class="n">uqbar</span><span class="o">.</span><span class="n">apis</span><span class="o">.</span><span class="n">documenters</span><span class="o">.</span><span class="n">ModuleDocumenter</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Abjad module documenter.</span>
+
+<span class="sd">    Writes ...</span>
+
+<span class="sd">        * abjad/docs/source/api/abjad/bind.rst</span>
+<span class="sd">        * abjad/docs/source/api/abjad/configuration.rst</span>
+<span class="sd">        * abjad/docs/source/api/abjad/contextmanagers.rst</span>
+<span class="sd">        * etc.</span>
+
+<span class="sd">    ... to disk.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_build_preamble</span><span class="p">()</span>
+        <span class="c1"># true for grace_corner_cases, parse</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_nominative</span><span class="p">:</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">member_documenters</span><span class="p">[</span><span class="mi">0</span><span class="p">])])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># true only for abjad, abjad.ext, abjad.parsers</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_package</span><span class="p">:</span>
+                <span class="n">subpackage_documenters</span> <span class="o">=</span> <span class="p">[</span>
+                    <span class="n">_</span>
+                    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">module_documenters</span> <span class="ow">or</span> <span class="p">[]</span>
+                    <span class="k">if</span> <span class="n">_</span><span class="o">.</span><span class="n">is_package</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">_</span><span class="o">.</span><span class="n">is_nominative</span>
+                <span class="p">]</span>
+                <span class="k">if</span> <span class="n">subpackage_documenters</span><span class="p">:</span>
+                    <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_build_toc</span><span class="p">(</span><span class="n">subpackage_documenters</span><span class="p">))</span>
+            <span class="n">flattened_documenters</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">section</span><span class="p">,</span> <span class="n">documenters</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">member_documenters_by_section</span><span class="p">:</span>
+                <span class="n">flattened_documenters</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">documenters</span><span class="p">)</span>
+            <span class="n">flattened_documenters</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">_</span><span class="p">:</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">_</span><span class="o">.</span><span class="n">client</span><span class="p">,</span> <span class="s2">&quot;__name__&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">))</span>
+            <span class="n">function_documenters</span><span class="p">,</span> <span class="n">class_documenters</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">documenter</span> <span class="ow">in</span> <span class="n">flattened_documenters</span><span class="p">:</span>
+                <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">documenter</span><span class="o">.</span><span class="n">client</span><span class="p">,</span> <span class="s2">&quot;__name__&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">islower</span><span class="p">():</span>
+                    <span class="n">function_documenters</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">documenter</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">class_documenters</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">documenter</span><span class="p">)</span>
+            <span class="n">function_documenters</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">_</span><span class="p">:</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">_</span><span class="o">.</span><span class="n">client</span><span class="p">,</span> <span class="s2">&quot;__name__&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">))</span>
+            <span class="n">class_documenters</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">_</span><span class="p">:</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">_</span><span class="o">.</span><span class="n">client</span><span class="p">,</span> <span class="s2">&quot;__name__&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">))</span>
+            <span class="n">flattened_documenters</span> <span class="o">=</span> <span class="n">function_documenters</span> <span class="o">+</span> <span class="n">class_documenters</span>
+            <span class="n">local_documenters</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="n">documenter</span>
+                <span class="k">for</span> <span class="n">documenter</span> <span class="ow">in</span> <span class="n">flattened_documenters</span>
+                <span class="k">if</span> <span class="n">documenter</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="vm">__module__</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">package_path</span>
+            <span class="p">]</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_build_toc</span><span class="p">(</span><span class="n">flattened_documenters</span><span class="p">))</span>
+            <span class="k">for</span> <span class="n">local_documenter</span> <span class="ow">in</span> <span class="n">local_documenters</span><span class="p">:</span>
+                <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">local_documenter</span><span class="p">)])</span>
+        <span class="k">return</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_build_preamble</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+        <span class="n">header</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;abjad.</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">package_name</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="n">result</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="sa">f</span><span class="s2">&quot;.. _</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">reference_name</span><span class="si">}</span><span class="s2">:&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;&quot;</span><span class="p">,</span>
+            <span class="n">header</span><span class="p">,</span>
+            <span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">header</span><span class="p">),</span>
+        <span class="p">]</span>
+        <span class="k">return</span> <span class="n">result</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_build_toc</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">documenters</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+        <span class="n">result</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">documenters</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">result</span>
+        <span class="n">toctree_paths</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">documenter</span> <span class="ow">in</span> <span class="n">documenters</span><span class="p">:</span>
+            <span class="n">path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_build_toc_path</span><span class="p">(</span><span class="n">documenter</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">path</span><span class="p">:</span>
+                <span class="n">toctree_paths</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+        <span class="c1"># true for abjad, abjad.ext, abjad.parsers</span>
+        <span class="k">if</span> <span class="n">toctree_paths</span><span class="p">:</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span>
+                <span class="p">[</span>
+                    <span class="s2">&quot;&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;.. toctree::&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;   :hidden:&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;&quot;</span><span class="p">,</span>
+                <span class="p">]</span>
+            <span class="p">)</span>
+            <span class="k">for</span> <span class="n">toctree_path</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">toctree_paths</span><span class="p">):</span>
+                <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   </span><span class="si">{</span><span class="n">toctree_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span>
+            <span class="p">[</span>
+                <span class="s2">&quot;&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;.. autosummary::&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;&quot;</span><span class="p">,</span>
+            <span class="p">]</span>
+        <span class="p">)</span>
+        <span class="k">for</span> <span class="n">documenter</span> <span class="ow">in</span> <span class="n">documenters</span><span class="p">:</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   </span><span class="si">{</span><span class="n">documenter</span><span class="o">.</span><span class="n">package_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">result</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">member_documenters_by_section</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="n">uqbar</span><span class="o">.</span><span class="n">apis</span><span class="o">.</span><span class="n">documenters</span><span class="o">.</span><span class="n">MemberDocumenter</span><span class="p">]]]:</span>
+        <span class="n">result</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">MutableMapping</span><span class="p">[</span>
+            <span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="n">uqbar</span><span class="o">.</span><span class="n">apis</span><span class="o">.</span><span class="n">documenters</span><span class="o">.</span><span class="n">MemberDocumenter</span><span class="p">]</span>
+        <span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">documenter</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">member_documenters</span><span class="p">:</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="n">documenter</span><span class="o">.</span><span class="n">documentation_section</span><span class="p">,</span> <span class="p">[])</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">documenter</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">module_documenter</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">module_documenters</span> <span class="ow">or</span> <span class="p">[]:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">module_documenter</span><span class="o">.</span><span class="n">is_nominative</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="n">documenter</span> <span class="o">=</span> <span class="n">module_documenter</span><span class="o">.</span><span class="n">member_documenters</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="n">documenter</span><span class="o">.</span><span class="n">documentation_section</span><span class="p">,</span> <span class="p">[])</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">documenter</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">items</span><span class="p">())</span></div>
+
+
+
+<div class="viewcode-block" id="AbjadRootDocumenter">
+<a class="viewcode-back" href="../../../api/abjad/ext/sphinx.html#abjad.ext.sphinx.AbjadRootDocumenter">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">AbjadRootDocumenter</span><span class="p">(</span><span class="n">uqbar</span><span class="o">.</span><span class="n">apis</span><span class="o">.</span><span class="n">documenters</span><span class="o">.</span><span class="n">RootDocumenter</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Abjad root documenter.</span>
+
+<span class="sd">    Writes abjad/docs/source/api/index.rst.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">do_not_document</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="s2">&quot;abjad.ext&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;abjad.ext.sphinx&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;abjad.parsers.base&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;abjad.parsers.parser&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;abjad.parsers.scheme&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">title</span><span class="p">,</span>
+            <span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">title</span><span class="p">),</span>
+            <span class="s2">&quot;&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;.. toctree::&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;   :hidden:&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="p">]</span>
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">module_documenters</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span>
+        <span class="k">for</span> <span class="n">documenter</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">module_documenters</span><span class="p">:</span>
+            <span class="n">path</span> <span class="o">=</span> <span class="n">documenter</span><span class="o">.</span><span class="n">package_path</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="s2">&quot;/&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">documenter</span><span class="o">.</span><span class="n">is_package</span><span class="p">:</span>
+                <span class="n">path</span> <span class="o">+=</span> <span class="s2">&quot;/index&quot;</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   </span><span class="si">{</span><span class="n">path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">module_documenter</span><span class="p">,</span> <span class="n">documenters_by_section</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_recurse</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">module_documenter</span><span class="o">.</span><span class="n">package_name</span> <span class="o">==</span> <span class="s2">&quot;abjad&quot;</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="k">if</span> <span class="n">module_documenter</span><span class="o">.</span><span class="n">package_path</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">do_not_document</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="n">package_path</span> <span class="o">=</span> <span class="n">module_documenter</span><span class="o">.</span><span class="n">package_path</span>
+            <span class="n">reference_name</span> <span class="o">=</span> <span class="n">module_documenter</span><span class="o">.</span><span class="n">reference_name</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span>
+                <span class="p">[</span>
+                    <span class="s2">&quot;&quot;</span><span class="p">,</span>
+                    <span class="sa">f</span><span class="s2">&quot;.. rubric:: :ref:`</span><span class="si">{</span><span class="n">package_path</span><span class="si">}</span><span class="s2"> &lt;</span><span class="si">{</span><span class="n">reference_name</span><span class="si">}</span><span class="s2">&gt;`&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;   :class: section-header&quot;</span><span class="p">,</span>
+                <span class="p">]</span>
+            <span class="p">)</span>
+            <span class="n">flattened_documenters</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">section_name</span><span class="p">,</span> <span class="n">documenters</span> <span class="ow">in</span> <span class="n">documenters_by_section</span><span class="p">:</span>
+                <span class="n">flattened_documenters</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">documenters</span><span class="p">)</span>
+            <span class="n">function_documenters</span><span class="p">,</span> <span class="n">class_documenters</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">documenter</span> <span class="ow">in</span> <span class="n">flattened_documenters</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">documenter</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="vm">__name__</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">islower</span><span class="p">():</span>
+                    <span class="n">function_documenters</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">documenter</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">class_documenters</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">documenter</span><span class="p">)</span>
+            <span class="n">function_documenters</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">_</span><span class="p">:</span> <span class="n">_</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
+            <span class="n">class_documenters</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">_</span><span class="p">:</span> <span class="n">_</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
+            <span class="n">flattened_documenters</span> <span class="o">=</span> <span class="n">function_documenters</span> <span class="o">+</span> <span class="n">class_documenters</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span>
+                <span class="p">[</span>
+                    <span class="s2">&quot;&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;.. autosummary::&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;&quot;</span><span class="p">,</span>
+                <span class="p">]</span>
+            <span class="p">)</span>
+            <span class="k">for</span> <span class="n">documenter</span> <span class="ow">in</span> <span class="n">flattened_documenters</span><span class="p">:</span>
+                <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   </span><span class="si">{</span><span class="n">documenter</span><span class="o">.</span><span class="n">package_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_recurse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">documenter</span><span class="p">):</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="p">(</span>
+            <span class="nb">isinstance</span><span class="p">(</span><span class="n">documenter</span><span class="p">,</span> <span class="n">uqbar</span><span class="o">.</span><span class="n">apis</span><span class="o">.</span><span class="n">documenters</span><span class="o">.</span><span class="n">ModuleDocumenter</span><span class="p">)</span>
+            <span class="ow">and</span> <span class="ow">not</span> <span class="n">documenter</span><span class="o">.</span><span class="n">is_nominative</span>
+        <span class="p">):</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">documenter</span><span class="p">,</span> <span class="n">documenter</span><span class="o">.</span><span class="n">member_documenters_by_section</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">module_documenter</span> <span class="ow">in</span> <span class="n">documenter</span><span class="o">.</span><span class="n">module_documenters</span><span class="p">:</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_recurse</span><span class="p">(</span><span class="n">module_documenter</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">result</span></div>
+
 
 
 <div class="viewcode-block" id="HiddenDoctestDirective">
 <a class="viewcode-back" href="../../../api/abjad/ext/sphinx.html#abjad.ext.sphinx.HiddenDoctestDirective">[docs]</a>
-<span class="k">class</span><span class="w"> </span><span class="nc">HiddenDoctestDirective</span><span class="p">(</span><span class="n">Directive</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">HiddenDoctestDirective</span><span class="p">(</span><span class="n">docutils</span><span class="o">.</span><span class="n">parsers</span><span class="o">.</span><span class="n">rst</span><span class="o">.</span><span class="n">Directive</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    A hidden doctest directive.</span>
+<span class="sd">    Hidden doctest directive.</span>
 
 <span class="sd">    Contributes no formatting to documents built by Sphinx.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -194,9 +470,9 @@
 
 <div class="viewcode-block" id="ShellDirective">
 <a class="viewcode-back" href="../../../api/abjad/ext/sphinx.html#abjad.ext.sphinx.ShellDirective">[docs]</a>
-<span class="k">class</span><span class="w"> </span><span class="nc">ShellDirective</span><span class="p">(</span><span class="n">Directive</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">ShellDirective</span><span class="p">(</span><span class="n">docutils</span><span class="o">.</span><span class="n">parsers</span><span class="o">.</span><span class="n">rst</span><span class="o">.</span><span class="n">Directive</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    A shell directive.</span>
+<span class="sd">    Shell directive.</span>
 
 <span class="sd">    Represents a shell session.</span>
 
@@ -220,7 +496,7 @@
     <span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">assert_has_content</span><span class="p">()</span>
         <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">with</span> <span class="n">TemporaryDirectoryChange</span><span class="p">(</span><span class="n">configuration</span><span class="o">.</span><span class="n">abjad_directory</span><span class="p">):</span>
+        <span class="k">with</span> <span class="n">_contextmanagers</span><span class="o">.</span><span class="n">TemporaryDirectoryChange</span><span class="p">(</span><span class="n">configuration</span><span class="o">.</span><span class="n">abjad_directory</span><span class="p">):</span>
             <span class="n">cwd</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="o">.</span><span class="n">cwd</span><span class="p">()</span>
             <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">content</span><span class="p">:</span>
                 <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">cwd</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">$ </span><span class="si">{</span><span class="n">line</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
@@ -233,9 +509,9 @@
                 <span class="p">)</span>
                 <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">completed_process</span><span class="o">.</span><span class="n">stdout</span><span class="p">)</span>
         <span class="n">code</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
-        <span class="n">literal</span> <span class="o">=</span> <span class="n">literal_block</span><span class="p">(</span><span class="n">code</span><span class="p">,</span> <span class="n">code</span><span class="p">)</span>
+        <span class="n">literal</span> <span class="o">=</span> <span class="n">docutils</span><span class="o">.</span><span class="n">nodes</span><span class="o">.</span><span class="n">literal_block</span><span class="p">(</span><span class="n">code</span><span class="p">,</span> <span class="n">code</span><span class="p">)</span>
         <span class="n">literal</span><span class="p">[</span><span class="s2">&quot;language&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;console&quot;</span>
-        <span class="n">set_source_info</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">literal</span><span class="p">)</span>
+        <span class="n">sphinx</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">nodes</span><span class="o">.</span><span class="n">set_source_info</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">literal</span><span class="p">)</span>
         <span class="k">return</span> <span class="p">[</span><span class="n">literal</span><span class="p">]</span></div>
 </div>
 
@@ -243,9 +519,9 @@
 
 <div class="viewcode-block" id="ThumbnailDirective">
 <a class="viewcode-back" href="../../../api/abjad/ext/sphinx.html#abjad.ext.sphinx.ThumbnailDirective">[docs]</a>
-<span class="k">class</span><span class="w"> </span><span class="nc">ThumbnailDirective</span><span class="p">(</span><span class="n">Directive</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">ThumbnailDirective</span><span class="p">(</span><span class="n">docutils</span><span class="o">.</span><span class="n">parsers</span><span class="o">.</span><span class="n">rst</span><span class="o">.</span><span class="n">Directive</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    A thumbnail directive.</span>
+<span class="sd">    Thumbnail directive.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="c1">### CLASS VARIABLES ###</span>
@@ -255,9 +531,9 @@
     <span class="n">final_argument_whitespace</span> <span class="o">=</span> <span class="kc">True</span>
     <span class="n">has_content</span> <span class="o">=</span> <span class="kc">False</span>
     <span class="n">option_spec</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="n">directives</span><span class="o">.</span><span class="n">class_option</span><span class="p">,</span>
-        <span class="s2">&quot;group&quot;</span><span class="p">:</span> <span class="n">directives</span><span class="o">.</span><span class="n">unchanged</span><span class="p">,</span>
-        <span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="n">directives</span><span class="o">.</span><span class="n">unchanged</span><span class="p">,</span>
+        <span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="n">docutils</span><span class="o">.</span><span class="n">parsers</span><span class="o">.</span><span class="n">rst</span><span class="o">.</span><span class="n">directives</span><span class="o">.</span><span class="n">class_option</span><span class="p">,</span>
+        <span class="s2">&quot;group&quot;</span><span class="p">:</span> <span class="n">docutils</span><span class="o">.</span><span class="n">parsers</span><span class="o">.</span><span class="n">rst</span><span class="o">.</span><span class="n">directives</span><span class="o">.</span><span class="n">unchanged</span><span class="p">,</span>
+        <span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="n">docutils</span><span class="o">.</span><span class="n">parsers</span><span class="o">.</span><span class="n">rst</span><span class="o">.</span><span class="n">directives</span><span class="o">.</span><span class="n">unchanged</span><span class="p">,</span>
     <span class="p">}</span>
     <span class="n">optional_arguments</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="n">required_arguments</span> <span class="o">=</span> <span class="mi">1</span>
@@ -287,7 +563,9 @@
 
 <div class="viewcode-block" id="thumbnail_block">
 <a class="viewcode-back" href="../../../api/abjad/ext/sphinx.html#abjad.ext.sphinx.thumbnail_block">[docs]</a>
-<span class="k">class</span><span class="w"> </span><span class="nc">thumbnail_block</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">General</span><span class="p">,</span> <span class="n">Element</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">thumbnail_block</span><span class="p">(</span>
+    <span class="n">docutils</span><span class="o">.</span><span class="n">nodes</span><span class="o">.</span><span class="n">image</span><span class="p">,</span> <span class="n">docutils</span><span class="o">.</span><span class="n">nodes</span><span class="o">.</span><span class="n">General</span><span class="p">,</span> <span class="n">docutils</span><span class="o">.</span><span class="n">nodes</span><span class="o">.</span><span class="n">Element</span>
+<span class="p">):</span>
     <span class="n">__documentation_ignore_inherited__</span> <span class="o">=</span> <span class="kc">True</span></div>
 
 
@@ -295,7 +573,7 @@
 <div class="viewcode-block" id="visit_thumbnail_block_html">
 <a class="viewcode-back" href="../../../api/abjad/ext/sphinx.html#abjad.ext.sphinx.visit_thumbnail_block_html">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">visit_thumbnail_block_html</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
-    <span class="n">template</span> <span class="o">=</span> <span class="n">normalize</span><span class="p">(</span>
+    <span class="n">template</span> <span class="o">=</span> <span class="n">uqbar</span><span class="o">.</span><span class="n">strings</span><span class="o">.</span><span class="n">normalize</span><span class="p">(</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        &lt;a data-lightbox=&quot;{group}&quot; href=&quot;{target_path}&quot; title=&quot;{title}&quot; data-title=&quot;{title}&quot; class=&quot;{cls}&quot;&gt;</span>
 <span class="sd">            &lt;img src=&quot;{thumbnail_path}&quot; alt=&quot;{alt}&quot;/&gt;</span>
@@ -314,7 +592,7 @@
     <span class="k">if</span> <span class="n">suffix</span> <span class="o">==</span> <span class="s2">&quot;.svg&quot;</span><span class="p">:</span>
         <span class="n">thumbnail_path</span> <span class="o">=</span> <span class="n">target_path</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="n">thumbnail_path</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">-thumbnail</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">prefix</span><span class="p">,</span> <span class="n">suffix</span><span class="p">)</span>
+        <span class="n">thumbnail_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">prefix</span><span class="si">}</span><span class="s2">-thumbnail</span><span class="si">{</span><span class="n">suffix</span><span class="si">}</span><span class="s2">&quot;</span>
     <span class="n">output</span> <span class="o">=</span> <span class="n">template</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
         <span class="n">alt</span><span class="o">=</span><span class="n">title</span><span class="p">,</span>
         <span class="n">group</span><span class="o">=</span><span class="n">group</span><span class="p">,</span>
@@ -324,14 +602,14 @@
         <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">body</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
-    <span class="k">raise</span> <span class="n">SkipNode</span></div>
+    <span class="k">raise</span> <span class="n">docutils</span><span class="o">.</span><span class="n">nodes</span><span class="o">.</span><span class="n">SkipNode</span></div>
 
 
 
 <div class="viewcode-block" id="visit_thumbnail_block_latex">
 <a class="viewcode-back" href="../../../api/abjad/ext/sphinx.html#abjad.ext.sphinx.visit_thumbnail_block_latex">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">visit_thumbnail_block_latex</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
-    <span class="k">raise</span> <span class="n">SkipNode</span></div>
+    <span class="k">raise</span> <span class="n">docutils</span><span class="o">.</span><span class="n">nodes</span><span class="o">.</span><span class="n">SkipNode</span></div>
 
 
 
@@ -351,15 +629,13 @@
         <span class="n">IMAGE</span> <span class="o">=</span> <span class="mi">1</span>
         <span class="n">AUDIO</span> <span class="o">=</span> <span class="mi">2</span>
 
-    <span class="k">class</span><span class="w"> </span><span class="nc">lilypond_block</span><span class="p">(</span><span class="n">General</span><span class="p">,</span> <span class="n">FixedTextElement</span><span class="p">):</span>
+    <span class="k">class</span><span class="w"> </span><span class="nc">lilypond_block</span><span class="p">(</span><span class="n">docutils</span><span class="o">.</span><span class="n">nodes</span><span class="o">.</span><span class="n">General</span><span class="p">,</span> <span class="n">docutils</span><span class="o">.</span><span class="n">nodes</span><span class="o">.</span><span class="n">FixedTextElement</span><span class="p">):</span>
         <span class="k">pass</span>
 
-<div class="viewcode-block" id="LilyPondExtension.setup_console">
-<a class="viewcode-back" href="../../../api/abjad/ext/sphinx.html#abjad.ext.sphinx.LilyPondExtension.setup_console">[docs]</a>
     <span class="nd">@classmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">setup_console</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">console</span><span class="p">,</span> <span class="n">monkeypatch</span><span class="p">):</span>
         <span class="n">monkeypatch</span><span class="o">.</span><span class="n">setattr</span><span class="p">(</span>
-            <span class="n">Illustrator</span><span class="p">,</span>
+            <span class="n">_io</span><span class="o">.</span><span class="n">Illustrator</span><span class="p">,</span>
             <span class="s2">&quot;__call__&quot;</span><span class="p">,</span>
             <span class="k">lambda</span> <span class="bp">self</span><span class="p">:</span> <span class="n">console</span><span class="o">.</span><span class="n">push_proxy</span><span class="p">(</span>
                 <span class="bp">cls</span><span class="p">(</span>
@@ -374,7 +650,7 @@
             <span class="p">),</span>
         <span class="p">)</span>
         <span class="n">monkeypatch</span><span class="o">.</span><span class="n">setattr</span><span class="p">(</span>
-            <span class="n">Player</span><span class="p">,</span>
+            <span class="n">_io</span><span class="o">.</span><span class="n">Player</span><span class="p">,</span>
             <span class="s2">&quot;__call__&quot;</span><span class="p">,</span>
             <span class="k">lambda</span> <span class="bp">self</span><span class="p">:</span> <span class="n">console</span><span class="o">.</span><span class="n">push_proxy</span><span class="p">(</span>
                 <span class="bp">cls</span><span class="p">(</span>
@@ -387,11 +663,8 @@
                     <span class="p">},</span>
                 <span class="p">),</span>
             <span class="p">),</span>
-        <span class="p">)</span></div>
+        <span class="p">)</span>
 
-
-<div class="viewcode-block" id="LilyPondExtension.setup_sphinx">
-<a class="viewcode-back" href="../../../api/abjad/ext/sphinx.html#abjad.ext.sphinx.LilyPondExtension.setup_sphinx">[docs]</a>
     <span class="nd">@classmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">setup_sphinx</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">app</span><span class="p">):</span>
         <span class="n">app</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span>
@@ -400,10 +673,9 @@
             <span class="n">latex</span><span class="o">=</span><span class="p">[</span><span class="bp">cls</span><span class="o">.</span><span class="n">visit_block_latex</span><span class="p">,</span> <span class="kc">None</span><span class="p">],</span>
             <span class="n">text</span><span class="o">=</span><span class="p">[</span><span class="bp">cls</span><span class="o">.</span><span class="n">visit_block_text</span><span class="p">,</span> <span class="bp">cls</span><span class="o">.</span><span class="n">depart_block_text</span><span class="p">],</span>
         <span class="p">)</span>
-        <span class="bp">cls</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s2">&quot;lilypond/no-trim&quot;</span><span class="p">,</span> <span class="n">directives</span><span class="o">.</span><span class="n">flag</span><span class="p">)</span>
-        <span class="bp">cls</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s2">&quot;lilypond/pages&quot;</span><span class="p">,</span> <span class="n">directives</span><span class="o">.</span><span class="n">unchanged</span><span class="p">)</span>
-        <span class="bp">cls</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s2">&quot;lilypond/with-columns&quot;</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span></div>
-
+        <span class="bp">cls</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s2">&quot;lilypond/no-trim&quot;</span><span class="p">,</span> <span class="n">docutils</span><span class="o">.</span><span class="n">parsers</span><span class="o">.</span><span class="n">rst</span><span class="o">.</span><span class="n">directives</span><span class="o">.</span><span class="n">flag</span><span class="p">)</span>
+        <span class="bp">cls</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s2">&quot;lilypond/pages&quot;</span><span class="p">,</span> <span class="n">docutils</span><span class="o">.</span><span class="n">parsers</span><span class="o">.</span><span class="n">rst</span><span class="o">.</span><span class="n">directives</span><span class="o">.</span><span class="n">unchanged</span><span class="p">)</span>
+        <span class="bp">cls</span><span class="o">.</span><span class="n">add_option</span><span class="p">(</span><span class="s2">&quot;lilypond/with-columns&quot;</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
@@ -427,7 +699,7 @@
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">illustrable</span><span class="p">,</span> <span class="n">_lilypondfile</span><span class="o">.</span><span class="n">LilyPondFile</span><span class="p">):</span>
             <span class="n">illustration</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">illustrable</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">illustration</span> <span class="o">=</span> <span class="n">illustrate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">illustrable</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">keywords</span><span class="p">)</span>
+            <span class="n">illustration</span> <span class="o">=</span> <span class="n">_illustrators</span><span class="o">.</span><span class="n">illustrate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">illustrable</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">keywords</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">kind</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">Kind</span><span class="o">.</span><span class="n">AUDIO</span><span class="p">:</span>
             <span class="n">block</span> <span class="o">=</span> <span class="n">_lilypondfile</span><span class="o">.</span><span class="n">Block</span><span class="p">(</span><span class="s2">&quot;midi&quot;</span><span class="p">)</span>
             <span class="n">illustration</span><span class="p">[</span><span class="s2">&quot;score&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">block</span><span class="p">)</span>
@@ -443,8 +715,6 @@
         <span class="k">return</span> <span class="p">[</span><span class="n">node</span><span class="p">]</span></div>
 
 
-<div class="viewcode-block" id="LilyPondExtension.visit_block_html">
-<a class="viewcode-back" href="../../../api/abjad/ext/sphinx.html#abjad.ext.sphinx.LilyPondExtension.visit_block_html">[docs]</a>
     <span class="nd">@staticmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">visit_block_html</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
         <span class="n">output_directory</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">builder</span><span class="o">.</span><span class="n">outdir</span><span class="p">)</span> <span class="o">/</span> <span class="s2">&quot;_images&quot;</span>
@@ -457,7 +727,7 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="n">flags</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;-dcrop&quot;</span><span class="p">,</span> <span class="s2">&quot;-dbackend=svg&quot;</span><span class="p">]</span>
             <span class="n">glob</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">render_prefix</span><span class="si">}</span><span class="s2">*.svg&quot;</span>
-        <span class="n">lilypond_io</span> <span class="o">=</span> <span class="n">LilyPondIO</span><span class="p">(</span>
+        <span class="n">lilypond_io</span> <span class="o">=</span> <span class="n">_io</span><span class="o">.</span><span class="n">LilyPondIO</span><span class="p">(</span>
             <span class="kc">None</span><span class="p">,</span>
             <span class="n">flags</span><span class="o">=</span><span class="n">flags</span><span class="p">,</span>
             <span class="n">output_directory</span><span class="o">=</span><span class="n">output_directory</span><span class="p">,</span>
@@ -478,21 +748,20 @@
             <span class="k">pass</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">embed_images</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">,</span> <span class="n">output_directory</span><span class="p">,</span> <span class="n">render_prefix</span><span class="p">,</span> <span class="n">source_path</span><span class="p">)</span>
-        <span class="k">raise</span> <span class="n">SkipNode</span></div>
-</div>
+        <span class="k">raise</span> <span class="n">docutils</span><span class="o">.</span><span class="n">nodes</span><span class="o">.</span><span class="n">SkipNode</span></div>
 
 
 
 <span class="n">table_row_open_template</span> <span class="o">=</span> <span class="s1">&#39;&lt;div class=&quot;table-row&quot;&gt;&#39;</span>
 <span class="n">table_row_close_template</span> <span class="o">=</span> <span class="s2">&quot;&lt;/div&gt;&quot;</span>
-<span class="n">basic_image_template</span> <span class="o">=</span> <span class="n">normalize</span><span class="p">(</span>
+<span class="n">basic_image_template</span> <span class="o">=</span> <span class="n">uqbar</span><span class="o">.</span><span class="n">strings</span><span class="o">.</span><span class="n">normalize</span><span class="p">(</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    &lt;div class=&quot;uqbar-book&quot;&gt;</span>
 <span class="sd">        &lt;a href=&quot;{source_path}&quot;&gt;&lt;img src=&quot;{relative_path}&quot;/&gt;&lt;/a&gt;</span>
 <span class="sd">    &lt;/div&gt;</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 <span class="p">)</span>
-<span class="n">thumbnail_template</span> <span class="o">=</span> <span class="n">normalize</span><span class="p">(</span>
+<span class="n">thumbnail_template</span> <span class="o">=</span> <span class="n">uqbar</span><span class="o">.</span><span class="n">strings</span><span class="o">.</span><span class="n">normalize</span><span class="p">(</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    &lt;a data-lightbox=&quot;{group}&quot; href=&quot;{fullsize_path}&quot; title=&quot;{title}&quot; data-title=&quot;{title}&quot; class=&quot;{cls}&quot;&gt;</span>
 <span class="sd">        &lt;img src=&quot;{thumbnail_path}&quot; alt=&quot;{alt}&quot;/&gt;</span>
@@ -573,15 +842,15 @@
     <span class="k">for</span> <span class="n">relative_file_path</span> <span class="ow">in</span> <span class="n">sphinx</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">status_iterator</span><span class="p">(</span>
         <span class="n">relative_file_paths</span><span class="p">,</span>
         <span class="s2">&quot;installing lightbox files... &quot;</span><span class="p">,</span>
-        <span class="n">brown</span><span class="p">,</span>
+        <span class="n">sphinx</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">console</span><span class="o">.</span><span class="n">brown</span><span class="p">,</span>
         <span class="nb">len</span><span class="p">(</span><span class="n">relative_file_paths</span><span class="p">),</span>
     <span class="p">):</span>
         <span class="n">source_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">source_static_path</span><span class="p">,</span> <span class="n">relative_file_path</span><span class="p">)</span>
         <span class="n">target_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">target_static_path</span><span class="p">,</span> <span class="n">relative_file_path</span><span class="p">)</span>
         <span class="n">target_directory</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">target_path</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">target_directory</span><span class="p">):</span>
-            <span class="n">ensuredir</span><span class="p">(</span><span class="n">target_directory</span><span class="p">)</span>
-        <span class="n">copyfile</span><span class="p">(</span><span class="n">source_path</span><span class="p">,</span> <span class="n">target_path</span><span class="p">)</span>
+            <span class="n">sphinx</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">osutil</span><span class="o">.</span><span class="n">ensuredir</span><span class="p">(</span><span class="n">target_directory</span><span class="p">)</span>
+        <span class="n">sphinx</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">osutil</span><span class="o">.</span><span class="n">copyfile</span><span class="p">(</span><span class="n">source_path</span><span class="p">,</span> <span class="n">target_path</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">relative_file_path</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;.js&quot;</span><span class="p">):</span>
             <span class="n">app</span><span class="o">.</span><span class="n">add_js_file</span><span class="p">(</span><span class="n">relative_file_path</span><span class="p">,</span> <span class="n">defer</span><span class="o">=</span><span class="s2">&quot;defer&quot;</span><span class="p">)</span>
         <span class="k">elif</span> <span class="n">relative_file_path</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;.css&quot;</span><span class="p">):</span>
@@ -641,7 +910,7 @@
         
         &copy; Copyright 2008-2025, Trevor Bača &amp; Joséphine Oberholtzer.
       <span class="lastupdated">
-        Last updated on Jun 02, 2025.
+        Last updated on Jul 05, 2025.
       </span>
 
     </p>
