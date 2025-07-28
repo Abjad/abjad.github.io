@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Hexachord recombination, all-interval &mdash; Abjad 3.26 documentation</title>
+  <title>Hexachord recombination, all-interval &mdash; Abjad 3.27 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../_static/abjad.css?v=1f187528" />
@@ -19,7 +19,7 @@
     <link rel="canonical" href="https://abjad.github.io_pending/hexachordal-recombination-all-interval.html"/>
       <script src="../_static/jquery.js?v=5d32c60e"></script>
       <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../_static/documentation_options.js?v=59ffb378"></script>
+      <script src="../_static/documentation_options.js?v=fd873761"></script>
       <script src="../_static/doctools.js?v=9bcbadda"></script>
       <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script src="../_static/ga.js?v=c455bbd5"></script>
@@ -36,11 +36,11 @@
   <div class="wy-grid-for-nav">
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search"  style="background: #CC8844" >
+        <div class="wy-side-nav-search"  style="background: #FFAA55" >
 
 
     <a href="../index.html" class="icon icon-home" alt="Documentation
-    Home"> Abjad 3.26
+    Home"> Abjad 3.27
 
 
 
@@ -111,7 +111,7 @@
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #CC8844" >
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #FFAA55" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../index.html">Abjad</a>
       </nav>
@@ -162,7 +162,7 @@
     <a href="../_images/lilypond-39a39cc49292b77c90a97b5bafffd413e875641d51b33eb91f2c3d2bbd86e558.ly"><img src="../_images/lilypond-39a39cc49292b77c90a97b5bafffd413e875641d51b33eb91f2c3d2bbd86e558.cropped.svg"/></a>
 </div><p>We can define a function to recombine any hexachord  like the one above:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span><span class="w"> </span><span class="nf">recombine</span><span class="p">(</span><span class="n">hexachord</span><span class="p">):</span>
-<span class="gp">... </span>    <span class="n">complement</span> <span class="o">=</span> <span class="n">hexachord</span><span class="o">.</span><span class="n">invert</span><span class="p">()</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">hexachord</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">number</span> <span class="o">+</span> <span class="mi">6</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="n">complement</span> <span class="o">=</span> <span class="n">hexachord</span><span class="o">.</span><span class="n">invert</span><span class="p">()</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">hexachord</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">get_number</span><span class="p">()</span> <span class="o">+</span> <span class="mi">6</span><span class="p">)</span>
 <span class="gp">... </span>    <span class="n">aggregate</span> <span class="o">=</span> <span class="n">hexachord</span> <span class="o">+</span> <span class="n">complement</span>
 <span class="gp">... </span>    <span class="k">return</span> <span class="n">aggregate</span>
 <span class="gp">... </span>
@@ -216,7 +216,7 @@ function to do the same:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span><span class="w"> </span><span class="nf">make_score</span><span class="p">(</span><span class="n">segment</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="n">treble_pitches</span><span class="p">,</span> <span class="n">bass_pitches</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
 <span class="gp">... </span>    <span class="k">for</span> <span class="n">pitch</span> <span class="ow">in</span> <span class="n">segment</span><span class="p">:</span>
-<span class="gp">... </span>        <span class="k">if</span> <span class="n">pitch</span><span class="o">.</span><span class="n">number</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+<span class="gp">... </span>        <span class="k">if</span> <span class="n">pitch</span><span class="o">.</span><span class="n">get_number</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
 <span class="gp">... </span>            <span class="n">bass_pitches</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pitch</span><span class="p">)</span>
 <span class="gp">... </span>        <span class="k">else</span><span class="p">:</span>
 <span class="gp">... </span>            <span class="n">treble_pitches</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pitch</span><span class="p">)</span>
@@ -284,7 +284,7 @@ function to do the same:</p>
 </div><hr class="docutils" />
 <p><strong>Example 3.</strong> Transposed retrograde of source hexachord, recombined with its complement:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">transform</span> <span class="o">=</span> <span class="n">hexachord</span><span class="o">.</span><span class="n">retrograde</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">transform</span> <span class="o">=</span> <span class="n">transform</span><span class="o">.</span><span class="n">transpose</span><span class="p">((</span><span class="mi">0</span> <span class="o">-</span> <span class="n">hexachord</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">number</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">transform</span> <span class="o">=</span> <span class="n">transform</span><span class="o">.</span><span class="n">transpose</span><span class="p">((</span><span class="mi">0</span> <span class="o">-</span> <span class="n">hexachord</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">get_number</span><span class="p">()))</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">abjad</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">transform</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -303,7 +303,7 @@ function to do the same:</p>
 <p><strong>Example 4.</strong> Inverted-and-transposed retrograde of source hexachord, recombined with
 its complement:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">transform</span> <span class="o">=</span> <span class="n">hexachord</span><span class="o">.</span><span class="n">retrograde</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">transform</span> <span class="o">=</span> <span class="n">transform</span><span class="o">.</span><span class="n">transpose</span><span class="p">((</span><span class="mi">0</span> <span class="o">-</span> <span class="n">hexachord</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">number</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">transform</span> <span class="o">=</span> <span class="n">transform</span><span class="o">.</span><span class="n">transpose</span><span class="p">((</span><span class="mi">0</span> <span class="o">-</span> <span class="n">hexachord</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">get_number</span><span class="p">()))</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">transform</span> <span class="o">=</span> <span class="n">transform</span><span class="o">.</span><span class="n">invert</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">abjad</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">transform</span><span class="p">)</span>
 </pre></div>
@@ -340,7 +340,7 @@ all-interval collections; hexachords appear in Carter’s Harmony Book.]</span><
         
         &copy; Copyright 2008-2025, Trevor Bača &amp; Joséphine Oberholtzer.
       <span class="lastupdated">
-        Last updated on Jul 05, 2025.
+        Last updated on Jul 28, 2025.
       </span>
 
     </p>

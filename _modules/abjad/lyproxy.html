@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>abjad.lyproxy &mdash; Abjad 3.26 documentation</title>
+  <title>abjad.lyproxy &mdash; Abjad 3.27 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../_static/abjad.css?v=1f187528" />
@@ -18,7 +18,7 @@
     <link rel="canonical" href="https://abjad.github.io_modules/abjad/lyproxy.html"/>
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=59ffb378"></script>
+      <script src="../../_static/documentation_options.js?v=fd873761"></script>
       <script src="../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script src="../../_static/ga.js?v=c455bbd5"></script>
@@ -35,11 +35,11 @@
   <div class="wy-grid-for-nav">
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search"  style="background: #CC8844" >
+        <div class="wy-side-nav-search"  style="background: #FFAA55" >
 
 
     <a href="../../index.html" class="icon icon-home" alt="Documentation
-    Home"> Abjad 3.26
+    Home"> Abjad 3.27
 
 
 
@@ -110,7 +110,7 @@
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #CC8844" >
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #FFAA55" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../index.html">Abjad</a>
       </nav>
@@ -148,18 +148,18 @@
 <span class="sd">        LilyPondContext(name=&#39;MensuralStaff&#39;)</span>
 
 <span class="sd">        &gt;&gt;&gt; for lilypond_context in abjad.LilyPondContext.list_all_contexts():</span>
-<span class="sd">        ...     is_global_context = &#39;X&#39; if lilypond_context.is_global_context else &#39; &#39;</span>
-<span class="sd">        ...     is_score_context = &#39;X&#39; if lilypond_context.is_score_context else &#39; &#39;</span>
-<span class="sd">        ...     is_staff_group_context = &#39;X&#39; if lilypond_context.is_staff_group_context else &#39; &#39;</span>
-<span class="sd">        ...     is_staff_context = &#39;X&#39; if lilypond_context.is_staff_context else &#39; &#39;</span>
-<span class="sd">        ...     is_bottom_context = &#39;X&#39; if lilypond_context.is_bottom_context else &#39; &#39;</span>
+<span class="sd">        ...     is_global_context = &#39;X&#39; if lilypond_context.is_global_context() else &#39; &#39;</span>
+<span class="sd">        ...     is_score_context = &#39;X&#39; if lilypond_context.is_score_context() else &#39; &#39;</span>
+<span class="sd">        ...     is_staff_group_context = &#39;X&#39; if lilypond_context.is_staff_group_context() else &#39; &#39;</span>
+<span class="sd">        ...     is_staff_context = &#39;X&#39; if lilypond_context.is_staff_context() else &#39; &#39;</span>
+<span class="sd">        ...     is_bottom_context = &#39;X&#39; if lilypond_context.is_bottom_context() else &#39; &#39;</span>
 <span class="sd">        ...     print(&#39;[{}] [{}] [{}] [{}] [{}] {}&#39;.format(</span>
 <span class="sd">        ...         is_global_context,</span>
 <span class="sd">        ...         is_score_context,</span>
 <span class="sd">        ...         is_staff_group_context,</span>
 <span class="sd">        ...         is_staff_context,</span>
 <span class="sd">        ...         is_bottom_context,</span>
-<span class="sd">        ...         lilypond_context.name,</span>
+<span class="sd">        ...         lilypond_context.name(),</span>
 <span class="sd">        ...         ))</span>
 <span class="sd">        ...</span>
 <span class="sd">        [ ] [ ] [X] [ ] [ ] ChoirStaff</span>
@@ -208,7 +208,7 @@
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__new__</span><span class="p">(</span><span class="n">class_</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Voice&quot;</span><span class="p">):</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">class_</span><span class="p">):</span>
-            <span class="n">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">.</span><span class="n">name</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">.</span><span class="n">name</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">class_</span><span class="o">.</span><span class="n">_identity_map</span><span class="p">:</span>
             <span class="n">obj</span> <span class="o">=</span> <span class="n">class_</span><span class="o">.</span><span class="n">_identity_map</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
         <span class="k">else</span><span class="p">:</span>
@@ -226,30 +226,31 @@
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets repr.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">(name=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">!r}</span><span class="s2">)&quot;</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">(name=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">()</span><span class="si">!r}</span><span class="s2">)&quot;</span>
 
     <span class="c1">### PUBLIC PROPERTIES ###</span>
 
-    <span class="nd">@property</span>
+<div class="viewcode-block" id="LilyPondContext.accepted_by">
+<a class="viewcode-back" href="../../api/abjad/lyproxy.html#abjad.lyproxy.LilyPondContext.accepted_by">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">accepted_by</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="s2">&quot;LilyPondContext&quot;</span><span class="p">,</span> <span class="o">...</span><span class="p">]:</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets contexts accepting LilyPond context.</span>
 
 <span class="sd">        ..  container:: example</span>
 
-<span class="sd">            &gt;&gt;&gt; context = abjad.LilyPondContext(&#39;MensuralStaff&#39;)</span>
-<span class="sd">            &gt;&gt;&gt; for accepting_context in context.accepted_by:</span>
+<span class="sd">            &gt;&gt;&gt; context = abjad.LilyPondContext(&quot;MensuralStaff&quot;)</span>
+<span class="sd">            &gt;&gt;&gt; for accepting_context in context.accepted_by():</span>
 <span class="sd">            ...     accepting_context</span>
 <span class="sd">            ...</span>
 <span class="sd">            LilyPondContext(name=&#39;OneStaff&#39;)</span>
 <span class="sd">            LilyPondContext(name=&#39;Score&#39;)</span>
 
 <span class="sd">            &gt;&gt;&gt; for lilypond_context in abjad.LilyPondContext.list_all_contexts():</span>
-<span class="sd">            ...     print(f&#39;{lilypond_context.name}:&#39;)</span>
-<span class="sd">            ...     accepted_by = lilypond_context.accepted_by</span>
+<span class="sd">            ...     print(f&quot;{lilypond_context.name()}:&quot;)</span>
+<span class="sd">            ...     accepted_by = lilypond_context.accepted_by()</span>
 <span class="sd">            ...     if accepted_by:</span>
-<span class="sd">            ...         accepted_by = &#39;,\n    &#39;.join(_.name for _ in accepted_by)</span>
-<span class="sd">            ...         print(f&#39;    {accepted_by}&#39;)</span>
+<span class="sd">            ...         accepted_by = &quot;,\n    &quot;.join(_.name() for _ in accepted_by)</span>
+<span class="sd">            ...         print(f&quot;    {accepted_by}&quot;)</span>
 <span class="sd">            ...</span>
 <span class="sd">            ChoirStaff:</span>
 <span class="sd">                ChoirStaff,</span>
@@ -394,20 +395,22 @@
         <span class="n">accepting_contexts</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
         <span class="k">for</span> <span class="n">lilypond_type</span><span class="p">,</span> <span class="n">context_info</span> <span class="ow">in</span> <span class="n">_lyenv</span><span class="o">.</span><span class="n">contexts</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">context_info</span><span class="p">,</span> <span class="nb">dict</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">context_info</span><span class="p">)</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="ow">in</span> <span class="n">context_info</span><span class="p">[</span><span class="s2">&quot;accepts&quot;</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">()</span> <span class="ow">in</span> <span class="n">context_info</span><span class="p">[</span><span class="s2">&quot;accepts&quot;</span><span class="p">]:</span>
                 <span class="n">accepting_context</span> <span class="o">=</span> <span class="n">LilyPondContext</span><span class="p">(</span><span class="n">lilypond_type</span><span class="p">)</span>
                 <span class="n">accepting_contexts</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">accepting_context</span><span class="p">)</span>
-        <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">accepting_contexts</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
+        <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">accepting_contexts</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">name</span><span class="p">()))</span></div>
 
-    <span class="nd">@property</span>
+
+<div class="viewcode-block" id="LilyPondContext.accepts">
+<a class="viewcode-back" href="../../api/abjad/lyproxy.html#abjad.lyproxy.LilyPondContext.accepts">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">accepts</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="s2">&quot;LilyPondContext&quot;</span><span class="p">,</span> <span class="o">...</span><span class="p">]:</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets contexts accepted by LilyPond context.</span>
 
 <span class="sd">        ..  container:: example</span>
 
-<span class="sd">            &gt;&gt;&gt; context = abjad.LilyPondContext(&#39;MensuralStaff&#39;)</span>
-<span class="sd">            &gt;&gt;&gt; for accepted_context in context.accepts:</span>
+<span class="sd">            &gt;&gt;&gt; context = abjad.LilyPondContext(&quot;MensuralStaff&quot;)</span>
+<span class="sd">            &gt;&gt;&gt; for accepted_context in context.accepts():</span>
 <span class="sd">            ...     accepted_context</span>
 <span class="sd">            ...</span>
 <span class="sd">            LilyPondContext(name=&#39;CueVoice&#39;)</span>
@@ -415,24 +418,26 @@
 <span class="sd">            LilyPondContext(name=&#39;NullVoice&#39;)</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">dictionary</span> <span class="o">=</span> <span class="n">_lyenv</span><span class="o">.</span><span class="n">contexts</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">]</span>
+        <span class="n">dictionary</span> <span class="o">=</span> <span class="n">_lyenv</span><span class="o">.</span><span class="n">contexts</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">()]</span>
         <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dictionary</span><span class="p">,</span> <span class="nb">dict</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">dictionary</span><span class="p">)</span>
         <span class="n">accepts</span> <span class="o">=</span> <span class="p">(</span><span class="n">LilyPondContext</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">)</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">dictionary</span><span class="p">[</span><span class="s2">&quot;accepts&quot;</span><span class="p">])</span>
-        <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">accepts</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
+        <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">accepts</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">name</span><span class="p">()))</span></div>
 
-    <span class="nd">@property</span>
+
+<div class="viewcode-block" id="LilyPondContext.alias">
+<a class="viewcode-back" href="../../api/abjad/lyproxy.html#abjad.lyproxy.LilyPondContext.alias">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">alias</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="s2">&quot;LilyPondContext&quot;</span><span class="p">]:</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets alias of LilyPond context.</span>
 
 <span class="sd">        ..  container:: example</span>
 
-<span class="sd">            &gt;&gt;&gt; context = abjad.LilyPondContext(&#39;MensuralStaff&#39;)</span>
-<span class="sd">            &gt;&gt;&gt; context.alias</span>
+<span class="sd">            &gt;&gt;&gt; context = abjad.LilyPondContext(&quot;MensuralStaff&quot;)</span>
+<span class="sd">            &gt;&gt;&gt; context.alias()</span>
 <span class="sd">            LilyPondContext(name=&#39;Staff&#39;)</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">dictionary</span> <span class="o">=</span> <span class="n">_lyenv</span><span class="o">.</span><span class="n">contexts</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">]</span>
+        <span class="n">dictionary</span> <span class="o">=</span> <span class="n">_lyenv</span><span class="o">.</span><span class="n">contexts</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">()]</span>
         <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dictionary</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span>
         <span class="n">aliases</span> <span class="o">=</span> <span class="n">dictionary</span><span class="p">[</span><span class="s2">&quot;aliases&quot;</span><span class="p">]</span>
         <span class="k">if</span> <span class="n">aliases</span><span class="p">:</span>
@@ -440,24 +445,26 @@
             <span class="k">if</span> <span class="n">alias</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">_lyenv</span><span class="o">.</span><span class="n">contexts</span><span class="p">:</span>
                 <span class="k">return</span> <span class="kc">None</span>
             <span class="k">return</span> <span class="n">LilyPondContext</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">alias</span><span class="p">)</span>
-        <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
 
-    <span class="nd">@property</span>
+
+<div class="viewcode-block" id="LilyPondContext.default_child">
+<a class="viewcode-back" href="../../api/abjad/lyproxy.html#abjad.lyproxy.LilyPondContext.default_child">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">default_child</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Optional</span><span class="p">[</span><span class="s2">&quot;LilyPondContext&quot;</span><span class="p">]:</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets default child of LilyPond context.</span>
 
 <span class="sd">        ..  container:: example</span>
 
-<span class="sd">            &gt;&gt;&gt; context = abjad.LilyPondContext(&#39;MensuralStaff&#39;)</span>
-<span class="sd">            &gt;&gt;&gt; context.default_child</span>
+<span class="sd">            &gt;&gt;&gt; context = abjad.LilyPondContext(&quot;MensuralStaff&quot;)</span>
+<span class="sd">            &gt;&gt;&gt; context.default_child()</span>
 <span class="sd">            LilyPondContext(name=&#39;MensuralVoice&#39;)</span>
 
 <span class="sd">            &gt;&gt;&gt; for lilypond_context in abjad.LilyPondContext.list_all_contexts():</span>
-<span class="sd">            ...     print(f&#39;{lilypond_context.name}:&#39;)</span>
-<span class="sd">            ...     default_child = lilypond_context.default_child</span>
+<span class="sd">            ...     print(f&quot;{lilypond_context.name()}:&quot;)</span>
+<span class="sd">            ...     default_child = lilypond_context.default_child()</span>
 <span class="sd">            ...     if default_child:</span>
-<span class="sd">            ...         print(f&#39;    {default_child.name}&#39;)</span>
+<span class="sd">            ...         print(f&quot;    {default_child.name()}&quot;)</span>
 <span class="sd">            ...</span>
 <span class="sd">            ChoirStaff:</span>
 <span class="sd">                Staff</span>
@@ -510,28 +517,30 @@
 <span class="sd">            Voice:</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_bottom_context</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_bottom_context</span><span class="p">():</span>
             <span class="k">return</span> <span class="kc">None</span>
-        <span class="n">dictionary</span> <span class="o">=</span> <span class="n">_lyenv</span><span class="o">.</span><span class="n">contexts</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">]</span>
+        <span class="n">dictionary</span> <span class="o">=</span> <span class="n">_lyenv</span><span class="o">.</span><span class="n">contexts</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">()]</span>
         <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dictionary</span><span class="p">,</span> <span class="nb">dict</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">dictionary</span><span class="p">)</span>
         <span class="n">default_child_name</span> <span class="o">=</span> <span class="n">dictionary</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;default_child&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">default_child_name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">alias</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">alias</span>
+            <span class="n">alias</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">alias</span><span class="p">()</span>
             <span class="k">if</span> <span class="n">alias</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="k">return</span> <span class="n">alias</span><span class="o">.</span><span class="n">default_child</span>
+                <span class="k">return</span> <span class="n">alias</span><span class="o">.</span><span class="n">default_child</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">default_child_name</span> <span class="ow">and</span> <span class="n">default_child_name</span> <span class="ow">in</span> <span class="n">_lyenv</span><span class="o">.</span><span class="n">contexts</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">LilyPondContext</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">default_child_name</span><span class="p">)</span>
-        <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
 
-    <span class="nd">@property</span>
+
+<div class="viewcode-block" id="LilyPondContext.engravers">
+<a class="viewcode-back" href="../../api/abjad/lyproxy.html#abjad.lyproxy.LilyPondContext.engravers">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">engravers</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="s2">&quot;LilyPondEngraver&quot;</span><span class="p">,</span> <span class="o">...</span><span class="p">]:</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets engravers belonging to LilyPond context.</span>
 
 <span class="sd">        ..  container:: example</span>
 
-<span class="sd">            &gt;&gt;&gt; context = abjad.LilyPondContext(&#39;MensuralStaff&#39;)</span>
-<span class="sd">            &gt;&gt;&gt; for engraver in context.engravers:</span>
+<span class="sd">            &gt;&gt;&gt; context = abjad.LilyPondContext(&quot;MensuralStaff&quot;)</span>
+<span class="sd">            &gt;&gt;&gt; for engraver in context.engravers():</span>
 <span class="sd">            ...     engraver</span>
 <span class="sd">            ...</span>
 <span class="sd">            LilyPondEngraver(name=&#39;Accidental_engraver&#39;)</span>
@@ -564,23 +573,25 @@
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">engravers</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
-        <span class="n">dictionary</span> <span class="o">=</span> <span class="n">_lyenv</span><span class="o">.</span><span class="n">contexts</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">]</span>
+        <span class="n">dictionary</span> <span class="o">=</span> <span class="n">_lyenv</span><span class="o">.</span><span class="n">contexts</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">()]</span>
         <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dictionary</span><span class="p">,</span> <span class="nb">dict</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">dictionary</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">engraver_name</span> <span class="ow">in</span> <span class="n">dictionary</span><span class="p">[</span><span class="s2">&quot;consists&quot;</span><span class="p">]:</span>
             <span class="n">engraver</span> <span class="o">=</span> <span class="n">LilyPondEngraver</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">engraver_name</span><span class="p">)</span>
             <span class="n">engravers</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">engraver</span><span class="p">)</span>
-        <span class="n">engravers_</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">engravers</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
-        <span class="k">return</span> <span class="n">engravers_</span>
+        <span class="n">engravers_</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">engravers</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">name</span><span class="p">()))</span>
+        <span class="k">return</span> <span class="n">engravers_</span></div>
 
-    <span class="nd">@property</span>
+
+<div class="viewcode-block" id="LilyPondContext.grobs">
+<a class="viewcode-back" href="../../api/abjad/lyproxy.html#abjad.lyproxy.LilyPondContext.grobs">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">grobs</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="s2">&quot;LilyPondGrob&quot;</span><span class="p">,</span> <span class="o">...</span><span class="p">]:</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets grobs created by LilyPond context.</span>
 
 <span class="sd">        ..  container:: example</span>
 
-<span class="sd">            &gt;&gt;&gt; context = abjad.LilyPondContext(&#39;MensuralStaff&#39;)</span>
-<span class="sd">            &gt;&gt;&gt; for grob in context.grobs:</span>
+<span class="sd">            &gt;&gt;&gt; context = abjad.LilyPondContext(&quot;MensuralStaff&quot;)</span>
+<span class="sd">            &gt;&gt;&gt; for grob in context.grobs():</span>
 <span class="sd">            ...     grob</span>
 <span class="sd">            ...</span>
 <span class="sd">            LilyPondGrob(name=&#39;Accidental&#39;)</span>
@@ -623,11 +634,13 @@
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">grobs</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Set</span><span class="p">[</span><span class="n">LilyPondGrob</span><span class="p">]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
-        <span class="k">for</span> <span class="n">engraver</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">engravers</span><span class="p">:</span>
-            <span class="n">grobs</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">engraver</span><span class="o">.</span><span class="n">grobs</span><span class="p">)</span>
-        <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">grobs</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">engraver</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">engravers</span><span class="p">():</span>
+            <span class="n">grobs</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">engraver</span><span class="o">.</span><span class="n">grobs</span><span class="p">())</span>
+        <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">grobs</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">name</span><span class="p">()))</span></div>
 
-    <span class="nd">@property</span>
+
+<div class="viewcode-block" id="LilyPondContext.is_bottom_context">
+<a class="viewcode-back" href="../../api/abjad/lyproxy.html#abjad.lyproxy.LilyPondContext.is_bottom_context">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">is_bottom_context</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Is true if LilyPond context is a bottom context.</span>
@@ -635,8 +648,8 @@
 <span class="sd">        ..  container:: example</span>
 
 <span class="sd">            &gt;&gt;&gt; for lilypond_context in abjad.LilyPondContext.list_all_contexts():</span>
-<span class="sd">            ...     is_bottom_context = &#39;X&#39; if lilypond_context.is_bottom_context else &#39; &#39;</span>
-<span class="sd">            ...     print(f&#39;[{is_bottom_context}] {lilypond_context.name}&#39;)</span>
+<span class="sd">            ...     is_bottom_context = &#39;X&#39; if lilypond_context.is_bottom_context() else &#39; &#39;</span>
+<span class="sd">            ...     print(f&quot;[{is_bottom_context}] {lilypond_context.name()}&quot;)</span>
 <span class="sd">            ...</span>
 <span class="sd">            [ ] ChoirStaff</span>
 <span class="sd">            [X] ChordNames</span>
@@ -673,27 +686,31 @@
 <span class="sd">            [X] Voice</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">accepts</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">accepts</span><span class="p">():</span>
             <span class="k">return</span> <span class="kc">True</span>
-        <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">return</span> <span class="kc">False</span></div>
 
-    <span class="nd">@property</span>
+
+<div class="viewcode-block" id="LilyPondContext.is_custom">
+<a class="viewcode-back" href="../../api/abjad/lyproxy.html#abjad.lyproxy.LilyPondContext.is_custom">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">is_custom</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Is true if LilyPond context is user-created.</span>
 
 <span class="sd">        ..  container:: example</span>
 
-<span class="sd">            &gt;&gt;&gt; context = abjad.LilyPondContext(&#39;MensuralStaff&#39;)</span>
-<span class="sd">            &gt;&gt;&gt; context.is_custom</span>
+<span class="sd">            &gt;&gt;&gt; context = abjad.LilyPondContext(&quot;MensuralStaff&quot;)</span>
+<span class="sd">            &gt;&gt;&gt; context.is_custom()</span>
 <span class="sd">            False</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">dictionary</span> <span class="o">=</span> <span class="n">_lyenv</span><span class="o">.</span><span class="n">contexts</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">]</span>
+        <span class="n">dictionary</span> <span class="o">=</span> <span class="n">_lyenv</span><span class="o">.</span><span class="n">contexts</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">()]</span>
         <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dictionary</span><span class="p">,</span> <span class="nb">dict</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">dictionary</span><span class="p">)</span>
-        <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="n">dictionary</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;is_custom&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">))</span>
+        <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="n">dictionary</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;is_custom&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">))</span></div>
 
-    <span class="nd">@property</span>
+
+<div class="viewcode-block" id="LilyPondContext.is_global_context">
+<a class="viewcode-back" href="../../api/abjad/lyproxy.html#abjad.lyproxy.LilyPondContext.is_global_context">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">is_global_context</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Is true if LilyPond context is a global context.</span>
@@ -701,8 +718,8 @@
 <span class="sd">        ..  container:: example</span>
 
 <span class="sd">            &gt;&gt;&gt; for lilypond_context in abjad.LilyPondContext.list_all_contexts():</span>
-<span class="sd">            ...     is_global_context = &#39;X&#39; if lilypond_context.is_global_context else &#39; &#39;</span>
-<span class="sd">            ...     print(f&#39;[{is_global_context}] {lilypond_context.name}&#39;)</span>
+<span class="sd">            ...     is_global_context = &#39;X&#39; if lilypond_context.is_global_context() else &#39; &#39;</span>
+<span class="sd">            ...     print(f&quot;[{is_global_context}] {lilypond_context.name()}&quot;)</span>
 <span class="sd">            ...</span>
 <span class="sd">            [ ] ChoirStaff</span>
 <span class="sd">            [ ] ChordNames</span>
@@ -739,15 +756,17 @@
 <span class="sd">            [ ] Voice</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">accepts</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">accepts</span><span class="p">():</span>
             <span class="k">return</span> <span class="kc">False</span>
         <span class="k">elif</span> <span class="bp">self</span> <span class="ow">is</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span><span class="s2">&quot;Global&quot;</span><span class="p">):</span>
             <span class="k">return</span> <span class="kc">True</span>
-        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">alias</span> <span class="ow">is</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span><span class="s2">&quot;Global&quot;</span><span class="p">):</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">alias</span><span class="p">()</span> <span class="ow">is</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span><span class="s2">&quot;Global&quot;</span><span class="p">):</span>
             <span class="k">return</span> <span class="kc">True</span>
-        <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">return</span> <span class="kc">False</span></div>
 
-    <span class="nd">@property</span>
+
+<div class="viewcode-block" id="LilyPondContext.is_score_context">
+<a class="viewcode-back" href="../../api/abjad/lyproxy.html#abjad.lyproxy.LilyPondContext.is_score_context">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">is_score_context</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Is true if LilyPond context is a score context.</span>
@@ -755,8 +774,8 @@
 <span class="sd">        ..  container:: example</span>
 
 <span class="sd">            &gt;&gt;&gt; for lilypond_context in abjad.LilyPondContext.list_all_contexts():</span>
-<span class="sd">            ...     is_score_context = &#39;X&#39; if lilypond_context.is_score_context else &#39; &#39;</span>
-<span class="sd">            ...     print(f&#39;[{is_score_context}] {lilypond_context.name}&#39;)</span>
+<span class="sd">            ...     is_score_context = &#39;X&#39; if lilypond_context.is_score_context() else &#39; &#39;</span>
+<span class="sd">            ...     print(f&quot;[{is_score_context}] {lilypond_context.name()}&quot;)</span>
 <span class="sd">            ...</span>
 <span class="sd">            [ ] ChoirStaff</span>
 <span class="sd">            [ ] ChordNames</span>
@@ -793,15 +812,17 @@
 <span class="sd">            [ ] Voice</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">accepts</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">accepts</span><span class="p">():</span>
             <span class="k">return</span> <span class="kc">False</span>
         <span class="k">elif</span> <span class="bp">self</span> <span class="ow">is</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span><span class="s2">&quot;Score&quot;</span><span class="p">):</span>
             <span class="k">return</span> <span class="kc">True</span>
-        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">alias</span> <span class="ow">is</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span><span class="s2">&quot;Score&quot;</span><span class="p">):</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">alias</span><span class="p">()</span> <span class="ow">is</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span><span class="s2">&quot;Score&quot;</span><span class="p">):</span>
             <span class="k">return</span> <span class="kc">True</span>
-        <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">return</span> <span class="kc">False</span></div>
 
-    <span class="nd">@property</span>
+
+<div class="viewcode-block" id="LilyPondContext.is_staff_context">
+<a class="viewcode-back" href="../../api/abjad/lyproxy.html#abjad.lyproxy.LilyPondContext.is_staff_context">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">is_staff_context</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Is true if LilyPond context is a staff context.</span>
@@ -809,8 +830,8 @@
 <span class="sd">        ..  container:: example</span>
 
 <span class="sd">            &gt;&gt;&gt; for lilypond_context in abjad.LilyPondContext.list_all_contexts():</span>
-<span class="sd">            ...     is_staff_context = &#39;X&#39; if lilypond_context.is_staff_context else &#39; &#39;</span>
-<span class="sd">            ...     print(f&#39;[{is_staff_context}] {lilypond_context.name}&#39;)</span>
+<span class="sd">            ...     is_staff_context = &#39;X&#39; if lilypond_context.is_staff_context() else &#39; &#39;</span>
+<span class="sd">            ...     print(f&quot;[{is_staff_context}] {lilypond_context.name()}&quot;)</span>
 <span class="sd">            ...</span>
 <span class="sd">            [ ] ChoirStaff</span>
 <span class="sd">            [ ] ChordNames</span>
@@ -847,15 +868,17 @@
 <span class="sd">            [ ] Voice</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">accepts</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">accepts</span><span class="p">():</span>
             <span class="k">return</span> <span class="kc">False</span>
         <span class="k">elif</span> <span class="bp">self</span> <span class="ow">is</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span><span class="s2">&quot;Staff&quot;</span><span class="p">):</span>
             <span class="k">return</span> <span class="kc">True</span>
-        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">alias</span> <span class="ow">is</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span><span class="s2">&quot;Staff&quot;</span><span class="p">):</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">alias</span><span class="p">()</span> <span class="ow">is</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span><span class="s2">&quot;Staff&quot;</span><span class="p">):</span>
             <span class="k">return</span> <span class="kc">True</span>
-        <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">return</span> <span class="kc">False</span></div>
 
-    <span class="nd">@property</span>
+
+<div class="viewcode-block" id="LilyPondContext.is_staff_group_context">
+<a class="viewcode-back" href="../../api/abjad/lyproxy.html#abjad.lyproxy.LilyPondContext.is_staff_group_context">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">is_staff_group_context</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Is true if LilyPond context is a staff group context.</span>
@@ -863,8 +886,8 @@
 <span class="sd">        ..  container:: example</span>
 
 <span class="sd">            &gt;&gt;&gt; for lilypond_context in abjad.LilyPondContext.list_all_contexts():</span>
-<span class="sd">            ...     is_staff_group_context = &#39;X&#39; if lilypond_context.is_staff_group_context else &#39; &#39;</span>
-<span class="sd">            ...     print(f&#39;[{is_staff_group_context}] {lilypond_context.name}&#39;)</span>
+<span class="sd">            ...     is_staff_group_context = &#39;X&#39; if lilypond_context.is_staff_group_context() else &#39; &#39;</span>
+<span class="sd">            ...     print(f&quot;[{is_staff_group_context}] {lilypond_context.name()}&quot;)</span>
 <span class="sd">            ...</span>
 <span class="sd">            [X] ChoirStaff</span>
 <span class="sd">            [ ] ChordNames</span>
@@ -903,36 +926,40 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="ow">not</span> <span class="nb">any</span><span class="p">(</span>
             <span class="p">[</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">is_global_context</span><span class="p">,</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">is_score_context</span><span class="p">,</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">is_staff_context</span><span class="p">,</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">is_bottom_context</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">is_global_context</span><span class="p">(),</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">is_score_context</span><span class="p">(),</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">is_staff_context</span><span class="p">(),</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">is_bottom_context</span><span class="p">(),</span>
             <span class="p">]</span>
-        <span class="p">)</span>
+        <span class="p">)</span></div>
 
-    <span class="nd">@property</span>
+
+<div class="viewcode-block" id="LilyPondContext.name">
+<a class="viewcode-back" href="../../api/abjad/lyproxy.html#abjad.lyproxy.LilyPondContext.name">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets name of LilyPond context.</span>
 
 <span class="sd">        ..  container:: example</span>
 
-<span class="sd">            &gt;&gt;&gt; context = abjad.LilyPondContext(&#39;MensuralStaff&#39;)</span>
-<span class="sd">            &gt;&gt;&gt; context.name</span>
+<span class="sd">            &gt;&gt;&gt; context = abjad.LilyPondContext(&quot;MensuralStaff&quot;)</span>
+<span class="sd">            &gt;&gt;&gt; context.name()</span>
 <span class="sd">            &#39;MensuralStaff&#39;</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span></div>
 
-    <span class="nd">@property</span>
+
+<div class="viewcode-block" id="LilyPondContext.property_names">
+<a class="viewcode-back" href="../../api/abjad/lyproxy.html#abjad.lyproxy.LilyPondContext.property_names">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">property_names</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="o">...</span><span class="p">]:</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets property names of LilyPond context.</span>
 
 <span class="sd">        ..  container:: example</span>
 
-<span class="sd">            &gt;&gt;&gt; context = abjad.LilyPondContext(&#39;MensuralStaff&#39;)</span>
-<span class="sd">            &gt;&gt;&gt; for property_name in context.property_names:</span>
+<span class="sd">            &gt;&gt;&gt; context = abjad.LilyPondContext(&quot;MensuralStaff&quot;)</span>
+<span class="sd">            &gt;&gt;&gt; for property_name in context.property_names():</span>
 <span class="sd">            ...     property_name</span>
 <span class="sd">            ...</span>
 <span class="sd">            &#39;accidentalGrouping&#39;</span>
@@ -997,9 +1024,10 @@
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">property_names</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Set</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
-        <span class="k">for</span> <span class="n">engraver</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">engravers</span><span class="p">:</span>
-            <span class="n">property_names</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">engraver</span><span class="o">.</span><span class="n">property_names</span><span class="p">)</span>
-        <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">property_names</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">engraver</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">engravers</span><span class="p">():</span>
+            <span class="n">property_names</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">engraver</span><span class="o">.</span><span class="n">property_names</span><span class="p">())</span>
+        <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">property_names</span><span class="p">))</span></div>
+
 
     <span class="c1">### PUBLIC METHODS ###</span>
 
@@ -1068,18 +1096,18 @@
 <span class="sd">        ..  container:: example</span>
 
 <span class="sd">            &gt;&gt;&gt; custom_context = abjad.LilyPondContext.register(</span>
-<span class="sd">            ...     accepted_by=[&#39;Score&#39;, &#39;StaffGroup&#39;],</span>
-<span class="sd">            ...     alias=&#39;Staff&#39;,</span>
-<span class="sd">            ...     name=&#39;BowingStaff&#39;,</span>
-<span class="sd">            ...     removes=[&#39;Note_heads_engraver&#39;],</span>
+<span class="sd">            ...     accepted_by=[&quot;Score&quot;, &quot;StaffGroup&quot;],</span>
+<span class="sd">            ...     alias=&quot;Staff&quot;,</span>
+<span class="sd">            ...     name=&quot;BowingStaff&quot;,</span>
+<span class="sd">            ...     removes=[&quot;Note_heads_engraver&quot;],</span>
 <span class="sd">            ...     )</span>
 <span class="sd">            &gt;&gt;&gt; custom_context</span>
 <span class="sd">            LilyPondContext(name=&#39;BowingStaff&#39;)</span>
 
-<span class="sd">            &gt;&gt;&gt; custom_context.is_custom</span>
+<span class="sd">            &gt;&gt;&gt; custom_context.is_custom()</span>
 <span class="sd">            True</span>
 
-<span class="sd">            &gt;&gt;&gt; for engraver in custom_context.engravers:</span>
+<span class="sd">            &gt;&gt;&gt; for engraver in custom_context.engravers():</span>
 <span class="sd">            ...     engraver</span>
 <span class="sd">            ...</span>
 <span class="sd">            LilyPondEngraver(name=&#39;Accidental_engraver&#39;)</span>
@@ -1110,7 +1138,7 @@
 <span class="sd">            LilyPondEngraver(name=&#39;Time_signature_engraver&#39;)</span>
 
 <span class="sd">            &gt;&gt;&gt; score_context = abjad.LilyPondContext(&#39;Score&#39;)</span>
-<span class="sd">            &gt;&gt;&gt; custom_context in score_context.accepts</span>
+<span class="sd">            &gt;&gt;&gt; custom_context in score_context.accepts()</span>
 <span class="sd">            True</span>
 
 <span class="sd">            &gt;&gt;&gt; custom_context.unregister()</span>
@@ -1127,47 +1155,47 @@
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">alias_</span> <span class="o">=</span> <span class="n">alias</span>
             <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">alias_</span><span class="p">,</span> <span class="n">class_</span><span class="p">)</span>
-            <span class="n">context_entry</span><span class="p">[</span><span class="s2">&quot;accepts&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">_</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">alias_</span><span class="o">.</span><span class="n">accepts</span><span class="p">)</span>
-            <span class="n">context_entry</span><span class="p">[</span><span class="s2">&quot;consists&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">_</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">alias_</span><span class="o">.</span><span class="n">engravers</span><span class="p">)</span>
-            <span class="n">context_entry</span><span class="p">[</span><span class="s2">&quot;aliases&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">([</span><span class="n">alias_</span><span class="o">.</span><span class="n">name</span><span class="p">])</span>
+            <span class="n">context_entry</span><span class="p">[</span><span class="s2">&quot;accepts&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">_</span><span class="o">.</span><span class="n">name</span><span class="p">()</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">alias_</span><span class="o">.</span><span class="n">accepts</span><span class="p">())</span>
+            <span class="n">context_entry</span><span class="p">[</span><span class="s2">&quot;consists&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">_</span><span class="o">.</span><span class="n">name</span><span class="p">()</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">alias_</span><span class="o">.</span><span class="n">engravers</span><span class="p">())</span>
+            <span class="n">context_entry</span><span class="p">[</span><span class="s2">&quot;aliases&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">([</span><span class="n">alias_</span><span class="o">.</span><span class="n">name</span><span class="p">()])</span>
         <span class="k">if</span> <span class="n">accepts</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">accepts</span><span class="p">:</span>
                 <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">class_</span><span class="p">):</span>
                     <span class="n">x</span> <span class="o">=</span> <span class="n">class_</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">x</span><span class="p">)</span>
                 <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">class_</span><span class="p">)</span>
-                <span class="n">context_entry</span><span class="p">[</span><span class="s2">&quot;accepts&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+                <span class="n">context_entry</span><span class="p">[</span><span class="s2">&quot;accepts&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">name</span><span class="p">())</span>
         <span class="k">if</span> <span class="n">denies</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">denies</span><span class="p">:</span>
                 <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">class_</span><span class="p">):</span>
                     <span class="n">x</span> <span class="o">=</span> <span class="n">class_</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">x</span><span class="p">)</span>
                 <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">class_</span><span class="p">)</span>
-                <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">name</span> <span class="ow">in</span> <span class="n">context_entry</span><span class="p">[</span><span class="s2">&quot;accepts&quot;</span><span class="p">]:</span>
-                    <span class="n">context_entry</span><span class="p">[</span><span class="s2">&quot;accepts&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">name</span><span class="p">()</span> <span class="ow">in</span> <span class="n">context_entry</span><span class="p">[</span><span class="s2">&quot;accepts&quot;</span><span class="p">]:</span>
+                    <span class="n">context_entry</span><span class="p">[</span><span class="s2">&quot;accepts&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">name</span><span class="p">())</span>
         <span class="k">if</span> <span class="n">consists</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">consists</span><span class="p">:</span>
                 <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">LilyPondEngraver</span><span class="p">):</span>
                     <span class="n">x</span> <span class="o">=</span> <span class="n">LilyPondEngraver</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">x</span><span class="p">)</span>
                 <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">LilyPondEngraver</span><span class="p">)</span>
-                <span class="n">context_entry</span><span class="p">[</span><span class="s2">&quot;consists&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+                <span class="n">context_entry</span><span class="p">[</span><span class="s2">&quot;consists&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">name</span><span class="p">())</span>
         <span class="k">if</span> <span class="n">removes</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">removes</span><span class="p">:</span>
                 <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">LilyPondEngraver</span><span class="p">):</span>
                     <span class="n">x</span> <span class="o">=</span> <span class="n">LilyPondEngraver</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">x</span><span class="p">)</span>
                 <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">LilyPondEngraver</span><span class="p">)</span>
-                <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">name</span> <span class="ow">in</span> <span class="n">context_entry</span><span class="p">[</span><span class="s2">&quot;consists&quot;</span><span class="p">]:</span>
-                    <span class="n">context_entry</span><span class="p">[</span><span class="s2">&quot;consists&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">name</span><span class="p">()</span> <span class="ow">in</span> <span class="n">context_entry</span><span class="p">[</span><span class="s2">&quot;consists&quot;</span><span class="p">]:</span>
+                    <span class="n">context_entry</span><span class="p">[</span><span class="s2">&quot;consists&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">name</span><span class="p">())</span>
         <span class="k">if</span> <span class="n">default_child</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">default_child</span><span class="p">,</span> <span class="n">class_</span><span class="p">):</span>
                 <span class="n">default_child</span> <span class="o">=</span> <span class="n">class_</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">default_child</span><span class="p">)</span>
             <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">default_child</span><span class="p">,</span> <span class="n">class_</span><span class="p">)</span>
-            <span class="n">context_entry</span><span class="p">[</span><span class="s2">&quot;default_child&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">default_child</span><span class="o">.</span><span class="n">name</span>
+            <span class="n">context_entry</span><span class="p">[</span><span class="s2">&quot;default_child&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">default_child</span><span class="o">.</span><span class="n">name</span><span class="p">()</span>
         <span class="n">accepting_contexts</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">accepted_by</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">accepted_by</span><span class="p">:</span>
                 <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">class_</span><span class="p">):</span>
                     <span class="n">x</span> <span class="o">=</span> <span class="n">class_</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">x</span><span class="p">)</span>
                 <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">class_</span><span class="p">)</span>
-                <span class="n">accepting_contexts</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+                <span class="n">accepting_contexts</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">name</span><span class="p">())</span>
         <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span>
         <span class="n">_lyenv</span><span class="o">.</span><span class="n">contexts</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">context_entry</span>
         <span class="k">for</span> <span class="n">accepting_context</span> <span class="ow">in</span> <span class="n">accepting_contexts</span><span class="p">:</span>
@@ -1186,13 +1214,13 @@
 <span class="sd">        ..  container:: example</span>
 
 <span class="sd">            &gt;&gt;&gt; custom_context = abjad.LilyPondContext.register(</span>
-<span class="sd">            ...     accepted_by=[&#39;Score&#39;, &#39;StaffGroup&#39;],</span>
-<span class="sd">            ...     alias=&#39;Staff&#39;,</span>
-<span class="sd">            ...     name=&#39;FingeringStaff&#39;,</span>
-<span class="sd">            ...     )</span>
+<span class="sd">            ...     accepted_by=[&quot;Score&quot;, &quot;StaffGroup&quot;],</span>
+<span class="sd">            ...     alias=&quot;Staff&quot;,</span>
+<span class="sd">            ...     name=&quot;FingeringStaff&quot;,</span>
+<span class="sd">            ... )</span>
 
-<span class="sd">            &gt;&gt;&gt; score_context = abjad.LilyPondContext(&#39;Score&#39;)</span>
-<span class="sd">            &gt;&gt;&gt; for accepted_context in score_context.accepts:</span>
+<span class="sd">            &gt;&gt;&gt; score_context = abjad.LilyPondContext(&quot;Score&quot;)</span>
+<span class="sd">            &gt;&gt;&gt; for accepted_context in score_context.accepts():</span>
 <span class="sd">            ...     accepted_context</span>
 <span class="sd">            ...</span>
 <span class="sd">            LilyPondContext(name=&#39;ChoirStaff&#39;)</span>
@@ -1221,7 +1249,7 @@
 <span class="sd">            &gt;&gt;&gt; custom_context.unregister()</span>
 
 <span class="sd">            &gt;&gt;&gt; score_context = abjad.LilyPondContext(&#39;Score&#39;)</span>
-<span class="sd">            &gt;&gt;&gt; for accepted_context in score_context.accepts:</span>
+<span class="sd">            &gt;&gt;&gt; for accepted_context in score_context.accepts():</span>
 <span class="sd">            ...     accepted_context</span>
 <span class="sd">            ...</span>
 <span class="sd">            LilyPondContext(name=&#39;ChoirStaff&#39;)</span>
@@ -1247,15 +1275,15 @@
 <span class="sd">            LilyPondContext(name=&#39;VaticanaStaff&#39;)</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_custom</span>
-        <span class="k">del</span> <span class="n">_lyenv</span><span class="o">.</span><span class="n">contexts</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">]</span>
-        <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">_identity_map</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">]</span>
+        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_custom</span><span class="p">()</span>
+        <span class="k">del</span> <span class="n">_lyenv</span><span class="o">.</span><span class="n">contexts</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">()]</span>
+        <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">_identity_map</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">()]</span>
         <span class="k">for</span> <span class="n">lilypond_type</span><span class="p">,</span> <span class="n">context_info</span> <span class="ow">in</span> <span class="n">_lyenv</span><span class="o">.</span><span class="n">contexts</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">context_info</span><span class="p">,</span> <span class="nb">dict</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">context_info</span><span class="p">)</span>
             <span class="n">set_</span> <span class="o">=</span> <span class="n">context_info</span><span class="p">[</span><span class="s2">&quot;accepts&quot;</span><span class="p">]</span>
             <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">set_</span><span class="p">,</span> <span class="nb">set</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">set_</span><span class="p">)</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="ow">in</span> <span class="n">set_</span><span class="p">:</span>
-                <span class="n">set_</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span></div>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">()</span> <span class="ow">in</span> <span class="n">set_</span><span class="p">:</span>
+                <span class="n">set_</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">())</span></div>
 </div>
 
 
@@ -1299,7 +1327,7 @@
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets repr.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">(name=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">!r}</span><span class="s2">)&quot;</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">(name=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">()</span><span class="si">!r}</span><span class="s2">)&quot;</span>
 
     <span class="c1">### PUBLIC METHODS ###</span>
 
@@ -1455,47 +1483,52 @@
 
     <span class="c1">### PUBLIC PROPERTIES ###</span>
 
-    <span class="nd">@property</span>
+<div class="viewcode-block" id="LilyPondEngraver.grobs">
+<a class="viewcode-back" href="../../api/abjad/lyproxy.html#abjad.lyproxy.LilyPondEngraver.grobs">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">grobs</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="s2">&quot;LilyPondGrob&quot;</span><span class="p">,</span> <span class="o">...</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets LilyPond engraver&#39;s created grobs.</span>
 
 <span class="sd">        ..  container:: example</span>
 
-<span class="sd">            &gt;&gt;&gt; engraver = abjad.LilyPondEngraver(&#39;Auto_beam_engraver&#39;)</span>
-<span class="sd">            &gt;&gt;&gt; for grob in engraver.grobs:</span>
+<span class="sd">            &gt;&gt;&gt; engraver = abjad.LilyPondEngraver(&quot;Auto_beam_engraver&quot;)</span>
+<span class="sd">            &gt;&gt;&gt; for grob in engraver.grobs():</span>
 <span class="sd">            ...     grob</span>
 <span class="sd">            ...</span>
 <span class="sd">            LilyPondGrob(name=&#39;Beam&#39;)</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">dictionary</span> <span class="o">=</span> <span class="n">_lyenv</span><span class="o">.</span><span class="n">engravers</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">]</span>
+        <span class="n">dictionary</span> <span class="o">=</span> <span class="n">_lyenv</span><span class="o">.</span><span class="n">engravers</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">()]</span>
         <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dictionary</span><span class="p">,</span> <span class="nb">dict</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">dictionary</span><span class="p">)</span>
-        <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">LilyPondGrob</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">)</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">dictionary</span><span class="p">[</span><span class="s2">&quot;grobs_created&quot;</span><span class="p">])</span>
+        <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">LilyPondGrob</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">)</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">dictionary</span><span class="p">[</span><span class="s2">&quot;grobs_created&quot;</span><span class="p">])</span></div>
 
-    <span class="nd">@property</span>
+
+<div class="viewcode-block" id="LilyPondEngraver.name">
+<a class="viewcode-back" href="../../api/abjad/lyproxy.html#abjad.lyproxy.LilyPondEngraver.name">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets name of LilyPond engraver.</span>
 
 <span class="sd">        ..  container:: example</span>
 
-<span class="sd">            &gt;&gt;&gt; engraver = abjad.LilyPondEngraver(&#39;Auto_beam_engraver&#39;)</span>
-<span class="sd">            &gt;&gt;&gt; engraver.name</span>
+<span class="sd">            &gt;&gt;&gt; engraver = abjad.LilyPondEngraver(&quot;Auto_beam_engraver&quot;)</span>
+<span class="sd">            &gt;&gt;&gt; engraver.name()</span>
 <span class="sd">            &#39;Auto_beam_engraver&#39;</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span></div>
 
-    <span class="nd">@property</span>
+
+<div class="viewcode-block" id="LilyPondEngraver.property_names">
+<a class="viewcode-back" href="../../api/abjad/lyproxy.html#abjad.lyproxy.LilyPondEngraver.property_names">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">property_names</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="o">...</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets LilyPond engraver&#39;s property names.</span>
 
 <span class="sd">        ..  container:: example</span>
 
-<span class="sd">            &gt;&gt;&gt; engraver = abjad.LilyPondEngraver(&#39;Auto_beam_engraver&#39;)</span>
-<span class="sd">            &gt;&gt;&gt; for property_name in engraver.property_names:</span>
+<span class="sd">            &gt;&gt;&gt; engraver = abjad.LilyPondEngraver(&quot;Auto_beam_engraver&quot;)</span>
+<span class="sd">            &gt;&gt;&gt; for property_name in engraver.property_names():</span>
 <span class="sd">            ...     property_name</span>
 <span class="sd">            ...</span>
 <span class="sd">            &#39;autoBeaming&#39;</span>
@@ -1506,12 +1539,13 @@
 <span class="sd">            &#39;subdivideBeams&#39;</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">dictionary</span> <span class="o">=</span> <span class="n">_lyenv</span><span class="o">.</span><span class="n">engravers</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">]</span>
+        <span class="n">dictionary</span> <span class="o">=</span> <span class="n">_lyenv</span><span class="o">.</span><span class="n">engravers</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">()]</span>
         <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dictionary</span><span class="p">,</span> <span class="nb">dict</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">dictionary</span><span class="p">)</span>
         <span class="n">property_names</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Set</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
         <span class="n">property_names</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">dictionary</span><span class="p">[</span><span class="s2">&quot;properties_read&quot;</span><span class="p">])</span>
         <span class="n">property_names</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">dictionary</span><span class="p">[</span><span class="s2">&quot;properties_written&quot;</span><span class="p">])</span>
         <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">property_names</span><span class="p">))</span></div>
+</div>
 
 
 
@@ -1554,19 +1588,20 @@
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets repr.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">(name=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">!r}</span><span class="s2">)&quot;</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">(name=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">()</span><span class="si">!r}</span><span class="s2">)&quot;</span>
 
     <span class="c1">### PUBLIC PROPERTIES ###</span>
 
-    <span class="nd">@property</span>
+<div class="viewcode-block" id="LilyPondGrob.interfaces">
+<a class="viewcode-back" href="../../api/abjad/lyproxy.html#abjad.lyproxy.LilyPondGrob.interfaces">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">interfaces</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="s2">&quot;LilyPondGrobInterface&quot;</span><span class="p">,</span> <span class="o">...</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets interfaces of LilyPond grob.</span>
 
 <span class="sd">        ..  container:: example</span>
 
-<span class="sd">            &gt;&gt;&gt; grob = abjad.LilyPondGrob(&#39;Beam&#39;)</span>
-<span class="sd">            &gt;&gt;&gt; for interface in grob.interfaces:</span>
+<span class="sd">            &gt;&gt;&gt; grob = abjad.LilyPondGrob(&quot;Beam&quot;)</span>
+<span class="sd">            &gt;&gt;&gt; for interface in grob.interfaces():</span>
 <span class="sd">            ...     interface</span>
 <span class="sd">            ...</span>
 <span class="sd">            LilyPondGrobInterface(name=&#39;beam-interface&#39;)</span>
@@ -1578,32 +1613,37 @@
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span>
-            <span class="n">LilyPondGrobInterface</span><span class="p">(</span><span class="n">_</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">_lyenv</span><span class="o">.</span><span class="n">grob_interfaces</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">])</span>
-        <span class="p">)</span>
+            <span class="n">LilyPondGrobInterface</span><span class="p">(</span><span class="n">_</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">_lyenv</span><span class="o">.</span><span class="n">grob_interfaces</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">()])</span>
+        <span class="p">)</span></div>
 
-    <span class="nd">@property</span>
+
+<div class="viewcode-block" id="LilyPondGrob.name">
+<a class="viewcode-back" href="../../api/abjad/lyproxy.html#abjad.lyproxy.LilyPondGrob.name">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets name of LilyPond grob.</span>
 
 <span class="sd">        ..  container:: example</span>
 
-<span class="sd">            &gt;&gt;&gt; grob = abjad.LilyPondGrob(&#39;Beam&#39;)</span>
-<span class="sd">            &gt;&gt;&gt; grob.name</span>
+<span class="sd">            &gt;&gt;&gt; grob = abjad.LilyPondGrob(&quot;Beam&quot;)</span>
+<span class="sd">            &gt;&gt;&gt; grob.name()</span>
 <span class="sd">            &#39;Beam&#39;</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span></div>
 
-    <span class="nd">@property</span>
+
+<div class="viewcode-block" id="LilyPondGrob.property_names">
+<a class="viewcode-back" href="../../api/abjad/lyproxy.html#abjad.lyproxy.LilyPondGrob.property_names">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">property_names</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="o">...</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets property names of LilyPond grob.</span>
 
 <span class="sd">        ..  container:: example</span>
 
-<span class="sd">            &gt;&gt;&gt; grob = abjad.LilyPondGrob(&#39;Beam&#39;)</span>
-<span class="sd">            &gt;&gt;&gt; for property_name in grob.property_names:</span>
+<span class="sd">            &gt;&gt;&gt; grob = abjad.LilyPondGrob(&quot;Beam&quot;)</span>
+<span class="sd">            &gt;&gt;&gt; for property_name in grob.property_names():</span>
 <span class="sd">            ...     property_name</span>
 <span class="sd">            ...</span>
 <span class="sd">            &#39;X-extent&#39;</span>
@@ -1673,9 +1713,10 @@
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">property_names</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Set</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
-        <span class="k">for</span> <span class="n">interface</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">interfaces</span><span class="p">:</span>
-            <span class="n">property_names</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">interface</span><span class="o">.</span><span class="n">property_names</span><span class="p">)</span>
-        <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">property_names</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">interface</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">interfaces</span><span class="p">():</span>
+            <span class="n">property_names</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">interface</span><span class="o">.</span><span class="n">property_names</span><span class="p">())</span>
+        <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">property_names</span><span class="p">))</span></div>
+
 
     <span class="c1">### PUBLIC METHODS ###</span>
 
@@ -1843,7 +1884,7 @@
 
 <span class="sd">    ..  container:: example</span>
 
-<span class="sd">        &gt;&gt;&gt; abjad.LilyPondGrobInterface(&#39;beam-interface&#39;)</span>
+<span class="sd">        &gt;&gt;&gt; abjad.LilyPondGrobInterface(&quot;beam-interface&quot;)</span>
 <span class="sd">        LilyPondGrobInterface(name=&#39;beam-interface&#39;)</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -1876,7 +1917,7 @@
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets repr.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">(name=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">!r}</span><span class="s2">)&quot;</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">(name=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">()</span><span class="si">!r}</span><span class="s2">)&quot;</span>
 
     <span class="c1">### PUBLIC METHODS ###</span>
 
@@ -2035,29 +2076,32 @@
 
     <span class="c1">### PUBLIC PROPERTIES ###</span>
 
-    <span class="nd">@property</span>
+<div class="viewcode-block" id="LilyPondGrobInterface.name">
+<a class="viewcode-back" href="../../api/abjad/lyproxy.html#abjad.lyproxy.LilyPondGrobInterface.name">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets name of LilyPond grob interface.</span>
 
 <span class="sd">        ..  container:: example</span>
 
-<span class="sd">            &gt;&gt;&gt; interface = abjad.LilyPondGrobInterface(&#39;beam-interface&#39;)</span>
-<span class="sd">            &gt;&gt;&gt; interface.name</span>
+<span class="sd">            &gt;&gt;&gt; interface = abjad.LilyPondGrobInterface(&quot;beam-interface&quot;)</span>
+<span class="sd">            &gt;&gt;&gt; interface.name()</span>
 <span class="sd">            &#39;beam-interface&#39;</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span></div>
 
-    <span class="nd">@property</span>
+
+<div class="viewcode-block" id="LilyPondGrobInterface.property_names">
+<a class="viewcode-back" href="../../api/abjad/lyproxy.html#abjad.lyproxy.LilyPondGrobInterface.property_names">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">property_names</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="o">...</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets property names of LilyPond grob interface.</span>
 
 <span class="sd">        ..  container:: example</span>
 
-<span class="sd">            &gt;&gt;&gt; interface = abjad.LilyPondGrobInterface(&#39;beam-interface&#39;)</span>
-<span class="sd">            &gt;&gt;&gt; for property_name in interface.property_names:</span>
+<span class="sd">            &gt;&gt;&gt; interface = abjad.LilyPondGrobInterface(&quot;beam-interface&quot;)</span>
+<span class="sd">            &gt;&gt;&gt; for property_name in interface.property_names():</span>
 <span class="sd">            ...     property_name</span>
 <span class="sd">            ...</span>
 <span class="sd">            &#39;X-positions&#39;</span>
@@ -2085,10 +2129,11 @@
 <span class="sd">            &#39;skip-quanting&#39;</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">names</span> <span class="o">=</span> <span class="n">_lyenv</span><span class="o">.</span><span class="n">interface_properties</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">]</span>
+        <span class="n">names</span> <span class="o">=</span> <span class="n">_lyenv</span><span class="o">.</span><span class="n">interface_properties</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">()]</span>
         <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">names</span><span class="p">,</span> <span class="nb">list</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">names</span><span class="p">)</span>
         <span class="k">assert</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">names</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">names</span><span class="p">)</span>
         <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">names</span><span class="p">)</span></div>
+</div>
 
 </pre></div>
 
@@ -2107,7 +2152,7 @@
         
         &copy; Copyright 2008-2025, Trevor Bača &amp; Joséphine Oberholtzer.
       <span class="lastupdated">
-        Last updated on Jul 05, 2025.
+        Last updated on Jul 28, 2025.
       </span>
 
     </p>

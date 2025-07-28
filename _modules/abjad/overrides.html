@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>abjad.overrides &mdash; Abjad 3.26 documentation</title>
+  <title>abjad.overrides &mdash; Abjad 3.27 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../_static/abjad.css?v=1f187528" />
@@ -18,7 +18,7 @@
     <link rel="canonical" href="https://abjad.github.io_modules/abjad/overrides.html"/>
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=59ffb378"></script>
+      <script src="../../_static/documentation_options.js?v=fd873761"></script>
       <script src="../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script src="../../_static/ga.js?v=c455bbd5"></script>
@@ -35,11 +35,11 @@
   <div class="wy-grid-for-nav">
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search"  style="background: #CC8844" >
+        <div class="wy-side-nav-search"  style="background: #FFAA55" >
 
 
     <a href="../../index.html" class="icon icon-home" alt="Documentation
-    Home"> Abjad 3.26
+    Home"> Abjad 3.27
 
 
 
@@ -110,7 +110,7 @@
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #CC8844" >
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #FFAA55" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../index.html">Abjad</a>
       </nav>
@@ -134,8 +134,7 @@
 <span class="kn">import</span><span class="w"> </span><span class="nn">dataclasses</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">typing</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">_indentlib</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">contributions</span> <span class="k">as</span> <span class="n">_contributions</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">_contributions</span><span class="p">,</span> <span class="n">_indentlib</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">enums</span> <span class="k">as</span> <span class="n">_enums</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">lyenv</span> <span class="k">as</span> <span class="n">_lyenv</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">string</span> <span class="k">as</span> <span class="n">_string</span>
@@ -201,7 +200,7 @@
 <span class="sd">        ...    ),</span>
 <span class="sd">        ...    value=r&quot;\markup \bold { over pressure }&quot;,</span>
 <span class="sd">        ... )</span>
-<span class="sd">        &gt;&gt;&gt; print(override.override_string)</span>
+<span class="sd">        &gt;&gt;&gt; print(override.override_string())</span>
 <span class="sd">        \once \override Staff.TextSpanner.bound-details.left.text = \markup \bold { over pressure }</span>
 
 <span class="sd">        &gt;&gt;&gt; override = abjad.LilyPondOverride(</span>
@@ -211,7 +210,7 @@
 <span class="sd">        ...    property_path=&quot;bound_details__left__text&quot;,</span>
 <span class="sd">        ...    value=r&quot;\markup \bold { over pressure }&quot;,</span>
 <span class="sd">        ... )</span>
-<span class="sd">        &gt;&gt;&gt; print(override.override_string)</span>
+<span class="sd">        &gt;&gt;&gt; print(override.override_string())</span>
 <span class="sd">        \once \override Staff.TextSpanner.bound-details.left.text = \markup \bold { over pressure }</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -242,13 +241,13 @@
         <span class="p">)</span>
         <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">prototype</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">_get_contributions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">component</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_contributions</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">contributions</span> <span class="o">=</span> <span class="n">_contributions</span><span class="o">.</span><span class="n">ContributionsBySite</span><span class="p">()</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">once</span><span class="p">:</span>
-            <span class="n">revert_format</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">revert_format_pieces</span><span class="p">)</span>
+            <span class="n">revert_format</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">revert_format_pieces</span><span class="p">())</span>
             <span class="n">contributions</span><span class="o">.</span><span class="n">grob_reverts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">revert_format</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_revert</span><span class="p">:</span>
-            <span class="n">override_format</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">override_format_pieces</span><span class="p">)</span>
+            <span class="n">override_format</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">override_format_pieces</span><span class="p">())</span>
             <span class="n">contributions</span><span class="o">.</span><span class="n">grob_overrides</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">override_format</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">contributions</span>
 
@@ -273,7 +272,8 @@
         <span class="n">path</span> <span class="o">=</span> <span class="s2">&quot;.&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">parts</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">path</span>
 
-    <span class="nd">@property</span>
+<div class="viewcode-block" id="LilyPondOverride.override_format_pieces">
+<a class="viewcode-back" href="../../api/abjad/overrides.html#abjad.overrides.LilyPondOverride.override_format_pieces">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">override_format_pieces</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="o">...</span><span class="p">]:</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets LilyPond grob override \override format pieces.</span>
@@ -291,7 +291,7 @@
 <span class="sd">            ...    ),</span>
 <span class="sd">            ...    value=r&quot;\markup \bold { over pressure }&quot;,</span>
 <span class="sd">            ... )</span>
-<span class="sd">            &gt;&gt;&gt; for line in override.override_format_pieces:</span>
+<span class="sd">            &gt;&gt;&gt; for line in override.override_format_pieces():</span>
 <span class="sd">            ...     line</span>
 <span class="sd">            ...</span>
 <span class="sd">            &#39;\\once \\override Staff.TextSpanner.bound-details.left.text = \\markup \\bold { over pressure }&#39;</span>
@@ -308,9 +308,11 @@
         <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">value_pieces</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
         <span class="n">result</span><span class="p">[:]</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">result</span><span class="p">)]</span>
         <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">value_pieces</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
-        <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">result</span><span class="p">)</span></div>
 
-    <span class="nd">@property</span>
+
+<div class="viewcode-block" id="LilyPondOverride.override_string">
+<a class="viewcode-back" href="../../api/abjad/overrides.html#abjad.overrides.LilyPondOverride.override_string">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">override_string</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets LilyPond grob override \override string.</span>
@@ -322,13 +324,15 @@
 <span class="sd">            ...     property_path=&quot;style&quot;,</span>
 <span class="sd">            ...     value=&quot;#&#39;zigzag&quot;,</span>
 <span class="sd">            ... )</span>
-<span class="sd">            &gt;&gt;&gt; override.override_string</span>
+<span class="sd">            &gt;&gt;&gt; override.override_string()</span>
 <span class="sd">            &quot;\\override Glissando.style = #&#39;zigzag&quot;</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">override_format_pieces</span><span class="p">)</span>
+        <span class="k">return</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">override_format_pieces</span><span class="p">())</span></div>
 
-    <span class="nd">@property</span>
+
+<div class="viewcode-block" id="LilyPondOverride.revert_format_pieces">
+<a class="viewcode-back" href="../../api/abjad/overrides.html#abjad.overrides.LilyPondOverride.revert_format_pieces">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">revert_format_pieces</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="o">...</span><span class="p">]:</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets LilyPond grob override \revert format pieces.</span>
@@ -340,14 +344,16 @@
 <span class="sd">            ...     property_path=&quot;style&quot;,</span>
 <span class="sd">            ...     value=&quot;#&#39;zigzag&quot;,</span>
 <span class="sd">            ... )</span>
-<span class="sd">            &gt;&gt;&gt; override.revert_format_pieces</span>
+<span class="sd">            &gt;&gt;&gt; override.revert_format_pieces()</span>
 <span class="sd">            (&#39;\\revert Glissando.style&#39;,)</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">result</span> <span class="o">=</span> <span class="sa">rf</span><span class="s2">&quot;\revert </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_revert_property_path_string</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span>
-        <span class="k">return</span> <span class="p">(</span><span class="n">result</span><span class="p">,)</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">result</span><span class="p">,)</span></div>
 
-    <span class="nd">@property</span>
+
+<div class="viewcode-block" id="LilyPondOverride.revert_string">
+<a class="viewcode-back" href="../../api/abjad/overrides.html#abjad.overrides.LilyPondOverride.revert_string">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">revert_string</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets LilyPond grob override \revert string.</span>
@@ -359,11 +365,12 @@
 <span class="sd">            ...     property_path=&quot;style&quot;,</span>
 <span class="sd">            ...     value=&quot;#&#39;zigzag&quot;,</span>
 <span class="sd">            ... )</span>
-<span class="sd">            &gt;&gt;&gt; override.revert_string</span>
+<span class="sd">            &gt;&gt;&gt; override.revert_string()</span>
 <span class="sd">            &#39;\\revert Glissando.style&#39;</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">revert_format_pieces</span><span class="p">)</span>
+        <span class="k">return</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">revert_format_pieces</span><span class="p">())</span></div>
+
 
 <div class="viewcode-block" id="LilyPondOverride.tweak_string">
 <a class="viewcode-back" href="../../api/abjad/overrides.html#abjad.overrides.LilyPondOverride.tweak_string">[docs]</a>
@@ -424,7 +431,7 @@
 <span class="sd">        ...    value=&quot;##f&quot;,</span>
 <span class="sd">        ... )</span>
 
-<span class="sd">        &gt;&gt;&gt; print(&quot;\n&quot;.join(context_setting.format_pieces))</span>
+<span class="sd">        &gt;&gt;&gt; print(&quot;\n&quot;.join(context_setting.format_pieces()))</span>
 <span class="sd">        \set Score.autoBeaming = ##f</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -443,13 +450,14 @@
         <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">is_unset</span><span class="p">,</span> <span class="nb">bool</span><span class="p">)</span>
         <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="nb">bool</span> <span class="o">|</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">float</span> <span class="o">|</span> <span class="nb">str</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">_get_contributions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">component</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_contributions</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">contributions</span> <span class="o">=</span> <span class="n">_contributions</span><span class="o">.</span><span class="n">ContributionsBySite</span><span class="p">()</span>
-        <span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">format_pieces</span><span class="p">)</span>
+        <span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">format_pieces</span><span class="p">())</span>
         <span class="n">contributions</span><span class="o">.</span><span class="n">context_settings</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">contributions</span>
 
-    <span class="nd">@property</span>
+<div class="viewcode-block" id="LilyPondSetting.format_pieces">
+<a class="viewcode-back" href="../../api/abjad/overrides.html#abjad.overrides.LilyPondSetting.format_pieces">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">format_pieces</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="o">...</span><span class="p">]:</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets LilyPond context setting ``\set`` or ``\unset`` format pieces.</span>
@@ -471,6 +479,7 @@
         <span class="n">result</span><span class="p">[:]</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">result</span><span class="p">)]</span>
         <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">value_pieces</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
         <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">result</span><span class="p">)</span></div>
+</div>
 
 
 
@@ -725,7 +734,7 @@
                     <span class="n">property_path</span><span class="o">=</span><span class="n">attribute</span><span class="p">,</span>
                     <span class="n">value</span><span class="o">=</span><span class="n">value</span><span class="p">,</span>
                 <span class="p">)</span>
-                <span class="n">override_string</span> <span class="o">=</span> <span class="n">override</span><span class="o">.</span><span class="n">override_string</span>
+                <span class="n">override_string</span> <span class="o">=</span> <span class="n">override</span><span class="o">.</span><span class="n">override_string</span><span class="p">()</span>
                 <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">override_string</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">override</span> <span class="o">=</span> <span class="n">LilyPondOverride</span><span class="p">(</span>
@@ -734,7 +743,7 @@
                     <span class="n">is_revert</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                     <span class="n">property_path</span><span class="o">=</span><span class="n">attribute</span><span class="p">,</span>
                 <span class="p">)</span>
-                <span class="n">revert_string</span> <span class="o">=</span> <span class="n">override</span><span class="o">.</span><span class="n">revert_string</span>
+                <span class="n">revert_string</span> <span class="o">=</span> <span class="n">override</span><span class="o">.</span><span class="n">revert_string</span><span class="p">()</span>
                 <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">revert_string</span><span class="p">)</span>
         <span class="n">result</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">result</span></div>
@@ -1012,7 +1021,7 @@
         
         &copy; Copyright 2008-2025, Trevor Bača &amp; Joséphine Oberholtzer.
       <span class="lastupdated">
-        Last updated on Jul 05, 2025.
+        Last updated on Jul 28, 2025.
       </span>
 
     </p>

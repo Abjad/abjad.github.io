@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>abjad.parsers.parser &mdash; Abjad 3.26 documentation</title>
+  <title>abjad.parsers.parser &mdash; Abjad 3.27 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../../_static/abjad.css?v=1f187528" />
@@ -18,7 +18,7 @@
     <link rel="canonical" href="https://abjad.github.io_modules/abjad/parsers/parser.html"/>
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=59ffb378"></script>
+      <script src="../../../_static/documentation_options.js?v=fd873761"></script>
       <script src="../../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script src="../../../_static/ga.js?v=c455bbd5"></script>
@@ -35,11 +35,11 @@
   <div class="wy-grid-for-nav">
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search"  style="background: #CC8844" >
+        <div class="wy-side-nav-search"  style="background: #FFAA55" >
 
 
     <a href="../../../index.html" class="icon icon-home" alt="Documentation
-    Home"> Abjad 3.26
+    Home"> Abjad 3.27
 
 
 
@@ -110,7 +110,7 @@
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #CC8844" >
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #FFAA55" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../../index.html">Abjad</a>
       </nav>
@@ -302,7 +302,7 @@
         <span class="n">lilypond_type</span> <span class="o">=</span> <span class="n">lilypond_type</span> <span class="ow">or</span> <span class="s2">&quot;&quot;</span>
         <span class="n">music</span> <span class="o">=</span> <span class="n">music</span> <span class="ow">or</span> <span class="n">SequentialMusic</span><span class="p">()</span>
         <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">music</span><span class="p">,</span> <span class="n">Music</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">lilypond_type</span> <span class="o">=</span> <span class="n">lilypond_type</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_lilypond_type</span><span class="p">(</span><span class="n">lilypond_type</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">optional_id</span> <span class="o">=</span> <span class="n">optional_id</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">optional_context_mod</span> <span class="o">=</span> <span class="n">optional_context_mod</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">music</span> <span class="o">=</span> <span class="n">music</span>
@@ -317,10 +317,10 @@
 
 <span class="sd">        Returns context.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">lilypond_type</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">known_contexts</span><span class="p">:</span>
-            <span class="n">context</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">known_contexts</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">lilypond_type</span><span class="p">]([])</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_lilypond_type</span><span class="p">()</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">known_contexts</span><span class="p">():</span>
+            <span class="n">context</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">known_contexts</span><span class="p">()[</span><span class="bp">self</span><span class="o">.</span><span class="n">get_lilypond_type</span><span class="p">()]([])</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;context type not supported: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">lilypond_type</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;context type not supported: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">get_lilypond_type</span><span class="p">()</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">optional_id</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">context</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">optional_id</span>
@@ -332,7 +332,7 @@
             <span class="k">pass</span>
 
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">music</span><span class="p">,</span> <span class="n">SimultaneousMusic</span><span class="p">):</span>
-            <span class="n">context</span><span class="o">.</span><span class="n">simultaneous</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="n">context</span><span class="o">.</span><span class="n">set_simultaneous</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
         <span class="c1"># context.extend(music.construct())</span>
         <span class="n">context</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">music</span><span class="o">.</span><span class="n">construct</span><span class="p">())</span>
 
@@ -341,7 +341,8 @@
 
     <span class="c1">### PUBLIC PROPERTIES ###</span>
 
-    <span class="nd">@property</span>
+<div class="viewcode-block" id="ContextSpeccedMusic.known_contexts">
+<a class="viewcode-back" href="../../../api/abjad/parsers/parser.html#abjad.parsers.parser.ContextSpeccedMusic.known_contexts">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">known_contexts</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Known contexts.</span>
@@ -357,6 +358,7 @@
             <span class="s2">&quot;StaffGroup&quot;</span><span class="p">:</span> <span class="n">_score</span><span class="o">.</span><span class="n">StaffGroup</span><span class="p">,</span>
             <span class="s2">&quot;Voice&quot;</span><span class="p">:</span> <span class="n">_score</span><span class="o">.</span><span class="n">Voice</span><span class="p">,</span>
         <span class="p">}</span></div>
+</div>
 
 
 
@@ -560,7 +562,9 @@
                 <span class="n">pitch</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_relative_leaf</span><span class="p">(</span><span class="n">component</span><span class="p">,</span> <span class="n">pitch</span><span class="p">)</span>
                 <span class="k">if</span> <span class="n">component</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">_repeated_chords</span><span class="p">:</span>
                     <span class="k">for</span> <span class="n">repeated_chord</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">_repeated_chords</span><span class="p">[</span><span class="n">component</span><span class="p">]:</span>
-                        <span class="n">repeated_chord</span><span class="o">.</span><span class="n">written_pitches</span> <span class="o">=</span> <span class="n">component</span><span class="o">.</span><span class="n">written_pitches</span>
+                        <span class="n">repeated_chord</span><span class="o">.</span><span class="n">set_written_pitches</span><span class="p">(</span>
+                            <span class="n">component</span><span class="o">.</span><span class="n">get_written_pitches</span><span class="p">()</span>
+                        <span class="p">)</span>
             <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">component</span><span class="p">,</span> <span class="n">_score</span><span class="o">.</span><span class="n">Container</span><span class="p">):</span>
                 <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">component</span><span class="p">:</span>
                     <span class="n">pitch</span> <span class="o">=</span> <span class="n">recurse</span><span class="p">(</span><span class="n">child</span><span class="p">,</span> <span class="n">pitch</span><span class="p">)</span>
@@ -632,23 +636,27 @@
             <span class="n">key_signatures</span> <span class="o">=</span> <span class="n">music</span><span class="o">.</span><span class="n">_get_indicators</span><span class="p">(</span><span class="n">_indicators</span><span class="o">.</span><span class="n">KeySignature</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">key_signatures</span><span class="p">:</span>
                 <span class="k">for</span> <span class="n">key_signature</span> <span class="ow">in</span> <span class="n">key_signatures</span><span class="p">:</span>
-                    <span class="n">new_tonic</span> <span class="o">=</span> <span class="n">_pitch</span><span class="o">.</span><span class="n">NamedPitch</span><span class="p">((</span><span class="n">key_signature</span><span class="o">.</span><span class="n">tonic</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+                    <span class="n">new_tonic</span> <span class="o">=</span> <span class="n">_pitch</span><span class="o">.</span><span class="n">NamedPitch</span><span class="p">((</span><span class="n">key_signature</span><span class="o">.</span><span class="n">tonic</span><span class="o">.</span><span class="n">get_name</span><span class="p">(),</span> <span class="mi">4</span><span class="p">))</span>
                     <span class="n">new_tonic</span> <span class="o">=</span> <span class="n">LilyPondParser</span><span class="o">.</span><span class="n">_transpose_enharmonically</span><span class="p">(</span>
                         <span class="n">from_pitch</span><span class="p">,</span> <span class="n">to_pitch</span><span class="p">,</span> <span class="n">new_tonic</span>
-                    <span class="p">)</span><span class="o">.</span><span class="n">pitch_class</span>
+                    <span class="p">)</span><span class="o">.</span><span class="n">get_pitch_class</span><span class="p">()</span>
                     <span class="n">new_key_signature</span> <span class="o">=</span> <span class="n">_indicators</span><span class="o">.</span><span class="n">KeySignature</span><span class="p">(</span>
                         <span class="n">new_tonic</span><span class="p">,</span> <span class="n">key_signature</span><span class="o">.</span><span class="n">mode</span>
                     <span class="p">)</span>
                     <span class="n">_bind</span><span class="o">.</span><span class="n">detach</span><span class="p">(</span><span class="n">key_signature</span><span class="p">,</span> <span class="n">music</span><span class="p">)</span>
                     <span class="n">_bind</span><span class="o">.</span><span class="n">_unsafe_attach</span><span class="p">(</span><span class="n">new_key_signature</span><span class="p">,</span> <span class="n">music</span><span class="p">)</span>
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">music</span><span class="p">,</span> <span class="n">_score</span><span class="o">.</span><span class="n">Note</span><span class="p">):</span>
-                <span class="n">music</span><span class="o">.</span><span class="n">written_pitch</span> <span class="o">=</span> <span class="n">LilyPondParser</span><span class="o">.</span><span class="n">_transpose_enharmonically</span><span class="p">(</span>
-                    <span class="n">from_pitch</span><span class="p">,</span> <span class="n">to_pitch</span><span class="p">,</span> <span class="n">music</span><span class="o">.</span><span class="n">written_pitch</span>
+                <span class="n">music</span><span class="o">.</span><span class="n">set_written_pitch</span><span class="p">(</span>
+                    <span class="n">LilyPondParser</span><span class="o">.</span><span class="n">_transpose_enharmonically</span><span class="p">(</span>
+                        <span class="n">from_pitch</span><span class="p">,</span> <span class="n">to_pitch</span><span class="p">,</span> <span class="n">music</span><span class="o">.</span><span class="n">get_written_pitch</span><span class="p">()</span>
+                    <span class="p">)</span>
                 <span class="p">)</span>
             <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">music</span><span class="p">,</span> <span class="n">_score</span><span class="o">.</span><span class="n">Chord</span><span class="p">):</span>
-                <span class="k">for</span> <span class="n">note_head</span> <span class="ow">in</span> <span class="n">music</span><span class="o">.</span><span class="n">note_heads</span><span class="p">:</span>
-                    <span class="n">note_head</span><span class="o">.</span><span class="n">written_pitch</span> <span class="o">=</span> <span class="n">LilyPondParser</span><span class="o">.</span><span class="n">_transpose_enharmonically</span><span class="p">(</span>
-                        <span class="n">from_pitch</span><span class="p">,</span> <span class="n">to_pitch</span><span class="p">,</span> <span class="n">note_head</span><span class="o">.</span><span class="n">written_pitch</span>
+                <span class="k">for</span> <span class="n">note_head</span> <span class="ow">in</span> <span class="n">music</span><span class="o">.</span><span class="n">get_note_heads</span><span class="p">():</span>
+                    <span class="n">note_head</span><span class="o">.</span><span class="n">set_written_pitch</span><span class="p">(</span>
+                        <span class="n">LilyPondParser</span><span class="o">.</span><span class="n">_transpose_enharmonically</span><span class="p">(</span>
+                            <span class="n">from_pitch</span><span class="p">,</span> <span class="n">to_pitch</span><span class="p">,</span> <span class="n">note_head</span><span class="o">.</span><span class="n">get_written_pitch</span><span class="p">()</span>
+                        <span class="p">)</span>
                     <span class="p">)</span>
             <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">music</span><span class="p">,</span> <span class="n">_score</span><span class="o">.</span><span class="n">Container</span><span class="p">):</span>
                 <span class="k">for</span> <span class="n">component</span> <span class="ow">in</span> <span class="n">music</span><span class="p">:</span>
@@ -730,8 +738,8 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_unrelativable</span><span class="p">(</span><span class="n">leaf</span><span class="p">):</span>
             <span class="k">return</span> <span class="n">pitch</span>
         <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">leaf</span><span class="p">,</span> <span class="n">_score</span><span class="o">.</span><span class="n">Note</span><span class="p">):</span>
-            <span class="n">pitch</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_to_relative_octave</span><span class="p">(</span><span class="n">leaf</span><span class="o">.</span><span class="n">written_pitch</span><span class="p">,</span> <span class="n">pitch</span><span class="p">)</span>
-            <span class="n">leaf</span><span class="o">.</span><span class="n">written_pitch</span> <span class="o">=</span> <span class="n">pitch</span>
+            <span class="n">pitch</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_to_relative_octave</span><span class="p">(</span><span class="n">leaf</span><span class="o">.</span><span class="n">get_written_pitch</span><span class="p">(),</span> <span class="n">pitch</span><span class="p">)</span>
+            <span class="n">leaf</span><span class="o">.</span><span class="n">set_written_pitch</span><span class="p">(</span><span class="n">pitch</span><span class="p">)</span>
         <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">leaf</span><span class="p">,</span> <span class="n">_score</span><span class="o">.</span><span class="n">Chord</span><span class="p">):</span>
             <span class="c1"># TODO: This is not ideal w/r/t post events as LilyPond does</span>
             <span class="c1"># not sort chord contents</span>
@@ -739,8 +747,8 @@
             <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">chord_pitch</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">chord_pitches</span><span class="p">):</span>
                 <span class="n">pitch</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_to_relative_octave</span><span class="p">(</span><span class="n">chord_pitch</span><span class="p">,</span> <span class="n">pitch</span><span class="p">)</span>
                 <span class="n">chord_pitches</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">pitch</span>
-            <span class="n">leaf</span><span class="o">.</span><span class="n">written_pitches</span> <span class="o">=</span> <span class="n">chord_pitches</span>
-            <span class="n">pitch</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">leaf</span><span class="o">.</span><span class="n">written_pitches</span><span class="p">)</span>
+            <span class="n">leaf</span><span class="o">.</span><span class="n">set_written_pitches</span><span class="p">(</span><span class="n">chord_pitches</span><span class="p">)</span>
+            <span class="n">pitch</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">leaf</span><span class="o">.</span><span class="n">get_written_pitches</span><span class="p">())</span>
         <span class="k">return</span> <span class="n">pitch</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_make_unrelativable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">music</span><span class="p">):</span>
@@ -750,8 +758,8 @@
 
     <span class="nd">@staticmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">_get_default_absolute_pitch</span><span class="p">(</span><span class="n">pitch</span><span class="p">,</span> <span class="n">reference</span><span class="p">):</span>
-        <span class="n">pitch_name</span> <span class="o">=</span> <span class="n">pitch</span><span class="o">.</span><span class="n">pitch_class</span><span class="o">.</span><span class="n">name</span>
-        <span class="n">reference_octave</span> <span class="o">=</span> <span class="n">reference</span><span class="o">.</span><span class="n">octave</span><span class="o">.</span><span class="n">number</span>
+        <span class="n">pitch_name</span> <span class="o">=</span> <span class="n">pitch</span><span class="o">.</span><span class="n">get_pitch_class</span><span class="p">()</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span>
+        <span class="n">reference_octave</span> <span class="o">=</span> <span class="n">reference</span><span class="o">.</span><span class="n">get_octave</span><span class="p">()</span><span class="o">.</span><span class="n">number</span>
         <span class="n">absolute_pitch</span> <span class="o">=</span> <span class="n">_pitch</span><span class="o">.</span><span class="n">NamedPitch</span><span class="p">((</span><span class="n">pitch_name</span><span class="p">,</span> <span class="n">reference_octave</span><span class="p">))</span>
         <span class="n">reference_pc_number</span> <span class="o">=</span> <span class="n">reference</span><span class="o">.</span><span class="n">_get_diatonic_pc_number</span><span class="p">()</span>
         <span class="n">pitch_pc_number</span> <span class="o">=</span> <span class="n">pitch</span><span class="o">.</span><span class="n">_get_diatonic_pc_number</span><span class="p">()</span>
@@ -765,7 +773,7 @@
         <span class="n">expect_higher_than_reference</span> <span class="o">=</span> <span class="p">(</span>
             <span class="n">diatonic_interval_up</span> <span class="o">&lt;</span> <span class="n">diatonic_interval_down</span>
             <span class="ow">or</span> <span class="n">diatonic_interval_up</span> <span class="o">==</span> <span class="n">diatonic_interval_down</span>
-            <span class="ow">and</span> <span class="n">pitch</span><span class="o">.</span><span class="n">accidental</span> <span class="o">&gt;</span> <span class="n">reference</span><span class="o">.</span><span class="n">accidental</span>
+            <span class="ow">and</span> <span class="n">pitch</span><span class="o">.</span><span class="n">get_accidental</span><span class="p">()</span> <span class="o">&gt;</span> <span class="n">reference</span><span class="o">.</span><span class="n">get_accidental</span><span class="p">()</span>
         <span class="p">)</span>
         <span class="k">if</span> <span class="n">expect_higher_than_reference</span> <span class="ow">and</span> <span class="n">absolute_pitch</span> <span class="o">&lt;</span> <span class="n">reference</span><span class="p">:</span>
             <span class="n">octave_transposition</span> <span class="o">=</span> <span class="mi">1</span>
@@ -773,14 +781,14 @@
             <span class="n">octave_transposition</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">octave_transposition</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="n">absolute_pitch</span><span class="o">.</span><span class="n">octave</span><span class="o">.</span><span class="n">number</span> <span class="o">+=</span> <span class="n">octave_transposition</span>
+        <span class="n">absolute_pitch</span><span class="o">.</span><span class="n">get_octave</span><span class="p">()</span><span class="o">.</span><span class="n">number</span> <span class="o">+=</span> <span class="n">octave_transposition</span>
         <span class="k">return</span> <span class="n">absolute_pitch</span>
 
     <span class="nd">@staticmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">_apply_octave_transposition</span><span class="p">(</span><span class="n">pitch</span><span class="p">,</span> <span class="n">absolute_pitch</span><span class="p">):</span>
         <span class="n">base_octave</span> <span class="o">=</span> <span class="mi">3</span>
-        <span class="n">octave_transposition</span> <span class="o">=</span> <span class="n">pitch</span><span class="o">.</span><span class="n">octave</span><span class="o">.</span><span class="n">number</span> <span class="o">-</span> <span class="n">base_octave</span>
-        <span class="n">absolute_pitch</span><span class="o">.</span><span class="n">octave</span><span class="o">.</span><span class="n">number</span> <span class="o">+=</span> <span class="n">octave_transposition</span>
+        <span class="n">octave_transposition</span> <span class="o">=</span> <span class="n">pitch</span><span class="o">.</span><span class="n">get_octave</span><span class="p">()</span><span class="o">.</span><span class="n">number</span> <span class="o">-</span> <span class="n">base_octave</span>
+        <span class="n">absolute_pitch</span><span class="o">.</span><span class="n">get_octave</span><span class="p">()</span><span class="o">.</span><span class="n">number</span> <span class="o">+=</span> <span class="n">octave_transposition</span>
         <span class="k">return</span> <span class="n">absolute_pitch</span>
 
     <span class="nd">@classmethod</span>
@@ -3105,7 +3113,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_language_pitch_names</span> <span class="o">=</span> <span class="n">_lyenv</span><span class="o">.</span><span class="n">language_pitch_names</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_markup_functions</span> <span class="o">=</span> <span class="n">_lyenv</span><span class="o">.</span><span class="n">markup_functions</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_markup_list_functions</span> <span class="o">=</span> <span class="n">_lyenv</span><span class="o">.</span><span class="n">markup_list_functions</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">default_language</span> <span class="o">=</span> <span class="n">default_language</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_default_language</span><span class="p">(</span><span class="n">default_language</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">tag</span> <span class="o">=</span> <span class="n">tag</span>
 
         <span class="c1"># attach parser and lexer rules</span>
@@ -3180,15 +3188,15 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;context type </span><span class="si">{</span><span class="n">context</span><span class="si">!r}</span><span class="s2"> not supported.&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">lilypond_type</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;GrandStaff&quot;</span><span class="p">,</span> <span class="s2">&quot;PianoStaff&quot;</span><span class="p">):</span>
-            <span class="n">context</span><span class="o">.</span><span class="n">lilypond_type</span> <span class="o">=</span> <span class="n">lilypond_type</span>
+            <span class="n">context</span><span class="o">.</span><span class="n">set_lilypond_type</span><span class="p">(</span><span class="n">lilypond_type</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">optional_id</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">context</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">optional_id</span>
+            <span class="n">context</span><span class="o">.</span><span class="n">set_name</span><span class="p">(</span><span class="n">optional_id</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">optional_context_mod</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">optional_context_mod</span><span class="p">:</span>
                 <span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
             <span class="c1"># TODO: impelement context mods on contexts</span>
             <span class="k">pass</span>
-        <span class="n">context</span><span class="o">.</span><span class="n">simultaneous</span> <span class="o">=</span> <span class="n">music</span><span class="o">.</span><span class="n">simultaneous</span>
+        <span class="n">context</span><span class="o">.</span><span class="n">set_simultaneous</span><span class="p">(</span><span class="n">music</span><span class="o">.</span><span class="n">get_simultaneous</span><span class="p">())</span>
         <span class="c1"># add children</span>
         <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">music</span><span class="p">):</span>
             <span class="n">component</span> <span class="o">=</span> <span class="n">music</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
@@ -3261,7 +3269,7 @@
             <span class="k">return</span> <span class="kc">False</span>
 
         <span class="n">container</span> <span class="o">=</span> <span class="n">_score</span><span class="o">.</span><span class="n">Container</span><span class="p">(</span><span class="n">tag</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">tag</span><span class="p">)</span>
-        <span class="n">container</span><span class="o">.</span><span class="n">simultaneous</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="n">container</span><span class="o">.</span><span class="n">set_simultaneous</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
         <span class="c1"># check for voice separators</span>
         <span class="n">groups</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">value</span><span class="p">,</span> <span class="n">group</span> <span class="ow">in</span> <span class="n">itertools</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">music</span><span class="p">,</span> <span class="n">is_separator</span><span class="p">):</span>
@@ -3398,7 +3406,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_last_chord</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="c1"># LilyPond&#39;s default!</span>
         <span class="c1"># self._last_chord = _score.Chord([&#39;c&#39;, &#39;g&#39;, &quot;c&#39;&quot;], (1, 4))</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_pitch_names</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_language_pitch_names</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">default_language</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_pitch_names</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_language_pitch_names</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">default_language</span><span class="p">()]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_repeated_chords</span> <span class="o">=</span> <span class="p">{}</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_resolve_event_identifier</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">identifier</span><span class="p">):</span>
@@ -3518,24 +3526,24 @@
             <span class="n">pitch_c</span> <span class="o">=</span> <span class="n">_pitch</span><span class="o">.</span><span class="n">NamedPitch</span><span class="p">(</span><span class="n">pitch_c</span><span class="p">)</span>
         <span class="n">scale</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">,</span> <span class="mf">7.0</span><span class="p">,</span> <span class="mf">9.0</span><span class="p">,</span> <span class="mf">11.0</span><span class="p">]</span>
         <span class="n">a_oct</span><span class="p">,</span> <span class="n">a_step</span> <span class="o">=</span> <span class="p">(</span>
-            <span class="n">pitch_a</span><span class="o">.</span><span class="n">octave</span><span class="o">.</span><span class="n">number</span><span class="p">,</span>
+            <span class="n">pitch_a</span><span class="o">.</span><span class="n">get_octave</span><span class="p">()</span><span class="o">.</span><span class="n">number</span><span class="p">,</span>
             <span class="n">pitch_a</span><span class="o">.</span><span class="n">_get_diatonic_pc_number</span><span class="p">(),</span>
         <span class="p">)</span>
         <span class="n">b_oct</span><span class="p">,</span> <span class="n">b_step</span> <span class="o">=</span> <span class="p">(</span>
-            <span class="n">pitch_b</span><span class="o">.</span><span class="n">octave</span><span class="o">.</span><span class="n">number</span><span class="p">,</span>
+            <span class="n">pitch_b</span><span class="o">.</span><span class="n">get_octave</span><span class="p">()</span><span class="o">.</span><span class="n">number</span><span class="p">,</span>
             <span class="n">pitch_b</span><span class="o">.</span><span class="n">_get_diatonic_pc_number</span><span class="p">(),</span>
         <span class="p">)</span>
         <span class="n">c_oct</span><span class="p">,</span> <span class="n">c_step</span><span class="p">,</span> <span class="n">c_alt</span> <span class="o">=</span> <span class="p">(</span>
-            <span class="n">pitch_c</span><span class="o">.</span><span class="n">octave</span><span class="o">.</span><span class="n">number</span><span class="p">,</span>
+            <span class="n">pitch_c</span><span class="o">.</span><span class="n">get_octave</span><span class="p">()</span><span class="o">.</span><span class="n">number</span><span class="p">,</span>
             <span class="n">pitch_c</span><span class="o">.</span><span class="n">_get_diatonic_pc_number</span><span class="p">(),</span>
-            <span class="n">pitch_c</span><span class="o">.</span><span class="n">accidental</span><span class="o">.</span><span class="n">semitones</span><span class="p">,</span>
+            <span class="n">pitch_c</span><span class="o">.</span><span class="n">get_accidental</span><span class="p">()</span><span class="o">.</span><span class="n">semitones</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="n">d_oct</span><span class="p">,</span> <span class="n">d_step</span><span class="p">,</span> <span class="n">d_tones</span> <span class="o">=</span> <span class="p">(</span>
             <span class="n">b_oct</span> <span class="o">-</span> <span class="n">a_oct</span><span class="p">,</span>
             <span class="n">b_step</span> <span class="o">-</span> <span class="n">a_step</span><span class="p">,</span>
-            <span class="nb">float</span><span class="p">(</span><span class="n">pitch_b</span><span class="o">.</span><span class="n">number</span><span class="p">)</span> <span class="o">-</span> <span class="nb">float</span><span class="p">(</span><span class="n">pitch_a</span><span class="o">.</span><span class="n">number</span><span class="p">),</span>
+            <span class="nb">float</span><span class="p">(</span><span class="n">pitch_b</span><span class="o">.</span><span class="n">get_number</span><span class="p">())</span> <span class="o">-</span> <span class="nb">float</span><span class="p">(</span><span class="n">pitch_a</span><span class="o">.</span><span class="n">get_number</span><span class="p">()),</span>
         <span class="p">)</span>
-        <span class="n">tmp_alt</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">pitch_c</span><span class="o">.</span><span class="n">number</span><span class="p">)</span> <span class="o">+</span> <span class="n">d_tones</span>
+        <span class="n">tmp_alt</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">pitch_c</span><span class="o">.</span><span class="n">get_number</span><span class="p">())</span> <span class="o">+</span> <span class="n">d_tones</span>
         <span class="c1"># print &#39;TMP_ALT: %f&#39; % tmp_alt</span>
         <span class="n">new_oct</span> <span class="o">=</span> <span class="n">c_oct</span> <span class="o">+</span> <span class="n">d_oct</span>
         <span class="n">new_step</span> <span class="o">=</span> <span class="n">c_step</span> <span class="o">+</span> <span class="n">d_step</span>
@@ -3544,17 +3552,17 @@
         <span class="n">new_step</span><span class="p">,</span> <span class="n">new_alt</span> <span class="o">=</span> <span class="n">normalize_alteration</span><span class="p">(</span><span class="n">new_step</span><span class="p">,</span> <span class="n">new_alt</span><span class="p">)</span>
         <span class="n">new_oct</span><span class="p">,</span> <span class="n">new_step</span> <span class="o">=</span> <span class="n">normalize_octave</span><span class="p">(</span><span class="n">new_oct</span><span class="p">,</span> <span class="n">new_step</span><span class="p">)</span>
         <span class="c1"># print &#39;NEW(norm):&#39;, new_oct, new_step, new_alt</span>
-        <span class="n">octave_ticks</span> <span class="o">=</span> <span class="n">_pitch</span><span class="o">.</span><span class="n">Octave</span><span class="p">(</span><span class="n">new_oct</span><span class="p">)</span><span class="o">.</span><span class="n">ticks</span>
+        <span class="n">octave_ticks</span> <span class="o">=</span> <span class="n">_pitch</span><span class="o">.</span><span class="n">Octave</span><span class="p">(</span><span class="n">new_oct</span><span class="p">)</span><span class="o">.</span><span class="n">get_ticks</span><span class="p">()</span>
         <span class="n">pitch_class_name</span> <span class="o">=</span> <span class="n">_pitch</span><span class="o">.</span><span class="n">_diatonic_pc_number_to_diatonic_pc_name</span><span class="p">[</span><span class="n">new_step</span> <span class="o">%</span> <span class="mi">7</span><span class="p">]</span>
         <span class="n">accidental</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">_pitch</span><span class="o">.</span><span class="n">Accidental</span><span class="p">(</span><span class="n">new_alt</span><span class="p">))</span>
         <span class="n">tmp_pitch</span> <span class="o">=</span> <span class="n">_pitch</span><span class="o">.</span><span class="n">NamedPitch</span><span class="p">(</span><span class="n">pitch_class_name</span> <span class="o">+</span> <span class="n">accidental</span> <span class="o">+</span> <span class="n">octave_ticks</span><span class="p">)</span>
         <span class="c1"># print &#39;TMP(pitch): %r&#39; % tmp_pitch</span>
-        <span class="n">new_alt</span> <span class="o">+=</span> <span class="n">tmp_alt</span> <span class="o">-</span> <span class="nb">float</span><span class="p">(</span><span class="n">tmp_pitch</span><span class="o">.</span><span class="n">number</span><span class="p">)</span>
+        <span class="n">new_alt</span> <span class="o">+=</span> <span class="n">tmp_alt</span> <span class="o">-</span> <span class="nb">float</span><span class="p">(</span><span class="n">tmp_pitch</span><span class="o">.</span><span class="n">get_number</span><span class="p">())</span>
         <span class="c1"># print &#39;NEW(alt): %f&#39; % new_alt</span>
         <span class="n">new_step</span><span class="p">,</span> <span class="n">new_alt</span> <span class="o">=</span> <span class="n">normalize_alteration</span><span class="p">(</span><span class="n">new_step</span><span class="p">,</span> <span class="n">new_alt</span><span class="p">)</span>
         <span class="n">new_oct</span><span class="p">,</span> <span class="n">new_step</span> <span class="o">=</span> <span class="n">normalize_octave</span><span class="p">(</span><span class="n">new_oct</span><span class="p">,</span> <span class="n">new_step</span><span class="p">)</span>
         <span class="c1"># print &#39;NEW(norm):&#39;, new_oct, new_step, new_alt</span>
-        <span class="n">octave_ticks</span> <span class="o">=</span> <span class="n">_pitch</span><span class="o">.</span><span class="n">Octave</span><span class="p">(</span><span class="n">new_oct</span><span class="p">)</span><span class="o">.</span><span class="n">ticks</span>
+        <span class="n">octave_ticks</span> <span class="o">=</span> <span class="n">_pitch</span><span class="o">.</span><span class="n">Octave</span><span class="p">(</span><span class="n">new_oct</span><span class="p">)</span><span class="o">.</span><span class="n">get_ticks</span><span class="p">()</span>
         <span class="n">pitch_class_name</span> <span class="o">=</span> <span class="n">_pitch</span><span class="o">.</span><span class="n">_diatonic_pc_number_to_diatonic_pc_name</span><span class="p">[</span><span class="n">new_step</span> <span class="o">%</span> <span class="mi">7</span><span class="p">]</span>
         <span class="n">accidental</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">_pitch</span><span class="o">.</span><span class="n">Accidental</span><span class="p">(</span><span class="n">new_alt</span><span class="p">))</span>
         <span class="k">return</span> <span class="n">_pitch</span><span class="o">.</span><span class="n">NamedPitch</span><span class="p">(</span><span class="n">pitch_class_name</span> <span class="o">+</span> <span class="n">accidental</span> <span class="o">+</span> <span class="n">octave_ticks</span><span class="p">)</span>
@@ -4055,7 +4063,8 @@
 
     <span class="c1">### PUBLIC PROPERTIES ###</span>
 
-    <span class="nd">@property</span>
+<div class="viewcode-block" id="LilyPondParser.available_languages">
+<a class="viewcode-back" href="../../../api/abjad/parsers/parser.html#abjad.parsers.parser.LilyPondParser.available_languages">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">available_languages</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="o">...</span><span class="p">]:</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Tuple of pitch-name languages supported by LilyPondParser.</span>
@@ -4063,7 +4072,7 @@
 <span class="sd">        ..  container:: example</span>
 
 <span class="sd">            &gt;&gt;&gt; parser = abjad.parser.LilyPondParser()</span>
-<span class="sd">            &gt;&gt;&gt; for language in parser.available_languages:</span>
+<span class="sd">            &gt;&gt;&gt; for language in parser.available_languages():</span>
 <span class="sd">            ...     print(language)</span>
 <span class="sd">            ...</span>
 <span class="sd">            catalan</span>
@@ -4081,9 +4090,11 @@
 <span class="sd">            vlaams</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_language_pitch_names</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
+        <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_language_pitch_names</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span></div>
 
-    <span class="nd">@property</span>
+
+<div class="viewcode-block" id="LilyPondParser.default_language">
+<a class="viewcode-back" href="../../../api/abjad/parsers/parser.html#abjad.parsers.parser.LilyPondParser.default_language">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">default_language</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets and sets default language of parser.</span>
@@ -4092,40 +4103,50 @@
 
 <span class="sd">            &gt;&gt;&gt; parser = abjad.parser.LilyPondParser()</span>
 
-<span class="sd">            &gt;&gt;&gt; parser.default_language</span>
+<span class="sd">            &gt;&gt;&gt; parser.default_language()</span>
 <span class="sd">            &#39;english&#39;</span>
 
 <span class="sd">            &gt;&gt;&gt; parser(&#39;{ c df e fs }&#39;)</span>
 <span class="sd">            Container(&#39;c4 df4 e4 fs4&#39;)</span>
 
-<span class="sd">            &gt;&gt;&gt; parser.default_language = &#39;nederlands&#39;</span>
-<span class="sd">            &gt;&gt;&gt; parser.default_language</span>
+<span class="sd">            &gt;&gt;&gt; parser.set_default_language(&quot;nederlands&quot;)</span>
+<span class="sd">            &gt;&gt;&gt; parser.default_language()</span>
 <span class="sd">            &#39;nederlands&#39;</span>
 
-<span class="sd">            &gt;&gt;&gt; parser(&#39;{ c des e fis }&#39;)</span>
+<span class="sd">            &gt;&gt;&gt; parser(&quot;{ c des e fis }&quot;)</span>
 <span class="sd">            Container(&#39;c4 df4 e4 fs4&#39;)</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_default_language</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_default_language</span></div>
 
-    <span class="nd">@default_language</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">default_language</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">):</span>
-        <span class="k">assert</span> <span class="n">argument</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">available_languages</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_default_language</span> <span class="o">=</span> <span class="n">argument</span>
 
-    <span class="nd">@property</span>
+<div class="viewcode-block" id="LilyPondParser.set_default_language">
+<a class="viewcode-back" href="../../../api/abjad/parsers/parser.html#abjad.parsers.parser.LilyPondParser.set_default_language">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_default_language</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sets default language.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">assert</span> <span class="n">argument</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">available_languages</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_default_language</span> <span class="o">=</span> <span class="n">argument</span></div>
+
+
+<div class="viewcode-block" id="LilyPondParser.lexer_rules_object">
+<a class="viewcode-back" href="../../../api/abjad/parsers/parser.html#abjad.parsers.parser.LilyPondParser.lexer_rules_object">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">lexer_rules_object</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Lexer rules object of LilyPond parser.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_lexdef</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_lexdef</span></div>
 
-    <span class="nd">@property</span>
+
+<div class="viewcode-block" id="LilyPondParser.parser_rules_object">
+<a class="viewcode-back" href="../../../api/abjad/parsers/parser.html#abjad.parsers.parser.LilyPondParser.parser_rules_object">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">parser_rules_object</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Parser rules object of LilyPond parser.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_syndef</span></div>
+</div>
 
 
 
@@ -5254,7 +5275,7 @@
         <span class="bp">self</span><span class="p">,</span> <span class="n">p</span>
     <span class="p">):</span>
         <span class="s2">&quot;event_chord : CHORD_REPETITION optional_notemode_duration post_events&quot;</span>
-        <span class="n">pitches</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">_last_chord</span><span class="o">.</span><span class="n">written_pitches</span>
+        <span class="n">pitches</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">_last_chord</span><span class="o">.</span><span class="n">get_written_pitches</span><span class="p">()</span>
         <span class="n">duration</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">duration</span>
         <span class="n">chord</span> <span class="o">=</span> <span class="n">_score</span><span class="o">.</span><span class="n">Chord</span><span class="p">(</span><span class="n">pitches</span><span class="p">,</span> <span class="n">duration</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">tag</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">_chord_pitch_orders</span><span class="p">[</span><span class="n">chord</span><span class="p">]</span> <span class="o">=</span> <span class="n">pitches</span>
@@ -5279,7 +5300,7 @@
         <span class="n">rest</span> <span class="o">=</span> <span class="n">_score</span><span class="o">.</span><span class="n">MultimeasureRest</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">duration</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">tag</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">multiplier</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">multiplier</span> <span class="o">=</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">multiplier</span><span class="p">)</span>
-            <span class="n">rest</span><span class="o">.</span><span class="n">multiplier</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">pair</span><span class="p">(</span><span class="n">multiplier</span><span class="p">)</span>
+            <span class="n">rest</span><span class="o">.</span><span class="n">set_multiplier</span><span class="p">(</span><span class="n">_duration</span><span class="o">.</span><span class="n">pair</span><span class="p">(</span><span class="n">multiplier</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">_process_post_events</span><span class="p">(</span><span class="n">rest</span><span class="p">,</span> <span class="n">p</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
         <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">rest</span></div>
 
@@ -6843,14 +6864,14 @@
         <span class="n">pitches</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">post_events</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
-            <span class="n">pitches</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">node</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">written_pitch</span><span class="p">)</span>
-            <span class="n">chord</span><span class="o">.</span><span class="n">note_heads</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">node</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="n">pitches</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">node</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get_written_pitch</span><span class="p">())</span>
+            <span class="n">chord</span><span class="o">.</span><span class="n">get_note_heads</span><span class="p">()</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">node</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
             <span class="n">post_events</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">node</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
         <span class="n">post_events</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">_chord_pitch_orders</span><span class="p">[</span><span class="n">chord</span><span class="p">]</span> <span class="o">=</span> <span class="n">pitches</span>
         <span class="k">if</span> <span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">multiplier</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">multiplier</span> <span class="o">=</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">multiplier</span><span class="p">)</span>
-            <span class="n">chord</span><span class="o">.</span><span class="n">multiplier</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">pair</span><span class="p">(</span><span class="n">multiplier</span><span class="p">)</span>
+            <span class="n">chord</span><span class="o">.</span><span class="n">set_multiplier</span><span class="p">(</span><span class="n">_duration</span><span class="o">.</span><span class="n">pair</span><span class="p">(</span><span class="n">multiplier</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">_process_post_events</span><span class="p">(</span><span class="n">chord</span><span class="p">,</span> <span class="n">post_events</span><span class="p">)</span>
         <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">chord</span></div>
 
@@ -7589,7 +7610,7 @@
             <span class="n">rest</span> <span class="o">=</span> <span class="n">_score</span><span class="o">.</span><span class="n">Skip</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">duration</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">tag</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">multiplier</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">multiplier</span> <span class="o">=</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">multiplier</span><span class="p">)</span>
-            <span class="n">rest</span><span class="o">.</span><span class="n">multiplier</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">pair</span><span class="p">(</span><span class="n">multiplier</span><span class="p">)</span>
+            <span class="n">rest</span><span class="o">.</span><span class="n">set_multiplier</span><span class="p">(</span><span class="n">_duration</span><span class="o">.</span><span class="n">pair</span><span class="p">(</span><span class="n">multiplier</span><span class="p">))</span>
         <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">rest</span></div>
 
 
@@ -7601,13 +7622,13 @@
         <span class="s2">&quot;simple_element : pitch exclamations questions octave_check optional_notemode_duration optional_rest&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">p</span><span class="p">[</span><span class="mi">6</span><span class="p">]:</span>
             <span class="n">leaf</span> <span class="o">=</span> <span class="n">_score</span><span class="o">.</span><span class="n">Note</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">p</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span><span class="o">.</span><span class="n">duration</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">tag</span><span class="p">)</span>
-            <span class="n">leaf</span><span class="o">.</span><span class="n">note_head</span><span class="o">.</span><span class="n">is_forced</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
-            <span class="n">leaf</span><span class="o">.</span><span class="n">note_head</span><span class="o">.</span><span class="n">is_cautionary</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
+            <span class="n">leaf</span><span class="o">.</span><span class="n">get_note_head</span><span class="p">()</span><span class="o">.</span><span class="n">set_is_forced</span><span class="p">(</span><span class="nb">bool</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">]))</span>
+            <span class="n">leaf</span><span class="o">.</span><span class="n">get_note_head</span><span class="p">()</span><span class="o">.</span><span class="n">set_is_cautionary</span><span class="p">(</span><span class="nb">bool</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">3</span><span class="p">]))</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">leaf</span> <span class="o">=</span> <span class="n">_score</span><span class="o">.</span><span class="n">Rest</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span><span class="o">.</span><span class="n">duration</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">tag</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">p</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span><span class="o">.</span><span class="n">multiplier</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">multiplier</span> <span class="o">=</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span><span class="o">.</span><span class="n">multiplier</span><span class="p">)</span>
-            <span class="n">leaf</span><span class="o">.</span><span class="n">multiplier</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">pair</span><span class="p">(</span><span class="n">multiplier</span><span class="p">)</span>
+            <span class="n">leaf</span><span class="o">.</span><span class="n">set_multiplier</span><span class="p">(</span><span class="n">_duration</span><span class="o">.</span><span class="n">pair</span><span class="p">(</span><span class="n">multiplier</span><span class="p">))</span>
         <span class="c1"># TODO: handle exclamations, questions, octave_check</span>
         <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">leaf</span></div>
 
@@ -7764,7 +7785,7 @@
         <span class="n">duration</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">duration</span>
         <span class="n">multiplier</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">multiplier</span>
         <span class="k">if</span> <span class="n">dots</span><span class="p">:</span>
-            <span class="n">duration</span> <span class="o">=</span> <span class="n">duration</span><span class="o">.</span><span class="n">lilypond_duration_string</span>
+            <span class="n">duration</span> <span class="o">=</span> <span class="n">duration</span><span class="o">.</span><span class="n">get_lilypond_duration_string</span><span class="p">()</span>
             <span class="n">duration</span> <span class="o">+=</span> <span class="s2">&quot;.&quot;</span> <span class="o">*</span> <span class="n">dots</span>
             <span class="n">duration</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Duration</span><span class="o">.</span><span class="n">from_lilypond_duration_string</span><span class="p">(</span><span class="n">duration</span><span class="p">)</span>
         <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">LilyPondDuration</span><span class="p">(</span><span class="n">duration</span><span class="p">,</span> <span class="n">multiplier</span><span class="p">)</span></div>
@@ -7788,7 +7809,7 @@
     <span class="k">def</span><span class="w"> </span><span class="nf">p_steno_pitch__NOTENAME_PITCH</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
         <span class="s2">&quot;steno_pitch : NOTENAME_PITCH&quot;</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">_pitch</span><span class="o">.</span><span class="n">NamedPitchClass</span><span class="p">):</span>
-            <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">_pitch</span><span class="o">.</span><span class="n">NamedPitch</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+            <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">_pitch</span><span class="o">.</span><span class="n">NamedPitch</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">get_name</span><span class="p">())</span>
         <span class="k">elif</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="ow">in</span> <span class="n">_lyconst</span><span class="o">.</span><span class="n">drums</span><span class="p">:</span>
             <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span></div>
 
@@ -7797,14 +7818,14 @@
 <a class="viewcode-back" href="../../../api/abjad/parsers/parser.html#abjad.parsers.parser.LilyPondSyntacticalDefinition.p_steno_pitch__NOTENAME_PITCH__sub_quotes">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">p_steno_pitch__NOTENAME_PITCH__sub_quotes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
         <span class="s2">&quot;steno_pitch : NOTENAME_PITCH sub_quotes&quot;</span>
-        <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">_pitch</span><span class="o">.</span><span class="n">NamedPitch</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span> <span class="s2">&quot;,&quot;</span> <span class="o">*</span> <span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span></div>
+        <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">_pitch</span><span class="o">.</span><span class="n">NamedPitch</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span> <span class="o">+</span> <span class="s2">&quot;,&quot;</span> <span class="o">*</span> <span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span></div>
 
 
 <div class="viewcode-block" id="LilyPondSyntacticalDefinition.p_steno_pitch__NOTENAME_PITCH__sup_quotes">
 <a class="viewcode-back" href="../../../api/abjad/parsers/parser.html#abjad.parsers.parser.LilyPondSyntacticalDefinition.p_steno_pitch__NOTENAME_PITCH__sup_quotes">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">p_steno_pitch__NOTENAME_PITCH__sup_quotes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
         <span class="s2">&quot;steno_pitch : NOTENAME_PITCH sup_quotes&quot;</span>
-        <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">_pitch</span><span class="o">.</span><span class="n">NamedPitch</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span> <span class="s2">&quot;&#39;&quot;</span> <span class="o">*</span> <span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span></div>
+        <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">_pitch</span><span class="o">.</span><span class="n">NamedPitch</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span> <span class="o">+</span> <span class="s2">&quot;&#39;&quot;</span> <span class="o">*</span> <span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span></div>
 
 
     <span class="c1">### steno_tonic_pitch ###</span>
@@ -8177,7 +8198,7 @@
         
         &copy; Copyright 2008-2025, Trevor Bača &amp; Joséphine Oberholtzer.
       <span class="lastupdated">
-        Last updated on Jul 05, 2025.
+        Last updated on Jul 28, 2025.
       </span>
 
     </p>

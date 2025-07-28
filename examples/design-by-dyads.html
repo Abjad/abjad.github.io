@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Design, by dyads &mdash; Abjad 3.26 documentation</title>
+  <title>Design, by dyads &mdash; Abjad 3.27 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../_static/abjad.css?v=1f187528" />
@@ -19,7 +19,7 @@
     <link rel="canonical" href="https://abjad.github.ioexamples/design-by-dyads.html"/>
       <script src="../_static/jquery.js?v=5d32c60e"></script>
       <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../_static/documentation_options.js?v=59ffb378"></script>
+      <script src="../_static/documentation_options.js?v=fd873761"></script>
       <script src="../_static/doctools.js?v=9bcbadda"></script>
       <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script src="../_static/ga.js?v=c455bbd5"></script>
@@ -38,11 +38,11 @@
   <div class="wy-grid-for-nav">
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search"  style="background: #CC8844" >
+        <div class="wy-side-nav-search"  style="background: #FFAA55" >
 
 
     <a href="../index.html" class="icon icon-home" alt="Documentation
-    Home"> Abjad 3.26
+    Home"> Abjad 3.27
 
 
 
@@ -113,7 +113,7 @@
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #CC8844" >
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #FFAA55" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../index.html">Abjad</a>
       </nav>
@@ -152,14 +152,16 @@ to Luigi Nono:</p>
 <span class="gp">... </span>    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">pair</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">pairs</span><span class="p">):</span>
 <span class="gp">... </span>        <span class="n">chord</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Chord</span><span class="p">(</span><span class="n">pair</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
 <span class="gp">... </span>        <span class="k">if</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">flip</span><span class="p">:</span>
-<span class="gp">... </span>            <span class="n">pitches</span> <span class="o">=</span> <span class="n">chord</span><span class="o">.</span><span class="n">written_pitches</span>
+<span class="gp">... </span>            <span class="n">pitches</span> <span class="o">=</span> <span class="n">chord</span><span class="o">.</span><span class="n">get_written_pitches</span><span class="p">()</span>
 <span class="gp">... </span>            <span class="n">lower</span><span class="p">,</span> <span class="n">higher</span> <span class="o">=</span> <span class="n">pitches</span>
 <span class="gp">... </span>            <span class="k">while</span> <span class="n">lower</span> <span class="o">&lt;</span> <span class="n">higher</span><span class="p">:</span>
 <span class="gp">... </span>                <span class="n">lower</span> <span class="o">=</span> <span class="n">lower</span> <span class="o">+</span> <span class="s2">&quot;+P8&quot;</span>
-<span class="gp">... </span>            <span class="n">chord</span><span class="o">.</span><span class="n">written_pitches</span> <span class="o">=</span> <span class="p">[</span><span class="n">lower</span><span class="p">,</span> <span class="n">higher</span><span class="p">]</span>
+<span class="gp">... </span>            <span class="n">chord</span><span class="o">.</span><span class="n">set_written_pitches</span><span class="p">([</span><span class="n">lower</span><span class="p">,</span> <span class="n">higher</span><span class="p">])</span>
 <span class="gp">... </span>        <span class="n">interval</span> <span class="o">=</span> <span class="n">transpositions</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="s2">&quot;P1&quot;</span><span class="p">)</span>
-<span class="gp">... </span>        <span class="n">pitches</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">_</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">interval</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">chord</span><span class="o">.</span><span class="n">written_pitches</span><span class="p">)</span>
-<span class="gp">... </span>        <span class="n">chord</span><span class="o">.</span><span class="n">written_pitches</span> <span class="o">=</span> <span class="n">pitches</span>
+<span class="gp">... </span>        <span class="n">pitches</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span>
+<span class="gp">... </span>            <span class="n">_</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">interval</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">chord</span><span class="o">.</span><span class="n">get_written_pitches</span><span class="p">()</span>
+<span class="gp">... </span>        <span class="p">)</span>
+<span class="gp">... </span>        <span class="n">chord</span><span class="o">.</span><span class="n">set_written_pitches</span><span class="p">(</span><span class="n">pitches</span><span class="p">)</span>
 <span class="gp">... </span>        <span class="n">chords</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">chord</span><span class="p">)</span>
 <span class="gp">... </span>    <span class="k">return</span> <span class="n">chords</span>
 <span class="gp">... </span>
@@ -306,7 +308,7 @@ indexes 0, 1 selectively transposed:</p>
         
         &copy; Copyright 2008-2025, Trevor Bača &amp; Joséphine Oberholtzer.
       <span class="lastupdated">
-        Last updated on Jul 05, 2025.
+        Last updated on Jul 28, 2025.
       </span>
 
     </p>

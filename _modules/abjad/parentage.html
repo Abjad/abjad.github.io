@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>abjad.parentage &mdash; Abjad 3.26 documentation</title>
+  <title>abjad.parentage &mdash; Abjad 3.27 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../_static/abjad.css?v=1f187528" />
@@ -18,7 +18,7 @@
     <link rel="canonical" href="https://abjad.github.io_modules/abjad/parentage.html"/>
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=59ffb378"></script>
+      <script src="../../_static/documentation_options.js?v=fd873761"></script>
       <script src="../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script src="../../_static/ga.js?v=c455bbd5"></script>
@@ -35,11 +35,11 @@
   <div class="wy-grid-for-nav">
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search"  style="background: #CC8844" >
+        <div class="wy-side-nav-search"  style="background: #FFAA55" >
 
 
     <a href="../../index.html" class="icon icon-home" alt="Documentation
-    Home"> Abjad 3.26
+    Home"> Abjad 3.27
 
 
 
@@ -110,7 +110,7 @@
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #CC8844" >
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #FFAA55" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../index.html">Abjad</a>
       </nav>
@@ -132,9 +132,12 @@
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">collections</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">fractions</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">typing</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">math</span> <span class="k">as</span> <span class="n">_math</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">score</span> <span class="k">as</span> <span class="n">_score</span>
+
+<span class="n">T</span> <span class="o">=</span> <span class="n">typing</span><span class="o">.</span><span class="n">TypeVar</span><span class="p">(</span><span class="s2">&quot;T&quot;</span><span class="p">,</span> <span class="n">bound</span><span class="o">=</span><span class="n">_score</span><span class="o">.</span><span class="n">Component</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="Parentage">
@@ -195,22 +198,20 @@
 
     <span class="vm">__slots__</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;_component&quot;</span><span class="p">,</span> <span class="s2">&quot;_components&quot;</span><span class="p">)</span>
 
+    <span class="n">_do_not_test_deepcopy</span> <span class="o">=</span> <span class="kc">True</span>
+
     <span class="c1">### INITIALIZER ###</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">component</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="n">components</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">if</span> <span class="n">component</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">component</span><span class="p">,</span> <span class="n">_score</span><span class="o">.</span><span class="n">Component</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">component</span><span class="p">)</span>
-            <span class="n">components</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">component</span><span class="o">.</span><span class="n">_get_parentage</span><span class="p">())</span>
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">component</span><span class="p">,</span> <span class="n">_score</span><span class="o">.</span><span class="n">Component</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">component</span><span class="p">)</span>
+        <span class="n">components</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">component</span><span class="o">.</span><span class="n">_get_parentage</span><span class="p">())</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_component</span> <span class="o">=</span> <span class="n">component</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_components</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">components</span><span class="p">)</span>
 
     <span class="c1">### SPECIAL METHODS ###</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Is true when ``argument`` is a parent with the same components as this parentage.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">argument</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)):</span>
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">argument</span><span class="p">):</span>
                 <span class="k">for</span> <span class="n">c</span><span class="p">,</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">):</span>
@@ -226,32 +227,36 @@
 
 <span class="sd">        Returns component or tuple of components.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">components</span><span class="o">.</span><span class="fm">__getitem__</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_components</span><span class="p">()</span><span class="o">.</span><span class="fm">__getitem__</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets number of components in parentage.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">components</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_components</span><span class="p">())</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets repr.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">(component=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">component</span><span class="si">!r}</span><span class="s2">)&quot;</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">(component=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">get_component</span><span class="p">()</span><span class="si">!r}</span><span class="s2">)&quot;</span>
 
     <span class="c1">### PRIVATE METHODS ###</span>
 
     <span class="nd">@staticmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">_id_string</span><span class="p">(</span><span class="n">component</span><span class="p">):</span>
         <span class="n">lhs</span> <span class="o">=</span> <span class="n">component</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
-        <span class="n">rhs</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">component</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">id</span><span class="p">(</span><span class="n">component</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">component</span><span class="p">,</span> <span class="s2">&quot;get_name&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">component</span><span class="o">.</span><span class="n">get_name</span><span class="p">():</span>
+            <span class="n">rhs</span> <span class="o">=</span> <span class="n">component</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">rhs</span> <span class="o">=</span> <span class="nb">id</span><span class="p">(</span><span class="n">component</span><span class="p">)</span>
         <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">lhs</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">rhs</span><span class="si">!r}</span><span class="s2">&quot;</span>
 
     <span class="c1">### PUBLIC PROPERTIES ###</span>
 
-    <span class="nd">@property</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">component</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">_score</span><span class="o">.</span><span class="n">Component</span><span class="p">:</span>
+<div class="viewcode-block" id="Parentage.get_component">
+<a class="viewcode-back" href="../../api/abjad/parentage.html#abjad.parentage.Parentage.get_component">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_component</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">_score</span><span class="o">.</span><span class="n">Component</span><span class="p">:</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets component.</span>
 
@@ -321,7 +326,7 @@
 
 <span class="sd">            &gt;&gt;&gt; for component in abjad.select.components(staff):</span>
 <span class="sd">            ...     parentage = abjad.get.parentage(component)</span>
-<span class="sd">            ...     print(f&quot;{repr(component):30} {repr(parentage.component)}&quot;)</span>
+<span class="sd">            ...     print(f&quot;{repr(component):30} {repr(parentage.get_component())}&quot;)</span>
 <span class="sd">            Staff(&quot;{ c&#39;4 d&#39;4 { { &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 } } f&#39;4 }&quot;) Staff(&quot;{ c&#39;4 d&#39;4 { { &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 } } f&#39;4 }&quot;)</span>
 <span class="sd">            Voice(&quot;c&#39;4 d&#39;4 { { &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 } } f&#39;4&quot;, name=&#39;MusicVoice&#39;) Voice(&quot;c&#39;4 d&#39;4 { { &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 } } f&#39;4&quot;, name=&#39;MusicVoice&#39;)</span>
 <span class="sd">            Note(&quot;c&#39;4&quot;)                    Note(&quot;c&#39;4&quot;)</span>
@@ -341,10 +346,12 @@
 <span class="sd">            Note(&quot;fs&#39;16&quot;)                  Note(&quot;fs&#39;16&quot;)</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_component</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_component</span></div>
 
-    <span class="nd">@property</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">components</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">_score</span><span class="o">.</span><span class="n">Component</span><span class="p">]:</span>
+
+<div class="viewcode-block" id="Parentage.get_components">
+<a class="viewcode-back" href="../../api/abjad/parentage.html#abjad.parentage.Parentage.get_components">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_components</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">_score</span><span class="o">.</span><span class="n">Component</span><span class="p">]:</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets components.</span>
 
@@ -414,7 +421,7 @@
 
 <span class="sd">            &gt;&gt;&gt; for component in abjad.select.components(staff):</span>
 <span class="sd">            ...     parentage = abjad.get.parentage(component)</span>
-<span class="sd">            ...     components = parentage.components</span>
+<span class="sd">            ...     components = parentage.get_components()</span>
 <span class="sd">            ...     print(f&quot;{repr(component)}:&quot;)</span>
 <span class="sd">            ...     for component_ in components:</span>
 <span class="sd">            ...         print(f&quot;    {repr(component_)}&quot;)</span>
@@ -499,10 +506,12 @@
 <span class="sd">                Staff(&quot;{ c&#39;4 d&#39;4 { { &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 } } f&#39;4 }&quot;)</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_components</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_components</span></div>
 
-    <span class="nd">@property</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">parent</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">_score</span><span class="o">.</span><span class="n">Component</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+
+<div class="viewcode-block" id="Parentage.get_parent">
+<a class="viewcode-back" href="../../api/abjad/parentage.html#abjad.parentage.Parentage.get_parent">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_parent</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">_score</span><span class="o">.</span><span class="n">Component</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets parent.</span>
 
@@ -572,7 +581,7 @@
 
 <span class="sd">            &gt;&gt;&gt; for component in abjad.select.components(staff):</span>
 <span class="sd">            ...     parentage = abjad.get.parentage(component)</span>
-<span class="sd">            ...     print(f&quot;{repr(component):30} {repr(parentage.parent)}&quot;)</span>
+<span class="sd">            ...     print(f&quot;{repr(component):30} {repr(parentage.get_parent())}&quot;)</span>
 <span class="sd">            Staff(&quot;{ c&#39;4 d&#39;4 { { &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 } } f&#39;4 }&quot;) None</span>
 <span class="sd">            Voice(&quot;c&#39;4 d&#39;4 { { &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 } } f&#39;4&quot;, name=&#39;MusicVoice&#39;) Staff(&quot;{ c&#39;4 d&#39;4 { { &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 } } f&#39;4 }&quot;)</span>
 <span class="sd">            Note(&quot;c&#39;4&quot;)                    Voice(&quot;c&#39;4 d&#39;4 { { &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 } } f&#39;4&quot;, name=&#39;MusicVoice&#39;)</span>
@@ -592,10 +601,12 @@
 <span class="sd">            Note(&quot;fs&#39;16&quot;)                  AfterGraceContainer(&quot;fs&#39;16&quot;)</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span></div>
 
-    <span class="nd">@property</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">prolation</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">:</span>
+
+<div class="viewcode-block" id="Parentage.get_prolation">
+<a class="viewcode-back" href="../../api/abjad/parentage.html#abjad.parentage.Parentage.get_prolation">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_prolation</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">:</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets prolation.</span>
 
@@ -604,7 +615,7 @@
 <span class="sd">            REGRESSION. Works with grace notes (and containers):</span>
 
 <span class="sd">            &gt;&gt;&gt; music_voice = abjad.Voice(</span>
-<span class="sd">            ...     r&quot;\times 2/3 { c&#39;4 d&#39; e&#39; } \times 2/3 { f&#39; g&#39; a&#39; }&quot;,</span>
+<span class="sd">            ...     r&quot;\tuplet 3/2 { c&#39;4 d&#39; e&#39; } \tuplet 3/2 { f&#39; g&#39; a&#39; }&quot;,</span>
 <span class="sd">            ...     name=&quot;MusicVoice&quot;</span>
 <span class="sd">            ... )</span>
 <span class="sd">            &gt;&gt;&gt; container = abjad.BeforeGraceContainer(&quot;cs&#39;16&quot;)</span>
@@ -672,7 +683,7 @@
 
 <span class="sd">            &gt;&gt;&gt; for component in abjad.select.components(staff):</span>
 <span class="sd">            ...     parentage = abjad.get.parentage(component)</span>
-<span class="sd">            ...     print(f&quot;{repr(component):30} {repr(parentage.prolation)}&quot;)</span>
+<span class="sd">            ...     print(f&quot;{repr(component):30} {repr(parentage.get_prolation())}&quot;)</span>
 <span class="sd">            Staff(&quot;{ { 3:2 c&#39;4 d&#39;4 e&#39;4 } { 3:2 { { &lt;f&#39; a&#39;&gt;8 b&#39;8 } { f&#39;4 } } g&#39;4 a&#39;4 } }&quot;) Fraction(1, 1)</span>
 <span class="sd">            Voice(&quot;{ 3:2 c&#39;4 d&#39;4 e&#39;4 } { 3:2 { { &lt;f&#39; a&#39;&gt;8 b&#39;8 } { f&#39;4 } } g&#39;4 a&#39;4 }&quot;, name=&#39;MusicVoice&#39;) Fraction(1, 1)</span>
 <span class="sd">            Tuplet(&#39;3:2&#39;, &quot;c&#39;4 d&#39;4 e&#39;4&quot;)   Fraction(2, 3)</span>
@@ -703,10 +714,12 @@
                 <span class="n">prolation</span> <span class="o">=</span> <span class="n">default</span>
             <span class="n">prolations</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">prolation</span><span class="p">)</span>
         <span class="n">products</span> <span class="o">=</span> <span class="n">_math</span><span class="o">.</span><span class="n">cumulative_products</span><span class="p">(</span><span class="n">prolations</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">products</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">products</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span></div>
 
-    <span class="nd">@property</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">root</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">_score</span><span class="o">.</span><span class="n">Component</span><span class="p">:</span>
+
+<div class="viewcode-block" id="Parentage.get_root">
+<a class="viewcode-back" href="../../api/abjad/parentage.html#abjad.parentage.Parentage.get_root">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_root</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">_score</span><span class="o">.</span><span class="n">Component</span><span class="p">:</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets root.</span>
 
@@ -776,7 +789,7 @@
 
 <span class="sd">            &gt;&gt;&gt; for component in abjad.select.components(staff):</span>
 <span class="sd">            ...     parentage = abjad.get.parentage(component)</span>
-<span class="sd">            ...     print(f&quot;{repr(component):30} {repr(parentage.root)}&quot;)</span>
+<span class="sd">            ...     print(f&quot;{repr(component):30} {repr(parentage.get_root())}&quot;)</span>
 <span class="sd">            Staff(&quot;{ c&#39;4 d&#39;4 { { &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 } } f&#39;4 }&quot;) Staff(&quot;{ c&#39;4 d&#39;4 { { &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 } } f&#39;4 }&quot;)</span>
 <span class="sd">            Voice(&quot;c&#39;4 d&#39;4 { { &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 } } f&#39;4&quot;, name=&#39;MusicVoice&#39;) Staff(&quot;{ c&#39;4 d&#39;4 { { &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 } } f&#39;4 }&quot;)</span>
 <span class="sd">            Note(&quot;c&#39;4&quot;)                    Staff(&quot;{ c&#39;4 d&#39;4 { { &lt;e&#39; g&#39;&gt;16 gs&#39;16 a&#39;16 as&#39;16 } { e&#39;4 } } f&#39;4 }&quot;)</span>
@@ -798,7 +811,8 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">root</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">n</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
         <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">_score</span><span class="o">.</span><span class="n">Component</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">root</span>
+        <span class="k">return</span> <span class="n">root</span></div>
+
 
     <span class="c1">### PUBLIC METHODS ###</span>
 
@@ -813,7 +827,7 @@
 <span class="sd">            Gets tuplet count:</span>
 
 <span class="sd">            &gt;&gt;&gt; staff = abjad.Staff(</span>
-<span class="sd">            ...     r&quot;\times 2/3 { c&#39;2 \times 2/3 { d&#39;8 e&#39; f&#39; } } \times 2/3 { c&#39;4 d&#39; e&#39; }&quot;</span>
+<span class="sd">            ...     r&quot;\tuplet 3/2 { c&#39;2 \tuplet 3/2 { d&#39;8 e&#39; f&#39; } } \tuplet 3/2 { c&#39;4 d&#39; e&#39; }&quot;</span>
 <span class="sd">            ... )</span>
 <span class="sd">            &gt;&gt;&gt; abjad.show(staff) # doctest: +SKIP</span>
 
@@ -1388,7 +1402,7 @@
 <span class="sd">            Note(&quot;fs&#39;16&quot;)                  False</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">parent</span> <span class="ow">is</span> <span class="kc">None</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_parent</span><span class="p">()</span> <span class="ow">is</span> <span class="kc">None</span></div>
 
 
 <div class="viewcode-block" id="Parentage.logical_voice">
@@ -1509,7 +1523,7 @@
 
 <span class="sd">            Score root sets score index to ``()``:</span>
 
-<span class="sd">            &gt;&gt;&gt; staff_1 = abjad.Staff(r&quot;\times 2/3 { c&#39;&#39;2 b&#39;2 a&#39;2 }&quot;)</span>
+<span class="sd">            &gt;&gt;&gt; staff_1 = abjad.Staff(r&quot;\tuplet 3/2 { c&#39;&#39;2 b&#39;2 a&#39;2 }&quot;)</span>
 <span class="sd">            &gt;&gt;&gt; staff_2 = abjad.Staff(&quot;c&#39;2 d&#39;2&quot;)</span>
 <span class="sd">            &gt;&gt;&gt; score = abjad.Score([staff_1, staff_2])</span>
 <span class="sd">            &gt;&gt;&gt; abjad.show(score) # doctest: +SKIP</span>
@@ -1672,7 +1686,7 @@
         
         &copy; Copyright 2008-2025, Trevor Bača &amp; Joséphine Oberholtzer.
       <span class="lastupdated">
-        Last updated on Jul 05, 2025.
+        Last updated on Jul 28, 2025.
       </span>
 
     </p>

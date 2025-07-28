@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>abjad.obgc &mdash; Abjad 3.26 documentation</title>
+  <title>abjad.obgc &mdash; Abjad 3.27 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../_static/abjad.css?v=1f187528" />
@@ -18,7 +18,7 @@
     <link rel="canonical" href="https://abjad.github.io_modules/abjad/obgc.html"/>
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=59ffb378"></script>
+      <script src="../../_static/documentation_options.js?v=fd873761"></script>
       <script src="../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script src="../../_static/ga.js?v=c455bbd5"></script>
@@ -35,11 +35,11 @@
   <div class="wy-grid-for-nav">
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search"  style="background: #CC8844" >
+        <div class="wy-side-nav-search"  style="background: #FFAA55" >
 
 
     <a href="../../index.html" class="icon icon-home" alt="Documentation
-    Home"> Abjad 3.26
+    Home"> Abjad 3.27
 
 
 
@@ -110,7 +110,7 @@
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #CC8844" >
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #FFAA55" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../index.html">Abjad</a>
       </nav>
@@ -150,14 +150,14 @@
 <span class="k">def</span><span class="w"> </span><span class="nf">_is_obgc_nongrace_voice</span><span class="p">(</span><span class="n">component</span><span class="p">):</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">component</span><span class="p">,</span> <span class="n">_score</span><span class="o">.</span><span class="n">Voice</span><span class="p">):</span>
         <span class="k">return</span> <span class="kc">False</span>
-    <span class="n">component</span> <span class="o">=</span> <span class="n">_get</span><span class="o">.</span><span class="n">parentage</span><span class="p">(</span><span class="n">component</span><span class="p">)</span><span class="o">.</span><span class="n">parent</span>
+    <span class="n">component</span> <span class="o">=</span> <span class="n">_get</span><span class="o">.</span><span class="n">parentage</span><span class="p">(</span><span class="n">component</span><span class="p">)</span><span class="o">.</span><span class="n">get_parent</span><span class="p">()</span>
     <span class="k">return</span> <span class="n">_is_obgc_polyphony_container</span><span class="p">(</span><span class="n">component</span><span class="p">)</span>
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">_is_obgc_polyphony_container</span><span class="p">(</span><span class="n">container</span><span class="p">):</span>
     <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">container</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">_score</span><span class="o">.</span><span class="n">Container</span><span class="p">:</span>
         <span class="k">return</span> <span class="kc">False</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">container</span><span class="o">.</span><span class="n">simultaneous</span><span class="p">:</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">container</span><span class="o">.</span><span class="n">get_simultaneous</span><span class="p">():</span>
         <span class="k">return</span> <span class="kc">False</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">container</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
         <span class="k">return</span> <span class="kc">False</span>
@@ -278,8 +278,8 @@
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_format_open_brackets_site</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">contributions</span><span class="p">):</span>
         <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">identifier</span><span class="p">:</span>
-            <span class="n">open_bracket</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="se">{{</span><span class="s2">   </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">identifier</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_identifier</span><span class="p">():</span>
+            <span class="n">open_bracket</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="se">{{</span><span class="s2">   </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">get_identifier</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">open_bracket</span> <span class="o">=</span> <span class="s2">&quot;{&quot;</span>
         <span class="n">brackets_open</span> <span class="o">=</span> <span class="p">[</span><span class="n">open_bracket</span><span class="p">]</span>
@@ -308,17 +308,6 @@
             <span class="n">result</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">contributions</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">result</span>
 
-    <span class="c1">### PUBLIC PROPERTIES ###</span>
-
-    <span class="nd">@property</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">grace_leaf_duration</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Duration</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Gets grace leaf duration.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_grace_leaf_duration</span>
-
-    <span class="c1">### PUBLIC METHODS ###</span>
-
 <div class="viewcode-block" id="OnBeatGraceContainer.attach_lilypond_one_voice">
 <a class="viewcode-back" href="../../api/abjad/obgc.html#abjad.obgc.OnBeatGraceContainer.attach_lilypond_one_voice">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">attach_lilypond_one_voice</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
@@ -332,12 +321,12 @@
             <span class="k">return</span>
         <span class="k">if</span> <span class="n">_get</span><span class="o">.</span><span class="n">has_indicator</span><span class="p">(</span><span class="n">next_leaf</span><span class="p">,</span> <span class="n">_indicators</span><span class="o">.</span><span class="n">VoiceNumber</span><span class="p">):</span>
             <span class="k">return</span>
-        <span class="n">next_leaf_parent</span> <span class="o">=</span> <span class="n">_get</span><span class="o">.</span><span class="n">parentage</span><span class="p">(</span><span class="n">next_leaf</span><span class="p">)</span><span class="o">.</span><span class="n">parent</span>
+        <span class="n">next_leaf_parent</span> <span class="o">=</span> <span class="n">_get</span><span class="o">.</span><span class="n">parentage</span><span class="p">(</span><span class="n">next_leaf</span><span class="p">)</span><span class="o">.</span><span class="n">get_parent</span><span class="p">()</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">next_leaf_parent</span><span class="p">,</span> <span class="n">OnBeatGraceContainer</span><span class="p">):</span>
             <span class="k">return</span>
         <span class="k">if</span> <span class="n">_is_obgc_nongrace_voice</span><span class="p">(</span><span class="n">next_leaf_parent</span><span class="p">):</span>
             <span class="k">return</span>
-        <span class="n">tag</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tag</span>
+        <span class="n">tag</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_tag</span><span class="p">()</span>
         <span class="k">assert</span> <span class="n">tag</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">tag</span><span class="p">)</span>
         <span class="n">tag</span> <span class="o">=</span> <span class="n">tag</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
             <span class="n">_tag</span><span class="o">.</span><span class="n">Tag</span><span class="p">(</span><span class="s2">&quot;abjad.OnBeatGraceContainer._attach_lilypond_one_voice()&quot;</span><span class="p">)</span>
@@ -353,7 +342,7 @@
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets first nongrace leaf.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">polyphony_container</span> <span class="o">=</span> <span class="n">_get</span><span class="o">.</span><span class="n">parentage</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">parent</span>
+        <span class="n">polyphony_container</span> <span class="o">=</span> <span class="n">_get</span><span class="o">.</span><span class="n">parentage</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">get_parent</span><span class="p">()</span>
         <span class="k">assert</span> <span class="nb">type</span><span class="p">(</span><span class="n">polyphony_container</span><span class="p">)</span> <span class="ow">is</span> <span class="n">_score</span><span class="o">.</span><span class="n">Container</span>
         <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">polyphony_container</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">polyphony_container</span><span class="p">)</span>
         <span class="n">nongrace_voice</span> <span class="o">=</span> <span class="n">polyphony_container</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
@@ -367,7 +356,7 @@
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets nongrace voice.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">polyphony_container</span> <span class="o">=</span> <span class="n">_get</span><span class="o">.</span><span class="n">parentage</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">parent</span>
+        <span class="n">polyphony_container</span> <span class="o">=</span> <span class="n">_get</span><span class="o">.</span><span class="n">parentage</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">get_parent</span><span class="p">()</span>
         <span class="k">assert</span> <span class="nb">type</span><span class="p">(</span><span class="n">polyphony_container</span><span class="p">)</span> <span class="ow">is</span> <span class="n">_score</span><span class="o">.</span><span class="n">Container</span>
         <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">polyphony_container</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">polyphony_container</span><span class="p">)</span>
         <span class="n">nongrace_voice</span> <span class="o">=</span> <span class="n">polyphony_container</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
@@ -381,10 +370,19 @@
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Gets polyphony container.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">polyphony_container</span> <span class="o">=</span> <span class="n">_get</span><span class="o">.</span><span class="n">parentage</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">parent</span>
+        <span class="n">polyphony_container</span> <span class="o">=</span> <span class="n">_get</span><span class="o">.</span><span class="n">parentage</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">get_parent</span><span class="p">()</span>
         <span class="k">assert</span> <span class="nb">type</span><span class="p">(</span><span class="n">polyphony_container</span><span class="p">)</span> <span class="ow">is</span> <span class="n">_score</span><span class="o">.</span><span class="n">Container</span>
         <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">polyphony_container</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">polyphony_container</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">polyphony_container</span></div>
+
+
+<div class="viewcode-block" id="OnBeatGraceContainer.grace_leaf_duration">
+<a class="viewcode-back" href="../../api/abjad/obgc.html#abjad.obgc.OnBeatGraceContainer.grace_leaf_duration">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">grace_leaf_duration</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Duration</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets grace leaf duration.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_grace_leaf_duration</span></div>
 
 
 <div class="viewcode-block" id="OnBeatGraceContainer.match_first_nongrace_leaf">
@@ -394,8 +392,9 @@
 <span class="sd">        Matches first nongrace leaf.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;abjad.OnBeatGraceContainer.match_first_nongrace_leaf()&quot;</span>
-        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">tag</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tag</span><span class="p">)</span>
-        <span class="n">tag</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tag</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">_tag</span><span class="o">.</span><span class="n">Tag</span><span class="p">(</span><span class="n">string</span><span class="p">))</span>
+        <span class="n">self_tag</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_tag</span><span class="p">()</span>
+        <span class="k">assert</span> <span class="n">self_tag</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">self_tag</span><span class="p">)</span>
+        <span class="n">tag</span> <span class="o">=</span> <span class="n">self_tag</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">_tag</span><span class="o">.</span><span class="n">Tag</span><span class="p">(</span><span class="n">string</span><span class="p">))</span>
         <span class="n">first_obgc_leaf</span> <span class="o">=</span> <span class="n">_iterlib</span><span class="o">.</span><span class="n">_get_leaf</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">first_obgc_leaf</span><span class="p">,</span> <span class="n">_score</span><span class="o">.</span><span class="n">Note</span> <span class="o">|</span> <span class="n">_score</span><span class="o">.</span><span class="n">Chord</span><span class="p">):</span>
             <span class="n">message</span> <span class="o">=</span> <span class="s2">&quot;must start with note or chord:</span><span class="se">\n</span><span class="s2">&quot;</span>
@@ -413,9 +412,9 @@
         <span class="n">generator</span> <span class="o">=</span> <span class="n">_iterate</span><span class="o">.</span><span class="n">pitches</span><span class="p">(</span><span class="n">first_nongrace_leaf</span><span class="p">)</span>
         <span class="n">nongrace_pitches</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">generator</span><span class="p">)</span>
         <span class="n">highest_pitch</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">nongrace_pitches</span><span class="p">))[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-        <span class="k">if</span> <span class="n">highest_pitch</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">first_obgc_leaf</span><span class="o">.</span><span class="n">note_heads</span><span class="p">:</span>
-            <span class="n">first_obgc_leaf</span><span class="o">.</span><span class="n">note_heads</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">highest_pitch</span><span class="p">)</span>
-        <span class="n">grace_mate_head</span> <span class="o">=</span> <span class="n">first_obgc_leaf</span><span class="o">.</span><span class="n">note_heads</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">highest_pitch</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">highest_pitch</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">first_obgc_leaf</span><span class="o">.</span><span class="n">get_note_heads</span><span class="p">():</span>
+            <span class="n">first_obgc_leaf</span><span class="o">.</span><span class="n">get_note_heads</span><span class="p">()</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">highest_pitch</span><span class="p">)</span>
+        <span class="n">grace_mate_head</span> <span class="o">=</span> <span class="n">first_obgc_leaf</span><span class="o">.</span><span class="n">get_note_heads</span><span class="p">()</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">highest_pitch</span><span class="p">)</span>
         <span class="n">_tweaks</span><span class="o">.</span><span class="n">tweak</span><span class="p">(</span><span class="n">grace_mate_head</span><span class="p">,</span> <span class="sa">r</span><span class="s2">&quot;\tweak font-size 0&quot;</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="n">tag</span><span class="p">)</span>
         <span class="n">_tweaks</span><span class="o">.</span><span class="n">tweak</span><span class="p">(</span><span class="n">grace_mate_head</span><span class="p">,</span> <span class="sa">r</span><span class="s2">&quot;\tweak transparent ##t&quot;</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="n">tag</span><span class="p">)</span></div>
 
@@ -426,13 +425,13 @@
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Sets grace leaf multipliers.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">grace_leaf_duration</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">grace_leaf_duration</span><span class="p">()</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span>
         <span class="k">for</span> <span class="n">leaf</span> <span class="ow">in</span> <span class="n">_select</span><span class="o">.</span><span class="n">leaves</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
             <span class="n">duration</span> <span class="o">=</span> <span class="n">_get</span><span class="o">.</span><span class="n">duration</span><span class="p">(</span><span class="n">leaf</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">duration</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">grace_leaf_duration</span><span class="p">:</span>
-                <span class="n">multiplier</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">grace_leaf_duration</span> <span class="o">/</span> <span class="n">duration</span>
-                <span class="n">leaf</span><span class="o">.</span><span class="n">multiplier</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">pair</span><span class="p">(</span><span class="n">multiplier</span><span class="p">)</span></div>
+            <span class="k">if</span> <span class="n">duration</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">grace_leaf_duration</span><span class="p">():</span>
+                <span class="n">multiplier</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">grace_leaf_duration</span><span class="p">()</span> <span class="o">/</span> <span class="n">duration</span>
+                <span class="n">leaf</span><span class="o">.</span><span class="n">set_multiplier</span><span class="p">(</span><span class="n">_duration</span><span class="o">.</span><span class="n">pair</span><span class="p">(</span><span class="n">multiplier</span><span class="p">))</span></div>
 </div>
 
 
@@ -978,14 +977,14 @@
     <span class="n">first_nongrace_leaf</span> <span class="o">=</span> <span class="n">_iterlib</span><span class="o">.</span><span class="n">_get_leaf</span><span class="p">(</span><span class="n">nongrace_leaves</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
     <span class="n">music_voice</span> <span class="o">=</span> <span class="n">_parentage</span><span class="o">.</span><span class="n">Parentage</span><span class="p">(</span><span class="n">first_nongrace_leaf</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">_score</span><span class="o">.</span><span class="n">Voice</span><span class="p">)</span>
     <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">music_voice</span><span class="p">,</span> <span class="n">_score</span><span class="o">.</span><span class="n">Voice</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">music_voice</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">music_voice</span><span class="o">.</span><span class="n">name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">music_voice</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">message</span> <span class="o">=</span> <span class="s2">&quot;nongrace leaves must reside in named voice:</span><span class="se">\n</span><span class="s2">&quot;</span>
         <span class="n">message</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;   </span><span class="si">{</span><span class="nb">repr</span><span class="p">(</span><span class="n">music_voice</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
         <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
     <span class="n">obgc</span> <span class="o">=</span> <span class="n">OnBeatGraceContainer</span><span class="p">(</span>
         <span class="n">grace_leaves</span><span class="p">,</span> <span class="n">grace_leaf_duration</span><span class="o">=</span><span class="n">grace_leaf_duration</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="n">tag</span>
     <span class="p">)</span>
-    <span class="n">nongrace_voice</span> <span class="o">=</span> <span class="n">_score</span><span class="o">.</span><span class="n">Voice</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">music_voice</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="n">tag</span><span class="p">)</span>
+    <span class="n">nongrace_voice</span> <span class="o">=</span> <span class="n">_score</span><span class="o">.</span><span class="n">Voice</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">music_voice</span><span class="o">.</span><span class="n">get_name</span><span class="p">(),</span> <span class="n">tag</span><span class="o">=</span><span class="n">tag</span><span class="p">)</span>
     <span class="n">_mutate</span><span class="o">.</span><span class="n">wrap</span><span class="p">(</span><span class="n">nongrace_leaves</span><span class="p">,</span> <span class="n">nongrace_voice</span><span class="p">)</span>
     <span class="n">polyphony_container</span> <span class="o">=</span> <span class="n">_score</span><span class="o">.</span><span class="n">Container</span><span class="p">(</span><span class="n">simultaneous</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="n">tag</span><span class="p">)</span>
     <span class="n">_mutate</span><span class="o">.</span><span class="n">wrap</span><span class="p">(</span><span class="n">nongrace_voice</span><span class="p">,</span> <span class="n">polyphony_container</span><span class="p">)</span>
@@ -1048,7 +1047,7 @@
         
         &copy; Copyright 2008-2025, Trevor Bača &amp; Joséphine Oberholtzer.
       <span class="lastupdated">
-        Last updated on Jul 05, 2025.
+        Last updated on Jul 28, 2025.
       </span>
 
     </p>
