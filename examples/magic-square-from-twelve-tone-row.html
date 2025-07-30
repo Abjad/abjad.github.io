@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Magic square, from twelve-tone row &mdash; Abjad 3.27 documentation</title>
+  <title>Magic square, from twelve-tone row &mdash; Abjad 3.28 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../_static/abjad.css?v=1f187528" />
@@ -19,7 +19,7 @@
     <link rel="canonical" href="https://abjad.github.ioexamples/magic-square-from-twelve-tone-row.html"/>
       <script src="../_static/jquery.js?v=5d32c60e"></script>
       <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../_static/documentation_options.js?v=fd873761"></script>
+      <script src="../_static/documentation_options.js?v=159d94a3"></script>
       <script src="../_static/doctools.js?v=9bcbadda"></script>
       <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script src="../_static/ga.js?v=c455bbd5"></script>
@@ -38,11 +38,11 @@
   <div class="wy-grid-for-nav">
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search"  style="background: #FFAA55" >
+        <div class="wy-side-nav-search"  style="background: #22CC66" >
 
 
     <a href="../index.html" class="icon icon-home" alt="Documentation
-    Home"> Abjad 3.27
+    Home"> Abjad 3.28
 
 
 
@@ -113,7 +113,7 @@
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #FFAA55" >
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #22CC66" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../index.html">Abjad</a>
       </nav>
@@ -138,7 +138,7 @@ example:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span><span class="w"> </span><span class="nf">make_transpositions</span><span class="p">(</span><span class="n">row</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="n">transpositions</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="gp">... </span>    <span class="k">for</span> <span class="n">pitch_class</span> <span class="ow">in</span> <span class="n">row</span><span class="o">.</span><span class="n">invert</span><span class="p">():</span>
-<span class="gp">... </span>        <span class="n">n</span> <span class="o">=</span> <span class="n">pitch_class</span><span class="o">.</span><span class="n">get_number</span><span class="p">()</span> <span class="o">-</span> <span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get_number</span><span class="p">()</span>
+<span class="gp">... </span>        <span class="n">n</span> <span class="o">=</span> <span class="n">pitch_class</span><span class="o">.</span><span class="n">number</span><span class="p">()</span> <span class="o">-</span> <span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">number</span><span class="p">()</span>
 <span class="gp">... </span>        <span class="n">transposition</span> <span class="o">=</span> <span class="n">row</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
 <span class="gp">... </span>        <span class="n">transpositions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">transposition</span><span class="p">)</span>
 <span class="gp">... </span>    <span class="k">return</span> <span class="n">transpositions</span>
@@ -153,14 +153,14 @@ example:</p>
 <span class="gp">... </span>        <span class="n">voice</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Voice</span><span class="p">(</span><span class="n">notes</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Voice_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 <span class="gp">... </span>        <span class="n">staff</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Staff</span><span class="p">([</span><span class="n">voice</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Staff_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 <span class="gp">... </span>        <span class="n">score</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">staff</span><span class="p">)</span>
-<span class="gp">... </span>        <span class="n">number</span> <span class="o">=</span> <span class="n">notes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get_written_pitch</span><span class="p">()</span><span class="o">.</span><span class="n">get_number</span><span class="p">()</span>
+<span class="gp">... </span>        <span class="n">number</span> <span class="o">=</span> <span class="n">notes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">written_pitch</span><span class="p">()</span><span class="o">.</span><span class="n">number</span><span class="p">()</span>
 <span class="gp">... </span>        <span class="n">string</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;\markup \larger \with-color #blue&quot;</span>
 <span class="gp">... </span>        <span class="n">string</span> <span class="o">=</span> <span class="n">string</span> <span class="o">+</span> <span class="sa">r</span><span class="s2">&quot; { T \hspace #-0.75 \sub&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">number</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;}&quot;</span>
 <span class="gp">... </span>        <span class="n">markup</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Markup</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
 <span class="gp">... </span>        <span class="n">instrument_name</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">InstrumentName</span><span class="p">(</span><span class="n">markup</span><span class="p">)</span>
 <span class="gp">... </span>        <span class="n">abjad</span><span class="o">.</span><span class="n">attach</span><span class="p">(</span><span class="n">instrument_name</span><span class="p">,</span> <span class="n">notes</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 <span class="gp">... </span>    <span class="k">for</span> <span class="n">note</span> <span class="ow">in</span> <span class="n">score</span><span class="p">[</span><span class="s2">&quot;Voice_0&quot;</span><span class="p">]:</span>
-<span class="gp">... </span>        <span class="n">number</span> <span class="o">=</span> <span class="n">note</span><span class="o">.</span><span class="n">get_written_pitch</span><span class="p">()</span><span class="o">.</span><span class="n">get_number</span><span class="p">()</span>
+<span class="gp">... </span>        <span class="n">number</span> <span class="o">=</span> <span class="n">note</span><span class="o">.</span><span class="n">written_pitch</span><span class="p">()</span><span class="o">.</span><span class="n">number</span><span class="p">()</span>
 <span class="gp">... </span>        <span class="n">string</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;\markup \larger { IT \hspace #-0.75 \sub &quot;</span>
 <span class="gp">... </span>        <span class="n">string</span> <span class="o">+=</span> <span class="nb">str</span><span class="p">(</span><span class="n">number</span><span class="p">)</span>
 <span class="gp">... </span>        <span class="n">string</span> <span class="o">+=</span> <span class="s2">&quot; }&quot;</span>
@@ -259,7 +259,7 @@ orchestras.</p>
         
         &copy; Copyright 2008-2025, Trevor Bača &amp; Joséphine Oberholtzer.
       <span class="lastupdated">
-        Last updated on Jul 28, 2025.
+        Last updated on Jul 30, 2025.
       </span>
 
     </p>
