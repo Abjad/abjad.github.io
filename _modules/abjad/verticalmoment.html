@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>abjad.verticalmoment &mdash; Abjad 3.28 documentation</title>
+  <title>abjad.verticalmoment &mdash; Abjad 3.29 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../_static/abjad.css?v=1f187528" />
@@ -18,7 +18,7 @@
     <link rel="canonical" href="https://abjad.github.io_modules/abjad/verticalmoment.html"/>
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=159d94a3"></script>
+      <script src="../../_static/documentation_options.js?v=b1e510ba"></script>
       <script src="../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script src="../../_static/ga.js?v=c455bbd5"></script>
@@ -35,11 +35,11 @@
   <div class="wy-grid-for-nav">
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search"  style="background: #22CC66" >
+        <div class="wy-side-nav-search"  style="background: #55EE77" >
 
 
     <a href="../../index.html" class="icon icon-home" alt="Documentation
-    Home"> Abjad 3.28
+    Home"> Abjad 3.29
 
 
 
@@ -110,7 +110,7 @@
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #22CC66" >
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #55EE77" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../index.html">Abjad</a>
       </nav>
@@ -132,6 +132,7 @@
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">typing</span>
 
+<span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">duration</span> <span class="k">as</span> <span class="n">_duration</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="nb">enumerate</span> <span class="k">as</span> <span class="n">_enumerate</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">iterate</span> <span class="k">as</span> <span class="n">_iterate</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">parentage</span> <span class="k">as</span> <span class="n">_parentage</span>
@@ -191,19 +192,26 @@
 
 <span class="sd">    &#39;&#39;&#39;</span>
 
-    <span class="c1">### CLASS VARIABLES ###</span>
+    <span class="vm">__slots__</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;_components&quot;</span><span class="p">,</span> <span class="s2">&quot;_offset&quot;</span><span class="p">)</span>
 
-    <span class="vm">__slots__</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;_components&quot;</span><span class="p">,</span> <span class="s2">&quot;_governors&quot;</span><span class="p">,</span> <span class="s2">&quot;_offset&quot;</span><span class="p">)</span>
+    <span class="n">_do_not_deepcopy</span> <span class="o">=</span> <span class="kc">True</span>
 
-    <span class="c1">### INITIALIZER ###</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">components</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_components</span> <span class="o">=</span> <span class="n">components</span> <span class="ow">or</span> <span class="p">()</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">components</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Sequence</span><span class="p">[</span><span class="n">_score</span><span class="o">.</span><span class="n">Component</span><span class="p">],</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">offset</span><span class="p">:</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Offset</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">components</span><span class="p">,</span> <span class="nb">list</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">components</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="n">_score</span><span class="o">.</span><span class="n">Component</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">components</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span>
+            <span class="n">components</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_components</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">components</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">offset</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">offset</span><span class="p">,</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Offset</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">offset</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_offset</span> <span class="o">=</span> <span class="n">offset</span>
 
-    <span class="c1">### SPECIAL METHODS ###</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">:</span> <span class="nb">object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">argument</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)):</span>
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">argument</span><span class="p">):</span>
                 <span class="k">for</span> <span class="n">c</span><span class="p">,</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">components</span><span class="p">(),</span> <span class="n">argument</span><span class="o">.</span><span class="n">components</span><span class="p">()):</span>
@@ -213,7 +221,7 @@
                     <span class="k">return</span> <span class="kc">True</span>
         <span class="k">return</span> <span class="kc">False</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="fm">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Hases vertical moment.</span>
 
@@ -294,8 +302,6 @@
 <span class="sd">            VerticalMoment(3/8, &lt;&lt;3&gt;&gt;) 9</span>
 
 <span class="sd">        Defined equal to the number of components in vertical moment.</span>
-
-<span class="sd">        Returns nonnegative integer.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">components</span><span class="p">())</span>
 
@@ -308,8 +314,6 @@
         <span class="n">length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">leaves</span><span class="p">())</span>
         <span class="n">result</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">(</span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">offset</span><span class="p">())</span><span class="si">}</span><span class="s2">, &lt;&lt;</span><span class="si">{</span><span class="n">length</span><span class="si">}</span><span class="s2">&gt;&gt;)&quot;</span>
         <span class="k">return</span> <span class="n">result</span>
-
-    <span class="c1">### PUBLIC PROPERTIES ###</span>
 
 <div class="viewcode-block" id="VerticalMoment.attack_count">
 <a class="viewcode-back" href="../../api/abjad/verticalmoment.html#abjad.verticalmoment.VerticalMoment.attack_count">[docs]</a>
@@ -381,7 +385,7 @@
 
 <div class="viewcode-block" id="VerticalMoment.components">
 <a class="viewcode-back" href="../../api/abjad/verticalmoment.html#abjad.verticalmoment.VerticalMoment.components">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">components</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">components</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">_score</span><span class="o">.</span><span class="n">Component</span><span class="p">,</span> <span class="o">...</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Tuple of zero or more components happening at vertical moment.</span>
 
@@ -391,18 +395,9 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_components</span></div>
 
 
-<div class="viewcode-block" id="VerticalMoment.governors">
-<a class="viewcode-back" href="../../api/abjad/verticalmoment.html#abjad.verticalmoment.VerticalMoment.governors">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">governors</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Tuple of one or more containers in which vertical moment is evaluated.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_governors</span></div>
-
-
 <div class="viewcode-block" id="VerticalMoment.leaves">
 <a class="viewcode-back" href="../../api/abjad/verticalmoment.html#abjad.verticalmoment.VerticalMoment.leaves">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">leaves</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">_score</span><span class="o">.</span><span class="n">Leaf</span><span class="p">]:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">leaves</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">_score</span><span class="o">.</span><span class="n">Leaf</span><span class="p">,</span> <span class="o">...</span><span class="p">]:</span>
 <span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Tuple of zero or more leaves at vertical moment.</span>
 
@@ -453,24 +448,24 @@
 <span class="sd">            &gt;&gt;&gt; for moment in abjad.iterate_vertical_moments(score):</span>
 <span class="sd">            ...     print(moment.offset(), moment.leaves())</span>
 <span class="sd">            ...</span>
-<span class="sd">            0 [Note(&quot;d&#39;&#39;4&quot;), Note(&quot;a&#39;4&quot;), Note(&quot;f&#39;8&quot;)]</span>
-<span class="sd">            1/8 [Note(&quot;d&#39;&#39;4&quot;), Note(&quot;a&#39;4&quot;), Note(&quot;e&#39;8&quot;)]</span>
-<span class="sd">            1/6 [Note(&quot;c&#39;&#39;4&quot;), Note(&quot;a&#39;4&quot;), Note(&quot;e&#39;8&quot;)]</span>
-<span class="sd">            1/4 [Note(&quot;c&#39;&#39;4&quot;), Note(&quot;g&#39;4&quot;), Note(&quot;d&#39;8&quot;)]</span>
-<span class="sd">            1/3 [Note(&quot;b&#39;4&quot;), Note(&quot;g&#39;4&quot;), Note(&quot;d&#39;8&quot;)]</span>
-<span class="sd">            3/8 [Note(&quot;b&#39;4&quot;), Note(&quot;g&#39;4&quot;), Note(&quot;c&#39;8&quot;)]</span>
+<span class="sd">            0 (Note(&quot;d&#39;&#39;4&quot;), Note(&quot;a&#39;4&quot;), Note(&quot;f&#39;8&quot;))</span>
+<span class="sd">            1/8 (Note(&quot;d&#39;&#39;4&quot;), Note(&quot;a&#39;4&quot;), Note(&quot;e&#39;8&quot;))</span>
+<span class="sd">            1/6 (Note(&quot;c&#39;&#39;4&quot;), Note(&quot;a&#39;4&quot;), Note(&quot;e&#39;8&quot;))</span>
+<span class="sd">            1/4 (Note(&quot;c&#39;&#39;4&quot;), Note(&quot;g&#39;4&quot;), Note(&quot;d&#39;8&quot;))</span>
+<span class="sd">            1/3 (Note(&quot;b&#39;4&quot;), Note(&quot;g&#39;4&quot;), Note(&quot;d&#39;8&quot;))</span>
+<span class="sd">            3/8 (Note(&quot;b&#39;4&quot;), Note(&quot;g&#39;4&quot;), Note(&quot;c&#39;8&quot;))</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">component</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">components</span><span class="p">():</span>
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">component</span><span class="p">,</span> <span class="n">_score</span><span class="o">.</span><span class="n">Leaf</span><span class="p">):</span>
                 <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">component</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">result</span></div>
+        <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">result</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="VerticalMoment.notes">
 <a class="viewcode-back" href="../../api/abjad/verticalmoment.html#abjad.verticalmoment.VerticalMoment.notes">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">notes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">notes</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">_score</span><span class="o">.</span><span class="n">Note</span><span class="p">,</span> <span class="o">...</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Tuple of zero or more notes at vertical moment.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -478,13 +473,12 @@
         <span class="k">for</span> <span class="n">component</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">components</span><span class="p">():</span>
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">component</span><span class="p">,</span> <span class="n">_score</span><span class="o">.</span><span class="n">Note</span><span class="p">):</span>
                 <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">component</span><span class="p">)</span>
-        <span class="n">result</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">result</span></div>
+        <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">result</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="VerticalMoment.notes_and_chords">
 <a class="viewcode-back" href="../../api/abjad/verticalmoment.html#abjad.verticalmoment.VerticalMoment.notes_and_chords">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">notes_and_chords</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">notes_and_chords</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">_score</span><span class="o">.</span><span class="n">Chord</span> <span class="o">|</span> <span class="n">_score</span><span class="o">.</span><span class="n">Note</span><span class="p">,</span> <span class="o">...</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Tuple of zero or more notes and chords at vertical moment.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -493,62 +487,21 @@
         <span class="k">for</span> <span class="n">component</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">components</span><span class="p">():</span>
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">component</span><span class="p">,</span> <span class="n">prototype</span><span class="p">):</span>
                 <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">component</span><span class="p">)</span>
-        <span class="n">result</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">result</span></div>
+        <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">result</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="VerticalMoment.offset">
 <a class="viewcode-back" href="../../api/abjad/verticalmoment.html#abjad.verticalmoment.VerticalMoment.offset">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">offset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">offset</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Offset</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Rational-valued score offset at which vertical moment is evaluated.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_offset</span></div>
 
 
-<div class="viewcode-block" id="VerticalMoment.overlap_components">
-<a class="viewcode-back" href="../../api/abjad/verticalmoment.html#abjad.verticalmoment.VerticalMoment.overlap_components">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">overlap_components</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Tuple of components in vertical moment starting before vertical</span>
-<span class="sd">        moment, ordered by score index.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">component</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">components</span><span class="p">():</span>
-            <span class="k">if</span> <span class="n">component</span><span class="o">.</span><span class="n">start</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">offset</span><span class="p">():</span>
-                <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">component</span><span class="p">)</span>
-        <span class="n">result</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">result</span></div>
-
-
-<div class="viewcode-block" id="VerticalMoment.overlap_leaves">
-<a class="viewcode-back" href="../../api/abjad/verticalmoment.html#abjad.verticalmoment.VerticalMoment.overlap_leaves">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">overlap_leaves</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Tuple of leaves in vertical moment starting before vertical moment,</span>
-<span class="sd">        ordered by score index.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">result</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">overlap_components</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">_score</span><span class="o">.</span><span class="n">Leaf</span><span class="p">)]</span>
-        <span class="n">result</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">result</span></div>
-
-
-<div class="viewcode-block" id="VerticalMoment.overlap_notes">
-<a class="viewcode-back" href="../../api/abjad/verticalmoment.html#abjad.verticalmoment.VerticalMoment.overlap_notes">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">overlap_notes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Tuple of notes in vertical moment starting before vertical moment,</span>
-<span class="sd">        ordered by score index.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">overlap_components</span>
-        <span class="n">result</span> <span class="o">=</span> <span class="p">[</span><span class="n">_</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">result</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="n">_score</span><span class="o">.</span><span class="n">Note</span><span class="p">)]</span>
-        <span class="n">result</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">result</span></div>
-
-
 <div class="viewcode-block" id="VerticalMoment.start_components">
 <a class="viewcode-back" href="../../api/abjad/verticalmoment.html#abjad.verticalmoment.VerticalMoment.start_components">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">start_components</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">start_components</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">_score</span><span class="o">.</span><span class="n">Component</span><span class="p">,</span> <span class="o">...</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Tuple of components in vertical moment starting with at vertical</span>
 <span class="sd">        moment, ordered by score index.</span>
@@ -557,37 +510,31 @@
         <span class="k">for</span> <span class="n">component</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">components</span><span class="p">():</span>
             <span class="k">if</span> <span class="n">component</span><span class="o">.</span><span class="n">_get_timespan</span><span class="p">()</span><span class="o">.</span><span class="n">start_offset</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">offset</span><span class="p">():</span>
                 <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">component</span><span class="p">)</span>
-        <span class="n">result</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">result</span></div>
+        <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">result</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="VerticalMoment.start_leaves">
 <a class="viewcode-back" href="../../api/abjad/verticalmoment.html#abjad.verticalmoment.VerticalMoment.start_leaves">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">start_leaves</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">start_leaves</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">_score</span><span class="o">.</span><span class="n">Leaf</span><span class="p">,</span> <span class="o">...</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Tuple of leaves in vertical moment starting with vertical moment,</span>
 <span class="sd">        ordered by score index.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">result</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_components</span><span class="p">()</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">_score</span><span class="o">.</span><span class="n">Leaf</span><span class="p">)]</span>
-        <span class="n">result</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">result</span></div>
+        <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">result</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="VerticalMoment.start_notes">
 <a class="viewcode-back" href="../../api/abjad/verticalmoment.html#abjad.verticalmoment.VerticalMoment.start_notes">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">start_notes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">start_notes</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">_score</span><span class="o">.</span><span class="n">Note</span><span class="p">,</span> <span class="o">...</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Tuple of notes in vertical moment starting with vertical moment,</span>
 <span class="sd">        ordered by score index.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">result</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_components</span><span class="p">()</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">_score</span><span class="o">.</span><span class="n">Note</span><span class="p">)]</span>
-        <span class="n">result</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">result</span></div>
+        <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">result</span><span class="p">)</span></div>
 </div>
 
-
-
-<span class="c1">### FUNCTIONS ###</span>
 
 
 <div class="viewcode-block" id="iterate_vertical_moments">
@@ -647,21 +594,21 @@
 <span class="sd">        &gt;&gt;&gt; for vertical_moment in abjad.iterate_vertical_moments(score):</span>
 <span class="sd">        ...     vertical_moment.leaves()</span>
 <span class="sd">        ...</span>
-<span class="sd">        [Note(&quot;d&#39;&#39;4&quot;), Note(&quot;a&#39;4&quot;), Note(&quot;f&#39;8&quot;)]</span>
-<span class="sd">        [Note(&quot;d&#39;&#39;4&quot;), Note(&quot;a&#39;4&quot;), Note(&quot;e&#39;8&quot;)]</span>
-<span class="sd">        [Note(&quot;c&#39;&#39;4&quot;), Note(&quot;a&#39;4&quot;), Note(&quot;e&#39;8&quot;)]</span>
-<span class="sd">        [Note(&quot;c&#39;&#39;4&quot;), Note(&quot;g&#39;4&quot;), Note(&quot;d&#39;8&quot;)]</span>
-<span class="sd">        [Note(&quot;b&#39;4&quot;), Note(&quot;g&#39;4&quot;), Note(&quot;d&#39;8&quot;)]</span>
-<span class="sd">        [Note(&quot;b&#39;4&quot;), Note(&quot;g&#39;4&quot;), Note(&quot;c&#39;8&quot;)]</span>
+<span class="sd">        (Note(&quot;d&#39;&#39;4&quot;), Note(&quot;a&#39;4&quot;), Note(&quot;f&#39;8&quot;))</span>
+<span class="sd">        (Note(&quot;d&#39;&#39;4&quot;), Note(&quot;a&#39;4&quot;), Note(&quot;e&#39;8&quot;))</span>
+<span class="sd">        (Note(&quot;c&#39;&#39;4&quot;), Note(&quot;a&#39;4&quot;), Note(&quot;e&#39;8&quot;))</span>
+<span class="sd">        (Note(&quot;c&#39;&#39;4&quot;), Note(&quot;g&#39;4&quot;), Note(&quot;d&#39;8&quot;))</span>
+<span class="sd">        (Note(&quot;b&#39;4&quot;), Note(&quot;g&#39;4&quot;), Note(&quot;d&#39;8&quot;))</span>
+<span class="sd">        (Note(&quot;b&#39;4&quot;), Note(&quot;g&#39;4&quot;), Note(&quot;c&#39;8&quot;))</span>
 
 <span class="sd">        &gt;&gt;&gt; staff_group = score[1]</span>
 <span class="sd">        &gt;&gt;&gt; for vertical_moment in abjad.iterate_vertical_moments(staff_group):</span>
 <span class="sd">        ...     vertical_moment.leaves()</span>
 <span class="sd">        ...</span>
-<span class="sd">        [Note(&quot;a&#39;4&quot;), Note(&quot;f&#39;8&quot;)]</span>
-<span class="sd">        [Note(&quot;a&#39;4&quot;), Note(&quot;e&#39;8&quot;)]</span>
-<span class="sd">        [Note(&quot;g&#39;4&quot;), Note(&quot;d&#39;8&quot;)]</span>
-<span class="sd">        [Note(&quot;g&#39;4&quot;), Note(&quot;c&#39;8&quot;)]</span>
+<span class="sd">        (Note(&quot;a&#39;4&quot;), Note(&quot;f&#39;8&quot;))</span>
+<span class="sd">        (Note(&quot;a&#39;4&quot;), Note(&quot;e&#39;8&quot;))</span>
+<span class="sd">        (Note(&quot;g&#39;4&quot;), Note(&quot;d&#39;8&quot;))</span>
+<span class="sd">        (Note(&quot;g&#39;4&quot;), Note(&quot;c&#39;8&quot;))</span>
 
 <span class="sd">    ..  container:: example</span>
 
@@ -670,20 +617,20 @@
 <span class="sd">        &gt;&gt;&gt; for vmoment in abjad.iterate_vertical_moments(score, reverse=True):</span>
 <span class="sd">        ...     vmoment.leaves()</span>
 <span class="sd">        ...</span>
-<span class="sd">        [Note(&quot;b&#39;4&quot;), Note(&quot;g&#39;4&quot;), Note(&quot;c&#39;8&quot;)]</span>
-<span class="sd">        [Note(&quot;b&#39;4&quot;), Note(&quot;g&#39;4&quot;), Note(&quot;d&#39;8&quot;)]</span>
-<span class="sd">        [Note(&quot;c&#39;&#39;4&quot;), Note(&quot;g&#39;4&quot;), Note(&quot;d&#39;8&quot;)]</span>
-<span class="sd">        [Note(&quot;c&#39;&#39;4&quot;), Note(&quot;a&#39;4&quot;), Note(&quot;e&#39;8&quot;)]</span>
-<span class="sd">        [Note(&quot;d&#39;&#39;4&quot;), Note(&quot;a&#39;4&quot;), Note(&quot;e&#39;8&quot;)]</span>
-<span class="sd">        [Note(&quot;d&#39;&#39;4&quot;), Note(&quot;a&#39;4&quot;), Note(&quot;f&#39;8&quot;)]</span>
+<span class="sd">        (Note(&quot;b&#39;4&quot;), Note(&quot;g&#39;4&quot;), Note(&quot;c&#39;8&quot;))</span>
+<span class="sd">        (Note(&quot;b&#39;4&quot;), Note(&quot;g&#39;4&quot;), Note(&quot;d&#39;8&quot;))</span>
+<span class="sd">        (Note(&quot;c&#39;&#39;4&quot;), Note(&quot;g&#39;4&quot;), Note(&quot;d&#39;8&quot;))</span>
+<span class="sd">        (Note(&quot;c&#39;&#39;4&quot;), Note(&quot;a&#39;4&quot;), Note(&quot;e&#39;8&quot;))</span>
+<span class="sd">        (Note(&quot;d&#39;&#39;4&quot;), Note(&quot;a&#39;4&quot;), Note(&quot;e&#39;8&quot;))</span>
+<span class="sd">        (Note(&quot;d&#39;&#39;4&quot;), Note(&quot;a&#39;4&quot;), Note(&quot;f&#39;8&quot;))</span>
 
 <span class="sd">        &gt;&gt;&gt; for vmoment in abjad.iterate_vertical_moments(staff_group, reverse=True):</span>
 <span class="sd">        ...     vmoment.leaves()</span>
 <span class="sd">        ...</span>
-<span class="sd">        [Note(&quot;g&#39;4&quot;), Note(&quot;c&#39;8&quot;)]</span>
-<span class="sd">        [Note(&quot;g&#39;4&quot;), Note(&quot;d&#39;8&quot;)]</span>
-<span class="sd">        [Note(&quot;a&#39;4&quot;), Note(&quot;e&#39;8&quot;)]</span>
-<span class="sd">        [Note(&quot;a&#39;4&quot;), Note(&quot;f&#39;8&quot;)]</span>
+<span class="sd">        (Note(&quot;g&#39;4&quot;), Note(&quot;c&#39;8&quot;))</span>
+<span class="sd">        (Note(&quot;g&#39;4&quot;), Note(&quot;d&#39;8&quot;))</span>
+<span class="sd">        (Note(&quot;a&#39;4&quot;), Note(&quot;e&#39;8&quot;))</span>
+<span class="sd">        (Note(&quot;a&#39;4&quot;), Note(&quot;f&#39;8&quot;))</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">moments</span> <span class="o">=</span> <span class="p">[]</span>
@@ -720,7 +667,9 @@
 
 <div class="viewcode-block" id="iterate_leaf_pairs">
 <a class="viewcode-back" href="../../api/abjad/verticalmoment.html#abjad.verticalmoment.iterate_leaf_pairs">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">iterate_leaf_pairs</span><span class="p">(</span><span class="n">components</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Iterator</span><span class="p">:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">iterate_leaf_pairs</span><span class="p">(</span>
+    <span class="n">components</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Sequence</span><span class="p">[</span><span class="n">_score</span><span class="o">.</span><span class="n">Component</span><span class="p">],</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Iterator</span><span class="p">:</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Iterates leaf pairs.</span>
 
@@ -792,7 +741,7 @@
 <div class="viewcode-block" id="iterate_pitch_pairs">
 <a class="viewcode-back" href="../../api/abjad/verticalmoment.html#abjad.verticalmoment.iterate_pitch_pairs">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">iterate_pitch_pairs</span><span class="p">(</span>
-    <span class="n">components</span><span class="p">,</span>
+    <span class="n">components</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">Sequence</span><span class="p">[</span><span class="n">_score</span><span class="o">.</span><span class="n">Component</span><span class="p">],</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Iterator</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="n">_pitch</span><span class="o">.</span><span class="n">NamedPitch</span><span class="p">,</span> <span class="n">_pitch</span><span class="o">.</span><span class="n">NamedPitch</span><span class="p">]]:</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Iterates pitch pairs.</span>
@@ -914,7 +863,7 @@
         
         &copy; Copyright 2008-2025, Trevor Bača &amp; Joséphine Oberholtzer.
       <span class="lastupdated">
-        Last updated on Jul 30, 2025.
+        Last updated on Aug 28, 2025.
       </span>
 
     </p>

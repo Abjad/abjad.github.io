@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Row derivation, by trichord &mdash; Abjad 3.28 documentation</title>
+  <title>Row derivation, by trichord &mdash; Abjad 3.29 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../_static/abjad.css?v=1f187528" />
@@ -19,7 +19,7 @@
     <link rel="canonical" href="https://abjad.github.io_pending/row-derivation-by-trichord.html"/>
       <script src="../_static/jquery.js?v=5d32c60e"></script>
       <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../_static/documentation_options.js?v=159d94a3"></script>
+      <script src="../_static/documentation_options.js?v=b1e510ba"></script>
       <script src="../_static/doctools.js?v=9bcbadda"></script>
       <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script src="../_static/ga.js?v=c455bbd5"></script>
@@ -36,11 +36,11 @@
   <div class="wy-grid-for-nav">
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search"  style="background: #22CC66" >
+        <div class="wy-side-nav-search"  style="background: #55EE77" >
 
 
     <a href="../index.html" class="icon icon-home" alt="Documentation
-    Home"> Abjad 3.28
+    Home"> Abjad 3.29
 
 
 
@@ -111,7 +111,7 @@
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #22CC66" >
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #55EE77" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../index.html">Abjad</a>
       </nav>
@@ -132,7 +132,11 @@
 <hr class="docutils" />
 <p>First we define functions to illustrate the examples that follow:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span><span class="w"> </span><span class="nf">illustrate_row</span><span class="p">(</span><span class="n">row</span><span class="p">):</span>
-<span class="gp">... </span>    <span class="n">notes</span> <span class="o">=</span> <span class="p">[</span><span class="n">abjad</span><span class="o">.</span><span class="n">Note</span><span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">row</span><span class="p">]</span>
+<span class="gp">... </span>    <span class="n">duration</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="n">notes</span> <span class="o">=</span> <span class="p">[</span>
+<span class="gp">... </span>        <span class="n">abjad</span><span class="o">.</span><span class="n">Note</span><span class="o">.</span><span class="n">from_duration_and_pitch</span><span class="p">(</span><span class="n">duration</span><span class="p">,</span> <span class="n">abjad</span><span class="o">.</span><span class="n">NamedPitch</span><span class="p">(</span><span class="n">_</span><span class="p">))</span>
+<span class="gp">... </span>        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">row</span>
+<span class="gp">... </span>    <span class="p">]</span>
 <span class="gp">... </span>    <span class="n">score</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">illustrators</span><span class="o">.</span><span class="n">make_piano_score</span><span class="p">(</span><span class="n">notes</span><span class="p">)</span>
 <span class="gp">... </span>    <span class="n">treble_staff</span> <span class="o">=</span> <span class="n">score</span><span class="p">[</span><span class="s2">&quot;Treble_Staff&quot;</span><span class="p">]</span>
 <span class="gp">... </span>    <span class="n">abjad</span><span class="o">.</span><span class="n">override</span><span class="p">(</span><span class="n">treble_staff</span><span class="p">)</span><span class="o">.</span><span class="n">BarLine</span><span class="o">.</span><span class="n">stencil</span> <span class="o">=</span> <span class="kc">False</span>
@@ -191,7 +195,7 @@
 </div>
 <div class="uqbar-book">
     <a href="../_images/lilypond-0631e4482ad89142c422d61a4fc08a2f69f75a3482b5cab5c23be30f9cdb0621.ly"><img src="../_images/lilypond-0631e4482ad89142c422d61a4fc08a2f69f75a3482b5cab5c23be30f9cdb0621.cropped.svg"/></a>
-</div><p><span class="author">[Evans (3.2), Bača (3.7)]</span></p>
+</div><p><span class="author">[Evans (3.2); Bača (3.7), (3.29)]</span></p>
 </section>
 
 
@@ -210,7 +214,7 @@
         
         &copy; Copyright 2008-2025, Trevor Bača &amp; Joséphine Oberholtzer.
       <span class="lastupdated">
-        Last updated on Jul 30, 2025.
+        Last updated on Aug 28, 2025.
       </span>
 
     </p>

@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Superimposition of partials &mdash; Abjad 3.28 documentation</title>
+  <title>Superimposition of partials &mdash; Abjad 3.29 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../_static/abjad.css?v=1f187528" />
@@ -19,7 +19,7 @@
     <link rel="canonical" href="https://abjad.github.io_pending/superimposition-of-partials.html"/>
       <script src="../_static/jquery.js?v=5d32c60e"></script>
       <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../_static/documentation_options.js?v=159d94a3"></script>
+      <script src="../_static/documentation_options.js?v=b1e510ba"></script>
       <script src="../_static/doctools.js?v=9bcbadda"></script>
       <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script src="../_static/ga.js?v=c455bbd5"></script>
@@ -36,11 +36,11 @@
   <div class="wy-grid-for-nav">
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search"  style="background: #22CC66" >
+        <div class="wy-side-nav-search"  style="background: #55EE77" >
 
 
     <a href="../index.html" class="icon icon-home" alt="Documentation
-    Home"> Abjad 3.28
+    Home"> Abjad 3.29
 
 
 
@@ -111,7 +111,7 @@
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #22CC66" >
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #55EE77" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../index.html">Abjad</a>
       </nav>
@@ -144,23 +144,24 @@
 <span class="gp">... </span>    <span class="n">ji_cents</span> <span class="o">=</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">(</span><span class="n">log_ratio</span> <span class="o">*</span> <span class="n">log_2</span><span class="p">)</span>
 <span class="gp">... </span>    <span class="n">semitones</span> <span class="o">=</span> <span class="n">ji_cents</span> <span class="o">/</span> <span class="mi">100</span>
 <span class="gp">... </span>    <span class="n">parts</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">modf</span><span class="p">(</span><span class="n">semitones</span><span class="p">)</span>
-<span class="gp">... </span>    <span class="n">pitch</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">NumberedPitch</span><span class="p">(</span><span class="n">note_head</span><span class="o">.</span><span class="n">written_pitch</span><span class="p">())</span> <span class="o">+</span> <span class="n">parts</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="gp">... </span>    <span class="n">numbered_pitch</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">NumberedPitch</span><span class="p">(</span><span class="n">note_head</span><span class="o">.</span><span class="n">written_pitch</span><span class="p">())</span> <span class="o">+</span> <span class="n">parts</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
 <span class="gp">... </span>    <span class="n">remainder</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">parts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">100</span><span class="p">)</span>
 <span class="gp">... </span>    <span class="k">if</span> <span class="mi">50</span> <span class="o">&lt;</span> <span class="nb">abs</span><span class="p">(</span><span class="n">remainder</span><span class="p">):</span>
 <span class="gp">... </span>        <span class="k">if</span> <span class="mi">0</span> <span class="o">&lt;</span> <span class="n">remainder</span><span class="p">:</span>
-<span class="gp">... </span>            <span class="n">pitch</span> <span class="o">+=</span> <span class="mi">1</span>
+<span class="gp">... </span>            <span class="n">numbered_pitch</span> <span class="o">+=</span> <span class="mi">1</span>
 <span class="gp">... </span>            <span class="n">remainder</span> <span class="o">=</span> <span class="o">-</span><span class="mi">100</span> <span class="o">+</span> <span class="n">remainder</span>
 <span class="gp">... </span>        <span class="k">else</span><span class="p">:</span>
-<span class="gp">... </span>            <span class="n">pitch</span> <span class="o">-=</span> <span class="mi">1</span>
+<span class="gp">... </span>            <span class="n">numbered_pitch</span> <span class="o">-=</span> <span class="mi">1</span>
 <span class="gp">... </span>            <span class="n">remainder</span> <span class="o">=</span> <span class="mi">100</span> <span class="o">+</span> <span class="n">remainder</span>
 <span class="gp">... </span>    <span class="k">if</span> <span class="n">quarter_tones</span><span class="p">:</span>
 <span class="gp">... </span>        <span class="k">if</span> <span class="mi">25</span> <span class="o">&lt;</span> <span class="nb">abs</span><span class="p">(</span><span class="n">remainder</span><span class="p">):</span>
 <span class="gp">... </span>            <span class="k">if</span> <span class="mi">0</span> <span class="o">&lt;</span> <span class="n">remainder</span><span class="p">:</span>
-<span class="gp">... </span>                <span class="n">pitch</span> <span class="o">+=</span> <span class="mf">0.5</span>
+<span class="gp">... </span>                <span class="n">numbered_pitch</span> <span class="o">+=</span> <span class="mf">0.5</span>
 <span class="gp">... </span>                <span class="n">remainder</span> <span class="o">=</span> <span class="o">-</span><span class="mi">50</span> <span class="o">+</span> <span class="n">remainder</span>
 <span class="gp">... </span>            <span class="k">else</span><span class="p">:</span>
-<span class="gp">... </span>                <span class="n">pitch</span> <span class="o">-=</span> <span class="mf">0.5</span>
+<span class="gp">... </span>                <span class="n">numbered_pitch</span> <span class="o">-=</span> <span class="mf">0.5</span>
 <span class="gp">... </span>                <span class="n">remainder</span> <span class="o">=</span> <span class="mi">50</span> <span class="o">+</span> <span class="n">remainder</span>
+<span class="gp">... </span>    <span class="n">pitch</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">NamedPitch</span><span class="p">(</span><span class="n">numbered_pitch</span><span class="p">)</span>
 <span class="gp">... </span>    <span class="n">note_head</span><span class="o">.</span><span class="n">set_written_pitch</span><span class="p">(</span><span class="n">pitch</span><span class="p">)</span>
 <span class="gp">... </span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">def</span><span class="w"> </span><span class="nf">illustrate_partials</span><span class="p">(</span>
@@ -168,9 +169,11 @@
 <span class="gp">... </span>    <span class="n">ratio_sequence</span><span class="p">,</span>
 <span class="gp">... </span>    <span class="n">with_quarter_tones</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
 <span class="gp">... </span><span class="p">):</span>
+<span class="gp">... </span>    <span class="n">pitch</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">NamedPitch</span><span class="p">(</span><span class="n">fundamental</span><span class="p">)</span>
 <span class="gp">... </span>    <span class="n">notes</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="gp">... </span>    <span class="n">duration</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">16</span><span class="p">)</span>
 <span class="gp">... </span>    <span class="k">for</span> <span class="n">ratio</span> <span class="ow">in</span> <span class="n">sequence</span><span class="p">:</span>
-<span class="gp">... </span>        <span class="n">note</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Note</span><span class="p">(</span><span class="n">fundamental</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">16</span><span class="p">))</span>
+<span class="gp">... </span>        <span class="n">note</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Note</span><span class="o">.</span><span class="n">from_duration_and_pitch</span><span class="p">(</span><span class="n">duration</span><span class="p">,</span> <span class="n">pitch</span><span class="p">)</span>
 <span class="gp">... </span>        <span class="n">tune_to_ratio</span><span class="p">(</span><span class="n">note</span><span class="o">.</span><span class="n">note_head</span><span class="p">(),</span> <span class="n">ratio</span><span class="p">,</span> <span class="n">quarter_tones</span><span class="o">=</span><span class="n">with_quarter_tones</span><span class="p">)</span>
 <span class="gp">... </span>        <span class="n">notes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">note</span><span class="p">)</span>
 <span class="gp">... </span>    <span class="n">score</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">illustrators</span><span class="o">.</span><span class="n">make_piano_score</span><span class="p">(</span><span class="n">notes</span><span class="p">)</span>
@@ -184,7 +187,7 @@
 <span class="gp">... </span>    <span class="n">abjad</span><span class="o">.</span><span class="n">override</span><span class="p">(</span><span class="n">score</span><span class="p">)</span><span class="o">.</span><span class="n">SpanBar</span><span class="o">.</span><span class="n">stencil</span> <span class="o">=</span> <span class="kc">False</span>
 <span class="gp">... </span>    <span class="n">abjad</span><span class="o">.</span><span class="n">override</span><span class="p">(</span><span class="n">score</span><span class="p">)</span><span class="o">.</span><span class="n">Stem</span><span class="o">.</span><span class="n">stencil</span> <span class="o">=</span> <span class="kc">False</span>
 <span class="gp">... </span>    <span class="n">abjad</span><span class="o">.</span><span class="n">override</span><span class="p">(</span><span class="n">score</span><span class="p">)</span><span class="o">.</span><span class="n">TimeSignature</span><span class="o">.</span><span class="n">stencil</span> <span class="o">=</span> <span class="kc">False</span>
-<span class="gp">... </span>    <span class="n">abjad</span><span class="o">.</span><span class="n">setting</span><span class="p">(</span><span class="n">score</span><span class="p">)</span><span class="o">.</span><span class="n">proportionalNotationDuration</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;\musicLength 1*1/25&quot;</span>
+<span class="gp">... </span>    <span class="n">abjad</span><span class="o">.</span><span class="n">setting</span><span class="p">(</span><span class="n">score</span><span class="p">)</span><span class="o">.</span><span class="n">proportionalNotationDuration</span> <span class="o">=</span> <span class="s2">&quot;#1/25&quot;</span>
 <span class="gp">... </span>    <span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;#(set-global-staff-size 16)&quot;</span>
 <span class="gp">... </span>    <span class="n">lilypond_file</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">LilyPondFile</span><span class="p">([</span><span class="n">string</span><span class="p">,</span> <span class="n">score</span><span class="p">])</span>
 <span class="gp">... </span>    <span class="k">return</span> <span class="n">lilypond_file</span>
@@ -199,7 +202,7 @@
 </pre></div>
 </div>
 <div class="uqbar-book">
-    <a href="../_images/lilypond-f7c812e43d885ac61f6cfee198f420ecfb6e0c47414fac502f6e09efe638ad1d.ly"><img src="../_images/lilypond-f7c812e43d885ac61f6cfee198f420ecfb6e0c47414fac502f6e09efe638ad1d.cropped.svg"/></a>
+    <a href="../_images/lilypond-4e5f6e888c59aa85f24670f444c67e8e7b9c6f1a75b43a9923ecb20cb3d17d33.ly"><img src="../_images/lilypond-4e5f6e888c59aa85f24670f444c67e8e7b9c6f1a75b43a9923ecb20cb3d17d33.cropped.svg"/></a>
 </div><p>Illustrate harmonic series approximated to quarter tones:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sequence</span> <span class="o">=</span> <span class="p">[</span><span class="n">_</span> <span class="o">+</span> <span class="mi">1</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">31</span><span class="p">)]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">file</span> <span class="o">=</span> <span class="n">illustrate_partials</span><span class="p">(</span><span class="s2">&quot;a,,&quot;</span><span class="p">,</span> <span class="n">sequence</span><span class="p">,</span> <span class="n">with_quarter_tones</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -207,7 +210,7 @@
 </pre></div>
 </div>
 <div class="uqbar-book">
-    <a href="../_images/lilypond-ea500b8ef9810cbc2be6bf3d306dec74720fd53b3905fa89ab05cedc07566d0c.ly"><img src="../_images/lilypond-ea500b8ef9810cbc2be6bf3d306dec74720fd53b3905fa89ab05cedc07566d0c.cropped.svg"/></a>
+    <a href="../_images/lilypond-332b147de95a245dd4cf1e7943ad3ccb4d1fa502c5cb5cf1aa2415b727618d56.ly"><img src="../_images/lilypond-332b147de95a245dd4cf1e7943ad3ccb4d1fa502c5cb5cf1aa2415b727618d56.cropped.svg"/></a>
 </div><p>Illustrate re-octavated harmonics:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sequence</span> <span class="o">=</span> <span class="p">[</span>
 <span class="gp">... </span>    <span class="s2">&quot;11/8&quot;</span><span class="p">,</span>
@@ -219,7 +222,7 @@
 </pre></div>
 </div>
 <div class="uqbar-book">
-    <a href="../_images/lilypond-6e448cfe5b3367cdf5f7663218b29e9309618e940d7e0cc6d14172fba97f923c.ly"><img src="../_images/lilypond-6e448cfe5b3367cdf5f7663218b29e9309618e940d7e0cc6d14172fba97f923c.cropped.svg"/></a>
+    <a href="../_images/lilypond-d87b10be1b2a3123459b752ec6ef9ce854d91fb6a5d2a65fc5a914a3f2a0b741.ly"><img src="../_images/lilypond-d87b10be1b2a3123459b752ec6ef9ce854d91fb6a5d2a65fc5a914a3f2a0b741.cropped.svg"/></a>
 </div><p>Illustrate sonority of Du Cristal:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sequence</span> <span class="o">=</span> <span class="p">[</span>
 <span class="gp">... </span>    <span class="mi">1</span><span class="p">,</span>
@@ -240,8 +243,8 @@
 </pre></div>
 </div>
 <div class="uqbar-book">
-    <a href="../_images/lilypond-d72bb691e930490476d6d9478fc644646ad3127a5f9132826d0f1773672d28ba.ly"><img src="../_images/lilypond-d72bb691e930490476d6d9478fc644646ad3127a5f9132826d0f1773672d28ba.cropped.svg"/></a>
-</div><p><span class="author">[Evans (3.2)]</span></p>
+    <a href="../_images/lilypond-04253e46feef96f706a90860da3bee967152036c69fbbb99bbe581bd11206c35.ly"><img src="../_images/lilypond-04253e46feef96f706a90860da3bee967152036c69fbbb99bbe581bd11206c35.cropped.svg"/></a>
+</div><p><span class="author">[Evans (3.2); Bača (3.29)]</span></p>
 </section>
 
 
@@ -260,7 +263,7 @@
         
         &copy; Copyright 2008-2025, Trevor Bača &amp; Joséphine Oberholtzer.
       <span class="lastupdated">
-        Last updated on Jul 30, 2025.
+        Last updated on Aug 28, 2025.
       </span>
 
     </p>

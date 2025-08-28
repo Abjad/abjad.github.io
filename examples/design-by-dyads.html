@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Design, by dyads &mdash; Abjad 3.28 documentation</title>
+  <title>Design, by dyads &mdash; Abjad 3.29 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../_static/abjad.css?v=1f187528" />
@@ -19,7 +19,7 @@
     <link rel="canonical" href="https://abjad.github.ioexamples/design-by-dyads.html"/>
       <script src="../_static/jquery.js?v=5d32c60e"></script>
       <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../_static/documentation_options.js?v=159d94a3"></script>
+      <script src="../_static/documentation_options.js?v=b1e510ba"></script>
       <script src="../_static/doctools.js?v=9bcbadda"></script>
       <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script src="../_static/ga.js?v=c455bbd5"></script>
@@ -38,11 +38,11 @@
   <div class="wy-grid-for-nav">
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search"  style="background: #22CC66" >
+        <div class="wy-side-nav-search"  style="background: #55EE77" >
 
 
     <a href="../index.html" class="icon icon-home" alt="Documentation
-    Home"> Abjad 3.28
+    Home"> Abjad 3.29
 
 
 
@@ -113,7 +113,7 @@
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #22CC66" >
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #55EE77" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../index.html">Abjad</a>
       </nav>
@@ -131,13 +131,13 @@
   <section id="design-by-dyads">
 <h1>Design, by dyads<a class="headerlink" href="#design-by-dyads" title="Link to this heading"></a></h1>
 <hr class="docutils" />
-<p>The function below pairs pitches at corresponding positions in a segment partitioned into
-halves. A sequence of two-note chords results. A first optional parameter flips the
-pitches in chords specified by index. A second optional parameter transposes chords,
-specified again by index. Two examples follow. The first operates on the regular
-structure of an ascending chromatic scale. The second successively tranforms a segment
-with greater intervallic variety. The implementation given here generalizes a process due
-to Luigi Nono:</p>
+<p>The function below pairs pitches at corresponding positions in a segment
+partitioned into halves. A sequence of two-note chords results. A first
+optional parameter flips the pitches in chords specified by index. A second
+optional parameter transposes chords, specified again by index. Two examples
+follow. The first operates on the regular structure of an ascending chromatic
+scale. The second successively tranforms a segment with greater intervallic
+variety. The implementation given here generalizes a process due to Luigi Nono:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span><span class="w"> </span><span class="nf">partition</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">flip</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">transpositions</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="n">strings</span> <span class="o">=</span> <span class="n">string</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
 <span class="gp">... </span>    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">strings</span><span class="p">)</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
@@ -149,8 +149,9 @@ to Luigi Nono:</p>
 <span class="gp">... </span>    <span class="n">right</span> <span class="o">=</span> <span class="n">segment</span><span class="p">[</span><span class="n">center</span><span class="p">:]</span>
 <span class="gp">... </span>    <span class="n">pairs</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="n">left</span><span class="p">,</span> <span class="n">right</span><span class="p">)</span>
 <span class="gp">... </span>    <span class="n">chords</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="gp">... </span>    <span class="n">duration</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
 <span class="gp">... </span>    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">pair</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">pairs</span><span class="p">):</span>
-<span class="gp">... </span>        <span class="n">chord</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Chord</span><span class="p">(</span><span class="n">pair</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="gp">... </span>        <span class="n">chord</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Chord</span><span class="o">.</span><span class="n">from_duration_and_pitches</span><span class="p">(</span><span class="n">duration</span><span class="p">,</span> <span class="n">pair</span><span class="p">)</span>
 <span class="gp">... </span>        <span class="k">if</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">flip</span><span class="p">:</span>
 <span class="gp">... </span>            <span class="n">pitches</span> <span class="o">=</span> <span class="n">chord</span><span class="o">.</span><span class="n">written_pitches</span><span class="p">()</span>
 <span class="gp">... </span>            <span class="n">lower</span><span class="p">,</span> <span class="n">higher</span> <span class="o">=</span> <span class="n">pitches</span>
@@ -191,7 +192,9 @@ to Luigi Nono:</p>
 <h2>Examples<a class="headerlink" href="#examples" title="Link to this heading"></a></h2>
 <p><strong>Example 1a.</strong> Ascending chromatic scale:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;cs&#39;&#39; d&#39;&#39; ef&#39;&#39; e&#39;&#39; f&#39;&#39; fs&#39;&#39; g&#39;&#39; gs&#39;&#39; a&#39;&#39; bf&#39;&#39; b&#39;&#39; c&#39;&#39;&#39;&quot;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">notes</span> <span class="o">=</span> <span class="p">[</span><span class="n">abjad</span><span class="o">.</span><span class="n">Note</span><span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">string</span><span class="o">.</span><span class="n">split</span><span class="p">()]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pitches</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">pitch</span><span class="o">.</span><span class="n">pitches</span><span class="p">(</span><span class="n">string</span><span class="o">.</span><span class="n">split</span><span class="p">())</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">duration</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">notes</span> <span class="o">=</span> <span class="p">[</span><span class="n">abjad</span><span class="o">.</span><span class="n">Note</span><span class="o">.</span><span class="n">from_duration_and_pitch</span><span class="p">(</span><span class="n">duration</span><span class="p">,</span> <span class="n">_</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">pitches</span><span class="p">]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">score</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">illustrators</span><span class="o">.</span><span class="n">make_piano_score</span><span class="p">(</span><span class="n">notes</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">lilypond_file</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">LilyPondFile</span><span class="p">([</span><span class="n">preamble</span><span class="p">,</span> <span class="n">score</span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">abjad</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">lilypond_file</span><span class="p">)</span>
@@ -236,7 +239,9 @@ Diotima</em> (1980).</p>
 <hr class="docutils" />
 <p><strong>Example 2a.</strong> Starting segment written by hand:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;d, b af c&#39;&#39; a&#39; fs&#39;&#39; g&#39;&#39; gs&#39;&#39; as&#39;&#39; b&#39;&#39; d&#39;&#39; f&#39; g&#39; ef&#39; e df c bf,&quot;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">notes</span> <span class="o">=</span> <span class="p">[</span><span class="n">abjad</span><span class="o">.</span><span class="n">Note</span><span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">string</span><span class="o">.</span><span class="n">split</span><span class="p">()]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pitches</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">pitch</span><span class="o">.</span><span class="n">pitches</span><span class="p">(</span><span class="n">string</span><span class="o">.</span><span class="n">split</span><span class="p">())</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">duration</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">notes</span> <span class="o">=</span> <span class="p">[</span><span class="n">abjad</span><span class="o">.</span><span class="n">Note</span><span class="o">.</span><span class="n">from_duration_and_pitch</span><span class="p">(</span><span class="n">duration</span><span class="p">,</span> <span class="n">_</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">pitches</span><span class="p">]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">score</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">illustrators</span><span class="o">.</span><span class="n">make_piano_score</span><span class="p">(</span><span class="n">notes</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">lilypond_file</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">LilyPondFile</span><span class="p">([</span><span class="n">preamble</span><span class="p">,</span> <span class="n">score</span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">abjad</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">lilypond_file</span><span class="p">)</span>
@@ -254,7 +259,8 @@ Diotima</em> (1980).</p>
 </div>
 <div class="uqbar-book">
     <a href="../_images/lilypond-2b6751cbcd009c69fa58e456314dc4ced540bff492499a426798b8e5ec2f547e.ly"><img src="../_images/lilypond-2b6751cbcd009c69fa58e456314dc4ced540bff492499a426798b8e5ec2f547e.cropped.svg"/></a>
-</div><p><strong>Example 2c.</strong> Starting segment; partitioned; chords at indexes 0, 1, 2, 4 flipped:</p>
+</div><p><strong>Example 2c.</strong> Starting segment; partitioned; chords at indexes 0, 1, 2, 4
+flipped:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;d, b af c&#39;&#39; a&#39; fs&#39;&#39; g&#39;&#39; gs&#39;&#39; as&#39;&#39; b&#39;&#39; d&#39;&#39; f&#39; g&#39; ef&#39; e df c bf,&quot;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">chords</span> <span class="o">=</span> <span class="n">partition</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">flip</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">score</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">illustrators</span><span class="o">.</span><span class="n">make_piano_score</span><span class="p">(</span><span class="n">chords</span><span class="p">)</span>
@@ -264,8 +270,8 @@ Diotima</em> (1980).</p>
 </div>
 <div class="uqbar-book">
     <a href="../_images/lilypond-e095bbab184526ee4087696a71d5d2c40932a5d0b1d466fa1f7cdff00c37528f.ly"><img src="../_images/lilypond-e095bbab184526ee4087696a71d5d2c40932a5d0b1d466fa1f7cdff00c37528f.cropped.svg"/></a>
-</div><p><strong>Example 2d.</strong> Starting segment; partitioned; chords 0, 1, 2, 4 flipped; chords at
-indexes 0, 1 selectively transposed:</p>
+</div><p><strong>Example 2d.</strong> Starting segment; partitioned; chords 0, 1, 2, 4 flipped;
+chords at indexes 0, 1 selectively transposed:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;d, b af c&#39;&#39; a&#39; fs&#39;&#39; g&#39;&#39; gs&#39;&#39; as&#39;&#39; b&#39;&#39; d&#39;&#39; f&#39; g&#39; ef&#39; e df c bf,&quot;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">transpositions</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;-36&quot;</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;-24&quot;</span><span class="p">)]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">chords</span> <span class="o">=</span> <span class="n">partition</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">flip</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span> <span class="n">transpositions</span><span class="o">=</span><span class="n">transpositions</span><span class="p">)</span>
@@ -276,7 +282,8 @@ indexes 0, 1 selectively transposed:</p>
 </div>
 <div class="uqbar-book">
     <a href="../_images/lilypond-cee3d956f83a3b04c2972ed3e2105a8f8884961942feb8492007881225d08438.ly"><img src="../_images/lilypond-cee3d956f83a3b04c2972ed3e2105a8f8884961942feb8492007881225d08438.cropped.svg"/></a>
-</div><p><span class="author">[Evans (3.2), Bača (3.2, 3.7); generalized from Luigi Nono, example 1d, above.]</span></p>
+</div><p><span class="author">[Evans (3.2), Bača (3.2, 3.7, 3.29); generalized from Luigi Nono,
+example 1d, above.]</span></p>
 </section>
 </section>
 
@@ -306,7 +313,7 @@ indexes 0, 1 selectively transposed:</p>
         
         &copy; Copyright 2008-2025, Trevor Bača &amp; Joséphine Oberholtzer.
       <span class="lastupdated">
-        Last updated on Jul 30, 2025.
+        Last updated on Aug 28, 2025.
       </span>
 
     </p>

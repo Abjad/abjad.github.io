@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>abjad.parsers.parser &mdash; Abjad 3.28 documentation</title>
+  <title>abjad.parsers.parser &mdash; Abjad 3.29 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../../_static/abjad.css?v=1f187528" />
@@ -18,7 +18,7 @@
     <link rel="canonical" href="https://abjad.github.io_modules/abjad/parsers/parser.html"/>
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=159d94a3"></script>
+      <script src="../../../_static/documentation_options.js?v=b1e510ba"></script>
       <script src="../../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script src="../../../_static/ga.js?v=c455bbd5"></script>
@@ -35,11 +35,11 @@
   <div class="wy-grid-for-nav">
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search"  style="background: #22CC66" >
+        <div class="wy-side-nav-search"  style="background: #55EE77" >
 
 
     <a href="../../../index.html" class="icon icon-home" alt="Documentation
-    Home"> Abjad 3.28
+    Home"> Abjad 3.29
 
 
 
@@ -110,7 +110,7 @@
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #22CC66" >
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #55EE77" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../../index.html">Abjad</a>
       </nav>
@@ -200,7 +200,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">arguments</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">arguments</span><span class="p">)</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">:</span> <span class="nb">object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Is true when ``argument`` is a markup command with name and arguments equal to</span>
 <span class="sd">        those of this markup command.</span>
@@ -338,8 +338,6 @@
 
         <span class="k">return</span> <span class="n">context</span></div>
 
-
-    <span class="c1">### PUBLIC PROPERTIES ###</span>
 
 <div class="viewcode-block" id="ContextSpeccedMusic.known_contexts">
 <a class="viewcode-back" href="../../../api/abjad/parsers/parser.html#abjad.parsers.parser.ContextSpeccedMusic.known_contexts">[docs]</a>
@@ -2250,8 +2248,10 @@
             <span class="n">t</span><span class="o">.</span><span class="n">type</span> <span class="o">=</span> <span class="s2">&quot;MULTI_MEASURE_REST&quot;</span>
         <span class="k">elif</span> <span class="n">value</span> <span class="o">==</span> <span class="s2">&quot;q&quot;</span><span class="p">:</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">_last_chord</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">_last_chord</span> <span class="o">=</span> <span class="n">_score</span><span class="o">.</span><span class="n">Chord</span><span class="p">(</span>
-                    <span class="p">[</span><span class="s2">&quot;c&quot;</span><span class="p">,</span> <span class="s2">&quot;g&quot;</span><span class="p">,</span> <span class="s2">&quot;c&#39;&quot;</span><span class="p">],</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="n">tag</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">tag</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">_last_chord</span> <span class="o">=</span> <span class="n">_score</span><span class="o">.</span><span class="n">Chord</span><span class="o">.</span><span class="n">from_duration_and_pitches</span><span class="p">(</span>
+                    <span class="n">_duration</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span>
+                    <span class="n">_pitch</span><span class="o">.</span><span class="n">pitches</span><span class="p">(</span><span class="s2">&quot;c g c&#39;&quot;</span><span class="o">.</span><span class="n">split</span><span class="p">()),</span>
+                    <span class="n">tag</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">tag</span><span class="p">,</span>
                 <span class="p">)</span>
             <span class="n">t</span><span class="o">.</span><span class="n">type</span> <span class="o">=</span> <span class="s2">&quot;CHORD_REPETITION&quot;</span>
         <span class="k">else</span><span class="p">:</span>
@@ -3119,7 +3119,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_syndef</span> <span class="o">=</span> <span class="n">LilyPondSyntacticalDefinition</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="n">tag</span><span class="p">)</span>
 
         <span class="c1"># build PLY parser and lexer</span>
-        <span class="n">Parser</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="n">debug</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">debug</span><span class="o">=</span><span class="n">debug</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_reset_parser_variables</span><span class="p">()</span>
 
@@ -3402,8 +3402,6 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_lexer</span><span class="o">.</span><span class="n">push_state</span><span class="p">(</span><span class="s2">&quot;notes&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_default_duration</span> <span class="o">=</span> <span class="n">LilyPondDuration</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="kc">None</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_last_chord</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="c1"># LilyPond&#39;s default!</span>
-        <span class="c1"># self._last_chord = _score.Chord([&#39;c&#39;, &#39;g&#39;, &quot;c&#39;&quot;], (1, 4))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_pitch_names</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_language_pitch_names</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">default_language</span><span class="p">()]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_repeated_chords</span> <span class="o">=</span> <span class="p">{}</span>
 
@@ -4058,8 +4056,6 @@
                 <span class="k">continue</span>
             <span class="n">music_functions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
         <span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">music_functions</span><span class="p">)</span>
-
-    <span class="c1">### PUBLIC PROPERTIES ###</span>
 
 <div class="viewcode-block" id="LilyPondParser.available_languages">
 <a class="viewcode-back" href="../../../api/abjad/parsers/parser.html#abjad.parsers.parser.LilyPondParser.available_languages">[docs]</a>
@@ -5274,8 +5270,11 @@
     <span class="p">):</span>
         <span class="s2">&quot;event_chord : CHORD_REPETITION optional_notemode_duration post_events&quot;</span>
         <span class="n">pitches</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">_last_chord</span><span class="o">.</span><span class="n">written_pitches</span><span class="p">()</span>
-        <span class="n">duration</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">duration</span>
-        <span class="n">chord</span> <span class="o">=</span> <span class="n">_score</span><span class="o">.</span><span class="n">Chord</span><span class="p">(</span><span class="n">pitches</span><span class="p">,</span> <span class="n">duration</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">tag</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">duration</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
+            <span class="n">duration</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="o">*</span><span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">duration</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">duration</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">duration</span>
+        <span class="n">chord</span> <span class="o">=</span> <span class="n">_score</span><span class="o">.</span><span class="n">Chord</span><span class="o">.</span><span class="n">from_duration_and_pitches</span><span class="p">(</span><span class="n">duration</span><span class="p">,</span> <span class="n">pitches</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">tag</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">_chord_pitch_orders</span><span class="p">[</span><span class="n">chord</span><span class="p">]</span> <span class="o">=</span> <span class="n">pitches</span>
         <span class="k">if</span> <span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">multiplier</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">multiplier</span> <span class="o">=</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">multiplier</span><span class="p">)</span>
@@ -5295,10 +5294,12 @@
         <span class="bp">self</span><span class="p">,</span> <span class="n">p</span>
     <span class="p">):</span>
         <span class="s2">&quot;event_chord : MULTI_MEASURE_REST optional_notemode_duration post_events&quot;</span>
-        <span class="n">rest</span> <span class="o">=</span> <span class="n">_score</span><span class="o">.</span><span class="n">MultimeasureRest</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">duration</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">tag</span><span class="p">)</span>
+        <span class="c1"># rest = _score.MultimeasureRest(p[2].duration, tag=self.tag)</span>
+        <span class="n">rest</span> <span class="o">=</span> <span class="n">_score</span><span class="o">.</span><span class="n">MultimeasureRest</span><span class="o">.</span><span class="n">from_duration</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">duration</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">tag</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">multiplier</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">multiplier</span> <span class="o">=</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">multiplier</span><span class="p">)</span>
-            <span class="n">rest</span><span class="o">.</span><span class="n">set_multiplier</span><span class="p">(</span><span class="n">_duration</span><span class="o">.</span><span class="n">pair</span><span class="p">(</span><span class="n">multiplier</span><span class="p">))</span>
+            <span class="n">fraction</span> <span class="o">=</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">multiplier</span><span class="p">)</span>
+            <span class="n">pair</span> <span class="o">=</span> <span class="p">(</span><span class="n">fraction</span><span class="o">.</span><span class="n">numerator</span><span class="p">,</span> <span class="n">fraction</span><span class="o">.</span><span class="n">denominator</span><span class="p">)</span>
+            <span class="n">rest</span><span class="o">.</span><span class="n">set_multiplier</span><span class="p">(</span><span class="n">pair</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">_process_post_events</span><span class="p">(</span><span class="n">rest</span><span class="p">,</span> <span class="n">p</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
         <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">rest</span></div>
 
@@ -6858,7 +6859,11 @@
         <span class="bp">self</span><span class="p">,</span> <span class="n">p</span>
     <span class="p">):</span>
         <span class="s2">&quot;note_chord_element : chord_body optional_notemode_duration post_events&quot;</span>
-        <span class="n">chord</span> <span class="o">=</span> <span class="n">_score</span><span class="o">.</span><span class="n">Chord</span><span class="p">([],</span> <span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">duration</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">tag</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">duration</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
+            <span class="n">duration</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="o">*</span><span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">duration</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">duration</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">duration</span>
+        <span class="n">chord</span> <span class="o">=</span> <span class="n">_score</span><span class="o">.</span><span class="n">Chord</span><span class="o">.</span><span class="n">from_duration_and_pitches</span><span class="p">(</span><span class="n">duration</span><span class="p">,</span> <span class="p">[],</span> <span class="n">tag</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">tag</span><span class="p">)</span>
         <span class="n">pitches</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">post_events</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
@@ -6868,8 +6873,9 @@
         <span class="n">post_events</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">_chord_pitch_orders</span><span class="p">[</span><span class="n">chord</span><span class="p">]</span> <span class="o">=</span> <span class="n">pitches</span>
         <span class="k">if</span> <span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">multiplier</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">multiplier</span> <span class="o">=</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">multiplier</span><span class="p">)</span>
-            <span class="n">chord</span><span class="o">.</span><span class="n">set_multiplier</span><span class="p">(</span><span class="n">_duration</span><span class="o">.</span><span class="n">pair</span><span class="p">(</span><span class="n">multiplier</span><span class="p">))</span>
+            <span class="n">fraction</span> <span class="o">=</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">multiplier</span><span class="p">)</span>
+            <span class="n">pair</span> <span class="o">=</span> <span class="p">(</span><span class="n">fraction</span><span class="o">.</span><span class="n">numerator</span><span class="p">,</span> <span class="n">fraction</span><span class="o">.</span><span class="n">denominator</span><span class="p">)</span>
+            <span class="n">chord</span><span class="o">.</span><span class="n">set_multiplier</span><span class="p">(</span><span class="n">pair</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">_process_post_events</span><span class="p">(</span><span class="n">chord</span><span class="p">,</span> <span class="n">post_events</span><span class="p">)</span>
         <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">chord</span></div>
 
@@ -7603,12 +7609,13 @@
     <span class="k">def</span><span class="w"> </span><span class="nf">p_simple_element__RESTNAME__optional_notemode_duration</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
         <span class="s2">&quot;simple_element : RESTNAME optional_notemode_duration&quot;</span>
         <span class="k">if</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;r&quot;</span><span class="p">:</span>
-            <span class="n">rest</span> <span class="o">=</span> <span class="n">_score</span><span class="o">.</span><span class="n">Rest</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">duration</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">tag</span><span class="p">)</span>
+            <span class="n">rest</span> <span class="o">=</span> <span class="n">_score</span><span class="o">.</span><span class="n">Rest</span><span class="o">.</span><span class="n">from_duration</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">duration</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">tag</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">rest</span> <span class="o">=</span> <span class="n">_score</span><span class="o">.</span><span class="n">Skip</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">duration</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">tag</span><span class="p">)</span>
+            <span class="n">rest</span> <span class="o">=</span> <span class="n">_score</span><span class="o">.</span><span class="n">Skip</span><span class="o">.</span><span class="n">from_duration</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">duration</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">tag</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">multiplier</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">multiplier</span> <span class="o">=</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">multiplier</span><span class="p">)</span>
-            <span class="n">rest</span><span class="o">.</span><span class="n">set_multiplier</span><span class="p">(</span><span class="n">_duration</span><span class="o">.</span><span class="n">pair</span><span class="p">(</span><span class="n">multiplier</span><span class="p">))</span>
+            <span class="n">fraction</span> <span class="o">=</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">multiplier</span><span class="p">)</span>
+            <span class="n">pair</span> <span class="o">=</span> <span class="p">(</span><span class="n">fraction</span><span class="o">.</span><span class="n">numerator</span><span class="p">,</span> <span class="n">fraction</span><span class="o">.</span><span class="n">denominator</span><span class="p">)</span>
+            <span class="n">rest</span><span class="o">.</span><span class="n">set_multiplier</span><span class="p">(</span><span class="n">pair</span><span class="p">)</span>
         <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">rest</span></div>
 
 
@@ -7619,14 +7626,19 @@
     <span class="p">):</span>
         <span class="s2">&quot;simple_element : pitch exclamations questions octave_check optional_notemode_duration optional_rest&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">p</span><span class="p">[</span><span class="mi">6</span><span class="p">]:</span>
-            <span class="n">leaf</span> <span class="o">=</span> <span class="n">_score</span><span class="o">.</span><span class="n">Note</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">p</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span><span class="o">.</span><span class="n">duration</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">tag</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span><span class="o">.</span><span class="n">duration</span><span class="p">,</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Duration</span><span class="p">):</span>
+                <span class="n">duration</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span><span class="o">.</span><span class="n">duration</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">duration</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="o">*</span><span class="n">p</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span><span class="o">.</span><span class="n">duration</span><span class="p">)</span>
+            <span class="n">leaf</span> <span class="o">=</span> <span class="n">_score</span><span class="o">.</span><span class="n">Note</span><span class="o">.</span><span class="n">from_duration_and_pitch</span><span class="p">(</span><span class="n">duration</span><span class="p">,</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">tag</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">tag</span><span class="p">)</span>
             <span class="n">leaf</span><span class="o">.</span><span class="n">note_head</span><span class="p">()</span><span class="o">.</span><span class="n">set_is_forced</span><span class="p">(</span><span class="nb">bool</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">]))</span>
             <span class="n">leaf</span><span class="o">.</span><span class="n">note_head</span><span class="p">()</span><span class="o">.</span><span class="n">set_is_cautionary</span><span class="p">(</span><span class="nb">bool</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">3</span><span class="p">]))</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">leaf</span> <span class="o">=</span> <span class="n">_score</span><span class="o">.</span><span class="n">Rest</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span><span class="o">.</span><span class="n">duration</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">tag</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">p</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span><span class="o">.</span><span class="n">multiplier</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">multiplier</span> <span class="o">=</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span><span class="o">.</span><span class="n">multiplier</span><span class="p">)</span>
-            <span class="n">leaf</span><span class="o">.</span><span class="n">set_multiplier</span><span class="p">(</span><span class="n">_duration</span><span class="o">.</span><span class="n">pair</span><span class="p">(</span><span class="n">multiplier</span><span class="p">))</span>
+            <span class="n">fraction</span> <span class="o">=</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span><span class="o">.</span><span class="n">multiplier</span><span class="p">)</span>
+            <span class="n">pair</span> <span class="o">=</span> <span class="p">(</span><span class="n">fraction</span><span class="o">.</span><span class="n">numerator</span><span class="p">,</span> <span class="n">fraction</span><span class="o">.</span><span class="n">denominator</span><span class="p">)</span>
+            <span class="n">leaf</span><span class="o">.</span><span class="n">set_multiplier</span><span class="p">(</span><span class="n">pair</span><span class="p">)</span>
         <span class="c1"># TODO: handle exclamations, questions, octave_check</span>
         <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">leaf</span></div>
 
@@ -8196,7 +8208,7 @@
         
         &copy; Copyright 2008-2025, Trevor Bača &amp; Joséphine Oberholtzer.
       <span class="lastupdated">
-        Last updated on Jul 30, 2025.
+        Last updated on Aug 28, 2025.
       </span>
 
     </p>

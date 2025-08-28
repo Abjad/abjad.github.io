@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Scale derivation, by sieve &mdash; Abjad 3.28 documentation</title>
+  <title>Scale derivation, by sieve &mdash; Abjad 3.29 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../_static/abjad.css?v=1f187528" />
@@ -19,7 +19,7 @@
     <link rel="canonical" href="https://abjad.github.io_pending/scale-derivation-by-sieve.html"/>
       <script src="../_static/jquery.js?v=5d32c60e"></script>
       <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../_static/documentation_options.js?v=159d94a3"></script>
+      <script src="../_static/documentation_options.js?v=b1e510ba"></script>
       <script src="../_static/doctools.js?v=9bcbadda"></script>
       <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script src="../_static/ga.js?v=c455bbd5"></script>
@@ -36,11 +36,11 @@
   <div class="wy-grid-for-nav">
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search"  style="background: #22CC66" >
+        <div class="wy-side-nav-search"  style="background: #55EE77" >
 
 
     <a href="../index.html" class="icon icon-home" alt="Documentation
-    Home"> Abjad 3.28
+    Home"> Abjad 3.29
 
 
 
@@ -111,7 +111,7 @@
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #22CC66" >
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #55EE77" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../index.html">Abjad</a>
       </nav>
@@ -132,9 +132,14 @@
 <hr class="docutils" />
 <p>First we define a function to illustrate the examples that follow:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span><span class="w"> </span><span class="nf">illustrate_scale</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">length</span><span class="p">,</span> <span class="n">transposition</span><span class="p">):</span>
-<span class="gp">... </span>    <span class="n">pitches</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">length</span><span class="p">))</span>
-<span class="gp">... </span>    <span class="n">pitches</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">sequence</span><span class="o">.</span><span class="n">retain_pattern</span><span class="p">(</span><span class="n">pitches</span><span class="p">,</span> <span class="n">pattern</span><span class="p">)</span>
-<span class="gp">... </span>    <span class="n">notes</span> <span class="o">=</span> <span class="p">[</span><span class="n">abjad</span><span class="o">.</span><span class="n">Note</span><span class="p">(</span><span class="n">_</span> <span class="o">+</span> <span class="n">transposition</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">16</span><span class="p">))</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">pitches</span><span class="p">]</span>
+<span class="gp">... </span>    <span class="n">numbers</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">length</span><span class="p">))</span>
+<span class="gp">... </span>    <span class="n">numbers</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">sequence</span><span class="o">.</span><span class="n">retain_pattern</span><span class="p">(</span><span class="n">numbers</span><span class="p">,</span> <span class="n">pattern</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="n">pitches</span> <span class="o">=</span> <span class="p">[</span><span class="n">abjad</span><span class="o">.</span><span class="n">NamedPitch</span><span class="p">(</span><span class="n">_</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">numbers</span><span class="p">]</span>
+<span class="gp">... </span>    <span class="n">duration</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">16</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="n">notes</span> <span class="o">=</span> <span class="p">[</span>
+<span class="gp">... </span>        <span class="n">abjad</span><span class="o">.</span><span class="n">Note</span><span class="o">.</span><span class="n">from_duration_and_pitch</span><span class="p">(</span><span class="n">duration</span><span class="p">,</span> <span class="n">_</span> <span class="o">+</span> <span class="n">transposition</span><span class="p">)</span>
+<span class="gp">... </span>        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">pitches</span>
+<span class="gp">... </span>    <span class="p">]</span>
 <span class="gp">... </span>    <span class="n">score</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">illustrators</span><span class="o">.</span><span class="n">make_piano_score</span><span class="p">(</span><span class="n">notes</span><span class="p">)</span>
 <span class="gp">... </span>    <span class="n">treble_staff</span> <span class="o">=</span> <span class="n">score</span><span class="p">[</span><span class="s2">&quot;Treble_Staff&quot;</span><span class="p">]</span>
 <span class="gp">... </span>    <span class="n">abjad</span><span class="o">.</span><span class="n">override</span><span class="p">(</span><span class="n">score</span><span class="p">)</span><span class="o">.</span><span class="n">BarLine</span><span class="o">.</span><span class="n">stencil</span> <span class="o">=</span> <span class="kc">False</span>
@@ -146,7 +151,7 @@
 <span class="gp">... </span>    <span class="n">abjad</span><span class="o">.</span><span class="n">override</span><span class="p">(</span><span class="n">score</span><span class="p">)</span><span class="o">.</span><span class="n">SpanBar</span><span class="o">.</span><span class="n">stencil</span> <span class="o">=</span> <span class="kc">False</span>
 <span class="gp">... </span>    <span class="n">abjad</span><span class="o">.</span><span class="n">override</span><span class="p">(</span><span class="n">score</span><span class="p">)</span><span class="o">.</span><span class="n">Stem</span><span class="o">.</span><span class="n">stencil</span> <span class="o">=</span> <span class="kc">False</span>
 <span class="gp">... </span>    <span class="n">abjad</span><span class="o">.</span><span class="n">override</span><span class="p">(</span><span class="n">score</span><span class="p">)</span><span class="o">.</span><span class="n">TimeSignature</span><span class="o">.</span><span class="n">stencil</span> <span class="o">=</span> <span class="kc">False</span>
-<span class="gp">... </span>    <span class="n">abjad</span><span class="o">.</span><span class="n">setting</span><span class="p">(</span><span class="n">score</span><span class="p">)</span><span class="o">.</span><span class="n">proportionalNotationDuration</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;\musicLength 1*1/25&quot;</span>
+<span class="gp">... </span>    <span class="n">abjad</span><span class="o">.</span><span class="n">setting</span><span class="p">(</span><span class="n">score</span><span class="p">)</span><span class="o">.</span><span class="n">proportionalNotationDuration</span> <span class="o">=</span> <span class="s2">&quot;#1/25&quot;</span>
 <span class="gp">... </span>    <span class="n">lilypond_file</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">LilyPondFile</span><span class="p">(</span>
 <span class="gp">... </span>        <span class="n">items</span><span class="o">=</span><span class="p">[</span>
 <span class="gp">... </span>            <span class="s2">&quot;#(set-global-staff-size 16)&quot;</span><span class="p">,</span>
@@ -169,7 +174,7 @@
 </pre></div>
 </div>
 <div class="uqbar-book">
-    <a href="../_images/lilypond-240784cb8de4d03261a7115c235660a454fa8b3d10128d36e00884a65cd9ae43.ly"><img src="../_images/lilypond-240784cb8de4d03261a7115c235660a454fa8b3d10128d36e00884a65cd9ae43.cropped.svg"/></a>
+    <a href="../_images/lilypond-7acb30f28d02996b55bea2b59a8e04cd6e001bf1274de02fc029ad48330fe423.ly"><img src="../_images/lilypond-7acb30f28d02996b55bea2b59a8e04cd6e001bf1274de02fc029ad48330fe423.cropped.svg"/></a>
 </div><p>Remainder of sieve:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">second_half</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Pattern</span><span class="p">(</span><span class="n">indices</span><span class="o">=</span><span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">16</span><span class="p">],</span> <span class="n">period</span><span class="o">=</span><span class="mi">17</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">lilypond_file</span> <span class="o">=</span> <span class="n">illustrate_scale</span><span class="p">(</span><span class="n">second_half</span><span class="p">,</span> <span class="mi">56</span><span class="p">,</span> <span class="o">-</span><span class="mi">15</span><span class="p">)</span>
@@ -177,7 +182,7 @@
 </pre></div>
 </div>
 <div class="uqbar-book">
-    <a href="../_images/lilypond-af6909fb4a86ebd7218f1aeecfa44dd3e22e77c1073a2f7d4a28ee16b9a3ac3a.ly"><img src="../_images/lilypond-af6909fb4a86ebd7218f1aeecfa44dd3e22e77c1073a2f7d4a28ee16b9a3ac3a.cropped.svg"/></a>
+    <a href="../_images/lilypond-267a9b43d2f5f914615ffd3c80b90acbc32c7f07f15e4cd63c5ebcfedbfbafda.ly"><img src="../_images/lilypond-267a9b43d2f5f914615ffd3c80b90acbc32c7f07f15e4cd63c5ebcfedbfbafda.cropped.svg"/></a>
 </div><p>Complete sieve:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sieve</span> <span class="o">=</span> <span class="n">first_half</span> <span class="o">|</span> <span class="n">second_half</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">lilypond_file</span> <span class="o">=</span> <span class="n">illustrate_scale</span><span class="p">(</span><span class="n">sieve</span><span class="p">,</span> <span class="mi">56</span><span class="p">,</span> <span class="o">-</span><span class="mi">15</span><span class="p">)</span>
@@ -185,7 +190,7 @@
 </pre></div>
 </div>
 <div class="uqbar-book">
-    <a href="../_images/lilypond-8d789714c6da0972afefe084a9edf2e184743f3f6ecef1e4cbbd37cf1bc4b84f.ly"><img src="../_images/lilypond-8d789714c6da0972afefe084a9edf2e184743f3f6ecef1e4cbbd37cf1bc4b84f.cropped.svg"/></a>
+    <a href="../_images/lilypond-2291a0fb3ce4ad3c38c1eb731a9818c54f091fb935848b8ca2bbc72aa68ad3c9.ly"><img src="../_images/lilypond-2291a0fb3ce4ad3c38c1eb731a9818c54f091fb935848b8ca2bbc72aa68ad3c9.cropped.svg"/></a>
 </div><p>Non-octave scale in Joel Hoffman’s <strong>Piano Concerto</strong>:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">scale</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Pattern</span><span class="p">(</span><span class="n">indices</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">13</span><span class="p">],</span> <span class="n">period</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">lilypond_file</span> <span class="o">=</span> <span class="n">illustrate_scale</span><span class="p">(</span><span class="n">scale</span><span class="p">,</span> <span class="mi">84</span><span class="p">,</span> <span class="o">-</span><span class="mi">37</span><span class="p">)</span>
@@ -193,8 +198,8 @@
 </pre></div>
 </div>
 <div class="uqbar-book">
-    <a href="../_images/lilypond-abe75a97e89f8919c1677d5b2327c7d8be574efa2d415f6b14b5b86da7cd1afd.ly"><img src="../_images/lilypond-abe75a97e89f8919c1677d5b2327c7d8be574efa2d415f6b14b5b86da7cd1afd.cropped.svg"/></a>
-</div><p><span class="author">[Evans (3.2)]</span></p>
+    <a href="../_images/lilypond-93120f3988578042c1d0dd755b37e04b33ed32a41fd515c91def74230f0c0124.ly"><img src="../_images/lilypond-93120f3988578042c1d0dd755b37e04b33ed32a41fd515c91def74230f0c0124.cropped.svg"/></a>
+</div><p><span class="author">[Evans (3.2); Bača (3.29)]</span></p>
 </section>
 
 
@@ -213,7 +218,7 @@
         
         &copy; Copyright 2008-2025, Trevor Bača &amp; Joséphine Oberholtzer.
       <span class="lastupdated">
-        Last updated on Jul 30, 2025.
+        Last updated on Aug 28, 2025.
       </span>
 
     </p>

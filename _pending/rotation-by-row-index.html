@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Rotation, by row index &mdash; Abjad 3.28 documentation</title>
+  <title>Rotation, by row index &mdash; Abjad 3.29 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../_static/abjad.css?v=1f187528" />
@@ -19,7 +19,7 @@
     <link rel="canonical" href="https://abjad.github.io_pending/rotation-by-row-index.html"/>
       <script src="../_static/jquery.js?v=5d32c60e"></script>
       <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../_static/documentation_options.js?v=159d94a3"></script>
+      <script src="../_static/documentation_options.js?v=b1e510ba"></script>
       <script src="../_static/doctools.js?v=9bcbadda"></script>
       <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script src="../_static/ga.js?v=c455bbd5"></script>
@@ -36,11 +36,11 @@
   <div class="wy-grid-for-nav">
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search"  style="background: #22CC66" >
+        <div class="wy-side-nav-search"  style="background: #55EE77" >
 
 
     <a href="../index.html" class="icon icon-home" alt="Documentation
-    Home"> Abjad 3.28
+    Home"> Abjad 3.29
 
 
 
@@ -111,7 +111,7 @@
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #22CC66" >
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #55EE77" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../index.html">Abjad</a>
       </nav>
@@ -131,7 +131,13 @@
 <hr class="docutils" />
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span><span class="w"> </span><span class="nf">make_rotation_chart</span><span class="p">(</span><span class="n">permutation</span><span class="p">,</span> <span class="n">label</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="n">rotations</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">4</span><span class="p">,</span> <span class="o">-</span><span class="mi">5</span><span class="p">]</span>
-<span class="gp">... </span>    <span class="n">source_staff</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Staff</span><span class="p">([</span><span class="n">abjad</span><span class="o">.</span><span class="n">Note</span><span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">16</span><span class="p">))</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">permutation</span><span class="p">])</span>
+<span class="gp">... </span>    <span class="n">duration</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">16</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="n">source_staff</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Staff</span><span class="p">(</span>
+<span class="gp">... </span>        <span class="p">[</span>
+<span class="gp">... </span>            <span class="n">abjad</span><span class="o">.</span><span class="n">Note</span><span class="o">.</span><span class="n">from_duration_and_pitch</span><span class="p">(</span><span class="n">duration</span><span class="p">,</span> <span class="n">abjad</span><span class="o">.</span><span class="n">NamedPitch</span><span class="p">(</span><span class="n">_</span><span class="p">))</span>
+<span class="gp">... </span>            <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">permutation</span>
+<span class="gp">... </span>        <span class="p">]</span>
+<span class="gp">... </span>    <span class="p">)</span>
 <span class="gp">... </span>    <span class="n">markup</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Markup</span><span class="p">(</span><span class="sa">rf</span><span class="s1">&#39;\markup &quot;</span><span class="si">{</span><span class="n">label</span><span class="si">}</span><span class="s1">&quot;&#39;</span><span class="p">)</span>
 <span class="gp">... </span>    <span class="n">abjad</span><span class="o">.</span><span class="n">attach</span><span class="p">(</span><span class="n">markup</span><span class="p">,</span> <span class="n">source_staff</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">direction</span><span class="o">=</span><span class="n">abjad</span><span class="o">.</span><span class="n">UP</span><span class="p">)</span>
 <span class="gp">... </span>    <span class="n">score</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Score</span><span class="p">([</span><span class="n">source_staff</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Score&quot;</span><span class="p">)</span>
@@ -149,7 +155,7 @@
 <span class="gp">... </span>        <span class="n">abjad</span><span class="o">.</span><span class="n">InstrumentName</span><span class="p">(</span><span class="s2">&quot;IV&quot;</span><span class="p">),</span>
 <span class="gp">... </span>        <span class="n">abjad</span><span class="o">.</span><span class="n">InstrumentName</span><span class="p">(</span><span class="s2">&quot;V&quot;</span><span class="p">),</span>
 <span class="gp">... </span>    <span class="p">]</span>
-<span class="gp">... </span>    <span class="k">for</span> <span class="n">r</span><span class="p">,</span> <span class="n">instrument_name</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">rotations</span><span class="p">,</span> <span class="n">instrument_names</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">for</span> <span class="n">r</span><span class="p">,</span> <span class="n">instrument_name</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">rotations</span><span class="p">,</span> <span class="n">instrument_names</span><span class="p">,</span> <span class="n">strict</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
 <span class="gp">... </span>        <span class="n">staff</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Staff</span><span class="p">()</span>
 <span class="gp">... </span>        <span class="n">sets</span> <span class="o">=</span> <span class="p">[</span>
 <span class="gp">... </span>            <span class="n">abjad</span><span class="o">.</span><span class="n">PitchClassSegment</span><span class="p">(</span><span class="n">hexachords</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">.</span><span class="n">rotate</span><span class="p">(</span><span class="n">r</span><span class="p">),</span>
@@ -170,7 +176,14 @@
 <span class="gp">... </span>            <span class="n">abjad</span><span class="o">.</span><span class="n">Markup</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\markup \box δ&quot;</span><span class="p">),</span>
 <span class="gp">... </span>        <span class="p">]</span>
 <span class="gp">... </span>        <span class="k">for</span> <span class="nb">set</span><span class="p">,</span> <span class="n">name</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">sets</span><span class="p">,</span> <span class="n">names</span><span class="p">):</span>
-<span class="gp">... </span>            <span class="n">voice</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Voice</span><span class="p">([</span><span class="n">abjad</span><span class="o">.</span><span class="n">Note</span><span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">16</span><span class="p">))</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">set</span><span class="p">])</span>
+<span class="gp">... </span>            <span class="n">voice</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Voice</span><span class="p">(</span>
+<span class="gp">... </span>                <span class="p">[</span>
+<span class="gp">... </span>                    <span class="n">abjad</span><span class="o">.</span><span class="n">Note</span><span class="o">.</span><span class="n">from_duration_and_pitch</span><span class="p">(</span>
+<span class="gp">... </span>                        <span class="n">duration</span><span class="p">,</span> <span class="n">abjad</span><span class="o">.</span><span class="n">NamedPitch</span><span class="p">(</span><span class="n">_</span><span class="p">)</span>
+<span class="gp">... </span>                    <span class="p">)</span>
+<span class="gp">... </span>                    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">set</span>
+<span class="gp">... </span>                <span class="p">]</span>
+<span class="gp">... </span>            <span class="p">)</span>
 <span class="gp">... </span>            <span class="k">for</span> <span class="n">leaf</span> <span class="ow">in</span> <span class="n">abjad</span><span class="o">.</span><span class="n">select</span><span class="o">.</span><span class="n">leaves</span><span class="p">(</span><span class="n">voice</span><span class="p">):</span>
 <span class="gp">... </span>                <span class="n">markup</span> <span class="o">=</span> <span class="n">abjad</span><span class="o">.</span><span class="n">Markup</span><span class="p">(</span>
 <span class="gp">... </span>                    <span class="sa">rf</span><span class="s2">&quot;\markup </span><span class="si">{</span><span class="n">abjad</span><span class="o">.</span><span class="n">NumberedPitchClass</span><span class="p">(</span><span class="n">leaf</span><span class="o">.</span><span class="n">written_pitch</span><span class="p">())</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
@@ -258,7 +271,8 @@ this?</p>
 </div>
 <div class="uqbar-book">
     <a href="../_images/lilypond-3b498a6a8b6facd5bc58d23562311e4c10a3b1f863e4b501063ce962f6022131.ly"><img src="../_images/lilypond-3b498a6a8b6facd5bc58d23562311e4c10a3b1f863e4b501063ce962f6022131.cropped.svg"/></a>
-</div><p><span class="author">[Evans (3.2); ex. Igor Stravinsky, Abraham and Isaac (1962–63).]</span></p>
+</div><p><span class="author">[Evans (3.2); Bača (3.29); ex. Igor Stravinsky, Abraham and Isaac
+(1962–63).]</span></p>
 </section>
 </section>
 
@@ -278,7 +292,7 @@ this?</p>
         
         &copy; Copyright 2008-2025, Trevor Bača &amp; Joséphine Oberholtzer.
       <span class="lastupdated">
-        Last updated on Jul 30, 2025.
+        Last updated on Aug 28, 2025.
       </span>
 
     </p>
