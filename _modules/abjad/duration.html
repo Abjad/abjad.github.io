@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>abjad.duration &mdash; Abjad 3.29 documentation</title>
+  <title>abjad.duration &mdash; Abjad 3.30 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../_static/abjad.css?v=1f187528" />
@@ -18,7 +18,7 @@
     <link rel="canonical" href="https://abjad.github.io_modules/abjad/duration.html"/>
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=b1e510ba"></script>
+      <script src="../../_static/documentation_options.js?v=52c177e8"></script>
       <script src="../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script src="../../_static/ga.js?v=c455bbd5"></script>
@@ -35,11 +35,11 @@
   <div class="wy-grid-for-nav">
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search"  style="background: #55EE77" >
+        <div class="wy-side-nav-search"  style="background: #880088" >
 
 
     <a href="../../index.html" class="icon icon-home" alt="Documentation
-    Home"> Abjad 3.29
+    Home"> Abjad 3.30
 
 
 
@@ -110,7 +110,7 @@
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #55EE77" >
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #880088" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../index.html">Abjad</a>
       </nav>
@@ -134,65 +134,13 @@
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">dataclasses</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">fractions</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">functools</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">math</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">typing</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">exceptions</span> <span class="k">as</span> <span class="n">_exceptions</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">math</span> <span class="k">as</span> <span class="n">_math</span>
-
-
-<div class="viewcode-block" id="durations">
-<a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.durations">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">durations</span><span class="p">(</span><span class="n">items</span><span class="p">:</span> <span class="nb">list</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Duration</span><span class="p">]:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Changes ``items`` to durations.</span>
-
-<span class="sd">    ..  container:: example</span>
-
-<span class="sd">        &gt;&gt;&gt; abjad.duration.durations([(15, 8), (3, 8), abjad.TimeSignature((3, 4))])</span>
-<span class="sd">        [Duration(15, 8), Duration(3, 8), Duration(3, 4)]</span>
-
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">durations</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">items</span><span class="p">:</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
-            <span class="n">duration</span> <span class="o">=</span> <span class="n">Duration</span><span class="p">(</span><span class="o">*</span><span class="n">item</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="nb">callable</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="s2">&quot;duration&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)):</span>
-            <span class="n">duration</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">duration</span><span class="p">()</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">duration</span> <span class="o">=</span> <span class="n">Duration</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
-        <span class="n">durations</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">duration</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">durations</span></div>
-
-
-
-<div class="viewcode-block" id="is_duration">
-<a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.is_duration">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">is_duration</span><span class="p">(</span><span class="n">argument</span><span class="p">:</span> <span class="nb">object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Is true when ``argument`` is duration (but not fraction).</span>
-
-<span class="sd">    ..  container:: example</span>
-
-<span class="sd">        &gt;&gt;&gt; abjad.duration.is_duration(abjad.Duration(1, 4))</span>
-<span class="sd">        True</span>
-
-<span class="sd">        &gt;&gt;&gt; abjad.duration.is_duration(abjad.Fraction(1, 4))</span>
-<span class="sd">        False</span>
-
-<span class="sd">        &gt;&gt;&gt; abjad.duration.is_duration(abjad.Offset(abjad.Fraction(1, 4)))</span>
-<span class="sd">        False</span>
-
-<span class="sd">        &gt;&gt;&gt; abjad.duration.is_duration((1, 4))</span>
-<span class="sd">        False</span>
-
-<span class="sd">        &gt;&gt;&gt; abjad.duration.is_duration(0)</span>
-<span class="sd">        False</span>
-
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;Duration&quot;</span></div>
-
 
 
 <div class="viewcode-block" id="is_fraction">
@@ -202,9 +150,6 @@
 <span class="sd">    Is true when ``argument`` is fraction (but not duration).</span>
 
 <span class="sd">    ..  container:: example</span>
-
-<span class="sd">        &gt;&gt;&gt; abjad.duration.is_fraction(abjad.Duration(1, 4))</span>
-<span class="sd">        False</span>
 
 <span class="sd">        &gt;&gt;&gt; abjad.duration.is_fraction(abjad.Fraction(1, 4))</span>
 <span class="sd">        True</span>
@@ -230,9 +175,6 @@
 <span class="sd">    Is true when ``argument`` is offset.</span>
 
 <span class="sd">    ..  container:: example</span>
-
-<span class="sd">        &gt;&gt;&gt; abjad.duration.is_offset(abjad.Duration(1, 4))</span>
-<span class="sd">        False</span>
 
 <span class="sd">        &gt;&gt;&gt; abjad.duration.is_offset(abjad.Fraction(1, 4))</span>
 <span class="sd">        False</span>
@@ -263,6 +205,9 @@
 <span class="sd">        Offset(Fraction(1, 1))</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="nb">int</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">d</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="nb">int</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
     <span class="n">fraction</span> <span class="o">=</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">d</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">Offset</span><span class="p">(</span><span class="n">fraction</span><span class="p">)</span></div>
 
@@ -347,197 +292,165 @@
 
 
 
-<div class="viewcode-block" id="Duration">
-<a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.Duration">[docs]</a>
-<span class="k">class</span><span class="w"> </span><span class="nc">Duration</span><span class="p">(</span><span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">):</span>
+<div class="viewcode-block" id="durations">
+<a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.durations">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">durations</span><span class="p">(</span><span class="n">items</span><span class="p">:</span> <span class="nb">list</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Duration</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Duration.</span>
+<span class="sd">    Changes ``items`` to durations.</span>
 
 <span class="sd">    ..  container:: example</span>
 
-<span class="sd">        &gt;&gt;&gt; abjad.Duration(3, 16)</span>
-<span class="sd">        Duration(3, 16)</span>
+<span class="sd">        &gt;&gt;&gt; items = [(15, 8), (3, 8), abjad.TimeSignature((3, 4))]</span>
+<span class="sd">        &gt;&gt;&gt; abjad.duration.durations(items)</span>
+<span class="sd">        [Duration(numerator=15, denominator=8), Duration(numerator=3, denominator=8), Duration(numerator=3, denominator=4)]</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">durations</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">items</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
+            <span class="n">duration</span> <span class="o">=</span> <span class="n">Duration</span><span class="p">(</span><span class="o">*</span><span class="n">item</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">callable</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="s2">&quot;duration&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)):</span>
+            <span class="n">duration</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">duration</span><span class="p">()</span>
+            <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">duration</span><span class="p">,</span> <span class="n">Duration</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">duration</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">callable</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="s2">&quot;as_integer_ratio&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)):</span>
+            <span class="n">duration</span> <span class="o">=</span> <span class="n">Duration</span><span class="p">(</span><span class="o">*</span><span class="n">item</span><span class="o">.</span><span class="n">as_integer_ratio</span><span class="p">())</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">duration</span> <span class="o">=</span> <span class="n">Duration</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+        <span class="n">durations</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">duration</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">durations</span></div>
+
+
+
+<div class="viewcode-block" id="Duration">
+<a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.Duration">[docs]</a>
+<span class="nd">@functools</span><span class="o">.</span><span class="n">total_ordering</span>
+<span class="nd">@dataclasses</span><span class="o">.</span><span class="n">dataclass</span><span class="p">(</span><span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">slots</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">unsafe_hash</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Duration</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Value duration.</span>
+
+<span class="sd">    ..  container:: example</span>
+
+<span class="sd">        &gt;&gt;&gt; abjad.Duration(2, 8)</span>
+<span class="sd">        Duration(numerator=1, denominator=4)</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="vm">__slots__</span> <span class="o">=</span> <span class="p">()</span>
+    <span class="n">numerator</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">denominator</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="fm">__abs__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Self</span><span class="p">:</span>
-        <span class="n">result</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__abs__</span><span class="p">()</span>
-        <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span><span class="n">result</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">__post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">denominator</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">denominator</span><span class="p">)</span>
+        <span class="n">numerator</span><span class="p">,</span> <span class="n">denominator</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">numerator</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">denominator</span>
+        <span class="k">if</span> <span class="n">denominator</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">numerator</span><span class="p">,</span> <span class="n">denominator</span> <span class="o">=</span> <span class="o">-</span><span class="n">numerator</span><span class="p">,</span> <span class="o">-</span><span class="n">denominator</span>
+        <span class="k">if</span> <span class="n">numerator</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">numerator</span><span class="p">,</span> <span class="n">denominator</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">g</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">gcd</span><span class="p">(</span><span class="n">numerator</span><span class="p">,</span> <span class="n">denominator</span><span class="p">)</span>
+            <span class="n">numerator</span> <span class="o">//=</span> <span class="n">g</span>
+            <span class="n">denominator</span> <span class="o">//=</span> <span class="n">g</span>
+        <span class="nb">object</span><span class="o">.</span><span class="fm">__setattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;numerator&quot;</span><span class="p">,</span> <span class="n">numerator</span><span class="p">)</span>
+        <span class="nb">object</span><span class="o">.</span><span class="fm">__setattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;denominator&quot;</span><span class="p">,</span> <span class="n">denominator</span><span class="p">)</span>
 
-    <span class="nd">@typing</span><span class="o">.</span><span class="n">overload</span>
-    <span class="k">def</span><span class="w"> </span><span class="fm">__add__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Self</span><span class="p">:</span>
-        <span class="k">pass</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__abs__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Duration</span><span class="p">:</span>
+        <span class="n">numerator</span><span class="p">,</span> <span class="n">denominator</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">numerator</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">denominator</span>
+        <span class="k">return</span> <span class="n">Duration</span><span class="p">(</span><span class="n">numerator</span><span class="p">,</span> <span class="n">denominator</span><span class="p">)</span>
 
-    <span class="nd">@typing</span><span class="o">.</span><span class="n">overload</span>
-    <span class="k">def</span><span class="w"> </span><span class="fm">__add__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-        <span class="k">pass</span>
-
-    <span class="nd">@typing</span><span class="o">.</span><span class="n">overload</span>
-    <span class="k">def</span><span class="w"> </span><span class="fm">__add__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">:</span> <span class="nb">complex</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">complex</span><span class="p">:</span>
-        <span class="k">pass</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="fm">__add__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">):</span>
-        <span class="n">result</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__add__</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">):</span>
-            <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span><span class="n">result</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">result</span>
-
-    <span class="nd">@typing</span><span class="o">.</span><span class="n">overload</span>
-    <span class="k">def</span><span class="w"> </span><span class="fm">__mul__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">:</span>
-        <span class="k">pass</span>
-
-    <span class="nd">@typing</span><span class="o">.</span><span class="n">overload</span>
-    <span class="k">def</span><span class="w"> </span><span class="fm">__mul__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-        <span class="k">pass</span>
-
-    <span class="nd">@typing</span><span class="o">.</span><span class="n">overload</span>
-    <span class="k">def</span><span class="w"> </span><span class="fm">__mul__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="nb">complex</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">complex</span><span class="p">:</span>
-        <span class="k">pass</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="fm">__mul__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__add__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="n">Duration</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Duration</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+            <span class="n">other</span> <span class="o">=</span> <span class="n">Duration</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">Duration</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Multiplying two durations is undefined&quot;</span><span class="p">)</span>
-        <span class="n">result</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__mul__</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">):</span>
-            <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span><span class="n">result</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">result</span>
+            <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">numerator</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">denominator</span>
+            <span class="n">c</span><span class="p">,</span> <span class="n">d</span> <span class="o">=</span> <span class="n">other</span><span class="o">.</span><span class="n">numerator</span><span class="p">,</span> <span class="n">other</span><span class="o">.</span><span class="n">denominator</span>
+            <span class="k">return</span> <span class="n">Duration</span><span class="p">(</span><span class="n">a</span> <span class="o">*</span> <span class="n">d</span> <span class="o">+</span> <span class="n">c</span> <span class="o">*</span> <span class="n">b</span><span class="p">,</span> <span class="n">b</span> <span class="o">*</span> <span class="n">d</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">NotImplemented</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="fm">__neg__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Self</span><span class="p">:</span>
-        <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span><span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__neg__</span><span class="p">())</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="nb">object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">Duration</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">as_integer_ratio</span><span class="p">()</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">as_integer_ratio</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">NotImplemented</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__float__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">numerator</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">denominator</span><span class="p">))</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__lt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="nb">object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">Duration</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">NotImplemented</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">numerator</span> <span class="o">*</span> <span class="n">other</span><span class="o">.</span><span class="n">denominator</span> <span class="o">&lt;</span> <span class="n">other</span><span class="o">.</span><span class="n">numerator</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">denominator</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__neg__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Duration</span><span class="p">:</span>
+        <span class="n">numerator</span><span class="p">,</span> <span class="n">denominator</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">numerator</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">denominator</span>
+        <span class="k">return</span> <span class="n">Duration</span><span class="p">(</span><span class="o">-</span><span class="n">numerator</span><span class="p">,</span> <span class="n">denominator</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__radd__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="n">Duration</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Duration</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="fm">__add__</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__rmul__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Duration</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+            <span class="n">other</span> <span class="o">=</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">):</span>
+            <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">numerator</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">denominator</span>
+            <span class="n">c</span><span class="p">,</span> <span class="n">d</span> <span class="o">=</span> <span class="n">other</span><span class="o">.</span><span class="n">numerator</span><span class="p">,</span> <span class="n">other</span><span class="o">.</span><span class="n">denominator</span>
+            <span class="k">return</span> <span class="n">Duration</span><span class="p">(</span><span class="n">a</span> <span class="o">*</span> <span class="n">c</span><span class="p">,</span> <span class="n">b</span> <span class="o">*</span> <span class="n">d</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">NotImplemented</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__sub__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="n">Duration</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Duration</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">Duration</span><span class="p">):</span>
+            <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">numerator</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">denominator</span>
+            <span class="n">c</span><span class="p">,</span> <span class="n">d</span> <span class="o">=</span> <span class="n">other</span><span class="o">.</span><span class="n">numerator</span><span class="p">,</span> <span class="n">other</span><span class="o">.</span><span class="n">denominator</span>
+            <span class="k">return</span> <span class="n">Duration</span><span class="p">(</span><span class="n">a</span> <span class="o">*</span> <span class="n">d</span> <span class="o">-</span> <span class="n">c</span> <span class="o">*</span> <span class="n">b</span><span class="p">,</span> <span class="n">b</span> <span class="o">*</span> <span class="n">d</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">NotImplemented</span>
 
     <span class="nd">@typing</span><span class="o">.</span><span class="n">overload</span>
-    <span class="k">def</span><span class="w"> </span><span class="fm">__radd__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Self</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__truediv__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="n">Duration</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">:</span>
         <span class="k">pass</span>
 
     <span class="nd">@typing</span><span class="o">.</span><span class="n">overload</span>
-    <span class="k">def</span><span class="w"> </span><span class="fm">__radd__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-        <span class="k">pass</span>
-
-    <span class="nd">@typing</span><span class="o">.</span><span class="n">overload</span>
-    <span class="k">def</span><span class="w"> </span><span class="fm">__radd__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">:</span> <span class="nb">complex</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">complex</span><span class="p">:</span>
-        <span class="k">pass</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="fm">__radd__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">):</span>
-        <span class="n">result</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__radd__</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">):</span>
-            <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span><span class="n">result</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">result</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">(</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">numerator</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">denominator</span><span class="si">}</span><span class="s2">)&quot;</span>
-
-    <span class="nd">@typing</span><span class="o">.</span><span class="n">overload</span>
-    <span class="k">def</span><span class="w"> </span><span class="fm">__rmul__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Self</span><span class="p">:</span>
-        <span class="k">pass</span>
-
-    <span class="nd">@typing</span><span class="o">.</span><span class="n">overload</span>
-    <span class="k">def</span><span class="w"> </span><span class="fm">__rmul__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-        <span class="k">pass</span>
-
-    <span class="nd">@typing</span><span class="o">.</span><span class="n">overload</span>
-    <span class="k">def</span><span class="w"> </span><span class="fm">__rmul__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="nb">complex</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">complex</span><span class="p">:</span>
-        <span class="k">pass</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="fm">__rmul__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">):</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">argument</span><span class="p">,</span> <span class="n">Duration</span><span class="p">):</span>
-            <span class="n">message</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Can not multiply two durations: </span><span class="si">{</span><span class="bp">self</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">argument</span><span class="si">}</span><span class="s2">&quot;</span>
-            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
-        <span class="n">result</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__rmul__</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">):</span>
-            <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span><span class="n">result</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">result</span>
-
-    <span class="nd">@typing</span><span class="o">.</span><span class="n">overload</span>
-    <span class="k">def</span><span class="w"> </span><span class="fm">__rsub__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Self</span><span class="p">:</span>
-        <span class="k">pass</span>
-
-    <span class="nd">@typing</span><span class="o">.</span><span class="n">overload</span>
-    <span class="k">def</span><span class="w"> </span><span class="fm">__rsub__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-        <span class="k">pass</span>
-
-    <span class="nd">@typing</span><span class="o">.</span><span class="n">overload</span>
-    <span class="k">def</span><span class="w"> </span><span class="fm">__rsub__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="nb">complex</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">complex</span><span class="p">:</span>
-        <span class="k">pass</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="fm">__rsub__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-        <span class="n">result</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__rsub__</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">):</span>
-            <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span><span class="n">result</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">result</span>
-
-    <span class="nd">@typing</span><span class="o">.</span><span class="n">overload</span>
-    <span class="k">def</span><span class="w"> </span><span class="fm">__rtruediv__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">:</span>
-        <span class="k">pass</span>
-
-    <span class="nd">@typing</span><span class="o">.</span><span class="n">overload</span>
-    <span class="k">def</span><span class="w"> </span><span class="fm">__rtruediv__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-        <span class="k">pass</span>
-
-    <span class="nd">@typing</span><span class="o">.</span><span class="n">overload</span>
-    <span class="k">def</span><span class="w"> </span><span class="fm">__rtruediv__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="nb">complex</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">complex</span><span class="p">:</span>
-        <span class="k">pass</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="fm">__rtruediv__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__rtruediv__</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
-
-    <span class="nd">@typing</span><span class="o">.</span><span class="n">overload</span>
-    <span class="k">def</span><span class="w"> </span><span class="fm">__sub__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">typing</span><span class="o">.</span><span class="n">Self</span><span class="p">:</span>
-        <span class="k">pass</span>
-
-    <span class="nd">@typing</span><span class="o">.</span><span class="n">overload</span>
-    <span class="k">def</span><span class="w"> </span><span class="fm">__sub__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-        <span class="k">pass</span>
-
-    <span class="nd">@typing</span><span class="o">.</span><span class="n">overload</span>
-    <span class="k">def</span><span class="w"> </span><span class="fm">__sub__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="nb">complex</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">complex</span><span class="p">:</span>
-        <span class="k">pass</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="fm">__sub__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-        <span class="n">result</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__sub__</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">):</span>
-            <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span><span class="n">result</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">result</span>
-
-    <span class="nd">@typing</span><span class="o">.</span><span class="n">overload</span>
-    <span class="k">def</span><span class="w"> </span><span class="fm">__truediv__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">:</span>
-        <span class="k">pass</span>
-
-    <span class="nd">@typing</span><span class="o">.</span><span class="n">overload</span>
-    <span class="k">def</span><span class="w"> </span><span class="fm">__truediv__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
-        <span class="k">pass</span>
-
-    <span class="nd">@typing</span><span class="o">.</span><span class="n">overload</span>
-    <span class="k">def</span><span class="w"> </span><span class="fm">__truediv__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="nb">complex</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">complex</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__truediv__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Duration</span><span class="p">:</span>
         <span class="k">pass</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__truediv__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-        <span class="n">result</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__truediv__</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+            <span class="n">other</span> <span class="o">=</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">Duration</span><span class="p">):</span>
-            <span class="k">return</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">/</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
-            <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span><span class="n">result</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">result</span>
+            <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">numerator</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">denominator</span>
+            <span class="n">c</span><span class="p">,</span> <span class="n">d</span> <span class="o">=</span> <span class="n">other</span><span class="o">.</span><span class="n">numerator</span><span class="p">,</span> <span class="n">other</span><span class="o">.</span><span class="n">denominator</span>
+            <span class="k">return</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">(</span><span class="n">a</span> <span class="o">*</span> <span class="n">d</span><span class="p">,</span> <span class="n">b</span> <span class="o">*</span> <span class="n">c</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">):</span>
+            <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">numerator</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">denominator</span>
+            <span class="n">c</span><span class="p">,</span> <span class="n">d</span> <span class="o">=</span> <span class="n">other</span><span class="o">.</span><span class="n">numerator</span><span class="p">,</span> <span class="n">other</span><span class="o">.</span><span class="n">denominator</span>
+            <span class="k">return</span> <span class="n">Duration</span><span class="p">(</span><span class="n">a</span> <span class="o">*</span> <span class="n">d</span><span class="p">,</span> <span class="n">b</span> <span class="o">*</span> <span class="n">c</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">NotImplemented</span>
 
-<div class="viewcode-block" id="Duration.clock_string">
-<a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.Duration.clock_string">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">clock_string</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Gets clock string.</span>
-
-<span class="sd">        Rounds down to nearest second.</span>
+<div class="viewcode-block" id="Duration.as_fraction">
+<a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.Duration.as_fraction">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">as_fraction</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns value duration as fraction.</span>
 
 <span class="sd">        ..  container:: example</span>
 
-<span class="sd">            &gt;&gt;&gt; abjad.Duration(117).clock_string()</span>
-<span class="sd">            &quot;1&#39;57&#39;&#39;&quot;</span>
+<span class="sd">            &gt;&gt;&gt; abjad.Duration(1, 4).as_fraction()</span>
+<span class="sd">            Fraction(1, 4)</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">minutes</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span> <span class="o">/</span> <span class="mi">60</span><span class="p">)</span>
-        <span class="n">seconds</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span> <span class="o">-</span> <span class="n">minutes</span> <span class="o">*</span> <span class="mi">60</span><span class="p">))</span><span class="o">.</span><span class="n">zfill</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-        <span class="n">clock_string</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">minutes</span><span class="si">}</span><span class="s2">&#39;</span><span class="si">{</span><span class="n">seconds</span><span class="si">}</span><span class="s2">&#39;&#39;&quot;</span>
-        <span class="k">return</span> <span class="n">clock_string</span></div>
+        <span class="k">return</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">as_integer_ratio</span><span class="p">())</span></div>
+
+
+<div class="viewcode-block" id="Duration.as_integer_ratio">
+<a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.Duration.as_integer_ratio">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">as_integer_ratio</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Changes duration to (numerator, denominator) pair.</span>
+
+<span class="sd">        ..  container:: example</span>
+
+<span class="sd">            &gt;&gt;&gt; abjad.Duration(1, 4).as_integer_ratio()</span>
+<span class="sd">            (1, 4)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">numerator</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">denominator</span></div>
 
 
 <div class="viewcode-block" id="Duration.dot_count">
@@ -553,15 +466,16 @@
 <span class="sd">            assignable.</span>
 
 <span class="sd">            &gt;&gt;&gt; for n in range(1, 16 + 1):</span>
+<span class="sd">            ...     duration = abjad.Duration(n, 16)</span>
+<span class="sd">            ...     fraction = duration.as_fraction()</span>
+<span class="sd">            ...     sixteenths = abjad.duration.pair_with_denominator(fraction, 16)</span>
+<span class="sd">            ...     numerator, denominator = sixteenths</span>
 <span class="sd">            ...     try:</span>
-<span class="sd">            ...         duration = abjad.Duration(n, 16)</span>
-<span class="sd">            ...         sixteenths = abjad.duration.pair_with_denominator(duration, 16)</span>
 <span class="sd">            ...         dot_count = duration.dot_count()</span>
-<span class="sd">            ...         string = f&quot;{sixteenths[0]}/{sixteenths[1]}\t{dot_count}&quot;</span>
+<span class="sd">            ...         string = f&quot;{numerator}/{denominator}\t{dot_count}&quot;</span>
 <span class="sd">            ...         print(string)</span>
 <span class="sd">            ...     except abjad.AssignabilityError:</span>
-<span class="sd">            ...         sixteenths = abjad.duration.pair_with_denominator(duration, 16)</span>
-<span class="sd">            ...         print(f&quot;{sixteenths[0]}/{sixteenths[1]}\t--&quot;)</span>
+<span class="sd">            ...         print(f&quot;{numerator}/{denominator}\t--&quot;)</span>
 <span class="sd">            ...</span>
 <span class="sd">            1/16    0</span>
 <span class="sd">            2/16    0</span>
@@ -589,191 +503,6 @@
         <span class="k">return</span> <span class="n">dot_count</span></div>
 
 
-    <span class="c1"># TODO: port logic to rmakers and then remove</span>
-    <span class="nd">@staticmethod</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">durations_to_nonreduced_fractions</span><span class="p">(</span>
-        <span class="n">durations</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Duration</span><span class="p">],</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Changes ``durations`` to pairs sharing least common denominator.</span>
-
-<span class="sd">        ..  container:: example</span>
-
-<span class="sd">            &gt;&gt;&gt; items = [abjad.Duration(2, 4), 3, (5, 16)]</span>
-<span class="sd">            &gt;&gt;&gt; durations = abjad.duration.durations(items)</span>
-<span class="sd">            &gt;&gt;&gt; result = abjad.Duration.durations_to_nonreduced_fractions(durations)</span>
-<span class="sd">            &gt;&gt;&gt; for x in result:</span>
-<span class="sd">            ...     x</span>
-<span class="sd">            ...</span>
-<span class="sd">            (8, 16)</span>
-<span class="sd">            (48, 16)</span>
-<span class="sd">            (5, 16)</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">assert</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="n">Duration</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">durations</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">durations</span><span class="p">)</span>
-        <span class="n">denominators</span> <span class="o">=</span> <span class="p">[</span><span class="n">_</span><span class="o">.</span><span class="n">denominator</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">durations</span><span class="p">]</span>
-        <span class="n">lcd</span> <span class="o">=</span> <span class="n">_math</span><span class="o">.</span><span class="n">least_common_multiple</span><span class="p">(</span><span class="o">*</span><span class="n">denominators</span><span class="p">)</span>
-        <span class="n">pairs</span> <span class="o">=</span> <span class="p">[</span><span class="n">pair_with_denominator</span><span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="n">lcd</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">durations</span><span class="p">]</span>
-        <span class="k">return</span> <span class="n">pairs</span>
-
-    <span class="c1"># TODO: move to math.py or remove</span>
-<div class="viewcode-block" id="Duration.equal_or_greater_assignable">
-<a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.Duration.equal_or_greater_assignable">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">equal_or_greater_assignable</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Duration</span><span class="p">:</span>
-<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Gets assignable duration equal to or just greater than this duration.</span>
-
-<span class="sd">        ..  container:: example</span>
-
-<span class="sd">            &gt;&gt;&gt; for numerator in range(1, 16 + 1):</span>
-<span class="sd">            ...     duration = abjad.Duration(numerator, 16)</span>
-<span class="sd">            ...     result = duration.equal_or_greater_assignable()</span>
-<span class="sd">            ...     sixteenths = abjad.duration.pair_with_denominator(duration, 16)</span>
-<span class="sd">            ...     print(f&quot;{sixteenths[0]}/{sixteenths[1]}\t{result!s}&quot;)</span>
-<span class="sd">            ...</span>
-<span class="sd">            1/16    1/16</span>
-<span class="sd">            2/16    1/8</span>
-<span class="sd">            3/16    3/16</span>
-<span class="sd">            4/16    1/4</span>
-<span class="sd">            5/16    3/8</span>
-<span class="sd">            6/16    3/8</span>
-<span class="sd">            7/16    7/16</span>
-<span class="sd">            8/16    1/2</span>
-<span class="sd">            9/16    3/4</span>
-<span class="sd">            10/16   3/4</span>
-<span class="sd">            11/16   3/4</span>
-<span class="sd">            12/16   3/4</span>
-<span class="sd">            13/16   7/8</span>
-<span class="sd">            14/16   7/8</span>
-<span class="sd">            15/16   15/16</span>
-<span class="sd">            16/16   1</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">good_denominator</span> <span class="o">=</span> <span class="n">_math</span><span class="o">.</span><span class="n">greatest_power_of_two_less_equal</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">denominator</span><span class="p">)</span>
-        <span class="n">current_numerator</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">numerator</span>
-        <span class="n">candidate</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span><span class="n">current_numerator</span><span class="p">,</span> <span class="n">good_denominator</span><span class="p">)</span>
-        <span class="k">while</span> <span class="ow">not</span> <span class="n">candidate</span><span class="o">.</span><span class="n">is_assignable</span><span class="p">():</span>
-            <span class="n">current_numerator</span> <span class="o">+=</span> <span class="mi">1</span>
-            <span class="n">candidate</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span><span class="n">current_numerator</span><span class="p">,</span> <span class="n">good_denominator</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">candidate</span></div>
-
-
-    <span class="c1"># TODO: move to math.py or remove</span>
-<div class="viewcode-block" id="Duration.equal_or_greater_power_of_two">
-<a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.Duration.equal_or_greater_power_of_two">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">equal_or_greater_power_of_two</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Duration</span><span class="p">:</span>
-<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Gets duration equal or just greater power of two.</span>
-
-<span class="sd">        ..  container:: example</span>
-
-<span class="sd">            &gt;&gt;&gt; for numerator in range(1, 16 + 1):</span>
-<span class="sd">            ...     duration = abjad.Duration(numerator, 16)</span>
-<span class="sd">            ...     result = duration.equal_or_greater_power_of_two()</span>
-<span class="sd">            ...     sixteenths = abjad.duration.pair_with_denominator(duration, 16)</span>
-<span class="sd">            ...     print(f&quot;{sixteenths[0]}/{sixteenths[1]}\t{result!s}&quot;)</span>
-<span class="sd">            ...</span>
-<span class="sd">            1/16    1/16</span>
-<span class="sd">            2/16    1/8</span>
-<span class="sd">            3/16    1/4</span>
-<span class="sd">            4/16    1/4</span>
-<span class="sd">            5/16    1/2</span>
-<span class="sd">            6/16    1/2</span>
-<span class="sd">            7/16    1/2</span>
-<span class="sd">            8/16    1/2</span>
-<span class="sd">            9/16    1</span>
-<span class="sd">            10/16   1</span>
-<span class="sd">            11/16   1</span>
-<span class="sd">            12/16   1</span>
-<span class="sd">            13/16   1</span>
-<span class="sd">            14/16   1</span>
-<span class="sd">            15/16   1</span>
-<span class="sd">            16/16   1</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">denominator_exponent</span> <span class="o">=</span> <span class="o">-</span><span class="nb">int</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="mi">2</span><span class="p">)))</span>
-        <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span><span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="o">**</span> <span class="n">denominator_exponent</span><span class="p">)</span></div>
-
-
-    <span class="c1"># TODO: move to math.py or remove</span>
-<div class="viewcode-block" id="Duration.equal_or_lesser_assignable">
-<a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.Duration.equal_or_lesser_assignable">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">equal_or_lesser_assignable</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Duration</span><span class="p">:</span>
-<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Gets assignable duration equal or just less than this duration.</span>
-
-<span class="sd">        ..  container:: example</span>
-
-<span class="sd">            &gt;&gt;&gt; for numerator in range(1, 16 + 1):</span>
-<span class="sd">            ...     duration = abjad.Duration(numerator, 16)</span>
-<span class="sd">            ...     result = duration.equal_or_lesser_assignable()</span>
-<span class="sd">            ...     sixteenths = abjad.duration.pair_with_denominator(duration, 16)</span>
-<span class="sd">            ...     print(f&quot;{sixteenths[0]}/{sixteenths[1]}\t{result!s}&quot;)</span>
-<span class="sd">            ...</span>
-<span class="sd">            1/16    1/16</span>
-<span class="sd">            2/16    1/8</span>
-<span class="sd">            3/16    3/16</span>
-<span class="sd">            4/16    1/4</span>
-<span class="sd">            5/16    1/4</span>
-<span class="sd">            6/16    3/8</span>
-<span class="sd">            7/16    7/16</span>
-<span class="sd">            8/16    1/2</span>
-<span class="sd">            9/16    1/2</span>
-<span class="sd">            10/16   1/2</span>
-<span class="sd">            11/16   1/2</span>
-<span class="sd">            12/16   3/4</span>
-<span class="sd">            13/16   3/4</span>
-<span class="sd">            14/16   7/8</span>
-<span class="sd">            15/16   15/16</span>
-<span class="sd">            16/16   1</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">good_denominator</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">**</span> <span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">denominator</span><span class="p">,</span> <span class="mi">2</span><span class="p">)))</span> <span class="o">+</span> <span class="mi">0</span><span class="p">)</span>
-        <span class="n">current_numerator</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">numerator</span>
-        <span class="n">candidate</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span><span class="n">current_numerator</span><span class="p">,</span> <span class="n">good_denominator</span><span class="p">)</span>
-        <span class="k">while</span> <span class="ow">not</span> <span class="n">candidate</span><span class="o">.</span><span class="n">is_assignable</span><span class="p">():</span>
-            <span class="n">current_numerator</span> <span class="o">-=</span> <span class="mi">1</span>
-            <span class="n">candidate</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span><span class="n">current_numerator</span><span class="p">,</span> <span class="n">good_denominator</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">candidate</span></div>
-
-
-    <span class="c1"># TODO: move to math.py or remove</span>
-<div class="viewcode-block" id="Duration.equal_or_lesser_power_of_two">
-<a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.Duration.equal_or_lesser_power_of_two">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">equal_or_lesser_power_of_two</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Duration</span><span class="p">:</span>
-<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Gets duration of the form ``d**2`` equal to or just less than this</span>
-<span class="sd">        duration.</span>
-
-<span class="sd">        ..  container:: example</span>
-
-<span class="sd">            &gt;&gt;&gt; for numerator in range(1, 16 + 1):</span>
-<span class="sd">            ...     duration = abjad.Duration(numerator, 16)</span>
-<span class="sd">            ...     result = duration.equal_or_lesser_power_of_two()</span>
-<span class="sd">            ...     sixteenths = abjad.duration.pair_with_denominator(duration, 16)</span>
-<span class="sd">            ...     print(f&quot;{sixteenths[0]}/{sixteenths[1]}\t{result!s}&quot;)</span>
-<span class="sd">            ...</span>
-<span class="sd">            1/16    1/16</span>
-<span class="sd">            2/16    1/8</span>
-<span class="sd">            3/16    1/8</span>
-<span class="sd">            4/16    1/4</span>
-<span class="sd">            5/16    1/4</span>
-<span class="sd">            6/16    1/4</span>
-<span class="sd">            7/16    1/4</span>
-<span class="sd">            8/16    1/2</span>
-<span class="sd">            9/16    1/2</span>
-<span class="sd">            10/16   1/2</span>
-<span class="sd">            11/16   1/2</span>
-<span class="sd">            12/16   1/2</span>
-<span class="sd">            13/16   1/2</span>
-<span class="sd">            14/16   1/2</span>
-<span class="sd">            15/16   1/2</span>
-<span class="sd">            16/16   1</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span><span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="o">**</span> <span class="bp">self</span><span class="o">.</span><span class="n">exponent</span><span class="p">())</span></div>
-
-
 <div class="viewcode-block" id="Duration.exponent">
 <a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.Duration.exponent">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">exponent</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
@@ -784,9 +513,11 @@
 
 <span class="sd">            &gt;&gt;&gt; for numerator in range(1, 16 + 1):</span>
 <span class="sd">            ...     duration = abjad.Duration(numerator, 16)</span>
+<span class="sd">            ...     fraction = duration.as_fraction()</span>
 <span class="sd">            ...     exponent = duration.exponent()</span>
-<span class="sd">            ...     sixteenths = abjad.duration.pair_with_denominator(duration, 16)</span>
-<span class="sd">            ...     print(f&quot;{sixteenths[0]}/{sixteenths[1]}\t{duration.exponent()!s}&quot;)</span>
+<span class="sd">            ...     sixteenths = abjad.duration.pair_with_denominator(fraction, 16)</span>
+<span class="sd">            ...     numerator, denominator = sixteenths</span>
+<span class="sd">            ...     print(f&quot;{numerator}/{denominator}\t{exponent!s}&quot;)</span>
 <span class="sd">            ...</span>
 <span class="sd">            1/16	4</span>
 <span class="sd">            2/16	3</span>
@@ -822,8 +553,11 @@
 
 <span class="sd">            &gt;&gt;&gt; for n in range(1, 16 + 1):</span>
 <span class="sd">            ...     duration = abjad.Duration(n, 64)</span>
-<span class="sd">            ...     sixty_fourths = abjad.duration.pair_with_denominator(duration, 64)</span>
-<span class="sd">            ...     print(f&quot;{sixty_fourths[0]}/{sixty_fourths[1]}\t{duration.flag_count()}&quot;)</span>
+<span class="sd">            ...     fraction = duration.as_fraction()</span>
+<span class="sd">            ...     sixty_fourths = abjad.duration.pair_with_denominator(fraction, 64)</span>
+<span class="sd">            ...     numerator, denominator = sixty_fourths</span>
+<span class="sd">            ...     flag_count = duration.flag_count()</span>
+<span class="sd">            ...     print(f&quot;{numerator}/{denominator}\t{flag_count}&quot;)</span>
 <span class="sd">            ...</span>
 <span class="sd">            1/64    4</span>
 <span class="sd">            2/64    3</span>
@@ -848,15 +582,6 @@
         <span class="k">return</span> <span class="nb">max</span><span class="p">(</span><span class="n">count</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="Duration.fraction">
-<a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.Duration.fraction">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">fraction</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Returns duration as fraction.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
-
-
     <span class="nd">@staticmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">from_clock_string</span><span class="p">(</span><span class="n">clock_string</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Duration</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
@@ -865,16 +590,16 @@
 <span class="sd">        ..  container:: example</span>
 
 <span class="sd">            &gt;&gt;&gt; abjad.Duration.from_clock_string(&quot;0&#39;00&#39;&#39;&quot;)</span>
-<span class="sd">            Duration(0, 1)</span>
+<span class="sd">            Duration(numerator=0, denominator=1)</span>
 
 <span class="sd">            &gt;&gt;&gt; abjad.Duration.from_clock_string(&quot;0&#39;59&#39;&#39;&quot;)</span>
-<span class="sd">            Duration(59, 1)</span>
+<span class="sd">            Duration(numerator=59, denominator=1)</span>
 
 <span class="sd">            &gt;&gt;&gt; abjad.Duration.from_clock_string(&quot;1&#39;00&#39;&#39;&quot;)</span>
-<span class="sd">            Duration(60, 1)</span>
+<span class="sd">            Duration(numerator=60, denominator=1)</span>
 
 <span class="sd">            &gt;&gt;&gt; abjad.Duration.from_clock_string(&quot;1&#39;17&#39;&#39;&quot;)</span>
-<span class="sd">            Duration(77, 1)</span>
+<span class="sd">            Duration(numerator=77, denominator=1)</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">minutes</span> <span class="o">=</span> <span class="mi">0</span>
@@ -895,7 +620,7 @@
 <span class="sd">        ..  container::</span>
 
 <span class="sd">            &gt;&gt;&gt; abjad.Duration.from_dot_count(2)</span>
-<span class="sd">            Duration(7, 4)</span>
+<span class="sd">            Duration(numerator=7, denominator=4)</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dot_count</span><span class="p">,</span> <span class="nb">int</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">dot_count</span><span class="p">)</span>
@@ -913,7 +638,7 @@
 <span class="sd">        ..  container:: example</span>
 
 <span class="sd">            &gt;&gt;&gt; abjad.Duration.from_lilypond_duration_string(&quot;8.&quot;)</span>
-<span class="sd">            Duration(3, 16)</span>
+<span class="sd">            Duration(numerator=3, denominator=16)</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">lilypond_duration_string</span><span class="p">,</span> <span class="nb">str</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">lilypond_duration_string</span><span class="p">)</span>
@@ -946,7 +671,7 @@
             <span class="n">multiplier</span> <span class="o">=</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">denominator</span><span class="p">)</span>
             <span class="n">addend</span> <span class="o">=</span> <span class="n">multiplier</span> <span class="o">*</span> <span class="n">body_duration</span>
             <span class="n">rational</span> <span class="o">+=</span> <span class="n">addend</span>
-        <span class="k">return</span> <span class="n">Duration</span><span class="p">(</span><span class="n">rational</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">Duration</span><span class="p">(</span><span class="o">*</span><span class="n">rational</span><span class="o">.</span><span class="n">as_integer_ratio</span><span class="p">())</span>
 
 <div class="viewcode-block" id="Duration.is_assignable">
 <a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.Duration.is_assignable">[docs]</a>
@@ -958,7 +683,8 @@
 
 <span class="sd">            &gt;&gt;&gt; for numerator in range(0, 16 + 1):</span>
 <span class="sd">            ...     duration = abjad.Duration(numerator, 16)</span>
-<span class="sd">            ...     sixteenths = abjad.duration.pair_with_denominator(duration, 16)</span>
+<span class="sd">            ...     fraction = duration.as_fraction()</span>
+<span class="sd">            ...     sixteenths = abjad.duration.pair_with_denominator(fraction, 16)</span>
 <span class="sd">            ...     print(f&quot;{sixteenths[0]}/{sixteenths[1]}\t{duration.is_assignable()}&quot;)</span>
 <span class="sd">            ...</span>
 <span class="sd">            0/16    False</span>
@@ -980,7 +706,7 @@
 <span class="sd">            16/16   True</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="mi">0</span> <span class="o">&lt;</span> <span class="bp">self</span> <span class="o">&lt;</span> <span class="mi">16</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">Duration</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">&lt;</span> <span class="bp">self</span> <span class="o">&lt;</span> <span class="n">Duration</span><span class="p">(</span><span class="mi">16</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">_math</span><span class="o">.</span><span class="n">is_nonnegative_integer_power_of_two</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">denominator</span><span class="p">):</span>
                 <span class="k">if</span> <span class="n">_math</span><span class="o">.</span><span class="n">is_assignable_integer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">numerator</span><span class="p">):</span>
                     <span class="k">return</span> <span class="kc">True</span>
@@ -997,9 +723,10 @@
 
 <span class="sd">            &gt;&gt;&gt; for n in range(1, 16 + 1):</span>
 <span class="sd">            ...     duration = abjad.Duration(1, n)</span>
-<span class="sd">            ...     print(f&quot;{duration!s}\t{duration.is_dyadic()}&quot;)</span>
+<span class="sd">            ...     result = duration.is_dyadic()</span>
+<span class="sd">            ...     print(f&quot;1/{n}\t{result}&quot;)</span>
 <span class="sd">            ...</span>
-<span class="sd">            1       True</span>
+<span class="sd">            1/1     True</span>
 <span class="sd">            1/2     True</span>
 <span class="sd">            1/3     False</span>
 <span class="sd">            1/4     True</span>
@@ -1020,24 +747,6 @@
         <span class="k">return</span> <span class="n">_math</span><span class="o">.</span><span class="n">is_nonnegative_integer_power_of_two</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">denominator</span><span class="p">)</span></div>
 
 
-    <span class="c1"># TODO: move logic to parser.py and then remove</span>
-    <span class="nd">@staticmethod</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">is_token</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Is true when ``argument`` correctly initializes a duration.</span>
-
-<span class="sd">        ..  container:: example</span>
-
-<span class="sd">            &gt;&gt;&gt; abjad.Duration.is_token(&#39;8.&#39;)</span>
-<span class="sd">            True</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="n">Duration</span><span class="o">.</span><span class="fm">__new__</span><span class="p">(</span><span class="n">Duration</span><span class="p">,</span> <span class="n">argument</span><span class="p">)</span>
-            <span class="k">return</span> <span class="kc">True</span>
-        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
-            <span class="k">return</span> <span class="kc">False</span>
-
 <div class="viewcode-block" id="Duration.lilypond_duration_string">
 <a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.Duration.lilypond_duration_string">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">lilypond_duration_string</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
@@ -1052,17 +761,18 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_assignable</span><span class="p">():</span>
             <span class="k">raise</span> <span class="n">_exceptions</span><span class="o">.</span><span class="n">AssignabilityError</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
-        <span class="n">undotted_rational</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">equal_or_lesser_power_of_two</span><span class="p">()</span>
+        <span class="n">undotted_rational</span> <span class="o">=</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="o">**</span> <span class="bp">self</span><span class="o">.</span><span class="n">exponent</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">undotted_rational</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">:</span>
             <span class="n">undotted_duration_string</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">undotted_rational</span><span class="o">.</span><span class="n">denominator</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="n">undotted_rational</span> <span class="o">==</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="k">elif</span> <span class="n">undotted_rational</span> <span class="o">==</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
             <span class="n">undotted_duration_string</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;\breve&quot;</span>
-        <span class="k">elif</span> <span class="n">undotted_rational</span> <span class="o">==</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="k">elif</span> <span class="n">undotted_rational</span> <span class="o">==</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
             <span class="n">undotted_duration_string</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;\longa&quot;</span>
-        <span class="k">elif</span> <span class="n">undotted_rational</span> <span class="o">==</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="k">elif</span> <span class="n">undotted_rational</span> <span class="o">==</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
             <span class="n">undotted_duration_string</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;\maxima&quot;</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;can not process undotted rational: </span><span class="si">{</span><span class="n">undotted_rational</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">message</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;can not process undotted rational: </span><span class="si">{</span><span class="n">undotted_rational</span><span class="si">!r}</span><span class="s2">&quot;</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
         <span class="n">dot_count</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dot_count</span><span class="p">()</span>
         <span class="n">dot_string</span> <span class="o">=</span> <span class="s2">&quot;.&quot;</span> <span class="o">*</span> <span class="n">dot_count</span>
         <span class="n">dotted_duration_string</span> <span class="o">=</span> <span class="n">undotted_duration_string</span> <span class="o">+</span> <span class="n">dot_string</span>
@@ -1073,13 +783,7 @@
 <a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.Duration.pair">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">pair</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Gets numerator and denominator pair.</span>
-
-<span class="sd">        ..  container:: example</span>
-
-<span class="sd">            &gt;&gt;&gt; abjad.Duration(3, 16).pair()</span>
-<span class="sd">            (3, 16)</span>
-
+<span class="sd">        Gets (numerator, denominator) pair.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">numerator</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">denominator</span></div>
 
@@ -1093,10 +797,10 @@
 <span class="sd">        ..  container:: example</span>
 
 <span class="sd">            &gt;&gt;&gt; abjad.Duration(3, 7).reciprocal()</span>
-<span class="sd">            Duration(7, 3)</span>
+<span class="sd">            Duration(numerator=7, denominator=3)</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)(</span><span class="bp">self</span><span class="o">.</span><span class="n">denominator</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">numerator</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">Duration</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">denominator</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">numerator</span><span class="p">)</span></div>
 </div>
 
 
@@ -1178,16 +882,15 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">numerator</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">denominator</span><span class="si">}</span><span class="s2">&quot;</span>
 
-    <span class="c1"># TODO: rename to fraction()</span>
-<div class="viewcode-block" id="Ratio.as_fraction">
-<a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.Ratio.as_fraction">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">as_fraction</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Ratio.fraction">
+<a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.Ratio.fraction">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">fraction</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Changes (unreduced) ratio to (reduced) fraction.</span>
 
 <span class="sd">        ..  container:: example</span>
 
-<span class="sd">            &gt;&gt;&gt; abjad.Ratio(6, 4).as_fraction()</span>
+<span class="sd">            &gt;&gt;&gt; abjad.Ratio(6, 4).fraction()</span>
 <span class="sd">            Fraction(3, 2)</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -1387,7 +1090,7 @@
 <span class="sd">            True</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">fraction</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">as_fraction</span><span class="p">()</span>
+        <span class="n">fraction</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fraction</span><span class="p">()</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">numerator</span> <span class="o">==</span> <span class="n">fraction</span><span class="o">.</span><span class="n">numerator</span><span class="p">:</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">denominator</span> <span class="o">==</span> <span class="n">fraction</span><span class="o">.</span><span class="n">denominator</span><span class="p">:</span>
                 <span class="k">return</span> <span class="kc">True</span>
@@ -1456,7 +1159,7 @@
 
 <span class="sd">        &gt;&gt;&gt; displacement = abjad.Duration(-1, 16)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.Offset(fraction, displacement=displacement)</span>
-<span class="sd">        Offset(Fraction(3, 16), displacement=Duration(-1, 16))</span>
+<span class="sd">        Offset(Fraction(3, 16), displacement=Duration(numerator=-1, denominator=16))</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -1471,7 +1174,7 @@
     <span class="k">def</span><span class="w"> </span><span class="fm">__add__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span> <span class="o">|</span> <span class="n">Duration</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Offset</span><span class="p">:</span>
         <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">argument</span><span class="p">,</span> <span class="nb">int</span> <span class="o">|</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span> <span class="o">|</span> <span class="n">Duration</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">argument</span><span class="p">,</span> <span class="n">Duration</span><span class="p">):</span>
-            <span class="n">fraction</span> <span class="o">=</span> <span class="n">argument</span><span class="o">.</span><span class="n">fraction</span><span class="p">()</span>
+            <span class="n">fraction</span> <span class="o">=</span> <span class="n">argument</span><span class="o">.</span><span class="n">as_fraction</span><span class="p">()</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">fraction</span> <span class="o">=</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span>
         <span class="n">offset</span> <span class="o">=</span> <span class="n">Offset</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fraction</span> <span class="o">+</span> <span class="n">fraction</span><span class="p">,</span> <span class="n">displacement</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">displacement</span><span class="p">)</span>
@@ -1480,53 +1183,57 @@
     <span class="k">def</span><span class="w"> </span><span class="fm">__radd__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span> <span class="o">|</span> <span class="n">Duration</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Offset</span><span class="p">:</span>
         <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">argument</span><span class="p">,</span> <span class="nb">int</span> <span class="o">|</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span> <span class="o">|</span> <span class="n">Duration</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">argument</span><span class="p">,</span> <span class="n">Duration</span><span class="p">):</span>
-            <span class="n">fraction</span> <span class="o">=</span> <span class="n">argument</span><span class="o">.</span><span class="n">fraction</span><span class="p">()</span>
+            <span class="n">fraction</span> <span class="o">=</span> <span class="n">argument</span><span class="o">.</span><span class="n">as_fraction</span><span class="p">()</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">fraction</span> <span class="o">=</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span>
         <span class="n">offset</span> <span class="o">=</span> <span class="n">Offset</span><span class="p">(</span><span class="n">fraction</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">fraction</span><span class="p">,</span> <span class="n">displacement</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">displacement</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">offset</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">:</span> <span class="nb">object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">argument</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">argument</span><span class="p">,</span> <span class="n">Offset</span><span class="p">):</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">fraction</span> <span class="o">==</span> <span class="n">argument</span><span class="o">.</span><span class="n">fraction</span><span class="p">:</span>
                 <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_nonnone_displacement</span><span class="p">()</span> <span class="o">==</span> <span class="n">argument</span><span class="o">.</span><span class="n">_nonnone_displacement</span><span class="p">():</span>
                     <span class="k">return</span> <span class="kc">True</span>
         <span class="k">return</span> <span class="kc">False</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__ge__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">:</span> <span class="nb">object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">argument</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">argument</span><span class="p">,</span> <span class="n">Offset</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">TypeError</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">fraction</span> <span class="o">==</span> <span class="n">argument</span><span class="o">.</span><span class="n">fraction</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_nonnone_displacement</span><span class="p">()</span> <span class="o">&gt;=</span> <span class="n">argument</span><span class="o">.</span><span class="n">_nonnone_displacement</span><span class="p">()</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">fraction</span> <span class="o">&gt;=</span> <span class="n">argument</span><span class="o">.</span><span class="n">fraction</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__gt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">:</span> <span class="nb">object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">argument</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">argument</span><span class="p">,</span> <span class="n">Offset</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">TypeError</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">fraction</span> <span class="o">==</span> <span class="n">argument</span><span class="o">.</span><span class="n">fraction</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_nonnone_displacement</span><span class="p">()</span> <span class="o">&gt;</span> <span class="n">argument</span><span class="o">.</span><span class="n">_nonnone_displacement</span><span class="p">()</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">fraction</span> <span class="o">&gt;</span> <span class="n">argument</span><span class="o">.</span><span class="n">fraction</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__le__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">:</span> <span class="nb">object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">argument</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">argument</span><span class="p">,</span> <span class="n">Offset</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">TypeError</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">fraction</span> <span class="o">==</span> <span class="n">argument</span><span class="o">.</span><span class="n">fraction</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_nonnone_displacement</span><span class="p">()</span> <span class="o">&lt;=</span> <span class="n">argument</span><span class="o">.</span><span class="n">_nonnone_displacement</span><span class="p">()</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">fraction</span> <span class="o">&lt;=</span> <span class="n">argument</span><span class="o">.</span><span class="n">fraction</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__lt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">:</span> <span class="nb">object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">argument</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">argument</span><span class="p">,</span> <span class="n">Offset</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">TypeError</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">fraction</span> <span class="o">==</span> <span class="n">argument</span><span class="o">.</span><span class="n">fraction</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_nonnone_displacement</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">argument</span><span class="o">.</span><span class="n">_nonnone_displacement</span><span class="p">()</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">fraction</span> <span class="o">&lt;</span> <span class="n">argument</span><span class="o">.</span><span class="n">fraction</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__mod__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Offset</span><span class="p">:</span>
+        <span class="n">fraction</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fraction</span> <span class="o">%</span> <span class="n">argument</span>
+        <span class="k">return</span> <span class="n">Offset</span><span class="p">(</span><span class="n">fraction</span><span class="o">=</span><span class="n">fraction</span><span class="p">,</span> <span class="n">displacement</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">displacement</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__mul__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">):</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Gets interpreter representation of value offset.</span>
+<span class="sd">        Gets interpreter representation of offset.</span>
 
 <span class="sd">        ..  container:: example</span>
 
@@ -1535,13 +1242,13 @@
 
 <span class="sd">            &gt;&gt;&gt; duration = abjad.Duration(-1, 16)</span>
 <span class="sd">            &gt;&gt;&gt; abjad.Offset(abjad.Fraction(1, 4), displacement=duration)</span>
-<span class="sd">            Offset(Fraction(1, 4), displacement=Duration(-1, 16))</span>
+<span class="sd">            Offset(Fraction(1, 4), displacement=Duration(numerator=-1, denominator=16))</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">string</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">fraction</span><span class="si">!r}</span><span class="s2">&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">displacement</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">string</span> <span class="o">=</span> <span class="n">string</span> <span class="o">+</span> <span class="sa">f</span><span class="s2">&quot;, displacement=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">displacement</span><span class="si">!r}</span><span class="s2">&quot;</span>
-        <span class="n">string</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">(</span><span class="si">{</span><span class="n">string</span><span class="si">}</span><span class="s2">)&quot;</span>
+        <span class="n">string</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">Offset</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">(</span><span class="si">{</span><span class="n">string</span><span class="si">}</span><span class="s2">)&quot;</span>
         <span class="k">return</span> <span class="n">string</span>
 
     <span class="fm">__rmul__</span> <span class="o">=</span> <span class="fm">__mul__</span>
@@ -1558,19 +1265,13 @@
         <span class="k">pass</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__sub__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">):</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">argument</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">argument</span><span class="p">,</span> <span class="n">Offset</span><span class="p">):</span>
             <span class="n">fraction</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fraction</span> <span class="o">-</span> <span class="n">argument</span><span class="o">.</span><span class="n">fraction</span>
             <span class="k">return</span> <span class="n">Duration</span><span class="p">(</span><span class="n">fraction</span><span class="o">.</span><span class="n">numerator</span><span class="p">,</span> <span class="n">fraction</span><span class="o">.</span><span class="n">denominator</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">argument</span><span class="p">,</span> <span class="nb">int</span> <span class="o">|</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span> <span class="o">|</span> <span class="n">Duration</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span>
-                <span class="n">argument</span>
-            <span class="p">)</span>
-            <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fraction</span> <span class="o">-</span> <span class="n">argument</span>
-            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">Duration</span><span class="p">):</span>
-                <span class="n">fraction</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">fraction</span><span class="p">()</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
-                <span class="n">fraction</span> <span class="o">=</span> <span class="n">result</span>
+            <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">argument</span><span class="p">,</span> <span class="n">Duration</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">Duration</span><span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">fraction</span><span class="o">.</span><span class="n">as_integer_ratio</span><span class="p">())</span> <span class="o">-</span> <span class="n">argument</span>
+            <span class="n">fraction</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">as_fraction</span><span class="p">()</span>
             <span class="k">return</span> <span class="n">Offset</span><span class="p">(</span><span class="n">fraction</span><span class="p">,</span> <span class="n">displacement</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">displacement</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__truediv__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">argument</span><span class="p">):</span>
@@ -1580,6 +1281,25 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">displacement</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">Duration</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">displacement</span>
+
+    <span class="c1"># TODO: change to as_duration()</span>
+<div class="viewcode-block" id="Offset.duration">
+<a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.Offset.duration">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">duration</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Duration</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Changes offset to duration.</span>
+
+<span class="sd">        ..  container:: example</span>
+
+<span class="sd">            &gt;&gt;&gt; fraction = abjad.Fraction(1, 4)</span>
+<span class="sd">            &gt;&gt;&gt; offset = abjad.Offset(fraction)</span>
+<span class="sd">            &gt;&gt;&gt; offset.duration()</span>
+<span class="sd">            Duration(numerator=1, denominator=4)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">displacement</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">Duration</span><span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">fraction</span><span class="o">.</span><span class="n">as_integer_ratio</span><span class="p">())</span></div>
+
 
 <div class="viewcode-block" id="Offset.remove_displacement">
 <a class="viewcode-back" href="../../api/abjad/duration.html#abjad.duration.Offset.remove_displacement">[docs]</a>
@@ -1592,7 +1312,7 @@
 <span class="sd">            &gt;&gt;&gt; duration = abjad.Duration(-1, 16)</span>
 <span class="sd">            &gt;&gt;&gt; offset = abjad.Offset(abjad.Fraction(1, 4), displacement=duration)</span>
 <span class="sd">            &gt;&gt;&gt; offset</span>
-<span class="sd">            Offset(Fraction(1, 4), displacement=Duration(-1, 16))</span>
+<span class="sd">            Offset(Fraction(1, 4), displacement=Duration(numerator=-1, denominator=16))</span>
 
 <span class="sd">            &gt;&gt;&gt; offset.remove_displacement()</span>
 <span class="sd">            Offset(Fraction(1, 4))</span>
@@ -1618,7 +1338,7 @@
         
         &copy; Copyright 2008-2025, Trevor Bača &amp; Joséphine Oberholtzer.
       <span class="lastupdated">
-        Last updated on Aug 28, 2025.
+        Last updated on Oct 03, 2025.
       </span>
 
     </p>

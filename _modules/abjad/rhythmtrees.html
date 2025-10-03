@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>abjad.rhythmtrees &mdash; Abjad 3.29 documentation</title>
+  <title>abjad.rhythmtrees &mdash; Abjad 3.30 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../_static/abjad.css?v=1f187528" />
@@ -18,7 +18,7 @@
     <link rel="canonical" href="https://abjad.github.io_modules/abjad/rhythmtrees.html"/>
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=b1e510ba"></script>
+      <script src="../../_static/documentation_options.js?v=52c177e8"></script>
       <script src="../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script src="../../_static/ga.js?v=c455bbd5"></script>
@@ -35,11 +35,11 @@
   <div class="wy-grid-for-nav">
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search"  style="background: #55EE77" >
+        <div class="wy-side-nav-search"  style="background: #880088" >
 
 
     <a href="../../index.html" class="icon icon-home" alt="Documentation
-    Home"> Abjad 3.29
+    Home"> Abjad 3.30
 
 
 
@@ -110,7 +110,7 @@
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #55EE77" >
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #880088" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../index.html">Abjad</a>
       </nav>
@@ -200,7 +200,8 @@
             <span class="n">parent_contents_duration</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">_get_contents_duration</span><span class="p">()</span>
             <span class="n">fraction</span> <span class="o">=</span> <span class="n">pair</span> <span class="o">/</span> <span class="n">parent_contents_duration</span>
             <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">fraction</span><span class="p">,</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">fraction</span><span class="p">)</span>
-            <span class="n">duration</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="n">fraction</span><span class="p">)</span>
+            <span class="c1"># duration = _duration.Duration(fraction)</span>
+            <span class="n">duration</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="o">*</span><span class="n">fraction</span><span class="o">.</span><span class="n">as_integer_ratio</span><span class="p">())</span>
             <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">duration</span><span class="p">,</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Duration</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">duration</span><span class="p">)</span>
             <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">duration</span><span class="o">.</span><span class="n">pair</span><span class="p">())</span>
             <span class="n">node</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">parent</span>
@@ -218,7 +219,8 @@
                 <span class="k">else</span><span class="p">:</span>
                     <span class="n">child</span><span class="o">.</span><span class="n">_offset</span> <span class="o">=</span> <span class="n">current_offset</span>
                     <span class="n">child</span><span class="o">.</span><span class="n">_offsets_are_current</span> <span class="o">=</span> <span class="kc">True</span>
-                    <span class="n">current_offset</span> <span class="o">+=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="n">child</span><span class="o">.</span><span class="n">duration</span><span class="p">())</span>
+                    <span class="c1"># current_offset += _duration.Duration(child.duration())</span>
+                    <span class="n">current_offset</span> <span class="o">+=</span> <span class="n">child</span><span class="o">.</span><span class="n">duration</span><span class="p">()</span>
             <span class="k">return</span> <span class="n">current_offset</span>
 
         <span class="n">offset</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">offset</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
@@ -280,13 +282,13 @@
 <span class="sd">                &gt;&gt;</span>
 
 <span class="sd">            &gt;&gt;&gt; rtc.duration()</span>
-<span class="sd">            Duration(1, 1)</span>
+<span class="sd">            Duration(numerator=1, denominator=1)</span>
 
 <span class="sd">            &gt;&gt;&gt; rtc[1].duration()</span>
-<span class="sd">            Duration(1, 2)</span>
+<span class="sd">            Duration(numerator=1, denominator=2)</span>
 
 <span class="sd">            &gt;&gt;&gt; rtc[1][1].duration()</span>
-<span class="sd">            Duration(1, 4)</span>
+<span class="sd">            Duration(numerator=1, denominator=4)</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">numerator</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">prolation</span><span class="p">()</span><span class="o">.</span><span class="n">numerator</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">pair</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
@@ -433,7 +435,8 @@
 <span class="sd">            Offset(Fraction(1, 4))</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_offset</span><span class="p">()</span> <span class="o">+</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">duration</span><span class="p">())</span></div>
+        <span class="c1"># return self.start_offset() + _duration.Duration(self.duration())</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_offset</span><span class="p">()</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">duration</span><span class="p">()</span></div>
 </div>
 
 
@@ -517,7 +520,9 @@
             <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_unpitched</span><span class="p">()</span> <span class="ow">is</span> <span class="kc">True</span>
             <span class="n">pitches</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span>
         <span class="n">pitch_lists</span> <span class="o">=</span> <span class="n">_makers</span><span class="o">.</span><span class="n">make_pitch_lists</span><span class="p">(</span><span class="n">pitches</span><span class="p">)</span>
-        <span class="n">duration</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">pair</span><span class="p">())</span> <span class="o">*</span> <span class="n">duration</span><span class="p">)</span>
+        <span class="c1"># duration = _duration.Duration(fractions.Fraction(*self.pair()) * duration)</span>
+        <span class="n">duration</span> <span class="o">=</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">pair</span><span class="p">())</span> <span class="o">*</span> <span class="n">duration</span>
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">duration</span><span class="p">,</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Duration</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">duration</span><span class="p">)</span>
         <span class="n">components</span> <span class="o">=</span> <span class="n">_makers</span><span class="o">.</span><span class="n">make_leaves</span><span class="p">(</span><span class="n">pitch_lists</span><span class="p">,</span> <span class="p">[</span><span class="n">duration</span><span class="p">])</span>
         <span class="k">return</span> <span class="n">components</span>
 
@@ -747,8 +752,10 @@
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">rtc</span><span class="p">,</span> <span class="n">RhythmTreeContainer</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">rtc</span><span class="p">)</span>
-        <span class="n">new_duration</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">duration</span><span class="p">())</span>
-        <span class="n">new_duration</span> <span class="o">+=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="n">rtc</span><span class="o">.</span><span class="n">duration</span><span class="p">())</span>
+        <span class="c1"># new_duration = _duration.Duration(self.duration())</span>
+        <span class="n">new_duration</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">duration</span><span class="p">()</span>
+        <span class="c1"># new_duration += _duration.Duration(rtc.duration())</span>
+        <span class="n">new_duration</span> <span class="o">=</span> <span class="n">new_duration</span> <span class="o">+</span> <span class="n">rtc</span><span class="o">.</span><span class="n">duration</span><span class="p">()</span>
         <span class="n">container</span> <span class="o">=</span> <span class="n">RhythmTreeContainer</span><span class="p">(</span><span class="n">new_duration</span><span class="o">.</span><span class="n">pair</span><span class="p">())</span>
         <span class="n">container</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="bp">self</span><span class="p">[:])</span>
         <span class="n">container</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">rtc</span><span class="p">[:])</span>
@@ -791,7 +798,7 @@
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">duration</span><span class="p">,</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Duration</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">duration</span><span class="p">)</span>
-        <span class="k">assert</span> <span class="mi">0</span> <span class="o">&lt;</span> <span class="n">duration</span>
+        <span class="k">assert</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">duration</span>
 
         <span class="k">def</span><span class="w"> </span><span class="nf">recurse</span><span class="p">(</span><span class="n">rtc</span><span class="p">,</span> <span class="n">tuplet_duration</span><span class="p">):</span>
             <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">rtc</span><span class="p">,</span> <span class="n">RhythmTreeContainer</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">rtc</span><span class="p">)</span>
@@ -799,13 +806,13 @@
             <span class="n">contents_duration</span> <span class="o">=</span> <span class="n">rtc</span><span class="o">.</span><span class="n">_get_contents_duration</span><span class="p">()</span>
             <span class="n">basic_prolated_fraction</span> <span class="o">=</span> <span class="n">tuplet_duration</span> <span class="o">/</span> <span class="n">contents_duration</span>
             <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">basic_prolated_fraction</span><span class="p">,</span> <span class="n">fractions</span><span class="o">.</span><span class="n">Fraction</span><span class="p">)</span>
-            <span class="n">basic_written_duration</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="n">basic_prolated_fraction</span><span class="p">)</span>
-            <span class="n">basic_written_duration</span> <span class="o">=</span> <span class="p">(</span>
-                <span class="n">basic_written_duration</span><span class="o">.</span><span class="n">equal_or_greater_power_of_two</span><span class="p">()</span>
+            <span class="c1"># basic_written_duration = _duration.Duration(basic_prolated_fraction)</span>
+            <span class="n">basic_written_duration</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span>
+                <span class="o">*</span><span class="n">basic_prolated_fraction</span><span class="o">.</span><span class="n">as_integer_ratio</span><span class="p">()</span>
             <span class="p">)</span>
-            <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">basic_written_duration</span><span class="p">,</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Duration</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span>
-                <span class="n">basic_written_duration</span>
-            <span class="p">)</span>
+            <span class="n">fraction</span> <span class="o">=</span> <span class="n">_math</span><span class="o">.</span><span class="n">equal_or_greater_power_of_two</span><span class="p">(</span><span class="n">basic_written_duration</span><span class="p">)</span>
+            <span class="c1"># basic_written_duration = _duration.Duration(fraction)</span>
+            <span class="n">basic_written_duration</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="o">*</span><span class="n">fraction</span><span class="o">.</span><span class="n">as_integer_ratio</span><span class="p">())</span>
             <span class="n">tuplet</span> <span class="o">=</span> <span class="n">_score</span><span class="o">.</span><span class="n">Tuplet</span><span class="p">(</span><span class="s2">&quot;1:1&quot;</span><span class="p">,</span> <span class="p">[])</span>
             <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">rtc</span><span class="o">.</span><span class="n">children</span><span class="p">:</span>
                 <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)):</span>
@@ -827,7 +834,7 @@
             <span class="n">tuplet</span><span class="o">.</span><span class="n">set_ratio</span><span class="p">(</span><span class="n">ratio</span><span class="p">)</span>
             <span class="k">return</span> <span class="p">[</span><span class="n">tuplet</span><span class="p">]</span>
 
-        <span class="n">tuplet_duration_</span> <span class="o">=</span> <span class="n">duration</span><span class="o">.</span><span class="n">fraction</span><span class="p">()</span> <span class="o">*</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">pair</span><span class="p">())</span>
+        <span class="n">tuplet_duration_</span> <span class="o">=</span> <span class="n">duration</span><span class="o">.</span><span class="n">as_fraction</span><span class="p">()</span> <span class="o">*</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">pair</span><span class="p">())</span>
         <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">tuplet_duration_</span><span class="p">,</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Duration</span><span class="p">)</span>
         <span class="n">components</span> <span class="o">=</span> <span class="n">recurse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tuplet_duration_</span><span class="p">)</span>
         <span class="k">assert</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="n">_score</span><span class="o">.</span><span class="n">Leaf</span> <span class="o">|</span> <span class="n">_score</span><span class="o">.</span><span class="n">Tuplet</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">components</span><span class="p">)</span>
@@ -883,7 +890,12 @@
         <span class="n">nodes</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">depth_first</span><span class="p">())</span>
         <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">nodes</span><span class="p">:</span>
             <span class="n">graphviz_node</span> <span class="o">=</span> <span class="n">uqbar</span><span class="o">.</span><span class="n">graphs</span><span class="o">.</span><span class="n">Node</span><span class="p">()</span>
-            <span class="n">label</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">_duration</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="o">*</span><span class="n">node</span><span class="o">.</span><span class="n">pair</span><span class="p">()))</span>
+            <span class="c1"># label = str(_duration.Duration(*node.pair()))</span>
+            <span class="n">numerator</span><span class="p">,</span> <span class="n">denominator</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">pair</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">denominator</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">label</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">numerator</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">label</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">numerator</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">denominator</span><span class="si">}</span><span class="s2">&quot;</span>
             <span class="n">graphviz_node</span><span class="o">.</span><span class="n">attributes</span><span class="p">[</span><span class="s2">&quot;label&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">label</span>
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)):</span>
                 <span class="n">graphviz_node</span><span class="o">.</span><span class="n">attributes</span><span class="p">[</span><span class="s2">&quot;shape&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;triangle&quot;</span>
@@ -1137,7 +1149,7 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Duration</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
             <span class="n">pair</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">pair</span><span class="p">()</span>
-        <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">RhythmTreeLeaf</span><span class="p">(</span><span class="n">pair</span><span class="p">,</span> <span class="n">is_unpitched</span><span class="o">=</span><span class="ow">not</span> <span class="mi">0</span> <span class="o">&lt;</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span></div>
+        <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">RhythmTreeLeaf</span><span class="p">(</span><span class="n">pair</span><span class="p">,</span> <span class="n">is_unpitched</span><span class="o">=</span><span class="ow">not</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span></div>
 
 
 <div class="viewcode-block" id="RhythmTreeParser.p_node__container">
@@ -1544,7 +1556,7 @@
         
         &copy; Copyright 2008-2025, Trevor Bača &amp; Joséphine Oberholtzer.
       <span class="lastupdated">
-        Last updated on Aug 28, 2025.
+        Last updated on Oct 03, 2025.
       </span>
 
     </p>

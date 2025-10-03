@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>abjad.label &mdash; Abjad 3.29 documentation</title>
+  <title>abjad.label &mdash; Abjad 3.30 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../../_static/abjad.css?v=1f187528" />
@@ -18,7 +18,7 @@
     <link rel="canonical" href="https://abjad.github.io_modules/abjad/label.html"/>
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=b1e510ba"></script>
+      <script src="../../_static/documentation_options.js?v=52c177e8"></script>
       <script src="../../_static/doctools.js?v=9bcbadda"></script>
       <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
       <script src="../../_static/ga.js?v=c455bbd5"></script>
@@ -35,11 +35,11 @@
   <div class="wy-grid-for-nav">
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search"  style="background: #55EE77" >
+        <div class="wy-side-nav-search"  style="background: #880088" >
 
 
     <a href="../../index.html" class="icon icon-home" alt="Documentation
-    Home"> Abjad 3.29
+    Home"> Abjad 3.30
 
 
 
@@ -110,7 +110,7 @@
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #55EE77" >
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #880088" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../index.html">Abjad</a>
       </nav>
@@ -140,6 +140,7 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">enums</span> <span class="k">as</span> <span class="n">_enums</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">indicators</span> <span class="k">as</span> <span class="n">_indicators</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">iterate</span> <span class="k">as</span> <span class="n">_iterate</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">math</span> <span class="k">as</span> <span class="n">_math</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">overrides</span> <span class="k">as</span> <span class="n">_overrides</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">pcollections</span> <span class="k">as</span> <span class="n">_pcollections</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">pitch</span> <span class="k">as</span> <span class="n">_pitch</span>
@@ -399,7 +400,9 @@
                     <span class="n">_tweaks</span><span class="o">.</span><span class="n">tweak</span><span class="p">(</span><span class="n">note_head</span><span class="p">,</span> <span class="sa">rf</span><span class="s2">&quot;\tweak color </span><span class="si">{</span><span class="n">color</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">leaf</span><span class="p">,</span> <span class="n">_score</span><span class="o">.</span><span class="n">Note</span><span class="p">):</span>
             <span class="n">note_head</span> <span class="o">=</span> <span class="n">leaf</span><span class="o">.</span><span class="n">note_head</span><span class="p">()</span>
-            <span class="n">number</span> <span class="o">=</span> <span class="n">note_head</span><span class="o">.</span><span class="n">written_pitch</span><span class="p">()</span><span class="o">.</span><span class="n">number</span><span class="p">()</span>
+            <span class="n">written_pitch</span> <span class="o">=</span> <span class="n">note_head</span><span class="o">.</span><span class="n">written_pitch</span><span class="p">()</span>
+            <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">written_pitch</span><span class="p">,</span> <span class="n">_pitch</span><span class="o">.</span><span class="n">NamedPitch</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">written_pitch</span><span class="p">)</span>
+            <span class="n">number</span> <span class="o">=</span> <span class="n">written_pitch</span><span class="o">.</span><span class="n">number</span><span class="p">()</span>
             <span class="n">pc</span> <span class="o">=</span> <span class="n">_pitch</span><span class="o">.</span><span class="n">NumberedPitchClass</span><span class="p">(</span><span class="n">number</span><span class="p">)</span>
             <span class="n">color</span> <span class="o">=</span> <span class="n">color_map</span><span class="p">[</span><span class="n">pc</span><span class="o">.</span><span class="n">number</span><span class="p">()]</span>
             <span class="k">if</span> <span class="n">color</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -956,10 +959,10 @@
         <span class="n">duration</span> <span class="o">=</span> <span class="n">_getlib</span><span class="o">.</span><span class="n">get_duration</span><span class="p">(</span><span class="n">logical_tie</span><span class="p">,</span> <span class="n">in_seconds</span><span class="o">=</span><span class="n">in_seconds</span><span class="p">)</span>
         <span class="n">pair</span> <span class="o">=</span> <span class="n">duration</span><span class="o">.</span><span class="n">pair</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">denominator</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">pair</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">pair_with_denominator</span><span class="p">(</span><span class="n">duration</span><span class="p">,</span> <span class="n">denominator</span><span class="p">)</span>
+            <span class="n">pair</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">pair_with_denominator</span><span class="p">(</span><span class="n">duration</span><span class="o">.</span><span class="n">as_fraction</span><span class="p">(),</span> <span class="n">denominator</span><span class="p">)</span>
         <span class="n">n</span><span class="p">,</span> <span class="n">d</span> <span class="o">=</span> <span class="n">pair</span>
         <span class="n">label</span> <span class="o">=</span> <span class="n">_indicators</span><span class="o">.</span><span class="n">Markup</span><span class="p">(</span><span class="sa">rf</span><span class="s2">&quot;\markup \fraction </span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">d</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="n">_attach</span><span class="p">(</span><span class="n">label</span><span class="p">,</span> <span class="n">logical_tie</span><span class="o">.</span><span class="n">head</span><span class="p">(),</span> <span class="n">direction</span><span class="o">=</span><span class="n">direction</span><span class="p">)</span></div>
+        <span class="n">_attach</span><span class="p">(</span><span class="n">label</span><span class="p">,</span> <span class="n">logical_tie</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">direction</span><span class="o">=</span><span class="n">direction</span><span class="p">)</span></div>
 
 
 
@@ -1388,7 +1391,7 @@
     <span class="n">prototype</span> <span class="o">=</span> <span class="n">prototype</span> <span class="ow">or</span> <span class="n">_pitch</span><span class="o">.</span><span class="n">NamedInterval</span>
     <span class="k">for</span> <span class="n">note</span> <span class="ow">in</span> <span class="n">_iterate</span><span class="o">.</span><span class="n">leaves</span><span class="p">(</span><span class="n">argument</span><span class="p">,</span> <span class="n">_score</span><span class="o">.</span><span class="n">Note</span><span class="p">):</span>
         <span class="n">label</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="n">next_leaf</span> <span class="o">=</span> <span class="n">_iterlib</span><span class="o">.</span><span class="n">_get_leaf</span><span class="p">(</span><span class="n">note</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">next_leaf</span> <span class="o">=</span> <span class="n">_iterlib</span><span class="o">.</span><span class="n">get_leaf</span><span class="p">(</span><span class="n">note</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">next_leaf</span><span class="p">,</span> <span class="n">_score</span><span class="o">.</span><span class="n">Note</span><span class="p">):</span>
             <span class="n">interval</span> <span class="o">=</span> <span class="n">_pitch</span><span class="o">.</span><span class="n">NamedInterval</span><span class="o">.</span><span class="n">from_pitch_carriers</span><span class="p">(</span><span class="n">note</span><span class="p">,</span> <span class="n">next_leaf</span><span class="p">)</span>
             <span class="n">interval</span> <span class="o">=</span> <span class="n">prototype</span><span class="p">(</span><span class="n">interval</span><span class="p">)</span>
@@ -1673,7 +1676,7 @@
     <span class="n">prototype</span> <span class="o">=</span> <span class="n">prototype</span> <span class="ow">or</span> <span class="n">_pitch</span><span class="o">.</span><span class="n">NamedPitch</span>
     <span class="n">logical_ties</span> <span class="o">=</span> <span class="n">_iterate</span><span class="o">.</span><span class="n">logical_ties</span><span class="p">(</span><span class="n">argument</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">logical_tie</span> <span class="ow">in</span> <span class="n">logical_ties</span><span class="p">:</span>
-        <span class="n">leaf</span> <span class="o">=</span> <span class="n">logical_tie</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+        <span class="n">leaf</span> <span class="o">=</span> <span class="n">logical_tie</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
         <span class="n">label</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">if</span> <span class="n">prototype</span> <span class="ow">is</span> <span class="n">_pitch</span><span class="o">.</span><span class="n">NamedPitch</span><span class="p">:</span>
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">leaf</span><span class="p">,</span> <span class="n">_score</span><span class="o">.</span><span class="n">Note</span><span class="p">):</span>
@@ -1903,7 +1906,7 @@
 <span class="sd">        &gt;&gt;&gt; string = r&quot;\tuplet 3/2 { c&#39;4 d&#39;4 e&#39;4 ~ } e&#39;4 ef&#39;4&quot;</span>
 <span class="sd">        &gt;&gt;&gt; staff = abjad.Staff(string)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.label.with_start_offsets(staff, direction=abjad.UP)</span>
-<span class="sd">        Duration(1, 1)</span>
+<span class="sd">        Duration(numerator=1, denominator=1)</span>
 
 <span class="sd">        &gt;&gt;&gt; abjad.override(staff).TextScript.staff_padding = 4</span>
 <span class="sd">        &gt;&gt;&gt; abjad.override(staff).TupletBracket.staff_padding = 0</span>
@@ -1944,7 +1947,7 @@
 <span class="sd">        &gt;&gt;&gt; mark = abjad.MetronomeMark(abjad.Duration(1, 4), 60)</span>
 <span class="sd">        &gt;&gt;&gt; abjad.attach(mark, staff[0])</span>
 <span class="sd">        &gt;&gt;&gt; abjad.label.with_start_offsets(staff, clock_time=True)</span>
-<span class="sd">        Duration(8, 1)</span>
+<span class="sd">        Duration(numerator=8, denominator=1)</span>
 
 <span class="sd">        &gt;&gt;&gt; abjad.override(staff).TextScript.staff_padding = 4</span>
 <span class="sd">        &gt;&gt;&gt; abjad.override(staff).TupletBracket.staff_padding = 0</span>
@@ -1989,7 +1992,7 @@
 <span class="sd">        ...     clock_time=True,</span>
 <span class="sd">        ...     markup_command=r&#39;\dark_cyan_markup&#39;,</span>
 <span class="sd">        ...     )</span>
-<span class="sd">        Duration(8, 1)</span>
+<span class="sd">        Duration(numerator=8, denominator=1)</span>
 
 <span class="sd">        &gt;&gt;&gt; abjad.override(staff).TextScript.staff_padding = 4</span>
 <span class="sd">        &gt;&gt;&gt; abjad.override(staff).TupletBracket.staff_padding = 0</span>
@@ -2023,13 +2026,13 @@
         <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">global_offset</span><span class="p">,</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Offset</span><span class="p">),</span> <span class="nb">repr</span><span class="p">(</span><span class="n">global_offset</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">logical_tie</span> <span class="ow">in</span> <span class="n">_iterate</span><span class="o">.</span><span class="n">logical_ties</span><span class="p">(</span><span class="n">argument</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">clock_time</span><span class="p">:</span>
-            <span class="n">timespan</span> <span class="o">=</span> <span class="n">logical_tie</span><span class="o">.</span><span class="n">head</span><span class="p">()</span><span class="o">.</span><span class="n">_get_timespan</span><span class="p">(</span><span class="n">in_seconds</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">timespan</span> <span class="o">=</span> <span class="n">logical_tie</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">_get_timespan</span><span class="p">(</span><span class="n">in_seconds</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
             <span class="n">start_offset</span> <span class="o">=</span> <span class="n">timespan</span><span class="o">.</span><span class="n">start_offset</span>
             <span class="k">if</span> <span class="n">global_offset</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="n">start_offset</span> <span class="o">+=</span> <span class="n">global_offset</span>
-            <span class="n">string</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="n">start_offset</span><span class="o">.</span><span class="n">fraction</span><span class="p">)</span><span class="o">.</span><span class="n">clock_string</span><span class="p">()</span>
+            <span class="n">string</span> <span class="o">=</span> <span class="n">_math</span><span class="o">.</span><span class="n">clock_string</span><span class="p">(</span><span class="n">start_offset</span><span class="o">.</span><span class="n">fraction</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">timespan</span> <span class="o">=</span> <span class="n">logical_tie</span><span class="o">.</span><span class="n">head</span><span class="p">()</span><span class="o">.</span><span class="n">_get_timespan</span><span class="p">()</span>
+            <span class="n">timespan</span> <span class="o">=</span> <span class="n">logical_tie</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">_get_timespan</span><span class="p">()</span>
             <span class="n">start_offset</span> <span class="o">=</span> <span class="n">timespan</span><span class="o">.</span><span class="n">start_offset</span>
             <span class="k">if</span> <span class="n">global_offset</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="n">start_offset</span> <span class="o">+=</span> <span class="n">global_offset</span>
@@ -2040,8 +2043,9 @@
             <span class="n">label</span> <span class="o">=</span> <span class="n">_indicators</span><span class="o">.</span><span class="n">Markup</span><span class="p">(</span><span class="sa">rf</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">markup_command</span><span class="si">}</span><span class="s2"> </span><span class="se">{{</span><span class="s2"> </span><span class="si">{</span><span class="n">string</span><span class="si">}</span><span class="s2"> </span><span class="se">}}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">label</span> <span class="o">=</span> <span class="n">_indicators</span><span class="o">.</span><span class="n">Markup</span><span class="p">(</span><span class="sa">rf</span><span class="s2">&quot;\markup </span><span class="se">{{</span><span class="s2"> </span><span class="si">{</span><span class="n">string</span><span class="si">}</span><span class="s2"> </span><span class="se">}}</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="n">_attach</span><span class="p">(</span><span class="n">label</span><span class="p">,</span> <span class="n">logical_tie</span><span class="o">.</span><span class="n">head</span><span class="p">(),</span> <span class="n">direction</span><span class="o">=</span><span class="n">direction</span><span class="p">)</span>
-    <span class="n">total_duration</span> <span class="o">=</span> <span class="n">_duration</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="n">timespan</span><span class="o">.</span><span class="n">stop_offset</span><span class="o">.</span><span class="n">fraction</span><span class="p">)</span>
+        <span class="n">_attach</span><span class="p">(</span><span class="n">label</span><span class="p">,</span> <span class="n">logical_tie</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">direction</span><span class="o">=</span><span class="n">direction</span><span class="p">)</span>
+    <span class="c1"># total_duration = _duration.Duration(timespan.stop_offset.fraction)</span>
+    <span class="n">total_duration</span> <span class="o">=</span> <span class="n">timespan</span><span class="o">.</span><span class="n">stop_offset</span><span class="o">.</span><span class="n">duration</span><span class="p">()</span>
     <span class="k">if</span> <span class="n">global_offset</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">total_duration</span> <span class="o">+=</span> <span class="n">global_offset</span><span class="o">.</span><span class="n">fraction</span>
     <span class="k">return</span> <span class="n">total_duration</span></div>
@@ -2106,7 +2110,9 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_color_dictionary</span><span class="p">[</span><span class="n">pitch_class</span><span class="o">.</span><span class="n">number</span><span class="p">()]</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_initialize_color_dictionary</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">for</span> <span class="n">pitch_iterable</span><span class="p">,</span> <span class="n">color</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pitch_iterables</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">colors</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">pitch_iterable</span><span class="p">,</span> <span class="n">color</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">pitch_iterables</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">colors</span><span class="p">,</span> <span class="n">strict</span><span class="o">=</span><span class="kc">True</span>
+        <span class="p">):</span>
             <span class="k">for</span> <span class="n">pitch</span> <span class="ow">in</span> <span class="n">pitch_iterable</span><span class="p">:</span>
                 <span class="n">pc</span> <span class="o">=</span> <span class="n">_pitch</span><span class="o">.</span><span class="n">NumberedPitchClass</span><span class="p">(</span><span class="n">pitch</span><span class="p">)</span>
                 <span class="n">keys</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_color_dictionary</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
@@ -2253,7 +2259,7 @@
         
         &copy; Copyright 2008-2025, Trevor Bača &amp; Joséphine Oberholtzer.
       <span class="lastupdated">
-        Last updated on Aug 28, 2025.
+        Last updated on Oct 03, 2025.
       </span>
 
     </p>
